@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
-from typing import Any, cast
+from typing import Any
 import json
 
 from sqlalchemy import (
@@ -14,6 +14,7 @@ from sqlalchemy import (
     String,
     select,
     update,
+    ForeignKey,
 )
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -42,6 +43,13 @@ class PublishStatus(str, Enum):
     failed = "failed"
 
 
+class AuditAction(str, Enum):
+    """Action types for audit log entries."""
+
+    metadata_update = "metadata_update"
+    retry = "retry"
+
+
 class PublishTask(Base):
     """Database model representing a publish task."""
 
@@ -61,6 +69,21 @@ class PublishTask(Base):
         DateTime, default=datetime.utcnow, nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, nullable=False
+    )
+
+
+class AuditLog(Base):
+    """Database model for manual override audit events."""
+
+    __tablename__ = "audit_log"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    task_id: Mapped[int] = mapped_column(ForeignKey("publish_task.id"))
+    action: Mapped[AuditAction] = mapped_column(SqlEnum(AuditAction), nullable=False)
+    old_value: Mapped[str | None] = mapped_column(String)
+    new_value: Mapped[str | None] = mapped_column(String)
+    created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.utcnow, nullable=False
     )
 
@@ -112,3 +135,23 @@ async def get_task(session: AsyncSession, task_id: int) -> PublishTask | None:
     """Retrieve a task by ID."""
     result = await session.execute(select(PublishTask).where(PublishTask.id == task_id))
     return result.scalars().first()
+
+
+async def log_audit(
+    session: AsyncSession,
+    task_id: int,
+    action: AuditAction,
+    old_value: dict[str, Any] | None,
+    new_value: dict[str, Any] | None,
+) -> AuditLog:
+    """Record a manual override action in the audit log."""
+    entry = AuditLog(
+        task_id=task_id,
+        action=action,
+        old_value=json.dumps(old_value) if old_value is not None else None,
+        new_value=json.dumps(new_value) if new_value is not None else None,
+    )
+    session.add(entry)
+    await session.commit()
+    await session.refresh(entry)
+    return entry

@@ -6,13 +6,25 @@ import logging
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine
+import json
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel
 
 from .logging_config import configure_logging
 from .settings import settings
-from .db import Marketplace, SessionLocal, create_task, get_task, init_db
+from .db import (
+    AuditAction,
+    Marketplace,
+    PublishStatus,
+    SessionLocal,
+    create_task,
+    get_task,
+    init_db,
+    log_audit,
+    PublishTask,
+)
+from sqlalchemy import select
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 
@@ -51,6 +63,23 @@ class PublishRequest(BaseModel):
     metadata: dict[str, Any] = {}
 
 
+class PublishTaskOut(BaseModel):
+    """Representation of a publish task."""
+
+    id: int
+    marketplace: Marketplace
+    design_path: str
+    metadata: dict[str, Any] | None
+    status: PublishStatus
+    attempts: int
+
+
+class UpdateMetadataRequest(BaseModel):
+    """Request body for editing publish metadata."""
+
+    metadata: dict[str, Any]
+
+
 async def _background_publish(task_id: int, req: PublishRequest) -> None:
     """Wrap background publishing."""
     async with SessionLocal() as session:
@@ -81,6 +110,65 @@ async def progress(task_id: int) -> dict[str, Any]:
         if task is None:
             raise HTTPException(status_code=404)
         return {"status": task.status, "attempts": task.attempts}
+
+
+@app.get("/tasks")
+async def list_tasks() -> list[PublishTaskOut]:
+    """Return all publish tasks."""
+    async with SessionLocal() as session:
+        result = await session.execute(select(PublishTask))
+        tasks = result.scalars().all()
+        return [
+            PublishTaskOut(
+                id=t.id,
+                marketplace=t.marketplace,
+                design_path=t.design_path,
+                metadata=json.loads(t.metadata_json) if t.metadata_json else None,
+                status=t.status,
+                attempts=t.attempts,
+            )
+            for t in tasks
+        ]
+
+
+@app.put("/tasks/{task_id}")
+async def update_task_metadata(
+    task_id: int, req: UpdateMetadataRequest
+) -> dict[str, str]:
+    """Update task metadata manually."""
+    async with SessionLocal() as session:
+        task = await get_task(session, task_id)
+        if task is None:
+            raise HTTPException(status_code=404)
+        old_data = json.loads(task.metadata_json) if task.metadata_json else None
+        task.metadata_json = json.dumps(req.metadata)
+        task.status = PublishStatus.pending
+        await session.commit()
+        await log_audit(
+            session, task_id, AuditAction.metadata_update, old_data, req.metadata
+        )
+    return {"status": "updated"}
+
+
+@app.post("/tasks/{task_id}/retry")
+async def retry_task(task_id: int, background: BackgroundTasks) -> dict[str, str]:
+    """Re-trigger publishing for a task."""
+    async with SessionLocal() as session:
+        task = await get_task(session, task_id)
+        if task is None:
+            raise HTTPException(status_code=404)
+        task.status = PublishStatus.pending
+        task.attempts = 0
+        await session.commit()
+        await log_audit(session, task_id, AuditAction.retry, None, None)
+
+        req = PublishRequest(
+            marketplace=task.marketplace,
+            design_path=Path(task.design_path),
+            metadata=json.loads(task.metadata_json) if task.metadata_json else {},
+        )
+    background.add_task(_background_publish, task_id, req)
+    return {"status": "queued"}
 
 
 @app.get("/health")

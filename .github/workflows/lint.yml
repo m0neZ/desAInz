@@ -32,7 +32,8 @@ jobs:
         run: |
           flake8 .
           mypy .
-          pydocstyle
+          pydocstyle .
+          docformatter --check --recursive .
       - name: Lint JavaScript and CSS
         run: |
           npm run lint

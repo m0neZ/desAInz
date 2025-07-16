@@ -1,0 +1,58 @@
+# TODO Checklist
+
+This file tracks the implementation progress of the Design Idea Engine. Each phase contains sub-features that should be completed before release.
+
+- [ ] **Phase 1: Analysis and Planning**
+  - [ ] Review and internalize the Design Idea Engine blueprint
+  - [ ] Define technology stack choices
+  - [ ] Outline detailed architecture for each component
+  - [x] Create `TODO.md` to track progress
+  - [ ] Produce `implementation_plan.md`
+- [ ] **Phase 2: System Architecture and Technology Stack Design**
+  - [ ] Select cloud providers and services
+  - [ ] Choose the message broker
+  - [ ] Decide on database solutions
+  - [ ] Identify AI model providers or frameworks
+  - [ ] Determine CI/CD pipeline tools
+  - [ ] Choose observability tools
+  - [ ] Finalize frontend framework
+- [ ] **Phase 3: Development Environment Setup and Project Structure**
+  - [ ] Initialize Git repositories
+  - [ ] Configure local development environments with Docker Compose
+  - [ ] Define coding standards and pre-commit hooks
+  - [ ] Implement basic CI/CD workflows
+- [ ] **Phase 4: Core Backend Services and APIs Implementation**
+  - [ ] Build signal ingestors for TikTok, Instagram, Reddit, YouTube, and others
+  - [ ] Implement normalization and deduplication logic
+  - [ ] Set up Idea Store (PostgreSQL + pgvector, S3, Redis)
+  - [ ] Develop the Scoring Engine microservice
+  - [ ] Establish the event bus for inter-service communication
+- [ ] **Phase 5: AI Integration Layer for Idea Generation and Design Creation**
+  - [ ] Develop the Prompt Builder service
+  - [ ] Integrate Stable Diffusion XL for image generation
+  - [ ] Implement post-processing for generated images
+  - [ ] Create the listing draft generation service
+- [ ] **Phase 6: Frontend Interface with Apple-Level UX/UI Development**
+  - [ ] Design and build the Admin Dashboard (Next.js + tRPC)
+  - [ ] Implement Signal Stream, Idea Heatmap, Mock-up Gallery, and A/B Test views
+  - [ ] Ensure responsive design and smooth animations
+  - [ ] Integrate Auth0 for authentication and authorization
+  - [ ] Manage state with Zustand and data fetching with React Query
+  - [ ] Provide full keyboard navigation and screen reader support
+- [ ] **Phase 7: Marketplace Integration and Automation Features**
+  - [ ] Add one-click publishing for Redbubble and Amazon Merch
+  - [ ] Ingest marketplace feedback metrics
+  - [ ] Implement A/B micro-tests for design validation
+  - [ ] Apply Thompson Sampling for dynamic budget allocation
+  - [ ] Update scoring weights via online learning
+- [ ] **Phase 8: Analytics, Monitoring, and Optimization**
+  - [ ] Integrate observability tools (OpenTelemetry, Prometheus, Grafana, PagerDuty)
+  - [ ] Perform performance and cost optimizations
+  - [ ] Implement trademark checks, NSFW filtering, and data privacy measures
+  - [ ] Ensure comprehensive testing with Pytest and VCR.py
+- [ ] **Phase 9: Testing, Deployment, and Delivery**
+  - [ ] Run unit, integration, end-to-end, and performance tests
+  - [ ] Finalize CI/CD pipelines for production deployment
+  - [ ] Conduct user acceptance testing (UAT)
+  - [ ] Prepare system operation and troubleshooting documentation
+  - [ ] Handover all code and deployment instructions

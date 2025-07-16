@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import requests
+import requests  # type: ignore
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
@@ -52,6 +52,14 @@ class EtsyClient(BaseClient):
     def __init__(self) -> None:
         """Initialize the API endpoint."""
         super().__init__("https://api.etsy.com")
+
+
+class PrintfulClient(BaseClient):
+    """Client for the Printful API."""
+
+    def __init__(self) -> None:
+        """Initialize the API endpoint."""
+        super().__init__("https://api.printful.com")
 
 
 class SeleniumFallback:

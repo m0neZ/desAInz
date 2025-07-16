@@ -14,6 +14,7 @@ from .logging_config import configure_logging
 from .settings import settings
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .publisher import publish_with_retry
+from . import flags
 from backend.shared.tracing import configure_tracing
 
 configure_logging()
@@ -24,8 +25,20 @@ configure_tracing(app, settings.app_name)
 
 @app.on_event("startup")
 async def startup() -> None:
-    """Initialize database tables."""
+    """Initialize services and database tables."""
     await init_db()
+    flags.init(
+        settings.unleash_url,
+        settings.unleash_token,
+        settings.unleash_environment,
+        settings.app_name,
+    )
+
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    """Clean up services on shutdown."""
+    flags.shutdown()
 
 
 @app.middleware("http")

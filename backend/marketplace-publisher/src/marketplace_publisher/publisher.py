@@ -8,7 +8,13 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .clients import AmazonMerchClient, EtsyClient, RedbubbleClient, SeleniumFallback
+from .clients import (
+    AmazonMerchClient,
+    EtsyClient,
+    PrintfulClient,
+    RedbubbleClient,
+    SeleniumFallback,
+)
 from .db import (
     Marketplace,
     PublishStatus,
@@ -16,6 +22,7 @@ from .db import (
     increment_attempts,
     update_task_status,
 )
+from . import flags
 
 
 CLIENTS = {
@@ -23,6 +30,9 @@ CLIENTS = {
     Marketplace.amazon_merch: AmazonMerchClient(),
     Marketplace.etsy: EtsyClient(),
 }
+
+if flags.is_enabled("enable_printful"):
+    CLIENTS[Marketplace.printful] = PrintfulClient()
 
 _fallback = SeleniumFallback()
 

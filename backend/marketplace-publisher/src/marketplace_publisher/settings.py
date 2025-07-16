@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     app_name: str = "marketplace-publisher"
     log_level: str = "INFO"
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost/db"
+    unleash_url: str | None = None
+    unleash_token: str | None = None
+    unleash_environment: str = "development"
 
     class Config:
         """Pydantic configuration for ``Settings``."""

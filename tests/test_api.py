@@ -1,5 +1,10 @@
 """Tests for the optimization API."""
 
+from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).resolve().parents[1] / "backend" / "optimization"))
+
 from datetime import datetime, timezone
 
 from fastapi.testclient import TestClient
@@ -22,3 +27,13 @@ def test_add_metric_and_get_optimizations() -> None:
     response = client.get("/optimizations")
     assert response.status_code == 200
     assert response.json() != []
+
+
+def test_health_ready_endpoints() -> None:
+    """Health and readiness endpoints return status."""
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+    response = client.get("/ready")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ready"}

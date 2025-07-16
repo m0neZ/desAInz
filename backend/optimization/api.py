@@ -43,3 +43,15 @@ def get_optimizations() -> List[str]:
     """Return recommended cost optimizations."""
     analyzer = MetricsAnalyzer(store.get_metrics())
     return analyzer.recommend_optimizations()
+
+
+@app.get("/health")
+async def health() -> dict[str, str]:
+    """Return service liveness."""
+    return {"status": "ok"}
+
+
+@app.get("/ready")
+async def ready() -> dict[str, str]:
+    """Return service readiness."""
+    return {"status": "ready"}

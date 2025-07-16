@@ -1,0 +1,6 @@
+apiVersion: v2
+name: backup-jobs
+version: 0.1.0
+description: Helm chart for scheduled backup jobs
+type: application
+appVersion: "1.0"

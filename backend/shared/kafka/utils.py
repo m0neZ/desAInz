@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Dict, Iterable, Tuple
+from typing import Any, Dict, Iterable, Iterator, Tuple
 
 from jsonschema import validate
 from kafka import KafkaConsumer, KafkaProducer
@@ -15,6 +15,7 @@ class KafkaProducerWrapper:
     """Kafka producer that validates messages against schemas."""
 
     def __init__(self, bootstrap_servers: str, registry: SchemaRegistryClient) -> None:
+        """Create producer connected to ``bootstrap_servers`` using ``registry``."""
         self._producer = KafkaProducer(
             bootstrap_servers=bootstrap_servers,
             value_serializer=lambda v: json.dumps(v).encode(),
@@ -38,6 +39,7 @@ class KafkaConsumerWrapper:
         registry: SchemaRegistryClient,
         topics: Iterable[str],
     ) -> None:
+        """Initialize consumer subscribed to ``topics``."""
         self._consumer = KafkaConsumer(
             *topics,
             bootstrap_servers=bootstrap_servers,
@@ -48,7 +50,7 @@ class KafkaConsumerWrapper:
         self._registry = registry
         self._schemas = {topic: registry.fetch(f"{topic}-value") for topic in topics}
 
-    def __iter__(self) -> Iterable[Tuple[str, Dict[str, Any]]]:
+    def __iter__(self) -> Iterator[Tuple[str, Dict[str, Any]]]:
         """Iterate over validated messages."""
         for message in self._consumer:
             value = message.value

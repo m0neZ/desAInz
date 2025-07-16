@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "backup-jobs.fullname" . }}
+  labels: {{- include "backup-jobs.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: backup
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: BACKUP_BUCKET
+                  value: {{ .Values.bucket | quote }}
+                - name: MINIO_DATA_PATH
+                  value: {{ .Values.minioDataPath | quote }}
+              command: ["python", "/app/backup.py"]

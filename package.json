@@ -9,10 +9,11 @@
   "scripts": {
     "lint:eslint": "eslint . --ext .js,.jsx --max-warnings=0",
     "lint:prettier": "prettier \"**/*.{js,jsx,css,json,md}\" --check",
-    "lint:stylelint": "stylelint \"**/*.css\" --max-warnings=0 --allow-empty-input",
+    "lint:stylelint": "stylelint \"**/*.{css,scss}\" --max-warnings=0 --allow-empty-input",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint && npm run flow",
     "flow": "flow check --max-warnings=0",
-    "test": "npm run lint"
+    "test:frontend": "npm test --prefix frontend/admin-dashboard",
+    "test": "npm run test:frontend"
   },
   "keywords": [],
   "author": "",

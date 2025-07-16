@@ -1,0 +1,10 @@
+# Python requirements
+sphinx
+myst-parser
+flake8
+mypy
+black
+pydocstyle
+flake8-docstrings
+docformatter
+pytest

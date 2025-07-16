@@ -38,4 +38,7 @@ def test_invalid_dimensions(monkeypatch: Any, tmp_path: Path) -> None:
             },
         )
         assert response.status_code == 400
-        assert "dimensions" in response.json()["detail"]
+        body = response.json()
+        assert body["error"] == "400"
+        assert "dimensions" in body["message"]
+        assert "trace_id" in body

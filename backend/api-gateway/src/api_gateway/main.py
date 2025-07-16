@@ -5,10 +5,12 @@ from fastapi import FastAPI
 from .routes import router
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared.errors import add_exception_handlers
 
 app = FastAPI(title="API Gateway")
 configure_tracing(app, "api-gateway")
 add_profiling(app)
+add_exception_handlers(app)
 
 
 @app.get("/health")  # type: ignore[misc]

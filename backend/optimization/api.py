@@ -9,6 +9,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared.errors import add_exception_handlers
 
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
@@ -16,6 +17,7 @@ from .storage import MetricsStore
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
 add_profiling(app)
+add_exception_handlers(app)
 store = MetricsStore()
 
 

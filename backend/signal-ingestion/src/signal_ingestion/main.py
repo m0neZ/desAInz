@@ -16,12 +16,14 @@ from .logging_config import configure_logging
 from .settings import settings
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared.errors import add_exception_handlers
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
 add_profiling(app)
+add_exception_handlers(app)
 
 
 @app.on_event("startup")

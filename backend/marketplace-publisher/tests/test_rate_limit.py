@@ -47,3 +47,6 @@ def test_rate_limit_exceeded(monkeypatch: Any, tmp_path: Path) -> None:
             },
         )
         assert resp2.status_code == 429
+        body = resp2.json()
+        assert body["error"] == "429"
+        assert "trace_id" in body

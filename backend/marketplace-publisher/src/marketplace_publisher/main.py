@@ -23,12 +23,14 @@ from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import init_feature_flags, is_enabled
+from backend.shared import add_error_handlers
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
 add_profiling(app)
+add_error_handlers(app)
 
 rate_limiter = MarketplaceRateLimiter(
     Redis.from_url(settings.redis_url),

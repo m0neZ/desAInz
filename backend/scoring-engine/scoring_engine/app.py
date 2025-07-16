@@ -15,6 +15,7 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 
+from backend.shared import add_flask_error_handlers
 
 from datetime import datetime
 
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 configure_tracing(app, "scoring-engine")
 add_profiling(app)
+add_flask_error_handlers(app)
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 redis_client = redis.Redis.from_url(REDIS_URL)
 

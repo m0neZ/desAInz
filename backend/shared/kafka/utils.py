@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Dict, Iterable, Tuple
+from typing import Any, Dict, Iterable, Iterator, Tuple
 
 from jsonschema import validate
 from kafka import KafkaConsumer, KafkaProducer
@@ -48,7 +48,7 @@ class KafkaConsumerWrapper:
         self._registry = registry
         self._schemas = {topic: registry.fetch(f"{topic}-value") for topic in topics}
 
-    def __iter__(self) -> Iterable[Tuple[str, Dict[str, Any]]]:
+    def __iter__(self) -> Iterator[Tuple[str, Dict[str, Any]]]:
         """Iterate over validated messages."""
         for message in self._consumer:
             value = message.value

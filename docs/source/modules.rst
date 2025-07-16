@@ -18,3 +18,9 @@ Modules
 
 .. automodule:: monitoring.main
     :members:
+
+.. automodule:: scripts.collect_metrics
+    :members:
+
+.. automodule:: scripts.review_monthly_costs
+    :members:

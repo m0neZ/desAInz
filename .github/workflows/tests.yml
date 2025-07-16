@@ -32,3 +32,30 @@ jobs:
       - name: Run tests
         run: |
           pytest -W error -vv
+
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install Poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+      - name: Publish microservice packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for pyproj in backend/*/pyproject.toml; do
+            svc=$(dirname "$pyproj")
+            echo "Publishing $svc"
+            poetry config repositories.github "https://pypi.pkg.github.com/${GITHUB_REPOSITORY_OWNER}"
+            cd "$svc"
+            poetry publish --build -r github -u "$GITHUB_ACTOR" -p "$GITHUB_TOKEN"
+            cd -
+          done

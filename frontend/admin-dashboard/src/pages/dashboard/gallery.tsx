@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function GalleryPage() {
-  return <div>Gallery page placeholder.</div>;
+  const { t } = useTranslation();
+  return <div>{t('galleryPlaceholder')}</div>;
 }

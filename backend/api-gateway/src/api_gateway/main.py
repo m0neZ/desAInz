@@ -5,6 +5,7 @@ import uuid
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
+from fastapi.middleware.gzip import GZipMiddleware
 
 from .routes import router
 from backend.shared.tracing import configure_tracing
@@ -16,6 +17,7 @@ configure_logging()
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="API Gateway")
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 configure_tracing(app, "api-gateway")
 add_profiling(app)
 

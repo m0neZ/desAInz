@@ -1,5 +1,10 @@
 import React from 'react';
+import StatusIndicators from '../../components/StatusIndicators';
 
 export default function DashboardPage() {
-  return <div>Signal stream coming soon.</div>;
+  return (
+    <div>
+      <StatusIndicators />
+    </div>
+  );
 }

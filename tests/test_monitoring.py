@@ -21,3 +21,9 @@ def test_overview_endpoint() -> None:
     body = response.json()
     assert "cpu_percent" in body
     assert "memory_mb" in body
+
+
+def test_daily_summary_endpoint() -> None:
+    """Daily summary endpoint should respond."""
+    response = client.get("/daily-summary")
+    assert response.status_code == 200

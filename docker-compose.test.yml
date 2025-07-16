@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  postgres:
+    environment:
+      POSTGRES_DB: app_test
+  redis:
+    environment:
+      REDIS_DB: 1
+  kafka:
+    environment:
+      KAFKA_BROKER_ID: 99

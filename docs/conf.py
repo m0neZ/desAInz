@@ -28,8 +28,11 @@ extensions = [
     "myst_parser",
     "sphinxcontrib.mermaid",
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
 ]
+
+autosummary_generate = True
 
 autodoc_mock_imports = [
     "flask",
@@ -41,6 +44,11 @@ autodoc_mock_imports = [
     "sqlalchemy",
     "psycopg2",
     "selenium",
+    "apscheduler",
+    "scoring_engine",
+    "backend.optimization",
+    "marketplace_publisher",
+    "monitoring",
 ]
 
 source_suffix = {
@@ -49,10 +57,7 @@ source_suffix = {
 }
 
 templates_path = ["_templates"]
-exclude_patterns: list[str] = [
-    "scoring_engine/*",
-    "source/*",
-]
+exclude_patterns: list[str] = []
 
 # Treat warnings as errors
 nitpicky = True
@@ -81,6 +86,23 @@ def _run_linters(app: "Sphinx") -> None:
     subprocess.check_call(["flake8", "--select=D", docs_dir])
 
 
+def _run_apidoc(app: "Sphinx") -> None:
+    """Generate API docs for all Python modules."""
+    output_path = os.path.join(app.srcdir, "api")
+    module_path = os.path.abspath(os.path.join(app.srcdir, "..", "backend"))
+    subprocess.check_call(
+        [
+            "sphinx-apidoc",
+            "--force",
+            "--module-first",
+            "--output-dir",
+            output_path,
+            module_path,
+        ]
+    )
+
+
 def setup(app: "Sphinx") -> None:
     """Set up Sphinx hooks."""
     app.connect("builder-inited", _run_linters)
+    app.connect("builder-inited", _run_apidoc)

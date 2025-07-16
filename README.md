@@ -25,6 +25,8 @@ Start the desired configuration from the Run panel to attach the debugger to the
 Run `scripts/register_schemas.py` after the Kafka and schema registry containers
 start to register the provided JSON schemas.
 
+Base Kubernetes manifests are available under `infrastructure/k8s`.
+
 PgBouncer connection pooling is available via the `pgbouncer` service in
 `docker-compose.yml`. Point `DATABASE_URL` at port `6432` to leverage pooling.
 Execute `scripts/analyze_query_plans.py` periodically to inspect query plans and

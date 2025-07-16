@@ -10,6 +10,8 @@ The `scripts` directory provides helper scripts for setting up storage and CDN r
 - `setup_storage.sh` – create the S3/MinIO bucket structure
 - `configure_cdn.sh` – create a CloudFront distribution
 - `invalidate_cache.sh` – invalidate CDN caches when mockups change
+- Base Kubernetes manifests can be found in `infrastructure/k8s` with instructions for
+  customizing them for local Minikube testing.
   This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.
 
 ## Service Template

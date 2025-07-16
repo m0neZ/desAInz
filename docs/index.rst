@@ -16,3 +16,10 @@ Kafka Utilities
 
 .. automodule:: backend.shared.kafka.schema_registry
     :members:
+
+
+Admin Dashboard
+---------------
+The admin dashboard is a Next.js application found in ``frontend/admin-dashboard``.
+Any shared TypeScript interfaces located in this package are included in the
+documentation build.

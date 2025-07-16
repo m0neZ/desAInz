@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "marketplace-publisher"
+version = "0.1.0"
+description = "Publish designs to various marketplaces"
+authors = ["Your Name <you@example.com>"]
+packages = [{include = "marketplace_publisher", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = "*"
+requests = "*"
+sqlalchemy = "*"
+asyncpg = "*"
+selenium = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+flake8 = "*"
+flake8-docstrings = "*"
+flake8-builtins = "*"
+flake8-bugbear = "*"
+flake8-import-order = "*"
+docformatter = "*"
+pydocstyle = "*"
+mypy = "*"
+pytest = "*"
+pytest-asyncio = "*"
+httpx = "*"
+
+[tool.black]
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+[tool.mypy]
+strict = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,4 +1,4 @@
-"""Minimal configuration for the mockup generation docs."""
+"""Sphinx configuration for generated modules."""
 
 project = "mockup_generation"
 extensions = ["sphinx.ext.autodoc"]

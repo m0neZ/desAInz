@@ -1,3 +1,5 @@
+"""Minimal Sphinx configuration for project documentation."""
+
 import os
 import sys
 

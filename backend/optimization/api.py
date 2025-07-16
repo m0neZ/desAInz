@@ -6,12 +6,15 @@ from datetime import datetime
 from typing import List
 
 from fastapi import FastAPI
+
+from backend.common.tracing import init_fastapi_tracing
 from pydantic import BaseModel
 
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
 app = FastAPI(title="Optimization Service")
+init_fastapi_tracing(app, "optimization")
 store = MetricsStore()
 
 

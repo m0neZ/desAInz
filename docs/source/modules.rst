@@ -9,3 +9,9 @@ Modules
 
 .. automodule:: backend.optimization.api
     :members:
+
+.. automodule:: backend.monitoring.main
+    :members:
+
+.. automodule:: backend.common.tracing
+    :members:

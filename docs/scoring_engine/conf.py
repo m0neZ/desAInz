@@ -1,4 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
+"""Sphinx configuration for the scoring engine docs."""
 
 import os
 import sys

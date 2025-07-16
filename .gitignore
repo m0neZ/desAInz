@@ -1,3 +1,5 @@
+*.egg-info/
+metrics.db
 docs/sphinx/_build/
 docs/_build/
 __pycache__/

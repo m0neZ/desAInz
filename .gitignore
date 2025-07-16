@@ -1,2 +1,5 @@
-__pycache__/
 docs/sphinx/_build/
+docs/_build/
+__pycache__/
+node_modules/
+flow-typed/

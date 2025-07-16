@@ -14,6 +14,7 @@ from redis.asyncio import Redis
 from .logging_config import configure_logging
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
+from .feature_flags import is_enabled
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
@@ -83,6 +84,8 @@ async def _background_publish(task_id: int, req: PublishRequest) -> None:
 @app.post("/publish")
 async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str, int]:
     """Create a publish task and run it in the background."""
+    if req.marketplace is Marketplace.shopify and not is_enabled("shopify_integration"):
+        raise HTTPException(status_code=403, detail="Shopify integration disabled")
     allowed = await rate_limiter.acquire(req.marketplace)
     if not allowed:
         logger.warning(

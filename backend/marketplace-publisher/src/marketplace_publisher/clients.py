@@ -54,6 +54,14 @@ class EtsyClient(BaseClient):
         super().__init__("https://api.etsy.com")
 
 
+class ShopifyClient(BaseClient):
+    """Client for the Shopify API."""
+
+    def __init__(self) -> None:
+        """Initialize the API endpoint."""
+        super().__init__("https://api.shopify.com")
+
+
 class SeleniumFallback:
     """Publish a design using browser automation if APIs fail."""
 

@@ -3,18 +3,19 @@ uvicorn
 pydantic
 pandas
 pytest
-pytest-cov
+pytest - cov
 requests
 httpx
-requests-mock
-kafka-python
+requests - mock
+kafka - python
 jsonschema
 dagster
-prometheus-client
+prometheus - client
 psutil
-opentelemetry-sdk
-opentelemetry-instrumentation-fastapi
-opentelemetry-instrumentation-flask
+opentelemetry - sdk
+opentelemetry - instrumentation - fastapi
+opentelemetry - instrumentation - flask
 Flask
-pydantic-settings
-psycopg2-binary
+pydantic - settings
+psycopg2 - binary
+UnleashClient

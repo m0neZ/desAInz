@@ -18,6 +18,7 @@ Welcome to desAInz's documentation!
    quickstart
    cloud_deployment
    troubleshooting
+   feature-flags
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
    load_testing

@@ -2,15 +2,17 @@ flake8
 black
 mypy
 pydocstyle
-flake8-docstrings
+flake8 - docstrings
 docformatter
 vcrpy
 Pillow
 redis
 asyncpg
-scikit-learn
-pytest-asyncio
+scikit - learn
+pytest - asyncio
 aiosqlite
 locust
 
-pip-audit
+UnleashClient
+
+pip - audit

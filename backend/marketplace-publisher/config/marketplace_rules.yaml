@@ -13,3 +13,8 @@ etsy:
   max_width: 10000
   max_height: 10000
   upload_limit: 80
+shopify:
+  max_file_size_mb: 20
+  max_width: 10000
+  max_height: 10000
+  upload_limit: 80

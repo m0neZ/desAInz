@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     rate_limit_amazon_merch: int = 60
     rate_limit_etsy: int = 60
     rate_limit_window: int = 60
+    unleash_url: str = "http://localhost:4242/api"
+    unleash_token: str = ""
+    unleash_app_name: str = "marketplace-publisher"
 
 
 settings = Settings()

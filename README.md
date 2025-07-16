@@ -16,3 +16,8 @@ Local development uses dotenv files. Copy the `.env.example` in each service to 
 In production, secrets are stored in HashiCorp Vault or AWS Secrets Manager and injected into the running services by the deployment manifests. Do not rely on `.env` files in production.
 
 See [docs/security.md](docs/security.md) for the rotation procedure.
+
+## Release process
+
+1. Ensure all commits follow the Conventional Commits specification.
+2. Run `./scripts/release.sh <registry>` to generate the changelog, tag the release and publish versioned Docker images.

@@ -6,6 +6,9 @@ Welcome to desAInz's documentation!
    :caption: Contents:
 
    README
+   quickstart
+   cloud_deployment
+   troubleshooting
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
    security

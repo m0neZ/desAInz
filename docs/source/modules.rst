@@ -9,3 +9,9 @@ Modules
 
 .. automodule:: backend.optimization.api
     :members:
+
+.. automodule:: marketplace_publisher.main
+    :members:
+
+.. automodule:: marketplace_publisher.publisher
+    :members:

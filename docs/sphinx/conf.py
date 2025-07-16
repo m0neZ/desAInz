@@ -1,3 +1,5 @@
+"""Sphinx configuration for generated modules."""
+
 project = "mockup_generation"
 extensions = ["sphinx.ext.autodoc"]
 exclude_patterns = ["_build"]

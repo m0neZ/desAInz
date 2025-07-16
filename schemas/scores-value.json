@@ -1,0 +1,10 @@
+{
+  "title": "ScoreMessage",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "score": { "type": "number" }
+  },
+  "required": ["id", "score"],
+  "additionalProperties": false
+}

@@ -9,6 +9,7 @@ Welcome to desAInz's documentation!
    architecture
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
+   privacy
    backup
    api/modules
    quickstart
@@ -20,7 +21,6 @@ Welcome to desAInz's documentation!
    maintenance
    i18n
    security
-
 
 Kafka Utilities
 ---------------

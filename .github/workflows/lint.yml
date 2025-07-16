@@ -34,6 +34,9 @@ jobs:
           mypy .
           pydocstyle .
           docformatter --check --recursive .
+      - name: Audit Python dependencies
+        run: |
+          pip-audit -r requirements.txt -r requirements-dev.txt
       - name: Lint JavaScript and CSS
         run: |
           npm run lint

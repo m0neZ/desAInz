@@ -12,3 +12,5 @@ scikit-learn
 pytest-asyncio
 aiosqlite
 locust
+
+pip-audit

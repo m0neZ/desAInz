@@ -8,13 +8,18 @@ from PIL import Image
 from .celery_app import app
 from .generator import MockupGenerator
 from .prompt_builder import PromptContext, build_prompt
-from .post_processor import convert_to_cmyk, remove_background, validate_dpi
+from .post_processor import (
+    convert_to_cmyk,
+    is_nsfw,
+    remove_background,
+    validate_dpi,
+)
 
 
 generator = MockupGenerator()
 
 
-@app.task
+@app.task  # type: ignore[misc]
 def generate_mockup(keywords: list[str], output_dir: str) -> str:
     """Generate a mockup asynchronously."""
     context = PromptContext(keywords=keywords)
@@ -23,6 +28,8 @@ def generate_mockup(keywords: list[str], output_dir: str) -> str:
     result = generator.generate(prompt, str(output_path))
 
     processed = remove_background(Image.open(result.image_path))
+    if is_nsfw(processed):
+        raise ValueError("NSFW content detected")
     processed = convert_to_cmyk(processed)
     processed.save(result.image_path)
     if not validate_dpi(result.image_path):

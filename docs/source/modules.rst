@@ -18,3 +18,6 @@ Modules
 
 .. automodule:: monitoring.main
     :members:
+
+.. automodule:: backend.shared.metrics
+    :members:

@@ -16,8 +16,8 @@ from .ops import (
 @job
 def idea_job() -> None:
     """Pipeline from ingestion to publishing."""
-    signals = ingest_signals()
-    scores = score_signals(signals)
-    items = generate_content(scores)
+    payload = ingest_signals()
+    payload = score_signals(payload)
+    payload = generate_content(payload)
     await_approval()
-    publish_content(items)
+    publish_content(payload)

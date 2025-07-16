@@ -21,3 +21,14 @@ def test_overview_endpoint() -> None:
     body = response.json()
     assert "cpu_percent" in body
     assert "memory_mb" in body
+
+
+def test_analytics_latency() -> None:
+    """Analytics should report recorded idea latency."""
+    from backend.shared.metrics import record_idea_latency
+
+    record_idea_latency(2.0)
+    response = client.get("/analytics")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["average_idea_latency"] >= 2.0

@@ -5,7 +5,7 @@ from __future__ import annotations
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     """Store configuration derived from environment variables."""
 
     model_config = SettingsConfigDict(env_file=".env")
@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     rate_limit_amazon_merch: int = 60
     rate_limit_etsy: int = 60
     rate_limit_window: int = 60
+    slack_webhook_url: str | None = None
 
 
 settings = Settings()

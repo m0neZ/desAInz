@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
+import asyncio
+import logging
 from typing import Any
+import requests
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,6 +20,10 @@ from .db import (
     increment_attempts,
     update_task_status,
 )
+from .settings import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 CLIENTS = {
@@ -26,6 +33,20 @@ CLIENTS = {
 }
 
 _fallback = SeleniumFallback()
+
+
+async def notify_failure(task_id: int, marketplace: Marketplace, attempts: int) -> None:
+    """Send a Slack notification for a failed publish task."""
+    url = settings.slack_webhook_url
+    if not url:
+        return
+    payload = {
+        "text": f"Publish task {task_id} failed on {marketplace.value} after {attempts} attempts"
+    }
+    try:
+        await asyncio.to_thread(requests.post, url, json=payload, timeout=5)
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.warning("failed to send notification: %s", exc)
 
 
 async def publish_with_retry(
@@ -60,3 +81,4 @@ async def publish_with_retry(
             await update_task_status(session, task_id, PublishStatus.success)
         else:
             await update_task_status(session, task_id, PublishStatus.failed)
+            await notify_failure(task_id, marketplace, attempts)

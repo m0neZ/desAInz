@@ -12,5 +12,7 @@
   "maintenance": "Maintenance",
   "runCleanup": "Run Cleanup",
   "cleanupTriggered": "Cleanup triggered",
-  "cleanupFailed": "Cleanup failed"
+  "cleanupFailed": "Cleanup failed",
+  "preferences": "Preferences",
+  "emailAlerts": "Email alerts"
 }

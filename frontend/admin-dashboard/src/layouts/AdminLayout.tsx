@@ -30,6 +30,9 @@ export default function AdminLayout({
           <Link href="/dashboard/maintenance" className="block hover:underline">
             {t('maintenance')}
           </Link>
+          <Link href="/dashboard/preferences" className="block hover:underline">
+            {t('preferences')}
+          </Link>
         </nav>
       </aside>
       <div className="flex flex-col flex-1">

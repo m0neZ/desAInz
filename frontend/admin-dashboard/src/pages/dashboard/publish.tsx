@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../components/Button';
+import dynamic from 'next/dynamic';
+
+const Button = dynamic(() => import('../../components/Button'));
 
 export default function PublishPage() {
   const { t } = useTranslation();

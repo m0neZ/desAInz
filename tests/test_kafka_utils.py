@@ -29,7 +29,6 @@ class DummyProducer:
 
 def test_producer_validation(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ensure messages are validated before being sent."""
-
     registry = SchemaRegistryClient("http://registry")
     monkeypatch.setattr(
         registry,
@@ -73,7 +72,6 @@ class DummyConsumer:
 
 def test_consumer_validation(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ensure consumed messages are validated."""
-
     registry = SchemaRegistryClient("http://registry")
     schema = {
         "type": "object",

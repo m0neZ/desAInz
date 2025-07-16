@@ -16,7 +16,7 @@ def add_profiling(app: FastAPI | Flask) -> None:
     """Attach middleware to profile request durations."""
     if isinstance(app, FastAPI):
 
-        @app.middleware("http")  # type: ignore[misc]
+        @app.middleware("http")
         async def _profile(
             request: Request,
             call_next: Callable[[Request], Coroutine[Any, Any, Response]],
@@ -32,11 +32,11 @@ def add_profiling(app: FastAPI | Flask) -> None:
 
     else:
 
-        @app.before_request  # type: ignore[misc]
+        @app.before_request
         def _before_request() -> None:
             setattr(flask_request, "_start_time", time.perf_counter())
 
-        @app.after_request  # type: ignore[misc]
+        @app.after_request
         def _after_request(response: Response) -> Response:
             start = getattr(flask_request, "_start_time", None)
             if start is not None:

@@ -18,7 +18,8 @@ class PromptContext:
 
 
 TEMPLATE = Template(
-    "A {{ style }} design featuring {{ keywords | join(', ') }}. {{ extra.get('note', '') }}"
+    "A {{ style }} design featuring {{ keywords | join(', ') }}. "
+    "{{ extra.get('note', '') }}"
 )
 
 

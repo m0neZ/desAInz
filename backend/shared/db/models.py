@@ -6,7 +6,7 @@ from datetime import datetime
 
 from typing import Any
 
-from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, JSON
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -142,3 +142,17 @@ class AuditLog(Base):
     action: Mapped[str] = mapped_column(String(100))
     details: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class AIModel(Base):
+    """AI model metadata tracked in the database."""
+
+    __tablename__ = "ai_models"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(100))
+    version: Mapped[str] = mapped_column(String(50))
+    model_id: Mapped[str] = mapped_column(String, unique=True)
+    details: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
+    is_default: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

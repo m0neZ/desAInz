@@ -10,6 +10,7 @@ from .auth import verify_token, require_role
 from .audit import log_admin_action
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
+from mockup_generation.model_repository import list_models, set_default
 from scripts import maintenance
 
 router = APIRouter()
@@ -122,3 +123,26 @@ async def get_audit_logs(
             for r in rows
         ],
     }
+
+
+@router.get("/models")
+async def get_models(
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> list[dict[str, Any]]:
+    """Return all available AI models."""
+    log_admin_action(payload.get("sub", "unknown"), "list_models")
+    return [m.__dict__ for m in list_models()]
+
+
+@router.post("/models/{model_id}/default")
+async def switch_default_model(
+    model_id: int,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, str]:
+    """Switch the default model used for mockup generation."""
+    try:
+        set_default(model_id)
+    except ValueError as exc:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=str(exc))
+    log_admin_action(payload.get("sub", "unknown"), "switch_model", {"id": model_id})
+    return {"status": "ok"}

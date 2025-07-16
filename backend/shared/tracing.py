@@ -29,4 +29,4 @@ def configure_tracing(app: FastAPI | Flask, service_name: str) -> None:
     if isinstance(app, FastAPI):
         FastAPIInstrumentor.instrument_app(app)
     else:
-        FlaskInstrumentor().instrument_app(app)
+        FlaskInstrumentor().instrument_app(app)  # type: ignore[no-untyped-call]

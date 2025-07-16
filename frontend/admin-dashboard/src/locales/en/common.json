@@ -1,0 +1,11 @@
+{
+  "title": "Admin Dashboard",
+  "dashboard": "Dashboard",
+  "heatmap": "Heatmap",
+  "gallery": "Gallery",
+  "abTests": "AB Tests",
+  "signalStreamComingSoon": "Signal stream coming soon.",
+  "galleryPlaceholder": "Gallery page placeholder.",
+  "heatmapPlaceholder": "Heatmap page placeholder.",
+  "abTestsPlaceholder": "AB Tests page placeholder."
+}

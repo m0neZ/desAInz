@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Performance Profiling
 
 Recent profiling efforts added a lightweight middleware which logs request durations for all backend services. Both FastAPI and Flask applications now call `add_profiling` during startup. The middleware records timing for each request using `time.perf_counter` and writes the result to the service log.

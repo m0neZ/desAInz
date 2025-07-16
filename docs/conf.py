@@ -30,6 +30,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
+    "sphinxcontrib.openapi",
 ]
 
 autosummary_generate = True
@@ -102,7 +103,20 @@ def _run_apidoc(app: "Sphinx") -> None:
     )
 
 
+def _generate_openapi(app: "Sphinx") -> None:
+    """Generate OpenAPI specifications for all services."""
+    root = os.path.abspath(os.path.join(app.srcdir, ".."))
+    env = os.environ.copy()
+    env["KAFKA_SKIP"] = "1"
+    env["SELENIUM_SKIP"] = "1"
+    subprocess.check_call(
+        [sys.executable, os.path.join(root, "scripts", "generate_openapi.py")],
+        env=env,
+    )
+
+
 def setup(app: "Sphinx") -> None:
     """Set up Sphinx hooks."""
     app.connect("builder-inited", _run_linters)
     app.connect("builder-inited", _run_apidoc)
+    app.connect("builder-inited", _generate_openapi)

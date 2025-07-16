@@ -10,12 +10,36 @@ import uuid
 
 from flask import Flask, Response, jsonify, request
 import redis
+from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 
 
 from datetime import datetime
+
+
+class WeightsUpdate(BaseModel):
+    """Request payload for updating weight parameters."""
+
+    freshness: float
+    engagement: float
+    novelty: float
+    community_fit: float
+    seasonality: float
+
+
+class ScoreRequest(BaseModel):
+    """Request payload for scoring a signal."""
+
+    timestamp: datetime
+    engagement_rate: float
+    embedding: list[float]
+    metadata: dict[str, float] | None = None
+    centroid: list[float] | None = None
+    median_engagement: float | None = None
+    topics: list[str] | None = None
+
 
 from .scoring import Signal, calculate_score
 from .weight_repository import get_weights, update_weights
@@ -65,8 +89,8 @@ def read_weights() -> Response:
 @app.put("/weights")
 def update_weights_endpoint() -> Response:
     """Update weighting parameters via JSON payload."""
-    data = request.get_json(force=True)
-    weights = update_weights(**data)
+    body = WeightsUpdate(**request.get_json(force=True))
+    weights = update_weights(**body.model_dump())
     return jsonify(
         {
             "freshness": weights.freshness,
@@ -81,20 +105,20 @@ def update_weights_endpoint() -> Response:
 @app.post("/score")
 def score_signal() -> Response:
     """Score a signal and cache hot results."""
-    payload = request.get_json(force=True)
-    key = json.dumps(payload, sort_keys=True)
+    payload = ScoreRequest(**request.get_json(force=True))
+    key = json.dumps(payload.model_dump(), sort_keys=True)
     cached = redis_client.get(key)
     if cached is not None:
         return jsonify({"score": float(cached), "cached": True})
     signal = Signal(
-        timestamp=datetime.fromisoformat(payload["timestamp"]),
-        engagement_rate=float(payload["engagement_rate"]),
-        embedding=payload["embedding"],
-        metadata=payload.get("metadata", {}),
+        timestamp=payload.timestamp,
+        engagement_rate=payload.engagement_rate,
+        embedding=payload.embedding,
+        metadata=payload.metadata or {},
     )
-    centroid = payload.get("centroid", [0.0 for _ in payload["embedding"]])
-    median_engagement = float(payload.get("median_engagement", 0))
-    topics = payload.get("topics", [])
+    centroid = payload.centroid or [0.0 for _ in payload.embedding]
+    median_engagement = float(payload.median_engagement or 0)
+    topics = payload.topics or []
     score = calculate_score(signal, centroid, median_engagement, topics)
     redis_client.setex(key, 3600, score)
     return jsonify({"score": score, "cached": False})

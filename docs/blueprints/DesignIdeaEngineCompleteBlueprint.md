@@ -606,6 +606,7 @@ design-idea-engine-bucket/
     ├── database/
     └── configurations/
 ```
+Use the `setup_storage.sh` script to create this layout automatically.
 
 #### 2.3.2 Event Schema Design
 
@@ -1044,6 +1045,9 @@ docker exec -i postgres psql -U postgres design_idea_engine < backup_20231201.sq
 aws s3 sync /path/to/minio/data s3://your-backup-bucket/minio-backup/
 ```
 
+
+#### Storage and CDN Setup
+Use `scripts/setup_storage.sh` to initialize S3 or MinIO buckets with the required structure. After the bucket is ready, run `scripts/configure_cdn.sh` to create a CloudFront distribution. When mockups change, invalidate caches with `scripts/invalidate_cache.sh`.
 ### Scaling
 
 #### Horizontal Scaling

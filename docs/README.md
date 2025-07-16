@@ -1,7 +1,11 @@
 # Documentation
 
-The `blueprints` folder contains a single comprehensive blueprint for the project.
+The `blueprints` folder contains the full system blueprint.
 
 - [Design Idea Engine Complete Blueprint](blueprints/DesignIdeaEngineCompleteBlueprint.md)
 
-This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.
+The `scripts` directory provides helper scripts for setting up storage and CDN resources:
+
+- `setup_storage.sh` – create the S3/MinIO bucket structure
+- `configure_cdn.sh` – create a CloudFront distribution
+- `invalidate_cache.sh` – invalidate CDN caches when mockups change

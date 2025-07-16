@@ -26,6 +26,7 @@ class WeightParams:
 
 
 def _to_params(model: Weights) -> WeightParams:
+    """Convert a ``Weights`` ORM object to ``WeightParams`` dataclass."""
     return WeightParams(
         freshness=model.freshness,
         engagement=model.engagement,

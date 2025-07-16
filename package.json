@@ -10,9 +10,9 @@
     "lint:eslint": "eslint . --ext .js,.jsx --max-warnings=0",
     "lint:prettier": "prettier \"**/*.{js,jsx,css,json,md}\" --check",
     "lint:stylelint": "stylelint \"**/*.css\" --max-warnings=0 --allow-empty-input",
-    "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
-    "flow": "flow",
-    "test": "npm run lint && npm run flow"
+    "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint && npm run flow",
+    "flow": "flow check --max-warnings=0",
+    "test": "npm run lint"
   },
   "keywords": [],
   "author": "",
@@ -29,7 +29,13 @@
     "eslint-plugin-promise": "^7.2.1",
     "flow-bin": "^0.275.0",
     "prettier": "^3.6.2",
-    "stylelint": "^16.21.1"
+    "stylelint": "^16.21.1",
+    "eslint-config-next": "^15.4.1",
+    "eslint-plugin-react": "^7.37.5",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-config-css-modules": "^4.5.1",
+    "next": "15.4.1",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",

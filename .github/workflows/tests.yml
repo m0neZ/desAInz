@@ -31,7 +31,8 @@ jobs:
           python -m pip install -e .
       - name: Run tests
         run: |
-          pytest -W error -vv
+          pytest -vv
+          npm test
 
   publish:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

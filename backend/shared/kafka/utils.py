@@ -15,6 +15,7 @@ class KafkaProducerWrapper:
     """Kafka producer that validates messages against schemas."""
 
     def __init__(self, bootstrap_servers: str, registry: SchemaRegistryClient) -> None:
+        """Create producer connected to ``bootstrap_servers`` using ``registry``."""
         self._producer = KafkaProducer(
             bootstrap_servers=bootstrap_servers,
             value_serializer=lambda v: json.dumps(v).encode(),
@@ -38,6 +39,7 @@ class KafkaConsumerWrapper:
         registry: SchemaRegistryClient,
         topics: Iterable[str],
     ) -> None:
+        """Initialize consumer subscribed to ``topics``."""
         self._consumer = KafkaConsumer(
             *topics,
             bootstrap_servers=bootstrap_servers,

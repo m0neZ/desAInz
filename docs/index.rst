@@ -8,6 +8,7 @@ Welcome to desAInz's documentation!
    README
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
+   i18n
 
 
 Kafka Utilities

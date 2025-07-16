@@ -9,4 +9,13 @@ module.exports = {
     '\\.css$': '<rootDir>/__mocks__/styleMock.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  collectCoverage: true,
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80,
+    },
+  },
 };

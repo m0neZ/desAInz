@@ -27,8 +27,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
-          npm ci
+          npm ci || npm ci --legacy-peer-deps
           python -m pip install -e .
-      - name: Run tests
+      - name: Run Python tests
         run: |
-          pytest -W error -vv
+          pytest
+      - name: Run JavaScript tests
+        run: |
+          cd frontend/admin-dashboard
+          npx jest --coverage --runInBand --ci

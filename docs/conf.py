@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 # -- Path setup --------------------------------------------------------------
@@ -13,6 +14,10 @@ sys.path.insert(0, os.path.abspath(".."))
 sys.path.append(os.path.abspath("../backend/signal-ingestion/src"))
 sys.path.append(os.path.abspath("../backend/mockup-generation"))
 sys.path.append(os.path.abspath("../backend/scoring-engine"))
+sys.path.append(os.path.abspath("../backend/api-gateway/src"))
+sys.path.append(os.path.abspath("../backend/monitoring/src"))
+sys.path.append(os.path.abspath("../backend/service-template/src"))
+sys.path.append(os.path.abspath("../backend/marketplace-publisher/src"))
 sys.path.append(os.path.abspath("../backend"))
 sys.path.append(os.path.abspath("../frontend/admin-dashboard"))
 
@@ -81,6 +86,13 @@ def _run_linters(app: "Sphinx") -> None:
     subprocess.check_call(["flake8", "--select=D", docs_dir])
 
 
+def _generate_openapi(app: "Sphinx") -> None:
+    """Export OpenAPI specs for all services."""
+    root = Path(__file__).resolve().parents[1]
+    subprocess.check_call([sys.executable, str(root / "scripts" / "export_openapi.py")])
+
+
 def setup(app: "Sphinx") -> None:
     """Set up Sphinx hooks."""
     app.connect("builder-inited", _run_linters)
+    app.connect("builder-inited", _generate_openapi)

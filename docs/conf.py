@@ -14,6 +14,7 @@ sys.path.append(os.path.abspath("../backend/signal-ingestion/src"))
 sys.path.append(os.path.abspath("../backend/mockup-generation"))
 sys.path.append(os.path.abspath("../backend/scoring-engine"))
 sys.path.append(os.path.abspath("../backend"))
+sys.path.append(os.path.abspath("../frontend/admin-dashboard"))
 
 # -- Project information -----------------------------------------------------
 
@@ -31,6 +32,7 @@ extensions = [
 ]
 
 autodoc_mock_imports = ["flask", "diffusers", "redis", "torch"]
+autodoc_mock_imports += ["numpy", "sklearn", "sqlalchemy"]
 
 source_suffix = {
     ".rst": "restructuredtext",

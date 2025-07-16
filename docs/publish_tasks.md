@@ -7,3 +7,5 @@ Administrators can adjust listing metadata prior to publishing using the API Gat
 `POST /publish-tasks/{task_id}/retry` re-triggers the publishing workflow for the task.
 
 All edits and retries are recorded in the audit log.
+
+If `SLACK_WEBHOOK_URL` is configured, failed publish attempts send a Slack notification.

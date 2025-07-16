@@ -171,6 +171,43 @@
         }
       }
     },
+    "/low_performers": {
+      "get": {
+        "summary": "Low Performers",
+        "description": "Return listings with the lowest total revenue.",
+        "operationId": "low_performers_low_performers_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "title": "Limit", "default": 10}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {"$ref": "#/components/schemas/LowPerformer"},
+                  "type": "array",
+                  "title": "Response Low Performers Low Performers Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/HTTPValidationError"}
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -285,6 +322,16 @@
         ],
         "title": "MarketplaceSummary",
         "description": "Aggregated metrics for a listing."
+      },
+      "LowPerformer": {
+        "properties": {
+          "listing_id": {"type": "integer", "title": "Listing Id"},
+          "revenue": {"type": "number", "title": "Revenue"}
+        },
+        "type": "object",
+        "required": ["listing_id", "revenue"],
+        "title": "LowPerformer",
+        "description": "Listing with the lowest revenue."
       },
       "ValidationError": {
         "properties": {

@@ -1,16 +1,12 @@
-"""Redis-backed rate limiter for publishing.
-
-Implements a simple fixed-window algorithm using Redis
-for distributed coordination across service instances.
-"""
+"""Redis-backed rate limiter using token buckets."""
 
 from __future__ import annotations
 
 import asyncio
-import time
 from collections.abc import Mapping
+from typing import Any
 
-from redis.asyncio import Redis
+from redis.asyncio import Redis, WatchError
 
 from .db import Marketplace
 
@@ -48,13 +44,25 @@ class MarketplaceRateLimiter:
         limit = self._limits.get(marketplace)
         if limit is None:
             return True
-        now = int(time.time())
-        window = now // self._window
-        key = f"rate:{marketplace.value}:{window}"
-        count = await self._redis.incr(key)
-        if count == 1:
-            await self._redis.expire(key, self._window)
-        if count > limit:
-            await asyncio.sleep(0)
-            return False
-        return True
+        key = f"tokens:{marketplace.value}"
+        async with self._redis.pipeline() as pipe:
+            while True:
+                try:
+                    await pipe.watch(key)
+                    raw: Any = await pipe.get(key)
+                    if raw is None:
+                        pipe.multi()  # type: ignore[no-untyped-call]
+                        pipe.set(key, limit - 1, ex=self._window)
+                        await pipe.execute()
+                        return True
+                    tokens = int(raw)
+                    if tokens <= 0:
+                        await pipe.unwatch()  # type: ignore[no-untyped-call]
+                        await asyncio.sleep(0)
+                        return False
+                    pipe.multi()  # type: ignore[no-untyped-call]
+                    pipe.decr(key)
+                    await pipe.execute()
+                    return True
+                except WatchError:
+                    continue

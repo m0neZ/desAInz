@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import fakeredis.aioredis
 from fastapi.testclient import TestClient
+from typing import Any
+from pathlib import Path
 
 
-def test_rate_limit_exceeded(monkeypatch, tmp_path) -> None:
+def test_rate_limit_exceeded(monkeypatch: Any, tmp_path: Path) -> None:
     """Return 429 when requests exceed the allowed rate."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
     monkeypatch.setenv("RATE_LIMIT_REDBUBBLE", "1")
@@ -15,13 +17,13 @@ def test_rate_limit_exceeded(monkeypatch, tmp_path) -> None:
     from marketplace_publisher import publisher
 
     rate_limiter._redis = fakeredis.aioredis.FakeRedis()
-    rate_limiter._limits[Marketplace.redbubble] = 1
+    rate_limiter._limits[Marketplace.redbubble] = 1  # type: ignore[index]
 
     class DummyClient:
-        def publish_design(self, design_path, metadata):
+        def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "1"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
     publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
 
     with TestClient(app) as client:

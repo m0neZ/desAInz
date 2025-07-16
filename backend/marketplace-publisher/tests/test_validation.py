@@ -1,15 +1,16 @@
-"""Tests for the marketplace publisher API."""
+"""Validation tests for mockup uploads."""
 
 from __future__ import annotations
 
 from fastapi.testclient import TestClient
 import fakeredis.aioredis
+from PIL import Image
 from typing import Any
 from pathlib import Path
 
 
-def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
-    """Publish design and check initial progress."""
+def test_invalid_dimensions(monkeypatch: Any, tmp_path: Path) -> None:
+    """Return 400 for mockups exceeding dimension limits."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     from marketplace_publisher.db import Marketplace
@@ -26,24 +27,15 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
     publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
 
     with TestClient(app) as client:
-        design = tmp_path / "a.png"
-        design.write_text("img")
+        design = tmp_path / "bad.png"
+        Image.new("RGB", (9001, 100)).save(design)
         response = client.post(
             "/publish",
             json={
                 "marketplace": Marketplace.redbubble.value,
                 "design_path": str(design),
-                "metadata": {"title": "t"},
+                "metadata": {},
             },
         )
-        assert response.status_code == 200
-        task_id = response.json()["task_id"]
-
-        response = client.get(f"/progress/{task_id}")
-        assert response.status_code == 200
-        assert response.json()["status"] in {
-            "pending",
-            "in_progress",
-            "success",
-            "failed",
-        }
+        assert response.status_code == 400
+        assert "dimensions" in response.json()["detail"]

@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "signal-ingestion"
+version = "0.1.0"
+description = "Signal ingestion service"
+authors = ["Your Name <you@example.com>"]
+packages = [{include = "", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = "*"
+httpx = "*"
+sqlalchemy = "*"
+asyncpg = "*"
+redis = {extras = ["bloom"], version = "*"}
+kafka-python = "*"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+flake8 = "*"
+flake8-docstrings = "*"
+flake8-builtins = "*"
+flake8-bugbear = "*"
+flake8-import-order = "*"
+docformatter = "*"
+pydocstyle = "*"
+mypy = "*"
+pytest = "*"
+pytest-asyncio = "*"
+factory-boy = "*"
+vcrpy = "*"
+
+[tool.black]
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+[tool.mypy]
+strict = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

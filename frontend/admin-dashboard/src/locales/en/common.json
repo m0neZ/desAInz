@@ -12,5 +12,8 @@
   "maintenance": "Maintenance",
   "runCleanup": "Run Cleanup",
   "cleanupTriggered": "Cleanup triggered",
-  "cleanupFailed": "Cleanup failed"
+  "cleanupFailed": "Cleanup failed",
+  "updateAndPublish": "Update & Publish",
+  "updateFailed": "Update failed",
+  "publishScheduled": "Publish scheduled"
 }

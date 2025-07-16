@@ -6,6 +6,7 @@ import logging
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine
+import json
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel
@@ -14,6 +15,8 @@ from redis.asyncio import Redis
 from .logging_config import configure_logging
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
+from sqlalchemy import update
+
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
@@ -75,11 +78,25 @@ class PublishRequest(BaseModel):
     metadata: dict[str, Any] = {}
 
 
-async def _background_publish(task_id: int, req: PublishRequest) -> None:
-    """Wrap background publishing."""
+async def _background_publish(task_id: int) -> None:
+    """Run publishing using the latest task metadata."""
     async with SessionLocal() as session:
+        task = await get_task(session, task_id)
+        if task is None:
+            logger.error("publish task %s not found", task_id)
+            return
+        metadata = {}
+        if task.metadata_json:
+            try:
+                metadata = json.loads(task.metadata_json)
+            except json.JSONDecodeError:
+                logger.warning("invalid metadata for task %s", task_id)
         await publish_with_retry(
-            session, task_id, req.marketplace, req.design_path, req.metadata
+            session,
+            task_id,
+            task.marketplace,
+            Path(task.design_path),
+            metadata,
         )
 
 
@@ -107,7 +124,7 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
             design_path=str(req.design_path),
             metadata_json=req.metadata,
         )
-    background.add_task(_background_publish, task.id, req)
+    background.add_task(_background_publish, task.id)
     return {"task_id": task.id}
 
 
@@ -119,6 +136,35 @@ async def progress(task_id: int) -> dict[str, Any]:
         if task is None:
             raise HTTPException(status_code=404)
         return {"status": task.status, "attempts": task.attempts}
+
+
+@app.patch("/tasks/{task_id}")
+async def update_task_metadata(task_id: int, body: dict[str, Any]) -> dict[str, str]:
+    """Update metadata for a pending publish task."""
+    async with SessionLocal() as session:
+        task = await get_task(session, task_id)
+        if task is None:
+            raise HTTPException(status_code=404)
+        if task.status != PublishStatus.pending:
+            raise HTTPException(status_code=400, detail="Task already started")
+        await session.execute(
+            update(PublishTask)
+            .where(PublishTask.id == task_id)
+            .values(metadata_json=json.dumps(body))
+        )
+        await session.commit()
+    return {"status": "updated"}
+
+
+@app.post("/tasks/{task_id}/retry")
+async def retry_task(task_id: int, background: BackgroundTasks) -> dict[str, str]:
+    """Re-trigger publishing for a task."""
+    async with SessionLocal() as session:
+        task = await get_task(session, task_id)
+        if task is None:
+            raise HTTPException(status_code=404)
+    background.add_task(_background_publish, task_id)
+    return {"status": "scheduled"}
 
 
 @app.get("/health")

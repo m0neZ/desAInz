@@ -24,6 +24,7 @@ Welcome to desAInz's documentation!
    load_testing
    mocking
    maintenance
+   publish_tasks
    i18n
    security
    roles

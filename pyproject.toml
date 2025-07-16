@@ -1,0 +1,24 @@
+[tool.black]
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = []
+show-source = true
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+warn_unused_configs = true
+strict = true
+
+[tool.docformatter]
+wrap-summaries = 88
+wrap-descriptions = 88
+pre-summary-newline = true
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = []

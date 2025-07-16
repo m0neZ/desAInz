@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+  repository: example/ai-mockup-generation
+  tag: prod
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+resources: {}

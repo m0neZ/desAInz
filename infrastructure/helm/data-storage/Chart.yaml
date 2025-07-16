@@ -1,0 +1,6 @@
+apiVersion: v2
+name: data-storage
+version: 0.1.0
+description: Helm chart for data-storage microservice
+type: application
+appVersion: "1.0"

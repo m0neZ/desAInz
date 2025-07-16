@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+  repository: example/marketplace-publisher
+  tag: staging
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+resources: {}

@@ -1,0 +1,26 @@
+# Helm Charts
+
+This directory contains Helm charts for the Design Idea Engine microservices.
+Each microservice can be deployed independently. Environment specific values
+files are provided for development, staging and production deployments.
+
+## Microservices
+
+- Signal Ingestion
+- Data Storage
+- Scoring Engine
+- AI Mock-up Generation
+- Marketplace Publisher
+- Feedback Loop
+- Orchestrator & CI/CD
+
+## Usage
+
+Ensure you have a Kubernetes cluster and Helm installed. Deploy a service using:
+
+```bash
+helm install <release-name> ./<microservice> -f ./<microservice>/values-<env>.yaml
+```
+
+Replace `<microservice>` with one of the service directories above and `<env>`
+with `dev`, `staging` or `prod`.

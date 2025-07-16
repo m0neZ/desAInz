@@ -20,3 +20,4 @@ watchtower
 Flask
 pydantic-settings
 psycopg2-binary
+UnleashClient

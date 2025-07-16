@@ -18,6 +18,14 @@ Subpackages
 Submodules
 ----------
 
+backend.shared.feature\_flags module
+------------------------------------
+
+.. automodule:: backend.shared.feature_flags
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 backend.shared.logging module
 -----------------------------
 

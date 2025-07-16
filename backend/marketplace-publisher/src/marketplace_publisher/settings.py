@@ -17,7 +17,11 @@ class Settings(BaseSettings):
     rate_limit_redbubble: int = 60
     rate_limit_amazon_merch: int = 60
     rate_limit_etsy: int = 60
+    rate_limit_society6: int = 60
     rate_limit_window: int = 60
+    unleash_url: str | None = None
+    unleash_api_token: str | None = None
+    unleash_app_name: str = "marketplace-publisher"
 
 
 settings = Settings()

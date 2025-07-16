@@ -28,6 +28,7 @@ Welcome to desAInz's documentation!
    security
    roles
    daily_summary
+   feature-flags
    openapi_specs
 
 Kafka Utilities

@@ -5,3 +5,6 @@ docs/_build/
 __pycache__/
 node_modules/
 flow-typed/
+.env
+.env.*
+!.env.*.example

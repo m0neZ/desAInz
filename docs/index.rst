@@ -23,4 +23,5 @@ Admin Dashboard
 ---------------
 The admin dashboard is a Next.js application found in ``frontend/admin-dashboard``.
 Any shared TypeScript interfaces located in this package are included in the
-documentation build.
+documentation build. The Tailwind configuration extends the default color
+palette and font families to maintain consistent styling.

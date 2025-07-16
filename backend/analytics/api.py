@@ -2,16 +2,20 @@
 
 from __future__ import annotations
 
+import csv
+import io
 import logging
 import uuid
-from typing import Callable, Coroutine, Dict
+from typing import Any, Callable, Coroutine, Dict, Iterable
 
-from fastapi import FastAPI, Request, Response
+from fastapi import Depends, FastAPI, Request, Response
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import func
 
 from backend.shared.db import SessionLocal
 from backend.shared.db import models
+from .auth import require_role
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
@@ -75,6 +79,37 @@ def ab_test_results(ab_test_id: int) -> ABTestSummary:
     )
 
 
+@app.get("/ab_test_results/{ab_test_id}/export")  # type: ignore[misc]
+def export_ab_test_results(
+    ab_test_id: int,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> StreamingResponse:
+    """Return all A/B test result rows for ``ab_test_id`` as CSV."""
+    with SessionLocal() as session:
+        rows = (
+            session.query(models.ABTestResult)
+            .filter(models.ABTestResult.ab_test_id == ab_test_id)
+            .all()
+        )
+
+    def _iter() -> Iterable[str]:
+        buffer = io.StringIO()
+        writer = csv.writer(buffer)
+        writer.writerow(["timestamp", "conversions", "impressions"])
+        for r in rows:
+            writer.writerow([r.timestamp.isoformat(), r.conversions, r.impressions])
+        buffer.seek(0)
+        yield buffer.read()
+
+    return StreamingResponse(
+        _iter(),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename=ab_test_{ab_test_id}.csv"
+        },
+    )
+
+
 @app.get("/marketplace_metrics/{listing_id}")  # type: ignore[misc]
 def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
     """Return aggregated metrics for a listing."""
@@ -93,6 +128,37 @@ def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
         clicks=clicks,
         purchases=purchases,
         revenue=revenue,
+    )
+
+
+@app.get("/marketplace_metrics/{listing_id}/export")  # type: ignore[misc]
+def export_marketplace_metrics(
+    listing_id: int,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> StreamingResponse:
+    """Return all marketplace metrics rows for ``listing_id`` as CSV."""
+    with SessionLocal() as session:
+        rows = (
+            session.query(models.MarketplaceMetric)
+            .filter(models.MarketplaceMetric.listing_id == listing_id)
+            .all()
+        )
+
+    def _iter() -> Iterable[str]:
+        buffer = io.StringIO()
+        writer = csv.writer(buffer)
+        writer.writerow(["timestamp", "clicks", "purchases", "revenue"])
+        for r in rows:
+            writer.writerow([r.timestamp.isoformat(), r.clicks, r.purchases, r.revenue])
+        buffer.seek(0)
+        yield buffer.read()
+
+    return StreamingResponse(
+        _iter(),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename=listing_{listing_id}.csv"
+        },
     )
 
 

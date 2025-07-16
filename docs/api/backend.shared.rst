@@ -18,6 +18,14 @@ Subpackages
 Submodules
 ----------
 
+backend.shared.logging module
+-----------------------------
+
+.. automodule:: backend.shared.logging
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 backend.shared.profiling module
 -------------------------------
 

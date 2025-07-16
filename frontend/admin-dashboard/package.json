@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/monitorAndStart.js",
     "lint": "next lint",
     "test": "jest --runInBand --ci"
   },

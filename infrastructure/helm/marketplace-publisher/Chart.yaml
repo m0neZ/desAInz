@@ -1,0 +1,6 @@
+apiVersion: v2
+name: marketplace-publisher
+version: 0.1.0
+description: Helm chart for marketplace-publisher microservice
+type: application
+appVersion: "1.0"

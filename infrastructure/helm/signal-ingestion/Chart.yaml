@@ -1,0 +1,6 @@
+apiVersion: v2
+name: signal-ingestion
+version: 0.1.0
+description: Helm chart for signal-ingestion microservice
+type: application
+appVersion: "1.0"

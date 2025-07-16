@@ -24,6 +24,9 @@ export default function AdminLayout({
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             {t('abTests')}
           </Link>
+          <Link href="/dashboard/roles" className="block hover:underline">
+            {t('roles')}
+          </Link>
         </nav>
       </aside>
       <div className="flex flex-col flex-1">

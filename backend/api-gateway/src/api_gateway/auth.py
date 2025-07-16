@@ -6,7 +6,11 @@ from typing import Any, Dict
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
-from typing import cast
+from sqlalchemy import select
+from typing import cast, Callable
+
+from backend.shared.db import session_scope
+from backend.shared.db.models import UserRole
 
 
 SECRET_KEY = "change_this"  # In production use env var
@@ -39,3 +43,25 @@ def verify_token(
             status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token"
         ) from exc
     return payload
+
+
+def require_role(required_role: str) -> Callable[[Dict[str, Any]], Dict[str, Any]]:
+    """Ensure the authenticated user has ``required_role``."""
+
+    def _checker(payload: Dict[str, Any] = Depends(verify_token)) -> Dict[str, Any]:
+        username = cast(str | None, payload.get("sub"))
+        if username is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token"
+            )
+        with session_scope() as session:
+            role = session.execute(
+                select(UserRole.role).where(UserRole.username == username)
+            ).scalar_one_or_none()
+        if role != required_role:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient role"
+            )
+        return payload
+
+    return _checker

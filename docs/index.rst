@@ -6,6 +6,7 @@ Welcome to desAInz's documentation!
    :caption: Contents:
 
    README
+   configuration
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
 

@@ -4,6 +4,7 @@ The `blueprints` folder contains the full system blueprint.
 
 - [Design Idea Engine Complete Blueprint](blueprints/DesignIdeaEngineCompleteBlueprint.md)
 - [Sphinx Documentation](sphinx/index)
+- [Configuration](configuration.md)
 
 The `scripts` directory provides helper scripts for setting up storage and CDN resources:
 

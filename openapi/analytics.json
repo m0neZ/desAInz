@@ -1,0 +1,238 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Analytics Service",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/ab_test_results/{ab_test_id}": {
+      "get": {
+        "summary": "Ab Test Results",
+        "description": "Return aggregated A/B test results.",
+        "operationId": "ab_test_results_ab_test_results__ab_test_id__get",
+        "parameters": [
+          {
+            "name": "ab_test_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Ab Test Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ABTestSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/marketplace_metrics/{listing_id}": {
+      "get": {
+        "summary": "Marketplace Metrics",
+        "description": "Return aggregated metrics for a listing.",
+        "operationId": "marketplace_metrics_marketplace_metrics__listing_id__get",
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Listing Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketplaceSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "description": "Return service liveness.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "summary": "Ready",
+        "description": "Return service readiness.",
+        "operationId": "ready_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Ready Ready Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ABTestSummary": {
+        "properties": {
+          "ab_test_id": {
+            "type": "integer",
+            "title": "Ab Test Id"
+          },
+          "conversions": {
+            "type": "integer",
+            "title": "Conversions"
+          },
+          "impressions": {
+            "type": "integer",
+            "title": "Impressions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ab_test_id",
+          "conversions",
+          "impressions"
+        ],
+        "title": "ABTestSummary",
+        "description": "Summary of results for an A/B test."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MarketplaceSummary": {
+        "properties": {
+          "listing_id": {
+            "type": "integer",
+            "title": "Listing Id"
+          },
+          "clicks": {
+            "type": "integer",
+            "title": "Clicks"
+          },
+          "purchases": {
+            "type": "integer",
+            "title": "Purchases"
+          },
+          "revenue": {
+            "type": "number",
+            "title": "Revenue"
+          }
+        },
+        "type": "object",
+        "required": [
+          "listing_id",
+          "clicks",
+          "purchases",
+          "revenue"
+        ],
+        "title": "MarketplaceSummary",
+        "description": "Aggregated metrics for a listing."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

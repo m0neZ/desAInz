@@ -8,6 +8,7 @@ from typing import Any
 import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+import os
 
 from .db import Marketplace
 
@@ -61,7 +62,10 @@ class SeleniumFallback:
         """Start a headless Firefox driver."""
         options = Options()
         options.add_argument("--headless")
-        self.driver = webdriver.Firefox(options=options)
+        if os.getenv("SELENIUM_SKIP") == "1":
+            self.driver = None
+        else:
+            self.driver = webdriver.Firefox(options=options)
 
     def publish(
         self, marketplace: Marketplace, design_path: Path, metadata: dict[str, Any]
@@ -72,6 +76,8 @@ class SeleniumFallback:
             Marketplace.amazon_merch: "https://merch.amazon.com/create",
             Marketplace.etsy: "https://www.etsy.com/new",
         }[marketplace]
+        if self.driver is None:
+            return
         self.driver.get(url)
         # This is a placeholder; real implementation would interact with the page.
         upload = self.driver.find_element("id", "upload")

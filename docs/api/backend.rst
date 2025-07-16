@@ -12,5 +12,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   backend.optimization
    backend.analytics
+   backend.optimization
+   backend.shared

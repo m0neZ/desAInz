@@ -73,5 +73,17 @@ def score_signal() -> Response:
     return jsonify({"score": score, "cached": False})
 
 
+@app.get("/health")
+def health() -> Response:
+    """Return service liveness."""
+    return jsonify(status="ok")
+
+
+@app.get("/ready")
+def ready() -> Response:
+    """Return service readiness."""
+    return jsonify(status="ready")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5002)

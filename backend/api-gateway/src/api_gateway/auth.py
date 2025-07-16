@@ -6,6 +6,7 @@ from typing import Any, Dict
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
+from typing import cast
 
 
 SECRET_KEY = "change_this"  # In production use env var
@@ -20,7 +21,7 @@ def create_access_token(data: Dict[str, Any]) -> str:
     to_encode = data.copy()
     expire = datetime.now(UTC) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return cast(str, jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM))
 
 
 def verify_token(
@@ -29,7 +30,9 @@ def verify_token(
     """Verify a JWT token and return the payload."""
     token = credentials.credentials
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = cast(
+            Dict[str, Any], jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        )
     except JWTError as exc:  # pragma: no cover
         # jose raises JWTError for all issues
         raise HTTPException(

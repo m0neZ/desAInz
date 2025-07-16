@@ -5,7 +5,7 @@ from __future__ import annotations
 from pydantic_settings import BaseSettings
 
 
-class Settings(BaseSettings):  # type: ignore[misc]
+class Settings(BaseSettings):
     """Configuration loaded from environment variables."""
 
     app_name: str = "monitoring"

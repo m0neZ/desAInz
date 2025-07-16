@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -18,7 +18,7 @@ class Idea(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(200))
     description: Mapped[str] = mapped_column(String)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(UTC))
     signals: Mapped[list["Signal"]] = relationship(back_populates="idea")
     mockups: Mapped[list["Mockup"]] = relationship(back_populates="idea")
 
@@ -89,3 +89,14 @@ class ABTest(Base):
     conversion_rate: Mapped[float] = mapped_column(Float, default=0.0)
 
     listing: Mapped[Listing] = relationship(back_populates="tests")
+
+
+class AuditLog(Base):
+    """Audit log entry for administrator actions."""
+
+    __tablename__ = "audit_logs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    admin_id: Mapped[str] = mapped_column(String(50))
+    action: Mapped[str] = mapped_column(String)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

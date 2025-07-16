@@ -1330,8 +1330,14 @@ Design Idea Engine Blueprint.
 *   **Key Activities:**
     *   Design and implement the **Admin Dashboard** using Next.js and tRPC.
     *   Develop UI components for displaying the signal stream, heatmap, mock-up gallery, and A/B test results.
+        *   **Signal Stream View** with infinite scroll for efficient browsing of incoming content signals.
+        *   **Idea Heatmap** built with D3.js to visualize popularity trends across categories.
+        *   **Mock-up Gallery** supporting filters and lazy loading to showcase generated designs.
+        *   **A/B Test Results** view featuring interactive charts for quick insights.
     *   Focus on responsive design, fluid animations, and a clean aesthetic consistent with Apple's design principles.
-    *   Implement user authentication and authorization for the dashboard.
+    *   Implement user authentication and authorization for the dashboard via **Auth0**, storing JWT tokens on the client.
+    *   Manage state with **Zustand** and fetch data with **React Query** for optimal performance.
+    *   Ensure full keyboard navigation and screen reader accessibility using proper ARIA attributes.
 *   **Deliverables:** Functional and aesthetically pleasing Admin Dashboard.
 
 #### Phase 7: Marketplace Integration and Automation Features Implementation

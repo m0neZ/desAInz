@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime
 
 from flask import Flask, Response, jsonify, request
 import redis
+from backend.shared.metrics_store import METRICS_STORE, ScoreRecord
 from backend.shared.tracing import configure_tracing
-
-from datetime import datetime
 
 from .scoring import Signal, calculate_score
 from .weight_repository import get_weights, update_weights
@@ -69,6 +69,7 @@ def score_signal() -> Response:
     median_engagement = float(payload.get("median_engagement", 0))
     topics = payload.get("topics", [])
     score = calculate_score(signal, centroid, median_engagement, topics)
+    METRICS_STORE.add_score(ScoreRecord(timestamp=datetime.utcnow(), score=score))
     redis_client.setex(key, 3600, score)
     return jsonify({"score": score, "cached": False})
 

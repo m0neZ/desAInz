@@ -1,0 +1,23 @@
+{
+    "title": "Scores and Publish Latency",
+    "panels": [
+        {
+            "type": "timeseries",
+            "title": "Average Score",
+            "targets": [
+                {
+                    "query": "SELECT toStartOfInterval(timestamp, INTERVAL 1 hour) as ts, avg(score) FROM scores GROUP BY ts ORDER BY ts"
+                }
+            ],
+        },
+        {
+            "type": "timeseries",
+            "title": "Publish Latency (ms)",
+            "targets": [
+                {
+                    "query": "SELECT toStartOfInterval(timestamp, INTERVAL 1 hour) as ts, avg(latency_ms) FROM publish_latency GROUP BY ts ORDER BY ts"
+                }
+            ],
+        },
+    ],
+}

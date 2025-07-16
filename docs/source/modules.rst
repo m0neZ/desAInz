@@ -4,6 +4,9 @@ Modules
 .. automodule:: backend.optimization.metrics
     :members:
 
+.. automodule:: backend.shared.metrics_store
+    :members:
+
 .. automodule:: backend.optimization.storage
     :members:
 

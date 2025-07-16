@@ -1759,7 +1759,8 @@ erDiagram
   - Contract tests for each external API; use VCR.py cassettes to keep CI fast.
 
 - **Monitoring & Alerts**:
-  - 95th‑percentile time from signal capture → mock‑up should remain under SLA; alerts via PagerDuty.
+  - Average time from signal ingestion to publishing is tracked via the `signal_to_publish_seconds` metric and displayed in the monitoring dashboard.
+  - PagerDuty alerts trigger if this average exceeds the configured `SLA_THRESHOLD_HOURS`.
 
 ### **Key Takeaways**
 

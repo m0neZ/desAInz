@@ -13,3 +13,4 @@ Subpackages
    :maxdepth: 4
 
    backend.optimization
+   backend.analytics

@@ -24,6 +24,7 @@ Welcome to desAInz's documentation!
    load_testing
    mocking
    maintenance
+   currency_conversion
    publish_tasks
    i18n
    security

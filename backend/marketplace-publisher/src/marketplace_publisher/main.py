@@ -10,19 +10,30 @@ import json
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel
-from redis.asyncio import Redis
+import redis
 
 from .logging_config import configure_logging
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
 from sqlalchemy import update
 
-from .db import Marketplace, SessionLocal, create_task, get_task, init_db
+from .db import (
+    Marketplace,
+    PublishStatus,
+    PublishTask,
+    SessionLocal,
+    create_task,
+    get_task,
+    init_db,
+)
 from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import init_feature_flags, is_enabled
+from backend.shared.currency import schedule_rate_updates
+
+_exchange_scheduler = None
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -31,7 +42,7 @@ configure_tracing(app, settings.app_name)
 add_profiling(app)
 
 rate_limiter = MarketplaceRateLimiter(
-    Redis.from_url(settings.redis_url),
+    redis.Redis.from_url(settings.redis_url),
     {
         Marketplace.redbubble: settings.rate_limit_redbubble,
         Marketplace.amazon_merch: settings.rate_limit_amazon_merch,
@@ -53,6 +64,8 @@ async def startup() -> None:
     )
     load_rules(rules_path)
     init_feature_flags()
+    global _exchange_scheduler
+    _exchange_scheduler = schedule_rate_updates(redis.Redis.from_url(settings.redis_url))
 
 
 @app.middleware("http")
@@ -177,6 +190,13 @@ async def health() -> dict[str, str]:
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}
+
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    """Stop background schedulers."""
+    if _exchange_scheduler:
+        _exchange_scheduler.shutdown()
 
 
 if __name__ == "__main__":  # pragma: no cover

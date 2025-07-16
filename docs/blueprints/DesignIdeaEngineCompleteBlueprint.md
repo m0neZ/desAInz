@@ -321,7 +321,7 @@ This document outlines the detailed system architecture and technology stack for
 
 **Programming Language and Framework**
 
-- **Python 3.11+**: Primary language for backend services due to excellent AI/ML library ecosystem
+- **Python 3.11+ (tested against 3.11 and 3.12)**: Primary language for backend services due to excellent AI/ML library ecosystem
 - **Flask**: Lightweight web framework for microservices APIs
 - **FastAPI**: Alternative for high-performance APIs requiring automatic documentation and type validation
 - **Pydantic**: Data validation and serialization for robust API contracts
@@ -1812,8 +1812,8 @@ The Design Idea Engine is a microservices-based system that:
 ### Prerequisites
 
 - Docker and Docker Compose
-- Node.js 20+ and npm
-- Python 3.11+
+- Node.js 18 or 20 LTS and npm
+- Python 3.11 or 3.12
 
 ### Development Setup
 

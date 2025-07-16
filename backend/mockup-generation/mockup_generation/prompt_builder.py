@@ -17,7 +17,12 @@ class PromptContext:
     extra: Dict[str, Any] = field(default_factory=dict)
 
 
-TEMPLATE = Template("A {{ style }} design featuring {{ keywords | join(', ') }}. {{ extra.get('note', '') }}")
+TEMPLATE = Template(
+    (
+        "A {{ style }} design featuring {{ keywords | join(', ') }}. "
+        "{{ extra.get('note', '') }}"
+    )
+)
 
 
 def build_prompt(context: PromptContext) -> str:

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from alembic import op
+from alembic import op  # noqa: F401
 
 revision = "0003"
 down_revision = ("0002", "0002")

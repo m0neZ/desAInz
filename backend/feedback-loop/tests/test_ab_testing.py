@@ -5,7 +5,7 @@ import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from feedback_loop import ABTestManager
+from feedback_loop import ABTestManager  # noqa: E402
 
 
 def test_budget_allocation(tmp_path) -> None:

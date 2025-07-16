@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import uuid
 from pathlib import Path
 from typing import Callable, Coroutine
 
@@ -13,30 +12,28 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
 
 from backend.shared.tracing import configure_tracing
 
-from .logging_config import configure_logging
+from backend.shared.logging_config import (
+    add_correlation_middleware,
+    configure_logging,
+)
 from .settings import settings
 
-configure_logging()
+configure_logging(settings.app_name)
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_correlation_middleware(app)
 
 REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
 
 
 @app.middleware("http")
-async def add_correlation_id(
-    request: Request,
-    call_next: Callable[[Request], Coroutine[None, None, Response]],
+async def count_requests(
+    request: Request, call_next: Callable[[Request], Coroutine[None, None, Response]]
 ) -> Response:
-    """Attach a correlation ID and record metrics."""
-    correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
-    request.state.correlation_id = correlation_id
+    """Increment the request counter."""
     REQUEST_COUNTER.inc()
-
-    response = await call_next(request)
-    response.headers["X-Correlation-ID"] = correlation_id
-    return response
+    return await call_next(request)
 
 
 @app.get("/metrics")

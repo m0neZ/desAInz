@@ -15,3 +15,11 @@ Architecture
 
 This diagram shows the high-level interaction between the dashboard and the
 backend services.
+
+Observability
+-------------
+
+All services emit JSON logs containing correlation IDs. Logs are streamed to
+CloudWatch when the ``CLOUDWATCH_LOG_GROUP`` environment variable is set. Traces
+are exported to Jaeger using OpenTelemetry so requests can be followed across
+services.

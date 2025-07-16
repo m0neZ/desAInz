@@ -4,15 +4,23 @@ from __future__ import annotations
 
 from typing import Dict
 
+import logging
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from backend.shared.db import SessionLocal
 from backend.shared.db import models
 from backend.shared.tracing import configure_tracing
+from backend.shared.logging_config import (
+    add_correlation_middleware,
+    configure_logging,
+)
 
+configure_logging("analytics")
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Analytics Service")
 configure_tracing(app, "analytics")
+add_correlation_middleware(app)
 
 
 class ABTestSummary(BaseModel):

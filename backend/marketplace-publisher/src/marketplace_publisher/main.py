@@ -3,15 +3,17 @@
 from __future__ import annotations
 
 import logging
-import uuid
 from pathlib import Path
-from typing import Any, Callable, Coroutine
+from typing import Any
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
+from fastapi import BackgroundTasks, FastAPI, HTTPException
 from pydantic import BaseModel
 from redis.asyncio import Redis
 
-from .logging_config import configure_logging
+from backend.shared.logging_config import (
+    add_correlation_middleware,
+    configure_logging,
+)
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
@@ -19,10 +21,11 @@ from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 
-configure_logging()
+configure_logging(settings.app_name)
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_correlation_middleware(app)
 
 rate_limiter = MarketplaceRateLimiter(
     Redis.from_url(settings.redis_url),
@@ -45,21 +48,6 @@ async def startup() -> None:
         / "marketplace_rules.yaml"
     )
     load_rules(rules_path)
-
-
-@app.middleware("http")
-async def add_correlation_id(
-    request: Request,
-    call_next: Callable[[Request], Coroutine[None, None, Response]],
-) -> Response:
-    """Ensure every request contains a correlation ID."""
-    correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
-    request.state.correlation_id = correlation_id
-
-    logger.info("request received", extra={"correlation_id": correlation_id})
-    response = await call_next(request)
-    response.headers["X-Correlation-ID"] = correlation_id
-    return response
 
 
 class PublishRequest(BaseModel):

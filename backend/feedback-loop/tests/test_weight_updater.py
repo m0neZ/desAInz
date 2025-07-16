@@ -5,7 +5,7 @@ import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from feedback_loop import update_weights
+from feedback_loop import update_weights  # noqa: E402
 
 
 def test_update_weights(requests_mock) -> None:

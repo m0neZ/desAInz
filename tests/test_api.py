@@ -5,11 +5,11 @@ import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "backend" / "optimization"))
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone  # noqa: E402
 
-from fastapi.testclient import TestClient
+from fastapi.testclient import TestClient  # noqa: E402
 
-from backend.optimization.api import app
+from backend.optimization.api import app  # noqa: E402
 
 
 client = TestClient(app)

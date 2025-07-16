@@ -9,14 +9,20 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
+import os
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 
 def configure_tracing(app: FastAPI | Flask, service_name: str) -> None:
     """Configure basic tracing for ``app``."""
     resource = Resource.create({"service.name": service_name})
     provider = TracerProvider(resource=resource)
-    processor = BatchSpanProcessor(ConsoleSpanExporter())
+    exporter = JaegerExporter(
+        agent_host_name=os.getenv("JAEGER_HOST", "localhost"),
+        agent_port=int(os.getenv("JAEGER_PORT", "6831")),
+    )
+    processor = BatchSpanProcessor(exporter)
     provider.add_span_processor(processor)
     trace.set_tracer_provider(provider)
 

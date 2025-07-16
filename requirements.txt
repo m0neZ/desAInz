@@ -18,3 +18,5 @@ opentelemetry-instrumentation-flask
 Flask
 pydantic-settings
 psycopg2-binary
+watchtower
+opentelemetry-exporter-jaeger

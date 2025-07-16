@@ -1,4 +1,6 @@
 """Load tests for desAInz API endpoints using Locust."""
+# flake8: noqa: D102
+# pydocstyle: ignore=D102
 
 from __future__ import annotations
 

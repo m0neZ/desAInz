@@ -12,13 +12,7 @@ def run(command: list[str]) -> None:
 
 
 def dump_postgres(backup_dir: Path, bucket: str) -> None:
-    """
-    Dump Postgres database and upload to S3.
-
-    Args:
-        backup_dir: Directory to store the dump.
-        bucket: Name of the S3 bucket.
-    """
+    """Dump Postgres database and upload to S3."""
     timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
     dump_file = backup_dir / f"postgres_{timestamp}.sql"
     run(
@@ -34,13 +28,7 @@ def dump_postgres(backup_dir: Path, bucket: str) -> None:
 
 
 def backup_minio(data_path: Path, bucket: str) -> None:
-    """
-    Sync MinIO data directory to S3.
-
-    Args:
-        data_path: Local path to MinIO data.
-        bucket: Name of the S3 bucket.
-    """
+    """Sync MinIO data directory to S3."""
     run(
         [
             "aws",

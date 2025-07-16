@@ -5,15 +5,23 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List
 
+import logging
 from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
+from backend.shared.logging_config import (
+    add_correlation_middleware,
+    configure_logging,
+)
 
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
+configure_logging("optimization")
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
+add_correlation_middleware(app)
 store = MetricsStore()
 
 

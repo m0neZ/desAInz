@@ -9,3 +9,4 @@ httpx
 requests-mock
 kafka-python
 jsonschema
+dagster

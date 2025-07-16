@@ -9,6 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .clients import AmazonMerchClient, EtsyClient, RedbubbleClient, SeleniumFallback
+from .trademark import is_trademarked
 from .db import (
     Marketplace,
     PublishStatus,
@@ -38,6 +39,11 @@ async def publish_with_retry(
     """Publish a design, retrying on failure."""
     try:
         await update_task_status(session, task_id, PublishStatus.in_progress)
+        title = str(metadata.get("title", ""))
+        if title and is_trademarked(title):
+            await update_task_status(session, task_id, PublishStatus.failed)
+            return
+
         client = CLIENTS[marketplace]
         client.publish_design(design_path, metadata)
         await update_task_status(session, task_id, PublishStatus.success)

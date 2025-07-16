@@ -5,8 +5,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from sqlalchemy import select
 
-from .db import engine, session_scope
-from .models import Base, Weights
+from backend.shared.db import engine, session_scope
+from backend.shared.db.models import Weights
+from backend.shared.db.base import Base
 
 
 # Create table if not exists

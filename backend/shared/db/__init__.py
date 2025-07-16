@@ -11,6 +11,8 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from .base import Base
 
+__all__ = ["Base", "engine", "SessionLocal", "session_scope"]
+
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///shared.db")
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)

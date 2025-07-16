@@ -1,6 +1,12 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslation } from 'react-i18next';
-import StatusIndicator from '../../components/StatusIndicator';
+
+// Dynamically import the status indicator to split the bundle
+const StatusIndicator = dynamic(
+  () => import('../../components/StatusIndicator'),
+  { ssr: false, loading: () => <div>Loading...</div> }
+);
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -10,4 +16,8 @@ export default function DashboardPage() {
       <div>{t('signalStreamComingSoon')}</div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 60 };
 }

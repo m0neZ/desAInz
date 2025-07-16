@@ -5,3 +5,7 @@ export default function GalleryPage() {
   const { t } = useTranslation();
   return <div>{t('galleryPlaceholder')}</div>;
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 60 };
+}

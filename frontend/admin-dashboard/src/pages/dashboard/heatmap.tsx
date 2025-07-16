@@ -5,3 +5,7 @@ export default function HeatmapPage() {
   const { t } = useTranslation();
   return <div>{t('heatmapPlaceholder')}</div>;
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 60 };
+}

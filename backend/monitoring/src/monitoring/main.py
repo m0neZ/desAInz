@@ -19,6 +19,7 @@ from prometheus_client import (
 )
 
 from backend.shared.tracing import configure_tracing
+from backend.shared.profiling import add_profiling
 from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
@@ -32,6 +33,7 @@ configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_profiling(app)
 
 REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
 SIGNAL_TO_PUBLISH_SECONDS = Histogram(

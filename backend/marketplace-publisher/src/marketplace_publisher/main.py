@@ -15,6 +15,7 @@ from .logging_config import configure_logging
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
+from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 
@@ -36,8 +37,14 @@ rate_limiter = MarketplaceRateLimiter(
 
 @app.on_event("startup")
 async def startup() -> None:
-    """Initialize database tables."""
+    """Initialize database tables and load rules."""
     await init_db()
+    rules_path = (
+        Path(__file__).resolve().parent.parent.parent
+        / "config"
+        / "marketplace_rules.yaml"
+    )
+    load_rules(rules_path)
 
 
 @app.middleware("http")
@@ -76,8 +83,14 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
     """Create a publish task and run it in the background."""
     allowed = await rate_limiter.acquire(req.marketplace)
     if not allowed:
-        logger.warning("rate limit exceeded", extra={"marketplace": req.marketplace.value})
+        logger.warning(
+            "rate limit exceeded", extra={"marketplace": req.marketplace.value}
+        )
         raise HTTPException(status_code=429, detail="Rate limit exceeded")
+    try:
+        validate_mockup(req.marketplace, req.design_path)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     async with SessionLocal() as session:
         task = await create_task(
             session,

@@ -15,6 +15,8 @@ sqlalchemy = "*"
 asyncpg = "*"
 selenium = "*"
 redis = "*"
+pyyaml = "*"
+Pillow = "*"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"

@@ -1,7 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex h-screen">
       <aside className="w-64 bg-gray-800 text-white p-4">
@@ -17,6 +21,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             AB Tests
+          </Link>
+          <Link href="/dashboard/preferences" className="block hover:underline">
+            Preferences
           </Link>
         </nav>
       </aside>

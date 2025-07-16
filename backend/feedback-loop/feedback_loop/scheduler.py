@@ -9,6 +9,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from .ab_testing import ABTestManager
 from .ingestion import ingest_metrics
+from .analysis import highlight_low_performing
 from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,9 @@ def setup_scheduler(
     def hourly_ingest() -> None:
         df = ingest_metrics(metrics_source)
         logger.info("processed metrics frame size %s", len(df))
+        low = highlight_low_performing(df)
+        if low:
+            logger.info("low performing designs %s", low)
 
     def nightly_update() -> None:
         weights = {

@@ -9,6 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .clients import AmazonMerchClient, EtsyClient, RedbubbleClient, SeleniumFallback
+from .notifications import notify_failure
 from .db import (
     Marketplace,
     PublishStatus,
@@ -54,3 +55,4 @@ async def publish_with_retry(
             await update_task_status(session, task_id, PublishStatus.success)
         else:
             await update_task_status(session, task_id, PublishStatus.failed)
+            notify_failure(task_id, marketplace, design_path)

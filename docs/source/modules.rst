@@ -16,5 +16,11 @@ Modules
 .. automodule:: marketplace_publisher.publisher
     :members:
 
+.. automodule:: marketplace_publisher.notifications
+    :members:
+
+.. automodule:: feedback_loop.analysis
+    :members:
+
 .. automodule:: monitoring.main
     :members:

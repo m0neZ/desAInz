@@ -21,6 +21,7 @@ Welcome to desAInz's documentation!
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
    load_testing
+   mocking
    maintenance
    i18n
    security

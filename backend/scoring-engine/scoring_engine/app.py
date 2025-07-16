@@ -7,6 +7,7 @@ import os
 
 from flask import Flask, Response, jsonify, request
 import redis
+from backend.shared.tracing import configure_tracing
 
 from datetime import datetime
 
@@ -14,6 +15,7 @@ from .scoring import Signal, calculate_score
 from .weight_repository import get_weights, update_weights
 
 app = Flask(__name__)
+configure_tracing(app, "scoring-engine")
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 redis_client = redis.Redis.from_url(REDIS_URL)
 

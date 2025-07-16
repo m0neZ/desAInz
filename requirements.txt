@@ -10,3 +10,10 @@ requests-mock
 kafka-python
 jsonschema
 dagster
+prometheus-client
+psutil
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-flask
+Flask
+pydantic-settings

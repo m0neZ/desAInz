@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "monitoring"
+version = "0.1.0"
+description = "Monitoring service"
+authors = ["Your Name <you@example.com>"]
+packages = [{include = "monitoring", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.110"
+uvicorn = {extras = ["standard"], version = "^0.29"}
+psutil = "*"
+prometheus-client = "*"
+opentelemetry-sdk = "*"
+opentelemetry-instrumentation-fastapi = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+flake8 = "*"
+flake8-docstrings = "*"
+docformatter = "*"
+pydocstyle = "*"
+mypy = "*"
+
+[build-system]
+requires = ["poetry-core>=1.7.0"]
+build-backend = "poetry.core.masonry.api"

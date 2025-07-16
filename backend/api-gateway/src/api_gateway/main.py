@@ -11,6 +11,7 @@ from .routes import router
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
+from backend.shared import add_error_handlers
 
 
 configure_logging()
@@ -20,6 +21,7 @@ app = FastAPI(title="API Gateway")
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 configure_tracing(app, "api-gateway")
 add_profiling(app)
+add_error_handlers(app)
 
 
 @app.middleware("http")

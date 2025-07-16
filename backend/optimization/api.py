@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
+from backend.shared import add_error_handlers
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
 add_profiling(app)
+add_error_handlers(app)
 
 
 @app.middleware("http")

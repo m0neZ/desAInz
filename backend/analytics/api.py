@@ -19,6 +19,7 @@ from .auth import require_role
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
+from backend.shared import add_error_handlers
 
 
 configure_logging()
@@ -27,6 +28,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Analytics Service")
 configure_tracing(app, "analytics")
 add_profiling(app)
+add_error_handlers(app)
 
 
 @app.middleware("http")

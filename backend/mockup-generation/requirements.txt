@@ -1,0 +1,10 @@
+celery[redis]==5.2.7
+redis==4.5.4
+requests
+Pillow
+opencv-python-headless
+numpy
+jinja2
+diffusers
+transformers
+accelerate

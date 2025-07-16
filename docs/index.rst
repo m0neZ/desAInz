@@ -25,6 +25,7 @@ Welcome to desAInz's documentation!
    maintenance
    i18n
    security
+   roles
    daily_summary
 
 Kafka Utilities

@@ -26,3 +26,14 @@ test('navigates to Heatmap page when link clicked', async () => {
   await userEvent.click(screen.getByText('Heatmap'));
   expect(Router).toMatchObject({ pathname: '/dashboard/heatmap' });
 });
+
+test('navigates to Roles page when link clicked', async () => {
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  await userEvent.click(screen.getByText('Roles'));
+  expect(Router).toMatchObject({ pathname: '/dashboard/roles' });
+});

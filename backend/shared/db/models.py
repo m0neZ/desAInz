@@ -118,3 +118,13 @@ class MarketplaceMetric(Base):
     revenue: Mapped[float] = mapped_column(Float, default=0.0)
 
     listing: Mapped[Listing] = relationship()
+
+
+class UserRole(Base):
+    """Association between a username and its role."""
+
+    __tablename__ = "user_roles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    username: Mapped[str] = mapped_column(String(50), unique=True)
+    role: Mapped[str] = mapped_column(String(20))

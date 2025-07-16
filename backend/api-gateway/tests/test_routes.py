@@ -1,14 +1,14 @@
 """Tests for routing logic."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 
-from fastapi.testclient import TestClient
+from fastapi.testclient import TestClient  # noqa: E402
 
-from api_gateway.main import app
-from api_gateway.auth import create_access_token
+from api_gateway.main import app  # noqa: E402
+from api_gateway.auth import create_access_token  # noqa: E402
 
 client = TestClient(app)
 

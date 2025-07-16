@@ -11,6 +11,10 @@ the following actions:
   are deleted along with log files under the directory specified by `LOG_DIR`.
 
 A scheduler is configured to run these tasks daily using `apscheduler`.
+The Dagster orchestrator exposes the same routines via the `cleanup_job`, which
+is scheduled hourly. Administrators can trigger the job manually from the Admin
+Dashboard.
+
 Run the script directly to start the scheduler:
 
 ```bash

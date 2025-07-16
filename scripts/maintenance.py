@@ -39,7 +39,11 @@ def purge_stale_records() -> None:
     """Delete signals and log files older than 30 days."""
     cutoff = datetime.utcnow() - timedelta(days=30)
     with session_scope() as session:
-        deleted = session.query(Signal).filter(Signal.timestamp < cutoff).delete(synchronize_session=False)
+        deleted = (
+            session.query(Signal)
+            .filter(Signal.timestamp < cutoff)
+            .delete(synchronize_session=False)
+        )
         logger.info("Deleted %s stale signals", deleted)
     if LOG_DIR.exists():
         for path in LOG_DIR.glob("*.log"):

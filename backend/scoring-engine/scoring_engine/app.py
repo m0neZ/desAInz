@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 import redis
 
 from datetime import datetime
@@ -19,7 +19,7 @@ redis_client = redis.Redis.from_url(REDIS_URL)
 
 
 @app.get("/weights")
-def read_weights():
+def read_weights() -> Response:
     """Return current weighting parameters."""
     weights = get_weights()
     return jsonify(
@@ -34,7 +34,7 @@ def read_weights():
 
 
 @app.put("/weights")
-def update_weights_endpoint():
+def update_weights_endpoint() -> Response:
     """Update weighting parameters via JSON payload."""
     data = request.get_json(force=True)
     weights = update_weights(**data)
@@ -50,7 +50,7 @@ def update_weights_endpoint():
 
 
 @app.post("/score")
-def score_signal():
+def score_signal() -> Response:
     """Score a signal and cache hot results."""
     payload = request.get_json(force=True)
     key = json.dumps(payload, sort_keys=True)

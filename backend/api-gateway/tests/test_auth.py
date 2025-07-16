@@ -1,5 +1,10 @@
 """Tests for JWT auth middleware."""
 
+from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+
 from fastapi.testclient import TestClient
 
 from api_gateway.main import app

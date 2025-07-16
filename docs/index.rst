@@ -7,9 +7,23 @@ Welcome to desAInz's documentation!
 
    README
    configuration
+   architecture
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
-
+   staging_manual_qa
+   migrations
+   privacy
+   backup
+   api/modules
+   quickstart
+   cloud_deployment
+   troubleshooting
+   blueprints/DesignIdeaEngineCompleteBlueprint
+   admin_dashboard_trpc
+   load_testing
+   maintenance
+   i18n
+   security
 
 Kafka Utilities
 ---------------
@@ -24,4 +38,5 @@ Admin Dashboard
 ---------------
 The admin dashboard is a Next.js application found in ``frontend/admin-dashboard``.
 Any shared TypeScript interfaces located in this package are included in the
-documentation build.
+documentation build. The Tailwind configuration extends the default color
+palette and font families to maintain consistent styling.

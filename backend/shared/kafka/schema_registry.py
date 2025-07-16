@@ -3,15 +3,16 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
-import requests
+import requests  # type: ignore[import-untyped]
 
 
 class SchemaRegistryClient:
     """Simple client for interacting with a schema registry."""
 
     def __init__(self, url: str) -> None:
+        """Initialize the client with the registry ``url``."""
         self._url = url.rstrip("/")
 
     def register(self, subject: str, schema: Dict[str, Any]) -> None:
@@ -31,4 +32,4 @@ class SchemaRegistryClient:
             timeout=5,
         )
         response.raise_for_status()
-        return json.loads(response.text)
+        return cast(Dict[str, Any], json.loads(response.text))

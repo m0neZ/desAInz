@@ -1,5 +1,12 @@
 """Tests for the monitoring service."""
 
+from pathlib import Path
+import sys
+
+sys.path.append(
+    str(Path(__file__).resolve().parents[1] / "backend" / "monitoring" / "src")
+)
+
 from fastapi.testclient import TestClient
 
 from monitoring.main import app
@@ -21,3 +28,13 @@ def test_overview_endpoint() -> None:
     body = response.json()
     assert "cpu_percent" in body
     assert "memory_mb" in body
+
+
+def test_health_ready_endpoints() -> None:
+    """Health and readiness should return status."""
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+    response = client.get("/ready")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ready"}

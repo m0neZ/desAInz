@@ -14,6 +14,9 @@ from .adapters.youtube import YouTubeAdapter
 from .dedup import add_key, is_duplicate
 from .models import Signal
 from .publisher import publish
+from .privacy import purge_row
+from .retention import purge_old_signals
+from .settings import settings
 
 
 ADAPTERS = [
@@ -28,6 +31,7 @@ ADAPTERS = [
 
 async def ingest(session: AsyncSession) -> None:
     """Fetch signals from adapters and store them."""
+    await purge_old_signals(session, settings.signal_retention_days)
     for adapter in ADAPTERS:
         rows = await adapter.fetch()
         for row in rows:
@@ -35,7 +39,8 @@ async def ingest(session: AsyncSession) -> None:
             if is_duplicate(key):
                 continue
             add_key(key)
-            signal = Signal(source=adapter.__class__.__name__, content=str(row))
+            clean_row = purge_row(row)
+            signal = Signal(source=adapter.__class__.__name__, content=str(clean_row))
             session.add(signal)
             await session.commit()
             publish("signals", key)

@@ -24,7 +24,7 @@ configure_tracing(app, settings.app_name)
 REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
 
 
-@app.middleware("http")  # type: ignore[misc]
+@app.middleware("http")
 async def add_correlation_id(
     request: Request,
     call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -39,14 +39,14 @@ async def add_correlation_id(
     return response
 
 
-@app.get("/metrics")  # type: ignore[misc]
+@app.get("/metrics")
 async def metrics() -> Response:
     """Expose Prometheus metrics."""
     data = generate_latest()
     return Response(content=data, media_type=CONTENT_TYPE_LATEST)
 
 
-@app.get("/overview")  # type: ignore[misc]
+@app.get("/overview")
 async def overview() -> dict[str, float]:
     """Return basic system information."""
     return {
@@ -55,13 +55,13 @@ async def overview() -> dict[str, float]:
     }
 
 
-@app.get("/analytics")  # type: ignore[misc]
+@app.get("/analytics")
 async def analytics() -> dict[str, int]:
     """Return placeholder analytics dashboard data."""
     return {"active_users": 0, "error_rate": 0}
 
 
-@app.get("/logs")  # type: ignore[misc]
+@app.get("/logs")
 async def logs() -> dict[str, str]:
     """Return the latest application logs."""
     path = Path(settings.log_file)
@@ -69,6 +69,18 @@ async def logs() -> dict[str, str]:
         return {"logs": ""}
     lines = path.read_text(encoding="utf-8").splitlines()[-100:]
     return {"logs": "\n".join(lines)}
+
+
+@app.get("/health")
+async def health() -> dict[str, str]:
+    """Return service liveness."""
+    return {"status": "ok"}
+
+
+@app.get("/ready")
+async def ready() -> dict[str, str]:
+    """Return service readiness."""
+    return {"status": "ready"}
 
 
 if __name__ == "__main__":  # pragma: no cover

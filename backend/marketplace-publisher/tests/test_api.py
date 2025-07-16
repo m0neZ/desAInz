@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 from fastapi.testclient import TestClient
+import fakeredis.aioredis
 
 
 def test_publish_and_progress(monkeypatch, tmp_path) -> None:
     """Publish design and check initial progress."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
+    monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     from marketplace_publisher.db import Marketplace
-    from marketplace_publisher.main import app
+    from marketplace_publisher.main import app, rate_limiter
     from marketplace_publisher import publisher
+
+    rate_limiter._redis = fakeredis.aioredis.FakeRedis()
 
     class DummyClient:
         def publish_design(self, design_path, metadata):

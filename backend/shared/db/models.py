@@ -62,6 +62,7 @@ class Listing(Base):
     mockup_id: Mapped[int] = mapped_column(ForeignKey("mockups.id"))
     price: Mapped[float] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    state: Mapped[str] = mapped_column(String(50), default="pending")
 
     mockup: Mapped[Mockup] = relationship(back_populates="listings")
     tests: Mapped[list["ABTest"]] = relationship(back_populates="listing")

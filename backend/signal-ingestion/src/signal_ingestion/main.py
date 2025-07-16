@@ -10,6 +10,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi import Depends, FastAPI, Request, Response
 
+from backend.shared.tracing import configure_tracing
+
 from .database import get_session, init_db
 from .ingestion import ingest
 from .logging_config import configure_logging
@@ -18,6 +20,7 @@ from .settings import settings
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
+configure_tracing("signal-ingestion", app)
 
 
 @app.on_event("startup")

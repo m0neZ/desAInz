@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "monitoring"
+version = "0.1.0"
+description = "Monitoring service exposing Prometheus metrics"
+authors = ["Your Name <you@example.com>"]
+packages = [{include = "monitoring", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.110"
+uvicorn = {extras = ["standard"], version = "^0.29"}
+prometheus-client = "^0.20"
+psutil = "^5.9"
+opentelemetry-api = "^1.22"
+opentelemetry-sdk = "^1.22"
+opentelemetry-exporter-otlp = "^1.22"
+opentelemetry-instrumentation-fastapi = "^0.44b0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1"
+httpx = "^0.27"
+flake8 = "^7.0"
+black = "^24.3"
+mypy = "^1.9"
+docformatter = "^1.7"
+flake8-docstrings = "^1.7"
+pydocstyle = "^6.3"
+
+[tool.black]
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+docstring-convention = "google"
+
+[tool.mypy]
+strict = true
+
+[tool.docformatter]
+wrap-summaries = 88
+wrap-descriptions = 88
+pre-summary-newline = true
+
+[tool.pydocstyle]
+convention = "google"
+
+[build-system]
+requires = ["poetry-core>=1.7.0"]
+build-backend = "poetry.core.masonry.api"

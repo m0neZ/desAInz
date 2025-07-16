@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 # -- Path setup --------------------------------------------------------------
 
 sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "backend", "monitoring", "src")))
 
 # -- Project information -----------------------------------------------------
 
@@ -32,7 +33,7 @@ source_suffix = {
 }
 
 templates_path = ["_templates"]
-exclude_patterns: list[str] = []
+exclude_patterns: list[str] = ["scoring_engine/*", "sphinx/*"]
 
 # Treat warnings as errors
 nitpicky = True

@@ -8,12 +8,15 @@ from typing import Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
 
+from backend.shared.tracing import configure_tracing
+
 from .logging_config import configure_logging
 from .settings import settings
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
+configure_tracing("service-template", app)
 
 
 @app.middleware("http")

@@ -9,6 +9,11 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from opentelemetry import trace
 
+try:  # pragma: no cover - optional dependency
+    import sentry_sdk
+except Exception:  # pragma: no cover - sentry optional
+    sentry_sdk = None
+
 
 def _trace_id() -> str | None:
     """Return current trace ID if available."""
@@ -38,6 +43,13 @@ def unhandled_exception_handler(request: Request, exc: Exception) -> JSONRespons
         "unhandled exception",
         extra={"correlation_id": correlation_id, "trace_id": trace_id},
     )
+    if sentry_sdk and sentry_sdk.Hub.current.client is not None:
+        with sentry_sdk.push_scope() as scope:
+            if correlation_id:
+                scope.set_tag("correlation_id", correlation_id)
+            if trace_id:
+                scope.set_tag("trace_id", trace_id)
+            sentry_sdk.capture_exception(exc)
     body = {
         "error": "Internal Server Error",
         "correlation_id": correlation_id,

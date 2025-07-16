@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
-from backend.shared import add_error_handlers
+from backend.shared import add_error_handlers, configure_sentry
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
+configure_sentry(app, "optimization")
 add_profiling(app)
 add_error_handlers(app)
 
@@ -34,6 +35,12 @@ async def add_correlation_id(
     """Ensure each request includes a correlation ID."""
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     request.state.correlation_id = correlation_id
+    try:
+        import sentry_sdk
+
+        sentry_sdk.set_tag("correlation_id", correlation_id)
+    except Exception:  # pragma: no cover - sentry optional
+        pass
     logger.info("request received", extra={"correlation_id": correlation_id})
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id

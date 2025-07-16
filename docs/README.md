@@ -1,7 +1,7 @@
 # Documentation
 
-The `blueprints` folder contains the consolidated design documentation for the project.
+The `blueprints` folder contains a single comprehensive blueprint for the project.
 
-- [Design Idea Engine Blueprint](blueprints/DesignIdeaEngine.md)
+- [Design Idea Engine Complete Blueprint](blueprints/DesignIdeaEngineCompleteBlueprint.md)
 
-This blueprint merges the original project summary, system architecture, deployment guide, and implementation plan into a single reference document.
+This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.

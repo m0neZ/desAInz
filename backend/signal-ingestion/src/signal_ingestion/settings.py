@@ -10,6 +10,7 @@ class Settings(BaseSettings):
 
     app_name: str = "signal-ingestion"
     log_level: str = "INFO"
+    signal_retention_days: int = 90
 
     class Config:
         """Pydantic configuration for ``Settings``."""

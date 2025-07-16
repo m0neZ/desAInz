@@ -18,3 +18,10 @@ The `backend/service-template` directory contains a minimal FastAPI service. The
 application loads configuration from environment variables using
 `pydantic.BaseSettings`. Variables can be provided via a `.env` file. The
 `Settings` class is defined in `src/settings.py` and read on startup.
+
+## Load Testing
+
+Load tests use [Locust](https://locust.io/) and live in the `load_tests`
+directory. To exercise the endpoints locally, start the services you want to
+benchmark and run `scripts/run_load_tests.sh`. Continuous integration executes
+the same script via the `loadtest` workflow.

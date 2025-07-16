@@ -1,7 +1,9 @@
 """JWT authentication utilities."""
 
+from __future__ import annotations
+
 from datetime import UTC, datetime, timedelta
-from typing import Any, Dict
+from typing import Any, Dict, Callable
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -39,3 +41,20 @@ def verify_token(
             status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token"
         ) from exc
     return payload
+
+
+def require_role(required_role: str) -> Callable[[Dict[str, Any]], Dict[str, Any]]:
+    """Return dependency that ensures the token contains the given role."""
+
+    def _require_role(
+        payload: Dict[str, Any] = Depends(verify_token),
+    ) -> Dict[str, Any]:
+        role = payload.get("role")
+        if role != required_role:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Insufficient role",
+            )
+        return payload
+
+    return _require_role

@@ -7,5 +7,7 @@
   "signalStreamComingSoon": "Signal stream coming soon.",
   "galleryPlaceholder": "Gallery page placeholder.",
   "heatmapPlaceholder": "Heatmap page placeholder.",
-  "abTestsPlaceholder": "AB Tests page placeholder."
+  "abTestsPlaceholder": "AB Tests page placeholder.",
+  "roles": "Roles",
+  "rolesPlaceholder": "Assign roles to users."
 }

@@ -1,5 +1,7 @@
 """API Gateway FastAPI application."""
 
+from __future__ import annotations
+
 from fastapi import FastAPI
 
 from .routes import router
@@ -9,13 +11,13 @@ app = FastAPI(title="API Gateway")
 configure_tracing(app, "api-gateway")
 
 
-@app.get("/health")
+@app.get("/health")  # type: ignore[misc]
 async def health() -> dict[str, str]:
     """Return service liveness."""
     return {"status": "ok"}
 
 
-@app.get("/ready")
+@app.get("/ready")  # type: ignore[misc]
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}

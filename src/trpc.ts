@@ -1,5 +1,4 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
-import type { inferRouterProxyClient } from '@trpc/client';
 
 /**
  * Types describing the available tRPC procedures.

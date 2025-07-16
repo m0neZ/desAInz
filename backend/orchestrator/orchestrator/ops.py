@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import os
-from typing import List
 
 from dagster import Failure, RetryPolicy, op
 
 
 @op
-def ingest_signals(context) -> List[str]:
+def ingest_signals(  # type: ignore[no-untyped-def]
+    context,
+) -> list[str]:
     """Fetch new signals."""
     context.log.info("ingesting signals")
     # Placeholder for actual ingestion logic
@@ -17,7 +18,10 @@ def ingest_signals(context) -> List[str]:
 
 
 @op
-def score_signals(context, signals: List[str]) -> List[float]:
+def score_signals(  # type: ignore[no-untyped-def]
+    context,
+    signals: list[str],
+) -> list[float]:
     """Score the ingested signals."""
     context.log.info("scoring %d signals", len(signals))
     # Placeholder for actual scoring logic
@@ -25,7 +29,10 @@ def score_signals(context, signals: List[str]) -> List[float]:
 
 
 @op
-def generate_content(context, scores: List[float]) -> List[str]:
+def generate_content(  # type: ignore[no-untyped-def]
+    context,
+    scores: list[float],
+) -> list[str]:
     """Generate content based on scores."""
     context.log.info("generating %d items", len(scores))
     # Placeholder for actual generation logic
@@ -40,9 +47,30 @@ def await_approval() -> None:
 
 
 @op(retry_policy=RetryPolicy(max_retries=3, delay=1))
-def publish_content(context, items: List[str]) -> None:
+def publish_content(  # type: ignore[no-untyped-def]
+    context,
+    items: list[str],
+) -> None:
     """Publish generated content."""
     context.log.info("publishing %d items", len(items))
     # Placeholder for actual publish logic
     for item in items:
         context.log.debug("published %s", item)
+
+
+@op
+def backup_data(  # type: ignore[no-untyped-def]
+    context,
+) -> None:
+    """Create a backup of critical datasets."""
+    context.log.info("performing backup")
+    # Placeholder for backup logic
+
+
+@op
+def cleanup_data(  # type: ignore[no-untyped-def]
+    context,
+) -> None:
+    """Remove temporary or stale data."""
+    context.log.info("running cleanup")
+    # Placeholder for cleanup logic

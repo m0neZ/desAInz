@@ -1,5 +1,12 @@
 """Orchestration pipelines using Dagster."""
 
-from .jobs import idea_job
+from .jobs import cleanup_job, idea_job, backup_job
+from .schedules import daily_backup_schedule, hourly_cleanup_schedule
 
-__all__ = ["idea_job"]
+__all__ = [
+    "idea_job",
+    "backup_job",
+    "cleanup_job",
+    "daily_backup_schedule",
+    "hourly_cleanup_schedule",
+]

@@ -30,7 +30,17 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 
-autodoc_mock_imports = ["flask", "diffusers", "redis", "torch"]
+autodoc_mock_imports = [
+    "flask",
+    "diffusers",
+    "redis",
+    "torch",
+    "numpy",
+    "sklearn",
+    "sqlalchemy",
+    "psycopg2",
+    "selenium",
+]
 
 source_suffix = {
     ".rst": "restructuredtext",
@@ -38,7 +48,10 @@ source_suffix = {
 }
 
 templates_path = ["_templates"]
-exclude_patterns: list[str] = []
+exclude_patterns: list[str] = [
+    "scoring_engine/*",
+    "source/*",
+]
 
 # Treat warnings as errors
 nitpicky = True

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from fastapi import FastAPI
 from flask import Flask
 from opentelemetry import trace
@@ -16,11 +17,12 @@ def configure_tracing(app: FastAPI | Flask, service_name: str) -> None:
     """Configure basic tracing for ``app``."""
     resource = Resource.create({"service.name": service_name})
     provider = TracerProvider(resource=resource)
-    processor = BatchSpanProcessor(ConsoleSpanExporter())
-    provider.add_span_processor(processor)
+    if not os.environ.get("DISABLE_TRACING"):
+        processor = BatchSpanProcessor(ConsoleSpanExporter())
+        provider.add_span_processor(processor)
     trace.set_tracer_provider(provider)
 
     if isinstance(app, FastAPI):
         FastAPIInstrumentor.instrument_app(app)
     else:
-        FlaskInstrumentor().instrument_app(app)
+        FlaskInstrumentor().instrument_app(app)  # type: ignore[no-untyped-call]

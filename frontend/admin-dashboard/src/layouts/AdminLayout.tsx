@@ -1,11 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex h-screen">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <aside className="w-64 bg-gray-800 text-white p-4">
-        <nav className="space-y-2">
+        <nav className="space-y-2" role="navigation" aria-label="Main">
           <Link href="/dashboard" className="block hover:underline">
             Dashboard
           </Link>
@@ -21,8 +28,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
       </aside>
       <div className="flex flex-col flex-1">
-        <header className="bg-gray-100 p-4 shadow">Admin Dashboard</header>
-        <main className="p-4 flex-1 overflow-auto">{children}</main>
+        <header className="bg-gray-100 p-4 shadow" aria-label="Page header">
+          Admin Dashboard
+        </header>
+        <main id="main-content" className="p-4 flex-1 overflow-auto">
+          {children}
+        </main>
       </div>
     </div>
   );

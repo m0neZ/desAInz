@@ -1,0 +1,8 @@
+black
+flake8
+mypy
+isort
+pydocstyle
+flake8-docstrings
+docformatter
+pytest

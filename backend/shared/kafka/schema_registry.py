@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
-import requests
+import requests  # type: ignore[import-untyped]
 
 
 class SchemaRegistryClient:
@@ -32,4 +32,4 @@ class SchemaRegistryClient:
             timeout=5,
         )
         response.raise_for_status()
-        return json.loads(response.text)
+        return cast(Dict[str, Any], json.loads(response.text))

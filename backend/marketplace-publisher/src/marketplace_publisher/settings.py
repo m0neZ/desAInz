@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     unleash_url: str | None = None
     unleash_api_token: str | None = None
     unleash_app_name: str = "marketplace-publisher"
+    slack_webhook_url: str | None = None
 
 
 settings = Settings()

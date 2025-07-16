@@ -15,5 +15,8 @@
   "cleanupFailed": "Cleanup failed",
   "updateAndPublish": "Update & Publish",
   "updateFailed": "Update failed",
-  "publishScheduled": "Publish scheduled"
+  "publishScheduled": "Publish scheduled",
+  "lowPerformers": "Low Performing Listings",
+  "preferences": "Preferences",
+  "notifyOnFail": "Notify on publish failure"
 }

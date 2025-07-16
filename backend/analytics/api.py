@@ -60,6 +60,13 @@ class MarketplaceSummary(BaseModel):  # type: ignore[misc]
     revenue: float
 
 
+class LowPerformer(BaseModel):  # type: ignore[misc]
+    """Listing with the lowest revenue."""
+
+    listing_id: int
+    revenue: float
+
+
 @app.get("/ab_test_results/{ab_test_id}")  # type: ignore[misc]
 def ab_test_results(ab_test_id: int) -> ABTestSummary:
     """Return aggregated A/B test results."""
@@ -129,6 +136,25 @@ def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
         purchases=purchases,
         revenue=revenue,
     )
+
+
+@app.get("/low_performers")  # type: ignore[misc]
+def low_performers(limit: int = 10) -> list[LowPerformer]:
+    """Return listings with the lowest total revenue."""
+    with SessionLocal() as session:
+        rows = (
+            session.query(
+                models.MarketplaceMetric.listing_id,
+                func.coalesce(func.sum(models.MarketplaceMetric.revenue), 0.0).label(
+                    "rev"
+                ),
+            )
+            .group_by(models.MarketplaceMetric.listing_id)
+            .order_by("rev")
+            .limit(limit)
+            .all()
+        )
+    return [LowPerformer(listing_id=row[0], revenue=row[1]) for row in rows]
 
 
 @app.get("/marketplace_metrics/{listing_id}/export")  # type: ignore[misc]

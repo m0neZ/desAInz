@@ -24,11 +24,17 @@ export default function AdminLayout({
           <Link href="/dashboard/publish" className="block hover:underline">
             {t('updateAndPublish')}
           </Link>
+          <Link href="/dashboard/low-performers" className="block hover:underline">
+            {t('lowPerformers')}
+          </Link>
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             {t('abTests')}
           </Link>
           <Link href="/dashboard/roles" className="block hover:underline">
             {t('roles')}
+          </Link>
+          <Link href="/dashboard/preferences" className="block hover:underline">
+            {t('preferences')}
           </Link>
           <Link href="/dashboard/maintenance" className="block hover:underline">
             {t('maintenance')}

@@ -16,6 +16,7 @@ from .clients import (
     SeleniumFallback,
 )
 from .trademark import is_trademarked
+from .notifications import notify_failure
 from .db import (
     Marketplace,
     PublishStatus,
@@ -49,6 +50,7 @@ async def publish_with_retry(
         title = str(metadata.get("title", ""))
         if title and is_trademarked(title):
             await update_task_status(session, task_id, PublishStatus.failed)
+            notify_failure(task_id, marketplace.value)
             return
 
         client = CLIENTS[marketplace]
@@ -67,3 +69,4 @@ async def publish_with_retry(
             await update_task_status(session, task_id, PublishStatus.success)
         else:
             await update_task_status(session, task_id, PublishStatus.failed)
+            notify_failure(task_id, marketplace.value)

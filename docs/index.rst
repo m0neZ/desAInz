@@ -8,7 +8,11 @@ Welcome to desAInz's documentation!
    README
    blueprints/DesignIdeaEngineCompleteBlueprint
 
-Signal Ingestion Service
------------------------
-.. automodule:: signal_ingestion
+
+Kafka Utilities
+---------------
+.. automodule:: backend.shared.kafka.utils
+    :members:
+
+.. automodule:: backend.shared.kafka.schema_registry
     :members:

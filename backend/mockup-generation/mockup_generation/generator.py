@@ -6,6 +6,8 @@ import logging
 from dataclasses import dataclass
 from typing import Optional
 
+from PIL import Image
+
 import requests
 from diffusers import StableDiffusionXLPipeline
 import torch
@@ -48,6 +50,7 @@ class MockupGenerator:
         from time import perf_counter
 
         self.load()
+        assert self.pipeline is not None
         start = perf_counter()
         try:
             image = self.pipeline(
@@ -60,7 +63,7 @@ class MockupGenerator:
         image.save(output_path)
         return GenerationResult(image_path=output_path, duration=duration)
 
-    def _fallback_api(self, prompt: str):
+    def _fallback_api(self, prompt: str) -> Image.Image:
         """Call external API as a fallback mechanism."""
         response = requests.post(
             "https://api.example.com/generate",

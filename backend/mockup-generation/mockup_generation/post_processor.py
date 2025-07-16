@@ -63,3 +63,21 @@ def validate_dpi(image_path: Path, expected_dpi: Tuple[int, int] = (300, 300)) -
     image = Image.open(image_path)
     dpi = cast(Tuple[int, int], image.info.get("dpi", expected_dpi))
     return dpi == expected_dpi
+
+
+def validate_color_space(image: Image.Image, expected_mode: str = "CMYK") -> bool:
+    """Return ``True`` if ``image`` uses ``expected_mode`` color space."""
+    return image.mode == expected_mode
+
+
+def validate_dpi_image(
+    image: Image.Image, expected_dpi: Tuple[int, int] = (300, 300)
+) -> bool:
+    """Return ``True`` if ``image`` has the expected DPI."""
+    dpi = cast(Tuple[int, int], image.info.get("dpi", expected_dpi))
+    return dpi == expected_dpi
+
+
+def compress_lossless(image: Image.Image, output_path: Path) -> None:
+    """Save ``image`` at ``output_path`` using lossless compression."""
+    image.save(output_path, format="PNG", optimize=True)

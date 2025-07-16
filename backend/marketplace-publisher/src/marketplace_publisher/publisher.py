@@ -8,7 +8,13 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .clients import AmazonMerchClient, EtsyClient, RedbubbleClient, SeleniumFallback
+from .clients import (
+    AmazonMerchClient,
+    EtsyClient,
+    RedbubbleClient,
+    Society6Client,
+    SeleniumFallback,
+)
 from .trademark import is_trademarked
 from .db import (
     Marketplace,
@@ -23,6 +29,7 @@ CLIENTS = {
     Marketplace.redbubble: RedbubbleClient(),
     Marketplace.amazon_merch: AmazonMerchClient(),
     Marketplace.etsy: EtsyClient(),
+    Marketplace.society6: Society6Client(),
 }
 
 _fallback = SeleniumFallback()

@@ -24,10 +24,12 @@ Welcome to desAInz's documentation!
    load_testing
    mocking
    maintenance
+   publish_tasks
    i18n
    security
    roles
    daily_summary
+   feature-flags
    openapi_specs
 
 Kafka Utilities

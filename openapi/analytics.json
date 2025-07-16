@@ -45,6 +45,49 @@
         }
       }
     },
+    "/ab_test_results/{ab_test_id}/export": {
+      "get": {
+        "summary": "Export Ab Test Results",
+        "description": "Return all A/B test result rows for ``ab_test_id`` as CSV.",
+        "operationId": "export_ab_test_results_ab_test_results__ab_test_id__export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ab_test_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Ab Test Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/marketplace_metrics/{listing_id}": {
       "get": {
         "summary": "Marketplace Metrics",
@@ -69,6 +112,49 @@
                 "schema": {
                   "$ref": "#/components/schemas/MarketplaceSummary"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/marketplace_metrics/{listing_id}/export": {
+      "get": {
+        "summary": "Export Marketplace Metrics",
+        "description": "Return all marketplace metrics rows for ``listing_id`` as CSV.",
+        "operationId": "export_marketplace_metrics_marketplace_metrics__listing_id__export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Listing Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -232,6 +318,12 @@
           "type"
         ],
         "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }

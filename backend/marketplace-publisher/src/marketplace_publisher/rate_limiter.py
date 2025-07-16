@@ -20,7 +20,8 @@ class MarketplaceRateLimiter:
         limits: Mapping[Marketplace, int],
         window: int,
     ) -> None:
-        """Instantiate the rate limiter.
+        """
+        Instantiate the rate limiter.
 
         Args:
             redis: Redis client instance.
@@ -32,7 +33,8 @@ class MarketplaceRateLimiter:
         self._window = window
 
     async def acquire(self, marketplace: Marketplace) -> bool:
-        """Attempt to consume a request slot.
+        """
+        Attempt to consume a request slot.
 
         Args:
             marketplace: Marketplace for which to consume a slot.

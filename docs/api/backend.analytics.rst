@@ -16,3 +16,11 @@ backend.analytics.api module
    :members:
    :show-inheritance:
    :undoc-members:
+
+backend.analytics.auth module
+-----------------------------
+
+.. automodule:: backend.analytics.auth
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -13,5 +13,7 @@ pytest-asyncio
 aiosqlite
 locust
 
+UnleashClient
+
 pip-audit
 sphinxcontrib-openapi

@@ -21,6 +21,9 @@ export default function AdminLayout({
           <Link href="/dashboard/gallery" className="block hover:underline">
             {t('gallery')}
           </Link>
+          <Link href="/dashboard/publish" className="block hover:underline">
+            {t('updateAndPublish')}
+          </Link>
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             {t('abTests')}
           </Link>

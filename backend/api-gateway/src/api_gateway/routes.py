@@ -1,6 +1,9 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
 from typing import Any, Dict
+import os
+
+import httpx
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
@@ -12,6 +15,11 @@ from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
 from mockup_generation.model_repository import list_models, set_default
 from scripts import maintenance
+
+PUBLISHER_URL = os.environ.get(
+    "PUBLISHER_URL",
+    "http://marketplace-publisher:8000",
+)
 
 router = APIRouter()
 
@@ -146,3 +154,41 @@ async def switch_default_model(
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail=str(exc))
     log_admin_action(payload.get("sub", "unknown"), "switch_model", {"id": model_id})
     return {"status": "ok"}
+
+@router.patch("/publish-tasks/{task_id}")
+async def edit_publish_task(
+    task_id: int,
+    body: Dict[str, Any],
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, str]:
+    """Edit metadata for a pending publish task."""
+    url = f"{PUBLISHER_URL}/tasks/{task_id}"
+    async with httpx.AsyncClient() as client:
+        resp = await client.patch(url, json=body)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    log_admin_action(
+        payload.get("sub", "unknown"),
+        "edit_publish_task",
+        {"task_id": task_id, "metadata": body},
+    )
+    return {"status": "updated"}
+
+
+@router.post("/publish-tasks/{task_id}/retry")
+async def retry_publish_task(
+    task_id: int,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, str]:
+    """Re-trigger publishing for a task."""
+    url = f"{PUBLISHER_URL}/tasks/{task_id}/retry"
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    log_admin_action(
+        payload.get("sub", "unknown"),
+        "retry_publish_task",
+        {"task_id": task_id},
+    )
+    return {"status": "scheduled"}

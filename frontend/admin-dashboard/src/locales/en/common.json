@@ -8,5 +8,9 @@
   "signalStreamComingSoon": "Signal stream coming soon.",
   "galleryPlaceholder": "Gallery page placeholder.",
   "heatmapPlaceholder": "Heatmap page placeholder.",
-  "abTestsPlaceholder": "AB Tests page placeholder."
+  "abTestsPlaceholder": "AB Tests page placeholder.",
+  "maintenance": "Maintenance",
+  "runCleanup": "Run Cleanup",
+  "cleanupTriggered": "Cleanup triggered",
+  "cleanupFailed": "Cleanup failed"
 }

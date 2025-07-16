@@ -37,3 +37,14 @@ test('navigates to Roles page when link clicked', async () => {
   await userEvent.click(screen.getByText('Roles'));
   expect(Router).toMatchObject({ pathname: '/dashboard/roles' });
 });
+
+test('navigates to Maintenance page when link clicked', async () => {
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  await userEvent.click(screen.getByText('Maintenance'));
+  expect(Router).toMatchObject({ pathname: '/dashboard/maintenance' });
+});

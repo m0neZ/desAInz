@@ -6,6 +6,8 @@ import os
 
 from dagster import Failure, RetryPolicy, op
 
+from scripts import maintenance
+
 
 @op
 def ingest_signals(  # type: ignore[no-untyped-def]
@@ -73,4 +75,5 @@ def cleanup_data(  # type: ignore[no-untyped-def]
 ) -> None:
     """Remove temporary or stale data."""
     context.log.info("running cleanup")
-    # Placeholder for cleanup logic
+    maintenance.archive_old_mockups()
+    maintenance.purge_stale_records()

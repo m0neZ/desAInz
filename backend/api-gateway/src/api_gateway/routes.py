@@ -8,6 +8,7 @@ from sqlalchemy import select
 from .auth import verify_token, require_role
 from backend.shared.db import session_scope
 from backend.shared.db.models import UserRole
+from scripts import maintenance
 
 router = APIRouter()
 
@@ -55,6 +56,16 @@ async def protected(
 ) -> Dict[str, Any]:
     """Protected endpoint requiring ``admin`` role."""
     return {"user": payload.get("sub")}
+
+
+@router.post("/maintenance/cleanup")  # type: ignore[misc]
+async def trigger_cleanup(
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, str]:
+    """Run cleanup tasks immediately."""
+    maintenance.archive_old_mockups()
+    maintenance.purge_stale_records()
+    return {"status": "ok"}
 
 
 @router.post("/trpc/{procedure}")  # type: ignore[misc]

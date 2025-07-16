@@ -11,6 +11,7 @@ Welcome to desAInz's documentation!
    troubleshooting
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
+   load_testing
    maintenance
    i18n
    security

@@ -11,3 +11,4 @@ asyncpg
 scikit-learn
 pytest-asyncio
 aiosqlite
+locust

@@ -15,3 +15,6 @@ Modules
 
 .. automodule:: marketplace_publisher.publisher
     :members:
+
+.. automodule:: monitoring.main
+    :members:

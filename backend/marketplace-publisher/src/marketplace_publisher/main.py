@@ -1,4 +1,4 @@
-"""Entrypoint for the marketplace publisher service."""
+"""Run the marketplace publisher service."""
 
 from __future__ import annotations
 
@@ -14,10 +14,12 @@ from .logging_config import configure_logging
 from .settings import settings
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .publisher import publish_with_retry
+from backend.shared.tracing import configure_tracing
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
+configure_tracing(app, settings.app_name)
 
 
 @app.on_event("startup")
@@ -50,7 +52,7 @@ class PublishRequest(BaseModel):
 
 
 async def _background_publish(task_id: int, req: PublishRequest) -> None:
-    """Wrapper for background publishing."""
+    """Wrap background publishing."""
     async with SessionLocal() as session:
         await publish_with_retry(
             session, task_id, req.marketplace, req.design_path, req.metadata

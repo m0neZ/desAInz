@@ -15,11 +15,13 @@ from .ingestion import ingest
 from .logging_config import configure_logging
 from .settings import settings
 from backend.shared.tracing import configure_tracing
+from backend.shared.error_handling import add_fastapi_error_handlers
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_fastapi_error_handlers(app)
 
 
 @app.on_event("startup")

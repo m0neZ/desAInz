@@ -8,12 +8,14 @@ from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
+from backend.shared.error_handling import add_fastapi_error_handlers
 
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
+add_fastapi_error_handlers(app)
 store = MetricsStore()
 
 

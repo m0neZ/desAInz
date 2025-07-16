@@ -15,11 +15,13 @@ from .settings import settings
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
+from backend.shared.error_handling import add_fastapi_error_handlers
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_fastapi_error_handlers(app)
 
 
 @app.on_event("startup")

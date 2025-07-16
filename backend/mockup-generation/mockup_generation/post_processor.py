@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from threading import Lock
 
 import open_clip
 import torch
@@ -15,17 +16,19 @@ from PIL import Image
 
 _clip_model: Module | None = None
 _clip_preprocess: Callable[[Image.Image], torch.Tensor] | None = None
+_clip_lock = Lock()
 _nsfw_tokens = open_clip.tokenize(["nsfw", "nudity", "pornography"]).to("cpu")
 
 
 def _load_clip() -> None:
     """Load CLIP model on first use."""
     global _clip_model, _clip_preprocess
-    if _clip_model is None:
-        _clip_model, _, _clip_preprocess = open_clip.create_model_and_transforms(
-            "ViT-B-32", pretrained="openai"
-        )
-        _clip_model.eval()
+    with _clip_lock:
+        if _clip_model is None:
+            _clip_model, _, _clip_preprocess = open_clip.create_model_and_transforms(
+                "ViT-B-32", pretrained="openai"
+            )
+            _clip_model.eval()
 
 
 def remove_background(image: Image.Image) -> Image.Image:

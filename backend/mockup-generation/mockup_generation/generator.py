@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
+from threading import Lock
 from typing import Optional
 
 from PIL import Image
@@ -33,17 +34,19 @@ class MockupGenerator:
         """Initialize the generator and defer model lookup."""
         self.model_id = get_default_model_id()
         self.pipeline: Optional[StableDiffusionXLPipeline] = None
+        self._lock = Lock()
 
     def load(self) -> None:
         """Load the diffusion pipeline on GPU if available."""
         current = get_default_model_id()
-        if self.pipeline is None or self.model_id != current:
-            self.model_id = current
-            device = "cuda" if torch.cuda.is_available() else "cpu"
-            self.pipeline = StableDiffusionXLPipeline.from_pretrained(self.model_id).to(
-                device
-            )
-            self.pipeline.enable_attention_slicing()
+        with self._lock:
+            if self.pipeline is None or self.model_id != current:
+                self.model_id = current
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+                self.pipeline = StableDiffusionXLPipeline.from_pretrained(
+                    self.model_id
+                ).to(device)
+                self.pipeline.enable_attention_slicing()
 
     def generate(
         self, prompt: str, output_path: str, *, num_inference_steps: int = 30

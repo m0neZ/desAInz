@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function DashboardPage() {
-  return <div>Signal stream coming soon.</div>;
+  const { t } = useTranslation();
+  return <div>{t('signalStreamComingSoon')}</div>;
 }

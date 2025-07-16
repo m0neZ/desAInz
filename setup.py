@@ -1,3 +1,5 @@
-from setuptools import setup, find_packages
+"""Package setup for desAInz."""
 
-setup(name='desAInz', version='0.1', packages=find_packages())
+from setuptools import find_packages, setup
+
+setup(name="desAInz", version="0.1", packages=find_packages())

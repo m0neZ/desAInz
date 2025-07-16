@@ -17,9 +17,14 @@ class PromptContext:
     extra: Dict[str, Any] = field(default_factory=dict)
 
 
-TEMPLATE = Template("A {{ style }} design featuring {{ keywords | join(', ') }}. {{ extra.get('note', '') }}")
+TEMPLATE = Template(
+    (
+        "A {{ style }} design featuring {{ keywords | join(', ') }}. "
+        "{{ extra.get('note', '') }}"
+    )
+)
 
 
 def build_prompt(context: PromptContext) -> str:
     """Return a formatted prompt string."""
-    return TEMPLATE.render(**context.__dict__)
+    return str(TEMPLATE.render(**context.__dict__))

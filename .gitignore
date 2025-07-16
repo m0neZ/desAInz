@@ -1,4 +1,7 @@
-__pycache__/
-docs/build/
 *.egg-info/
 metrics.db
+docs/sphinx/_build/
+docs/_build/
+__pycache__/
+node_modules/
+flow-typed/

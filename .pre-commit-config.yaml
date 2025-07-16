@@ -3,7 +3,6 @@ repos:
     rev: 24.4.2
     hooks:
       - id: black
-        args: ["--check"]
   - repo: https://github.com/pycqa/flake8
     rev: 7.0.0
     hooks:
@@ -38,7 +37,7 @@ repos:
         language: node
         files: \.(js|jsx|ts|tsx|css|scss|md)$
         additional_dependencies: ["prettier"]
-        args: ["--check"]
+        args: ["--write"]
       - id: flow
         name: flow
         entry: flow

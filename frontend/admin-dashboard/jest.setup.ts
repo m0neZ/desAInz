@@ -1,1 +1,16 @@
 import '@testing-library/jest-dom';
+
+// Fail tests if any console warnings or errors are logged.
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation((...args) => {
+    throw new Error(`console.error: ${args.join(' ')}`);
+  });
+  jest.spyOn(console, 'warn').mockImplementation((...args) => {
+    throw new Error(`console.warn: ${args.join(' ')}`);
+  });
+});
+
+afterAll(() => {
+  (console.error as jest.Mock).mockRestore();
+  (console.warn as jest.Mock).mockRestore();
+});

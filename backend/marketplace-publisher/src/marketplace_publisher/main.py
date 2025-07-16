@@ -9,9 +9,11 @@ from typing import Any, Callable, Coroutine
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel
+from redis.asyncio import Redis
 
 from .logging_config import configure_logging
 from .settings import settings
+from .rate_limiter import MarketplaceRateLimiter
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
@@ -20,6 +22,16 @@ configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+
+rate_limiter = MarketplaceRateLimiter(
+    Redis.from_url(settings.redis_url),
+    {
+        Marketplace.redbubble: settings.rate_limit_redbubble,
+        Marketplace.amazon_merch: settings.rate_limit_amazon_merch,
+        Marketplace.etsy: settings.rate_limit_etsy,
+    },
+    settings.rate_limit_window,
+)
 
 
 @app.on_event("startup")
@@ -62,6 +74,10 @@ async def _background_publish(task_id: int, req: PublishRequest) -> None:
 @app.post("/publish")
 async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str, int]:
     """Create a publish task and run it in the background."""
+    allowed = await rate_limiter.acquire(req.marketplace)
+    if not allowed:
+        logger.warning("rate limit exceeded", extra={"marketplace": req.marketplace.value})
+        raise HTTPException(status_code=429, detail="Rate limit exceeded")
     async with SessionLocal() as session:
         task = await create_task(
             session,

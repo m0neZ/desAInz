@@ -16,6 +16,13 @@ services:
       interval: 10s
       retries: 5
 
+  pgbouncer:
+    build: ./docker/pgbouncer
+    ports:
+      - "6432:6432"
+    depends_on:
+      - postgres
+
   redis:
     build: ./docker/redis
     ports:
@@ -77,7 +84,7 @@ services:
     volumes:
       - ./docker/kafka/create-topics.sh:/create-topics.sh:ro
     entrypoint: ["/bin/bash", "/create-topics.sh"]
-    restart: "no"
+    restart: 'no'
 
   minio:
     build: ./docker/minio
@@ -94,28 +101,45 @@ services:
       interval: 10s
       retries: 5
 
+  # Optional GPU-based service
+  mockup-generation:
+    build: ./backend/mockup-generation
+    profiles:
+      - gpu
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  # Optional monitoring stack
+  monitoring:
+    build: ./backend/monitoring
+    command: python -m monitoring.main
+    profiles:
+      - monitoring
+    ports:
+      - "8000:8000"
+
+  prometheus:
+    image: prom/prometheus:latest
+    profiles:
+      - monitoring
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    profiles:
+      - monitoring
+    ports:
+      - "3000:3000"
+
 volumes:
   postgres-data:
   redis-data:
   zookeeper-data:
   kafka-data:
   minio-data:
-services:
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: backend_db
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  cache:
-    image: redis:7
-    ports:
-      - "6379:6379"
-
-volumes:
-  db-data:

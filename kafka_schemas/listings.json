@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Listing",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string"},
+    "url": {"type": "string", "format": "uri"},
+    "price": {"type": "number"},
+    "metadata": {"type": "object"}
+  },
+  "required": ["id", "url", "price"]
+}

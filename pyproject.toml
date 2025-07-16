@@ -1,0 +1,20 @@
+[tool.black]
+line-length = 79
+
+[tool.flake8]
+ignore = ""
+max-line-length = 79
+extend-ignore = "E203,W503"
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict = true
+
+[tool.docformatter]
+wrap-summaries = 79
+wrap-descriptions = 79
+
+[tool.pydocstyle]
+convention = "google"
+

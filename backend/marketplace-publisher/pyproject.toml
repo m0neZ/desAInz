@@ -14,6 +14,7 @@ requests = "*"
 sqlalchemy = "*"
 asyncpg = "*"
 selenium = "*"
+redis = "*"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"

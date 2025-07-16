@@ -10,6 +10,7 @@ python = "^3.10"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 pydantic = "*"
+watchtower = "*"
 
 [tool.poetry.dev-dependencies]
 black = "*"

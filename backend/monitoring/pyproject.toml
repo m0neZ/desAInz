@@ -13,6 +13,7 @@ psutil = "*"
 prometheus-client = "*"
 opentelemetry-sdk = "*"
 opentelemetry-instrumentation-fastapi = "*"
+watchtower = "*"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"

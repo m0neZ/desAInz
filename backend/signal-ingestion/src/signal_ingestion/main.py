@@ -12,7 +12,7 @@ from fastapi import Depends, FastAPI, Request, Response
 
 from .database import get_session, init_db
 from .ingestion import ingest
-from .logging_config import configure_logging
+from backend.shared.logging_config import configure_logging
 from .settings import settings
 from backend.shared.tracing import configure_tracing
 

@@ -5,8 +5,11 @@ from __future__ import annotations
 import json
 import os
 
-from flask import Flask, Response, jsonify, request
+import logging
+import uuid
+from flask import Flask, Response, jsonify, request, g
 import redis
+from backend.shared.logging_config import configure_logging
 from backend.shared.tracing import configure_tracing
 
 from datetime import datetime
@@ -14,10 +17,26 @@ from datetime import datetime
 from .scoring import Signal, calculate_score
 from .weight_repository import get_weights, update_weights
 
+configure_logging()
+logger = logging.getLogger(__name__)
 app = Flask(__name__)
 configure_tracing(app, "scoring-engine")
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 redis_client = redis.Redis.from_url(REDIS_URL)
+
+
+@app.before_request
+def before_request() -> None:
+    """Generate correlation ID for each request."""
+    g.correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
+    logger.info("request received", extra={"correlation_id": g.correlation_id})
+
+
+@app.after_request
+def after_request(response: Response) -> Response:
+    """Attach correlation ID to ``response`` headers."""
+    response.headers["X-Correlation-ID"] = g.correlation_id
+    return response
 
 
 @app.get("/weights")

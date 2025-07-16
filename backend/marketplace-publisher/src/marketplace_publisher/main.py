@@ -11,7 +11,7 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel
 from redis.asyncio import Redis
 
-from .logging_config import configure_logging
+from backend.shared.logging_config import configure_logging
 from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db

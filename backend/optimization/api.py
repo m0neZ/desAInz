@@ -3,18 +3,37 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import List
+import logging
+import uuid
+from typing import Callable, Coroutine, List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel
+from backend.shared.logging_config import configure_logging
 from backend.shared.tracing import configure_tracing
 
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
 
+configure_logging()
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Optimization Service")
 configure_tracing(app, "optimization")
 store = MetricsStore()
+
+
+@app.middleware("http")
+async def add_correlation_id(
+    request: Request, call_next: Callable[[Request], Coroutine[None, None, Response]]
+) -> Response:
+    """Ensure every request contains a correlation ID."""
+    correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
+    request.state.correlation_id = correlation_id
+
+    logger.info("request received", extra={"correlation_id": correlation_id})
+    response = await call_next(request)
+    response.headers["X-Correlation-ID"] = correlation_id
+    return response
 
 
 class MetricIn(BaseModel):

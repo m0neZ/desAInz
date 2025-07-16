@@ -15,6 +15,7 @@ sqlalchemy = "*"
 asyncpg = "*"
 redis = {extras = ["bloom"], version = "*"}
 kafka-python = "*"
+watchtower = "*"
 
 [tool.poetry.dev-dependencies]
 black = "*"

@@ -6,11 +6,13 @@ import logging
 from typing import Iterable
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from backend.shared.logging_config import configure_logging
 
 from .ab_testing import ABTestManager
 from .ingestion import ingest_metrics
 from .weight_updater import update_weights
 
+configure_logging()
 logger = logging.getLogger(__name__)
 
 

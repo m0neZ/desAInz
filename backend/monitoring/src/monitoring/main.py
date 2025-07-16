@@ -25,7 +25,7 @@ from sqlalchemy import func, select
 
 from .pagerduty import trigger_sla_violation
 
-from .logging_config import configure_logging
+from backend.shared.logging_config import configure_logging
 from .settings import settings
 
 configure_logging()

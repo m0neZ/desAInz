@@ -858,7 +858,7 @@ Developer Push → GitHub → GitHub Actions → Tests → Build → Deploy to D
 
 - **JSON Format**: Consistent, machine-readable log format
 - **Correlation IDs**: Request tracing across microservices
-- **Log Aggregation**: Centralized logging with Elasticsearch or CloudWatch
+- **Log Aggregation**: Centralized logging with CloudWatch
 
 **Distributed Tracing**:
 
@@ -1939,7 +1939,7 @@ Each service exposes health check endpoints:
 
 - **Metrics**: Prometheus + Grafana
 - **Tracing**: Jaeger with OpenTelemetry
-- **Logging**: Structured JSON logs
+- **Logging**: Structured JSON logs aggregated via CloudWatch
 - **Alerting**: PagerDuty integration
 
 ## 🧪 Testing

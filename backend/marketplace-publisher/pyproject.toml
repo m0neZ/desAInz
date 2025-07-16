@@ -17,6 +17,7 @@ selenium = "*"
 redis = "*"
 pyyaml = "*"
 Pillow = "*"
+watchtower = "*"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"

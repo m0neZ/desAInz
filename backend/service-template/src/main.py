@@ -8,7 +8,7 @@ from typing import Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
 
-from .logging_config import configure_logging
+from backend.shared.logging_config import configure_logging
 from .settings import settings
 from backend.shared.tracing import configure_tracing
 

@@ -12,6 +12,7 @@ class SchemaRegistryClient:
     """Simple client for interacting with a schema registry."""
 
     def __init__(self, url: str) -> None:
+        """Initialize the client with the registry ``url``."""
         self._url = url.rstrip("/")
 
     def register(self, subject: str, schema: Dict[str, Any]) -> None:

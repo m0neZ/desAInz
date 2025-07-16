@@ -1,0 +1,6 @@
+apiVersion: v2
+name: scoring-engine
+version: 0.1.0
+description: Helm chart for scoring-engine microservice
+type: application
+appVersion: "1.0"

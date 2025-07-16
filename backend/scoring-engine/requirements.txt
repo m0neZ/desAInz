@@ -1,0 +1,16 @@
+flask
+sqlalchemy
+psycopg2-binary
+redis
+fakeredis
+pydantic
+pytest
+scikit-learn
+numpy
+
+black
+flake8
+flake8-docstrings
+pydocstyle
+docformatter
+mypy

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: feedback-loop
+version: 0.1.0
+description: Helm chart for feedback-loop microservice
+type: application
+appVersion: "1.0"

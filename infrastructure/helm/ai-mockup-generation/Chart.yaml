@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ai-mockup-generation
+version: 0.1.0
+description: Helm chart for ai-mockup-generation microservice
+type: application
+appVersion: "1.0"

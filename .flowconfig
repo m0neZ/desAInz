@@ -1,0 +1,20 @@
+[include]
+
+[ignore]
+.*/node_modules/.*
+
+[libs]
+
+[lints]
+all=error
+
+[options]
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow-typed/css.js'
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.json
+module.file_ext=.css
+server.max_workers=4
+module.use_strict=true
+
+[strict]

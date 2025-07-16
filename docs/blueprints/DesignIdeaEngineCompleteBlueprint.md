@@ -611,7 +611,7 @@ Use the `setup_storage.sh` script to create this layout automatically.
 #### 2.3.2 Event Schema Design
 
 **Event Bus Message Format**:
-```json
+```
 {
   "eventType": "signal.ingested",
   "eventId": "uuid",
@@ -1334,8 +1334,14 @@ Design Idea Engine Blueprint.
 *   **Key Activities:**
     *   Design and implement the **Admin Dashboard** using Next.js and tRPC.
     *   Develop UI components for displaying the signal stream, heatmap, mock-up gallery, and A/B test results.
+        *   **Signal Stream View** with infinite scroll for efficient browsing of incoming content signals.
+        *   **Idea Heatmap** built with D3.js to visualize popularity trends across categories.
+        *   **Mock-up Gallery** supporting filters and lazy loading to showcase generated designs.
+        *   **A/B Test Results** view featuring interactive charts for quick insights.
     *   Focus on responsive design, fluid animations, and a clean aesthetic consistent with Apple's design principles.
-    *   Implement user authentication and authorization for the dashboard.
+    *   Implement user authentication and authorization for the dashboard via **Auth0**, storing JWT tokens on the client.
+    *   Manage state with **Zustand** and fetch data with **React Query** for optimal performance.
+    *   Ensure full keyboard navigation and screen reader accessibility using proper ARIA attributes.
 *   **Deliverables:** Functional and aesthetically pleasing Admin Dashboard.
 
 #### Phase 7: Marketplace Integration and Automation Features Implementation
@@ -1374,34 +1380,34 @@ Design Idea Engine Blueprint.
 
 The blueprint provides a simplified ER diagram for the core data model. This will be translated into database schemas during implementation.
 
-```mermaid
-erDiagram
-    SIGNAL {
-      uuid id PK
-      text content
-      source ENUM
-      captured_at TIMESTAMP
-      metadata JSONB
-      hash CHAR(32) UNIQUE
-    }
-    IDEA ||--|| SIGNAL : derived_from
-    IDEA {
-      uuid id PK
-      title TEXT
-      embedding VECTOR(768)
-      score FLOAT
-      status ENUM(queued, mocked, live, archived)
-      created_at TIMESTAMP
-      updated_at TIMESTAMP
-    }
-    MOCKUP ||--|| IDEA : for
-    MOCKUP {
-      uuid id PK
-      s3_uri TEXT
-      variant ENUM(front, back, colorway)
-      ctr FLOAT
-    }
-```
+.. mermaid::
+
+   erDiagram
+       SIGNAL {
+         uuid id PK
+         text content
+         source ENUM
+         captured_at TIMESTAMP
+         metadata JSONB
+         hash CHAR(32) UNIQUE
+       }
+       IDEA ||--|| SIGNAL : derived_from
+       IDEA {
+         uuid id PK
+         title TEXT
+         embedding VECTOR(768)
+         score FLOAT
+         status ENUM(queued, mocked, live, archived)
+         created_at TIMESTAMP
+         updated_at TIMESTAMP
+       }
+       MOCKUP ||--|| IDEA : for
+       MOCKUP {
+         uuid id PK
+         s3_uri TEXT
+         variant ENUM(front, back, colorway)
+         ctr FLOAT
+       }
 
 ### 1.5 Key Takeaways from Blueprint
 
@@ -1871,7 +1877,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 - `POST /api/publish` - Publish to marketplace
 
 ### Event Schema
-```json
+```
 {
   "eventType": "signal.ingested",
   "eventId": "uuid",
@@ -1900,11 +1906,11 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🆘 Support
 
-- **Documentation**: [docs/](docs/)
+- **Documentation**: docs/
 - **Issues**: GitHub Issues
 - **Discussions**: GitHub Discussions
 

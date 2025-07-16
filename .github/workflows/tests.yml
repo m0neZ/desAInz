@@ -8,12 +8,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.11", "3.12"]
+        node-version: ["18", "20"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "${{ matrix.python-version }}"
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
@@ -21,7 +26,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "${{ matrix.node-version }}"
           cache: 'npm'
       - name: Install dependencies
         run: |

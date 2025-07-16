@@ -21,5 +21,12 @@ module.exports = {
       version: 'detect',
     },
   },
+  globals: {
+    jest: 'readonly',
+    describe: 'readonly',
+    it: 'readonly',
+    test: 'readonly',
+    expect: 'readonly',
+  },
   rules: {},
 };

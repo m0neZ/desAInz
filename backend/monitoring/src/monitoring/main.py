@@ -5,18 +5,23 @@ from __future__ import annotations
 import logging
 import uuid
 from pathlib import Path
-from typing import Callable, Coroutine
+from typing import Callable, Coroutine, Iterable
 
 import httpx
 
 import psutil
 from fastapi import FastAPI, Request, Response
-from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
+from prometheus_client import (
+    CONTENT_TYPE_LATEST,
+    Counter,
+    Histogram,
+    generate_latest,
+)
 
 from backend.shared.tracing import configure_tracing
 from backend.shared.db import session_scope
-from backend.shared.db.models import Idea, Listing, Mockup
-from sqlalchemy import select
+from backend.shared.db.models import Idea, Listing, Mockup, Signal
+from sqlalchemy import func, select
 
 from .pagerduty import trigger_sla_violation
 
@@ -29,6 +34,11 @@ app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
 
 REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
+SIGNAL_TO_PUBLISH_SECONDS = Histogram(
+    "signal_to_publish_seconds",
+    "Latency from first signal ingestion to listing publish per idea",
+    buckets=(60, 300, 900, 1800, 3600, 7200, 10800),
+)
 
 
 @app.middleware("http")
@@ -89,30 +99,52 @@ async def status() -> dict[str, str]:
     return results
 
 
-def _check_sla() -> None:
-    """Trigger PagerDuty alert if latest listing exceeds SLA."""
+def _record_latencies() -> Iterable[float]:
+    """Record per-idea publish latency and return all values."""
     stmt = (
-        select(Listing.created_at, Idea.created_at)
-        .join(Mockup, Listing.mockup_id == Mockup.id)
-        .join(Idea, Mockup.idea_id == Idea.id)
-        .order_by(Listing.created_at.desc())
-        .limit(1)
+        select(
+            func.min(Signal.timestamp),
+            func.min(Listing.created_at),
+        )
+        .join(Signal, Signal.idea_id == Idea.id)
+        .join(Mockup, Mockup.idea_id == Idea.id)
+        .join(Listing, Listing.mockup_id == Mockup.id)
+        .group_by(Idea.id)
     )
     with session_scope() as session:
-        row = session.execute(stmt).first()
-    if row is None:
-        return
-    listing_time, idea_time = row
-    hours = (listing_time - idea_time).total_seconds() / 3600
-    if hours > 2:
-        trigger_sla_violation(hours)
+        rows = session.execute(stmt).all()
+    latencies: list[float] = []
+    for signal_time, listing_time in rows:
+        seconds = (listing_time - signal_time).total_seconds()
+        latencies.append(seconds)
+        SIGNAL_TO_PUBLISH_SECONDS.observe(seconds)
+    return latencies
+
+
+def _check_sla() -> float:
+    """Check average latency and trigger PagerDuty if above threshold."""
+    latencies = _record_latencies()
+    if not latencies:
+        return 0.0
+    avg = sum(latencies) / len(latencies)
+    if avg > settings.sla_threshold_hours * 3600:
+        trigger_sla_violation(avg / 3600)
+    return avg
 
 
 @app.get("/sla")
-async def sla() -> dict[str, str]:
+async def sla() -> dict[str, float]:
     """Check SLA status and emit PagerDuty alert if violated."""
-    _check_sla()
-    return {"status": "checked"}
+    avg = _check_sla()
+    return {"average_seconds": avg}
+
+
+@app.get("/latency")
+async def latency() -> dict[str, float]:
+    """Return average signal-to-publish latency without triggering alerts."""
+    latencies = _record_latencies()
+    avg = sum(latencies) / max(len(latencies), 1)
+    return {"average_seconds": avg}
 
 
 @app.get("/logs")

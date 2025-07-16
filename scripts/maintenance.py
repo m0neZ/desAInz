@@ -11,7 +11,7 @@ from pathlib import Path
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from backend.shared.db import session_scope
-from backend.shared.db.models import Mockup, Signal
+from backend.shared.db.models import AuditLog, Mockup, Signal
 
 logger = logging.getLogger(__name__)
 
@@ -52,11 +52,24 @@ def purge_stale_records() -> None:
                 path.unlink()
 
 
+def purge_old_audit_logs() -> None:
+    """Delete audit log entries older than 18 months."""
+    cutoff = datetime.utcnow() - timedelta(days=30 * 18)
+    with session_scope() as session:
+        deleted = (
+            session.query(AuditLog)
+            .filter(AuditLog.timestamp < cutoff)
+            .delete(synchronize_session=False)
+        )
+        logger.info("Deleted %s audit logs", deleted)
+
+
 def setup_scheduler() -> BlockingScheduler:
     """Return a scheduler configured for maintenance tasks."""
     scheduler = BlockingScheduler()
     scheduler.add_job(archive_old_mockups, "cron", hour=2, minute=0)
     scheduler.add_job(purge_stale_records, "cron", hour=3, minute=0)
+    scheduler.add_job(purge_old_audit_logs, "cron", hour=4, minute=0)
     return scheduler
 
 

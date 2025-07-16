@@ -9,6 +9,8 @@ the following actions:
   are removed.
 - **Purge stale signals and logs**: any signal entries older than thirty days
   are deleted along with log files under the directory specified by `LOG_DIR`.
+- **Remove audit log entries**: records older than eighteen months are purged to
+  keep the audit table compact.
 
 A scheduler is configured to run these tasks daily using `apscheduler`.
 The Dagster orchestrator exposes the same routines via the `cleanup_job`, which

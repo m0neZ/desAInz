@@ -9,6 +9,7 @@ Welcome to desAInz's documentation!
    architecture
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
+   migrations
    privacy
    backup
    api/modules

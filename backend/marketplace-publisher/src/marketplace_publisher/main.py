@@ -19,6 +19,7 @@ from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared import init_feature_flags, is_enabled
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -32,6 +33,7 @@ rate_limiter = MarketplaceRateLimiter(
         Marketplace.redbubble: settings.rate_limit_redbubble,
         Marketplace.amazon_merch: settings.rate_limit_amazon_merch,
         Marketplace.etsy: settings.rate_limit_etsy,
+        Marketplace.society6: settings.rate_limit_society6,
     },
     settings.rate_limit_window,
 )
@@ -47,6 +49,7 @@ async def startup() -> None:
         / "marketplace_rules.yaml"
     )
     load_rules(rules_path)
+    init_feature_flags()
 
 
 @app.middleware("http")
@@ -83,6 +86,10 @@ async def _background_publish(task_id: int, req: PublishRequest) -> None:
 @app.post("/publish")
 async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str, int]:
     """Create a publish task and run it in the background."""
+    if req.marketplace == Marketplace.society6 and not is_enabled(
+        "society6_integration"
+    ):
+        raise HTTPException(status_code=403, detail="Society6 integration disabled")
     allowed = await rate_limiter.acquire(req.marketplace)
     if not allowed:
         logger.warning(

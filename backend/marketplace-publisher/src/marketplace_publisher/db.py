@@ -31,6 +31,7 @@ class Marketplace(str, Enum):
     redbubble = "redbubble"
     amazon_merch = "amazon_merch"
     etsy = "etsy"
+    society6 = "society6"
 
 
 class PublishStatus(str, Enum):

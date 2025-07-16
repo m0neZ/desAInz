@@ -157,7 +157,8 @@
         "enum": [
           "redbubble",
           "amazon_merch",
-          "etsy"
+          "etsy",
+          "society6"
         ],
         "title": "Marketplace",
         "description": "Supported marketplaces."

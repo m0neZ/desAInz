@@ -27,3 +27,8 @@ Environment variables can override the storage paths:
 
 - `COLD_STORAGE_PATH` – directory for archived mockups (defaults to `cold_storage`)
 - `LOG_DIR` – directory containing log files (defaults to `logs`)
+
+## Dependency Updates
+
+Dependencies for Python, JavaScript, and GitHub Actions are kept current via Dependabot.
+Weekly update PRs run on all `requirements*.txt`, `package.json` files, and workflow definitions. These PRs must pass the full test suite before merge.

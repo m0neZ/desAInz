@@ -1,7 +1,14 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
+import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import StatusIndicator from '../../components/StatusIndicator';
-import LatencyIndicator from '../../components/LatencyIndicator';
+
+const StatusIndicator = dynamic(
+  () => import('../../components/StatusIndicator')
+);
+const LatencyIndicator = dynamic(
+  () => import('../../components/LatencyIndicator')
+);
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -13,3 +20,11 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+    // Revalidate every 60 seconds to enable incremental static regeneration
+    revalidate: 60,
+  };
+};

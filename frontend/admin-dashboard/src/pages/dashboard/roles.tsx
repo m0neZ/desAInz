@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 
 interface Assignment {
@@ -33,3 +34,10 @@ export default function RolesPage() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+    revalidate: 60,
+  };
+};

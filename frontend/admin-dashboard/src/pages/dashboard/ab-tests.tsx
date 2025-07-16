@@ -1,6 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
+import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { AbTestSummary } from '../../components/AbTestSummary';
+
+const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
+  ssr: false,
+});
 
 export default function AbTestsPage() {
   const { t } = useTranslation();
@@ -11,3 +16,10 @@ export default function AbTestsPage() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+    revalidate: 60,
+  };
+};

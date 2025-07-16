@@ -50,6 +50,8 @@ autodoc_mock_imports = [
     "backend.optimization",
     "marketplace_publisher",
     "monitoring",
+    "jose",
+    "celery",
 ]
 
 source_suffix = {

@@ -17,3 +17,5 @@ UnleashClient
 
 pip-audit
 sphinxcontrib-openapi
+sentry-sdk
+Deprecated

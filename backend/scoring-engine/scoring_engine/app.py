@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
+from backend.shared import configure_sentry
 
 from backend.shared import add_flask_error_handlers
 
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 configure_tracing(app, "scoring-engine")
+configure_sentry(app, "scoring-engine")
 add_profiling(app)
 add_flask_error_handlers(app)
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
@@ -62,6 +64,12 @@ def _before_request() -> None:
     """Attach a correlation ID before each request."""
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     request.correlation_id = correlation_id
+    try:
+        import sentry_sdk
+
+        sentry_sdk.set_tag("correlation_id", correlation_id)
+    except Exception:  # pragma: no cover - sentry optional
+        pass
     logger.info("request received", extra={"correlation_id": correlation_id})
 
 

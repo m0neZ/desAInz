@@ -6,14 +6,18 @@ on:
   pull_request:
 
 jobs:
-  test:
+  backend-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: ${{ matrix.python-version }}
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
@@ -29,6 +33,30 @@ jobs:
           pip install -r requirements.txt -r requirements-dev.txt
           npm ci
           python -m pip install -e .
-      - name: Run tests
+      - name: Run backend tests
         run: |
           pytest -W error -vv
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['18', '20']
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install root dependencies
+        run: npm ci
+      - name: Install dashboard dependencies
+        run: npm ci
+        working-directory: frontend/admin-dashboard
+      - name: Run frontend lint
+        run: npm test
+      - name: Run dashboard tests
+        run: npm test
+        working-directory: frontend/admin-dashboard

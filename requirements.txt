@@ -1,0 +1,5 @@
+APScheduler
+SQLAlchemy
+numpy
+requests
+psycopg2-binary

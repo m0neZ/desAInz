@@ -28,6 +28,7 @@ Welcome to desAInz's documentation!
    security
    roles
    daily_summary
+   currency_conversion
    openapi_specs
 
 Kafka Utilities

@@ -12,6 +12,8 @@ import requests
 from diffusers import StableDiffusionXLPipeline
 import torch
 
+from .model_repository import get_default_model_id
+
 
 logger = logging.getLogger(__name__)
 
@@ -27,16 +29,16 @@ class GenerationResult:
 class MockupGenerator:
     """Generate mockups using Stable Diffusion XL with fallback."""
 
-    def __init__(
-        self, model_id: str = "stabilityai/stable-diffusion-xl-base-1.0"
-    ) -> None:
-        """Initialize the generator with the model identifier."""
-        self.model_id = model_id
+    def __init__(self) -> None:
+        """Initialize the generator and defer model lookup."""
+        self.model_id = get_default_model_id()
         self.pipeline: Optional[StableDiffusionXLPipeline] = None
 
     def load(self) -> None:
         """Load the diffusion pipeline on GPU if available."""
-        if self.pipeline is None:
+        current = get_default_model_id()
+        if self.pipeline is None or self.model_id != current:
+            self.model_id = current
             device = "cuda" if torch.cuda.is_available() else "cpu"
             self.pipeline = StableDiffusionXLPipeline.from_pretrained(self.model_id).to(
                 device

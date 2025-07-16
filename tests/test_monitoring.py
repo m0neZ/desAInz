@@ -5,11 +5,11 @@ import sys
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "monitoring" / "src")
-)
+)  # noqa: E402
 
-from fastapi.testclient import TestClient
+from fastapi.testclient import TestClient  # noqa: E402
 
-from monitoring.main import app
+from monitoring.main import app  # noqa: E402
 
 client = TestClient(app)
 

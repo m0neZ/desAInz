@@ -36,13 +36,13 @@ async def add_correlation_id(
     return response
 
 
-@app.get("/health")  # type: ignore[misc]
+@app.get("/health")
 async def health() -> dict[str, str]:
     """Return service liveness."""
     return {"status": "ok"}
 
 
-@app.get("/ready")  # type: ignore[misc]
+@app.get("/ready")
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}

@@ -5,10 +5,12 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from typing import Optional
+from threading import Lock
 
-import requests
+import requests  # type: ignore[import-untyped]
 from diffusers import StableDiffusionXLPipeline
 import torch
+from PIL import Image
 
 
 logger = logging.getLogger(__name__)
@@ -25,25 +27,37 @@ class GenerationResult:
 class MockupGenerator:
     """Generate mockups using Stable Diffusion XL with fallback."""
 
-    def __init__(self, model_id: str = "stabilityai/stable-diffusion-xl-base-1.0") -> None:
+    def __init__(
+        self, model_id: str = "stabilityai/stable-diffusion-xl-base-1.0"
+    ) -> None:
         self.model_id = model_id
-        self.pipeline: Optional[StableDiffusionXLPipeline] = None
+        self.pipeline: StableDiffusionXLPipeline | None = None
+        self._lock = Lock()
 
     def load(self) -> None:
         """Load the diffusion pipeline on GPU if available."""
-        if self.pipeline is None:
-            device = "cuda" if torch.cuda.is_available() else "cpu"
-            self.pipeline = StableDiffusionXLPipeline.from_pretrained(self.model_id).to(device)
-            self.pipeline.enable_attention_slicing()
+        with self._lock:
+            if self.pipeline is None:
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+                self.pipeline = StableDiffusionXLPipeline.from_pretrained(
+                    self.model_id
+                ).to(device)
+                self.pipeline.enable_attention_slicing()
 
-    def generate(self, prompt: str, output_path: str, *, num_inference_steps: int = 30) -> GenerationResult:
+    def generate(
+        self, prompt: str, output_path: str, *, num_inference_steps: int = 30
+    ) -> GenerationResult:
         """Generate an image or fall back to external API on failure."""
         from time import perf_counter
 
         self.load()
         start = perf_counter()
         try:
-            image = self.pipeline(prompt=prompt, num_inference_steps=num_inference_steps).images[0]
+            with self._lock:
+                assert self.pipeline is not None
+                image = self.pipeline(
+                    prompt=prompt, num_inference_steps=num_inference_steps
+                ).images[0]
         except Exception as exc:  # pylint: disable=broad-except
             logger.warning("Local generation failed: %s. Falling back to API", exc)
             image = self._fallback_api(prompt)
@@ -51,7 +65,7 @@ class MockupGenerator:
         image.save(output_path)
         return GenerationResult(image_path=output_path, duration=duration)
 
-    def _fallback_api(self, prompt: str):
+    def _fallback_api(self, prompt: str) -> Image.Image:
         """Call external API as a fallback mechanism."""
         response = requests.post(
             "https://api.example.com/generate",

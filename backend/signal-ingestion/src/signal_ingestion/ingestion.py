@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 
-from sqlalchemy.ext.asyncio import AsyncSession
+import asyncio
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from .adapters.events import EventsAdapter
 from .adapters.instagram import InstagramAdapter
@@ -14,6 +15,8 @@ from .adapters.youtube import YouTubeAdapter
 from .dedup import add_key, is_duplicate
 from .models import Signal
 from .publisher import publish
+from .database import SessionLocal
+from .adapters.base import BaseAdapter
 
 
 ADAPTERS = [
@@ -26,9 +29,11 @@ ADAPTERS = [
 ]
 
 
-async def ingest(session: AsyncSession) -> None:
-    """Fetch signals from adapters and store them."""
-    for adapter in ADAPTERS:
+async def _process_adapter(
+    adapter: BaseAdapter, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    """Fetch signals from a single adapter and persist them."""
+    async with session_factory() as session:
         rows = await adapter.fetch()
         for row in rows:
             key = f"{adapter.__class__.__name__}:{row['id']}"
@@ -39,3 +44,10 @@ async def ingest(session: AsyncSession) -> None:
             session.add(signal)
             await session.commit()
             publish("signals", key)
+
+
+async def ingest(session: AsyncSession | None = None) -> None:
+    """Fetch signals from adapters concurrently and store them."""
+    await asyncio.gather(
+        *(_process_adapter(adapter, SessionLocal) for adapter in ADAPTERS)
+    )

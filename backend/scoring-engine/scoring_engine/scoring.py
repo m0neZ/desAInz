@@ -29,9 +29,6 @@ class Signal:
         self.metadata = metadata
 
 
-_SCALER = StandardScaler()
-
-
 def compute_freshness(timestamp: datetime) -> float:
     """Return freshness score based on time decay in hours."""
     hours = (datetime.now(timezone.utc) - timestamp).total_seconds() / 3600
@@ -40,8 +37,9 @@ def compute_freshness(timestamp: datetime) -> float:
 
 def compute_engagement(current: float, median: float) -> float:
     """Z-score of engagement rate against median."""
+    scaler = StandardScaler()
     arr = np.array([[current], [median]])
-    scaled = _SCALER.fit_transform(arr)
+    scaled = scaler.fit_transform(arr)
     return float(scaled[0][0])
 
 

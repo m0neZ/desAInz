@@ -8,6 +8,7 @@ Welcome to desAInz's documentation!
    README
    configuration
    architecture
+   marketplace_file_sizes
    blueprints/DesignIdeaEngineCompleteBlueprint
    admin_dashboard_trpc
    staging_manual_qa

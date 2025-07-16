@@ -11,3 +11,5 @@ asyncpg
 scikit-learn
 pytest-asyncio
 aiosqlite
+fakeredis
+types-requests

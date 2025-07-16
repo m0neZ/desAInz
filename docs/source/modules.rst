@@ -18,3 +18,9 @@ Modules
 
 .. automodule:: monitoring.main
     :members:
+
+.. automodule:: backend.shared.currency
+    :members:
+
+.. automodule:: backend.shared.currency_tasks
+    :members:

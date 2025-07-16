@@ -30,12 +30,13 @@ async def ingest(session: AsyncSession) -> None:
     """Fetch signals from adapters and store them."""
     for adapter in ADAPTERS:
         rows = await adapter.fetch()
+        signals = []
         for row in rows:
             key = f"{adapter.__class__.__name__}:{row['id']}"
             if is_duplicate(key):
                 continue
             add_key(key)
-            signal = Signal(source=adapter.__class__.__name__, content=str(row))
-            session.add(signal)
-            await session.commit()
+            signals.append(Signal(source=adapter.__class__.__name__, content=str(row)))
             publish("signals", key)
+        session.add_all(signals)
+        await session.commit()

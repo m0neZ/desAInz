@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
-from typing import Any, cast
+from typing import Any
 import json
 
 from sqlalchemy import (
@@ -12,7 +12,6 @@ from sqlalchemy import (
     Enum as SqlEnum,
     Integer,
     String,
-    select,
     update,
 )
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -110,5 +109,4 @@ async def increment_attempts(session: AsyncSession, task_id: int) -> None:
 
 async def get_task(session: AsyncSession, task_id: int) -> PublishTask | None:
     """Retrieve a task by ID."""
-    result = await session.execute(select(PublishTask).where(PublishTask.id == task_id))
-    return result.scalars().first()
+    return await session.get(PublishTask, task_id)

@@ -11,11 +11,13 @@ from fastapi import FastAPI, Request, Response
 from .logging_config import configure_logging
 from .settings import settings
 from backend.shared.tracing import configure_tracing
+from backend.shared.profiling import configure_profiling
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+configure_profiling(app)
 
 
 @app.middleware("http")

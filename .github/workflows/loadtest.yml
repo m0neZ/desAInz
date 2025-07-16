@@ -1,0 +1,35 @@
+name: Load Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  loadtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+          pip install locust
+          python -m pip install -e .
+      - name: Start services
+        run: |
+          python backend/service-template/src/main.py &
+          python backend/monitoring/src/monitoring/main.py &
+          python -m uvicorn backend.optimization.api:app --port 8003 &
+          sleep 5
+      - name: Run load tests
+        run: |
+          ./scripts/run_load_tests.sh

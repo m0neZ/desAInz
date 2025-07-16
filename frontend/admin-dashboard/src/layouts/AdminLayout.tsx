@@ -18,6 +18,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             AB Tests
           </Link>
+          <Link href="/dashboard/roles" className="block hover:underline">
+            Roles
+          </Link>
         </nav>
       </aside>
       <div className="flex flex-col flex-1">

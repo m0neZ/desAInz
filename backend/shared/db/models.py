@@ -89,3 +89,26 @@ class ABTest(Base):
     conversion_rate: Mapped[float] = mapped_column(Float, default=0.0)
 
     listing: Mapped[Listing] = relationship(back_populates="tests")
+
+
+class Role(Base):
+    """User role type."""
+
+    __tablename__ = "roles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(50), unique=True)
+
+    user_roles: Mapped[list["UserRole"]] = relationship(back_populates="role")
+
+
+class UserRole(Base):
+    """Assignment of a role to a user."""
+
+    __tablename__ = "user_roles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[str] = mapped_column(String, index=True)
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+
+    role: Mapped[Role] = relationship(back_populates="user_roles")

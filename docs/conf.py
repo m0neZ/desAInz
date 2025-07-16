@@ -10,6 +10,10 @@ from typing import TYPE_CHECKING
 # -- Path setup --------------------------------------------------------------
 
 sys.path.insert(0, os.path.abspath(".."))
+sys.path.append(os.path.abspath("../backend/signal-ingestion/src"))
+sys.path.append(os.path.abspath("../backend/mockup-generation"))
+sys.path.append(os.path.abspath("../backend/scoring-engine"))
+sys.path.append(os.path.abspath("../backend"))
 
 # -- Project information -----------------------------------------------------
 
@@ -26,6 +30,8 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 
+autodoc_mock_imports = ["flask", "diffusers", "redis", "torch"]
+
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
@@ -36,6 +42,10 @@ exclude_patterns: list[str] = []
 
 # Treat warnings as errors
 nitpicky = True
+nitpick_ignore = [
+    ("py:class", "datetime.datetime"),
+    ("py:class", "ConfigDict"),
+]
 
 # -- Options for HTML output -------------------------------------------------
 

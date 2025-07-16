@@ -7,4 +7,6 @@ pytest-cov
 requests
 httpx
 requests-mock
+kafka-python
+jsonschema
 dagster

@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import '../src/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "Admin dashboard application",
+  title: 'Admin Dashboard',
+  description: 'Admin dashboard application',
 };
 
 export default function RootLayout({

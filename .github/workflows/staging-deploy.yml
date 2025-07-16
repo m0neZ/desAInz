@@ -1,0 +1,25 @@
+name: Deploy to Staging
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Kubernetes
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+      - name: Mirror secrets from production
+        run: |
+          ./scripts/sync_staging_secrets.sh prod staging
+      - name: Deploy services
+        run: |
+          for svc in orchestrator ai-mockup-generation data-storage signal-ingestion scoring-engine marketplace-publisher feedback-loop; do
+            ./scripts/deploy.sh "$svc" "example/$svc:main" staging
+          done
+

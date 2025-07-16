@@ -1,0 +1,4 @@
+__pycache__/
+docs/build/
+*.egg-info/
+metrics.db

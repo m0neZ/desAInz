@@ -11,6 +11,8 @@ import httpx
 
 import psutil
 from fastapi import FastAPI, Request, Response
+
+from backend.shared.profiling import add_fastapi_profiler
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
 
 from backend.shared.tracing import configure_tracing
@@ -27,6 +29,7 @@ configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_fastapi_profiler(app)
 
 REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
 

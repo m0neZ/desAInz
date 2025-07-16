@@ -6,6 +6,8 @@ import json
 import os
 
 from flask import Flask, Response, jsonify, request
+
+from backend.shared.profiling import add_flask_profiler
 import redis
 from backend.shared.tracing import configure_tracing
 
@@ -16,6 +18,7 @@ from .weight_repository import get_weights, update_weights
 
 app = Flask(__name__)
 configure_tracing(app, "scoring-engine")
+add_flask_profiler(app)
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 redis_client = redis.Redis.from_url(REDIS_URL)
 

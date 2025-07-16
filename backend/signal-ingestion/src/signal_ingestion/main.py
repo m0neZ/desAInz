@@ -10,6 +10,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi import Depends, FastAPI, Request, Response
 
+from backend.shared.profiling import add_fastapi_profiler
+
 from .database import get_session, init_db
 from .ingestion import ingest
 from .logging_config import configure_logging
@@ -20,6 +22,7 @@ configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_fastapi_profiler(app)
 
 
 @app.on_event("startup")

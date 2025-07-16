@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any, Callable, Coroutine
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
+
+from backend.shared.profiling import add_fastapi_profiler
 from pydantic import BaseModel
 from redis.asyncio import Redis
 
@@ -23,6 +25,7 @@ configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+add_fastapi_profiler(app)
 
 rate_limiter = MarketplaceRateLimiter(
     Redis.from_url(settings.redis_url),

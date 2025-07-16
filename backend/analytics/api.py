@@ -5,14 +5,18 @@ from __future__ import annotations
 from typing import Dict
 
 from fastapi import FastAPI
+
+from backend.shared.profiling import add_fastapi_profiler
 from pydantic import BaseModel
 
 from backend.shared.db import SessionLocal
 from backend.shared.db import models
+from sqlalchemy import func, select
 from backend.shared.tracing import configure_tracing
 
 app = FastAPI(title="Analytics Service")
 configure_tracing(app, "analytics")
+add_fastapi_profiler(app)
 
 
 class ABTestSummary(BaseModel):
@@ -36,13 +40,12 @@ class MarketplaceSummary(BaseModel):
 def ab_test_results(ab_test_id: int) -> ABTestSummary:
     """Return aggregated A/B test results."""
     with SessionLocal() as session:
-        rows = (
-            session.query(models.ABTestResult)
-            .filter(models.ABTestResult.ab_test_id == ab_test_id)
-            .all()
-        )
-    conversions = sum(r.conversions for r in rows)
-    impressions = sum(r.impressions for r in rows)
+        conversions, impressions = session.execute(
+            select(
+                func.coalesce(func.sum(models.ABTestResult.conversions), 0),
+                func.coalesce(func.sum(models.ABTestResult.impressions), 0),
+            ).where(models.ABTestResult.ab_test_id == ab_test_id)
+        ).one()
     return ABTestSummary(
         ab_test_id=ab_test_id,
         conversions=conversions,
@@ -54,14 +57,13 @@ def ab_test_results(ab_test_id: int) -> ABTestSummary:
 def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
     """Return aggregated metrics for a listing."""
     with SessionLocal() as session:
-        rows = (
-            session.query(models.MarketplaceMetric)
-            .filter(models.MarketplaceMetric.listing_id == listing_id)
-            .all()
-        )
-    clicks = sum(r.clicks for r in rows)
-    purchases = sum(r.purchases for r in rows)
-    revenue = sum(r.revenue for r in rows)
+        clicks, purchases, revenue = session.execute(
+            select(
+                func.coalesce(func.sum(models.MarketplaceMetric.clicks), 0),
+                func.coalesce(func.sum(models.MarketplaceMetric.purchases), 0),
+                func.coalesce(func.sum(models.MarketplaceMetric.revenue), 0),
+            ).where(models.MarketplaceMetric.listing_id == listing_id)
+        ).one()
     return MarketplaceSummary(
         listing_id=listing_id,
         clicks=clicks,

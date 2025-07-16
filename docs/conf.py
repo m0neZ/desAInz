@@ -1,10 +1,11 @@
 """Sphinx configuration for the desAInz project."""
+
 from __future__ import annotations
 
 import os
 import subprocess
 import sys
-from datetime import datetime
+from typing import TYPE_CHECKING
 
 # -- Path setup --------------------------------------------------------------
 
@@ -43,6 +44,11 @@ html_static_path = ["_static"]
 
 
 # -- Helper functions --------------------------------------------------------
+
+
+if TYPE_CHECKING:  # pragma: no cover
+    from sphinx.application import Sphinx
+
 
 def _run_linters(app: "Sphinx") -> None:
     """Run docformatter and flake8-docstrings before building docs."""

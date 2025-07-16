@@ -7,3 +7,8 @@ Welcome to desAInz's documentation!
 
    README
    blueprints/DesignIdeaEngineCompleteBlueprint
+
+Signal Ingestion Service
+-----------------------
+.. automodule:: signal_ingestion
+    :members:

@@ -1,5 +1,6 @@
 import React from 'react';
+import { ExperimentSummary } from '../../components/ExperimentSummary';
 
 export default function AbTestsPage() {
-  return <div>AB Tests page placeholder.</div>;
+  return <ExperimentSummary />;
 }

@@ -89,3 +89,32 @@ class ABTest(Base):
     conversion_rate: Mapped[float] = mapped_column(Float, default=0.0)
 
     listing: Mapped[Listing] = relationship(back_populates="tests")
+    results: Mapped[list["ABTestResult"]] = relationship(back_populates="ab_test")
+
+
+class ABTestResult(Base):
+    """Result metrics for an ``ABTest`` variant."""
+
+    __tablename__ = "ab_test_results"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    ab_test_id: Mapped[int] = mapped_column(ForeignKey("ab_tests.id"))
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    impressions: Mapped[int] = mapped_column(Integer, default=0)
+    conversions: Mapped[int] = mapped_column(Integer, default=0)
+
+    ab_test: Mapped[ABTest] = relationship(back_populates="results")
+
+
+class MarketplaceMetric(Base):
+    """Daily performance metrics for a marketplace listing."""
+
+    __tablename__ = "marketplace_metrics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    listing_id: Mapped[int] = mapped_column(ForeignKey("listings.id"))
+    date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    revenue: Mapped[float] = mapped_column(Float, default=0.0)
+    impressions: Mapped[int] = mapped_column(Integer, default=0)
+
+    listing: Mapped[Listing] = relationship()

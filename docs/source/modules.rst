@@ -18,3 +18,6 @@ Modules
 
 .. automodule:: monitoring.main
     :members:
+
+.. automodule:: monitoring.analytics
+    :members:

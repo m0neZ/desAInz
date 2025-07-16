@@ -29,11 +29,9 @@ case "$BUMP" in
         patch=$((patch+1));;
 esac
 NEW_VERSION="$major.$minor.$patch"
-DATE=$(date +"%Y-%m-%d")
-CHANGELOG_ENTRY="## v$NEW_VERSION - $DATE"$'\n'
-CHANGELOG_ENTRY+="$(git log "$LAST_TAG"..HEAD --pretty=format:"- %s (%h)")"$'\n\n'
-{ printf "%s" "$CHANGELOG_ENTRY"; cat CHANGELOG.md 2>/dev/null; } > CHANGELOG.tmp
-mv CHANGELOG.tmp CHANGELOG.md
+
+# Generate changelog with git-cliff
+git cliff --tag "v$NEW_VERSION" -o CHANGELOG.md
 git add CHANGELOG.md
 git commit -m "chore(release): v$NEW_VERSION" || true
 git tag -a "v$NEW_VERSION" -m "Release v$NEW_VERSION"

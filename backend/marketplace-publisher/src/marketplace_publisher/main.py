@@ -14,12 +14,18 @@ from .logging_config import configure_logging
 from .settings import settings
 from .db import Marketplace, SessionLocal, create_task, get_task, init_db
 from .publisher import publish_with_retry
+from .rate_limiter import RateLimiter
+from .rules import RULES, validate_design
+import redis
 from backend.shared.tracing import configure_tracing
 
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
 configure_tracing(app, settings.app_name)
+
+redis_client = redis.Redis.from_url(settings.redis_url)
+limiter = RateLimiter(redis_client)
 
 
 @app.on_event("startup")
@@ -62,6 +68,15 @@ async def _background_publish(task_id: int, req: PublishRequest) -> None:
 @app.post("/publish")
 async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str, int]:
     """Create a publish task and run it in the background."""
+    try:
+        validate_design(req.marketplace, req.design_path)
+        rule = RULES[req.marketplace]
+        key = f"rate:{req.marketplace.value}"
+        if not limiter.acquire(key, rule.daily_upload_limit):
+            raise HTTPException(status_code=429, detail="rate limit exceeded")
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
     async with SessionLocal() as session:
         task = await create_task(
             session,

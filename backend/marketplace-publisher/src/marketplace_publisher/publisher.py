@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import redis
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,6 +18,9 @@ from .db import (
     increment_attempts,
     update_task_status,
 )
+from .rate_limiter import RateLimiter
+from .rules import RULES, validate_design
+from .settings import settings
 
 
 CLIENTS = {
@@ -25,6 +30,8 @@ CLIENTS = {
 }
 
 _fallback = SeleniumFallback()
+_redis_client = redis.Redis.from_url(settings.redis_url)
+_limiter = RateLimiter(_redis_client)
 
 
 async def publish_with_retry(
@@ -37,6 +44,11 @@ async def publish_with_retry(
 ) -> None:
     """Publish a design, retrying on failure."""
     try:
+        validate_design(marketplace, design_path)
+        key = f"rate:{marketplace.value}"
+        rule = RULES[marketplace]
+        if not _limiter.acquire(key, rule.daily_upload_limit):
+            raise RuntimeError("rate limit exceeded")
         await update_task_status(session, task_id, PublishStatus.in_progress)
         client = CLIENTS[marketplace]
         client.publish_design(design_path, metadata)

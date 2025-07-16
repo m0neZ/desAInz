@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     app_name: str = "marketplace-publisher"
     log_level: str = "INFO"
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost/db"
+    redis_url: str = "redis://localhost:6379/0"
 
     class Config:
         """Pydantic configuration for ``Settings``."""

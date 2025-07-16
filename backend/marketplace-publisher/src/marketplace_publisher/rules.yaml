@@ -1,0 +1,15 @@
+redbubble:
+  max_file_size: 10000000
+  max_width: 5000
+  max_height: 5000
+  daily_upload_limit: 50
+amazon_merch:
+  max_file_size: 15000000
+  max_width: 4500
+  max_height: 5400
+  daily_upload_limit: 25
+etsy:
+  max_file_size: 10000000
+  max_width: 3000
+  max_height: 3000
+  daily_upload_limit: 100

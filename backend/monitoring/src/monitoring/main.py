@@ -7,11 +7,18 @@ import uuid
 from pathlib import Path
 from typing import Callable, Coroutine
 
+import httpx
+
 import psutil
 from fastapi import FastAPI, Request, Response
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
 
 from backend.shared.tracing import configure_tracing
+from backend.shared.db import session_scope
+from backend.shared.db.models import Idea, Listing, Mockup
+from sqlalchemy import select
+
+from .pagerduty import trigger_sla_violation
 
 from .logging_config import configure_logging
 from .settings import settings
@@ -59,6 +66,53 @@ async def overview() -> dict[str, float]:
 async def analytics() -> dict[str, int]:
     """Return placeholder analytics dashboard data."""
     return {"active_users": 0, "error_rate": 0}
+
+
+@app.get("/status")
+async def status() -> dict[str, str]:
+    """Return health status for core services."""
+    services = {
+        "mockup_generation": "http://mockup-generation:8000/health",
+        "marketplace_publisher": "http://marketplace-publisher:8000/health",
+        "orchestrator": "http://orchestrator:8000/health",
+    }
+    results: dict[str, str] = {}
+    async with httpx.AsyncClient(timeout=2) as client:
+        for name, url in services.items():
+            try:
+                resp = await client.get(url)
+                results[name] = (
+                    resp.json().get("status") if resp.status_code == 200 else "down"
+                )
+            except Exception:  # pragma: no cover - network failures
+                results[name] = "down"
+    return results
+
+
+def _check_sla() -> None:
+    """Trigger PagerDuty alert if latest listing exceeds SLA."""
+    stmt = (
+        select(Listing.created_at, Idea.created_at)
+        .join(Mockup, Listing.mockup_id == Mockup.id)
+        .join(Idea, Mockup.idea_id == Idea.id)
+        .order_by(Listing.created_at.desc())
+        .limit(1)
+    )
+    with session_scope() as session:
+        row = session.execute(stmt).first()
+    if row is None:
+        return
+    listing_time, idea_time = row
+    hours = (listing_time - idea_time).total_seconds() / 3600
+    if hours > 2:
+        trigger_sla_violation(hours)
+
+
+@app.get("/sla")
+async def sla() -> dict[str, str]:
+    """Check SLA status and emit PagerDuty alert if violated."""
+    _check_sla()
+    return {"status": "checked"}
 
 
 @app.get("/logs")

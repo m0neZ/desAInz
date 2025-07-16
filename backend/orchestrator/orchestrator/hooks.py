@@ -10,7 +10,7 @@ from .metrics import (
 )
 
 
-@success_hook
+@success_hook  # type: ignore[misc]
 def record_success(context: HookContext) -> None:
     """Increment success counters based on job name."""
     if context.job_name == "backup_job":
@@ -19,7 +19,7 @@ def record_success(context: HookContext) -> None:
         CLEANUP_JOB_SUCCESS.inc()
 
 
-@failure_hook
+@failure_hook  # type: ignore[misc]
 def record_failure(context: HookContext) -> None:
     """Increment failure counters based on job name."""
     if context.job_name == "backup_job":

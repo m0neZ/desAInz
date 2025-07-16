@@ -6,8 +6,10 @@ import os
 
 from dagster import Failure, RetryPolicy, op
 
+from scripts.maintenance import archive_old_mockups, purge_stale_records
 
-@op
+
+@op  # type: ignore[misc]
 def ingest_signals(  # type: ignore[no-untyped-def]
     context,
 ) -> list[str]:
@@ -17,7 +19,7 @@ def ingest_signals(  # type: ignore[no-untyped-def]
     return ["signal-1"]
 
 
-@op
+@op  # type: ignore[misc]
 def score_signals(  # type: ignore[no-untyped-def]
     context,
     signals: list[str],
@@ -28,7 +30,7 @@ def score_signals(  # type: ignore[no-untyped-def]
     return [1.0 for _ in signals]
 
 
-@op
+@op  # type: ignore[misc]
 def generate_content(  # type: ignore[no-untyped-def]
     context,
     scores: list[float],
@@ -39,14 +41,14 @@ def generate_content(  # type: ignore[no-untyped-def]
     return [f"item-{i}" for i, _ in enumerate(scores)]
 
 
-@op
+@op  # type: ignore[misc]
 def await_approval() -> None:
     """Fail if publishing has not been approved."""
     if os.environ.get("APPROVE_PUBLISHING") != "true":
         raise Failure("publishing not approved")
 
 
-@op(retry_policy=RetryPolicy(max_retries=3, delay=1))
+@op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]
 def publish_content(  # type: ignore[no-untyped-def]
     context,
     items: list[str],
@@ -58,7 +60,7 @@ def publish_content(  # type: ignore[no-untyped-def]
         context.log.debug("published %s", item)
 
 
-@op
+@op  # type: ignore[misc]
 def backup_data(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
@@ -67,10 +69,11 @@ def backup_data(  # type: ignore[no-untyped-def]
     # Placeholder for backup logic
 
 
-@op
+@op  # type: ignore[misc]
 def cleanup_data(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
-    """Remove temporary or stale data."""
+    """Run maintenance tasks to free unused resources."""
     context.log.info("running cleanup")
-    # Placeholder for cleanup logic
+    archive_old_mockups()
+    purge_stale_records()

@@ -21,3 +21,7 @@ Environment variables can override the storage paths:
 
 - `COLD_STORAGE_PATH` – directory for archived mockups (defaults to `cold_storage`)
 - `LOG_DIR` – directory containing log files (defaults to `logs`)
+
+The Admin Dashboard provides a **Maintenance** page where privileged users can
+manually trigger the same cleanup routine through the API Gateway. This offers a
+convenient way to run maintenance outside the regular schedule when needed.

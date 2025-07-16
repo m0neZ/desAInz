@@ -16,7 +16,7 @@ from .ops import (
 from .hooks import record_failure, record_success
 
 
-@job
+@job  # type: ignore[misc]
 def idea_job() -> None:
     """Pipeline from ingestion to publishing."""
     signals = ingest_signals()
@@ -26,13 +26,13 @@ def idea_job() -> None:
     publish_content(items)
 
 
-@job(hooks={record_success, record_failure})
+@job(hooks={record_success, record_failure})  # type: ignore[misc]
 def backup_job() -> None:
     """Job running the backup operation."""
     backup_data()
 
 
-@job(hooks={record_success, record_failure})
+@job(hooks={record_success, record_failure})  # type: ignore[misc]
 def cleanup_job() -> None:
     """Job running periodic cleanup."""
     cleanup_data()

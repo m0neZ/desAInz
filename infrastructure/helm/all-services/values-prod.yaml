@@ -1,0 +1,31 @@
+signal-ingestion:
+  image:
+    tag: prod
+
+data-storage:
+  image:
+    tag: prod
+
+scoring-engine:
+  image:
+    tag: prod
+
+ai-mockup-generation:
+  image:
+    tag: prod
+
+marketplace-publisher:
+  image:
+    tag: prod
+
+feedback-loop:
+  image:
+    tag: prod
+
+orchestrator:
+  image:
+    tag: prod
+
+backup-jobs:
+  image:
+    tag: latest

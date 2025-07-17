@@ -1,0 +1,31 @@
+signal-ingestion:
+  image:
+    tag: staging
+
+data-storage:
+  image:
+    tag: staging
+
+scoring-engine:
+  image:
+    tag: staging
+
+ai-mockup-generation:
+  image:
+    tag: staging
+
+marketplace-publisher:
+  image:
+    tag: staging
+
+feedback-loop:
+  image:
+    tag: staging
+
+orchestrator:
+  image:
+    tag: staging
+
+backup-jobs:
+  image:
+    tag: latest

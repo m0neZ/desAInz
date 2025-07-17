@@ -10,3 +10,15 @@ This module contains all Dagster jobs and schedules for desAInz.
 Metrics for job success and failure are exported as Prometheus counters:
 `backup_job_success_total`, `backup_job_failure_total`, `cleanup_job_success_total`, and `cleanup_job_failure_total`.
 
+
+## Dagster UI
+
+Start the Dagster webserver to inspect pipeline status and logs:
+
+```bash
+./scripts/run_dagster_webserver.sh
+```
+
+Then open http://localhost:3000 in your browser. The server loads
+`backend/orchestrator/workspace.yaml` and `backend/orchestrator/dagster.yaml`
+for configuration.

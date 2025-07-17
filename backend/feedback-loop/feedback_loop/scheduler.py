@@ -30,16 +30,11 @@ def setup_scheduler(
         logger.info("processed metrics frame size %s", len(df))
 
     def nightly_update() -> None:
-        weights = {
-            "freshness": 1.0,
-            "engagement": 1.0,
-            "novelty": 1.0,
-            "community_fit": 1.0,
-            "seasonality": 1.0,
-        }
-        update_weights(scoring_api, weights)
+        df = ingest_metrics(metrics_source)
+        weights = update_weights(scoring_api, df.to_dict("records"))
         allocation = ab_manager.allocate_budget(total_budget=100.0)
         logger.info("budget allocation %s", allocation)
+        logger.info("updated weights payload %s", weights)
 
     scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
     scheduler.add_job(nightly_update, "cron", hour=0, minute=0, next_run_time=None)

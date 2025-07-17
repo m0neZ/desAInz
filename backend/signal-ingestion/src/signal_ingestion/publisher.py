@@ -5,11 +5,14 @@ from __future__ import annotations
 from kafka import KafkaProducer
 import os
 
+from backend.shared.config import settings
+
 if os.getenv("KAFKA_SKIP") == "1":  # pragma: no cover - used for docs generation
     producer = None
 else:
     producer = KafkaProducer(
-        bootstrap_servers=["localhost:9092"], value_serializer=lambda v: v.encode()
+        bootstrap_servers=settings.kafka_bootstrap_servers.split(","),
+        value_serializer=lambda v: v.encode(),
     )
 
 

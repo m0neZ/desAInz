@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from backend.shared.config import settings as shared_settings
+
 
 class Settings(BaseSettings):
     """Store configuration derived from environment variables."""
@@ -12,8 +14,8 @@ class Settings(BaseSettings):
 
     app_name: str = "marketplace-publisher"
     log_level: str = "INFO"
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost/db"
-    redis_url: str = "redis://localhost:6379/0"
+    database_url: str = shared_settings.database_url
+    redis_url: str = shared_settings.redis_url
     rate_limit_redbubble: int = 60
     rate_limit_amazon_merch: int = 60
     rate_limit_etsy: int = 60

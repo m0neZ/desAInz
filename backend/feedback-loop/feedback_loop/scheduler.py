@@ -8,7 +8,7 @@ from typing import Iterable
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from .ab_testing import ABTestManager
-from .ingestion import ingest_metrics
+from .ingestion import ingest_metrics, schedule_marketplace_ingestion
 from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)
@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 def setup_scheduler(
     metrics_source: Iterable[dict[str, float]],
     scoring_api: str,
+    marketplace_api: str | None = None,
+    listing_ids: Iterable[int] | None = None,
     ab_db_url: str = "sqlite:///abtest.db",
 ) -> BackgroundScheduler:
     """Configure and return the job scheduler."""
@@ -41,4 +43,8 @@ def setup_scheduler(
 
     scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
     scheduler.add_job(nightly_update, "cron", hour=0, minute=0, next_run_time=None)
+    if marketplace_api and listing_ids:
+        schedule_marketplace_ingestion(
+            scheduler, marketplace_api, list(listing_ids), interval_minutes=60
+        )
     return scheduler

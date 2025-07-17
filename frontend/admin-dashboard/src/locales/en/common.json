@@ -20,5 +20,13 @@
   "publishScheduled": "Publish scheduled",
   "lowPerformers": "Low Performing Listings",
   "preferences": "Preferences",
-  "notifyOnFail": "Notify on publish failure"
+  "notifyOnFail": "Notify on publish failure",
+  "login": "Login",
+  "logout": "Logout",
+  "loading": "Loading...",
+  "on": "On",
+  "off": "Off",
+  "toggle": "Toggle",
+  "latency": "Avg time from signal to publish: {{hours}}h",
+  "summary": "Conversions: {{conversions}} / Impressions: {{impressions}}"
 }

@@ -17,7 +17,16 @@ from .settings import settings
 from .rate_limiter import MarketplaceRateLimiter
 from sqlalchemy import update
 
-from .db import Marketplace, SessionLocal, create_task, get_task, init_db
+from .db import (
+    Marketplace,
+    PublishStatus,
+    PublishTask,
+    SessionLocal,
+    create_task,
+    get_task,
+    init_db,
+    update_task_status,
+)
 from .rules import load_rules, validate_mockup
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
@@ -87,6 +96,13 @@ class PublishRequest(BaseModel):
     metadata: dict[str, Any] = {}
 
 
+class WebhookPayload(BaseModel):
+    """Payload for marketplace callbacks."""
+
+    task_id: int
+    status: str
+
+
 async def _background_publish(task_id: int) -> None:
     """Run publishing using the latest task metadata."""
     async with SessionLocal() as session:
@@ -145,6 +161,21 @@ async def progress(task_id: int) -> dict[str, Any]:
         if task is None:
             raise HTTPException(status_code=404)
         return {"status": task.status, "attempts": task.attempts}
+
+
+@app.post("/webhooks/{marketplace}")
+async def handle_webhook(
+    marketplace: Marketplace, payload: WebhookPayload
+) -> dict[str, str]:
+    """Process listing status callbacks."""
+    async with SessionLocal() as session:
+        task = await get_task(session, payload.task_id)
+        if task is None or task.marketplace != marketplace:
+            raise HTTPException(status_code=404)
+        await update_task_status(
+            session, payload.task_id, PublishStatus(payload.status)
+        )
+    return {"status": "updated"}
 
 
 @app.patch("/tasks/{task_id}")

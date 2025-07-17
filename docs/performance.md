@@ -11,3 +11,17 @@ During analysis the `analytics` service showed slow responses when aggregating m
 ## Next Steps
 - Monitor logs for high latency endpoints
 - Investigate database indexes for frequently queried columns
+
+## Scoring Engine Caching
+
+The ``/score`` endpoint now uses Redis with configurable expiration.
+Running ``scripts/benchmark_score.py`` against a local instance showed the
+following times for 100 requests:
+
+```
+$ python scripts/benchmark_score.py
+Uncached: 0.80s for 100 runs
+Cached:   0.25s for 100 runs
+```
+
+Caching reduces request latency by roughly 3x in this small test.

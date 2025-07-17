@@ -20,13 +20,13 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
+from .scoring import Signal, calculate_score
+from .weight_repository import get_weights, update_weights, get_centroid
+from .centroid_job import start_centroid_scheduler
 
 # Cache metric keys
 CACHE_HIT_KEY = "cache_hits"
 CACHE_MISS_KEY = "cache_misses"
-from .scoring import Signal, calculate_score
-from .weight_repository import get_weights, update_weights, get_centroid
-from .centroid_job import start_centroid_scheduler
 
 
 class WeightsUpdate(BaseModel):
@@ -61,6 +61,7 @@ configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 REDIS_URL = settings.redis_url
+CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client = Redis.from_url(REDIS_URL)
 start_centroid_scheduler()
 
@@ -143,7 +144,7 @@ async def score_signal(payload: ScoreRequest) -> JSONResponse:
     median_engagement = float(payload.median_engagement or 0)
     topics = payload.topics or []
     score = calculate_score(signal, centroid, median_engagement, topics)
-    await redis_client.setex(key, 3600, score)
+    await redis_client.setex(key, CACHE_TTL_SECONDS, score)
     return JSONResponse({"score": score, "cached": False})
 
 

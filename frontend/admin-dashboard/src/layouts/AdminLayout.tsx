@@ -22,13 +22,19 @@ export default function AdminLayout({
             {t('gallery')}
           </Link>
           <Link href="/dashboard/publish" className="block hover:underline">
-            {t('updateAndPublish')}
+            {t('publishTasks')}
           </Link>
-          <Link href="/dashboard/low-performers" className="block hover:underline">
+          <Link
+            href="/dashboard/low-performers"
+            className="block hover:underline"
+          >
             {t('lowPerformers')}
           </Link>
           <Link href="/dashboard/ab-tests" className="block hover:underline">
             {t('abTests')}
+          </Link>
+          <Link href="/dashboard/analytics" className="block hover:underline">
+            {t('analytics')}
           </Link>
           <Link href="/dashboard/roles" className="block hover:underline">
             {t('roles')}

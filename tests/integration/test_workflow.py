@@ -53,9 +53,7 @@ async def test_end_to_end(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(ing_db, "SessionLocal", session_factory)
     await ing_db.init_db()
 
-    ingestion.ADAPTERS = [
-        ingestion.TikTokAdapter("https://jsonplaceholder.typicode.com")
-    ]
+    ingestion.ADAPTERS = [ingestion.TikTokAdapter()]
 
     sent: list[tuple[str, bytes]] = []
 

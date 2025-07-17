@@ -4,13 +4,19 @@ from __future__ import annotations
 
 from typing import Any
 
+import os
+
 from .base import BaseAdapter
 
 
 class EventsAdapter(BaseAdapter):
-    """Adapter for events API."""
+    """Adapter for public holiday events API."""
+
+    def __init__(self, base_url: str | None = None) -> None:
+        """Initialize adapter with optional ``base_url``."""
+        super().__init__(base_url or "https://date.nager.at")
 
     async def fetch(self) -> list[dict[str, Any]]:
-        """Return a list of events."""
-        resp = await self._request("/posts/5")
-        return [resp.json()]
+        """Return upcoming US public holidays."""
+        resp = await self._request("/api/v3/NextPublicHolidays/US")
+        return [resp.json()[0]]

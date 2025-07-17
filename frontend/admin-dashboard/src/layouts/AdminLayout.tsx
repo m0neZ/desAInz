@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import AuthButton from '../components/AuthButton';
 
 export default function AdminLayout({
   children,
@@ -48,7 +49,10 @@ export default function AdminLayout({
         </nav>
       </aside>
       <div className="flex flex-col flex-1">
-        <header className="bg-gray-100 p-4 shadow">{t('title')}</header>
+        <header className="bg-gray-100 p-4 shadow flex items-center">
+          <span className="flex-1">{t('title')}</span>
+          <AuthButton />
+        </header>
         <main className="p-4 flex-1 overflow-auto">{children}</main>
       </div>
     </div>

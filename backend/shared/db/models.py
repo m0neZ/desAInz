@@ -224,3 +224,13 @@ class GeneratedMockup(Base):
     num_inference_steps: Mapped[int] = mapped_column(Integer)
     seed: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class RevokedToken(Base):
+    """JWT token that has been revoked."""
+
+    __tablename__ = "revoked_tokens"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    jti: Mapped[str] = mapped_column(String(36), unique=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime)

@@ -59,20 +59,34 @@ def gpu_slot() -> Iterator[None]:
 
 
 @app.task  # type: ignore[misc]
-def generate_mockup(keywords: list[str], output_dir: str) -> str:
-    """Generate a mockup asynchronously."""
-    context = PromptContext(keywords=keywords)
-    prompt = build_prompt(context)
-    output_path = Path(output_dir) / "mockup.png"
-    with gpu_slot():
-        result = generator.generate(prompt, str(output_path))
+def generate_mockup(keywords_batch: list[list[str]], output_dir: str) -> list[str]:
+    """
+    Generate mockups sequentially on the GPU.
 
-    processed = remove_background(Image.open(result.image_path))
-    processed = convert_to_cmyk(processed)
-    ensure_not_nsfw(processed)
-    if not validate_dpi_image(processed):
-        raise ValueError("Invalid DPI")
-    if not validate_color_space(processed):
-        raise ValueError("Invalid color space")
-    compress_lossless(processed, output_path)
-    return str(output_path)
+    Args:
+        keywords_batch: A list of keyword groups used to build prompts.
+        output_dir: Directory where generated mockups will be written.
+
+    Returns:
+        A list with paths to the generated mockups.
+    """
+
+    results: list[str] = []
+    with gpu_slot():
+        for idx, keywords in enumerate(keywords_batch):
+            context = PromptContext(keywords=keywords)
+            prompt = build_prompt(context)
+            output_path = Path(output_dir) / f"mockup_{idx}.png"
+            gen_result = generator.generate(prompt, str(output_path))
+
+            processed = remove_background(Image.open(gen_result.image_path))
+            processed = convert_to_cmyk(processed)
+            ensure_not_nsfw(processed)
+            if not validate_dpi_image(processed):
+                raise ValueError("Invalid DPI")
+            if not validate_color_space(processed):
+                raise ValueError("Invalid color space")
+            compress_lossless(processed, output_path)
+            results.append(str(output_path))
+
+    return results

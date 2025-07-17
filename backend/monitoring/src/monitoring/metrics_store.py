@@ -6,7 +6,9 @@ import os
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterator
+from typing import Iterator, MutableMapping
+
+import requests
 
 import psycopg2
 
@@ -30,13 +32,14 @@ class PublishLatencyMetric:
 
 
 class TimescaleMetricsStore:
-    """Store and downsample metrics in TimescaleDB."""
+    """Store and downsample metrics in TimescaleDB and log to Loki."""
 
-    def __init__(self, db_url: str | None = None) -> None:
-        """Initialize the store and ensure tables exist."""
+    def __init__(self, db_url: str | None = None, loki_url: str | None = None) -> None:
+        """Initialize the store, ensure tables exist and configure logging."""
         self.db_url = db_url or os.environ.get(
             "METRICS_DB_URL", "postgresql://localhost/metrics"
         )
+        self.loki_url = loki_url or os.environ.get("LOKI_URL")
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute(
@@ -53,6 +56,27 @@ class TimescaleMetricsStore:
                 )
             )
             conn.commit()
+
+    def _send_loki_log(
+        self, message: str, labels: MutableMapping[str, str] | None = None
+    ) -> None:
+        """Send a log line to Loki if configured."""
+        if not self.loki_url:
+            return
+        payload = {
+            "streams": [
+                {
+                    "stream": labels or {"app": "monitoring"},
+                    "values": [
+                        [str(int(datetime.utcnow().timestamp() * 1e9)), message]
+                    ],
+                }
+            ]
+        }
+        try:
+            requests.post(f"{self.loki_url}/loki/api/v1/push", json=payload, timeout=2)
+        except requests.RequestException:
+            pass
 
     @contextmanager
     def _get_conn(self) -> Iterator[psycopg2.extensions.connection]:
@@ -72,6 +96,9 @@ class TimescaleMetricsStore:
                     (metric.idea_id, metric.timestamp, metric.score),
                 )
                 conn.commit()
+        self._send_loki_log(
+            "score_metric", {"idea_id": str(metric.idea_id), "type": "score"}
+        )
 
     def add_latency(self, metric: PublishLatencyMetric) -> None:
         """Insert a publish latency metric row."""
@@ -82,6 +109,10 @@ class TimescaleMetricsStore:
                     (metric.idea_id, metric.timestamp, metric.latency_seconds),
                 )
                 conn.commit()
+        self._send_loki_log(
+            "latency_metric",
+            {"idea_id": str(metric.idea_id), "type": "publish_latency"},
+        )
 
     def create_hourly_continuous_aggregate(self) -> None:
         """Create an hourly downsampled view for latency metrics."""
@@ -96,3 +127,4 @@ class TimescaleMetricsStore:
             with conn.cursor() as cur:
                 cur.execute(stmt)
                 conn.commit()
+        self._send_loki_log("continuous_aggregate_created")

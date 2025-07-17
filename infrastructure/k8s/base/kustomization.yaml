@@ -4,3 +4,5 @@ resources:
   - configmap.yaml
   - secret.yaml
   - servicemonitor.yaml
+  - loki-deployment.yaml
+  - loki-service.yaml

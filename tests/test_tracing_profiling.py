@@ -1,3 +1,5 @@
+"""Tests for tracing and profiling middleware across services."""
+
 import importlib
 import logging
 import os
@@ -47,7 +49,7 @@ SERVICES = [
     (
         "backend/scoring-engine/scoring_engine",
         "scoring_engine.app",
-        "flask",
+        "fastapi",
     ),
 ]
 

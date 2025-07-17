@@ -6,17 +6,18 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
-import fakeredis
+import fakeredis.aioredis
 from PIL import Image
 
-from scoring_engine.app import app as scoring_app, redis_client
+from fastapi.testclient import TestClient
+from scoring_engine.app import app as scoring_app
+import scoring_engine.app as scoring_module
 from scoring_engine.weight_repository import update_weights
 from mockup_generation.generator import MockupGenerator
 
 
 def _setup_scoring() -> ThreadPoolExecutor:
-    scoring_app.config.update(TESTING=True)
-    redis_client.connection_pool.connection_class = fakeredis.FakeConnection
+    scoring_module.redis_client = fakeredis.aioredis.FakeRedis()
     update_weights(
         freshness=1.0,
         engagement=1.0,
@@ -57,6 +58,6 @@ def test_parallel_services(monkeypatch, tmp_path) -> None:
     gen = MockupGenerator()
     monkeypatch.setattr(MockupGenerator, "load", _fake_load)
 
-    client = scoring_app.test_client()
+    client = TestClient(scoring_app)
     with executor:
         list(executor.map(lambda i: _worker(client, gen, tmp_path, i), range(10)))

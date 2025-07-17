@@ -116,6 +116,29 @@
           }
         }
       }
+    },
+    "/recommendations": {
+      "get": {
+        "summary": "Get Recommendations",
+        "description": "Return top optimization actions.",
+        "operationId": "get_recommendations_recommendations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Get Recommendations Recommendations Get"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

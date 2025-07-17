@@ -29,6 +29,9 @@ def test_add_metric_and_get_optimizations() -> None:
     response = client.get("/optimizations")
     assert response.status_code == 200
     assert response.json() != []
+    response = client.get("/recommendations")
+    assert response.status_code == 200
+    assert response.json() != []
 
 
 def test_health_ready_endpoints() -> None:

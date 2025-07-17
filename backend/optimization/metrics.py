@@ -60,3 +60,12 @@ class MetricsAnalyzer:
                 "Investigate memory leaks or reduce memory footprint"
             )
         return recommendations
+
+    def top_recommendations(self, limit: int = 3) -> List[str]:
+        """
+        Return the top optimization recommendations.
+
+        This simply limits the list returned by :meth:`recommend_optimizations`.
+        """
+
+        return self.recommend_optimizations()[:limit]

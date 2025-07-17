@@ -80,6 +80,13 @@ def get_optimizations() -> List[str]:
     return analyzer.recommend_optimizations()
 
 
+@app.get("/recommendations")
+def get_recommendations() -> List[str]:
+    """Return top optimization actions."""
+    analyzer = MetricsAnalyzer(store.get_metrics())
+    return analyzer.top_recommendations()
+
+
 @app.get("/health")
 async def health() -> dict[str, str]:
     """Return service liveness."""

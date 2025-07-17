@@ -37,6 +37,7 @@ Check that the API and frontend respond.
 
 ```bash
 curl http://localhost:8000/health
+curl http://localhost:8000/recommendations
 curl http://localhost:3000
 ```
 

@@ -15,7 +15,12 @@ depends_on = None
 def upgrade() -> None:
     """Apply the migration."""
     op.execute("CREATE EXTENSION IF NOT EXISTS vector")
-    op.add_column("weights", sa.Column("source", sa.String(length=50), nullable=False, server_default="global"))
+    op.add_column(
+        "weights",
+        sa.Column(
+            "source", sa.String(length=50), nullable=False, server_default="global"
+        ),
+    )
     op.add_column("weights", sa.Column("centroid", Vector(768), nullable=True))
     op.create_unique_constraint(op.f("uq_weights_source"), "weights", ["source"])
     op.create_table(

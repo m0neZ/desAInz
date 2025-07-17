@@ -7,6 +7,7 @@ This is the frontend for the Admin Dashboard built with Next.js.
 ```bash
 npm install
 npm run dev
+npm run flow
 ```
 
 ## Environment Variables

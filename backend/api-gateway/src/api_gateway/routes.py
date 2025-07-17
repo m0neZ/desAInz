@@ -1,11 +1,12 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
-from typing import Any, Dict
+from typing import Any, Dict, cast
 import os
 
 import httpx
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 import sqlalchemy as sa
 
@@ -20,6 +21,9 @@ PUBLISHER_URL = os.environ.get(
     "PUBLISHER_URL",
     "http://marketplace-publisher:8000",
 )
+
+TRPC_SERVICE_URL = os.environ.get("TRPC_SERVICE_URL", "http://backend:8000")
+auth_scheme = HTTPBearer()
 
 router = APIRouter()
 
@@ -90,12 +94,21 @@ async def trigger_cleanup(
 @router.post("/trpc/{procedure}")
 async def trpc_endpoint(
     procedure: str,
-    payload: Dict[str, Any] = Depends(verify_token),
+    request: Request,
+    credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
 ) -> Dict[str, Any]:
-    """TRPC-compatible endpoint."""
-    if procedure == "ping":
-        return {"result": {"message": "pong", "user": payload.get("sub")}}
-    return {"error": f"Procedure '{procedure}' not found"}
+    """Proxy tRPC call to the configured backend service."""
+    verify_token(credentials)
+    url = f"{TRPC_SERVICE_URL}/trpc/{procedure}"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            url,
+            json=await request.json(),
+            headers={"Authorization": f"Bearer {credentials.credentials}"},
+        )
+    if response.status_code != 200:
+        raise HTTPException(response.status_code, response.text)
+    return cast(Dict[str, Any], response.json())
 
 
 @router.get("/audit-logs")
@@ -154,6 +167,7 @@ async def switch_default_model(
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail=str(exc))
     log_admin_action(payload.get("sub", "unknown"), "switch_model", {"id": model_id})
     return {"status": "ok"}
+
 
 @router.patch("/publish-tasks/{task_id}")
 async def edit_publish_task(

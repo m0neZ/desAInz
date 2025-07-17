@@ -19,3 +19,4 @@ pip-audit
 sphinxcontrib-openapi
 sentry-sdk
 Deprecated
+testing.postgresql

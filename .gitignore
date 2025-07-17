@@ -8,3 +8,4 @@ flow-typed/
 .env
 .env.*
 !.env.*.example
+docs/sphinx/api/

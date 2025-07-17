@@ -1,13 +1,13 @@
 :orphan:
 
-Mockup Generation
-=================
+desAInz Backend Documentation
+=============================
 
-.. automodule:: mockup_generation.generator
-   :members:
+.. include:: architecture.rst
 
-.. automodule:: mockup_generation.settings
-   :members:
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
 
-.. automodule:: mockup_generation.model_repository
-   :members:
+   api/modules
+

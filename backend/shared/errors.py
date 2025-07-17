@@ -7,6 +7,8 @@ from typing import Any, Dict
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
+from flask import Flask, jsonify, request as flask_request, Response
+from werkzeug.exceptions import HTTPException as FlaskHTTPException
 from opentelemetry import trace
 
 try:  # pragma: no cover - optional dependency
@@ -64,15 +66,11 @@ def add_error_handlers(app: FastAPI) -> None:
     app.add_exception_handler(Exception, unhandled_exception_handler)
 
 
-from flask import Flask, jsonify, request as flask_request
-from werkzeug.exceptions import HTTPException as FlaskHTTPException
-
-
 def add_flask_error_handlers(app: Flask) -> None:
     """Register standard error handlers on a Flask ``app``."""
 
     @app.errorhandler(FlaskHTTPException)
-    def _http_error(exc: FlaskHTTPException):
+    def _http_error(exc: FlaskHTTPException) -> Response:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)
         body = {
@@ -85,7 +83,7 @@ def add_flask_error_handlers(app: Flask) -> None:
         return resp
 
     @app.errorhandler(Exception)
-    def _unhandled(exc: Exception):
+    def _unhandled(exc: Exception) -> Response:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)
         logging.getLogger(__name__).exception(

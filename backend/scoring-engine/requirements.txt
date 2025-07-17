@@ -7,6 +7,9 @@ pydantic
 pytest
 scikit-learn
 numpy
+apscheduler
+
+pgvector
 
 black
 flake8

@@ -126,6 +126,22 @@ class MarketplaceMetric(Base):
     listing: Mapped[Listing] = relationship()
 
 
+class MarketplacePerformanceMetric(Base):
+    """Detailed performance metrics for a listing."""
+
+    __tablename__ = "marketplace_performance_metrics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    listing_id: Mapped[int] = mapped_column(ForeignKey("listings.id"))
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    views: Mapped[int] = mapped_column(Integer, default=0)
+    favorites: Mapped[int] = mapped_column(Integer, default=0)
+    orders: Mapped[int] = mapped_column(Integer, default=0)
+    revenue: Mapped[float] = mapped_column(Float, default=0.0)
+
+    listing: Mapped[Listing] = relationship()
+
+
 class Embedding(Base):
     """Content embedding stored as a pgvector."""
 

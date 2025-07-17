@@ -2,24 +2,22 @@
 
 from datetime import datetime, timezone
 
-import fakeredis
-from flask.testing import FlaskClient
+import fakeredis.aioredis
+from fastapi.testclient import TestClient
 
-from scoring_engine.app import app, redis_client
+import scoring_engine.app as scoring_module
+from scoring_engine import app
 from scoring_engine.weight_repository import update_weights
 
 
-app.config.update(TESTING=True)
-
-
-def setup_module(module):
+def setup_module(module) -> None:
     """Use fakeredis for tests."""
-    redis_client.connection_pool.connection_class = fakeredis.FakeConnection
+    scoring_module.redis_client = fakeredis.aioredis.FakeRedis()
 
 
-def test_score_endpoint_caches():
+def test_score_endpoint_caches() -> None:
     """Ensure score endpoint caches results in Redis."""
-    client: FlaskClient = app.test_client()
+    client = TestClient(app.app)
     update_weights(
         freshness=1.0,
         engagement=1.0,

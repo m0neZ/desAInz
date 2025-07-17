@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 from typing import Any, Dict, Callable, cast
+from uuid import uuid4
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -11,7 +12,7 @@ from jose import JWTError, jwt
 from sqlalchemy import select
 
 from backend.shared.db import session_scope
-from backend.shared.db.models import UserRole
+from backend.shared.db.models import UserRole, RevokedToken
 from backend.shared.config import settings as shared_settings
 
 SECRET_KEY = shared_settings.secret_key or "change_this"
@@ -22,10 +23,10 @@ auth_scheme = HTTPBearer()
 
 
 def create_access_token(data: Dict[str, Any]) -> str:
-    """Create a signed JWT access token."""
+    """Create a signed JWT access token with a unique ID."""
     to_encode = data.copy()
     expire = datetime.now(UTC) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire, "jti": str(uuid4())})
     return cast(str, jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM))
 
 
@@ -43,6 +44,17 @@ def verify_token(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid token",
         ) from exc
+    jti = cast(str | None, payload.get("jti"))
+    if jti is not None:
+        with session_scope() as session:
+            exists = session.execute(
+                select(RevokedToken.id).where(RevokedToken.jti == jti)
+            ).scalar_one_or_none()
+        if exists is not None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Token revoked",
+            )
     return payload
 
 
@@ -67,3 +79,9 @@ def require_role(required_role: str) -> Callable[[Dict[str, Any]], Dict[str, Any
         return payload
 
     return _checker
+
+
+def revoke_token(jti: str, expires_at: datetime) -> None:
+    """Persist ``jti`` of a revoked token."""
+    with session_scope() as session:
+        session.add(RevokedToken(jti=jti, expires_at=expires_at))

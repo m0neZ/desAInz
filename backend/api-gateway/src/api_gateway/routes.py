@@ -10,9 +10,10 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 import sqlalchemy as sa
 
-from .auth import verify_token, require_role
+from .auth import verify_token, require_role, revoke_token
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
+from datetime import UTC, datetime
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
 from mockup_generation.model_repository import list_models, set_default
@@ -49,6 +50,20 @@ async def issue_token(body: Dict[str, str]) -> Dict[str, str]:
         raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
     token = create_access_token({"sub": username})
     return {"access_token": token, "token_type": "bearer"}
+
+
+@router.post("/auth/revoke")
+async def revoke_auth_token(
+    credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
+) -> Dict[str, str]:
+    """Invalidate the provided JWT token."""
+    payload = verify_token(credentials)
+    jti = payload.get("jti")
+    exp = payload.get("exp")
+    if jti is None or exp is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid token")
+    revoke_token(str(jti), datetime.fromtimestamp(exp, tz=UTC))
+    return {"status": "revoked"}
 
 
 @router.get("/roles")

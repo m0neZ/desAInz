@@ -5,7 +5,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 from typing import Iterator
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
 from .base import Base
@@ -19,9 +19,13 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, futu
 
 
 @contextmanager
-def session_scope() -> Iterator[Session]:
-    """Provide a transactional scope for database operations."""
+def session_scope(username: str | None = None) -> Iterator[Session]:
+    """Return a transactional scope optionally setting RLS user."""
     session: Session = SessionLocal()
+    if username is not None:
+        session.execute(
+            text("SET LOCAL app.current_username = :user"), {"user": username}
+        )
     try:
         yield session
         session.commit()

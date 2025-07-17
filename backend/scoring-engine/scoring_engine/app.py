@@ -21,7 +21,8 @@ from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from .scoring import Signal, calculate_score
-from .weight_repository import get_weights, update_weights
+from .weight_repository import get_weights, update_weights, get_centroid
+from .centroid_job import start_centroid_scheduler
 
 
 class WeightsUpdate(BaseModel):
@@ -57,6 +58,7 @@ add_profiling(app)
 add_error_handlers(app)
 REDIS_URL = settings.redis_url
 redis_client = Redis.from_url(REDIS_URL)
+start_centroid_scheduler()
 
 
 @app.middleware("http")
@@ -107,6 +109,15 @@ async def update_weights_endpoint(body: WeightsUpdate) -> JSONResponse:
             "seasonality": weights.seasonality,
         }
     )
+
+
+@app.get("/centroid/{source}")
+async def centroid_endpoint(source: str) -> JSONResponse:
+    """Return current centroid for ``source``."""
+    centroid = await run_in_threadpool(get_centroid, source)
+    if centroid is None:
+        return JSONResponse(status_code=404, content={"detail": "not found"})
+    return JSONResponse({"centroid": centroid})
 
 
 @app.post("/score")

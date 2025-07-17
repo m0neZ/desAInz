@@ -16,6 +16,8 @@ opentelemetry-sdk
 opentelemetry-instrumentation-fastapi
 opentelemetry-instrumentation-flask
 opentelemetry-exporter-jaeger
+apscheduler
+pgvector
 watchtower
 Flask
 pydantic-settings

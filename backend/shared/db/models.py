@@ -8,6 +8,7 @@ from typing import Any
 
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pgvector.sqlalchemy import Vector
 
 from .base import Base
 
@@ -74,11 +75,13 @@ class Weights(Base):
     __tablename__ = "weights"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    source: Mapped[str] = mapped_column(String(50), unique=True, default="global")
     freshness: Mapped[float] = mapped_column(Float, default=1.0)
     engagement: Mapped[float] = mapped_column(Float, default=1.0)
     novelty: Mapped[float] = mapped_column(Float, default=1.0)
     community_fit: Mapped[float] = mapped_column(Float, default=1.0)
     seasonality: Mapped[float] = mapped_column(Float, default=1.0)
+    centroid: Mapped[list[float] | None] = mapped_column(Vector(768), nullable=True)
 
 
 class ABTest(Base):
@@ -121,6 +124,16 @@ class MarketplaceMetric(Base):
     revenue: Mapped[float] = mapped_column(Float, default=0.0)
 
     listing: Mapped[Listing] = relationship()
+
+
+class Embedding(Base):
+    """Content embedding stored as a pgvector."""
+
+    __tablename__ = "embeddings"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    source: Mapped[str] = mapped_column(String(50))
+    embedding: Mapped[list[float]] = mapped_column(Vector(768))
 
 
 class UserRole(Base):

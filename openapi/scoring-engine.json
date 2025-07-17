@@ -50,6 +50,19 @@
         }
       }
     },
+    "/centroid/{source}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "source",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {"200": {"description": "OK"}}
+      }
+    },
     "/health": {
       "get": {
         "responses": {

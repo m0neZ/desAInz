@@ -100,6 +100,19 @@ spec = {
                 "responses": {"200": {"description": "OK"}},
             }
         },
+        "/centroid/{source}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "required": True,
+                        "schema": {"type": "string"},
+                    }
+                ],
+                "responses": {"200": {"description": "OK"}},
+            }
+        },
         "/health": {"get": {"responses": {"200": {"description": "OK"}}}},
         "/ready": {"get": {"responses": {"200": {"description": "Ready"}}}},
     },

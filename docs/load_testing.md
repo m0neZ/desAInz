@@ -2,6 +2,13 @@
 
 The repository provides load tests for each API endpoint using [Locust](https://locust.io/).
 
+## Baseline Scenarios
+
+Baseline scenarios cover the ingestion, scoring and publishing APIs. They live in
+`load_tests/baseline_scenarios.py` and are imported by `locustfile.py`. Each
+scenario issues simple requests against its respective service to verify basic
+performance characteristics.
+
 ## Running Locally
 
 1. Install dependencies:

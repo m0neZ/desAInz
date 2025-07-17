@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from signal_ingestion import tasks
+from signal_ingestion import database, tasks
+from signal_ingestion.adapters.base import BaseAdapter
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+import pytest
 
 
 class DummyApp:
@@ -19,7 +22,7 @@ class DummyApp:
         self.sent.append((name, args or [], queue))
 
 
-def test_schedule_ingestion(monkeypatch) -> None:
+def test_schedule_ingestion(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ensure each adapter is dispatched to its own queue."""
     dummy = DummyApp()
     monkeypatch.setattr(tasks, "app", dummy)
@@ -32,3 +35,36 @@ def test_schedule_ingestion(monkeypatch) -> None:
             tasks.queue_for("instagram"),
         ),
     ]
+
+
+@pytest.mark.asyncio()
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+async def test_ingest_from_adapter_publishes(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Publish normalized rows to Kafka topics."""
+
+    class DummyAdapter(BaseAdapter):  # type: ignore[misc]
+        def __init__(self) -> None:
+            super().__init__(base_url="")
+
+        async def fetch(self) -> list[dict[str, object]]:
+            return [{"id": 1, "foo": "bar"}]
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    database.engine = engine
+    database.SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
+    await database.init_db()
+
+    published: list[tuple[str, str]] = []
+
+    def dummy_publish(topic: str, message: str) -> None:
+        published.append((topic, message))
+
+    monkeypatch.setattr(tasks, "publish", dummy_publish)
+    monkeypatch.setattr(tasks, "is_duplicate", lambda key: False)
+    monkeypatch.setattr(tasks, "add_key", lambda key: None)
+
+    async with database.SessionLocal() as session:
+        await tasks._ingest_from_adapter(session, DummyAdapter())
+
+    assert ("signals", "DummyAdapter:1") in published
+    assert ("signals.ingested", '{"id": 1, "foo": "bar"}') in published

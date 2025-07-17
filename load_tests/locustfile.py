@@ -1,9 +1,17 @@
 """Load tests for desAInz API endpoints using Locust."""
 
+# mypy: ignore-errors
+
 from __future__ import annotations
 
 import os
 from locust import HttpUser, task, between, events
+
+from baseline_scenarios import (  # noqa: F401
+    IngestionApiUser,
+    PublishingApiUser,
+    ScoringApiUser,
+)
 
 THRESHOLD_FAILURE_RATIO = float(os.environ.get("THRESHOLD_FAILURE_RATIO", "0.01"))
 THRESHOLD_AVG_RESPONSE_TIME = float(

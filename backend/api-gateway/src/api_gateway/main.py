@@ -1,6 +1,7 @@
 """API Gateway FastAPI application."""
 
 import logging
+import os
 import uuid
 from typing import Callable, Coroutine
 
@@ -17,10 +18,11 @@ from backend.shared import add_error_handlers, configure_sentry
 configure_logging()
 logger = logging.getLogger(__name__)
 
+SERVICE_NAME = os.getenv("SERVICE_NAME", "api-gateway")
 app = FastAPI(title="API Gateway")
 app.add_middleware(GZipMiddleware, minimum_size=1000)
-configure_tracing(app, "api-gateway")
-configure_sentry(app, "api-gateway")
+configure_tracing(app, SERVICE_NAME)
+configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 

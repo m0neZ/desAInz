@@ -10,7 +10,7 @@ from backend.shared.config import settings as shared_settings
 class Settings(BaseSettings):
     """Configuration derived from environment variables."""
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
 
     app_name: str = "api-gateway"
     redis_url: str = shared_settings.redis_url

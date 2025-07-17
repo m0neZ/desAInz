@@ -11,9 +11,10 @@ from typing import cast, Callable
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import UserRole
+from backend.shared.config import settings as shared_settings
 
 
-SECRET_KEY = "change_this"  # In production use env var
+SECRET_KEY = shared_settings.secret_key or "change_this"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

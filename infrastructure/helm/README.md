@@ -13,6 +13,7 @@ files are provided for development, staging and production deployments.
 - Marketplace Publisher
 - Feedback Loop
 - Orchestrator & CI/CD
+- Backup Jobs
 
 ## Usage
 
@@ -24,6 +25,19 @@ helm install <release-name> ./<microservice> -f ./<microservice>/values-<env>.ya
 
 Replace `<microservice>` with one of the service directories above and `<env>`
 with `dev`, `staging` or `prod`.
+
+## Deploying All Services
+
+The `all-services` chart packages every microservice so the entire platform can
+be installed with a single Helm release.
+
+```bash
+helm dependency update ./all-services
+helm install desainz ./all-services -f ./all-services/values-dev.yaml
+```
+
+Override values for individual microservices under their names in the provided
+values files.
 
 ### Mirroring Production in Staging
 

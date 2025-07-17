@@ -1,0 +1,85 @@
+signal-ingestion:
+  replicaCount: 1
+  image:
+    repository: example/signal-ingestion
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+data-storage:
+  replicaCount: 1
+  image:
+    repository: example/data-storage
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+scoring-engine:
+  replicaCount: 1
+  image:
+    repository: example/scoring-engine
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+ai-mockup-generation:
+  replicaCount: 1
+  image:
+    repository: example/ai-mockup-generation
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+marketplace-publisher:
+  replicaCount: 1
+  image:
+    repository: example/marketplace-publisher
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+feedback-loop:
+  replicaCount: 1
+  image:
+    repository: example/feedback-loop
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+orchestrator:
+  replicaCount: 1
+  image:
+    repository: example/orchestrator
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+
+backup-jobs:
+  image:
+    repository: example/backup
+    tag: latest
+    pullPolicy: IfNotPresent
+  schedule: "0 2 * * *"
+  bucket: my-backup-bucket
+  minioDataPath: /data

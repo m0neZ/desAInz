@@ -1,0 +1,31 @@
+apiVersion: v2
+name: all-services
+description: Helm chart that packages all Design Idea Engine microservices
+version: 0.1.0
+type: application
+appVersion: "1.0"
+dependencies:
+  - name: signal-ingestion
+    version: 0.1.0
+    repository: "file://../signal-ingestion"
+  - name: data-storage
+    version: 0.1.0
+    repository: "file://../data-storage"
+  - name: scoring-engine
+    version: 0.1.0
+    repository: "file://../scoring-engine"
+  - name: ai-mockup-generation
+    version: 0.1.0
+    repository: "file://../ai-mockup-generation"
+  - name: marketplace-publisher
+    version: 0.1.0
+    repository: "file://../marketplace-publisher"
+  - name: feedback-loop
+    version: 0.1.0
+    repository: "file://../feedback-loop"
+  - name: orchestrator
+    version: 0.1.0
+    repository: "file://../orchestrator"
+  - name: backup-jobs
+    version: 0.1.0
+    repository: "file://../backup-jobs"

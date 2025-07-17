@@ -135,6 +135,58 @@
           }
         }
       }
+    },
+    "/webhooks/{marketplace}": {
+      "post": {
+        "summary": "Webhook",
+        "description": "Receive status callbacks from marketplaces.",
+        "operationId": "webhook_webhooks__marketplace__post",
+        "parameters": [
+          {
+            "name": "marketplace",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Marketplace"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -220,6 +272,25 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WebhookPayload": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "integer",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "required": [
+          "task_id",
+          "status"
+        ],
+        "title": "WebhookPayload",
+        "description": "Webhook callback payload."
       }
     }
   }

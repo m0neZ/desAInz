@@ -1,8 +1,20 @@
 resources:
-  - deployment.yaml
-  - service.yaml
+  - api-gateway-deployment.yaml
+  - api-gateway-service.yaml
+  - api-gateway-servicemonitor.yaml
+  - marketplace-publisher-deployment.yaml
+  - marketplace-publisher-service.yaml
+  - marketplace-publisher-servicemonitor.yaml
+  - signal-ingestion-deployment.yaml
+  - signal-ingestion-service.yaml
+  - signal-ingestion-servicemonitor.yaml
+  - scoring-engine-deployment.yaml
+  - scoring-engine-service.yaml
+  - scoring-engine-servicemonitor.yaml
+  - monitoring-deployment.yaml
+  - monitoring-service.yaml
+  - monitoring-servicemonitor.yaml
   - configmap.yaml
   - secret.yaml
-  - servicemonitor.yaml
   - loki-deployment.yaml
   - loki-service.yaml

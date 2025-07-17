@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scoring-engine
+spec:
+  type: ClusterIP
+  selector:
+    app: scoring-engine
+  ports:
+    - port: 80
+      targetPort: 5002

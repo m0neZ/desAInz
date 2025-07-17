@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signal-ingestion
+  labels:
+    app: signal-ingestion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: signal-ingestion
+  template:
+    metadata:
+      labels:
+        app: signal-ingestion
+    spec:
+      containers:
+        - name: signal-ingestion
+          image: example/signal-ingestion:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: LOKI_URL
+              value: http://loki:3100
+          envFrom:
+            - configMapRef:
+                name: shared-config
+            - secretRef:
+                name: shared-secret
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 20

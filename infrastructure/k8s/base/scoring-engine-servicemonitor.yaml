@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: scoring-engine
+  labels:
+    app: scoring-engine
+spec:
+  selector:
+    matchLabels:
+      app: scoring-engine
+  endpoints:
+    - path: /metrics
+      targetPort: 80
+      interval: 30s

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 from typing import Iterable
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -47,6 +48,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         session.add(signal)
         await session.commit()
         publish("signals", key)
+        publish("signals.ingested", json.dumps(clean_row))
 
 
 @app.task(name="signal_ingestion.ingest_adapter")  # type: ignore[misc]

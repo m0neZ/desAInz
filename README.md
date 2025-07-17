@@ -17,6 +17,14 @@ make test  # run Python tests
 make lint  # run linters for Python and JavaScript
 ```
 
+## Type Checking
+
+Run Flow across the repository with:
+
+```bash
+npm run flow
+```
+
 ## Debugging with VSCode
 
 VSCode launch configurations are provided in `.vscode/launch.json`.

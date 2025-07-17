@@ -157,3 +157,29 @@ class AIModel(Base):
     details: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     is_default: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class ScoreMetric(Base):
+    """Score metric for a design idea."""
+
+    __tablename__ = "score_metrics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    idea_id: Mapped[int] = mapped_column(ForeignKey("ideas.id"))
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    score: Mapped[float] = mapped_column(Float)
+
+    idea: Mapped[Idea] = relationship()
+
+
+class PublishLatencyMetric(Base):
+    """Publish latency metric for a design idea."""
+
+    __tablename__ = "publish_latency_metrics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    idea_id: Mapped[int] = mapped_column(ForeignKey("ideas.id"))
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    latency_seconds: Mapped[float] = mapped_column(Float)
+
+    idea: Mapped[Idea] = relationship()

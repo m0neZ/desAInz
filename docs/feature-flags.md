@@ -9,6 +9,10 @@ Experimental features are toggled using [Unleash](https://www.getunleash.io/).
 3. Optionally set `UNLEASH_APP_NAME` to override the default application name.
 4. Restart the service to load the flag configuration.
 
+Set ``UNLEASH_DEFAULTS`` to a JSON mapping of fallback values when no Unleash
+server is configured or if it cannot be reached. Results are cached for the
+number of seconds specified by ``UNLEASH_CACHE_TTL`` (default ``30``).
+
 ## Disabling a flag
 
 Disable the feature from the Unleash dashboard or remove the environment

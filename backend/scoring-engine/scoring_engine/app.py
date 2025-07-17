@@ -50,9 +50,10 @@ from .weight_repository import get_weights, update_weights
 configure_logging()
 logger = logging.getLogger(__name__)
 
+SERVICE_NAME = os.getenv("SERVICE_NAME", "scoring-engine")
 app = Flask(__name__)
-configure_tracing(app, "scoring-engine")
-configure_sentry(app, "scoring-engine")
+configure_tracing(app, SERVICE_NAME)
+configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_flask_error_handlers(app)
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")

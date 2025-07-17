@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 import logging
+import os
 import uuid
 from typing import Callable, Coroutine, List
 
@@ -20,9 +21,10 @@ from .storage import MetricsStore
 configure_logging()
 logger = logging.getLogger(__name__)
 
+SERVICE_NAME = os.getenv("SERVICE_NAME", "optimization")
 app = FastAPI(title="Optimization Service")
-configure_tracing(app, "optimization")
-configure_sentry(app, "optimization")
+configure_tracing(app, SERVICE_NAME)
+configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 

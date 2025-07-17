@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import io
 import logging
+import os
 import uuid
 from typing import Any, Callable, Coroutine, Dict, Iterable
 
@@ -25,9 +26,10 @@ from backend.shared import add_error_handlers, configure_sentry
 configure_logging()
 logger = logging.getLogger(__name__)
 
+SERVICE_NAME = os.getenv("SERVICE_NAME", "analytics")
 app = FastAPI(title="Analytics Service")
-configure_tracing(app, "analytics")
-configure_sentry(app, "analytics")
+configure_tracing(app, SERVICE_NAME)
+configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 

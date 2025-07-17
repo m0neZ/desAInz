@@ -8,7 +8,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Centralized configuration for backend services."""
 
-    model_config = SettingsConfigDict(env_file=".env", env_prefix="")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_prefix="", secrets_dir="/run/secrets"
+    )
 
     database_url: str = "sqlite:///shared.db"
     kafka_bootstrap_servers: str = "localhost:9092"
@@ -17,6 +19,7 @@ class Settings(BaseSettings):
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
+    secret_key: str | None = None
 
 
 settings = Settings()

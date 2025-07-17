@@ -10,7 +10,7 @@ from backend.shared.config import settings as shared_settings
 class Settings(BaseSettings):
     """Store configuration derived from environment variables."""
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
 
     app_name: str = "marketplace-publisher"
     log_level: str = "INFO"

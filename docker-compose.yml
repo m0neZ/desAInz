@@ -111,6 +111,10 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
+    secrets:
+      - openai_api_key
+      - stability_ai_api_key
+      - huggingface_token
 
   # Optional monitoring stack
   monitoring:
@@ -155,3 +159,12 @@ volumes:
   zookeeper-data:
   kafka-data:
   minio-data:
+secrets:
+  secret_key:
+    file: ./secrets/secret_key.txt
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
+  stability_ai_api_key:
+    file: ./secrets/stability_ai_api_key.txt
+  huggingface_token:
+    file: ./secrets/huggingface_token.txt

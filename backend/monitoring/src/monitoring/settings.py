@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Configuration loaded from environment variables."""
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
 
     app_name: str = "monitoring"
     log_file: str = "app.log"

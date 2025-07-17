@@ -21,7 +21,8 @@ The `scripts` directory provides helper scripts for setting up storage and CDN r
 
 The `backend/service-template` directory contains a minimal FastAPI service. The
 application loads configuration from environment variables using
-`pydantic.BaseSettings`. Variables can be provided via a `.env` file. The
+`pydantic.BaseSettings`. Variables can be provided via a `.env` file for local
+development or via Docker/Kubernetes secrets mounted under `/run/secrets`. The
 `Settings` class is defined in `src/settings.py` and read on startup.
 
 ## Load Testing

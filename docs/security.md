@@ -7,11 +7,14 @@ This project relies on environment variables for configuration.
 - Copy `.env.example` files to `.env` inside each service directory.
 - Adjust the values for your local setup.
 - The applications load these variables automatically via `pydantic.BaseSettings`.
+- For a production-like setup with Docker Compose, place sensitive values in
+  files under `secrets/` and reference them as Docker secrets.
 
 ## Production
 
-- Secrets are stored in HashiCorp Vault or AWS Secrets Manager.
-- Deployment manifests fetch the secrets at runtime.
+- Secrets are stored in HashiCorp Vault or AWS Secrets Manager and exposed to
+  the containers using Kubernetes Secrets.
+- Deployment manifests mount the secrets under `/run/secrets`.
 - `.env` files are **not** used in production.
 
 ## Secret rotation procedure

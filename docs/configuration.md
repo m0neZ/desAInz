@@ -4,7 +4,9 @@ This project uses environment variables for all runtime configuration. The
 example files `.env.dev.example`, `.env.staging.example` and
 `.env.prod.example` provide sample values for each deployment stage. Copy the
 appropriate file to `.env` and adjust the values before running services
-locally or in CI.
+locally or in CI. In production, sensitive variables are mounted from Docker or
+Kubernetes secrets under `/run/secrets` and loaded automatically by the
+application settings classes.
 
 | Variable | Description |
 | --- | --- |

@@ -25,12 +25,12 @@ from .settings import settings
 
 
 ADAPTERS: dict[str, BaseAdapter] = {
-    "tiktok": TikTokAdapter("https://jsonplaceholder.typicode.com"),
-    "instagram": InstagramAdapter("https://jsonplaceholder.typicode.com"),
-    "reddit": RedditAdapter("https://jsonplaceholder.typicode.com"),
-    "youtube": YouTubeAdapter("https://jsonplaceholder.typicode.com"),
-    "events": EventsAdapter("https://jsonplaceholder.typicode.com"),
-    "nostalgia": NostalgiaAdapter("https://jsonplaceholder.typicode.com"),
+    "tiktok": TikTokAdapter(),
+    "instagram": InstagramAdapter(),
+    "reddit": RedditAdapter(),
+    "youtube": YouTubeAdapter(),
+    "events": EventsAdapter(),
+    "nostalgia": NostalgiaAdapter(),
 }
 
 

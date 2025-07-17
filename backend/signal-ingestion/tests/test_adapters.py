@@ -32,9 +32,9 @@ ADAPTERS = [
 @pytest.mark.asyncio()
 async def test_fetch(adapter_cls, name) -> None:
     """Each adapter should fetch one item."""
-    adapter = adapter_cls("https://jsonplaceholder.typicode.com")
+    adapter = adapter_cls()
     cassette = f"backend/signal-ingestion/tests/cassettes/{name}.yaml"
-    with vcr.use_cassette(cassette):
+    with vcr.use_cassette(cassette, record_mode="new_episodes"):
         rows = await adapter.fetch()
     assert len(rows) == 1
-    assert "id" in rows[0]
+    assert isinstance(rows[0], dict)

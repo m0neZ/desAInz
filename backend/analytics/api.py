@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import csv
-import io
 import logging
 import os
 import uuid
@@ -103,21 +101,18 @@ def export_ab_test_results(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> StreamingResponse:
     """Return all A/B test result rows for ``ab_test_id`` as CSV."""
-    with SessionLocal() as session:
-        rows = (
-            session.query(models.ABTestResult)
-            .filter(models.ABTestResult.ab_test_id == ab_test_id)
-            .all()
-        )
 
     def _iter() -> Iterable[str]:
-        buffer = io.StringIO()
-        writer = csv.writer(buffer)
-        writer.writerow(["timestamp", "conversions", "impressions"])
-        for r in rows:
-            writer.writerow([r.timestamp.isoformat(), r.conversions, r.impressions])
-        buffer.seek(0)
-        yield buffer.read()
+        yield "timestamp,conversions,impressions\n"
+        with SessionLocal() as session:
+            query = (
+                session.query(models.ABTestResult)
+                .filter(models.ABTestResult.ab_test_id == ab_test_id)
+                .order_by(models.ABTestResult.timestamp)
+                .yield_per(1000)
+            )
+            for r in query:
+                yield (f"{r.timestamp.isoformat()},{r.conversions},{r.impressions}\n")
 
     return StreamingResponse(
         _iter(),
@@ -174,21 +169,20 @@ def export_marketplace_metrics(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> StreamingResponse:
     """Return all marketplace metrics rows for ``listing_id`` as CSV."""
-    with SessionLocal() as session:
-        rows = (
-            session.query(models.MarketplaceMetric)
-            .filter(models.MarketplaceMetric.listing_id == listing_id)
-            .all()
-        )
 
     def _iter() -> Iterable[str]:
-        buffer = io.StringIO()
-        writer = csv.writer(buffer)
-        writer.writerow(["timestamp", "clicks", "purchases", "revenue"])
-        for r in rows:
-            writer.writerow([r.timestamp.isoformat(), r.clicks, r.purchases, r.revenue])
-        buffer.seek(0)
-        yield buffer.read()
+        yield "timestamp,clicks,purchases,revenue\n"
+        with SessionLocal() as session:
+            query = (
+                session.query(models.MarketplaceMetric)
+                .filter(models.MarketplaceMetric.listing_id == listing_id)
+                .order_by(models.MarketplaceMetric.timestamp)
+                .yield_per(1000)
+            )
+            for r in query:
+                yield (
+                    f"{r.timestamp.isoformat()},{r.clicks},{r.purchases},{r.revenue}\n"
+                )
 
     return StreamingResponse(
         _iter(),

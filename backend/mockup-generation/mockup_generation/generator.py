@@ -12,6 +12,7 @@ from PIL import Image
 import requests
 from diffusers import StableDiffusionXLPipeline
 import torch
+from .settings import settings
 
 from .model_repository import get_default_model_id
 
@@ -69,14 +70,53 @@ class MockupGenerator:
         return GenerationResult(image_path=output_path, duration=duration)
 
     def _fallback_api(self, prompt: str) -> Image.Image:
-        """Call external API as a fallback mechanism."""
-        response = requests.post(
-            "https://api.example.com/generate",
-            json={"prompt": prompt},
-            timeout=60,
-        )
-        response.raise_for_status()
-        from io import BytesIO
-        from PIL import Image
+        """
+        Call external API as a fallback mechanism.
 
-        return Image.open(BytesIO(response.content))
+        The provider is selected via ``settings.fallback_provider`` and
+        authentication tokens are loaded from environment variables.
+        """
+        from io import BytesIO
+        import base64
+        import time
+
+        session = requests.Session()
+        provider = settings.fallback_provider.lower()
+
+        for attempt in range(3):
+            try:
+                if provider == "dall-e":
+                    response = session.post(
+                        "https://api.openai.com/v1/images/generations",
+                        headers={"Authorization": f"Bearer {settings.openai_api_key}"},
+                        json={"prompt": prompt, "n": 1, "size": "1024x1024"},
+                        timeout=30,
+                    )
+                    response.raise_for_status()
+                    image_url = response.json()["data"][0]["url"]
+                    image_resp = session.get(image_url, timeout=30)
+                    image_resp.raise_for_status()
+                    data = image_resp.content
+                else:
+                    response = session.post(
+                        (
+                            "https://api.stability.ai/v1/generation/"
+                            "stable-diffusion-v1-6/text-to-image"
+                        ),
+                        headers={
+                            "Authorization": f"Bearer {settings.stability_ai_api_key}",
+                            "Accept": "application/json",
+                        },
+                        json={"text_prompts": [{"text": prompt}]},
+                        timeout=30,
+                    )
+                    response.raise_for_status()
+                    data = base64.b64decode(response.json()["artifacts"][0]["base64"])
+                return Image.open(BytesIO(data))
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("Fallback provider error: %s", exc)
+                if attempt == 2:
+                    raise
+                time.sleep(2**attempt)
+
+        raise RuntimeError("Failed to generate image via fallback provider")

@@ -17,6 +17,7 @@ Welcome to desAInz's documentation!
    backup
    api/modules
    quickstart
+   deployment
    cloud_deployment
    troubleshooting
    error_triage

@@ -115,6 +115,7 @@ spec = {
         },
         "/health": {"get": {"responses": {"200": {"description": "OK"}}}},
         "/ready": {"get": {"responses": {"200": {"description": "Ready"}}}},
+        "/metrics": {"get": {"responses": {"200": {"description": "OK"}}}},
     },
     "components": {
         "schemas": {

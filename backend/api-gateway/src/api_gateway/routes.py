@@ -12,6 +12,7 @@ import sqlalchemy as sa
 
 from .auth import verify_token, require_role
 from .audit import log_admin_action
+from backend.analytics.auth import create_access_token
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
 from mockup_generation.model_repository import list_models, set_default
@@ -32,6 +33,22 @@ router = APIRouter()
 async def status_endpoint() -> Dict[str, str]:
     """Public status endpoint."""
     return {"status": "ok"}
+
+
+@router.post("/auth/token")
+async def issue_token(body: Dict[str, str]) -> Dict[str, str]:
+    """Return a JWT token for ``username`` if it exists."""
+    username = body.get("username")
+    if not username:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Username required")
+    with session_scope() as session:
+        exists = session.execute(
+            select(UserRole.id).where(UserRole.username == username)
+        ).scalar_one_or_none()
+    if exists is None:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
+    token = create_access_token({"sub": username})
+    return {"access_token": token, "token_type": "bearer"}
 
 
 @router.get("/roles")

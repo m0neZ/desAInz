@@ -6,6 +6,8 @@ import json
 import logging
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict
+
+from backend.shared.config import settings
 import os
 
 import requests
@@ -14,7 +16,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 logger = logging.getLogger(__name__)
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+REDIS_URL = settings.redis_url
 EXCHANGE_API_URL = os.environ.get(
     "EXCHANGE_API_URL", "https://api.exchangerate.host/latest"
 )

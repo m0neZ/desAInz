@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 import os
 
+from backend.shared.config import settings
+
 import logging
 import uuid
 
@@ -56,7 +58,7 @@ configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_flask_error_handlers(app)
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+REDIS_URL = settings.redis_url
 redis_client = redis.Redis.from_url(REDIS_URL)
 
 

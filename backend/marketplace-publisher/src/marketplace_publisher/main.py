@@ -28,6 +28,7 @@ from .db import (
     update_task_status,
 )
 from .rules import load_rules, validate_mockup
+from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
@@ -93,6 +94,7 @@ class PublishRequest(BaseModel):
 
     marketplace: Marketplace
     design_path: Path
+    score: float = 0.0
     metadata: dict[str, Any] = {}
 
 
@@ -143,11 +145,12 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     async with SessionLocal() as session:
+        metadata = create_listing_metadata(req.score, req.marketplace, req.metadata)
         task = await create_task(
             session,
             marketplace=req.marketplace,
             design_path=str(req.design_path),
-            metadata_json=req.metadata,
+            metadata_json=metadata,
         )
     background.add_task(_background_publish, task.id)
     return {"task_id": task.id}

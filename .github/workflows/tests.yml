@@ -34,10 +34,15 @@ jobs:
           pip install -r requirements.txt -r requirements-dev.txt
           npm ci
           python -m pip install -e .
+      - name: Start services
+        run: docker compose -f docker-compose.test.yml up -d
       - name: Run tests
         run: |
           pytest -vv
           npm test
+      - name: Stop services
+        if: always()
+        run: docker compose -f docker-compose.test.yml down
 
   publish:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

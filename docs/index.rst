@@ -33,6 +33,7 @@ Welcome to desAInz's documentation!
    daily_summary
    feature-flags
    openapi_specs
+   logs_with_loki
 
 Kafka Utilities
 ---------------

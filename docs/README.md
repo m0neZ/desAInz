@@ -6,6 +6,7 @@ The `blueprints` folder contains the full system blueprint.
 - [Sphinx Documentation](sphinx/index)
 - [Configuration](configuration.md)
 - [Metrics Storage](metrics_storage.md)
+- [Log Aggregation](logs_with_loki.md)
 
 The `scripts` directory provides helper scripts for setting up storage and CDN resources:
 

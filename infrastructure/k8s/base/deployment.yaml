@@ -20,6 +20,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+          env:
+            - name: LOKI_URL
+              value: http://loki:3100
           envFrom:
             - configMapRef:
                 name: placeholder-config

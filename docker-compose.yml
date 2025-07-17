@@ -120,6 +120,18 @@ services:
       - monitoring
     ports:
       - "8000:8000"
+    environment:
+      LOKI_URL: http://loki:3100
+    depends_on:
+      - loki
+
+  loki:
+    image: grafana/loki:latest
+    profiles:
+      - monitoring
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
 
   prometheus:
     image: prom/prometheus:latest

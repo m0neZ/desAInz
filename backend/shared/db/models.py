@@ -196,3 +196,15 @@ class PublishLatencyMetric(Base):
     latency_seconds: Mapped[float] = mapped_column(Float)
 
     idea: Mapped[Idea] = relationship()
+
+
+class GeneratedMockup(Base):
+    """Parameters used for generating a mockup."""
+
+    __tablename__ = "generated_mockups"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    prompt: Mapped[str] = mapped_column(String)
+    num_inference_steps: Mapped[int] = mapped_column(Integer)
+    seed: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

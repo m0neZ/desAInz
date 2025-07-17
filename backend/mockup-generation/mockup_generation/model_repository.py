@@ -9,7 +9,7 @@ from sqlalchemy import select, update
 
 from backend.shared.db import engine, session_scope
 from backend.shared.db.base import Base
-from backend.shared.db.models import AIModel
+from backend.shared.db.models import AIModel, GeneratedMockup
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,6 +24,16 @@ class ModelInfo:
     model_id: str
     details: dict[str, object] | None
     is_default: bool
+
+
+@dataclass
+class GeneratedMockupInfo:
+    """Dataclass representing a generated mockup entry."""
+
+    id: int
+    prompt: str
+    num_inference_steps: int
+    seed: int
 
 
 def list_models() -> List[ModelInfo]:
@@ -59,3 +69,29 @@ def get_default_model_id() -> str:
     with session_scope() as session:
         ident = session.scalar(select(AIModel.model_id).where(AIModel.is_default))
     return ident or "stabilityai/stable-diffusion-xl-base-1.0"
+
+
+def save_generated_mockup(prompt: str, num_inference_steps: int, seed: int) -> int:
+    """Persist generation parameters and return the created row id."""
+    with session_scope() as session:
+        obj = GeneratedMockup(
+            prompt=prompt, num_inference_steps=num_inference_steps, seed=seed
+        )
+        session.add(obj)
+        session.flush()
+        return int(obj.id)
+
+
+def list_generated_mockups() -> List[GeneratedMockupInfo]:
+    """Return all stored generation parameter entries."""
+    with session_scope() as session:
+        rows: Iterable[GeneratedMockup] = session.scalars(select(GeneratedMockup)).all()
+        return [
+            GeneratedMockupInfo(
+                id=row.id,
+                prompt=row.prompt,
+                num_inference_steps=row.num_inference_steps,
+                seed=row.seed,
+            )
+            for row in rows
+        ]

@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: placeholder
+  name: monitoring
   labels:
-    app: placeholder
+    app: monitoring
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: placeholder
+      app: monitoring
   template:
     metadata:
       labels:
-        app: placeholder
+        app: monitoring
     spec:
       containers:
-        - name: placeholder
-          image: example/placeholder:latest
+        - name: monitoring
+          image: example/monitoring:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
+            - containerPort: 8000
           env:
             - name: LOKI_URL
               value: http://loki:3100
           envFrom:
             - configMapRef:
-                name: placeholder-config
+                name: shared-config
             - secretRef:
-                name: placeholder-secret
+                name: shared-secret
           resources:
             limits:
               cpu: "500m"
@@ -37,7 +37,7 @@ spec:
               memory: "256Mi"
           readinessProbe:
             httpGet:
-              path: /health
+              path: /ready
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10

@@ -3,10 +3,51 @@ resources:
 patches:
   - target:
       kind: Service
+      name: api-gateway
     patch: |-
       apiVersion: v1
       kind: Service
       metadata:
-        name: placeholder
+        name: api-gateway
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: marketplace-publisher
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: marketplace-publisher
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: signal-ingestion
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: signal-ingestion
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: scoring-engine
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: scoring-engine
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: monitoring
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: monitoring
       spec:
         type: NodePort

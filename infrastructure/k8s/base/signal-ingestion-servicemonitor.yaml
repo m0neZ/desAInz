@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: signal-ingestion
+  labels:
+    app: signal-ingestion
+spec:
+  selector:
+    matchLabels:
+      app: signal-ingestion
+  endpoints:
+    - path: /metrics
+      targetPort: 80
+      interval: 30s

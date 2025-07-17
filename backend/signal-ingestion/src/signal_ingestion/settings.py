@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     app_name: str = "signal-ingestion"
     log_level: str = "INFO"
     signal_retention_days: int = 90
+    dedup_error_rate: float = 0.01
+    dedup_capacity: int = 100_000
+    dedup_ttl: int = 86_400
 
 
 settings = Settings()

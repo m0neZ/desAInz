@@ -6,12 +6,15 @@ from fastapi.testclient import TestClient
 import fakeredis.aioredis
 from typing import Any
 from pathlib import Path
+import warnings
 
 
 def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
     """Publish design and check initial progress."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    monkeypatch.setenv("SELENIUM_SKIP", "1")
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
     from marketplace_publisher.db import Marketplace
     from marketplace_publisher.main import app, rate_limiter
     from marketplace_publisher import publisher
@@ -20,6 +23,8 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
 
     class DummyClient:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
+            assert "price" in metadata
+            assert metadata["price"] > 0
             return "1"
 
     publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
@@ -33,6 +38,7 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
             json={
                 "marketplace": Marketplace.redbubble.value,
                 "design_path": str(design),
+                "score": 1.0,
                 "metadata": {"title": "t"},
             },
         )

@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///shared.db"
     kafka_bootstrap_servers: str = "localhost:9092"
     redis_url: str = "redis://localhost:6379/0"
+    score_cache_ttl: int = 3600
     s3_endpoint: str | None = None
     s3_access_key: str | None = None
     s3_secret_key: str | None = None

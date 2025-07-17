@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: placeholder
+  labels:
+    app: placeholder
+spec:
+  selector:
+    matchLabels:
+      app: placeholder
+  endpoints:
+    - path: /metrics
+      targetPort: 80
+      interval: 30s

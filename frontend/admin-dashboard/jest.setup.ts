@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import './src/i18n';
 
 // Fail tests if any console warnings or errors are logged.
 beforeAll(() => {

@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';
 
 function useSafeSession() {
   try {
@@ -9,6 +10,7 @@ function useSafeSession() {
 }
 
 export default function AuthButton() {
+  const { t } = useTranslation();
   const { data: session, status } = useSafeSession();
 
   if (status === 'loading') {
@@ -18,14 +20,14 @@ export default function AuthButton() {
   if (session) {
     return (
       <button onClick={() => signOut()} className="ml-auto">
-        Logout
+        {t('logout')}
       </button>
     );
   }
 
   return (
     <button onClick={() => signIn()} className="ml-auto">
-      Login
+      {t('login')}
     </button>
   );
 }

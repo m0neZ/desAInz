@@ -62,10 +62,25 @@ class MetricsAnalyzer:
         return recommendations
 
     def top_recommendations(self, limit: int = 3) -> List[str]:
-        """
-        Return the top optimization recommendations.
+        """Return prioritized optimization recommendations."""
+        recommendations: List[str] = []
 
-        This simply limits the list returned by :meth:`recommend_optimizations`.
-        """
+        if self.average_cpu() > 70:
+            recommendations.append(
+                "Average CPU usage is consistently high; evaluate long-term scaling"
+            )
+        if self.average_memory() > 1024:
+            recommendations.append(
+                "Average memory usage exceeds 1GB; consider memory optimization"
+            )
 
-        return self.recommend_optimizations()[:limit]
+        recommendations.extend(self.recommend_optimizations())
+
+        unique: list[str] = []
+        seen: set[str] = set()
+        for rec in recommendations:
+            if rec not in seen:
+                unique.append(rec)
+                seen.add(rec)
+
+        return unique[:limit]

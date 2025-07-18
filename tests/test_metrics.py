@@ -24,12 +24,14 @@ def test_top_recommendations() -> None:
     """Ensure top recommendations are returned in priority order."""
     metrics = [
         ResourceMetric(
-            datetime.now(timezone.utc) - timedelta(minutes=1),
+            datetime.now(timezone.utc) - timedelta(minutes=i),
             90,
             2048,
         )
+        for i in range(20)
     ]
     analyzer = MetricsAnalyzer(metrics)
     recs = analyzer.top_recommendations()
     assert recs != []
     assert len(recs) <= 3
+    assert any("Average CPU" in r for r in recs)

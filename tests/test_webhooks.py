@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy import select
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -63,3 +64,9 @@ async def test_webhook_updates_task_state(monkeypatch, tmp_path: Path) -> None:
         refreshed = await db.get_task(session, task.id)
         assert refreshed is not None
         assert refreshed.status == db.PublishStatus.success
+        events = (
+            await session.execute(
+                select(db.WebhookEvent).where(db.WebhookEvent.task_id == task.id)
+            )
+        ).scalars()
+        assert len(list(events)) == 1

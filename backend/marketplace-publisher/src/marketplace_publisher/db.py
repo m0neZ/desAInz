@@ -10,13 +10,18 @@ import json
 from sqlalchemy import (
     DateTime,
     Enum as SqlEnum,
+    ForeignKey,
     Integer,
     String,
     select,
     update,
 )
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 from .settings import settings
 
@@ -66,6 +71,22 @@ class PublishTask(Base):
     )
 
 
+class WebhookEvent(Base):
+    """Webhook event received from a marketplace."""
+
+    __tablename__ = "webhook_event"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    task_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("publish_task.id"), nullable=False
+    )
+    status: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, nullable=False
+    )
+    task: Mapped["PublishTask"] = relationship("PublishTask", backref="events")
+
+
 engine = create_async_engine(settings.database_url, future=True)
 SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
@@ -105,6 +126,20 @@ async def increment_attempts(session: AsyncSession, task_id: int) -> None:
         update(PublishTask)
         .where(PublishTask.id == task_id)
         .values(attempts=PublishTask.attempts + 1, updated_at=datetime.utcnow())
+    )
+    await session.commit()
+
+
+async def create_webhook_event(
+    session: AsyncSession, task_id: int, status: str
+) -> None:
+    """Persist a ``WebhookEvent`` row and update the task status."""
+    event = WebhookEvent(task_id=task_id, status=status)
+    session.add(event)
+    await session.execute(
+        update(PublishTask)
+        .where(PublishTask.id == task_id)
+        .values(status=status, updated_at=datetime.utcnow())
     )
     await session.commit()
 

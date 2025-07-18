@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import asyncio
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
@@ -25,11 +26,11 @@ from .db import (
     create_task,
     get_task,
     init_db,
-    update_task_status,
 )
 from .rules import load_rules, validate_mockup
 from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
+from . import notifications
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import init_feature_flags, is_enabled
@@ -132,13 +133,21 @@ async def _background_publish(task_id: int) -> None:
                 metadata = json.loads(task.metadata_json)
             except json.JSONDecodeError:
                 logger.warning("invalid metadata for task %s", task_id)
-        await publish_with_retry(
+        success = await publish_with_retry(
             session,
             task_id,
             task.marketplace,
             Path(task.design_path),
             metadata,
+            settings.max_attempts,
         )
+        refreshed = await get_task(session, task_id)
+        if (
+            not success
+            and refreshed is not None
+            and refreshed.attempts < settings.max_attempts
+        ):
+            asyncio.create_task(_background_publish(task_id))
 
 
 @app.post("/publish")
@@ -170,8 +179,8 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
     return {"task_id": task.id}
 
 
-@app.get("/progress/{task_id}")
-async def progress(task_id: int) -> dict[str, Any]:
+@app.get("/tasks/{task_id}")
+async def get_task_status(task_id: int) -> dict[str, Any]:
     """Return current status of a publish task."""
     async with SessionLocal() as session:
         task = await get_task(session, task_id)
@@ -189,9 +198,7 @@ async def handle_webhook(
         task = await get_task(session, payload.task_id)
         if task is None or task.marketplace != marketplace:
             raise HTTPException(status_code=404)
-        await update_task_status(
-            session, payload.task_id, PublishStatus(payload.status)
-        )
+        await notifications.record_webhook(session, payload.task_id, payload.status)
     return {"status": "updated"}
 
 

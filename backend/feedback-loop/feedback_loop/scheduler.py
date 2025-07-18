@@ -8,7 +8,11 @@ from typing import Iterable
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from .ab_testing import ABTestManager
-from .ingestion import ingest_metrics, schedule_marketplace_ingestion
+from .ingestion import (
+    ingest_metrics,
+    schedule_marketplace_ingestion,
+    update_weights_from_db,
+)
 from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)
@@ -36,8 +40,19 @@ def setup_scheduler(
         logger.info("budget allocation %s", allocation)
         logger.info("updated weights payload %s", weights)
 
+    def nightly_marketplace_update() -> None:
+        weights = update_weights_from_db(scoring_api)
+        logger.info("updated marketplace weights %s", weights)
+
     scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
     scheduler.add_job(nightly_update, "cron", hour=0, minute=0, next_run_time=None)
+    scheduler.add_job(
+        nightly_marketplace_update,
+        "cron",
+        hour=1,
+        minute=0,
+        next_run_time=None,
+    )
     if marketplace_api and listing_ids:
         schedule_marketplace_ingestion(
             scheduler, marketplace_api, list(listing_ids), interval_minutes=60

@@ -21,6 +21,9 @@ def update_weights(
     if {"clicks", "impressions"} <= set(df.columns):
         impressions_sum = float(df["impressions"].sum())
         ctr = float(df["clicks"].sum() / impressions_sum) if impressions_sum else 0.0
+    elif {"favorites", "views"} <= set(df.columns):
+        impressions_sum = float(df["views"].sum())
+        ctr = float(df["favorites"].sum() / impressions_sum) if impressions_sum else 0.0
     elif "ctr" in df.columns:
         ctr = float(df["ctr"].mean())
 
@@ -28,6 +31,12 @@ def update_weights(
     if {"purchases", "clicks"} <= set(df.columns):
         clicks_sum = float(df["clicks"].sum())
         conv_rate = float(df["purchases"].sum() / clicks_sum) if clicks_sum else 0.0
+    elif {"orders", "favorites"} <= set(df.columns):
+        fav_sum = float(df["favorites"].sum())
+        conv_rate = float(df["orders"].sum() / fav_sum) if fav_sum else 0.0
+    elif {"orders", "views"} <= set(df.columns):
+        views_sum = float(df["views"].sum())
+        conv_rate = float(df["orders"].sum() / views_sum) if views_sum else 0.0
     elif {"conversions", "impressions"} <= set(df.columns):
         impressions_sum = float(df["impressions"].sum())
         conv_rate = (
@@ -44,9 +53,7 @@ def update_weights(
         "seasonality": 1.0,
     }
 
-    response = requests.post(
-        f"{api_url}/weights/feedback", json=weights, timeout=5
-    )
+    response = requests.post(f"{api_url}/weights/feedback", json=weights, timeout=5)
     response.raise_for_status()
     logger.info("updated weights: %s", weights)
     return weights

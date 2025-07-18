@@ -6,6 +6,7 @@ import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import select
+import numpy as np
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding, Weights
@@ -25,10 +26,8 @@ def compute_and_store_centroids() -> None:
             ).all()
             if not vectors:
                 continue
-            dim = len(vectors[0])
-            centroid = [
-                float(sum(vec[i] for vec in vectors) / len(vectors)) for i in range(dim)
-            ]
+            arr = np.array(vectors, dtype=float)
+            centroid = arr.mean(axis=0).tolist()
             weights = session.scalar(select(Weights).where(Weights.source == src))
             if weights is None:
                 weights = Weights(source=src)

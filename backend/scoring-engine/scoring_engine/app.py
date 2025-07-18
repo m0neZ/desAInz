@@ -58,6 +58,7 @@ class ScoreRequest(BaseModel):
     timestamp: datetime
     engagement_rate: float
     embedding: list[float]
+    source: str | None = "global"
     metadata: dict[str, float] | None = None
     centroid: list[float] | None = None
     median_engagement: float | None = None
@@ -178,16 +179,16 @@ async def score_signal(payload: ScoreRequest) -> JSONResponse:
     await redis_client.incr(CACHE_MISS_KEY)
     CACHE_MISS_COUNTER.inc()
     signal = Signal(
+        source=payload.source or "global",
         timestamp=payload.timestamp,
         engagement_rate=payload.engagement_rate,
         embedding=payload.embedding,
         metadata=payload.metadata or {},
     )
-    centroid = payload.centroid or [0.0 for _ in payload.embedding]
     median_engagement = float(payload.median_engagement or 0)
     topics = payload.topics or []
     with SCORE_TIME_HISTOGRAM.time():
-        score = calculate_score(signal, centroid, median_engagement, topics)
+        score = calculate_score(signal, median_engagement, topics)
     await redis_client.setex(key, CACHE_TTL_SECONDS, score)
     return JSONResponse({"score": score, "cached": False})
 

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
+import logging
+
+from requests import RequestException
+from sqlalchemy.exc import SQLAlchemyError
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -35,6 +39,8 @@ CLIENTS = {
 
 _fallback = SeleniumFallback()
 
+logger = logging.getLogger(__name__)
+
 
 async def publish_with_retry(
     session: AsyncSession,
@@ -56,7 +62,10 @@ async def publish_with_retry(
         client = CLIENTS[marketplace]
         client.publish_design(design_path, metadata)
         await update_task_status(session, task_id, PublishStatus.success)
-    except Exception:  # pylint: disable=broad-except
+    except (RequestException, SQLAlchemyError, RuntimeError) as exc:
+        logger.exception(
+            "Publish attempt %s for %s failed", task_id, marketplace.value, exc_info=exc
+        )
         await increment_attempts(session, task_id)
         await update_task_status(session, task_id, PublishStatus.failed)
         # Retrieve attempts to decide on fallback

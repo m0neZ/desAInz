@@ -1,38 +1,51 @@
-"""Kafka publisher."""
+"""Kafka publisher using typed schemas."""
 
 from __future__ import annotations
 
-from kafka import KafkaProducer
+import json
 import os
+from pathlib import Path
+from typing import Any, Dict
 
 from backend.shared.config import settings
+from backend.shared.kafka import KafkaProducerWrapper, SchemaRegistryClient
+
+SCHEMA_DIR = Path(__file__).resolve().parents[4] / "schemas"
 
 if os.getenv("KAFKA_SKIP") == "1":  # pragma: no cover - used for docs generation
-    _producer = None
+    producer: KafkaProducerWrapper | None = None
 else:
-    _producer = KafkaProducer(
-        bootstrap_servers=settings.kafka_bootstrap_servers.split(","),
-        value_serializer=lambda v: v.encode(),
-    )
+    registry = SchemaRegistryClient(settings.schema_registry_url)
+    for path in SCHEMA_DIR.glob("*.json"):
+        with open(path) as fh:
+            schema = json.load(fh)
+        try:
+            registry.register(path.stem, schema)
+        except Exception:  # pragma: no cover - ignore duplicate errors
+            pass
+    producer = KafkaProducerWrapper(settings.kafka_bootstrap_servers, registry)
 
 
-def publish(topic: str, message: str, producer: KafkaProducer | None = None) -> None:
-    """
-    Publish ``message`` to ``topic`` using ``producer``.
+def publish(
+    topic: str,
+    message: Dict[str, Any] | str,
+    *,
+    prod: KafkaProducerWrapper | None = None,
+) -> None:
+    """Publish ``message`` to ``topic`` using the configured Kafka producer."""
 
-    Parameters
-    ----------
-    topic:
-        Kafka topic to publish to.
-    message:
-        Serialized message payload.
-    producer:
-        Optional :class:`KafkaProducer` instance. When ``None``, the module
-        level producer is used.
-    """
-
-    chosen = producer or _producer
-    if chosen is None:
+    chosen = prod or producer
+    if chosen is None:  # pragma: no cover - skipped when generating docs
         return
-    chosen.send(topic, message)
-    chosen.flush()
+
+    payload: Dict[str, Any]
+    if isinstance(message, dict):
+        payload = message
+    else:
+        try:
+            loaded = json.loads(message)
+            payload = loaded if isinstance(loaded, dict) else {"value": message}
+        except json.JSONDecodeError:
+            payload = {"value": message}
+
+    chosen.produce(topic, payload)

@@ -22,5 +22,6 @@ application settings classes.
 | `S3_SECRET_KEY` | Object storage secret key |
 | `S3_BUCKET` | Bucket name for storing assets |
 | `KAFKA_BOOTSTRAP_SERVERS` | Kafka broker list |
+| `SCHEMA_REGISTRY_URL` | Schema Registry endpoint |
 | `LOG_LEVEL` | Logging verbosity |
 | `APPROVE_PUBLISHING` | Require publishing approval flag |

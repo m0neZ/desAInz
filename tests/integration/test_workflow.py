@@ -15,11 +15,14 @@ from PIL import Image
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 # Stub external dependencies before importing service modules
-import kafka
+from backend.shared.kafka import utils as kafka_utils
+from backend.shared.kafka import schema_registry as kafka_schema
 
-kafka.KafkaProducer = MagicMock(
+kafka_utils.KafkaProducer = MagicMock(
     return_value=SimpleNamespace(send=lambda *a, **k: None, flush=lambda: None)
 )
+kafka_schema.SchemaRegistryClient.register = MagicMock()
+kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})
 sys.modules.setdefault(
     "diffusers",
     SimpleNamespace(StableDiffusionXLPipeline=object),
@@ -55,14 +58,12 @@ async def test_end_to_end(monkeypatch, tmp_path) -> None:
 
     ingestion.ADAPTERS = [ingestion.TikTokAdapter()]
 
-    sent: list[tuple[str, bytes]] = []
+    sent: list[tuple[str, dict]] = []
 
-    def fake_send(topic: str, message: bytes) -> object:  # pragma: no cover
+    def fake_produce(topic: str, message: dict) -> None:  # pragma: no cover
         sent.append((topic, message))
-        return SimpleNamespace(get=lambda *a, **k: None)
 
-    monkeypatch.setattr(publisher.producer, "send", fake_send)
-    monkeypatch.setattr(publisher.producer, "flush", lambda: None)
+    monkeypatch.setattr(publisher.producer, "produce", fake_produce)
 
     def fake_load(self) -> None:  # pragma: no cover
         self.pipeline = None

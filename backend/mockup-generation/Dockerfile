@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y git python3-pip && rm -rf /var/lib/apt/
 
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
+COPY LICENSES /licenses/LICENSES
 
 COPY . .
 

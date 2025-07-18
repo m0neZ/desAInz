@@ -17,6 +17,8 @@ class Settings(BaseSettings):  # type: ignore[misc]
     dedup_capacity: int = 100_000
     dedup_ttl: int = 86_400
     ingest_interval_minutes: int = 60
+    http_proxies: str | None = None
+    adapter_rate_limit: int = 5
 
 
 settings = Settings()

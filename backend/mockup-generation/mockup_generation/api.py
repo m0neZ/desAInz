@@ -42,7 +42,6 @@ class ModelCreate(BaseModel):  # type: ignore[misc]
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-
     return str(request.headers.get("X-User", request.client.host))
 
 
@@ -52,7 +51,6 @@ async def add_correlation_id(
     call_next: Callable[[Request], Coroutine[None, None, Response]],
 ) -> Response:
     """Ensure each request includes a correlation ID."""
-
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     request.state.correlation_id = correlation_id
     try:
@@ -78,28 +76,24 @@ async def add_correlation_id(
 @app.get("/health")
 async def health() -> dict[str, str]:
     """Return service liveness."""
-
     return {"status": "ok"}
 
 
 @app.get("/ready")
 async def ready() -> dict[str, str]:
     """Return service readiness."""
-
     return {"status": "ready"}
 
 
 @app.get("/models")
 async def get_models() -> list[dict[str, object]]:
     """Return all registered models."""
-
     return [m.__dict__ for m in list_models()]
 
 
 @app.post("/models")
 async def create_model(payload: ModelCreate) -> dict[str, int]:
     """Register a new diffusion model."""
-
     model_id = register_model(
         payload.name,
         payload.version,
@@ -113,7 +107,6 @@ async def create_model(payload: ModelCreate) -> dict[str, int]:
 @app.post("/models/{model_id}/default")
 async def switch_default(model_id: int) -> dict[str, str]:
     """Switch the default diffusion model."""
-
     try:
         set_default(model_id)
     except ValueError as exc:

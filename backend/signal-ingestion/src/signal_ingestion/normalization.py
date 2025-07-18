@@ -21,6 +21,7 @@ class NormalizedSignal:
 
 
 def _extract_between(text: str | None, start: str, end: str) -> str:
+    """Return substring of ``text`` between ``start`` and ``end`` if present."""
     if not text:
         return ""
     s = text.find(start)
@@ -32,6 +33,7 @@ def _extract_between(text: str | None, start: str, end: str) -> str:
 
 
 def normalize_tiktok(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize TikTok API response into a :class:`NormalizedSignal`."""
     video_id = data.get("embed_product_id") or _extract_between(
         data.get("html"), 'data-video-id="', '"'
     )
@@ -44,6 +46,7 @@ def normalize_tiktok(data: Dict[str, Any]) -> NormalizedSignal:
 
 
 def normalize_instagram(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize Instagram data into a :class:`NormalizedSignal`."""
     return NormalizedSignal(
         id=str(data.get("id", "")),
         title=data.get("title") or data.get("author_name"),
@@ -53,6 +56,7 @@ def normalize_instagram(data: Dict[str, Any]) -> NormalizedSignal:
 
 
 def normalize_reddit(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize Reddit data into a :class:`NormalizedSignal`."""
     if "data" in data:
         post = data["data"]["children"][0]["data"]
         post_id = post["id"]
@@ -66,6 +70,7 @@ def normalize_reddit(data: Dict[str, Any]) -> NormalizedSignal:
 
 
 def normalize_youtube(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize YouTube data into a :class:`NormalizedSignal`."""
     video_id = _extract_between(data.get("html"), "embed/", "?")
     return NormalizedSignal(
         id=video_id,
@@ -76,6 +81,7 @@ def normalize_youtube(data: Dict[str, Any]) -> NormalizedSignal:
 
 
 def normalize_events(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize event data into a :class:`NormalizedSignal`."""
     return NormalizedSignal(
         id=data["date"],
         title=data["name"],
@@ -85,6 +91,7 @@ def normalize_events(data: Dict[str, Any]) -> NormalizedSignal:
 
 
 def normalize_nostalgia(data: Dict[str, Any]) -> NormalizedSignal:
+    """Normalize Internet Archive data into a :class:`NormalizedSignal`."""
     doc = data["response"]["docs"][0]
     identifier = doc.get("identifier", "")
     return NormalizedSignal(

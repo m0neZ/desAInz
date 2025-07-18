@@ -12,7 +12,8 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 Run the common tasks using the `Makefile`:
 
 ```bash
-make up           # start services with Docker Compose
+make up           # start services with Docker Compose for development
+make prod-up      # start services with the production compose file
 make test         # run unit and integration tests
 make lint         # run all linters and type checkers
 make docker-build # build local Docker images
@@ -39,7 +40,7 @@ start to register the provided JSON schemas.
 Base Kubernetes manifests are available under `infrastructure/k8s`.
 
 PgBouncer connection pooling is available via the `pgbouncer` service in
-`docker-compose.yml`. Point `DATABASE_URL` at port `6432` to leverage pooling.
+`docker-compose.dev.yml`. Point `DATABASE_URL` at port `6432` to leverage pooling.
 Execute `scripts/analyze_query_plans.py` periodically to inspect query plans and
 identify missing indexes.
 
@@ -55,3 +56,13 @@ See [docs/security.md](docs/security.md) for the rotation procedure.
 
 1. Ensure all commits follow the Conventional Commits specification.
 2. Run `./scripts/release.sh <registry>` to generate the changelog, tag the release and publish versioned Docker images.
+
+### Production deployment
+
+Start the infrastructure stack in production mode using:
+
+```bash
+make prod-up
+```
+
+The `docker-compose.prod.yml` file uses prebuilt images and is intended for use on servers.

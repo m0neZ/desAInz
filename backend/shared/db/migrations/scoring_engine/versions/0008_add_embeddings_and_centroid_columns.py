@@ -14,7 +14,8 @@ depends_on = None
 
 def upgrade() -> None:
     """Apply the migration."""
-    op.execute("CREATE EXTENSION IF NOT EXISTS vector")
+    if op.get_context().dialect.name != "sqlite":
+        op.execute("CREATE EXTENSION IF NOT EXISTS vector")
     op.add_column(
         "weights",
         sa.Column(
@@ -22,7 +23,10 @@ def upgrade() -> None:
         ),
     )
     op.add_column("weights", sa.Column("centroid", Vector(768), nullable=True))
-    op.create_unique_constraint(op.f("uq_weights_source"), "weights", ["source"])
+    if op.get_context().dialect.name != "sqlite":
+        op.create_unique_constraint(
+            op.f("uq_weights_source"), "weights", ["source"]
+        )
     op.create_table(
         "embeddings",
         sa.Column("id", sa.Integer, primary_key=True),
@@ -34,6 +38,7 @@ def upgrade() -> None:
 def downgrade() -> None:
     """Revert the migration."""
     op.drop_table("embeddings")
-    op.drop_constraint(op.f("uq_weights_source"), "weights", type_="unique")
+    if op.get_context().dialect.name != "sqlite":
+        op.drop_constraint(op.f("uq_weights_source"), "weights", type_="unique")
     op.drop_column("weights", "centroid")
     op.drop_column("weights", "source")

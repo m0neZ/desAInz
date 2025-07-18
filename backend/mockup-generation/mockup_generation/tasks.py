@@ -16,6 +16,7 @@ from PIL import Image
 from .celery_app import app
 from .generator import MockupGenerator
 from .prompt_builder import PromptContext, build_prompt
+from .listing_generator import ListingGenerator
 from .post_processor import (
     compress_lossless,
     convert_to_cmyk,
@@ -70,16 +71,15 @@ def gpu_slot(slot: int | None = None) -> Iterator[None]:
 @app.task(bind=True)  # type: ignore[misc]
 def generate_mockup(
     self: Task, keywords_batch: list[list[str]], output_dir: str
-) -> list[str]:
-    """
-    Generate mockups sequentially on the GPU.
+) -> list[dict[str, object]]:
+    """Generate mockups sequentially on the GPU.
 
     Args:
         keywords_batch: A list of keyword groups used to build prompts.
         output_dir: Directory where generated mockups will be written.
 
     Returns:
-        A list with paths to the generated mockups.
+        A list of dictionaries containing image paths and listing metadata.
     """
     queue = self.request.delivery_info.get("routing_key", "")
     try:
@@ -87,7 +87,8 @@ def generate_mockup(
     except (ValueError, AttributeError):
         slot = GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None
 
-    results: list[str] = []
+    listing_gen = ListingGenerator()
+    results: list[dict[str, object]] = []
     with gpu_slot(slot):
         for idx, keywords in enumerate(keywords_batch):
             context = PromptContext(keywords=keywords)
@@ -103,6 +104,14 @@ def generate_mockup(
             if not validate_color_space(processed):
                 raise ValueError("Invalid color space")
             compress_lossless(processed, output_path)
-            results.append(str(output_path))
+            metadata = listing_gen.generate(keywords)
+            results.append(
+                {
+                    "image_path": str(output_path),
+                    "title": metadata.title,
+                    "description": metadata.description,
+                    "tags": metadata.tags,
+                }
+            )
 
     return results

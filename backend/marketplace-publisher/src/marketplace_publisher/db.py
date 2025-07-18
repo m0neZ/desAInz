@@ -37,6 +37,7 @@ class Marketplace(str, Enum):
     amazon_merch = "amazon_merch"
     etsy = "etsy"
     society6 = "society6"
+    zazzle = "zazzle"
 
 
 class PublishStatus(str, Enum):

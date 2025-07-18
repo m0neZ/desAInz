@@ -23,5 +23,6 @@ Flask
 pydantic-settings
 psycopg2-binary
 UnleashClient
+launchdarkly-server-sdk
 sentry-sdk
 Deprecated

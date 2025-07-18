@@ -13,6 +13,7 @@ FEE_PERCENT: Mapping[Marketplace, float] = {
     Marketplace.amazon_merch: 0.3,
     Marketplace.etsy: 0.15,
     Marketplace.society6: 0.25,
+    Marketplace.zazzle: 0.22,
 }
 
 

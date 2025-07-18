@@ -6,6 +6,8 @@ import importlib
 from typing import Iterator
 from unittest import mock
 
+import fakeredis
+
 import pytest
 
 from backend.shared import feature_flags
@@ -20,35 +22,50 @@ def reload_module() -> Iterator[None]:
 
 def test_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     """Flags fall back to defaults when Unleash is disabled."""
-    monkeypatch.delenv("UNLEASH_URL", raising=False)
-    monkeypatch.delenv("UNLEASH_API_TOKEN", raising=False)
-    monkeypatch.setenv("UNLEASH_DEFAULTS", '{"demo": true}')
+    monkeypatch.delenv("LAUNCHDARKLY_SDK_KEY", raising=False)
+    monkeypatch.delenv("FEATURE_FLAGS_REDIS_URL", raising=False)
+    monkeypatch.setenv("FEATURE_FLAGS_DEFAULTS", '{"demo": true}')
     feature_flags.initialize()
     assert feature_flags.is_enabled("demo") is True
     assert feature_flags.is_enabled("missing") is False
 
 
 def test_caching(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Calls to Unleash are cached for the configured TTL."""
-    monkeypatch.setenv("UNLEASH_URL", "http://example.com")
-    monkeypatch.setenv("UNLEASH_API_TOKEN", "tkn")
-    monkeypatch.setenv("UNLEASH_CACHE_TTL", "60")
+    """Calls to providers are cached for the configured TTL."""
+    monkeypatch.setenv("LAUNCHDARKLY_SDK_KEY", "sdk")
+    monkeypatch.setenv("FEATURE_FLAGS_CACHE_TTL", "60")
     client = mock.MagicMock()
-    client.is_enabled.return_value = True
-    monkeypatch.setattr(feature_flags, "UnleashClient", lambda **_: client)
+    client.variation.return_value = True
+    monkeypatch.setattr(feature_flags, "LDClient", lambda *_, **__: client)
     feature_flags.initialize()
     assert feature_flags.is_enabled("flag") is True
     assert feature_flags.is_enabled("flag") is True
-    client.is_enabled.assert_called_once()
+    client.variation.assert_called_once()
 
 
 def test_error_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Errors from Unleash return the configured default."""
-    monkeypatch.setenv("UNLEASH_URL", "http://example.com")
-    monkeypatch.setenv("UNLEASH_API_TOKEN", "tkn")
-    monkeypatch.setenv("UNLEASH_DEFAULTS", '{"flag": false}')
+    """Errors from providers return the configured default."""
+    monkeypatch.setenv("LAUNCHDARKLY_SDK_KEY", "sdk")
+    monkeypatch.setenv("FEATURE_FLAGS_DEFAULTS", '{"flag": false}')
     client = mock.MagicMock()
-    client.is_enabled.side_effect = RuntimeError("boom")
-    monkeypatch.setattr(feature_flags, "UnleashClient", lambda **_: client)
+    client.variation.side_effect = RuntimeError("boom")
+    monkeypatch.setattr(feature_flags, "LDClient", lambda *_, **__: client)
     feature_flags.initialize()
     assert feature_flags.is_enabled("flag") is False
+
+
+def test_env_override(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Environment flags override defaults."""
+    monkeypatch.setenv("FEATURE_FLAGS", '{"demo": true}')
+    feature_flags.initialize()
+    assert feature_flags.is_enabled("demo") is True
+
+
+def test_redis_flags(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Flags are read from Redis when configured."""
+    fake = fakeredis.FakeRedis(decode_responses=True)
+    monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)
+    fake.set("demo", "1")
+    feature_flags.initialize()
+    assert feature_flags.is_enabled("demo") is True

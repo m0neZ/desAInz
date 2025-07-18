@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import uuid
 from pathlib import Path
-from typing import Any, Callable, Coroutine
+from typing import Any, Callable, Coroutine, cast
 import json
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
@@ -42,6 +42,12 @@ configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
+
+
+def _identify_user(request: Request) -> str:
+    """Return identifier for logging, header ``X-User`` or client IP."""
+    return cast(str, request.headers.get("X-User", request.client.host))
+
 
 rate_limiter = MarketplaceRateLimiter(
     Redis.from_url(settings.redis_url),
@@ -83,7 +89,15 @@ async def add_correlation_id(
     except Exception:  # pragma: no cover - sentry optional
         pass
 
-    logger.info("request received", extra={"correlation_id": correlation_id})
+    logger.info(
+        "request received",
+        extra={
+            "correlation_id": correlation_id,
+            "user": _identify_user(request),
+            "path": request.url.path,
+            "method": request.method,
+        },
+    )
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response

@@ -28,4 +28,4 @@ pre-summary-newline = true
 
 [tool.pydocstyle]
 convention = "google"
-add-ignore = []
+add-ignore = ["D212"]

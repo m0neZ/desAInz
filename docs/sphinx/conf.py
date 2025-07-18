@@ -38,6 +38,12 @@ autodoc_mock_imports = [
     "jose",
     "celery",
     "opentelemetry",
+    "pydantic_settings",
+    "werkzeug",
+    "UnleashClient",
+    "prometheus_client",
+    "pgvector",
+    "kafka",
 ]
 exclude_patterns = ["_build"]
 html_theme = "alabaster"

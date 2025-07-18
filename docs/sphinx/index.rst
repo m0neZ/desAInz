@@ -11,3 +11,9 @@ desAInz Backend Documentation
 
    api/modules
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorials
+
+   tutorials/deployment
+

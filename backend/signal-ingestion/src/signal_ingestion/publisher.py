@@ -33,7 +33,6 @@ def publish(
     prod: KafkaProducerWrapper | None = None,
 ) -> None:
     """Publish ``message`` to ``topic`` using the configured Kafka producer."""
-
     chosen = prod or producer
     if chosen is None:  # pragma: no cover - skipped when generating docs
         return

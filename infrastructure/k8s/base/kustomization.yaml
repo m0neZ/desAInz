@@ -18,3 +18,6 @@ resources:
   - secret.yaml
   - loki-deployment.yaml
   - loki-service.yaml
+  - cronjobs/orchestrator-backup.yaml
+  - cronjobs/orchestrator-cleanup.yaml
+  - cronjobs/orchestrator-idea.yaml

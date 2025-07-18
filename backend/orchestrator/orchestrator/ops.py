@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import uuid
 
 from datetime import datetime, timezone
 from typing import Any
@@ -11,6 +12,15 @@ import requests
 from dagster import Failure, RetryPolicy, op
 
 from scripts import maintenance
+
+
+def _auth_headers(context: Any) -> dict[str, str]:
+    """Return headers with auth and correlation ID."""
+    headers = {"X-Correlation-ID": getattr(context, "run_id", str(uuid.uuid4()))}
+    token = os.environ.get("SERVICE_AUTH_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
 
 
 @op  # type: ignore[misc]
@@ -23,8 +33,9 @@ def ingest_signals(  # type: ignore[no-untyped-def]
         "SIGNAL_INGESTION_URL",
         "http://signal-ingestion:8004",
     )
+    headers = _auth_headers(context)
     try:
-        response = requests.post(f"{base_url}/ingest", timeout=30)
+        response = requests.post(f"{base_url}/ingest", headers=headers, timeout=30)
         response.raise_for_status()
     except requests.RequestException as exc:  # noqa: BLE001
         raise Failure(f"ingestion failed: {exc}") from exc
@@ -65,7 +76,12 @@ def score_signals(  # type: ignore[no-untyped-def]
             "embedding": [0.0],
         }
         try:
-            resp = requests.post(f"{base_url}/score", json=payload, timeout=30)
+            resp = requests.post(
+                f"{base_url}/score",
+                json=payload,
+                headers=_auth_headers(context),
+                timeout=30,
+            )
             resp.raise_for_status()
             score = float(resp.json().get("score", 0))
         except requests.RequestException as exc:  # noqa: BLE001
@@ -90,6 +106,7 @@ def generate_content(  # type: ignore[no-untyped-def]
         resp = requests.post(
             f"{base_url}/generate",
             json={"scores": scores},
+            headers=_auth_headers(context),
             timeout=60,
         )
         resp.raise_for_status()
@@ -123,7 +140,12 @@ def publish_content(  # type: ignore[no-untyped-def]
     for item in items:
         payload = {"marketplace": "redbubble", "design_path": item}
         try:
-            resp = requests.post(f"{base_url}/publish", json=payload, timeout=30)
+            resp = requests.post(
+                f"{base_url}/publish",
+                json=payload,
+                headers=_auth_headers(context),
+                timeout=30,
+            )
             resp.raise_for_status()
             task_id = resp.json().get("task_id")
             context.log.debug("created publish task %s", task_id)

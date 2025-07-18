@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: orchestrator-cleanup
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: orchestrator
+              image: example/orchestrator:latest
+              imagePullPolicy: IfNotPresent
+              command: ["dagster", "job", "execute", "-m", "orchestrator.jobs", "-j", "cleanup_job"]

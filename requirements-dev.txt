@@ -26,5 +26,6 @@ sentry-sdk
 Deprecated
 testing.postgresql
 sphinxcontrib-mermaid
+openapi-schema-validator
 opentelemetry-exporter-otlp
 python-jose[cryptography]

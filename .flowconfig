@@ -2,6 +2,7 @@
 
 [ignore]
 .*/node_modules/.*
+<PROJECT_ROOT>/frontend/admin-dashboard/scripts/.*
 
 [libs]
 

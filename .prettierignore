@@ -1,0 +1,7 @@
+openapi/*.json
+docs/**
+.vscode/**
+CHANGELOG.md
+README.md
+.github/pull_request_template.md
+infrastructure/**

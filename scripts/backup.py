@@ -1,4 +1,4 @@
-"""Backup Postgres and MinIO data to S3."""
+"""Backup the PostgreSQL database to S3."""
 
 import os
 import subprocess
@@ -33,33 +33,12 @@ def dump_postgres(backup_dir: Path, bucket: str) -> None:
     dump_file.unlink()
 
 
-def backup_minio(data_path: Path, bucket: str) -> None:
-    """
-    Sync MinIO data directory to S3.
-
-    Args:
-        data_path: Local path to MinIO data.
-        bucket: Name of the S3 bucket.
-    """
-    run(
-        [
-            "aws",
-            "s3",
-            "sync",
-            str(data_path),
-            f"s3://{bucket}/minio/",
-        ]
-    )
-
-
 def main() -> None:
-    """Run database and object storage backups."""
+    """Run database backups."""
     bucket = os.environ["BACKUP_BUCKET"]
     backup_dir = Path(os.getenv("BACKUP_DIR", "/tmp"))
     backup_dir.mkdir(parents=True, exist_ok=True)
     dump_postgres(backup_dir, bucket)
-    data_path = Path(os.getenv("MINIO_DATA_PATH", "/data"))
-    backup_minio(data_path, bucket)
 
 
 if __name__ == "__main__":

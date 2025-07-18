@@ -12,9 +12,12 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 Run the common tasks using the `Makefile`:
 
 ```bash
-make up    # start services with Docker Compose
-make test  # run Python tests
-make lint  # run linters for Python and JavaScript
+make up           # start services with Docker Compose
+make test         # run unit and integration tests
+make lint         # run all linters and type checkers
+make docker-build # build local Docker images
+make docker-push  # push images to REGISTRY with TAG
+make helm-deploy  # deploy charts with Helm
 ```
 
 ## Type Checking

@@ -36,16 +36,8 @@ jobs:
           npm ci --prefix frontend/admin-dashboard
           npx playwright install --with-deps
           python -m pip install -e .
-      - name: Start services
-        run: docker compose -f docker-compose.test.yml up -d
       - name: Run tests
-        run: |
-          pytest -vv
-          npm test
-          npm run test:e2e
-      - name: Stop services
-        if: always()
-        run: docker compose -f docker-compose.test.yml down
+        run: make test
 
   publish:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

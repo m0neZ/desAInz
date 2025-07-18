@@ -1,6 +1,6 @@
 # Error Monitoring and Triage
 
-Unhandled exceptions from backend services are sent to Sentry when `SENTRY_DSN` is configured. Each request middleware attaches a `correlation_id` which Sentry stores as a tag for easy filtering.
+Unhandled exceptions from backend services are sent to Sentry when `SENTRY_DSN` is configured. Each request middleware attaches a `correlation_id` which Sentry stores as a tag for easy filtering. Logs also include structured `user`, `path`, and `method` fields for every request.
 
 1. Sign in to the Sentry dashboard.
 2. Select the environment matching your deployment.

@@ -6,7 +6,7 @@ from datetime import datetime
 import logging
 import os
 import uuid
-from typing import Callable, Coroutine, List
+from typing import Callable, Coroutine, List, cast
 
 from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel
@@ -29,6 +29,11 @@ add_profiling(app)
 add_error_handlers(app)
 
 
+def _identify_user(request: Request) -> str:
+    """Return identifier for logging, header ``X-User`` or client IP."""
+    return cast(str, request.headers.get("X-User", request.client.host))
+
+
 @app.middleware("http")
 async def add_correlation_id(
     request: Request,
@@ -43,7 +48,15 @@ async def add_correlation_id(
         sentry_sdk.set_tag("correlation_id", correlation_id)
     except Exception:  # pragma: no cover - sentry optional
         pass
-    logger.info("request received", extra={"correlation_id": correlation_id})
+    logger.info(
+        "request received",
+        extra={
+            "correlation_id": correlation_id,
+            "user": _identify_user(request),
+            "path": request.url.path,
+            "method": request.method,
+        },
+    )
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response

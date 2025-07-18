@@ -67,7 +67,15 @@ async def add_correlation_id(
         sentry_sdk.set_tag("correlation_id", correlation_id)
     except Exception:  # pragma: no cover - sentry optional
         pass
-    logger.info("request received", extra={"correlation_id": correlation_id})
+    logger.info(
+        "request received",
+        extra={
+            "correlation_id": correlation_id,
+            "user": _identify_user(request),
+            "path": request.url.path,
+            "method": request.method,
+        },
+    )
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response

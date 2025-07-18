@@ -27,6 +27,17 @@ class CorrelationIdFilter(logging.Filter):
         return True
 
 
+class RequestInfoFilter(logging.Filter):
+    """Attach request context to log records."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Ensure user and request fields are present."""
+        record.user = getattr(record, "user", None)
+        record.path = getattr(record, "path", None)
+        record.method = getattr(record, "method", None)
+        return True
+
+
 class JsonFormatter(logging.Formatter):
     """Format log records as JSON."""
 
@@ -38,6 +49,9 @@ class JsonFormatter(logging.Formatter):
             "name": record.name,
             "message": record.getMessage(),
             "correlation_id": getattr(record, "correlation_id", None),
+            "user": getattr(record, "user", None),
+            "path": getattr(record, "path", None),
+            "method": getattr(record, "method", None),
         }
         return json.dumps(log_record)
 
@@ -58,7 +72,7 @@ def configure_logging() -> None:
         "default": {
             "class": "logging.StreamHandler",
             "formatter": "json",
-            "filters": ["correlation"],
+            "filters": ["correlation", "request"],
         }
     }
     for idx, handler in enumerate(_additional_handlers()):
@@ -66,13 +80,16 @@ def configure_logging() -> None:
             "class": handler.__class__.__name__,
             "()": handler,
             "formatter": "json",
-            "filters": ["correlation"],
+            "filters": ["correlation", "request"],
         }
 
     log_config = {
         "version": 1,
         "disable_existing_loggers": False,
-        "filters": {"correlation": {"()": CorrelationIdFilter}},
+        "filters": {
+            "correlation": {"()": CorrelationIdFilter},
+            "request": {"()": RequestInfoFilter},
+        },
         "formatters": {"json": {"()": JsonFormatter}},
         "handlers": handlers,
         "root": {"handlers": list(handlers.keys()), "level": "INFO"},

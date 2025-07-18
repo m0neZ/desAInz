@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable, List
 
-from sqlalchemy import select, update
+from sqlalchemy import delete, select, update
 
 from backend.shared.db import engine, session_scope
 from backend.shared.db.base import Base
@@ -34,6 +34,36 @@ class GeneratedMockupInfo:
     prompt: str
     num_inference_steps: int
     seed: int
+
+
+def register_model(
+    name: str,
+    version: str,
+    model_id: str,
+    *,
+    details: dict[str, object] | None = None,
+    is_default: bool = False,
+) -> int:
+    """Register a new model and return its database id."""
+    with session_scope() as session:
+        if is_default:
+            session.execute(update(AIModel).values(is_default=False))
+        obj = AIModel(
+            name=name,
+            version=version,
+            model_id=model_id,
+            details=details,
+            is_default=is_default,
+        )
+        session.add(obj)
+        session.flush()
+        return int(obj.id)
+
+
+def remove_model(model_id: int) -> None:
+    """Delete the model with ``model_id`` from the database."""
+    with session_scope() as session:
+        session.execute(delete(AIModel).where(AIModel.id == model_id))
 
 
 def list_models() -> List[ModelInfo]:

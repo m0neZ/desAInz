@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import i18n from '../src/i18n';
+import { changeLanguage } from '../src/i18n';
 import { ToggleButton } from '../src/components/ToggleButton';
 
 test('switches locale at runtime', async () => {
@@ -7,10 +7,10 @@ test('switches locale at runtime', async () => {
   const button = screen.getByTestId('toggle-button');
   expect(button).toHaveTextContent('Off');
   await act(async () => {
-    await i18n.changeLanguage('es');
+    await changeLanguage('es');
   });
   expect(button).toHaveTextContent('Apagado');
   await act(async () => {
-    await i18n.changeLanguage('en');
+    await changeLanguage('en');
   });
 });

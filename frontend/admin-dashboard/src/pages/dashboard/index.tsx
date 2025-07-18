@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type Signal } from '../../../../../src/trpc';
+import { trpc, type Signal } from '../../trpc';
 
 const StatusIndicator = dynamic(
   () => import('../../components/StatusIndicator')

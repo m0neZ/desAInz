@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type GalleryItem } from '../../../../../src/trpc';
+import { trpc, type GalleryItem } from '../../trpc';
 
 export default function GalleryPage() {
   const { t } = useTranslation();

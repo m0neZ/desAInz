@@ -16,6 +16,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     dedup_error_rate: float = 0.01
     dedup_capacity: int = 100_000
     dedup_ttl: int = 86_400
+    ingest_interval_minutes: int = 60
 
 
 settings = Settings()

@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends, FastAPI, Request, Response
 
 from .database import get_session, init_db
+from .scheduler import create_scheduler
 from .ingestion import ingest
 from .logging_config import configure_logging
 from .settings import settings
@@ -26,6 +27,7 @@ configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
+scheduler = create_scheduler()
 
 
 def _identify_user(request: Request) -> str:
@@ -37,6 +39,13 @@ def _identify_user(request: Request) -> str:
 async def startup() -> None:
     """Initialize resources."""
     await init_db()
+    scheduler.start()
+
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    """Stop background tasks."""
+    scheduler.shutdown()
 
 
 @app.middleware("http")

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { trpc, type PublishTask } from '../../../../../src/trpc';
+import { trpc, type PublishTask } from '../../trpc';
 
 export default function PublishPage() {
   const { t } = useTranslation();

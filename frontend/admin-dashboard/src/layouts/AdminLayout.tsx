@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import AuthButton from '../components/AuthButton';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 export default function AdminLayout({
   children,
@@ -49,8 +50,9 @@ export default function AdminLayout({
         </nav>
       </aside>
       <div className="flex flex-col flex-1">
-        <header className="bg-gray-100 p-4 shadow flex items-center">
+        <header className="bg-gray-100 p-4 shadow flex items-center space-x-4">
           <span className="flex-1">{t('title')}</span>
+          <LanguageSwitcher />
           <AuthButton />
         </header>
         <main className="p-4 flex-1 overflow-auto">{children}</main>

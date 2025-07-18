@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type HeatmapEntry } from '../../../../../src/trpc';
+import { trpc, type HeatmapEntry } from '../../trpc';
 
 export default function HeatmapPage() {
   const { t } = useTranslation();

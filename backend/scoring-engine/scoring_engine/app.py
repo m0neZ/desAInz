@@ -10,6 +10,8 @@ import asyncio
 import logging
 import json
 from datetime import datetime
+from threading import Event, Thread
+from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response
@@ -31,6 +33,9 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
+from backend.shared.db import session_scope
+from backend.shared.db.models import Embedding
 from .scoring import Signal, calculate_score
 from .weight_repository import get_weights, update_weights, get_centroid
 from .centroid_job import start_centroid_scheduler
@@ -89,6 +94,63 @@ REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client = Redis.from_url(REDIS_URL)
 start_centroid_scheduler()
+
+
+# Background Kafka consumer setup
+_stop_event = Event()
+_consumer_thread: Thread | None = None
+
+
+def _create_consumer() -> KafkaConsumerWrapper:
+    """Return Kafka consumer subscribed to the ``signals.ingested`` topic."""
+    registry = SchemaRegistryClient(settings.schema_registry_url)
+    schema_dir = Path(__file__).resolve().parents[3] / "schemas"
+    for path in schema_dir.glob("*.json"):
+        with open(path) as fh:
+            schema = json.load(fh)
+        try:
+            registry.register(path.stem, schema)
+        except Exception:  # pragma: no cover - ignore duplicates
+            pass
+    return KafkaConsumerWrapper(
+        settings.kafka_bootstrap_servers, registry, ["signals.ingested"]
+    )
+
+
+def consume_signals(stop_event: Event, consumer: KafkaConsumerWrapper) -> None:
+    """Persist embeddings from Kafka messages until ``stop_event`` is set."""
+    for _, message in consumer:
+        if stop_event.is_set():
+            break
+        embedding = message.get("embedding")
+        if embedding is None:
+            continue
+        source = cast(str, message.get("source", "global"))
+        with session_scope() as session:
+            session.add(Embedding(source=source, embedding=embedding))
+            session.flush()
+
+
+@app.on_event("startup")
+async def start_consumer() -> None:
+    """Launch background Kafka consumer."""
+    global _consumer_thread
+    if os.getenv("KAFKA_SKIP") == "1":
+        return
+    consumer = _create_consumer()
+    _stop_event.clear()
+    _consumer_thread = Thread(
+        target=consume_signals, args=(_stop_event, consumer), daemon=True
+    )
+    _consumer_thread.start()
+
+
+@app.on_event("shutdown")
+async def stop_consumer() -> None:
+    """Stop background Kafka consumer."""
+    _stop_event.set()
+    if _consumer_thread is not None:
+        _consumer_thread.join(timeout=5)
 
 
 async def trending_factor(topics: list[str]) -> float:

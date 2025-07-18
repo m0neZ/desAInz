@@ -49,3 +49,15 @@ test('navigates to Maintenance page when link clicked', async () => {
   await userEvent.click(screen.getByText('Maintenance'));
   expect(Router).toMatchObject({ pathname: '/dashboard/maintenance' });
 });
+
+test('shows Zazzle link when flag enabled', () => {
+  process.env.NEXT_PUBLIC_ENABLE_ZAZZLE = 'true';
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  expect(screen.getByText('Zazzle')).toBeInTheDocument();
+  delete process.env.NEXT_PUBLIC_ENABLE_ZAZZLE;
+});

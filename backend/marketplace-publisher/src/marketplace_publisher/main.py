@@ -168,6 +168,8 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
         "society6_integration"
     ):
         raise HTTPException(status_code=403, detail="Society6 integration disabled")
+    if req.marketplace == Marketplace.zazzle and not is_enabled("zazzle_integration"):
+        raise HTTPException(status_code=403, detail="Zazzle integration disabled")
     allowed = await rate_limiter.acquire(req.marketplace)
     if not allowed:
         logger.warning(

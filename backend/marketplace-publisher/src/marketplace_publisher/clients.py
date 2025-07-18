@@ -180,6 +180,23 @@ class Society6Client(BaseClient):
         )
 
 
+class ZazzleClient(BaseClient):
+    """Client for the Zazzle API."""
+
+    def __init__(self) -> None:
+        """Configure endpoints and credentials from the environment."""
+        super().__init__(
+            "https://api.zazzle.com/v1",
+            os.getenv("ZAZZLE_TOKEN_URL"),
+            "ZAZZLE_CLIENT_ID",
+            "ZAZZLE_CLIENT_SECRET",
+            "ZAZZLE_API_KEY",
+            os.getenv("ZAZZLE_AUTHORIZE_URL"),
+            "ZAZZLE_REDIRECT_URI",
+            "ZAZZLE_SCOPE",
+        )
+
+
 class SeleniumFallback:
     """Publish a design using browser automation if APIs fail."""
 

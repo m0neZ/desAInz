@@ -17,6 +17,7 @@ from .clients import (
     EtsyClient,
     RedbubbleClient,
     Society6Client,
+    ZazzleClient,
     SeleniumFallback,
 )
 from .trademark import is_trademarked
@@ -35,6 +36,7 @@ CLIENTS = {
     Marketplace.amazon_merch: AmazonMerchClient(),
     Marketplace.etsy: EtsyClient(),
     Marketplace.society6: Society6Client(),
+    Marketplace.zazzle: ZazzleClient(),
 }
 
 _fallback = SeleniumFallback()

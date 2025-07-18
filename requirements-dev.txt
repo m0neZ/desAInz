@@ -18,6 +18,7 @@ aiosqlite
 locust
 
 UnleashClient
+launchdarkly-server-sdk
 
 pip-audit
 sphinxcontrib-openapi

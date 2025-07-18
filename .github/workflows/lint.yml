@@ -28,17 +28,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
           npm ci
-      - name: Lint Python
-        run: |
-          flake8 .
-          mypy backend --explicit-package-bases --exclude "tests"
-          pydocstyle .
-          docformatter --check --recursive .
-      - name: Audit Python dependencies
-        run: |
-          pip-audit -r requirements.txt -r requirements-dev.txt
-      - name: Lint JavaScript and CSS
-        run: |
-          npm run lint
-          npm run lint:css
-          npm run flow
+      - name: Run linters
+        run: make lint

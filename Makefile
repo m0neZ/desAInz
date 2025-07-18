@@ -8,25 +8,35 @@ up:
 	docker compose up -d
 
 test:
-	python -m pytest -W error
+	docker compose -f docker-compose.test.yml up -d
+	python -m pytest -W error -vv
+	npm test
+	npm run test:e2e
+	docker compose -f docker-compose.test.yml down
 
 lint:
-        python -m flake8
-        npm run lint
+	flake8 .
+	mypy backend --explicit-package-bases --exclude "tests"
+	pydocstyle .
+	docformatter --check --recursive .
+	pip-audit -r requirements.txt -r requirements-dev.txt
+	npm run lint
+	npm run lint:css
+	npm run flow
 
 setup:
-        alembic -c backend/shared/db/alembic_api_gateway.ini upgrade head
-        alembic -c backend/shared/db/alembic_scoring_engine.ini upgrade head
-        alembic -c backend/shared/db/alembic_marketplace_publisher.ini upgrade head
-        alembic -c backend/shared/db/alembic_signal_ingestion.ini upgrade head
+	alembic -c backend/shared/db/alembic_api_gateway.ini upgrade head
+	alembic -c backend/shared/db/alembic_scoring_engine.ini upgrade head
+	alembic -c backend/shared/db/alembic_marketplace_publisher.ini upgrade head
+	alembic -c backend/shared/db/alembic_signal_ingestion.ini upgrade head
 
 docker-build:
-        ./scripts/build-images.sh
+	./scripts/build-images.sh
 
 docker-push:
-        ./scripts/push-images.sh $(REGISTRY) $(TAG)
+	./scripts/push-images.sh $(REGISTRY) $(TAG)
 
 helm-deploy:
-        ./scripts/helm_deploy.sh $(REGISTRY) $(TAG) $(ENV)
+	./scripts/helm_deploy.sh $(REGISTRY) $(TAG) $(ENV)
 
 ci: lint test docker-build

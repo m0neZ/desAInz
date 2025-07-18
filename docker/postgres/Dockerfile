@@ -6,4 +6,6 @@ RUN apt-get update \
 # Expose Postgres port
 EXPOSE 5432
 
+COPY LICENSES /licenses/LICENSES
+
 HEALTHCHECK --interval=10s --retries=5 CMD pg_isready -U "$POSTGRES_USER"

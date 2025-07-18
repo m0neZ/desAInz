@@ -32,3 +32,19 @@ Use these prefixes so the release script can determine the next semantic version
 ## Releasing
 
 Run `./scripts/release.sh <registry>` after your changes are merged. The script updates `CHANGELOG.md`, creates a git tag, builds Docker images and pushes them with the new version number.
+
+## Third-Party Licenses
+
+Generate the bundled `LICENSES` file with:
+
+```bash
+python scripts/collect_licenses.py
+```
+
+Copy this file into all Docker contexts and ensure each Dockerfile includes:
+
+```Dockerfile
+COPY LICENSES /licenses/LICENSES
+```
+
+The resulting images must contain `/licenses/LICENSES` in the final layer.

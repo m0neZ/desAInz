@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { trpc, type Idea } from '../../../src/trpc';
+import { trpc, type Idea } from '../../src/trpc';
 
 export default function IdeasPage() {
   const { t } = useTranslation();

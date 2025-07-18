@@ -14,6 +14,7 @@ from backend.shared.logging import configure_logging
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.metrics import register_metrics
 
 from .model_repository import list_models, register_model, set_default
 
@@ -26,6 +27,7 @@ configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
+register_metrics(app)
 
 
 class ModelCreate(BaseModel):  # type: ignore[misc]

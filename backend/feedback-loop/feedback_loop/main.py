@@ -8,11 +8,13 @@ import uuid
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from backend.shared.metrics import register_metrics
 from pydantic import BaseModel
 
 from .ab_testing import ABTestManager
 
 app = FastAPI(title="Feedback Loop")
+register_metrics(app)
 logger = logging.getLogger(__name__)
 
 

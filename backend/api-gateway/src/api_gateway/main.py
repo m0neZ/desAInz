@@ -13,6 +13,7 @@ from redis.asyncio import Redis
 from .routes import router
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared.metrics import register_metrics
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from .rate_limiter import UserRateLimiter
@@ -30,6 +31,7 @@ configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
+register_metrics(app)
 
 rate_limiter = UserRateLimiter(
     Redis.from_url(settings.redis_url),

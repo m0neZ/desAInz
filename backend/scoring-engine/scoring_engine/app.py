@@ -20,6 +20,7 @@ from prometheus_client import (
     Histogram,
     generate_latest,
 )
+from backend.shared.metrics import register_metrics
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 
@@ -74,6 +75,7 @@ configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
+register_metrics(app)
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client = Redis.from_url(REDIS_URL)
@@ -203,13 +205,6 @@ async def health() -> dict[str, str]:
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}
-
-
-@app.get("/metrics")
-async def metrics() -> Response:
-    """Return Prometheus formatted metrics."""
-    payload = generate_latest()
-    return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
 
 if __name__ == "__main__":  # pragma: no cover

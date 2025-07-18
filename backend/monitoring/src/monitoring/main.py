@@ -11,12 +11,8 @@ import httpx
 
 import psutil
 from fastapi import FastAPI, Request, Response
-from prometheus_client import (
-    CONTENT_TYPE_LATEST,
-    Counter,
-    Histogram,
-    generate_latest,
-)
+from prometheus_client import Histogram
+from backend.shared.metrics import register_metrics
 
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
@@ -40,8 +36,7 @@ configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
-
-REQUEST_COUNTER = Counter("http_requests_total", "Total HTTP requests")
+register_metrics(app)
 SIGNAL_TO_PUBLISH_SECONDS = Histogram(
     "signal_to_publish_seconds",
     "Latency from first signal ingestion to listing publish per idea",
@@ -63,18 +58,10 @@ async def add_correlation_id(
         sentry_sdk.set_tag("correlation_id", correlation_id)
     except Exception:  # pragma: no cover - sentry optional
         pass
-    REQUEST_COUNTER.inc()
 
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response
-
-
-@app.get("/metrics")
-async def metrics() -> Response:
-    """Expose Prometheus metrics."""
-    data = generate_latest()
-    return Response(content=data, media_type=CONTENT_TYPE_LATEST)
 
 
 @app.get("/overview")

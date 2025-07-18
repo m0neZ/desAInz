@@ -33,6 +33,7 @@ from .publisher import publish_with_retry
 from . import notifications
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
+from backend.shared.metrics import register_metrics
 from backend.shared import init_feature_flags, is_enabled
 from backend.shared import add_error_handlers, configure_sentry
 
@@ -43,6 +44,7 @@ configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
+register_metrics(app)
 
 
 def _identify_user(request: Request) -> str:

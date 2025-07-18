@@ -62,7 +62,7 @@ class MockupGenerator:
             image = self.pipeline(
                 prompt=prompt, num_inference_steps=num_inference_steps
             ).images[0]
-        except Exception as exc:  # pylint: disable=broad-except
+        except (RuntimeError, ValueError, OSError) as exc:
             logger.warning("Local generation failed: %s. Falling back to API", exc)
             image = self._fallback_api(prompt)
         duration = perf_counter() - start
@@ -113,7 +113,7 @@ class MockupGenerator:
                     response.raise_for_status()
                     data = base64.b64decode(response.json()["artifacts"][0]["base64"])
                 return Image.open(BytesIO(data))
-            except Exception as exc:  # noqa: BLE001
+            except (requests.RequestException, OSError, ValueError) as exc:
                 logger.warning("Fallback provider error: %s", exc)
                 if attempt == 2:
                     raise

@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     schema_registry_url: str = "http://localhost:8081"
     redis_url: str = "redis://localhost:6379/0"
     score_cache_ttl: int = 3600
+    trending_ttl: int = 3600
     s3_endpoint: str | None = None
     s3_access_key: str | None = None
     s3_secret_key: str | None = None

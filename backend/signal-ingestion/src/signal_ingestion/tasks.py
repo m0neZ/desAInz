@@ -25,6 +25,7 @@ from .normalization import NormalizedSignal, normalize
 from .publisher import publish
 from .retention import purge_old_signals
 from .settings import settings
+from .trending import extract_keywords, store_keywords
 
 
 ADAPTERS: dict[str, BaseAdapter] = {
@@ -58,6 +59,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         await session.commit()
         publish("signals", key)
         publish("signals.ingested", json.dumps(clean_row))
+        store_keywords(extract_keywords(signal_data.title))
 
 
 @app.task(name="signal_ingestion.ingest_adapter")  # type: ignore[misc]

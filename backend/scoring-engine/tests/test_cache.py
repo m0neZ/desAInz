@@ -34,7 +34,7 @@ def test_score_endpoint_caches() -> None:
         "engagement_rate": 1.0,
         "embedding": [1.0, 0.0],
         "metadata": {"a": 1.0},
-        "centroid": [0.0, 1.0],
+        "source": "global",
         "median_engagement": 1.0,
         "topics": ["t"],
     }

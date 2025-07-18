@@ -7,8 +7,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import MagicMock
-
-import numpy as np
 import pytest
 import vcr
 from PIL import Image
@@ -89,12 +87,13 @@ async def test_end_to_end(monkeypatch, tmp_path) -> None:
         seasonality=1.0,
     )
     sig = scoring.Signal(
+        source="global",
         timestamp=datetime.now(timezone.utc),
         engagement_rate=1.0,
         embedding=[0.1, 0.2],
         metadata={},
     )
-    score = scoring.calculate_score(sig, np.array([0.0, 0.0]), 0.5, [])
+    score = scoring.calculate_score(sig, 0.5, [])
     assert isinstance(score, float)
 
     gen = MockupGenerator()

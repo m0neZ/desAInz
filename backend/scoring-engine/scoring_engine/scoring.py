@@ -9,7 +9,7 @@ from typing import Iterable
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-from .weight_repository import get_weights
+from .weight_repository import get_centroid, get_weights
 
 
 class Signal:
@@ -17,12 +17,14 @@ class Signal:
 
     def __init__(
         self,
+        source: str,
         timestamp: datetime,
         engagement_rate: float,
         embedding: Iterable[float],
         metadata: dict[str, float],
-    ):
+    ) -> None:
         """Create a new signal instance."""
+        self.source = source
         self.timestamp = timestamp
         self.engagement_rate = engagement_rate
         self.embedding = np.array(list(embedding), dtype=float)
@@ -75,12 +77,19 @@ def compute_seasonality(timestamp: datetime, topics: Iterable[str]) -> float:
 
 def calculate_score(
     signal: Signal,
-    centroid: np.ndarray,
     median_engagement: float,
     topics: Iterable[str],
 ) -> float:
-    """Calculate composite score using current weights."""
+    """Calculate composite score using current weights.
+
+    The centroid is automatically fetched based on ``signal.source``.
+    """
     weights = get_weights()
+    centroid_list = get_centroid(signal.source)
+    if centroid_list is None:
+        centroid = np.zeros_like(signal.embedding)
+    else:
+        centroid = np.array(centroid_list, dtype=float)
     freshness = compute_freshness(signal.timestamp)
     engagement = compute_engagement(signal.engagement_rate, median_engagement)
     novelty = compute_novelty(signal.embedding, centroid)

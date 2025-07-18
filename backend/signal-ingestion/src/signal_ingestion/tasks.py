@@ -19,6 +19,7 @@ from .celery_app import app
 from .database import SessionLocal
 from .dedup import add_key, is_duplicate
 from .models import Signal
+from .embedding import generate_embedding
 from .privacy import purge_row
 from .normalization import NormalizedSignal, normalize
 from .publisher import publish
@@ -51,6 +52,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         signal = Signal(
             source=adapter.__class__.__name__,
             content=str(clean_row),
+            embedding=generate_embedding(json.dumps(clean_row)),
         )
         session.add(signal)
         await session.commit()

@@ -6,9 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "node scripts/monitorAndStart.js",
-    "lint": "next lint",
+    "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0",
+    "lint:css": "stylelint \"**/*.{css,scss}\" --max-warnings=0 --allow-empty-input",
+    "format": "prettier \"**/*.{js,jsx,ts,tsx,css,scss,md}\" --write",
+    "lint": "npm run lint:eslint && npm run lint:css && npm run flow",
     "test": "node --trace-warnings -r ../../scripts/exit_on_warnings.js ./node_modules/jest/bin/jest.js --runInBand --ci",
-    "flow": "flow check --max-warnings=0",
+    "flow": "cd ../.. && flow check --max-warnings=0",
     "test:e2e": "playwright test"
   },
   "dependencies": {

@@ -28,13 +28,20 @@ from .settings import settings
 from .trending import extract_keywords, store_keywords
 
 
+_PROXIES = (
+    [p or None for p in settings.http_proxies.split(",")]
+    if settings.http_proxies
+    else None
+)
+_RATE_LIMIT = settings.adapter_rate_limit
+
 ADAPTERS: dict[str, BaseAdapter] = {
-    "tiktok": TikTokAdapter(),
-    "instagram": InstagramAdapter(),
-    "reddit": RedditAdapter(),
-    "youtube": YouTubeAdapter(),
-    "events": EventsAdapter(),
-    "nostalgia": NostalgiaAdapter(),
+    "tiktok": TikTokAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "instagram": InstagramAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "reddit": RedditAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "youtube": YouTubeAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "events": EventsAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "nostalgia": NostalgiaAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
 }
 
 

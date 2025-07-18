@@ -1,4 +1,8 @@
-"""Base adapter with rate limiting and proxy rotation."""
+"""
+Base adapter with rate limiting and proxy rotation.
+
+Each adapter type has its own asyncio semaphore to throttle concurrent requests.
+"""
 
 from __future__ import annotations
 
@@ -13,15 +17,30 @@ import httpx
 class BaseAdapter:
     """Provide HTTP fetching with rate limiting and rotating proxies."""
 
+    _semaphores: dict[type, asyncio.Semaphore] = {}
+
     def __init__(
         self,
         base_url: str,
         proxies: Optional[Iterable[str | None]] = None,
         rate_limit: int = 5,
     ) -> None:
-        """Instantiate the adapter."""
+        """
+        Instantiate the adapter.
+
+        Parameters
+        ----------
+        base_url:
+            API base URL.
+        proxies:
+            Optional list of proxies rotated on each request.
+        rate_limit:
+            Maximum number of concurrent requests for this adapter.
+        """
         self.base_url = base_url
-        self._rate_limiter = asyncio.Semaphore(rate_limit)
+        if self.__class__ not in BaseAdapter._semaphores:
+            BaseAdapter._semaphores[self.__class__] = asyncio.Semaphore(rate_limit)
+        self._rate_limiter = BaseAdapter._semaphores[self.__class__]
         if proxies is None:
             raw = os.environ.get("HTTP_PROXIES")
             parsed = raw.split(",") if raw else []

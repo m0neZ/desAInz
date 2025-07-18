@@ -3,23 +3,42 @@
 from __future__ import annotations
 
 import logging
+import os
 import uuid
 from typing import Callable, Coroutine
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, HTTPException, Request, Response
+from pydantic import BaseModel
 
-from .scheduler import setup_scheduler
+from .ab_testing import ABTestManager
 
 app = FastAPI(title="Feedback Loop")
 logger = logging.getLogger(__name__)
 
 
-@app.on_event("startup")
+class AllocationResponse(BaseModel):
+    """Budget allocation response payload."""
+
+    variant_a: float
+    variant_b: float
+
+
+manager = ABTestManager(
+    database_url=os.environ.get("ABTEST_DB_URL", "sqlite:///abtest.db")
+)
+
+
 async def startup() -> None:
     """Start background scheduler."""
+    # Import here to avoid heavy dependencies at module import time
+    from .scheduler import setup_scheduler
+
     # Setup scheduler with no-op defaults for health endpoints
     scheduler = setup_scheduler([], "")
     scheduler.start()
+
+
+app.add_event_handler("startup", startup)
 
 
 @app.middleware("http")
@@ -46,6 +65,37 @@ async def health() -> dict[str, str]:
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}
+
+
+def _validate_variant(variant: str) -> None:
+    """Ensure the variant parameter is valid."""
+    if variant not in {"A", "B"}:
+        raise HTTPException(status_code=400, detail="invalid variant")
+
+
+@app.post("/impression")
+async def record_impression(variant: str) -> dict[str, str]:
+    """Persist a variant impression."""
+    _validate_variant(variant)
+    manager.record_result(variant, success=False)
+    return {"status": "recorded"}
+
+
+@app.post("/conversion")
+async def record_conversion(variant: str) -> dict[str, str]:
+    """Persist a variant conversion."""
+    _validate_variant(variant)
+    manager.record_result(variant, success=True)
+    return {"status": "recorded"}
+
+
+@app.get("/allocation", response_model=AllocationResponse)
+async def get_allocation(total_budget: float = 100.0) -> AllocationResponse:
+    """Return promotion budget allocation using Thompson Sampling."""
+    allocation = manager.allocate_budget(total_budget)
+    return AllocationResponse(
+        variant_a=allocation.variant_a, variant_b=allocation.variant_b
+    )
 
 
 if __name__ == "__main__":  # pragma: no cover

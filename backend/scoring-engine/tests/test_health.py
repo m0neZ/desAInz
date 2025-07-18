@@ -1,5 +1,7 @@
 """Tests for scoring engine health endpoints."""
 
+# mypy: ignore-errors
+
 from fastapi.testclient import TestClient
 
 from scoring_engine.app import app

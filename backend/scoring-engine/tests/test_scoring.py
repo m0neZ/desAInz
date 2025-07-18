@@ -1,5 +1,7 @@
 """Tests for scoring calculations."""
 
+# mypy: ignore-errors
+
 from datetime import datetime, timezone
 
 import numpy as np

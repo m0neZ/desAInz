@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from sqlalchemy import func, select
+from sqlalchemy import select
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding, Weights
@@ -20,14 +20,20 @@ def compute_and_store_centroids() -> None:
     with session_scope() as session:
         sources = session.scalars(select(Embedding.source).distinct()).all()
         for src in sources:
-            centroid = session.execute(
-                select(func.avg(Embedding.embedding)).where(Embedding.source == src)
-            ).scalar_one()
+            vectors = session.scalars(
+                select(Embedding.embedding).where(Embedding.source == src)
+            ).all()
+            if not vectors:
+                continue
+            dim = len(vectors[0])
+            centroid = [
+                float(sum(vec[i] for vec in vectors) / len(vectors)) for i in range(dim)
+            ]
             weights = session.scalar(select(Weights).where(Weights.source == src))
             if weights is None:
                 weights = Weights(source=src)
                 session.add(weights)
-            weights.centroid = list(centroid)
+            weights.centroid = centroid
         session.flush()
     logger.info("updated centroids for %s sources", len(sources))
 

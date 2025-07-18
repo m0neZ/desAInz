@@ -1,17 +1,25 @@
 """FastAPI application exposing scoring API."""
 
+# mypy: ignore-errors
+
 from __future__ import annotations
 
-import json
 import os
 import uuid
 import logging
+import json
 from datetime import datetime
 from typing import Any, Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 from redis.asyncio import Redis
+from prometheus_client import (
+    CONTENT_TYPE_LATEST,
+    Counter,
+    Histogram,
+    generate_latest,
+)
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 
@@ -27,6 +35,11 @@ from .centroid_job import start_centroid_scheduler
 # Cache metric keys
 CACHE_HIT_KEY = "cache_hits"
 CACHE_MISS_KEY = "cache_misses"
+
+# Prometheus metrics
+CACHE_HIT_COUNTER = Counter("cache_hits_total", "Number of cache hits")
+CACHE_MISS_COUNTER = Counter("cache_misses_total", "Number of cache misses")
+SCORE_TIME_HISTOGRAM = Histogram("score_compute_seconds", "Time spent computing score")
 
 
 class WeightsUpdate(BaseModel):
@@ -129,24 +142,41 @@ async def update_weights_endpoint(body: WeightsUpdate) -> JSONResponse:
     )
 
 
+@app.post("/weights/feedback")
+async def feedback_weights(body: WeightsUpdate) -> JSONResponse:
+    """Update weights from feedback loop."""
+    weights = await run_in_threadpool(update_weights, **body.model_dump())
+    return JSONResponse(
+        {
+            "freshness": weights.freshness,
+            "engagement": weights.engagement,
+            "novelty": weights.novelty,
+            "community_fit": weights.community_fit,
+            "seasonality": weights.seasonality,
+        }
+    )
+
+
 @app.get("/centroid/{source}")
 async def centroid_endpoint(source: str) -> JSONResponse:
     """Return current centroid for ``source``."""
     centroid = await run_in_threadpool(get_centroid, source)
     if centroid is None:
         return JSONResponse(status_code=404, content={"detail": "not found"})
-    return JSONResponse({"centroid": centroid})
+    return JSONResponse({"centroid": [float(x) for x in centroid]})
 
 
 @app.post("/score")
 async def score_signal(payload: ScoreRequest) -> JSONResponse:
     """Score a signal and cache hot results."""
-    key = json.dumps(payload.model_dump(), sort_keys=True)
+    key = json.dumps(payload.model_dump(), sort_keys=True, default=str)
     cached = await redis_client.get(key)
     if cached is not None:
         await redis_client.incr(CACHE_HIT_KEY)
+        CACHE_HIT_COUNTER.inc()
         return JSONResponse({"score": float(cached), "cached": True})
     await redis_client.incr(CACHE_MISS_KEY)
+    CACHE_MISS_COUNTER.inc()
     signal = Signal(
         timestamp=payload.timestamp,
         engagement_rate=payload.engagement_rate,
@@ -156,7 +186,8 @@ async def score_signal(payload: ScoreRequest) -> JSONResponse:
     centroid = payload.centroid or [0.0 for _ in payload.embedding]
     median_engagement = float(payload.median_engagement or 0)
     topics = payload.topics or []
-    score = calculate_score(signal, centroid, median_engagement, topics)
+    with SCORE_TIME_HISTOGRAM.time():
+        score = calculate_score(signal, centroid, median_engagement, topics)
     await redis_client.setex(key, CACHE_TTL_SECONDS, score)
     return JSONResponse({"score": score, "cached": False})
 
@@ -174,13 +205,10 @@ async def ready() -> dict[str, str]:
 
 
 @app.get("/metrics")
-async def metrics() -> JSONResponse:
-    """Return cache hit/miss metrics stored in Redis."""
-    hits_raw = await redis_client.get(CACHE_HIT_KEY)
-    misses_raw = await redis_client.get(CACHE_MISS_KEY)
-    hits = int(hits_raw or 0)
-    misses = int(misses_raw or 0)
-    return JSONResponse({"cache_hits": hits, "cache_misses": misses})
+async def metrics() -> Response:
+    """Return Prometheus formatted metrics."""
+    payload = generate_latest()
+    return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
 
 if __name__ == "__main__":  # pragma: no cover

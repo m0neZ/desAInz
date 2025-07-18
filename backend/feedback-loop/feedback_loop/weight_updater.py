@@ -44,7 +44,9 @@ def update_weights(
         "seasonality": 1.0,
     }
 
-    response = requests.put(f"{api_url}/weights", json=weights, timeout=5)
+    response = requests.post(
+        f"{api_url}/weights/feedback", json=weights, timeout=5
+    )
     response.raise_for_status()
     logger.info("updated weights: %s", weights)
     return weights

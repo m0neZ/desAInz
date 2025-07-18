@@ -1,23 +1,27 @@
 """Tests for Redis caching behavior."""
 
+# mypy: ignore-errors
+
 from datetime import datetime, timezone
+import importlib
 
-import fakeredis.aioredis
 from fastapi.testclient import TestClient
-
-import scoring_engine.app as scoring_module
 from scoring_engine import app
 from scoring_engine.weight_repository import update_weights
+
+scoring_module = importlib.import_module("scoring_engine.app")
 
 
 def setup_module(module) -> None:
     """Use fakeredis for tests."""
-    scoring_module.redis_client = fakeredis.aioredis.FakeRedis()
+    from tests import DummyRedis
+
+    scoring_module.redis_client = DummyRedis()
 
 
 def test_score_endpoint_caches() -> None:
     """Ensure score endpoint caches results in Redis."""
-    client = TestClient(app.app)
+    client = TestClient(app)
     update_weights(
         freshness=1.0,
         engagement=1.0,
@@ -35,6 +39,6 @@ def test_score_endpoint_caches() -> None:
         "topics": ["t"],
     }
     resp1 = client.post("/score", json=payload)
-    assert resp1.json["cached"] is False
+    assert resp1.json()["cached"] is False
     resp2 = client.post("/score", json=payload)
-    assert resp2.json["cached"] is True
+    assert resp2.json()["cached"] is True

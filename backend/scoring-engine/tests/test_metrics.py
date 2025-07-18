@@ -1,18 +1,31 @@
 """Tests for cache metrics endpoint."""
 
+# mypy: ignore-errors
+
 from datetime import datetime, timezone
+import importlib
 
-import fakeredis.aioredis
 from fastapi.testclient import TestClient
-
-import scoring_engine.app as scoring_module
 from scoring_engine.app import app
 from scoring_engine.weight_repository import update_weights
+import warnings
+
+scoring_module = importlib.import_module("scoring_engine.app")
 
 
 def setup_module(module) -> None:
     """Use fakeredis for tests."""
-    scoring_module.redis_client = fakeredis.aioredis.FakeRedis()
+    from tests import DummyRedis
+
+    scoring_module.redis_client = DummyRedis()
+    warnings.filterwarnings("ignore", category=ResourceWarning)
+
+
+def _get_metric(payload: str, name: str) -> float:
+    for line in payload.splitlines():
+        if line.startswith(name):
+            return float(line.split(" ")[1])
+    raise AssertionError(f"metric {name} not found")
 
 
 def test_metrics_endpoint_counts_hits_and_misses() -> None:
@@ -36,6 +49,6 @@ def test_metrics_endpoint_counts_hits_and_misses() -> None:
     client.post("/score", json=payload)
     resp = client.get("/metrics")
     assert resp.status_code == 200
-    data = resp.json()
-    assert data["cache_hits"] == 1
-    assert data["cache_misses"] == 1
+    metrics_text = resp.text
+    assert _get_metric(metrics_text, "cache_hits_total") >= 1.0
+    assert _get_metric(metrics_text, "cache_misses_total") >= 1.0

@@ -24,3 +24,15 @@ This project relies on environment variables for configuration.
 3. Deploy to a staging environment and verify the rollout.
 4. Promote the secret to production after validation.
 5. Remove the previous version when all services consume the new secret.
+
+### JWT secret rotation
+
+The `SECRET_KEY` used to sign JWT tokens is loaded from `/run/secrets` in
+production. To rotate it safely:
+
+1. Deploy the new secret alongside the old one and update the `secret_key`
+   environment variable.
+2. Insert all active token identifiers into the `revoked_tokens` table so old
+   credentials are rejected.
+3. Redeploy the services to pick up the new secret and remove the old one when
+   all clients have refreshed their tokens.

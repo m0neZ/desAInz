@@ -8,12 +8,14 @@ import uuid
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.shared.logging import configure_logging
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
 
 from .model_repository import list_models, register_model, set_default
@@ -23,6 +25,13 @@ logger = logging.getLogger(__name__)
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "mockup-generation")
 app = FastAPI(title="Mockup Generation Service")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)

@@ -6,6 +6,7 @@ import uuid
 from typing import Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from jose import JWTError, jwt
 from redis.asyncio import Redis
@@ -16,6 +17,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.config import settings as shared_settings
 from .rate_limiter import UserRateLimiter
 from .settings import settings
 from .auth import ALGORITHM, SECRET_KEY
@@ -26,6 +28,13 @@ logger = logging.getLogger(__name__)
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "api-gateway")
 app = FastAPI(title="API Gateway")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)

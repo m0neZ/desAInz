@@ -80,7 +80,8 @@ def calculate_score(
     median_engagement: float,
     topics: Iterable[str],
 ) -> float:
-    """Calculate composite score using current weights.
+    """
+    Calculate composite score using current weights.
 
     The centroid is automatically fetched based on ``signal.source``.
     """

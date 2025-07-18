@@ -5,6 +5,9 @@ pydocstyle
 flake8-docstrings
 docformatter
 vcrpy
+pytest
+pytest-cov
+fakeredis
 responses
 Pillow
 redis
@@ -18,6 +21,10 @@ UnleashClient
 
 pip-audit
 sphinxcontrib-openapi
+myst-parser
 sentry-sdk
 Deprecated
 testing.postgresql
+sphinxcontrib-mermaid
+opentelemetry-exporter-otlp
+python-jose[cryptography]

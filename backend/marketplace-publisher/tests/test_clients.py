@@ -7,7 +7,7 @@ from typing import Any, Callable
 import os
 
 import pytest
-import requests
+import responses
 
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
@@ -45,34 +45,25 @@ def test_publish_design_oauth(
     """Ensure clients fetch tokens and attach auth headers."""
 
     _setup_env(monkeypatch, prefix)
-    calls: list[tuple[str, dict[str, Any]]] = []
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.POST,
+            "https://example.com/token",
+            json={"access_token": "tok"},
+        )
+        rsps.add(
+            responses.POST,
+            publish_url,
+            json={"id": 1},
+        )
 
-    def fake_post(url: str, *args: Any, **kwargs: Any) -> Any:
-        calls.append((url, kwargs))
+        design = tmp_path / "d.png"
+        design.write_text("x")
+        client = client_cls()
+        listing_id = client.publish_design(design, {"title": "t"})
 
-        class Resp:
-            def __init__(self, data: dict[str, Any]) -> None:
-                self._data = data
-
-            def raise_for_status(self) -> None:  # noqa: D401
-                """No-op to simulate successful request."""
-
-            def json(self) -> dict[str, Any]:
-                return self._data
-
-        if url == "https://example.com/token":
-            return Resp({"access_token": "tok"})
-        assert kwargs["headers"]["Authorization"] == "Bearer tok"
-        assert kwargs["headers"]["X-API-Key"] == "key"
-        return Resp({"id": 1})
-
-    monkeypatch.setattr(requests, "post", fake_post)
-
-    design = tmp_path / "d.png"
-    design.write_text("x")
-    client = client_cls()
-    listing_id = client.publish_design(design, {"title": "t"})
-
-    assert listing_id == "1"
-    assert calls[0][0] == "https://example.com/token"
-    assert calls[1][0] == publish_url
+        assert listing_id == "1"
+        assert rsps.calls[0].request.url == "https://example.com/token"
+        assert rsps.calls[1].request.url == publish_url
+        assert rsps.calls[1].request.headers["Authorization"] == "Bearer tok"
+        assert rsps.calls[1].request.headers["X-API-Key"] == "key"

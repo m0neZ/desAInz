@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import os
 import requests
+from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
@@ -23,17 +24,26 @@ class BaseClient:
         client_id_env: str | None = None,
         client_secret_env: str | None = None,
         api_key_env: str | None = None,
+        authorize_url: str | None = None,
+        redirect_uri_env: str | None = None,
+        scope_env: str | None = None,
     ) -> None:
         """Initialize API configuration and credentials."""
         self.base_url = base_url.rstrip("/")
         self.token_url = token_url
+        self.publish_url = f"{self.base_url}/publish"
+        self.authorize_url = authorize_url
+        self.redirect_uri = os.getenv(redirect_uri_env or "")
+        raw_scope = os.getenv(scope_env or "")
+        self.scope: list[str] | None = raw_scope.split() if raw_scope else None
         self._client_id = os.getenv(client_id_env or "")
         self._client_secret = os.getenv(client_secret_env or "")
         self._api_key = os.getenv(api_key_env or "")
         self._token: str | None = None
+        self._state: str | None = None
 
     def _get_token(self) -> str | None:
-        """Retrieve an OAuth token if configuration is provided."""
+        """Return a cached token or fetch one using client credentials."""
         if self._token:
             return self._token
         if self.token_url and self._client_id and self._client_secret:
@@ -51,6 +61,35 @@ class BaseClient:
             return self._token
         return None
 
+    def get_authorization_url(self) -> str:
+        """Return the authorization URL for user consent."""
+        if not (self.authorize_url and self._client_id and self.redirect_uri):
+            msg = "OAuth flow not configured"
+            raise RuntimeError(msg)
+        oauth = OAuth2Session(
+            self._client_id, redirect_uri=self.redirect_uri, scope=self.scope
+        )
+        url, state = oauth.authorization_url(self.authorize_url)
+        self._state = state
+        return url
+
+    def fetch_token(self, authorization_response: str) -> None:
+        """Exchange the authorization response URL for an access token."""
+        if not (self.token_url and self._client_id and self._client_secret):
+            msg = "OAuth flow not configured"
+            raise RuntimeError(msg)
+        oauth = OAuth2Session(
+            self._client_id,
+            redirect_uri=self.redirect_uri,
+            state=self._state,
+        )
+        token = oauth.fetch_token(
+            self.token_url,
+            authorization_response=authorization_response,
+            client_secret=self._client_secret,
+        )
+        self._token = token.get("access_token")
+
     def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
         """Upload a design and return the created listing ID."""
         headers = {}
@@ -62,7 +101,7 @@ class BaseClient:
         with open(design_path, "rb") as file:
             files = {"file": file}
             response = requests.post(
-                f"{self.base_url}/publish",
+                self.publish_url,
                 files=files,
                 data=metadata,
                 headers=headers,
@@ -84,6 +123,9 @@ class RedbubbleClient(BaseClient):
             "REDBUBBLE_CLIENT_ID",
             "REDBUBBLE_CLIENT_SECRET",
             "REDBUBBLE_API_KEY",
+            os.getenv("REDBUBBLE_AUTHORIZE_URL"),
+            "REDBUBBLE_REDIRECT_URI",
+            "REDBUBBLE_SCOPE",
         )
 
 
@@ -98,6 +140,9 @@ class AmazonMerchClient(BaseClient):
             "AMAZON_MERCH_CLIENT_ID",
             "AMAZON_MERCH_CLIENT_SECRET",
             "AMAZON_MERCH_API_KEY",
+            os.getenv("AMAZON_MERCH_AUTHORIZE_URL"),
+            "AMAZON_MERCH_REDIRECT_URI",
+            "AMAZON_MERCH_SCOPE",
         )
 
 
@@ -112,6 +157,9 @@ class EtsyClient(BaseClient):
             "ETSY_CLIENT_ID",
             "ETSY_CLIENT_SECRET",
             "ETSY_API_KEY",
+            os.getenv("ETSY_AUTHORIZE_URL"),
+            "ETSY_REDIRECT_URI",
+            "ETSY_SCOPE",
         )
 
 
@@ -126,6 +174,9 @@ class Society6Client(BaseClient):
             "SOCIETY6_CLIENT_ID",
             "SOCIETY6_CLIENT_SECRET",
             "SOCIETY6_API_KEY",
+            os.getenv("SOCIETY6_AUTHORIZE_URL"),
+            "SOCIETY6_REDIRECT_URI",
+            "SOCIETY6_SCOPE",
         )
 
 

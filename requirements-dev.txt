@@ -5,6 +5,7 @@ pydocstyle
 flake8-docstrings
 docformatter
 vcrpy
+responses
 Pillow
 redis
 asyncpg

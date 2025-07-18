@@ -6,6 +6,7 @@ from datetime import datetime
 
 from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from pgvector.sqlalchemy import Vector
 
 
 class Base(DeclarativeBase):
@@ -21,3 +22,4 @@ class Signal(Base):
     source: Mapped[str] = mapped_column(String(50))
     content: Mapped[str] = mapped_column(String)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(768), nullable=True)

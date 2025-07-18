@@ -7,8 +7,11 @@ from __future__ import annotations
 import json
 import logging
 import os
+from datetime import datetime
 from logging.config import dictConfig
-from typing import Any, Dict, Optional, Type
+from typing import Any, Dict, MutableMapping, Optional, Type
+
+import requests
 
 try:
     from watchtower import CloudWatchLogHandler as CWHandler
@@ -56,6 +59,38 @@ class JsonFormatter(logging.Formatter):
         return json.dumps(log_record)
 
 
+class LokiHandler(logging.Handler):
+    """Send log records to Loki via HTTP."""
+
+    def __init__(
+        self, url: str, labels: MutableMapping[str, str] | None = None
+    ) -> None:
+        """Initialize handler with Loki endpoint and labels."""
+        super().__init__()
+        self.url = url.rstrip("/")
+        self.labels = labels or {"app": os.getenv("SERVICE_NAME", "app")}
+
+    def emit(self, record: logging.LogRecord) -> None:
+        """Push a log entry to Loki."""
+        payload = {
+            "streams": [
+                {
+                    "stream": self.labels,
+                    "values": [
+                        [
+                            str(int(datetime.utcnow().timestamp() * 1_000_000_000)),
+                            self.format(record),
+                        ]
+                    ],
+                }
+            ]
+        }
+        try:
+            requests.post(f"{self.url}/loki/api/v1/push", json=payload, timeout=2)
+        except Exception:
+            pass
+
+
 def _additional_handlers() -> list[logging.Handler]:
     """Return optional log handlers for aggregation."""
     handlers: list[logging.Handler] = []
@@ -63,11 +98,20 @@ def _additional_handlers() -> list[logging.Handler]:
         group = os.getenv("CLOUDWATCH_GROUP", "desAInz")
         stream = os.getenv("CLOUDWATCH_STREAM", "app")
         handlers.append(CloudWatchLogHandler(log_group=group, stream_name=stream))
+    loki = os.getenv("LOKI_URL")
+    if loki:
+        handlers.append(LokiHandler(loki))
     return handlers
 
 
 def configure_logging() -> None:
-    """Configure JSON logging and aggregation."""
+    """
+    Configure JSON logging and optional aggregation.
+
+    A ``LokiHandler`` is added when ``LOKI_URL`` is defined, allowing
+    structured logs with correlation IDs and user info to be pushed to
+    Loki.
+    """
     handlers: dict[str, Any] = {
         "default": {
             "class": "logging.StreamHandler",

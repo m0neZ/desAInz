@@ -4,7 +4,8 @@ This project stores publish latency and scoring metrics in **TimescaleDB** for e
 
 1. Run TimescaleDB and configure `METRICS_DB_URL` to point to the instance.
 2. The monitoring service uses `TimescaleMetricsStore` to insert `scores` and `publish_latency` records.
-3. Downsample data with a continuous aggregate view:
+3. Event messages are validated using schemas registered at `SCHEMA_REGISTRY_URL`.
+4. Downsample data with a continuous aggregate view:
 
 ```sql
 CREATE MATERIALIZED VIEW IF NOT EXISTS latency_hourly

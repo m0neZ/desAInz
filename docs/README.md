@@ -7,6 +7,7 @@ The `blueprints` folder contains the full system blueprint.
 - [Configuration](configuration.md)
 - [Metrics Storage](metrics_storage.md)
 - [Log Aggregation](logs_with_loki.md)
+- Kafka schemas under `schemas/` are loaded into the registry configured by `SCHEMA_REGISTRY_URL`.
 
 The `scripts` directory provides helper scripts for setting up storage and CDN resources:
 

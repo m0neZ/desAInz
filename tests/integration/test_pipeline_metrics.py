@@ -11,9 +11,10 @@ sys.path.append(str(ROOT / "backend" / "scoring-engine"))
 sys.path.append(str(ROOT))
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))
 
-import kafka  # noqa: E402
 from unittest.mock import MagicMock  # noqa: E402
 from types import ModuleType, SimpleNamespace  # noqa: E402
+from backend.shared.kafka import utils as kafka_utils  # noqa: E402
+from backend.shared.kafka import schema_registry as kafka_schema  # noqa: E402
 
 diffusers_stub = ModuleType("diffusers")
 setattr(diffusers_stub, "StableDiffusionXLPipeline", object)
@@ -26,7 +27,9 @@ sys.modules.setdefault("torch", torch_stub)
 kafka_producer_mock = MagicMock(
     return_value=SimpleNamespace(send=lambda *a, **k: None, flush=lambda: None)
 )
-kafka.KafkaProducer = kafka_producer_mock
+kafka_utils.KafkaProducer = kafka_producer_mock
+kafka_schema.SchemaRegistryClient.register = MagicMock()
+kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})
 
 import psutil  # noqa: E402
 import time  # noqa: E402
@@ -99,14 +102,12 @@ async def test_pipeline_with_metrics(
         SimpleNamespace(utcnow=lambda: datetime.now(timezone.utc)),
     )
 
-    sent: list[str] = []
+    sent: list[dict] = []
 
-    def fake_send(topic: str, message: bytes | str) -> object:
-        sent.append(message.decode() if isinstance(message, bytes) else message)
-        return SimpleNamespace(get=lambda *a, **k: None)
+    def fake_produce(topic: str, message: dict) -> None:
+        sent.append(message)
 
-    monkeypatch.setattr(publisher.producer, "send", fake_send)
-    monkeypatch.setattr(publisher.producer, "flush", lambda: None)
+    monkeypatch.setattr(publisher.producer, "produce", fake_produce)
 
     def fake_load(self) -> None:  # type: ignore[no-untyped-def]
         self.pipeline = None

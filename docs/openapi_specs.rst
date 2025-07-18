@@ -14,3 +14,4 @@ automatically generated using ``scripts/generate_openapi.py``.
    openapi/optimization
    openapi/scoring-engine
    openapi/signal-ingestion
+   openapi/mockup-generation

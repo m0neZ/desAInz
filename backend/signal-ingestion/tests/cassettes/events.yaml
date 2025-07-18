@@ -72,4 +72,69 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - date.nager.at
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://date.nager.at/api/v3/NextPublicHolidays/US
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAJbogA/8RVXW/aMBT9K5Ff+pJMSbZSlbcudG2AGFS+1iEeDHETa8ZGjrMNTfvvE8uNwE47
+        oa5ano44Ptjnnhv7Ln+ilGiKuij0w0vPv/b8ALmIyw3hmGwPC0OylqVyemSPXCSOXE1tZCm02kcy
+        PahnE+SiJ/aDpqj7RHhBXZRxuSYcdbUqKcgZLVBXlJy7iJNSbPJHSlTN6P3usLxE43LN2Qatfrmm
+        y8D3gveWy0jycrsuC9OnxZ5tFX4evS7RbOLdDJH7B79UGI0ApxXe3VQY9wBBH2NAWB9MAB8rHAKf
+        3ALC/5OaB30C5yVwHgY9vgfsAyaAsD+OKhyBbjSocAz7P8QVTkA3Bb8zOGcOusUcrd6sYbFIWUaF
+        LAtnTOWO0+LC7N3Lgn9tI5RftzOC8u5js02NtsB6gs1Y8a0Zex3v6AFihXZOP5txziHeRfzaWAMv
+        sG/rnGqqiLDugcWeHeDbXdnAC68sq9OciK9Fxr4xkZl2n1lpwXLohZeW5ShXrNBbYj8zFv2/zXY8
+        P2g+3Jh+dw6bXFhuG3wrdoNrK9uEKM2EMyx1TpUzYCJznb56Z3r/u6iFQkIv6FiFLEiRM5FpKS4K
+        5yNTOk9PSxgrWrCUCl205/qD59sD9E7K1PmkmOHVJM+OF34e812ejsnerfXe4ufHYT22cM8cb1P8
+        qvey4/mXzRud0K1UjHCnd9oji23hu+o0L0i/FFRTKnTuYKKZFIQ7sUjpjoqUig01SzhT3UJpV82P
+        7+Uy2rG8+g0AAP//AwC6eHInGAsAAA==
+    headers:
+      age:
+      - '25479'
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - public,max-age=86400
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - 960e71241e164760-DFW
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 18 Jul 2025 02:10:18 GMT
+      last-modified:
+      - Thu, 17 Jul 2025 19:05:39 GMT
+      nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      report-to:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=qtx0kxXeXh2ojoFkVKkX8ChcYpf4%2FooAVZjsr3FeE347LgCon9RG%2BSAjAY9ZWF%2FzkdtAlvuxIuO5T99sOlkz6wNCkB58blBnv1NVulo%3D"}]}'
+      server:
+      - envoy
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      via:
+      - 1.1 Caddy
+      x-envoy-upstream-service-time:
+      - '82'
+    status:
+      code: 200
+      message: OK
 version: 1

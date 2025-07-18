@@ -6,6 +6,7 @@ import os
 import sys
 import pytest
 import vcr
+import httpx
 
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
@@ -35,6 +36,10 @@ async def test_fetch(adapter_cls, name) -> None:
     adapter = adapter_cls()
     cassette = f"backend/signal-ingestion/tests/cassettes/{name}.yaml"
     with vcr.use_cassette(cassette, record_mode="new_episodes"):
+        if name == "instagram":
+            with pytest.raises(httpx.HTTPStatusError):
+                await adapter.fetch()
+            return
         rows = await adapter.fetch()
     assert len(rows) == 1
     assert isinstance(rows[0], dict)

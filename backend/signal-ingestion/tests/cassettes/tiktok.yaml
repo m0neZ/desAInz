@@ -75,4 +75,93 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - www.tiktok.com
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://www.tiktok.com/oembed?url=https://www.tiktok.com/@scout2015/video/6718335390845095173
+  response:
+    body:
+      string: !!binary |
+        MVwbACB/Tl8R1b1cjKxveX87a8OOrQzZlv+XlxRLylgtIL3SNWGPl+EA0s7/5Z6fHaCuRXdt/j0v
+        vDGGNjHbnBVQB5IGHK9hltYc7nqciz4QIKRLMaX1a/B9uwhy8CcEXDCXikMOu8T/PrhghOk45PCo
+        HFlfdBxZhezodHvOyEEH928+dB0y4yUyEs0s1xoJ8//b+7f3X37/+/sOLdRyvJRWsRlHC4obLWsj
+        WiNbtMC4NnNuRAkuMGvmcjy2Ywc5zI1ROve88/PziRGtke2klL23rktpTUD8GNxMnYH1AKtJa1z0
+        yLYCOeiR4V3HwIW3t++AHHxCFsEFZzztvduYvoMclotOlu2plYa7NwgUcD4j5n3BKwqoFIavUHCM
+        13PVvCT1p2EYhxmZRjHJYj8N6TIdJGitWFQrFCKRupW4HmW/QkEi8Wtv4B4KPbvAzZvMExLvSFEU
+        w004DACFVaQa2p1RGn4VRE3huOjY0NK1IRkK+AsomBbbbSq/9nJ6bgWbZ7WcrVj22CpaVquE0ays
+        yVCgThmFJthAO2HYzOOeEWItK9FTU7GOo24kXTGGSVeFYSImhBtNJsowPIiHhGUFq65IjBPg/sMf
+        pIke9JcXbA5hZERdIyF+BC7v5YfwT+EkmWZTEiUJ8VOfTIOY+ENirVKUTx6Pyh5vroJVtKy9NPzI
+        u2VAPZZdhIyBZNJoCqvLXtbuKrggoczx9JmBPE6TJ7hiTPkkiJLf6tQByk9wKfteDliL2YDPGCv6
+        ymrAVlPyVFLjnnXijGGFCUmmXhAmaZlWUVzWccT8MEtZURGeBkUdBJyVd0Z1Z5hewgXuouNMRM9m
+        fK0aV7IkTJwLzC+UGLle8dM4yNJkSohzAeQPMWNHvhI/KLbH8Kp7XDwpdl8uBrs1O3tcPk7V9t7z
+        F4vhtmNWoiouSJRGjtIrfphGJPGJo+dqpYizKini2NHzUq1EYR2xoM4cUZUrVnOmTQwuqFGeiYqP
+        x3bsFYP56IVYTLDnPhbtY9kK/75BnFp+LCrIQU3a4MLY8ccr19AQM3ElgvWfXfTt
+    headers:
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-tt-traceflag,x-tt-logid
+      cache-control:
+      - max-age=0, no-cache, no-store
+      content-encoding:
+      - br
+      content-length:
+      - '789'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 18 Jul 2025 02:10:14 GMT
+      expires:
+      - Fri, 18 Jul 2025 02:10:14 GMT
+      pragma:
+      - no-cache
+      server:
+      - envoy
+      server-timing:
+      - cdn-cache; desc=MISS, edge; dur=19, origin; dur=171
+      - inner; dur=130
+      x-akamai-request-id:
+      - ac57da8.38123412
+      x-cache:
+      - TCP_MISS from a23-201-44-11.deploy.akamaitechnologies.com (AkamaiGHost/22.2.0-c471f2b4819e3aa253dfcc21bfdfd452)
+        (-)
+      x-cache-remote:
+      - TCP_MISS from a23-3-98-221.deploy.akamaitechnologies.com (AkamaiGHost/22.1.5-3117971c8e766d2067e9a32e654e7386)
+        (-)
+      x-content-type-options:
+      - nosniff
+      x-download-options:
+      - noopen
+      x-envoy-upstream-service-time:
+      - '276'
+      x-frame-options:
+      - SAMEORIGIN
+      x-origin-response-time:
+      - 172,23.3.98.221
+      x-parent-response-time:
+      - 190,23.201.44.11
+      x-tt-logid:
+      - 202507180210146FE0B76EF200F10873F2
+      x-tt-trace-host:
+      - 01327b8d6b1e65828706006505044a4f281302c2da4ee7d74b5d53e33a01a943e9a4e1a53aabd9a118afd75ebae13f0f91121861de820542e4f503256291249534df20a4699de7a08f5060d62453bcf0824ffde5053c906bae4850c13b3d47554b77d867aa1a7aa9e9a270b2709d5baaeb
+      x-tt-trace-id:
+      - 00-2507180210146FE0B76EF200F10873F2-1DC583CE68652C18-00
+      x-tt-trace-tag:
+      - id=16;cdn-cache=miss;type=dyn
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 version: 1

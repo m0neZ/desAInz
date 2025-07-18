@@ -75,4 +75,82 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - graph.facebook.com
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://graph.facebook.com/v19.0/instagram_oembed?url=https://www.instagram.com/p/CgPu2zYHl5m/&access_token=
+  response:
+    body:
+      string: '{"error":{"message":"(#200) Provide valid app ID","type":"OAuthException","code":200,"fbtrace_id":"APgvQoDPQz2m2VKBT5Is52u"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - no-store
+      content-length:
+      - '125'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 18 Jul 2025 02:10:14 GMT
+      error-mid:
+      - 7fce0719f1a266f3c4445a0da7352ddc
+      expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      facebook-api-version:
+      - v19.0
+      pragma:
+      - no-cache
+      proxy-status:
+      - http_request_error; e_fb_vipaddr="AcOpNhD1GXyfZCyFJwIkFMhXEmjg2JBZCllTfoUCpIF5cwarWXwZIzr2xCDjWvP_ff7JdZE5Hf5oIpVTEjq1iMEBk1X_qtOp0w";
+        e_clientaddr="AcMUxI9Bmq4pXBy3lVBu6VhmaZX9EQvhLriET94Bu4G_YODX4BHl3RRSwfdkvU1PWTv1x5h8az_gxdye_5Lq7CpXw6svMNDQo1IyD8u7J1BX_P4Y";
+        e_upip="AcOVRpalH3i7Qlfpja0sXlMyheuk20A2nkj-c5C5xa8Y44-tkf21lewBPBngHSYdfMLw1Mz_UMfFppR3Hh2V3Bz4dTdyPe_dxxPXGus";
+        e_fb_zone="AcNMc5rhcSUtmnZRFGzwhZxG3xtWxHhxXZ0bYokgKmTJqh75C6d8X7DFsyIpabXS";
+        e_fb_twtaskhandle="AcNIfYsB_EofuE83bNEgAnaHO48jR_GVb2G3FBd5d_x6Bm4n2xgVTe3zS2dt4YuBdgURM4kLp1N7JUH_e-u-cffboalwoBu1LO8VnFz7NNkxiQ";
+        e_proxy="AcN-FlVWLqoxdE8W846cwtF_TfnCSAvGwK4XL0SDOtmE6Nht6xGckS-nOGuxmIPsGC_2jcwRwbytN-RtZo1u",
+        http_request_error; e_fb_vipaddr="AcOOBC2AHYyfxYkG7E6nd9SXIBido_T1NL4yAw-GJzzsWu9cKl1ZWmw7g8-tr5CkDQhemmemV8c";
+        e_clientaddr="AcP5Uo7B_tOsND-dpJqbwYGD-xlktozhhsUaluTDGuEQUiw6YPVXNWI_HwVGZla5lJ4OkGTEojwLAhez";
+        e_upip="AcMg5zU-iBehyNr4CBx-cWMUqUHHYg1OIwv-dW11Rp1UwFcbaJhe7DtaTxGrfVqp4y8dor5aUlckyr6hhC7eHIeM_9J2G1d0KA";
+        e_fb_zone="AcOtyFNllAV3qHACYb2Ouptb7n6qiVw31DZ0qQogxOaGIcdTIBcR0Ap_1FCtrg";
+        e_fb_twtaskhandle="AcN76qUC_L4jS-FazPwNj-eMZHAtVUDeh0SbL9_4m9OboeDQUUn5tmgQ75Kor58TnUHIajt7xtpVVEGU0jMcYnS6JLP4d1114qVb";
+        e_proxy="AcPir-brOHTp-67Lly8VSJQ-cxFiWW9xd99ld05U4zHjmQu6j9E719wZDNvo80V_Cn6n3HQnrdjSqaI"
+      server:
+      - envoy
+      strict-transport-security:
+      - max-age=15552000; preload
+      vary:
+      - Origin
+      www-authenticate:
+      - OAuth "Facebook Platform" "insufficient_scope" "(#200) Provide valid app ID"
+      x-ad-api-version-warning:
+      - You are calling a deprecated version of the Ads API.
+      x-envoy-upstream-service-time:
+      - '71'
+      x-fb-connection-quality:
+      - EXCELLENT; q=0.9, rtt=11, rtx=0, c=10, mss=1380, tbw=3533, tp=-1, tpl=-1,
+        uplat=32, ullat=0
+      x-fb-debug:
+      - VQQxWq+Ji7uop4MR/hpzuJf4gkK2guHniz4txbMLx6Q1y2tU8Lo92HZBJNEv7CIeAvSVw32eGIWB6pO3hQnoMw==
+      x-fb-request-id:
+      - APgvQoDPQz2m2VKBT5Is52u
+      x-fb-rev:
+      - '1024876920'
+      x-fb-trace-id:
+      - D7okb9fZDJt
+    status:
+      code: 403
+      message: Forbidden
 version: 1

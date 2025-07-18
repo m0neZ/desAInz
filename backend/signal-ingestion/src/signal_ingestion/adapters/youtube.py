@@ -12,9 +12,14 @@ from .base import BaseAdapter
 class YouTubeAdapter(BaseAdapter):
     """Adapter for YouTube API using the oEmbed endpoint."""
 
-    def __init__(self, base_url: str | None = None) -> None:
+    def __init__(
+        self,
+        base_url: str | None = None,
+        proxies: list[str] | None = None,
+        rate_limit: int = 5,
+    ) -> None:
         """Initialize adapter with optional ``base_url``."""
-        super().__init__(base_url or "https://noembed.com")
+        super().__init__(base_url or "https://noembed.com", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:
         """Return metadata for a single YouTube video."""

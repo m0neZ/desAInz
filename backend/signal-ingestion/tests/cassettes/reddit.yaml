@@ -75,4 +75,64 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - r.jina.ai
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://r.jina.ai/https://www.reddit.com/r/python/top.json?limit=1
+  response:
+    body:
+      string: !!binary |
+        IYgHACC+qfN3L9PbCgB/A4KAmigg9Ryn8PTAqWWJBFjzBBIINJC07d9+sCN9/t1t7KxIJLdWrzyz
+        y2gOY14er/GkpQ1ojti5bTHvdPb7fdtSGLL7j/8ztrM9ulil43TbTgqVk4xzdqueMW+eFZZojmfP
+        RuTw8ni9o+EAhSBr1WLYHcxxqtbnMCQx5sazaah7gadkfW4+tKzsCD6RwM80SCmEf4TjgkA5tI15
+        1l/nJ1lKaiLTCCxwiqOWFo+kCf4NDbUoCyobJ8Yl4DQlMeZig6OWcDFLiiOF3ZwL56XUxIYzggfH
+        QUoOEfqdJyH2VMkyZKopTkCV7NrGfF0z8/xU55llGrF0al+nwKYDN8yBAhxTtlWhioMOSassOpay
+        3VXREdqfAIz/bdTmfxyu+r3pZNaf9cezQW/YrRkDAw==
+    headers:
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 960e7109ce65e946-DFW
+      content-encoding:
+      - br
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 18 Jul 2025 02:10:18 GMT
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=w2LmtVh0XE%2BtYiyaWFEvlSN%2F%2B3XRMDNoDgsqORjsBoCx0yG3oasrCyYkENU0m%2FLcOIlN4it50XQQ%2FJtIuGRKWkkpZeY8XSL%2FFY0%2F2mGjrnR5hlQGvswSnlLDJg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      server:
+      - envoy
+      server-timing:
+      - cfL4;desc="?proto=TCP&rtt=20296&min_rtt=14533&rtt_var=8966&sent=6&recv=8&lost=0&retrans=0&sent_bytes=3349&recv_bytes=905&delivery_rate=193490&cwnd=254&unsent_bytes=0&cid=a3ada11cd87eb840&ts=3690&x=0"
+      traceparent:
+      - 00-53cf9a499c34923e31d3727277953712-ac1410bd9571a962-00
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - 53cf9a499c34923e31d3727277953712/12399554080499935586
+      x-envoy-upstream-service-time:
+      - '3727'
+    status:
+      code: 200
+      message: OK
 version: 1

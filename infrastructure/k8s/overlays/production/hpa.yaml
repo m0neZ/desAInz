@@ -16,6 +16,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -32,6 +38,12 @@ spec:
     - type: Resource
       resource:
         name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
         target:
           type: Utilization
           averageUtilization: 70
@@ -54,6 +66,19 @@ spec:
         target:
           type: Utilization
           averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: External
+      external:
+        metric:
+          name: celery_queue_length
+        target:
+          type: AverageValue
+          averageValue: "30"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -73,6 +98,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -89,6 +120,12 @@ spec:
     - type: Resource
       resource:
         name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
         target:
           type: Utilization
           averageUtilization: 70

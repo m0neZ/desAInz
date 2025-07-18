@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "node scripts/monitorAndStart.js",
     "lint": "next lint",
-    "test": "jest --runInBand --ci",
+    "test": "node --trace-warnings -r ../../scripts/exit_on_warnings.js ./node_modules/jest/bin/jest.js --runInBand --ci",
     "flow": "flow check --max-warnings=0",
     "test:e2e": "playwright test"
   },

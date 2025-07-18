@@ -5,7 +5,7 @@ from __future__ import annotations
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     """Store configuration derived from environment variables."""
 
     model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")

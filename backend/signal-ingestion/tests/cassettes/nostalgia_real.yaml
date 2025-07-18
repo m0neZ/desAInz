@@ -5,82 +5,6 @@ interactions:
       accept:
       - '*/*'
       accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-      host:
-      - jsonplaceholder.typicode.com
-      user-agent:
-      - python-httpx/0.28.1
-    method: GET
-    uri: https://jsonplaceholder.typicode.com/posts/6
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/0VPO24EMQjt9xTIdZo0KXKD3GEaZowySDZ4AY8URbl78CbSdvAevM/3DaBMJ/uo
-        5R1eX9bKa3x7jMHRKLdStalRB5odOn4KA6kDDjLGDvfJWB4Pu9avdT8D0JMVjGlwqA01djjRUkD4
-        5LaeHIbpxZUkwCmBTbq2xsEIonvy2DjhCgmTJ0ybpKoPPhgjeQqgvKWugDsYDaOTpGasDHAc01GC
-        50qIvsmlbY7AIPjr43BRui2V/4L3SU+vcvv5BaWuk7UgAQAA
-    headers:
-      access-control-allow-credentials:
-      - 'true'
-      age:
-      - '19458'
-      alt-svc:
-      - h3=":443"; ma=86400
-      cache-control:
-      - max-age=43200
-      cf-cache-status:
-      - HIT
-      cf-ray:
-      - 96029dbe6f682cc1-DFW
-      content-encoding:
-      - gzip
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Wed, 16 Jul 2025 15:43:36 GMT
-      etag:
-      - W/"120-kxIuVC3UpKrGIRfIBmsZMsJaaiA"
-      expires:
-      - '-1'
-      nel:
-      - '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}'
-      pragma:
-      - no-cache
-      report-to:
-      - '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=Eyt6XUliOEYdDLgl6bLnjJAbDb9uu8aIvVde6GKWA4g%3D\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\u0026ts=1752330796"}],"max_age":3600}'
-      reporting-endpoints:
-      - heroku-nel="https://nel.heroku.com/reports?s=Eyt6XUliOEYdDLgl6bLnjJAbDb9uu8aIvVde6GKWA4g%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1752330796"
-      server:
-      - envoy
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin, Accept-Encoding
-      via:
-      - 2.0 heroku-router
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '62'
-      x-powered-by:
-      - Express
-      x-ratelimit-limit:
-      - '1000'
-      x-ratelimit-remaining:
-      - '998'
-      x-ratelimit-reset:
-      - '1752330854'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
       - gzip, deflate, br
       connection:
       - keep-alive
@@ -108,7 +32,7 @@ interactions:
         style-src ''unsafe-inline'' https://archive.org/ https://archive.org https://esm.archive.org/
         https://esm.ext.archive.org/ https://offshoot.prod.archive.org/ https://av.archive.org/css/
         https://av.dev.archive.org/css/ https://accounts.google.com/gsi/ https://synerg.adp.com/;
-        script-src ''nonce-cba9ba63a309eebe7c793d8420d676ea'' https://archive.org/includes/
+        script-src ''nonce-6b0e1b67e164d13dd6ff1167ab174c17'' https://archive.org/includes/
         https://archive.org/includes/ https://archive.org/components/ https://archive.org/components/
         https://archive.org/v/ https://archive.org/v/ https://archive.org/upload/app/
         https://archive.org/offshoot_assets/ https://archive.org/offshoot_assets/
@@ -123,7 +47,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 18 Jul 2025 02:10:19 GMT
+      - Fri, 18 Jul 2025 02:17:55 GMT
       onion-location:
       - https://archivep75mbjunhxc6x4j5mwjmomyxb573v42baldlqu56ruil2oiad.onion/advancedsearch.php?q=subject:%22nostalgia%22&output=json&rows=1
       referrer-policy:
@@ -135,7 +59,7 @@ interactions:
       transfer-encoding:
       - chunked
       x-envoy-upstream-service-time:
-      - '243'
+      - '193'
     status:
       code: 200
       message: OK

@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - noembed.com
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://noembed.com/embed?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  response:
+    body:
+      string: '{"author_name":"Rick Astley","provider_name":"YouTube","html":"<iframe
+        width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed\"
+        frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media;
+        gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\"
+        allowfullscreen title=\"Rick Astley - Never Gonna Give You Up (Official Video)
+        (4K Remaster)\"></iframe>","url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","type":"video","width":200,"provider_url":"https://www.youtube.com/","version":"1.0","thumbnail_width":480,"thumbnail_url":"https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg","title":"Rick
+        Astley - Never Gonna Give You Up (Official Video) (4K Remaster)","height":113,"author_url":"https://www.youtube.com/@RickAstleyYT","thumbnail_height":360}'
+    headers:
+      accept-ranges:
+      - bytes
+      access-control-allow-headers:
+      - Origin, Accept, Content-Type
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '300502'
+      compliance-region:
+      - none
+      content-length:
+      - '844'
+      content-type:
+      - text/javascript; charset=utf-8
+      date:
+      - Fri, 18 Jul 2025 02:17:55 GMT
+      server:
+      - envoy
+      via:
+      - 1.1 varnish, 1.1 varnish
+      x-cache:
+      - HIT, HIT
+      x-cache-hits:
+      - 227, 0
+      x-envoy-upstream-service-time:
+      - '93'
+      x-served-by:
+      - cache-ewr-kewr1740055-EWR, cache-dfw-kdfw8210073-DFW
+      x-timer:
+      - S1752805075.193636,VS0,VE3
+    status:
+      code: 200
+      message: OK
+version: 1

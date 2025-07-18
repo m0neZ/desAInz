@@ -20,6 +20,7 @@ from .database import SessionLocal
 from .dedup import add_key, is_duplicate
 from .models import Signal
 from .privacy import purge_row
+from .normalization import NormalizedSignal, normalize
 from .publisher import publish
 from .retention import purge_old_signals
 from .settings import settings
@@ -39,12 +40,18 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
     await purge_old_signals(session, settings.signal_retention_days)
     rows = await adapter.fetch()
     for row in rows:
-        key = f"{adapter.__class__.__name__}:{row['id']}"
+        signal_data: NormalizedSignal = normalize(
+            adapter.__class__.__name__.replace("Adapter", "").lower(), row
+        )
+        key = f"{adapter.__class__.__name__}:{signal_data.id}"
         if is_duplicate(key):
             continue
         add_key(key)
-        clean_row = purge_row(row)
-        signal = Signal(source=adapter.__class__.__name__, content=str(clean_row))
+        clean_row = purge_row(signal_data.asdict())
+        signal = Signal(
+            source=adapter.__class__.__name__,
+            content=str(clean_row),
+        )
         session.add(signal)
         await session.commit()
         publish("signals", key)

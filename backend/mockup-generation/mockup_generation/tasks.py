@@ -10,6 +10,7 @@ import time
 
 import redis
 from redis.lock import Lock as RedisLock
+from celery import Task
 
 from PIL import Image
 from .celery_app import app
@@ -28,16 +29,24 @@ from .post_processor import (
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
 GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
+GPU_QUEUE_PREFIX = os.getenv("GPU_QUEUE_PREFIX", "gpu")
+GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
 
 redis_client = redis.Redis.from_url(REDIS_URL)
 
 generator = MockupGenerator()
 
 
-def _acquire_gpu_lock() -> RedisLock:
-    """Acquire and return a lock for an available GPU slot."""
+def queue_for_gpu(index: int) -> str:
+    """Return the Celery queue name for ``index``."""
+    return f"{GPU_QUEUE_PREFIX}-{index}"
+
+
+def _acquire_gpu_lock(slot: int | None = None) -> RedisLock:
+    """Acquire and return a lock for ``slot`` or any free slot."""
     while True:
-        for idx in range(GPU_SLOTS):
+        slots = [slot] if slot is not None else range(GPU_SLOTS)
+        for idx in slots:
             lock = redis_client.lock(
                 f"gpu_slot:{idx}",
                 timeout=GPU_LOCK_TIMEOUT,
@@ -49,17 +58,19 @@ def _acquire_gpu_lock() -> RedisLock:
 
 
 @contextmanager
-def gpu_slot() -> Iterator[None]:
+def gpu_slot(slot: int | None = None) -> Iterator[None]:
     """Yield while holding a GPU slot lock."""
-    lock = _acquire_gpu_lock()
+    lock = _acquire_gpu_lock(slot)
     try:
         yield
     finally:
         lock.release()
 
 
-@app.task  # type: ignore[misc]
-def generate_mockup(keywords_batch: list[list[str]], output_dir: str) -> list[str]:
+@app.task(bind=True)  # type: ignore[misc]
+def generate_mockup(
+    self: Task, keywords_batch: list[list[str]], output_dir: str
+) -> list[str]:
     """
     Generate mockups sequentially on the GPU.
 
@@ -70,9 +81,14 @@ def generate_mockup(keywords_batch: list[list[str]], output_dir: str) -> list[st
     Returns:
         A list with paths to the generated mockups.
     """
+    queue = self.request.delivery_info.get("routing_key", "")
+    try:
+        slot: int | None = int(queue.split("-")[-1])
+    except (ValueError, AttributeError):
+        slot = GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None
 
     results: list[str] = []
-    with gpu_slot():
+    with gpu_slot(slot):
         for idx, keywords in enumerate(keywords_batch):
             context = PromptContext(keywords=keywords)
             prompt = build_prompt(context)

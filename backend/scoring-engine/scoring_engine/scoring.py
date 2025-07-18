@@ -34,10 +34,11 @@ class Signal:
 _SCALER = StandardScaler()
 
 
-def compute_freshness(timestamp: datetime) -> float:
-    """Return freshness score based on time decay in hours."""
+def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> float:
+    """Return freshness score weighted by ``trending_factor``."""
     hours = (datetime.now(timezone.utc) - timestamp).total_seconds() / 3600
-    return 1 / (1 + math.exp(hours / 24))
+    base = 1 / (1 + math.exp(hours / 24))
+    return base * trending_factor
 
 
 def compute_engagement(current: float, median: float) -> float:
@@ -79,6 +80,7 @@ def calculate_score(
     signal: Signal,
     median_engagement: float,
     topics: Iterable[str],
+    trending_factor: float = 1.0,
 ) -> float:
     """
     Calculate composite score using current weights.
@@ -91,7 +93,7 @@ def calculate_score(
         centroid = np.zeros_like(signal.embedding)
     else:
         centroid = np.array(centroid_list, dtype=float)
-    freshness = compute_freshness(signal.timestamp)
+    freshness = compute_freshness(signal.timestamp, trending_factor)
     engagement = compute_engagement(signal.engagement_rate, median_engagement)
     novelty = compute_novelty(signal.embedding, centroid)
     community_fit = compute_community_fit(signal.metadata)

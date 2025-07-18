@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import os
 import uuid
+import asyncio
 import logging
 import json
 from datetime import datetime
@@ -88,6 +89,17 @@ REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client = Redis.from_url(REDIS_URL)
 start_centroid_scheduler()
+
+
+async def trending_factor(topics: list[str]) -> float:
+    """Return multiplier based on cached trending topics."""
+    if not topics:
+        return 1.0
+    scores = await asyncio.gather(
+        *[redis_client.zscore("trending:keywords", t) for t in topics]
+    )
+    max_score = max((s or 0.0) for s in scores)
+    return 1.0 + max_score / 100.0
 
 
 def _identify_user(request: Request) -> str:
@@ -197,8 +209,9 @@ async def score_signal(payload: ScoreRequest) -> JSONResponse:
     )
     median_engagement = float(payload.median_engagement or 0)
     topics = payload.topics or []
+    factor = await trending_factor(topics)
     with SCORE_TIME_HISTOGRAM.time():
-        score = calculate_score(signal, median_engagement, topics)
+        score = calculate_score(signal, median_engagement, topics, factor)
     await redis_client.setex(key, CACHE_TTL_SECONDS, score)
     return JSONResponse({"score": score, "cached": False})
 

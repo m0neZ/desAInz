@@ -3,6 +3,8 @@
 [ignore]
 .*/node_modules/.*
 <PROJECT_ROOT>/frontend/admin-dashboard/scripts/.*
+<PROJECT_ROOT>/scripts/.*
+frontend/admin-dashboard/scripts/.*
 
 [libs]
 

@@ -1,17 +1,19 @@
-"""Tests for model management API in the mockup generation service."""
+"""Tests for /generate endpoint in mockup generation service."""
 
 from __future__ import annotations
 
 import sys
 from pathlib import Path
-
 import types
+import warnings
 from fastapi.testclient import TestClient
+import pytest
 
 root = Path(__file__).resolve().parents[3]
-sys.path.append(str(root))  # noqa: E402
-sys.path.append(str(root / "backend" / "mockup-generation"))  # noqa: E402
+sys.path.append(str(root))
+sys.path.append(str(root / "backend" / "mockup-generation"))
 
+# Minimal stubs to satisfy imports performed in api.py
 fastapi_mod = types.ModuleType("fastapi")
 fastapi_mod.FastAPI = object
 fastapi_mod.Request = object
@@ -46,7 +48,9 @@ flask_instr.FlaskInstrumentor = object
 sys.modules.setdefault("opentelemetry.instrumentation.flask", flask_instr)
 res_mod = types.ModuleType("opentelemetry.sdk.resources")
 res_mod.Resource = type(
-    "Resource", (), {"create": staticmethod(lambda *a, **k: object())}
+    "Resource",
+    (),
+    {"create": staticmethod(lambda *a, **k: object())},
 )
 sys.modules.setdefault("opentelemetry.sdk.resources", res_mod)
 trace_mod = types.ModuleType("opentelemetry.sdk.trace")
@@ -55,7 +59,7 @@ trace_mod.TracerProvider = type(
     (),
     {
         "__init__": lambda self, *a, **k: None,
-        "add_span_processor": lambda self, *a, **k: None,
+        "add_span_processor": lambda *a, **k: None,
     },
 )
 sys.modules.setdefault("opentelemetry.sdk.trace", trace_mod)
@@ -104,48 +108,62 @@ logging_mod = sys.modules.setdefault(
     types.ModuleType("sentry_sdk.integrations.logging"),
 )
 logging_mod.LoggingIntegration = object
-import warnings
 
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-from mockup_generation.api import app  # noqa: E402
-from mockup_generation.model_repository import list_models
+from mockup_generation import api  # noqa: E402
 
-client = TestClient(app)
+client = TestClient(api.app)
+
+pytestmark = pytest.mark.filterwarnings("ignore::UserWarning")
 
 
-def test_register_and_list_models() -> None:
-    """Register a model and verify it appears in listings."""
+class DummyResult:
+    def __init__(self, id_: str) -> None:
+        self.id = id_
 
+
+class DummyCelery:
+    """Collect Celery ``send_task`` calls."""
+
+    def __init__(self) -> None:
+        self.sent: list[tuple[str, list[object], str | None]] = []
+
+    def send_task(
+        self, name: str, args: list[list[str]] | None = None, queue: str | None = None
+    ) -> DummyResult:
+        idx = len(self.sent)
+        self.sent.append((name, args or [], queue))
+        return DummyResult(f"task-{idx}")
+
+
+def test_generate_success(monkeypatch: "pytest.MonkeyPatch") -> None:
+    """Return task identifiers when payload is valid."""
+
+    dummy = DummyCelery()
+    monkeypatch.setattr(api, "celery_app", dummy)
     resp = client.post(
-        "/models",
-        json={
-            "name": "base",
-            "version": "1",
-            "model_id": "model/a",
-            "details": {},
-            "is_default": True,
-        },
+        "/generate",
+        json={"batches": [["foo", "bar"], ["baz"]], "output_dir": "/tmp"},
     )
     assert resp.status_code == 200
-    model_id = resp.json()["id"]
-    models = [m for m in list_models() if m.id == model_id]
-    assert models
+    assert resp.json() == {"tasks": ["task-0", "task-1"]}
+    assert dummy.sent == [
+        (
+            "mockup_generation.tasks.generate_mockup",
+            [["foo", "bar"], "/tmp"],
+            None,
+        ),
+        (
+            "mockup_generation.tasks.generate_mockup",
+            [["baz"], "/tmp"],
+            None,
+        ),
+    ]
 
 
-def test_switch_default_model() -> None:
-    """Switch model via the service API."""
+def test_generate_bad_request() -> None:
+    """Return 422 response for invalid payload."""
 
-    resp = client.post(
-        "/models",
-        json={
-            "name": "alt",
-            "version": "2",
-            "model_id": "model/b",
-        },
-    )
-    model_id = resp.json()["id"]
-    resp = client.post(f"/models/{model_id}/default")
-    assert resp.status_code == 200
-    models = list_models()
-    assert any(m.id == model_id and m.is_default for m in models)
+    resp = client.post("/generate", json={"batches": "foo", "output_dir": "/tmp"})
+    assert resp.status_code == 422

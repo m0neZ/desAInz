@@ -19,6 +19,7 @@ from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
 
 from .model_repository import list_models, register_model, set_default
+from .celery_app import app as celery_app
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -121,3 +122,24 @@ async def switch_default(model_id: int) -> dict[str, str]:
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc))
     return {"status": "ok"}
+
+
+class GeneratePayload(BaseModel):  # type: ignore[misc]
+    """Request body for the ``/generate`` endpoint."""
+
+    batches: list[list[str]]
+    output_dir: str
+
+
+@app.post("/generate")
+async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
+    """Schedule mockup generation tasks and return Celery task IDs."""
+
+    task_ids = [
+        celery_app.send_task(
+            "mockup_generation.tasks.generate_mockup",
+            args=[batch, payload.output_dir],
+        ).id
+        for batch in payload.batches
+    ]
+    return {"tasks": task_ids}

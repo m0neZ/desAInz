@@ -5,14 +5,17 @@ TAG ?= latest
 ENV ?= dev
 
 up:
-	docker compose up -d
+	docker compose -f docker-compose.dev.yml up -d
+
+prod-up:
+	docker compose -f docker-compose.prod.yml up -d
 
 test:
-	docker compose -f docker-compose.test.yml up -d
+	docker compose -f docker-compose.dev.yml -f docker-compose.test.yml up -d
 	python -m pytest -W error -vv
 	npm test
 	npm run test:e2e
-	docker compose -f docker-compose.test.yml down
+	docker compose -f docker-compose.dev.yml -f docker-compose.test.yml down
 
 lint:
 	flake8 .
@@ -30,10 +33,10 @@ setup:
 	alembic -c backend/shared/db/alembic_marketplace_publisher.ini upgrade head
 	alembic -c backend/shared/db/alembic_signal_ingestion.ini upgrade head
 
-docker-build:
+	docker-build:
 	./scripts/build-images.sh
 
-docker-push:
+	docker-push:
 	./scripts/push-images.sh $(REGISTRY) $(TAG)
 
 helm-deploy:

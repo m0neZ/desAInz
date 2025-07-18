@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from signal_ingestion import database, tasks
 from signal_ingestion.adapters.base import BaseAdapter
+from signal_ingestion.models import Signal
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy import select
 import pytest
 
 
@@ -42,7 +44,7 @@ def test_schedule_ingestion(monkeypatch: pytest.MonkeyPatch) -> None:
 async def test_ingest_from_adapter_publishes(monkeypatch: pytest.MonkeyPatch) -> None:
     """Publish normalized rows to Kafka topics."""
 
-    class DummyAdapter(BaseAdapter):  # type: ignore[misc]
+    class DummyAdapter(BaseAdapter):
         def __init__(self) -> None:
             super().__init__(base_url="")
 
@@ -65,6 +67,10 @@ async def test_ingest_from_adapter_publishes(monkeypatch: pytest.MonkeyPatch) ->
 
     async with database.SessionLocal() as session:
         await tasks._ingest_from_adapter(session, DummyAdapter())
+        row = (await session.execute(select(Signal))).scalars().first()
+
+    assert row is not None
+    assert isinstance(row.embedding, list)
 
     assert ("signals", "DummyAdapter:1") in published
     assert ("signals.ingested", '{"id": 1, "foo": "bar"}') in published

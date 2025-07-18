@@ -20,7 +20,13 @@ async def test_purge_pii() -> None:
     await database.init_db()
 
     async with database.SessionLocal() as session:
-        session.add(Signal(source="t", content="Contact me at user@example.com"))
+        session.add(
+            Signal(
+                source="t",
+                content="Contact me at user@example.com",
+                embedding=[0.0, 0.0],
+            )
+        )
         await session.commit()
         await purge_pii(session)
         row = (await session.execute(select(Signal))).scalars().first()

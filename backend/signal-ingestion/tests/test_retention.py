@@ -26,8 +26,18 @@ async def test_purge_old_signals() -> None:
         new_ts = datetime.now(timezone.utc)
         session.add_all(
             [
-                Signal(source="t", content="{}", timestamp=old_ts),
-                Signal(source="t", content="{}", timestamp=new_ts),
+                Signal(
+                    source="t",
+                    content="{}",
+                    timestamp=old_ts,
+                    embedding=[0.0, 0.0],
+                ),
+                Signal(
+                    source="t",
+                    content="{}",
+                    timestamp=new_ts,
+                    embedding=[0.0, 0.0],
+                ),
             ]
         )
         await session.commit()

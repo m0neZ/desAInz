@@ -27,9 +27,9 @@ sys.modules.setdefault("torch", torch_stub)
 kafka_producer_mock = MagicMock(
     return_value=SimpleNamespace(send=lambda *a, **k: None, flush=lambda: None)
 )
-kafka_utils.KafkaProducer = kafka_producer_mock
-kafka_schema.SchemaRegistryClient.register = MagicMock()
-kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})
+kafka_utils.KafkaProducer = kafka_producer_mock  # type: ignore[assignment]
+kafka_schema.SchemaRegistryClient.register = MagicMock()  # type: ignore[assignment]
+kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})  # type: ignore[assignment]
 
 import psutil  # noqa: E402
 import time  # noqa: E402
@@ -41,7 +41,8 @@ from sqlalchemy.ext.asyncio import (  # noqa: E402
     AsyncSession,
     async_sessionmaker,
     create_async_engine,
-)  # noqa: E402
+)
+from sqlalchemy import select  # noqa: E402
 
 from signal_ingestion import ingestion, publisher  # noqa: E402
 from signal_ingestion import database as ing_db  # noqa: E402
@@ -74,7 +75,7 @@ async def test_pipeline_with_metrics(
     monkeypatch.setattr(ing_db, "SessionLocal", session_factory)
     await ing_db.init_db()
 
-    ingestion.ADAPTERS = [DummyAdapter()]
+    ingestion.ADAPTERS = [DummyAdapter()]  # type: ignore[attr-defined]
 
     async def patched_ingest(session: AsyncSession) -> None:
         for adapter in ingestion.ADAPTERS:
@@ -88,6 +89,7 @@ async def test_pipeline_with_metrics(
                     source=adapter.__class__.__name__,
                     content=str(row),
                     timestamp=datetime.now(timezone.utc),
+                    embedding=[0.0, 0.0],
                 )
                 session.add(signal)
                 await session.commit()
@@ -120,8 +122,8 @@ async def test_pipeline_with_metrics(
     )
 
     store = set()
-    monkeypatch.setattr(ingestion, "is_duplicate", lambda key: key in store)
-    monkeypatch.setattr(ingestion, "add_key", lambda key: store.add(key))
+    monkeypatch.setattr(ingestion, "is_duplicate", lambda key: key in store)  # type: ignore[attr-defined]
+    monkeypatch.setattr(ingestion, "add_key", lambda key: store.add(key))  # type: ignore[attr-defined]
 
     weight_repository.update_weights(
         freshness=1.0,
@@ -143,6 +145,8 @@ async def test_pipeline_with_metrics(
         start = time.perf_counter()
         await ingestion.ingest(session)
         ingest_time = time.perf_counter() - start
+        stored = (await session.execute(select(models.Signal))).scalars().first()
+        assert stored is not None and isinstance(stored.embedding, list)
     assert ingest_time < thresholds["ingest"]
     assert proc.memory_info().rss / 1024**2 < thresholds["memory_mb"]
 

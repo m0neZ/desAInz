@@ -25,6 +25,10 @@ PUBLISHER_URL = os.environ.get(
 )
 
 TRPC_SERVICE_URL = os.environ.get("TRPC_SERVICE_URL", "http://backend:8000")
+OPTIMIZATION_URL = os.environ.get(
+    "OPTIMIZATION_URL",
+    "http://optimization:8000",
+)
 auth_scheme = HTTPBearer()
 
 router = APIRouter()
@@ -141,6 +145,28 @@ async def trpc_endpoint(
     if response.status_code != 200:
         raise HTTPException(response.status_code, response.text)
     return cast(Dict[str, Any], response.json())
+
+
+@router.get("/optimizations")
+async def optimizations() -> list[str]:
+    """Return cost optimization suggestions from the optimization service."""
+    url = f"{OPTIMIZATION_URL}/optimizations"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[str], resp.json())
+
+
+@router.get("/recommendations")
+async def recommendations() -> list[str]:
+    """Return top optimization actions from the optimization service."""
+    url = f"{OPTIMIZATION_URL}/recommendations"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[str], resp.json())
 
 
 @router.get("/audit-logs")

@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
+import asyncio
+import psutil
 import logging
 import os
 import uuid
@@ -65,6 +67,28 @@ async def add_correlation_id(
 
 
 store = MetricsStore()
+
+
+def record_resource_usage(target_store: MetricsStore = store) -> None:
+    """Capture current CPU and memory usage and store the metric."""
+    metric = ResourceMetric(
+        timestamp=datetime.now(timezone.utc),
+        cpu_percent=psutil.cpu_percent(),
+        memory_mb=psutil.virtual_memory().used / (1024 * 1024),
+    )
+    target_store.add_metric(metric)
+
+
+@app.on_event("startup")
+async def start_metrics_collection() -> None:
+    """Begin periodic recording of container resource usage."""
+
+    async def _run() -> None:
+        while True:
+            record_resource_usage()
+            await asyncio.sleep(30)
+
+    asyncio.create_task(_run())
 
 
 class MetricIn(BaseModel):

@@ -8,6 +8,7 @@ from .feature_flags import initialize as init_feature_flags, is_enabled
 
 from .errors import add_error_handlers, add_flask_error_handlers
 from .currency import convert_price, start_rate_updater
+from .metrics import register_metrics
 from .config import settings
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "is_enabled",
     "convert_price",
     "start_rate_updater",
+    "register_metrics",
     "settings",
 ]

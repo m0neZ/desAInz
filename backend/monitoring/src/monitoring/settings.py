@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     app_name: str = "monitoring"
     log_file: str = "app.log"
     sla_threshold_hours: float = 2.0
+    SLA_THRESHOLD_HOURS: float = 2.0
 
 
 settings = Settings()

@@ -26,9 +26,12 @@ from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
 
 from .pagerduty import trigger_sla_violation
+from .metrics_store import PublishLatencyMetric, TimescaleMetricsStore
 
 from .logging_config import configure_logging
 from .settings import settings
+
+metrics_store = TimescaleMetricsStore()
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -114,6 +117,7 @@ def _record_latencies() -> Iterable[float]:
     """Record per-idea publish latency and return all values."""
     stmt = (
         select(
+            Idea.id,
             func.min(Signal.timestamp),
             func.min(Listing.created_at),
         )
@@ -125,10 +129,17 @@ def _record_latencies() -> Iterable[float]:
     with session_scope() as session:
         rows = session.execute(stmt).all()
     latencies: list[float] = []
-    for signal_time, listing_time in rows:
+    for idea_id, signal_time, listing_time in rows:
         seconds = (listing_time - signal_time).total_seconds()
         latencies.append(seconds)
         SIGNAL_TO_PUBLISH_SECONDS.observe(seconds)
+        metrics_store.add_latency(
+            PublishLatencyMetric(
+                idea_id=idea_id,
+                timestamp=listing_time,
+                latency_seconds=seconds,
+            )
+        )
     return latencies
 
 
@@ -138,7 +149,8 @@ def _check_sla() -> float:
     if not latencies:
         return 0.0
     avg = sum(latencies) / len(latencies)
-    if avg > settings.sla_threshold_hours * 3600:
+    threshold = getattr(settings, "SLA_THRESHOLD_HOURS", settings.sla_threshold_hours)
+    if avg > threshold * 3600:
         trigger_sla_violation(avg / 3600)
     return avg
 

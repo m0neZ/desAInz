@@ -1,24 +1,14 @@
 #!/usr/bin/env python
-# flake8: noqa
 """Generate a daily summary report for desAInz."""
 
 from __future__ import annotations
 
-from collections import defaultdict
-from datetime import datetime, timedelta, timezone
-from typing import Mapping
-
 import sys
 from pathlib import Path
 
-sys.path.append(
-    str(
-        Path(__file__).resolve().parents[1]
-        / "backend"
-        / "marketplace-publisher"
-        / "src"
-    )
-)
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
+from typing import Mapping
 
 from sqlalchemy import func, select
 
@@ -45,6 +35,14 @@ def _mockups_count(since: datetime) -> int:
 async def _marketplace_stats(since: datetime) -> Mapping[str, int]:
     """Return count of successful publish tasks per marketplace."""
     stats: dict[str, int] = defaultdict(int)
+    sys.path.append(
+        str(
+            Path(__file__).resolve().parents[1]
+            / "backend"
+            / "marketplace-publisher"
+            / "src"
+        )
+    )
     from marketplace_publisher.db import (
         PublishStatus,
         PublishTask,

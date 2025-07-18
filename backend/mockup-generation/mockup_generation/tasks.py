@@ -72,7 +72,8 @@ def gpu_slot(slot: int | None = None) -> Iterator[None]:
 def generate_mockup(
     self: Task, keywords_batch: list[list[str]], output_dir: str
 ) -> list[dict[str, object]]:
-    """Generate mockups sequentially on the GPU.
+    """
+    Generate mockups sequentially on the GPU.
 
     Args:
         keywords_batch: A list of keyword groups used to build prompts.

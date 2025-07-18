@@ -1,4 +1,5 @@
-"""Feature flag utilities using Unleash with simple caching.
+"""
+Feature flag utilities using Unleash with simple caching.
 
 Flags are read from an Unleash server when configuration is available. Results
 are cached for ``UNLEASH_CACHE_TTL`` seconds and fall back to values defined in

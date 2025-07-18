@@ -33,3 +33,15 @@ Load tests use [Locust](https://locust.io/) and live in the `load_tests`
 directory. To exercise the endpoints locally, start the services you want to
 benchmark and run `scripts/run_load_tests.sh`. Continuous integration executes
 the same script via the `loadtest` workflow.
+
+### Expected Throughput
+
+Benchmark runs on a developer workstation yield roughly the following
+transactions per second (TPS):
+
+- API gateway: **80 TPS**
+- Scoring engine: **60 TPS**
+- Publisher: **40 TPS**
+
+Numbers may vary depending on hardware and configuration, but significant
+deviations should be investigated.

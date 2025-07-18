@@ -19,6 +19,7 @@ class MarketplaceRules:
     max_width: int
     max_height: int
     upload_limit: int
+    allowed_formats: list[str] | None = None
 
 
 class RulesRegistry:
@@ -45,6 +46,15 @@ def load_rules(path: Path) -> None:
     rules_registry = RulesRegistry(path)
 
 
+def get_upload_limit(marketplace: Marketplace) -> int | None:
+    """Return the upload limit for ``marketplace``."""
+    if rules_registry is None:
+        msg = "rules not loaded"
+        raise RuntimeError(msg)
+    rules = rules_registry.get(marketplace)
+    return rules.upload_limit if rules else None
+
+
 def validate_mockup(marketplace: Marketplace, path: Path) -> None:
     """Validate ``path`` against marketplace-specific rules."""
     if rules_registry is None:
@@ -67,3 +77,9 @@ def validate_mockup(marketplace: Marketplace, path: Path) -> None:
             f"{rules.max_width}x{rules.max_height}"
         )
         raise ValueError(msg)
+    if rules.allowed_formats is not None:
+        ext = path.suffix.lower().lstrip(".")
+        if ext not in {e.lower() for e in rules.allowed_formats}:
+            allowed = ", ".join(rules.allowed_formats)
+            msg = f"extension {ext} not in allowed formats: {allowed}"
+            raise ValueError(msg)

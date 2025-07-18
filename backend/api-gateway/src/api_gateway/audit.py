@@ -22,3 +22,4 @@ def log_admin_action(
                 timestamp=datetime.utcnow(),
             )
         )
+        session.flush()

@@ -12,6 +12,7 @@ from baseline_scenarios import (  # noqa: F401
     PublishingApiUser,
     ScoringApiUser,
 )
+from api_gateway_scenarios import ApiGatewayUser  # noqa: F401
 
 THRESHOLD_FAILURE_RATIO = float(os.environ.get("THRESHOLD_FAILURE_RATIO", "0.01"))
 THRESHOLD_AVG_RESPONSE_TIME = float(

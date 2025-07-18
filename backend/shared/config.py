@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
     secret_key: str | None = None
+    allowed_origins: list[str] = ["*"]
 
 
 settings = Settings()

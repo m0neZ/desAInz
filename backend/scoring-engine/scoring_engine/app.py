@@ -13,6 +13,7 @@ from typing import Any, Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from redis.asyncio import Redis
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
@@ -71,6 +72,13 @@ logger = logging.getLogger(__name__)
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "scoring-engine")
 app = FastAPI(title="Scoring Engine")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)

@@ -8,12 +8,21 @@ import uuid
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.metrics import register_metrics
 from pydantic import BaseModel
 
 from .ab_testing import ABTestManager
+from backend.shared.config import settings as shared_settings
 
 app = FastAPI(title="Feedback Loop")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 register_metrics(app)
 logger = logging.getLogger(__name__)
 

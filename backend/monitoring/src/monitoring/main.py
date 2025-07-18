@@ -11,12 +11,14 @@ import httpx
 
 import psutil
 from fastapi import FastAPI, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Histogram
 from backend.shared.metrics import register_metrics
 
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.config import settings as shared_settings
 from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
@@ -32,6 +34,13 @@ metrics_store = TimescaleMetricsStore()
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)

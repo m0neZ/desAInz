@@ -20,6 +20,8 @@ from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.config import settings as shared_settings
+from fastapi.middleware.cors import CORSMiddleware
 
 
 configure_logging()
@@ -27,6 +29,13 @@ logger = logging.getLogger(__name__)
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "analytics")
 app = FastAPI(title="Analytics Service")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)

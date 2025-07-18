@@ -9,12 +9,14 @@ from typing import Callable, Coroutine, cast
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi import Depends, FastAPI, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import get_session, init_db
 from .scheduler import create_scheduler
 from .ingestion import ingest
 from .logging_config import configure_logging
 from .settings import settings
+from backend.shared.config import settings as shared_settings
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
@@ -24,6 +26,13 @@ from backend.shared import add_error_handlers, configure_sentry
 configure_logging()
 logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.app_name)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=shared_settings.allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)

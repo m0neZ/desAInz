@@ -25,3 +25,11 @@ Cached:   0.25s for 100 runs
 ```
 
 Caching reduces request latency by roughly 3x in this small test.
+
+## Scaling Strategy
+
+Production workloads run under Kubernetes with [Horizontal Pod Autoscalers](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
+Each service scales between two and five replicas based on CPU and memory usage.
+The `signal-ingestion` deployment also reacts to queue pressure using a custom
+`celery_queue_length` metric.  When the average queue length exceeds 30 pending
+tasks, additional workers are spawned automatically.

@@ -14,7 +14,8 @@
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:css && npm run flow",
     "flow": "flow check --max-warnings=0",
     "test:frontend": "npm test --prefix frontend/admin-dashboard",
-    "test": "npm run test:frontend"
+    "test": "npm run test:frontend",
+    "test:e2e": "playwright test --config frontend/admin-dashboard/playwright.config.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.31.0",
+    "@playwright/test": "^1.54.1",
     "eslint": "^9.31.0",
     "eslint-config-next": "^15.4.1",
     "eslint-config-prettier": "^10.1.5",

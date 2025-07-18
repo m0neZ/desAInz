@@ -19,4 +19,5 @@ module.exports = {
     '\\.css$': '<rootDir>/__mocks__/styleMock.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  testPathIgnorePatterns: ['<rootDir>/e2e/'],
 };

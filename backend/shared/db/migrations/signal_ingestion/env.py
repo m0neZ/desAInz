@@ -7,17 +7,17 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-from signal_ingestion.database import engine, Base
+from backend.shared.config import settings
+
+target_metadata = None
 
 config = context.config
 fileConfig(config.config_file_name)
 
-target_metadata = Base.metadata
-
 
 def run_migrations_offline() -> None:
     """Run migrations in offline mode."""
-    url = str(engine.url)
+    url = config.get_main_option("sqlalchemy.url") or settings.database_url
     context.configure(
         url=url,
         target_metadata=target_metadata,

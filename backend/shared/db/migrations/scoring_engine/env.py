@@ -7,18 +7,19 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-from ... import engine
-from ...base import Base
+import os
+
+target_metadata = None
 
 config = context.config
 fileConfig(config.config_file_name)
 
-target_metadata = Base.metadata
-
 
 def run_migrations_offline() -> None:
     """Run migrations in offline mode."""
-    url = str(engine.url)
+    url = config.get_main_option("sqlalchemy.url") or os.getenv(
+        "DATABASE_URL", "sqlite:///shared.db"
+    )
     context.configure(
         url=url,
         target_metadata=target_metadata,

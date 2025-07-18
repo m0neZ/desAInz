@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 revision = "0003"
-down_revision = ("0002", "0002")
+down_revision = ("0002a", "0002b")
 branch_labels = None
 depends_on = None
 

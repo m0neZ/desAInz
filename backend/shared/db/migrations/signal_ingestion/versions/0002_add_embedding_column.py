@@ -14,7 +14,8 @@ depends_on = None
 
 def upgrade() -> None:
     """Add embedding column to signals table."""
-    op.execute("CREATE EXTENSION IF NOT EXISTS vector")
+    if op.get_context().dialect.name != "sqlite":
+        op.execute("CREATE EXTENSION IF NOT EXISTS vector")
     op.add_column("signals", sa.Column("embedding", Vector(768), nullable=True))
 
 

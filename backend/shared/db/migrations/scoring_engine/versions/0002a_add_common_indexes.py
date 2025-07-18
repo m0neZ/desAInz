@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from alembic import op
 
-revision = "0002"
+revision = "0002a"
 down_revision = "0001"
 branch_labels = None
 depends_on = None

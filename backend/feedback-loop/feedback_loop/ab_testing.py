@@ -7,6 +7,7 @@ from contextlib import contextmanager
 from typing import Iterator, Mapping
 
 from sqlalchemy import Boolean, Integer, String, create_engine, select
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 import numpy as np
 
@@ -35,7 +36,15 @@ class BudgetAllocation:
 
 def create_engine_and_session(url: str) -> tuple[Session, sessionmaker]:
     """Create SQLAlchemy engine and session factory."""
-    engine = create_engine(url, future=True)
+    if url.startswith("sqlite") and ":memory:" in url:
+        engine = create_engine(
+            url,
+            future=True,
+            connect_args={"check_same_thread": False},
+            poolclass=StaticPool,
+        )
+    else:
+        engine = create_engine(url, future=True)
     Base.metadata.create_all(engine)
     SessionLocal = sessionmaker(
         bind=engine,

@@ -8,6 +8,8 @@ from .ingestion import (
     fetch_marketplace_metrics,
     store_marketplace_metrics,
     schedule_marketplace_ingestion,
+    aggregate_marketplace_metrics,
+    update_weights_from_db,
 )
 
 __all__ = [
@@ -19,4 +21,6 @@ __all__ = [
     "fetch_marketplace_metrics",
     "store_marketplace_metrics",
     "schedule_marketplace_ingestion",
+    "aggregate_marketplace_metrics",
+    "update_weights_from_db",
 ]

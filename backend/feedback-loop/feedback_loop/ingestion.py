@@ -9,10 +9,13 @@ from typing import Iterable, Mapping
 import requests
 from apscheduler.job import Job
 from apscheduler.schedulers.base import BaseScheduler
+from sqlalchemy import func
 
 import pandas as pd
 from backend.shared.db import session_scope
 from backend.shared.db import models
+from scoring_engine import weight_repository
+from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)
 
@@ -85,3 +88,28 @@ def schedule_marketplace_ingestion(
     return scheduler.add_job(
         _job, "interval", minutes=interval_minutes, next_run_time=None
     )
+
+
+def aggregate_marketplace_metrics() -> dict[str, float]:
+    """Return aggregated marketplace metrics from the database."""
+    with session_scope() as session:
+        views, favorites, orders, revenue = session.query(
+            func.coalesce(func.sum(models.MarketplacePerformanceMetric.views), 0),
+            func.coalesce(func.sum(models.MarketplacePerformanceMetric.favorites), 0),
+            func.coalesce(func.sum(models.MarketplacePerformanceMetric.orders), 0),
+            func.coalesce(func.sum(models.MarketplacePerformanceMetric.revenue), 0.0),
+        ).one()
+    return {
+        "views": float(views),
+        "favorites": float(favorites),
+        "orders": float(orders),
+        "revenue": float(revenue),
+    }
+
+
+def update_weights_from_db(scoring_api: str) -> dict[str, float]:
+    """Update scoring weights using aggregated marketplace metrics."""
+    metrics = aggregate_marketplace_metrics()
+    weights = update_weights(scoring_api, [metrics])
+    weight_repository.update_weights(**weights)
+    return weights

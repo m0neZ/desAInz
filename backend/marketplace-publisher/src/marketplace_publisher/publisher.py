@@ -49,8 +49,12 @@ async def publish_with_retry(
     design_path: Path,
     metadata: dict[str, Any],
     max_attempts: int = 3,
-) -> None:
-    """Publish a design, retrying on failure."""
+) -> bool:
+    """
+    Publish a design, retrying on failure.
+
+    Return ``True`` when the publish succeeded.
+    """
     try:
         await update_task_status(session, task_id, PublishStatus.in_progress)
         title = str(metadata.get("title", ""))
@@ -62,6 +66,7 @@ async def publish_with_retry(
         client = CLIENTS[marketplace]
         client.publish_design(design_path, metadata)
         await update_task_status(session, task_id, PublishStatus.success)
+        return True
     except (RequestException, SQLAlchemyError, RuntimeError) as exc:
         logger.exception(
             "Publish attempt %s for %s failed", task_id, marketplace.value, exc_info=exc
@@ -73,9 +78,6 @@ async def publish_with_retry(
             select(PublishTask.attempts).where(PublishTask.id == task_id)
         )
         attempts = result.scalar_one()
-        if attempts < max_attempts:
-            _fallback.publish(marketplace, design_path, metadata)
-            await update_task_status(session, task_id, PublishStatus.success)
-        else:
-            await update_task_status(session, task_id, PublishStatus.failed)
+        if attempts >= max_attempts:
             notify_failure(task_id, marketplace.value)
+        return False

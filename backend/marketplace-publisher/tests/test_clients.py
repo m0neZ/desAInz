@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Callable
+from typing import Callable
 import os
 
 import pytest
@@ -11,7 +11,7 @@ import responses
 
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
-from marketplace_publisher import clients
+from marketplace_publisher import clients  # noqa: E402
 
 
 def _setup_env(monkeypatch: pytest.MonkeyPatch, prefix: str) -> None:

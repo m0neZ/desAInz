@@ -45,7 +45,7 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
         assert response.status_code == 200
         task_id = response.json()["task_id"]
 
-        response = client.get(f"/progress/{task_id}")
+        response = client.get(f"/tasks/{task_id}")
         assert response.status_code == 200
         assert response.json()["status"] in {
             "pending",

@@ -1,16 +1,23 @@
 import { trpc } from '../src/trpc';
 
-jest.mock('../src/trpc', () => ({
-  trpc: {
-    ping: {
-      mutate: jest.fn(),
-    },
-  },
-}));
+beforeEach(() => {
+  global.fetch = jest.fn(
+    () =>
+      Promise.resolve({
+        ok: true,
+        json: async () => ({ result: { message: 'pong', user: 'test' } }),
+      }) as unknown as Response
+  );
+});
+
+afterEach(() => {
+  (global.fetch as jest.Mock).mockRestore();
+});
 
 describe('tRPC ping', () => {
-  it('calls trpc ping mutate', async () => {
-    await trpc.ping.mutate();
-    expect(trpc.ping.mutate).toHaveBeenCalled();
+  it('calls fetch with ping route', async () => {
+    const result = await trpc.ping.mutate();
+    expect(global.fetch).toHaveBeenCalled();
+    expect(result.message).toBe('pong');
   });
 });

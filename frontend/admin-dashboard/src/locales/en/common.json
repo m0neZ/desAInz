@@ -28,5 +28,11 @@
   "off": "Off",
   "toggle": "Toggle",
   "latency": "Avg time from signal to publish: {{hours}}h",
-  "summary": "Conversions: {{conversions}} / Impressions: {{impressions}}"
+  "summary": "Conversions: {{conversions}} / Impressions: {{impressions}}",
+  "signals": "Signals",
+  "ideas": "Ideas",
+  "mockups": "Mockups",
+  "metrics": "Metrics",
+  "revenue": "Revenue",
+  "conversions": "Conversions"
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { trpc, type Mockup } from '../../../src/trpc';
+import { trpc, type Mockup } from '../../src/trpc';
 
 export default function MockupsPage() {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { trpc, type Signal } from '../../../src/trpc';
+import { trpc, type Signal } from '../../src/trpc';
 
 export default function SignalsPage() {
   const { t } = useTranslation();

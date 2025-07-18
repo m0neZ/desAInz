@@ -28,5 +28,11 @@
   "off": "Apagado",
   "toggle": "Cambiar",
   "latency": "Tiempo promedio desde señal a publicación: {{hours}}h",
-  "summary": "Conversiones: {{conversions}} / Impresiones: {{impressions}}"
+  "summary": "Conversiones: {{conversions}} / Impresiones: {{impressions}}",
+  "signals": "Señales",
+  "ideas": "Ideas",
+  "mockups": "Mockups",
+  "metrics": "Métricas",
+  "revenue": "Ingresos",
+  "conversions": "Conversiones"
 }

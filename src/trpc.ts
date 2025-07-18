@@ -1,5 +1,5 @@
 /**
- * Lightweight tRPC client returning placeholder data.
+ * Lightweight tRPC client that forwards requests to the API Gateway.
  */
 export interface Signal {
   id: number;
@@ -16,6 +16,23 @@ export interface GalleryItem {
   id: number;
   imageUrl: string;
   title: string;
+}
+
+export interface Idea {
+  id: number;
+  title: string;
+  status: string;
+}
+
+export interface Mockup {
+  id: number;
+  imageUrl: string;
+  generatedAt: string;
+}
+
+export interface Metric {
+  label: string;
+  value: number;
 }
 
 export interface PublishTask {
@@ -36,48 +53,53 @@ export interface AppRouter {
   };
 }
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_GATEWAY_URL ?? 'http://localhost:8000';
+
+async function call<Out, In = Record<string, unknown>>(
+  procedure: string,
+  input?: In
+): Promise<Out> {
+  const res = await fetch(`${API_URL}/trpc/${procedure}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input ?? {}),
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(`tRPC call failed: ${res.status}`);
+  }
+  const body = (await res.json()) as { result: Out };
+  return body.result;
+}
+
 export const trpc = {
   ping: {
-    async mutate(): Promise<{ message: string; user: string }> {
-      return { message: 'pong', user: 'admin' };
-    },
+    mutate: () => call<{ message: string; user: string }>('ping'),
   },
   signals: {
-    async list(): Promise<Signal[]> {
-      return [
-        { id: 1, content: 'New trend', source: 'twitter' },
-        { id: 2, content: 'Fresh design idea', source: 'reddit' },
-      ];
-    },
+    list: () => call<Signal[]>('signals.list'),
+  },
+  ideas: {
+    list: () => call<Idea[]>('ideas.list'),
+  },
+  mockups: {
+    list: () => call<Mockup[]>('mockups.list'),
   },
   heatmap: {
-    async list(): Promise<HeatmapEntry[]> {
-      return [
-        { label: 'cats', count: 10 },
-        { label: 'dogs', count: 7 },
-      ];
-    },
+    list: () => call<HeatmapEntry[]>('heatmap.list'),
   },
   gallery: {
-    async list(): Promise<GalleryItem[]> {
-      return [
-        { id: 1, imageUrl: '/img/mock1.png', title: 'Mock 1' },
-        { id: 2, imageUrl: '/img/mock2.png', title: 'Mock 2' },
-      ];
-    },
+    list: () => call<GalleryItem[]>('gallery.list'),
   },
   publishTasks: {
-    async list(): Promise<PublishTask[]> {
-      return [
-        { id: 1, title: 'Cats Tee', status: 'pending' },
-        { id: 2, title: 'Dogs Hoodie', status: 'scheduled' },
-      ];
-    },
+    list: () => call<PublishTask[]>('publishTasks.list'),
   },
   analytics: {
-    async summary(): Promise<AnalyticsData> {
-      return { revenue: 1234.56, conversions: 42 };
-    },
+    summary: () => call<AnalyticsData>('analytics.summary'),
+  },
+  metrics: {
+    summary: () => call<Metric[]>('metrics.summary'),
   },
 };
 

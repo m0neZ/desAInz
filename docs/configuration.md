@@ -13,10 +13,10 @@ application settings classes.
 | `DATABASE_URL` | Database connection string |
 | `REDIS_URL` | Redis connection string |
 | `SECRET_KEY` | Secret key for cryptographic signing |
-| `OPENAI_API_KEY` | OpenAI API authentication token |
+| `OPENAI_API_KEY` | OpenAI API authentication token used for image and listing generation |
 | `STABILITY_AI_API_KEY` | Stability AI API token |
 | `FALLBACK_PROVIDER` | `stability` or `dall-e` |
-| `HUGGINGFACE_TOKEN` | Hugging Face API token |
+| `HUGGINGFACE_TOKEN` | Hugging Face API token for Claude-based listing generation |
 | `S3_ENDPOINT` | URL of the object storage service |
 | `S3_ACCESS_KEY` | Object storage access key |
 | `S3_SECRET_KEY` | Object storage secret key |

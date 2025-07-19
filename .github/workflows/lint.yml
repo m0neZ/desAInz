@@ -28,5 +28,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
           npm ci
-      - name: Run linters
-        run: make lint
+      - name: Run Black
+        run: black --check .
+      - name: Run Flake8
+        run: flake8 .
+      - name: Run MyPy
+        run: mypy backend --explicit-package-bases --exclude "tests"
+      - name: Run ESLint/Prettier/Stylelint
+        run: npm run lint
+      - name: Run Flow
+        run: npm run flow

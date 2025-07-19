@@ -17,6 +17,18 @@ updated.
 
 The hooks enforce Black, flake8, mypy, docformatter, pydocstyle, eslint, prettier, flow and stylelint. Warnings are treated as errors, so commits will fail until issues are fixed.
 
+## CI Lint Commands
+
+The continuous integration workflow runs the following commands and fails on any warnings:
+
+```bash
+black --check .
+flake8 .
+mypy backend --explicit-package-bases --exclude "tests"
+npm run lint
+npm run flow
+```
+
 ## Commit Messages
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification. Examples:

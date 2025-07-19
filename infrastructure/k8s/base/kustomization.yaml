@@ -21,3 +21,4 @@ resources:
   - cronjobs/orchestrator-backup.yaml
   - cronjobs/orchestrator-cleanup.yaml
   - cronjobs/orchestrator-idea.yaml
+  - cronjobs/orchestrator-query-plan.yaml

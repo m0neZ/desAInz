@@ -15,6 +15,11 @@ sys.path.append(os.path.abspath("../backend/mockup-generation"))
 sys.path.append(os.path.abspath("../backend/scoring-engine"))
 sys.path.append(os.path.abspath("../backend"))
 sys.path.append(os.path.abspath("../frontend/admin-dashboard"))
+sys.path.append(os.path.abspath("../backend/api-gateway/src"))
+sys.path.append(os.path.abspath("../backend/feedback-loop"))
+sys.path.append(os.path.abspath("../backend/marketplace-publisher/src"))
+sys.path.append(os.path.abspath("../backend/monitoring/src"))
+sys.path.append(os.path.abspath("../backend/orchestrator"))
 
 # -- Project information -----------------------------------------------------
 
@@ -52,6 +57,16 @@ autodoc_mock_imports = [
     "monitoring",
     "jose",
     "celery",
+    "api_gateway",
+    "feedback_loop",
+    "marketplace_publisher",
+    "mockup_generation",
+    "monitoring",
+    "orchestrator",
+    "scoring_engine",
+    "signal_ingestion",
+    "backend.analytics",
+    "backend.shared",
 ]
 
 source_suffix = {
@@ -73,6 +88,13 @@ nitpick_ignore = [
 
 html_theme = "alabaster"
 html_static_path = ["_static"]
+
+# Silence warnings for mocked imports
+suppress_warnings = [
+    "autodoc.mocked_object",
+    "toc.duplicate_entry",
+    "toc.not_included",
+]
 
 
 # -- Helper functions --------------------------------------------------------
@@ -107,6 +129,8 @@ def _run_apidoc(app: "Sphinx") -> None:
 
 def _generate_openapi(app: "Sphinx") -> None:
     """Generate OpenAPI specifications for all services."""
+    if os.environ.get("SKIP_OPENAPI", "0") == "1":
+        return
     root = os.path.abspath(os.path.join(app.srcdir, ".."))
     env = os.environ.copy()
     env["KAFKA_SKIP"] = "1"

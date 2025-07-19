@@ -53,7 +53,11 @@ def update_weights(
         "seasonality": 1.0,
     }
 
-    response = requests.post(f"{api_url}/weights/feedback", json=weights, timeout=5)
-    response.raise_for_status()
+    try:
+        response = requests.post(f"{api_url}/weights/feedback", json=weights, timeout=5)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.exception("failed to update weights: %s", exc)
+        raise
     logger.info("updated weights: %s", weights)
     return weights

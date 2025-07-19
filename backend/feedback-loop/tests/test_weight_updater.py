@@ -4,6 +4,8 @@ from pathlib import Path
 from typing import Any
 import sys
 import importlib.util
+import pytest
+from requests import RequestException
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT.parent))
@@ -32,3 +34,11 @@ def test_update_weights(requests_mock: Any) -> None:
     assert requests_mock.request_history[0].json() == weights
     assert weights["engagement"] == 0.1
     assert round(weights["community_fit"], 2) == 0.47
+
+
+def test_update_weights_error(requests_mock: Any) -> None:
+    """The function should raise for non-2xx responses."""
+    url = "http://example.com"
+    requests_mock.post(f"{url}/weights/feedback", status_code=500)
+    with pytest.raises(RequestException):
+        update_weights(url, [{"ctr": 0.1, "conversion_rate": 0.2}])

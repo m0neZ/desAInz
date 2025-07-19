@@ -45,7 +45,9 @@ def setup_scheduler(
         logger.info("updated marketplace weights %s", weights)
 
     scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
-    scheduler.add_job(nightly_update, "cron", hour=0, minute=0, next_run_time=None)
+    # Run weight update a few minutes after the midnight ingestion so the
+    # latest metrics are available before updating the scoring engine.
+    scheduler.add_job(nightly_update, "cron", hour=0, minute=5, next_run_time=None)
     scheduler.add_job(
         nightly_marketplace_update,
         "cron",

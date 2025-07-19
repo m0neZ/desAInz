@@ -129,7 +129,7 @@ def test_gpu_slot(monkeypatch: pytest.MonkeyPatch) -> None:
     """Lock is acquired and released using the context manager."""
     fake = fakeredis.FakeRedis()
     monkeypatch.setattr(tasks, "redis_client", fake)
-    monkeypatch.setattr(tasks, "GPU_SLOTS", 1)
+    monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
 
     with tasks.gpu_slot():
         assert fake.lock("gpu_slot:0").locked()
@@ -140,7 +140,7 @@ def test_gpu_slot_contention(monkeypatch: pytest.MonkeyPatch) -> None:
     """Multiple workers should acquire the lock sequentially."""
     fake = fakeredis.FakeRedis()
     monkeypatch.setattr(tasks, "redis_client", fake)
-    monkeypatch.setattr(tasks, "GPU_SLOTS", 1)
+    monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
 
     order: list[str] = []
 

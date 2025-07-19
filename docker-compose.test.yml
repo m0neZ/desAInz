@@ -6,6 +6,12 @@ services:
       service: postgres
     environment:
       POSTGRES_DB: app_test
+  pgbouncer:
+    extends:
+      file: docker-compose.dev.yml
+      service: pgbouncer
+    depends_on:
+      - postgres
   redis:
     extends:
       file: docker-compose.dev.yml

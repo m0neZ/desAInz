@@ -13,7 +13,7 @@ from .models import Base
 from backend.shared.config import settings
 
 
-DATABASE_URL = settings.database_url
+DATABASE_URL = settings.effective_database_url
 engine = create_async_engine(DATABASE_URL, echo=False)
 SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 

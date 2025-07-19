@@ -24,15 +24,17 @@ def _load_settings(path: Path) -> type:
     dummy_shared.settings = SimpleNamespace(
         redis_url="redis://localhost:6379/0",
         database_url="sqlite:///db",
+        effective_database_url="sqlite:///db",
     )
     sys.modules.setdefault("backend.shared.config", dummy_shared)
     backend_shared = ModuleType("backend.shared")
     backend_shared.config = dummy_shared
     sys.modules.setdefault("backend.shared", backend_shared)
-    sys.modules.setdefault("selenium.webdriver", ModuleType("selenium.webdriver"))
-    sys.modules["selenium.webdriver"].Firefox = lambda *a, **k: SimpleNamespace(
-        get=lambda *a, **k: None
-    )
+    selenium_mod = sys.modules.setdefault("selenium", ModuleType("selenium"))
+    webdriver_mod = ModuleType("selenium.webdriver")
+    selenium_mod.webdriver = webdriver_mod
+    sys.modules.setdefault("selenium.webdriver", webdriver_mod)
+    webdriver_mod.Firefox = lambda *a, **k: SimpleNamespace(get=lambda *a, **k: None)
     sys.modules.setdefault(
         "opentelemetry.sdk.resources", ModuleType("opentelemetry.sdk.resources")
     )

@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     )
 
     database_url: AnyUrl = AnyUrl("sqlite:///shared.db")
+    pgbouncer_url: AnyUrl | None = None
     kafka_bootstrap_servers: str = "localhost:9092"
     schema_registry_url: HttpUrl = HttpUrl("http://localhost:8081")
     redis_url: RedisDsn = RedisDsn("redis://localhost:6379/0")
@@ -32,6 +33,11 @@ class Settings(BaseSettings):
         if value <= 0:
             raise ValueError("must be positive")
         return value
+
+    @property
+    def effective_database_url(self) -> AnyUrl:
+        """Return ``pgbouncer_url`` if set, otherwise ``database_url``."""
+        return self.pgbouncer_url or self.database_url
 
 
 Settings.model_rebuild()

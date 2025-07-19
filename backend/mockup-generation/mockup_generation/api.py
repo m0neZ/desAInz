@@ -37,7 +37,6 @@ configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
-register_metrics(app)
 
 
 class ModelCreate(BaseModel):  # type: ignore[misc]
@@ -81,6 +80,9 @@ async def add_correlation_id(
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response
+
+
+register_metrics(app)
 
 
 @app.get("/health")

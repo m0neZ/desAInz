@@ -1,4 +1,4 @@
-"""Image generation module using Stable Diffusion XL."""
+"""Utilities for generating mockups with Stable Diffusion XL."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GenerationResult:
-    """Container for generation result."""
+    """Result from a generation request."""
 
     image_path: str
     duration: float
@@ -32,13 +32,13 @@ class MockupGenerator:
     """Generate mockups using Stable Diffusion XL with fallback."""
 
     def __init__(self) -> None:
-        """Initialize the generator and defer model lookup."""
+        """Prepare the generator without loading the model."""
         self.model_id = get_default_model_id()
         self.pipeline: Optional[StableDiffusionXLPipeline] = None
         self._lock = Lock()
 
     def load(self) -> None:
-        """Load the diffusion pipeline on GPU if available."""
+        """Load or reload the diffusion pipeline on the available device."""
         current = get_default_model_id()
         with self._lock:
             if self.pipeline is None or self.model_id != current:
@@ -52,7 +52,20 @@ class MockupGenerator:
     def generate(
         self, prompt: str, output_path: str, *, num_inference_steps: int = 30
     ) -> GenerationResult:
-        """Generate an image or fall back to external API on failure."""
+        """
+        Generate an image.
+
+        If local generation fails, an external provider is used as a
+        fallback.
+
+        Args:
+            prompt: Text prompt describing the desired image.
+            output_path: Filesystem path to save the resulting image.
+            num_inference_steps: Number of inference steps for the model.
+
+        Returns:
+            GenerationResult containing the image path and duration.
+        """
         from time import perf_counter
 
         self.load()
@@ -71,10 +84,16 @@ class MockupGenerator:
 
     def _fallback_api(self, prompt: str) -> Image.Image:
         """
-        Call external API as a fallback mechanism.
+        Fetch an image from a third-party provider.
 
-        The provider is selected via ``settings.fallback_provider`` and
-        authentication tokens are loaded from environment variables.
+        Args:
+            prompt: Text prompt to send to the provider.
+
+        Returns:
+            PIL image from the external API.
+
+        Raises:
+            RuntimeError: If all retry attempts fail.
         """
         from io import BytesIO
         import base64

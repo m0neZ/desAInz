@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -14,7 +17,15 @@ class Settings(BaseSettings):
 
     stability_ai_api_key: str | None = None
     openai_api_key: str | None = None
-    fallback_provider: str = "stability"
+    fallback_provider: Literal["stability", "openai"] = "stability"
+
+    @field_validator("fallback_provider")
+    @classmethod
+    def _valid_provider(cls, value: str) -> str:
+        if value not in {"stability", "openai"}:
+            raise ValueError("invalid provider")
+        return value
 
 
-settings = Settings()
+Settings.model_rebuild()
+settings: Settings = Settings()

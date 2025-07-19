@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -11,7 +14,13 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
 
     app_name: str = "service-template"
-    log_level: str = "INFO"
+    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+
+    @field_validator("log_level")
+    @classmethod
+    def _valid_level(cls, value: str) -> str:
+        return value
 
 
-settings = Settings()
+Settings.model_rebuild()
+settings: Settings = Settings()

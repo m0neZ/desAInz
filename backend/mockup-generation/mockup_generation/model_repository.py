@@ -34,6 +34,10 @@ class GeneratedMockupInfo:
     prompt: str
     num_inference_steps: int
     seed: int
+    image_uri: str
+    title: str
+    description: str
+    tags: list[str]
 
 
 def register_model(
@@ -101,11 +105,25 @@ def get_default_model_id() -> str:
     return ident or "stabilityai/stable-diffusion-xl-base-1.0"
 
 
-def save_generated_mockup(prompt: str, num_inference_steps: int, seed: int) -> int:
+def save_generated_mockup(
+    prompt: str,
+    num_inference_steps: int,
+    seed: int,
+    image_uri: str,
+    title: str,
+    description: str,
+    tags: list[str],
+) -> int:
     """Persist generation parameters and return the created row id."""
     with session_scope() as session:
         obj = GeneratedMockup(
-            prompt=prompt, num_inference_steps=num_inference_steps, seed=seed
+            prompt=prompt,
+            num_inference_steps=num_inference_steps,
+            seed=seed,
+            image_uri=image_uri,
+            title=title,
+            description=description,
+            tags=tags,
         )
         session.add(obj)
         session.flush()
@@ -122,6 +140,10 @@ def list_generated_mockups() -> List[GeneratedMockupInfo]:
                 prompt=row.prompt,
                 num_inference_steps=row.num_inference_steps,
                 seed=row.seed,
+                image_uri=row.image_uri,
+                title=row.title,
+                description=row.description,
+                tags=row.tags,
             )
             for row in rows
         ]

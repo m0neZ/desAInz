@@ -169,3 +169,14 @@ def cleanup_data(  # type: ignore[no-untyped-def]
     context.log.info("running cleanup")
     maintenance.archive_old_mockups()
     maintenance.purge_stale_records()
+
+
+@op  # type: ignore[misc]
+def analyze_query_plans_op(  # type: ignore[no-untyped-def]
+    context,
+) -> None:
+    """Run query plan analysis script."""
+    context.log.info("analyzing slow queries")
+    from scripts import analyze_query_plans
+
+    analyze_query_plans.main()

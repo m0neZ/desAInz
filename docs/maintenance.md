@@ -32,3 +32,15 @@ Environment variables can override the storage paths:
 
 Dependencies for Python, JavaScript, and GitHub Actions are kept current via Dependabot.
 Weekly update PRs run on all `requirements*.txt`, `package.json` files, and workflow definitions. These PRs must pass the full test suite before merge.
+
+## Query Plan Analysis
+
+Slow database statements can be inspected using `scripts/analyze_query_plans.py`.
+The script reads from `pg_stat_statements` and prints `EXPLAIN` plans for the worst offenders.
+Use the optional `SLOW_QUERY_LIMIT` environment variable to adjust how many statements are inspected.
+
+```bash
+python scripts/analyze_query_plans.py
+```
+
+The `daily_query_plan_schedule` Dagster schedule runs the analysis once a day.

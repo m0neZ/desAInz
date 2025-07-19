@@ -8,6 +8,7 @@ from .ops import (
     await_approval,
     backup_data,
     cleanup_data,
+    analyze_query_plans_op,
     generate_content,
     ingest_signals,
     publish_content,
@@ -36,3 +37,9 @@ def backup_job() -> None:
 def cleanup_job() -> None:
     """Job running periodic cleanup."""
     cleanup_data()
+
+
+@job(hooks={record_success, record_failure})
+def analyze_query_plans_job() -> None:
+    """Job collecting EXPLAIN plans for slow queries."""
+    analyze_query_plans_op()

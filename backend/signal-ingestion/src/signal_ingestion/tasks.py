@@ -57,15 +57,16 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
             continue
         add_key(key)
         clean_row = purge_row(signal_data.asdict())
+        sanitized_json = json.dumps(clean_row)
         signal = Signal(
             source=adapter.__class__.__name__,
-            content=str(clean_row),
-            embedding=generate_embedding(json.dumps(clean_row)),
+            content=sanitized_json,
+            embedding=generate_embedding(sanitized_json),
         )
         session.add(signal)
         await session.commit()
         publish("signals", key)
-        publish("signals.ingested", json.dumps(clean_row))
+        publish("signals.ingested", sanitized_json)
         store_keywords(extract_keywords(signal_data.title))
 
 

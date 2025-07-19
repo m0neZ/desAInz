@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from signal_ingestion import database, tasks
+from signal_ingestion.normalization import NormalizedSignal
 from signal_ingestion.adapters.base import BaseAdapter
 from signal_ingestion.models import Signal
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -74,3 +75,48 @@ async def test_ingest_from_adapter_publishes(monkeypatch: pytest.MonkeyPatch) ->
 
     assert ("signals", "DummyAdapter:1") in published
     assert ("signals.ingested", '{"id": 1, "foo": "bar"}') in published
+
+
+@pytest.mark.asyncio()
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+async def test_ingest_from_adapter_redacts_pii(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Emails and phone numbers are removed before persisting signals."""
+
+    class DummyAdapter(BaseAdapter):
+        def __init__(self) -> None:
+            super().__init__(base_url="")
+
+        async def fetch(self) -> list[dict[str, object]]:
+            return [
+                {
+                    "id": 1,
+                    "title": "Contact user@example.com or 123-456-7890",
+                    "url": "https://example.com",
+                }
+            ]
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    database.engine = engine
+    database.SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
+    await database.init_db()
+
+    monkeypatch.setattr(tasks, "publish", lambda *args, **kwargs: None)
+    monkeypatch.setattr(tasks, "is_duplicate", lambda key: False)
+    monkeypatch.setattr(tasks, "add_key", lambda key: None)
+    monkeypatch.setattr(tasks, "store_keywords", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        tasks,
+        "normalize",
+        lambda source, row: NormalizedSignal(
+            id=str(row["id"]), title=row.get("title"), url=row.get("url"), source=source
+        ),
+    )
+
+    async with database.SessionLocal() as session:
+        await tasks._ingest_from_adapter(session, DummyAdapter())
+        row = (await session.execute(select(Signal))).scalars().first()
+
+    assert row is not None
+    assert "user@example.com" not in row.content
+    assert "123-456-7890" not in row.content
+    assert "[REDACTED]" in row.content

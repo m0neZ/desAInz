@@ -11,6 +11,7 @@ from sqlalchemy import select
 import sqlalchemy as sa
 
 from .auth import verify_token, require_role, revoke_token
+from .models import MetadataPatch, RoleAssignment, UsernameRequest
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
@@ -41,11 +42,9 @@ async def status_endpoint() -> Dict[str, str]:
 
 
 @router.post("/auth/token", tags=["Authentication"], summary="Issue JWT token")
-async def issue_token(body: Dict[str, str]) -> Dict[str, str]:
+async def issue_token(body: UsernameRequest) -> Dict[str, str]:
     """Return a JWT token for ``username`` if it exists."""
-    username = body.get("username")
-    if not username:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Username required")
+    username = body.username
     with session_scope() as session:
         exists = session.execute(
             select(UserRole.id).where(UserRole.username == username)
@@ -84,11 +83,11 @@ async def list_roles(
 @router.post("/roles/{username}", tags=["Roles"], summary="Assign role")
 async def assign_role(
     username: str,
-    body: Dict[str, str],
+    body: RoleAssignment,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, str]:
     """Assign ``role`` in ``body`` to ``username``."""
-    role = body.get("role")
+    role = body.role
     if role not in {"admin", "editor", "viewer"}:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid role")
     with session_scope() as session:
@@ -232,19 +231,19 @@ async def switch_default_model(
 @router.patch("/publish-tasks/{task_id}", tags=["Publish"], summary="Edit publish task")
 async def edit_publish_task(
     task_id: int,
-    body: Dict[str, Any],
+    body: MetadataPatch,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, str]:
     """Edit metadata for a pending publish task."""
     url = f"{PUBLISHER_URL}/tasks/{task_id}"
     async with httpx.AsyncClient() as client:
-        resp = await client.patch(url, json=body)
+        resp = await client.patch(url, json=body.model_dump())
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
     log_admin_action(
         payload.get("sub", "unknown"),
         "edit_publish_task",
-        {"task_id": task_id, "metadata": body},
+        {"task_id": task_id, "metadata": body.model_dump()},
     )
     return {"status": "updated"}
 

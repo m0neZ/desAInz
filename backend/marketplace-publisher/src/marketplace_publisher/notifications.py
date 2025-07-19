@@ -17,17 +17,26 @@ logger = logging.getLogger(__name__)
 
 
 def notify_failure(task_id: int, marketplace: str) -> None:
-    """Send a Slack notification about a failed publish task."""
+    """Send Slack and PagerDuty alerts about a failed publish task."""
     webhook = os.getenv("SLACK_WEBHOOK_URL")
-    if not webhook:
-        return
     payload: dict[str, Any] = {
         "text": f"Publish task {task_id} failed for {marketplace}",
     }
-    try:
-        requests.post(webhook, json=payload, timeout=5)
-    except requests.RequestException as exc:  # pragma: no cover - best effort
-        logger.warning("notification failed: %s", exc)
+    if webhook:
+        try:
+            requests.post(webhook, json=payload, timeout=5)
+        except requests.RequestException as exc:  # pragma: no cover - best effort
+            logger.warning("notification failed: %s", exc)
+
+    try:  # Import lazily so monitoring is optional
+        from monitoring.pagerduty import notify_listing_issue
+    except Exception as exc:  # pragma: no cover - optional dependency
+        logger.debug("pagerduty unavailable: %s", exc)
+    else:
+        try:
+            notify_listing_issue(task_id, "failed")
+        except Exception as exc:  # pragma: no cover - best effort
+            logger.warning("pagerduty notification failed: %s", exc)
 
 
 async def record_webhook(session: AsyncSession, task_id: int, status: str) -> None:

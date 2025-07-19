@@ -56,7 +56,6 @@ configure_tracing(app, settings.app_name)
 configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
-register_metrics(app)
 
 
 def _identify_user(request: Request) -> str:
@@ -116,6 +115,9 @@ async def add_correlation_id(
     response = await call_next(request)
     response.headers["X-Correlation-ID"] = correlation_id
     return response
+
+
+register_metrics(app)
 
 
 class PublishRequest(BaseModel):

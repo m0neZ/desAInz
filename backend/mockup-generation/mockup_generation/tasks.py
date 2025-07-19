@@ -53,7 +53,7 @@ def _get_storage_client():
 
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
+DEFAULT_GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
 GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
 GPU_QUEUE_PREFIX = os.getenv("GPU_QUEUE_PREFIX", "gpu")
 GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
@@ -61,6 +61,17 @@ GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
 redis_client = redis.Redis.from_url(REDIS_URL)
 
 generator = MockupGenerator()
+
+
+def get_gpu_slots() -> int:
+    """Return the number of GPU slots defined in Redis or the default value."""
+    value = redis_client.get("gpu_slots")
+    if value is None:
+        return DEFAULT_GPU_SLOTS
+    try:
+        return int(value)
+    except ValueError:
+        return DEFAULT_GPU_SLOTS
 
 
 def queue_for_gpu(index: int) -> str:
@@ -71,7 +82,7 @@ def queue_for_gpu(index: int) -> str:
 def _acquire_gpu_lock(slot: int | None = None) -> RedisLock:
     """Acquire and return a lock for ``slot`` or any free slot."""
     while True:
-        slots = [slot] if slot is not None else range(GPU_SLOTS)
+        slots = [slot] if slot is not None else range(get_gpu_slots())
         for idx in slots:
             lock = redis_client.lock(
                 f"gpu_slot:{idx}",

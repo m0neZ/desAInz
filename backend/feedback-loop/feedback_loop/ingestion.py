@@ -7,8 +7,12 @@ from datetime import datetime, timezone
 from typing import Iterable, Mapping
 
 import requests
+import asyncio
 from apscheduler.job import Job
 from apscheduler.schedulers.base import BaseScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from marketplace_publisher.publisher import CLIENTS
+from marketplace_publisher.clients import BaseClient
 from sqlalchemy import func
 
 import pandas as pd
@@ -73,20 +77,51 @@ def store_marketplace_metrics(metrics: Iterable[Mapping[str, float]]) -> None:
         logger.info("stored %s marketplace metrics", len(rows))
 
 
+async def _fetch_metrics_async(
+    clients: Iterable["BaseClient"], listing_ids: Iterable[int]
+) -> list[dict[str, float]]:
+    async def _get(c: "BaseClient", lid: int) -> dict[str, float] | None:
+        try:
+            data = await asyncio.to_thread(c.get_listing_metrics, lid)
+        except Exception as exc:  # pragma: no cover - network failures
+            logger.warning(
+                "failed to fetch metrics for %s from %s: %s", lid, c.base_url, exc
+            )
+            return None
+        return {
+            "listing_id": float(lid),
+            "views": float(data.get("views", 0)),
+            "favorites": float(data.get("favorites", 0)),
+            "orders": float(data.get("orders", 0)),
+            "revenue": float(data.get("revenue", 0.0)),
+        }
+
+    tasks = [_get(c, lid) for c in clients for lid in listing_ids]
+    results = await asyncio.gather(*tasks)
+    return [r for r in results if r]
+
+
 def schedule_marketplace_ingestion(
     scheduler: "BaseScheduler",
-    api_url: str,
     listing_ids: Iterable[int],
     interval_minutes: int = 60,
 ) -> "Job":
-    """Register a scheduled job to fetch and store marketplace metrics."""
+    """Register a job fetching metrics from all marketplace API clients."""
 
-    def _job() -> None:
-        metrics = fetch_marketplace_metrics(api_url, listing_ids)
+    async def _job() -> None:
+        metrics = await _fetch_metrics_async(list(CLIENTS.values()), listing_ids)
         store_marketplace_metrics(metrics)
 
+    if isinstance(scheduler, AsyncIOScheduler):
+        return scheduler.add_job(
+            _job, "interval", minutes=interval_minutes, next_run_time=None
+        )
+
+    def _run_sync() -> None:
+        asyncio.run(_job())
+
     return scheduler.add_job(
-        _job, "interval", minutes=interval_minutes, next_run_time=None
+        _run_sync, "interval", minutes=interval_minutes, next_run_time=None
     )
 
 

@@ -111,6 +111,22 @@ class BaseClient:
         data = response.json()
         return str(data["id"])
 
+    def get_listing_metrics(self, listing_id: int) -> dict[str, Any]:
+        """Return performance metrics for a listing."""
+        headers = {}
+        token = self._get_token()
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        if self._api_key:
+            headers["X-API-Key"] = self._api_key
+        response = requests.get(
+            f"{self.base_url}/listings/{listing_id}/metrics",
+            headers=headers,
+            timeout=30,
+        )
+        response.raise_for_status()
+        return response.json()
+
 
 class RedbubbleClient(BaseClient):
     """Client for the Redbubble API."""

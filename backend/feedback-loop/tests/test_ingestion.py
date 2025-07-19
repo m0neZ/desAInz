@@ -46,7 +46,7 @@ def _db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
         Base.metadata.drop_all(db.engine)
 
 
-def test_schedule_marketplace_ingestion(_db, requests_mock):
+def test_schedule_marketplace_ingestion(_db) -> None:
     """Job should store fetched metrics."""
     import importlib.util
 
@@ -68,14 +68,16 @@ def test_schedule_marketplace_ingestion(_db, requests_mock):
     spec.loader.exec_module(ingestion)
     sys.modules["feedback_loop.ingestion"] = ingestion
 
-    url = "http://api.example.com"
-    requests_mock.get(
-        f"{url}/listings/1/metrics",
-        json={"views": 5, "favorites": 2, "orders": 1, "revenue": 3.5},
-    )
+    class DummyClient:
+        base_url = "http://api.example.com"
+
+        def get_listing_metrics(self, listing_id: int) -> dict[str, float]:
+            assert listing_id == 1
+            return {"views": 5, "favorites": 2, "orders": 1, "revenue": 3.5}
 
     scheduler = BackgroundScheduler()
-    job = ingestion.schedule_marketplace_ingestion(scheduler, url, [1], 1)
+    ingestion.CLIENTS = {"dummy": DummyClient()}  # type: ignore[attr-defined]
+    job = ingestion.schedule_marketplace_ingestion(scheduler, [1], 1)
     job.func()
 
     with _db.session_scope() as session:

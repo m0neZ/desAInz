@@ -136,7 +136,6 @@ class GeneratePayload(BaseModel):  # type: ignore[misc]
 @app.post("/generate")
 async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
     """Schedule mockup generation tasks and return Celery task IDs."""
-
     task_ids = [
         celery_app.send_task(
             "mockup_generation.tasks.generate_mockup",

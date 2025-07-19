@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     app_name: str = "marketplace-publisher"
     log_level: str = "INFO"
-    database_url: AnyUrl = AnyUrl(shared_settings.database_url)
+    database_url: AnyUrl = AnyUrl(shared_settings.effective_database_url)
     redis_url: RedisDsn = RedisDsn(shared_settings.redis_url)
     rate_limit_redbubble: int = 60
     rate_limit_amazon_merch: int = 60

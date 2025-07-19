@@ -88,7 +88,7 @@ class WebhookEvent(Base):
     task: Mapped["PublishTask"] = relationship("PublishTask", backref="events")
 
 
-engine = create_async_engine(settings.database_url, future=True)
+engine = create_async_engine(settings.effective_database_url, future=True)
 SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
 

@@ -15,3 +15,10 @@ Architecture
 
 This diagram shows the high-level interaction between the dashboard and the
 backend services.
+
+PgBouncer
+---------
+
+PgBouncer provides lightweight connection pooling for PostgreSQL. Each service
+reads the ``PGBOUNCER_URL`` environment variable and connects to PgBouncer when
+set. If the variable is unset, the connection falls back to ``DATABASE_URL``.

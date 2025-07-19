@@ -13,7 +13,7 @@ from backend.shared.config import settings
 
 __all__ = ["Base", "engine", "SessionLocal", "session_scope"]
 
-DATABASE_URL = settings.database_url
+DATABASE_URL = settings.effective_database_url
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 

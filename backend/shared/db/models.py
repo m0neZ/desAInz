@@ -223,6 +223,10 @@ class GeneratedMockup(Base):
     prompt: Mapped[str] = mapped_column(String)
     num_inference_steps: Mapped[int] = mapped_column(Integer)
     seed: Mapped[int] = mapped_column(Integer)
+    image_uri: Mapped[str] = mapped_column(String)
+    title: Mapped[str] = mapped_column(String(200))
+    description: Mapped[str] = mapped_column(String)
+    tags: Mapped[list[str]] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 

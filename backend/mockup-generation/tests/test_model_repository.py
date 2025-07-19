@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 import types
+import warnings
 
 root = Path(__file__).resolve().parents[3]
 sys.path.append(str(root))  # noqa: E402
@@ -25,6 +26,7 @@ flask_mod = types.ModuleType("flask")
 flask_mod.Flask = object
 flask_mod.request = object()
 flask_mod.jsonify = lambda *args, **kwargs: ""
+flask_mod.Response = object
 sys.modules.setdefault("flask", flask_mod)
 
 otel_mod = types.ModuleType("opentelemetry")
@@ -81,6 +83,24 @@ logging_mod = sys.modules.setdefault(
     types.ModuleType("sentry_sdk.integrations.logging"),
 )
 logging_mod.LoggingIntegration = object
+uc_mod = sys.modules.setdefault("UnleashClient", types.ModuleType("UnleashClient"))
+uc_mod.UnleashClient = object
+ld_mod = sys.modules.setdefault("ldclient", types.ModuleType("ldclient"))
+ld_mod.LDClient = object
+prom_mod = sys.modules.setdefault(
+    "prometheus_client", types.ModuleType("prometheus_client")
+)
+prom_mod.CONTENT_TYPE_LATEST = ""
+prom_mod.Counter = lambda *a, **k: types.SimpleNamespace(
+    labels=lambda *_, **__: types.SimpleNamespace(inc=lambda *_, **__: None)
+)
+prom_mod.Histogram = lambda *a, **k: types.SimpleNamespace(
+    labels=lambda *_, **__: types.SimpleNamespace(observe=lambda *_, **__: None)
+)
+prom_mod.generate_latest = lambda *a, **k: b""
+sys.modules.setdefault("pgvector.sqlalchemy", types.ModuleType("pgvector.sqlalchemy"))
+sys.modules["pgvector.sqlalchemy"].Vector = object
+warnings.filterwarnings("ignore", category=UserWarning)
 
 from mockup_generation.model_repository import (  # noqa: E402
     list_generated_mockups,
@@ -90,9 +110,20 @@ from mockup_generation.model_repository import (  # noqa: E402
 
 def test_save_and_list_generated_mockups() -> None:
     """Insert a record and retrieve it."""
-    save_generated_mockup("a prompt", 10, 123)
+    save_generated_mockup(
+        "a prompt",
+        10,
+        123,
+        "uri",
+        "title",
+        "desc",
+        ["t"],
+    )
     items = list_generated_mockups()
     assert any(
-        i.prompt == "a prompt" and i.num_inference_steps == 10 and i.seed == 123
+        i.prompt == "a prompt"
+        and i.num_inference_steps == 10
+        and i.seed == 123
+        and i.image_uri == "uri"
         for i in items
     )

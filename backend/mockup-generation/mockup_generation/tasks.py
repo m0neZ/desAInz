@@ -25,6 +25,31 @@ from .post_processor import (
     validate_color_space,
     validate_dpi_image,
 )
+from backend.shared.config import settings
+from . import model_repository
+
+
+def _get_storage_client():
+    """Return a MinIO or boto3 client based on environment configuration."""
+    if settings.s3_endpoint and "amazonaws" not in settings.s3_endpoint:
+        from minio import Minio  # type: ignore
+
+        secure = settings.s3_endpoint.startswith("https")
+        host = settings.s3_endpoint.replace("https://", "").replace("http://", "")
+        return Minio(
+            host,
+            access_key=settings.s3_access_key,
+            secret_key=settings.s3_secret_key,
+            secure=secure,
+        )
+    import boto3
+
+    return boto3.client(
+        "s3",
+        endpoint_url=settings.s3_endpoint,
+        aws_access_key_id=settings.s3_access_key,
+        aws_secret_access_key=settings.s3_secret_key,
+    )
 
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -89,6 +114,7 @@ def generate_mockup(
         slot = GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None
 
     listing_gen = ListingGenerator()
+    client = _get_storage_client()
     results: list[dict[str, object]] = []
     with gpu_slot(slot):
         for idx, keywords in enumerate(keywords_batch):
@@ -105,10 +131,31 @@ def generate_mockup(
             if not validate_color_space(processed):
                 raise ValueError("Invalid color space")
             compress_lossless(processed, output_path)
+            obj_name = f"generated-mockups/{output_path.name}"
+            if hasattr(client, "fput_object"):
+                client.fput_object(settings.s3_bucket, obj_name, str(output_path))
+            else:
+                client.upload_file(str(output_path), settings.s3_bucket, obj_name)
+            base = settings.s3_endpoint.rstrip("/") if settings.s3_endpoint else "s3://"
+            uri = (
+                f"{base}/{settings.s3_bucket}/{obj_name}"
+                if settings.s3_endpoint
+                else f"s3://{settings.s3_bucket}/{obj_name}"
+            )
             metadata = listing_gen.generate(keywords)
+            model_repository.save_generated_mockup(
+                prompt,
+                30,
+                0,
+                uri,
+                metadata.title,
+                metadata.description,
+                metadata.tags,
+            )
             results.append(
                 {
                     "image_path": str(output_path),
+                    "uri": uri,
                     "title": metadata.title,
                     "description": metadata.description,
                     "tags": metadata.tags,

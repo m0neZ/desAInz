@@ -8,6 +8,7 @@ from alembic.config import Config
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from testing.postgresql import Postgresql
+from datetime import datetime, UTC
 
 
 def test_rls_enforcement() -> None:
@@ -15,6 +16,9 @@ def test_rls_enforcement() -> None:
     with Postgresql() as pg:
         url = pg.url()
         cfg = Config("backend/shared/db/alembic_api_gateway.ini")
+        cfg.set_main_option("sqlalchemy.url", url)
+        command.upgrade(cfg, "head")
+        cfg = Config("backend/shared/db/alembic_scoring_engine.ini")
         cfg.set_main_option("sqlalchemy.url", url)
         command.upgrade(cfg, "head")
 
@@ -31,9 +35,29 @@ def test_rls_enforcement() -> None:
                     """
                 )
             )
+            idea_id = session.execute(
+                text(
+                    """
+                    INSERT INTO ideas (username, title, description, created_at)
+                    VALUES ('alice', 't', 'd', :ts)
+                    RETURNING id
+                    """
+                ),
+                {"ts": datetime.now(UTC)},
+            ).scalar_one()
+            session.execute(
+                text(
+                    """
+                    INSERT INTO signals (username, idea_id, timestamp, engagement_rate)
+                    VALUES ('alice', :idea_id, now(), 1.0)
+                    """
+                ),
+                {"idea_id": idea_id},
+            )
             session.commit()
 
         with Session() as session:
             session.execute(text("SET LOCAL app.current_username = 'bob'"))
-            result = session.execute(text("SELECT * FROM audit_logs")).fetchall()
-            assert result == []
+            assert session.execute(text("SELECT * FROM audit_logs")).fetchall() == []
+            assert session.execute(text("SELECT * FROM ideas")).fetchall() == []
+            assert session.execute(text("SELECT * FROM signals")).fetchall() == []

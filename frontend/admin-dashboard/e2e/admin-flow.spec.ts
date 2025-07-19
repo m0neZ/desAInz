@@ -16,4 +16,10 @@ test('login and publish design', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: /publish tasks/i })
   ).toBeVisible();
+
+  await page.getByRole('link', { name: /audit logs/i }).click();
+  await expect(page).toHaveURL(/dashboard\/audit-logs/);
+
+  await page.getByRole('link', { name: /optimizations/i }).click();
+  await expect(page).toHaveURL(/dashboard\/optimizations/);
 });

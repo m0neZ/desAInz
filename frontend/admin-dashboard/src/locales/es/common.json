@@ -5,6 +5,8 @@
   "gallery": "Galería",
   "abTests": "Pruebas A/B",
   "roles": "Roles",
+  "auditLogs": "Registros de Auditoría",
+  "optimizations": "Optimizaciones",
   "signalStream": "Flujo de señales",
   "galleryPlaceholder": "Página de galería en construcción.",
   "heatmapPlaceholder": "Página de mapa de calor en construcción.",

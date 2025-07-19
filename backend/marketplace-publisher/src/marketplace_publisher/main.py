@@ -11,7 +11,7 @@ import json
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from redis.asyncio import Redis
 
 from .logging_config import configure_logging
@@ -136,6 +136,12 @@ class WebhookPayload(BaseModel):
     status: str
 
 
+class MetadataPatch(BaseModel):
+    """Arbitrary metadata payload."""
+
+    model_config = ConfigDict(extra="allow")
+
+
 async def _background_publish(task_id: int) -> None:
     """Run publishing using the latest task metadata."""
     async with SessionLocal() as session:
@@ -221,7 +227,7 @@ async def handle_webhook(
 
 
 @app.patch("/tasks/{task_id}")
-async def update_task_metadata(task_id: int, body: dict[str, Any]) -> dict[str, str]:
+async def update_task_metadata(task_id: int, body: MetadataPatch) -> dict[str, str]:
     """Update metadata for a pending publish task."""
     async with SessionLocal() as session:
         task = await get_task(session, task_id)
@@ -232,7 +238,7 @@ async def update_task_metadata(task_id: int, body: dict[str, Any]) -> dict[str, 
         await session.execute(
             update(PublishTask)
             .where(PublishTask.id == task_id)
-            .values(metadata_json=json.dumps(body))
+            .values(metadata_json=json.dumps(body.model_dump()))
         )
         await session.commit()
     return {"status": "updated"}

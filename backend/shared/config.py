@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import AnyUrl, HttpUrl, RedisDsn, field_validator
+from pydantic import AnyUrl, Field, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -25,7 +25,15 @@ class Settings(BaseSettings):
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
     secret_key: str | None = None
-    allowed_origins: list[str] = ["*"]
+    allowed_origins: list[str] = Field(default_factory=list)
+
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def _split_origins(cls, value: str | list[str]) -> list[str]:
+        """Parse comma separated origins from environment variables."""
+        if isinstance(value, str):
+            return [v.strip() for v in value.split(",") if v.strip()]
+        return value
 
     @field_validator("score_cache_ttl", "trending_ttl")
     @classmethod

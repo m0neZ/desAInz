@@ -25,3 +25,4 @@ application settings classes.
 | `SCHEMA_REGISTRY_URL` | Schema Registry endpoint |
 | `LOG_LEVEL` | Logging verbosity |
 | `APPROVE_PUBLISHING` | Require publishing approval flag |
+| `ALLOWED_ORIGINS` | Comma separated whitelist of origins for CORS |

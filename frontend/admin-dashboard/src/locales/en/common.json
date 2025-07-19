@@ -5,6 +5,8 @@
   "gallery": "Gallery",
   "abTests": "AB Tests",
   "roles": "Roles",
+  "auditLogs": "Audit Logs",
+  "optimizations": "Optimizations",
   "signalStream": "Signal Stream",
   "galleryPlaceholder": "Gallery page placeholder.",
   "heatmapPlaceholder": "Heatmap page placeholder.",

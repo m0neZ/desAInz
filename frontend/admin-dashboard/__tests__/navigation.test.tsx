@@ -39,6 +39,28 @@ test('navigates to Roles page when link clicked', async () => {
   expect(Router).toMatchObject({ pathname: '/dashboard/roles' });
 });
 
+test('navigates to Audit Logs page when link clicked', async () => {
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  await userEvent.click(screen.getByText('AuditLogs'));
+  expect(Router).toMatchObject({ pathname: '/dashboard/audit-logs' });
+});
+
+test('navigates to Optimizations page when link clicked', async () => {
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  await userEvent.click(screen.getByText('Optimizations'));
+  expect(Router).toMatchObject({ pathname: '/dashboard/optimizations' });
+});
+
 test('navigates to Maintenance page when link clicked', async () => {
   Router.setCurrentUrl('/dashboard');
   renderWithRouter(

@@ -1,3 +1,64 @@
+/**
+ * Lightweight tRPC client for the dashboard.
+ */
+export interface Signal {
+  id: number;
+  content: string;
+  source: string;
+}
+
+export interface HeatmapEntry {
+  label: string;
+  count: number;
+}
+
+export interface GalleryItem {
+  id: number;
+  imageUrl: string;
+  title: string;
+}
+
+export interface Idea {
+  id: number;
+  title: string;
+  status: string;
+}
+
+export interface Mockup {
+  id: number;
+  imageUrl: string;
+  generatedAt: string;
+}
+
+export interface Metric {
+  label: string;
+  value: number;
+}
+
+export interface PublishTask {
+  id: number;
+  title: string;
+  status: string;
+}
+
+export interface AnalyticsData {
+  revenue: number;
+  conversions: number;
+}
+
+export interface AuditLog {
+  id: number;
+  username: string;
+  action: string;
+  details: string;
+  timestamp: string;
+}
+
+export interface AuditLogResponse {
+  total: number;
+  items: AuditLog[];
+}
+
 export interface AppRouter {
   ping: {
     input: void;
@@ -5,16 +66,77 @@ export interface AppRouter {
   };
 }
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_GATEWAY_URL ?? 'http://localhost:8000';
+
+async function call<Out, In = Record<string, unknown>>(
+  procedure: string,
+  input?: In
+): Promise<Out> {
+  const res = await fetch(`${API_URL}/trpc/${procedure}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input ?? {}),
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(`tRPC call failed: ${res.status}`);
+  }
+  const body = (await res.json()) as { result: Out };
+  return body.result;
+}
+
+async function getJson<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`);
+  if (!res.ok) {
+    throw new Error(`request failed: ${res.status}`);
+  }
+  return (await res.json()) as T;
+}
+
+async function getText(path: string): Promise<string> {
+  const res = await fetch(`${API_URL}${path}`);
+  if (!res.ok) {
+    throw new Error(`request failed: ${res.status}`);
+  }
+  return res.text();
+}
+
 export const trpc = {
   ping: {
-    async mutate(): Promise<{ message: string; user: string }> {
-      const resp = await fetch('/api/ping', { method: 'POST' });
-      if (resp.ok) {
-        const json = await resp.json();
-        return json.result as { message: string; user: string };
-      }
-      return { message: 'pong', user: 'admin' };
-    },
+    mutate: () => call<{ message: string; user: string }>('ping'),
+  },
+  signals: {
+    list: () => call<Signal[]>('signals.list'),
+  },
+  ideas: {
+    list: () => call<Idea[]>('ideas.list'),
+  },
+  mockups: {
+    list: () => call<Mockup[]>('mockups.list'),
+  },
+  heatmap: {
+    list: () => call<HeatmapEntry[]>('heatmap.list'),
+  },
+  gallery: {
+    list: () => call<GalleryItem[]>('gallery.list'),
+  },
+  publishTasks: {
+    list: () => call<PublishTask[]>('publishTasks.list'),
+  },
+  analytics: {
+    summary: () => call<AnalyticsData>('analytics.summary'),
+  },
+  metrics: {
+    summary: () => call<Metric[]>('metrics.summary'),
+    list: () => getText('/metrics'),
+  },
+  auditLogs: {
+    list: (limit = 50, offset = 0) =>
+      getJson<AuditLogResponse>(`/audit-logs?limit=${limit}&offset=${offset}`),
+  },
+  optimizations: {
+    list: () => getJson<string[]>('/optimizations'),
   },
 };
 

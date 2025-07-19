@@ -33,10 +33,10 @@ setup:
 	alembic -c backend/shared/db/alembic_marketplace_publisher.ini upgrade head
 	alembic -c backend/shared/db/alembic_signal_ingestion.ini upgrade head
 
-	docker-build:
+docker-build:
 	./scripts/build-images.sh
 
-	docker-push:
+docker-push:
 	./scripts/push-images.sh $(REGISTRY) $(TAG)
 
 helm-deploy:

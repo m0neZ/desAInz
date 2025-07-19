@@ -5,18 +5,33 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-SERVICES_DIR="$ROOT_DIR/services"
+SERVICES=(
+  backend/api-gateway
+  backend/feedback-loop
+  backend/marketplace-publisher
+  backend/mockup-generation
+  backend/monitoring
+  backend/orchestrator
+  backend/scoring-engine
+  backend/signal-ingestion
+  frontend/admin-dashboard
+  docker/postgres
+  docker/pgbouncer
+  docker/redis
+  docker/kafka
+  docker/minio
+  docker/backup
+)
 
-if [[ ! -d "$SERVICES_DIR" ]]; then
-  echo "No services directory found at $SERVICES_DIR" >&2
-  exit 1
-fi
-
-for svc in "$SERVICES_DIR"/*; do
-  if [[ -d "$svc" && -f "$svc/Dockerfile" ]]; then
+for svc in "${SERVICES[@]}"; do
+  path="$ROOT_DIR/$svc"
+  if [[ -f "$path/Dockerfile" ]]; then
     name="$(basename "$svc")"
-    image="$name:latest"
-    echo "Building $image from $svc"
-    docker build -t "$image" "$svc"
+    context="$path"
+    if [[ "$svc" == "backend/orchestrator" ]]; then
+      context="$ROOT_DIR"
+    fi
+    echo "Building ${name}:latest from $path"
+    docker build -t "${name}:latest" -f "$path/Dockerfile" "$context"
   fi
 done

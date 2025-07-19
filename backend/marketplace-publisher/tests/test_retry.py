@@ -6,9 +6,22 @@ import asyncio
 from pathlib import Path
 from typing import Any
 
+import sys
 import pytest
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.append(str(ROOT))
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 import requests
+
+import os
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
+
+from marketplace_publisher import notifications
 
 from marketplace_publisher import db, main, publisher
 from marketplace_publisher.settings import settings
@@ -61,3 +74,46 @@ async def test_retry_on_failure(
     async with session_factory() as session:
         refreshed = await db.get_task(session, task.id)
         assert refreshed.status == db.PublishStatus.success
+
+
+@pytest.mark.asyncio()
+async def test_publish_notifies_after_max_attempts(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Failure after max attempts should trigger notifications."""
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    session_factory = async_sessionmaker(engine, expire_on_commit=False)
+    monkeypatch.setattr(db, "engine", engine)
+    monkeypatch.setattr(db, "SessionLocal", session_factory)
+    await db.init_db()
+
+    class FailingClient:
+        def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
+            raise requests.RequestException("boom")
+
+    publisher.CLIENTS[db.Marketplace.redbubble] = FailingClient()  # type: ignore[assignment]
+
+    notified: list[tuple[int, str]] = []
+    monkeypatch.setattr(
+        notifications,
+        "notify_failure",
+        lambda task_id, marketplace: notified.append((task_id, marketplace)),
+    )
+
+    async with session_factory() as session:
+        task = await db.create_task(
+            session,
+            marketplace=db.Marketplace.redbubble,
+            design_path=str(tmp_path / "img.png"),
+        )
+        (tmp_path / "img.png").write_text("img")
+        await publisher.publish_with_retry(
+            session,
+            task.id,
+            db.Marketplace.redbubble,
+            tmp_path / "img.png",
+            {},
+            max_attempts=1,
+        )
+
+    assert notified == [(task.id, db.Marketplace.redbubble.value)]

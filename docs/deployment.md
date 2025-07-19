@@ -15,7 +15,13 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
    ```bash
    python scripts/register_schemas.py
    ```
-4. Secrets can be stored in files under `secrets/` and referenced as Docker secrets. The services read them from `/run/secrets`.
+4. Initialize the object storage bucket used by the services:
+
+   ```bash
+   scripts/setup_storage.sh desainz-bucket --minio  # omit --minio for AWS S3
+   ```
+
+5. Secrets can be stored in files under `secrets/` and referenced as Docker secrets. The services read them from `/run/secrets`.
 
 ## Kubernetes
 

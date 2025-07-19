@@ -26,8 +26,21 @@ from .auth import ALGORITHM, SECRET_KEY
 configure_logging()
 logger = logging.getLogger(__name__)
 
+tags_metadata = [
+    {"name": "Status", "description": "Health and readiness endpoints."},
+    {"name": "Authentication", "description": "Issue and revoke JWT tokens."},
+    {"name": "Roles", "description": "Manage user role assignments."},
+    {"name": "Maintenance", "description": "Run maintenance tasks."},
+    {"name": "tRPC", "description": "Proxy calls to the backend tRPC service."},
+    {"name": "Optimization", "description": "Retrieve optimization hints."},
+    {"name": "Audit", "description": "Query audit log entries."},
+    {"name": "Models", "description": "Manage available AI models."},
+    {"name": "Publish", "description": "Manage publishing tasks."},
+    {"name": "Protected", "description": "Endpoints requiring authentication."},
+]
+
 SERVICE_NAME = os.getenv("SERVICE_NAME", "api-gateway")
-app = FastAPI(title="API Gateway")
+app = FastAPI(title="API Gateway", openapi_tags=tags_metadata)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=shared_settings.allowed_origins,
@@ -107,13 +120,13 @@ async def enforce_rate_limit(
     return await call_next(request)
 
 
-@app.get("/health")
+@app.get("/health", tags=["Status"], summary="Service liveness")
 async def health() -> dict[str, str]:
     """Return service liveness."""
     return {"status": "ok"}
 
 
-@app.get("/ready")
+@app.get("/ready", tags=["Status"], summary="Service readiness")
 async def ready() -> dict[str, str]:
     """Return service readiness."""
     return {"status": "ready"}

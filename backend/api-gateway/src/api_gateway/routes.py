@@ -34,13 +34,13 @@ auth_scheme = HTTPBearer()
 router = APIRouter()
 
 
-@router.get("/status")
+@router.get("/status", tags=["Status"], summary="Public status")
 async def status_endpoint() -> Dict[str, str]:
     """Public status endpoint."""
     return {"status": "ok"}
 
 
-@router.post("/auth/token")
+@router.post("/auth/token", tags=["Authentication"], summary="Issue JWT token")
 async def issue_token(body: Dict[str, str]) -> Dict[str, str]:
     """Return a JWT token for ``username`` if it exists."""
     username = body.get("username")
@@ -56,7 +56,7 @@ async def issue_token(body: Dict[str, str]) -> Dict[str, str]:
     return {"access_token": token, "token_type": "bearer"}
 
 
-@router.post("/auth/revoke")
+@router.post("/auth/revoke", tags=["Authentication"], summary="Revoke JWT token")
 async def revoke_auth_token(
     credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
 ) -> Dict[str, str]:
@@ -70,7 +70,7 @@ async def revoke_auth_token(
     return {"status": "revoked"}
 
 
-@router.get("/roles")
+@router.get("/roles", tags=["Roles"], summary="List user roles")
 async def list_roles(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[Dict[str, str]]:
@@ -81,7 +81,7 @@ async def list_roles(
     return [{"username": row.username, "role": row.role} for row in rows]
 
 
-@router.post("/roles/{username}")
+@router.post("/roles/{username}", tags=["Roles"], summary="Assign role")
 async def assign_role(
     username: str,
     body: Dict[str, str],
@@ -107,7 +107,7 @@ async def assign_role(
     return {"username": username, "role": role}
 
 
-@router.get("/protected")
+@router.get("/protected", tags=["Protected"], summary="Protected example")
 async def protected(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, Any]:
@@ -116,7 +116,7 @@ async def protected(
     return {"user": payload.get("sub")}
 
 
-@router.post("/maintenance/cleanup")
+@router.post("/maintenance/cleanup", tags=["Maintenance"], summary="Run cleanup")
 async def trigger_cleanup(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, str]:
@@ -127,7 +127,7 @@ async def trigger_cleanup(
     return {"status": "ok"}
 
 
-@router.post("/trpc/{procedure}")
+@router.post("/trpc/{procedure}", tags=["tRPC"], summary="Proxy tRPC call")
 async def trpc_endpoint(
     procedure: str,
     request: Request,
@@ -147,7 +147,7 @@ async def trpc_endpoint(
     return cast(Dict[str, Any], response.json())
 
 
-@router.get("/optimizations")
+@router.get("/optimizations", tags=["Optimization"], summary="Optimization suggestions")
 async def optimizations() -> list[str]:
     """Return cost optimization suggestions from the optimization service."""
     url = f"{OPTIMIZATION_URL}/optimizations"
@@ -158,7 +158,9 @@ async def optimizations() -> list[str]:
     return cast(list[str], resp.json())
 
 
-@router.get("/recommendations")
+@router.get(
+    "/recommendations", tags=["Optimization"], summary="Top optimization actions"
+)
 async def recommendations() -> list[str]:
     """Return top optimization actions from the optimization service."""
     url = f"{OPTIMIZATION_URL}/recommendations"
@@ -169,7 +171,7 @@ async def recommendations() -> list[str]:
     return cast(list[str], resp.json())
 
 
-@router.get("/audit-logs")
+@router.get("/audit-logs", tags=["Audit"], summary="Retrieve audit logs")
 async def get_audit_logs(
     limit: int = 50,
     offset: int = 0,
@@ -204,7 +206,7 @@ async def get_audit_logs(
     }
 
 
-@router.get("/models")
+@router.get("/models", tags=["Models"], summary="List AI models")
 async def get_models(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[dict[str, Any]]:
@@ -213,7 +215,7 @@ async def get_models(
     return [m.__dict__ for m in list_models()]
 
 
-@router.post("/models/{model_id}/default")
+@router.post("/models/{model_id}/default", tags=["Models"], summary="Set default model")
 async def switch_default_model(
     model_id: int,
     payload: Dict[str, Any] = Depends(require_role("admin")),
@@ -227,7 +229,7 @@ async def switch_default_model(
     return {"status": "ok"}
 
 
-@router.patch("/publish-tasks/{task_id}")
+@router.patch("/publish-tasks/{task_id}", tags=["Publish"], summary="Edit publish task")
 async def edit_publish_task(
     task_id: int,
     body: Dict[str, Any],
@@ -247,7 +249,9 @@ async def edit_publish_task(
     return {"status": "updated"}
 
 
-@router.post("/publish-tasks/{task_id}/retry")
+@router.post(
+    "/publish-tasks/{task_id}/retry", tags=["Publish"], summary="Retry publish task"
+)
 async def retry_publish_task(
     task_id: int,
     payload: Dict[str, Any] = Depends(require_role("admin")),

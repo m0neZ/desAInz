@@ -21,6 +21,14 @@ make docker-push  # push images to REGISTRY with TAG
 make helm-deploy  # deploy charts with Helm
 ```
 
+## Storage setup
+
+Create the buckets required by the blueprint and apply the lifecycle policy:
+
+```bash
+scripts/setup_storage.sh desainz-bucket --minio  # omit --minio for AWS S3
+```
+
 ## Type Checking
 
 Run Flow across the repository with:

@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 def setup_scheduler(
     metrics_source: Iterable[dict[str, float]],
     scoring_api: str,
-    marketplace_api: str | None = None,
     listing_ids: Iterable[int] | None = None,
     ab_db_url: str = "sqlite:///abtest.db",
 ) -> BackgroundScheduler:
@@ -55,8 +54,8 @@ def setup_scheduler(
         minute=0,
         next_run_time=None,
     )
-    if marketplace_api and listing_ids:
+    if listing_ids:
         schedule_marketplace_ingestion(
-            scheduler, marketplace_api, list(listing_ids), interval_minutes=60
+            scheduler, list(listing_ids), interval_minutes=60
         )
     return scheduler

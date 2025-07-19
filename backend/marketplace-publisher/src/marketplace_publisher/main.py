@@ -35,6 +35,9 @@ from . import notifications
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
+from backend.shared.db import session_scope
+from backend.shared.db import models as shared_models
+from sqlalchemy import func
 from backend.shared import init_feature_flags, is_enabled
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
@@ -242,6 +245,38 @@ async def retry_task(task_id: int, background: BackgroundTasks) -> dict[str, str
             raise HTTPException(status_code=404)
     background.add_task(_background_publish, task_id)
     return {"status": "scheduled"}
+
+
+@app.get("/metrics/{listing_id}")
+async def metrics(listing_id: int) -> dict[str, float]:
+    """Return aggregated performance metrics for a listing."""
+    with session_scope() as session:
+        views, favorites, orders, revenue = (
+            session.query(
+                func.coalesce(
+                    func.sum(shared_models.MarketplacePerformanceMetric.views), 0
+                ),
+                func.coalesce(
+                    func.sum(shared_models.MarketplacePerformanceMetric.favorites), 0
+                ),
+                func.coalesce(
+                    func.sum(shared_models.MarketplacePerformanceMetric.orders), 0
+                ),
+                func.coalesce(
+                    func.sum(shared_models.MarketplacePerformanceMetric.revenue), 0.0
+                ),
+            )
+            .filter(shared_models.MarketplacePerformanceMetric.listing_id == listing_id)
+            .one()
+        )
+    if views == 0 and favorites == 0 and orders == 0 and revenue == 0:
+        raise HTTPException(status_code=404)
+    return {
+        "views": float(views),
+        "favorites": float(favorites),
+        "orders": float(orders),
+        "revenue": float(revenue),
+    }
 
 
 @app.get("/health")

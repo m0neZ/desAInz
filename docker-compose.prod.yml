@@ -154,6 +154,56 @@ services:
     ports:
       - "3000:3000"
 
+  api-gateway:
+    image: ghcr.io/example/api-gateway:latest
+    ports:
+      - "8001:8000"
+    environment:
+      LOKI_URL: http://loki:3100
+    depends_on:
+      - kafka
+      - redis
+      - postgres
+
+  scoring-engine:
+    image: ghcr.io/example/scoring-engine:latest
+    ports:
+      - "5002:5002"
+    depends_on:
+      - postgres
+
+  marketplace-publisher:
+    image: ghcr.io/example/marketplace-publisher:latest
+    ports:
+      - "8003:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  signal-ingestion:
+    image: ghcr.io/example/signal-ingestion:latest
+    ports:
+      - "8004:8000"
+    depends_on:
+      - postgres
+      - kafka
+
+  feedback-loop:
+    image: ghcr.io/example/feedback-loop:latest
+    ports:
+      - "8005:8000"
+
+  admin-dashboard:
+    image: ghcr.io/example/admin-dashboard:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+
+  orchestrator:
+    image: ghcr.io/example/orchestrator:latest
+    ports:
+      - "3001:3000"
 volumes:
   postgres-data:
   redis-data:

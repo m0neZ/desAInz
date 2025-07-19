@@ -157,6 +157,63 @@ services:
     ports:
       - "3000:3000"
 
+  api-gateway:
+    build: ./backend/api-gateway
+    command: python -m api_gateway.main
+    ports:
+      - "8001:8000"
+    environment:
+      LOKI_URL: http://loki:3100
+    depends_on:
+      - kafka
+      - redis
+      - postgres
+
+  scoring-engine:
+    build: ./backend/scoring-engine
+    command: python -m scoring_engine.app
+    ports:
+      - "5002:5002"
+    depends_on:
+      - postgres
+
+  marketplace-publisher:
+    build: ./backend/marketplace-publisher
+    command: python -m marketplace_publisher.main
+    ports:
+      - "8003:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  signal-ingestion:
+    build: ./backend/signal-ingestion
+    command: python -m signal_ingestion.main
+    ports:
+      - "8004:8000"
+    depends_on:
+      - postgres
+      - kafka
+
+  feedback-loop:
+    build: ./backend/feedback-loop
+    command: python -m feedback_loop.main
+    ports:
+      - "8005:8000"
+
+  admin-dashboard:
+    build: ./frontend/admin-dashboard
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: backend/orchestrator/Dockerfile
+    ports:
+      - "3001:3000"
 volumes:
   postgres-data:
   redis-data:

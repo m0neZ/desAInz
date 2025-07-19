@@ -5,3 +5,6 @@ image:
 schedule: "0 2 * * *"
 bucket: my-backup-bucket
 minioDataPath: /data
+
+# Additional environment variables
+extraEnv: {}

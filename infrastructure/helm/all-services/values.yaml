@@ -8,6 +8,13 @@ signal-ingestion:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 data-storage:
   replicaCount: 1
@@ -19,6 +26,13 @@ data-storage:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 scoring-engine:
   replicaCount: 1
@@ -30,6 +44,13 @@ scoring-engine:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 ai-mockup-generation:
   replicaCount: 1
@@ -41,6 +62,13 @@ ai-mockup-generation:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 marketplace-publisher:
   replicaCount: 1
@@ -52,6 +80,13 @@ marketplace-publisher:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 feedback-loop:
   replicaCount: 1
@@ -63,6 +98,13 @@ feedback-loop:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 orchestrator:
   replicaCount: 1
@@ -74,6 +116,13 @@ orchestrator:
     type: ClusterIP
     port: 80
   resources: {}
+  env: {}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
 
 backup-jobs:
   image:

@@ -21,8 +21,6 @@ Welcome to desAInz's documentation!
    cloud_deployment
    troubleshooting
    error_triage
-   blueprints/DesignIdeaEngineCompleteBlueprint
-   admin_dashboard_trpc
    load_testing
    mocking
    maintenance
@@ -35,6 +33,7 @@ Welcome to desAInz's documentation!
    feature-flags
    openapi_specs
    logs_with_loki
+   source/index
 
 Kafka Utilities
 ---------------

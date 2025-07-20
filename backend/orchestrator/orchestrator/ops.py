@@ -203,6 +203,7 @@ def cleanup_data(  # type: ignore[no-untyped-def]
     context.log.info("running cleanup")
     maintenance.archive_old_mockups()
     maintenance.purge_stale_records()
+    maintenance.purge_old_s3_objects()
 
 
 @op  # type: ignore[misc]

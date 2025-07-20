@@ -28,6 +28,10 @@ class GenerationResult:
     duration: float
 
 
+class GenerationError(RuntimeError):
+    """Raised when mockup generation fails after all retries."""
+
+
 class MockupGenerator:
     """Generate mockups using Stable Diffusion XL with fallback."""
 
@@ -99,7 +103,7 @@ class MockupGenerator:
             PIL image from the external API.
 
         Raises:
-            RuntimeError: If all retry attempts fail.
+            GenerationError: If all retry attempts fail.
         """
         from io import BytesIO
         import base64
@@ -141,10 +145,12 @@ class MockupGenerator:
             except (requests.RequestException, OSError, ValueError) as exc:
                 logger.warning("Fallback provider error: %s", exc)
                 if attempt == 2:
-                    raise
+                    raise GenerationError(
+                        "Failed to generate image via fallback provider"
+                    ) from exc
                 time.sleep(2**attempt)
 
-        raise RuntimeError("Failed to generate image via fallback provider")
+        raise GenerationError("Failed to generate image via fallback provider")
 
     def cleanup(self) -> None:
         """Release the diffusion pipeline and free CUDA memory."""

@@ -136,7 +136,9 @@ def generate_mockup(
         gpu_index: Preferred GPU slot index.
 
     Returns:
-        A list of dictionaries containing image paths and listing metadata.
+        A list of dictionaries containing image paths and listing metadata. If
+        a prompt fails, the item will contain an ``error`` key with the
+        message.
     """
     queue = self.request.delivery_info.get("routing_key", "")
     try:
@@ -156,54 +158,57 @@ def generate_mockup(
             context = PromptContext(keywords=keywords)
             prompt = build_prompt(context)
             output_path = Path(output_dir) / f"mockup_{idx}.png"
-            gen_result = generator.generate(
-                prompt,
-                str(output_path),
-                model_identifier=model,
-            )
+            try:
+                gen_result = generator.generate(
+                    prompt,
+                    str(output_path),
+                    model_identifier=model,
+                )
 
-            processed = remove_background(Image.open(gen_result.image_path))
-            processed = convert_to_cmyk(processed)
-            ensure_not_nsfw(processed)
-            if not validate_dpi_image(processed):
-                raise ValueError("Invalid DPI")
-            if not validate_color_space(processed):
-                raise ValueError("Invalid color space")
-            if not validate_dimensions(processed):
-                raise ValueError("Invalid dimensions")
-            compress_lossless(processed, output_path)
-            if not validate_file_size(output_path):
-                raise ValueError("File size too large")
-            obj_name = f"generated-mockups/{output_path.name}"
-            if hasattr(client, "fput_object"):
-                client.fput_object(settings.s3_bucket, obj_name, str(output_path))
-            else:
-                client.upload_file(str(output_path), settings.s3_bucket, obj_name)
-            base = settings.s3_endpoint.rstrip("/") if settings.s3_endpoint else "s3://"
-            uri = (
-                f"{base}/{settings.s3_bucket}/{obj_name}"
-                if settings.s3_endpoint
-                else f"s3://{settings.s3_bucket}/{obj_name}"
-            )
-            metadata = listing_gen.generate(keywords)
-            model_repository.save_generated_mockup(
-                prompt,
-                30,
-                0,
-                uri,
-                metadata.title,
-                metadata.description,
-                metadata.tags,
-            )
-            results.append(
-                {
-                    "image_path": str(output_path),
-                    "uri": uri,
-                    "title": metadata.title,
-                    "description": metadata.description,
-                    "tags": metadata.tags,
-                }
-            )
+                processed = remove_background(Image.open(gen_result.image_path))
+                processed = convert_to_cmyk(processed)
+                ensure_not_nsfw(processed)
+                if not validate_dpi_image(processed):
+                    raise ValueError("Invalid DPI")
+                if not validate_color_space(processed):
+                    raise ValueError("Invalid color space")
+                if not validate_dimensions(processed):
+                    raise ValueError("Invalid dimensions")
+                compress_lossless(processed, output_path)
+                if not validate_file_size(output_path):
+                    raise ValueError("File size too large")
+                obj_name = f"generated-mockups/{output_path.name}"
+                if hasattr(client, "fput_object"):
+                    client.fput_object(settings.s3_bucket, obj_name, str(output_path))
+                else:
+                    client.upload_file(str(output_path), settings.s3_bucket, obj_name)
+                base = settings.s3_endpoint.rstrip("/") if settings.s3_endpoint else "s3://"
+                uri = (
+                    f"{base}/{settings.s3_bucket}/{obj_name}"
+                    if settings.s3_endpoint
+                    else f"s3://{settings.s3_bucket}/{obj_name}"
+                )
+                metadata = listing_gen.generate(keywords)
+                model_repository.save_generated_mockup(
+                    prompt,
+                    30,
+                    0,
+                    uri,
+                    metadata.title,
+                    metadata.description,
+                    metadata.tags,
+                )
+                results.append(
+                    {
+                        "image_path": str(output_path),
+                        "uri": uri,
+                        "title": metadata.title,
+                        "description": metadata.description,
+                        "tags": metadata.tags,
+                    }
+                )
+            except Exception as exc:  # pragma: no cover - error path tested separately
+                results.append({"error": str(exc), "keywords": keywords})
         generator.cleanup()
 
     return results

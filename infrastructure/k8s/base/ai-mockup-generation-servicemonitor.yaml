@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ai-mockup-generation
+  labels:
+    app: ai-mockup-generation
+spec:
+  selector:
+    matchLabels:
+      app: ai-mockup-generation
+  endpoints:
+    - path: /metrics
+      targetPort: 80
+      interval: 30s

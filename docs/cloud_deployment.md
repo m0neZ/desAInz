@@ -2,6 +2,25 @@
 
 This document outlines how to deploy desAInz to AWS, Google Cloud Platform and Microsoft Azure using container images.
 
+## Kubernetes
+
+The repository ships with Kustomize manifests under `infrastructure/k8s`. Apply
+the base configuration to any cluster with:
+
+```bash
+kubectl apply -k infrastructure/k8s/base
+```
+
+For local testing with Minikube use the overlay which exposes each service via
+`NodePort`:
+
+```bash
+kubectl apply -k infrastructure/k8s/overlays/minikube
+```
+
+Check that all Pods are running and inspect logs using `kubectl get pods` and
+`kubectl logs`.
+
 ## AWS
 
 1. **Build and push images** to Amazon Elastic Container Registry (ECR).

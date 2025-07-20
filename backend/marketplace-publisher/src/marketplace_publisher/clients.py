@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import os
 import requests
@@ -11,6 +11,8 @@ from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import time
+
+from .settings import settings
 
 from .db import Marketplace
 from . import rules
@@ -23,45 +25,59 @@ class BaseClient:
         self,
         base_url: str,
         token_url: str | None = None,
-        client_id_env: str | None = None,
-        client_secret_env: str | None = None,
-        api_key_env: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
+        api_key: str | None = None,
         authorize_url: str | None = None,
-        redirect_uri_env: str | None = None,
-        scope_env: str | None = None,
+        redirect_uri: str | None = None,
+        scope: str | None = None,
     ) -> None:
         """Initialize API configuration and credentials."""
         self.base_url = base_url.rstrip("/")
         self.token_url = token_url
         self.publish_url = f"{self.base_url}/publish"
         self.authorize_url = authorize_url
-        self.redirect_uri = os.getenv(redirect_uri_env or "")
-        raw_scope = os.getenv(scope_env or "")
-        self.scope: list[str] | None = raw_scope.split() if raw_scope else None
-        self._client_id = os.getenv(client_id_env or "")
-        self._client_secret = os.getenv(client_secret_env or "")
-        self._api_key = os.getenv(api_key_env or "")
+        self.redirect_uri = redirect_uri or ""
+        self.scope: list[str] | None = scope.split() if scope else None
+        self._client_id = client_id or ""
+        self._client_secret = client_secret or ""
+        self._api_key = api_key or ""
         self._token: str | None = None
+        self._refresh_token: str | None = None
+        self._expiry: float | None = None
         self._state: str | None = None
 
+    def _fetch_new_token(self, grant_data: dict[str, str]) -> None:
+        """Retrieve a token from ``token_url`` using ``grant_data``."""
+        if not (self.token_url and self._client_id and self._client_secret):
+            return
+        data = {
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            **grant_data,
+        }
+        response = requests.post(self.token_url, data=data, timeout=30)
+        response.raise_for_status()
+        payload = response.json()
+        self._token = payload.get("access_token")
+        self._refresh_token = payload.get("refresh_token", self._refresh_token)
+        expires_in = int(payload.get("expires_in", 0))
+        self._expiry = time.time() + expires_in if expires_in else None
+
     def _get_token(self) -> str | None:
-        """Return a cached token or fetch one using client credentials."""
-        if self._token:
-            return self._token
-        if self.token_url and self._client_id and self._client_secret:
-            response = requests.post(
-                self.token_url,
-                data={
-                    "grant_type": "client_credentials",
-                    "client_id": self._client_id,
-                    "client_secret": self._client_secret,
-                },
-                timeout=30,
+        """Return a cached token refreshing if expired."""
+        if not self._token or (self._expiry and self._expiry <= time.time()):
+            self._fetch_new_token({"grant_type": "client_credentials"})
+        return self._token
+
+    def _refresh_token_if_needed(self) -> None:
+        """Refresh token using ``refresh_token`` or client credentials."""
+        if self._refresh_token:
+            self._fetch_new_token(
+                {"grant_type": "refresh_token", "refresh_token": self._refresh_token}
             )
-            response.raise_for_status()
-            self._token = response.json().get("access_token")
-            return self._token
-        return None
+        else:
+            self._fetch_new_token({"grant_type": "client_credentials"})
 
     def get_authorization_url(self) -> str:
         """Return the authorization URL for user consent."""
@@ -71,7 +87,7 @@ class BaseClient:
         oauth = OAuth2Session(
             self._client_id, redirect_uri=self.redirect_uri, scope=self.scope
         )
-        url, state = oauth.authorization_url(self.authorize_url)
+        url, state = cast(tuple[str, str], oauth.authorization_url(self.authorize_url))
         self._state = state
         return url
 
@@ -94,7 +110,7 @@ class BaseClient:
 
     def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
         """Upload a design and return the created listing ID."""
-        headers = {}
+        headers: dict[str, str] = {}
         token = self._get_token()
         if token:
             headers["Authorization"] = f"Bearer {token}"
@@ -109,13 +125,26 @@ class BaseClient:
                 headers=headers,
                 timeout=30,
             )
+        if response.status_code == 401:
+            self._refresh_token_if_needed()
+            if self._token:
+                headers["Authorization"] = f"Bearer {self._token}"
+            with open(design_path, "rb") as file:
+                files = {"file": file}
+                response = requests.post(
+                    self.publish_url,
+                    files=files,
+                    data=metadata,
+                    headers=headers,
+                    timeout=30,
+                )
         response.raise_for_status()
         data = response.json()
         return str(data["id"])
 
     def get_listing_metrics(self, listing_id: int) -> dict[str, Any]:
         """Return performance metrics for a listing."""
-        headers = {}
+        headers: dict[str, str] = {}
         token = self._get_token()
         if token:
             headers["Authorization"] = f"Bearer {token}"
@@ -126,24 +155,33 @@ class BaseClient:
             headers=headers,
             timeout=30,
         )
+        if response.status_code == 401:
+            self._refresh_token_if_needed()
+            if self._token:
+                headers["Authorization"] = f"Bearer {self._token}"
+            response = requests.get(
+                f"{self.base_url}/listings/{listing_id}/metrics",
+                headers=headers,
+                timeout=30,
+            )
         response.raise_for_status()
-        return response.json()
+        return cast(dict[str, Any], response.json())
 
 
 class RedbubbleClient(BaseClient):
     """Client for the Redbubble API."""
 
     def __init__(self) -> None:
-        """Configure endpoints and credentials from the environment."""
+        """Configure endpoints and credentials from settings."""
         super().__init__(
             "https://api.redbubble.com/v1",
-            os.getenv("REDBUBBLE_TOKEN_URL"),
-            "REDBUBBLE_CLIENT_ID",
-            "REDBUBBLE_CLIENT_SECRET",
-            "REDBUBBLE_API_KEY",
-            os.getenv("REDBUBBLE_AUTHORIZE_URL"),
-            "REDBUBBLE_REDIRECT_URI",
-            "REDBUBBLE_SCOPE",
+            settings.redbubble_token_url,
+            settings.redbubble_client_id,
+            settings.redbubble_client_secret,
+            settings.redbubble_api_key,
+            settings.redbubble_authorize_url,
+            settings.redbubble_redirect_uri,
+            settings.redbubble_scope,
         )
 
 
@@ -151,16 +189,16 @@ class AmazonMerchClient(BaseClient):
     """Client for the Amazon Merch API."""
 
     def __init__(self) -> None:
-        """Configure endpoints and credentials from the environment."""
+        """Configure endpoints and credentials from settings."""
         super().__init__(
-            "https://api.amazonmerch.com/v1",
-            os.getenv("AMAZON_MERCH_TOKEN_URL"),
-            "AMAZON_MERCH_CLIENT_ID",
-            "AMAZON_MERCH_CLIENT_SECRET",
-            "AMAZON_MERCH_API_KEY",
-            os.getenv("AMAZON_MERCH_AUTHORIZE_URL"),
-            "AMAZON_MERCH_REDIRECT_URI",
-            "AMAZON_MERCH_SCOPE",
+            "https://merch.amazon.com/api",
+            settings.amazon_merch_token_url,
+            settings.amazon_merch_client_id,
+            settings.amazon_merch_client_secret,
+            settings.amazon_merch_api_key,
+            settings.amazon_merch_authorize_url,
+            settings.amazon_merch_redirect_uri,
+            settings.amazon_merch_scope,
         )
 
 
@@ -168,16 +206,16 @@ class EtsyClient(BaseClient):
     """Client for the Etsy API."""
 
     def __init__(self) -> None:
-        """Configure endpoints and credentials from the environment."""
+        """Configure endpoints and credentials from settings."""
         super().__init__(
-            "https://api.etsy.com/v3",
-            os.getenv("ETSY_TOKEN_URL"),
-            "ETSY_CLIENT_ID",
-            "ETSY_CLIENT_SECRET",
-            "ETSY_API_KEY",
-            os.getenv("ETSY_AUTHORIZE_URL"),
-            "ETSY_REDIRECT_URI",
-            "ETSY_SCOPE",
+            "https://openapi.etsy.com/v3/application",
+            settings.etsy_token_url,
+            settings.etsy_client_id,
+            settings.etsy_client_secret,
+            settings.etsy_api_key,
+            settings.etsy_authorize_url,
+            settings.etsy_redirect_uri,
+            settings.etsy_scope,
         )
 
 
@@ -185,16 +223,16 @@ class Society6Client(BaseClient):
     """Client for the Society6 API."""
 
     def __init__(self) -> None:
-        """Configure endpoints and credentials from the environment."""
+        """Configure endpoints and credentials from settings."""
         super().__init__(
             "https://api.society6.com/v1",
-            os.getenv("SOCIETY6_TOKEN_URL"),
-            "SOCIETY6_CLIENT_ID",
-            "SOCIETY6_CLIENT_SECRET",
-            "SOCIETY6_API_KEY",
-            os.getenv("SOCIETY6_AUTHORIZE_URL"),
-            "SOCIETY6_REDIRECT_URI",
-            "SOCIETY6_SCOPE",
+            settings.society6_token_url,
+            settings.society6_client_id,
+            settings.society6_client_secret,
+            settings.society6_api_key,
+            settings.society6_authorize_url,
+            settings.society6_redirect_uri,
+            settings.society6_scope,
         )
 
 
@@ -202,16 +240,16 @@ class ZazzleClient(BaseClient):
     """Client for the Zazzle API."""
 
     def __init__(self) -> None:
-        """Configure endpoints and credentials from the environment."""
+        """Configure endpoints and credentials from settings."""
         super().__init__(
             "https://api.zazzle.com/v1",
-            os.getenv("ZAZZLE_TOKEN_URL"),
-            "ZAZZLE_CLIENT_ID",
-            "ZAZZLE_CLIENT_SECRET",
-            "ZAZZLE_API_KEY",
-            os.getenv("ZAZZLE_AUTHORIZE_URL"),
-            "ZAZZLE_REDIRECT_URI",
-            "ZAZZLE_SCOPE",
+            settings.zazzle_token_url,
+            settings.zazzle_client_id,
+            settings.zazzle_client_secret,
+            settings.zazzle_api_key,
+            settings.zazzle_authorize_url,
+            settings.zazzle_redirect_uri,
+            settings.zazzle_scope,
         )
 
 

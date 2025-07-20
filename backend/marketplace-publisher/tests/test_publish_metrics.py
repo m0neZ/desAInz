@@ -1,3 +1,5 @@
+"""Tests for metrics publication in ``marketplace_publisher``."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -13,6 +15,8 @@ from marketplace_publisher import db, main, publisher
 async def test_metrics_stored_after_publish(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
+    """Background publish should store metrics in TimescaleDB."""
+
     async_url = f"sqlite+aiosqlite:///{tmp_path}/db.sqlite"
     sync_url = f"sqlite:///{tmp_path}/db.sqlite"
 

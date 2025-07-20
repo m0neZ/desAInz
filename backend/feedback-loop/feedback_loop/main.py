@@ -5,14 +5,15 @@ from __future__ import annotations
 import logging
 import os
 import uuid
-from typing import Callable, Coroutine
+from typing import Any, Callable, Coroutine
 
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.metrics import register_metrics
 from pydantic import BaseModel
 
 from .ab_testing import ABTestManager
+from .auth import require_role
 from backend.shared.config import settings as shared_settings
 
 app = FastAPI(title="Feedback Loop")
@@ -108,7 +109,10 @@ async def record_conversion(variant: str) -> dict[str, str]:
 
 
 @app.get("/allocation", response_model=AllocationResponse)
-async def get_allocation(total_budget: float = 100.0) -> AllocationResponse:
+async def get_allocation(
+    total_budget: float = 100.0,
+    payload: dict[str, Any] = Depends(require_role("admin")),
+) -> AllocationResponse:
     """Return promotion budget allocation using Thompson Sampling."""
     allocation = manager.allocate_budget(total_budget)
     return AllocationResponse(
@@ -117,7 +121,9 @@ async def get_allocation(total_budget: float = 100.0) -> AllocationResponse:
 
 
 @app.get("/stats", response_model=StatsResponse)
-async def get_stats() -> StatsResponse:
+async def get_stats(
+    payload: dict[str, Any] = Depends(require_role("admin")),
+) -> StatsResponse:
     """Return total conversions for both variants."""
     totals = manager.conversion_totals()
     return StatsResponse(

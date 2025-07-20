@@ -1,6 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: analytics
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: analytics
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: api-gateway
 spec:
   replicas: 2
@@ -141,3 +159,4 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
+

@@ -10,6 +10,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from .database import SessionLocal
 from .ingestion import ingest
 from .settings import settings
+from .trending import trim_keywords
 
 logger = logging.getLogger(__name__)
 
@@ -31,4 +32,15 @@ def create_scheduler() -> AsyncIOScheduler:
         id="ingest",
         replace_existing=True,
     )
+    scheduler.add_job(
+        trim_trending_job,
+        trigger=IntervalTrigger(minutes=5),
+        id="trim_trending",
+        replace_existing=True,
+    )
     return scheduler
+
+
+def trim_trending_job() -> None:
+    """Trim trending keywords to maximum size."""
+    trim_keywords(settings.trending_max_keywords)

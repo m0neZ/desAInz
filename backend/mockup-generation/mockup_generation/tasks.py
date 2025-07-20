@@ -11,6 +11,7 @@ import time
 import redis
 from redis.lock import Lock as RedisLock
 from celery import Task
+from prometheus_client import Counter, Gauge
 
 from PIL import Image
 from .celery_app import app
@@ -62,6 +63,12 @@ redis_client = redis.Redis.from_url(REDIS_URL)
 
 generator = MockupGenerator()
 
+# Prometheus metrics for GPU slot usage
+GPU_SLOTS_IN_USE = Gauge("gpu_slots_in_use", "Number of GPU slots currently in use")
+GPU_SLOT_ACQUIRE_TOTAL = Counter(
+    "gpu_slot_acquire_total", "Total GPU slot acquisitions"
+)
+
 
 def get_gpu_slots() -> int:
     """Return the number of GPU slots defined in Redis or the default value."""
@@ -98,9 +105,12 @@ def _acquire_gpu_lock(slot: int | None = None) -> RedisLock:
 def gpu_slot(slot: int | None = None) -> Iterator[None]:
     """Yield while holding a GPU slot lock."""
     lock = _acquire_gpu_lock(slot)
+    GPU_SLOTS_IN_USE.inc()
+    GPU_SLOT_ACQUIRE_TOTAL.inc()
     try:
         yield
     finally:
+        GPU_SLOTS_IN_USE.dec()
         lock.release()
 
 

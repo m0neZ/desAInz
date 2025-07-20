@@ -129,13 +129,20 @@ class DummyCelery:
     """Collect Celery ``send_task`` calls."""
 
     def __init__(self) -> None:
-        self.sent: list[tuple[str, list[object], str | None]] = []
+        self.sent: list[tuple[str, list[object], dict[str, object], str | None]] = []
 
     def send_task(
-        self, name: str, args: list[list[str]] | None = None, queue: str | None = None
+        self,
+        name: str,
+        args: list[list[str]] | None = None,
+        *,
+        kwargs: dict[str, object] | None = None,
+        queue: str | None = None,
     ) -> DummyResult:
         idx = len(self.sent)
-        self.sent.append((name, args or [], queue))
+        if kwargs and "gpu_index" in kwargs and queue is None:
+            queue = f"gpu-{kwargs['gpu_index']}"
+        self.sent.append((name, args or [], kwargs or {}, queue))
         return DummyResult(f"task-{idx}")
 
 
@@ -146,7 +153,12 @@ def test_generate_success(monkeypatch: "pytest.MonkeyPatch") -> None:
     monkeypatch.setattr(api, "celery_app", dummy)
     resp = client.post(
         "/generate",
-        json={"batches": [["foo", "bar"], ["baz"]], "output_dir": "/tmp"},
+        json={
+            "batches": [["foo", "bar"], ["baz"]],
+            "output_dir": "/tmp",
+            "model": "m",
+            "gpu_index": 1,
+        },
     )
     assert resp.status_code == 200
     assert resp.json() == {"tasks": ["task-0", "task-1"]}
@@ -154,12 +166,14 @@ def test_generate_success(monkeypatch: "pytest.MonkeyPatch") -> None:
         (
             "mockup_generation.tasks.generate_mockup",
             [["foo", "bar"], "/tmp"],
-            None,
+            {"model": "m", "gpu_index": 1},
+            "gpu-1",
         ),
         (
             "mockup_generation.tasks.generate_mockup",
             [["baz"], "/tmp"],
-            None,
+            {"model": "m", "gpu_index": 1},
+            "gpu-1",
         ),
     ]
 

@@ -105,6 +105,8 @@ warnings.filterwarnings("ignore", category=UserWarning)
 from mockup_generation.model_repository import (  # noqa: E402
     list_generated_mockups,
     save_generated_mockup,
+    register_model,
+    get_model,
 )
 
 
@@ -127,3 +129,10 @@ def test_save_and_list_generated_mockups() -> None:
         and i.image_uri == "uri"
         for i in items
     )
+
+
+def test_register_and_get_model() -> None:
+    """Model info can be retrieved by id."""
+    model_id = register_model("n", "1", "foo")
+    info = get_model(model_id)
+    assert info is not None and info.model_id == "foo"

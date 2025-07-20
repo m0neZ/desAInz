@@ -131,6 +131,8 @@ class GeneratePayload(BaseModel):  # type: ignore[misc]
 
     batches: list[list[str]]
     output_dir: str
+    model: str | None = None
+    gpu_index: int | None = None
 
 
 @app.post("/generate")
@@ -140,6 +142,7 @@ async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
         celery_app.send_task(
             "mockup_generation.tasks.generate_mockup",
             args=[batch, payload.output_dir],
+            kwargs={"model": payload.model, "gpu_index": payload.gpu_index},
         ).id
         for batch in payload.batches
     ]

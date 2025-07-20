@@ -2,8 +2,10 @@
 
 The mockup generation service runs inside CUDA-enabled containers. Each
 Celery worker is pinned to a specific GPU using the `GPU_WORKER_INDEX`
-environment variable. Workers listen on dedicated queues
-`gpu-<index>` so Kubernetes can scale them independently.
+environment variable. Workers listen on dedicated queues `gpu-<index>`
+so Kubernetes can scale them independently. Tasks can target a specific
+GPU by passing ``gpu_index`` to the ``/generate`` endpoint, which will
+route them to the corresponding queue.
 
 ```bash
 # build image and target the first GPU

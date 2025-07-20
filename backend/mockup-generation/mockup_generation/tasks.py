@@ -117,7 +117,12 @@ def gpu_slot(slot: int | None = None) -> Iterator[None]:
 
 @app.task(bind=True)  # type: ignore[misc]
 def generate_mockup(
-    self: Task, keywords_batch: list[list[str]], output_dir: str
+    self: Task,
+    keywords_batch: list[list[str]],
+    output_dir: str,
+    *,
+    model: str | None = None,
+    gpu_index: int | None = None,
 ) -> list[dict[str, object]]:
     """
     Generate mockups sequentially on the GPU.
@@ -125,6 +130,8 @@ def generate_mockup(
     Args:
         keywords_batch: A list of keyword groups used to build prompts.
         output_dir: Directory where generated mockups will be written.
+        model: Optional model identifier to use for generation.
+        gpu_index: Preferred GPU slot index.
 
     Returns:
         A list of dictionaries containing image paths and listing metadata.
@@ -133,7 +140,11 @@ def generate_mockup(
     try:
         slot: int | None = int(queue.split("-")[-1])
     except (ValueError, AttributeError):
-        slot = GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None
+        slot = (
+            gpu_index
+            if gpu_index is not None
+            else (GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None)
+        )
 
     listing_gen = ListingGenerator()
     client = _get_storage_client()
@@ -143,7 +154,11 @@ def generate_mockup(
             context = PromptContext(keywords=keywords)
             prompt = build_prompt(context)
             output_path = Path(output_dir) / f"mockup_{idx}.png"
-            gen_result = generator.generate(prompt, str(output_path))
+            gen_result = generator.generate(
+                prompt,
+                str(output_path),
+                model_identifier=model,
+            )
 
             processed = remove_background(Image.open(gen_result.image_path))
             processed = convert_to_cmyk(processed)

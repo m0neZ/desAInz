@@ -4,6 +4,10 @@ import type { NextConfig } from 'next';
  * Next.js configuration enabling tree shaking and granular code splitting.
  */
 const nextConfig: NextConfig = {
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+  },
   async headers() {
     return [
       {

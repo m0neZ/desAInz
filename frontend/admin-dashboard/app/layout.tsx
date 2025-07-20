@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import '../src/styles/globals.css';
 import { LanguageSwitcher } from '../src/components/LanguageSwitcher';
-import i18n from '../src/i18n';
+import { I18nProvider } from '../src/i18n';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard',
@@ -15,12 +15,14 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang={i18n.language}>
+    <html lang="en">
       <body>
-        <div className="p-2">
-          <LanguageSwitcher />
-        </div>
-        {children}
+        <I18nProvider>
+          <div className="p-2">
+            <LanguageSwitcher />
+          </div>
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );

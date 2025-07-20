@@ -1,5 +1,9 @@
+'use client';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import type { ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export const supportedLngs = ['en', 'es'] as const;
 export type SupportedLng = (typeof supportedLngs)[number];
@@ -30,6 +34,16 @@ void loadResources('en');
 export async function changeLanguage(lng: SupportedLng) {
   await loadResources(lng);
   await i18n.changeLanguage(lng);
+}
+
+export function I18nProvider({ children }: { children: ReactNode }) {
+  const { locale } = useRouter();
+  useEffect(() => {
+    const lng =
+      supportedLngs.find((l) => l === locale) ?? 'en';
+    void changeLanguage(lng);
+  }, [locale]);
+  return <>{children}</>;
 }
 
 export default i18n;

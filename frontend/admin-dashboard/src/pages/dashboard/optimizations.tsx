@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc } from '../../trpc';
+import { useOptimizations } from '../../lib/trpc/hooks';
 
 export default function OptimizationsPage() {
   const { t } = useTranslation();
-  const [items, setItems] = useState<string[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        setItems(await trpc.optimizations.list());
-      } catch {
-        setItems([]);
-      }
-    }
-    void load();
-  }, []);
+  const { data: items, isLoading } = useOptimizations();
 
   return (
     <div className="space-y-2">
       <h1>{t('optimizations')}</h1>
-      <ul>
-        {items.map((opt, idx) => (
-          <li key={idx}>{opt}</li>
-        ))}
-      </ul>
+      {isLoading || !items ? (
+        <div>{t('loading')}</div>
+      ) : (
+        <ul>
+          {items.map((opt, idx) => (
+            <li key={idx}>{opt}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

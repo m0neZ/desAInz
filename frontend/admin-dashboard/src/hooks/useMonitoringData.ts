@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 export interface MetricPoint {
   timestamp: string;
@@ -6,70 +6,46 @@ export interface MetricPoint {
 }
 
 export function useAnalyticsData(range: string) {
-  const [data, setData] = useState<MetricPoint[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const resp = await fetch(`/api/monitoring/analytics?range=${range}`);
-        if (resp.ok) {
-          const body = await resp.json();
-          setData(body.metrics ?? []);
-        }
-      } catch {
-        setData([]);
+  return useQuery({
+    queryKey: ['analyticsData', range],
+    queryFn: async () => {
+      const resp = await fetch(`/api/monitoring/analytics?range=${range}`);
+      if (!resp.ok) {
+        throw new Error('failed to load analytics');
       }
-    }
-    void load();
-  }, [range]);
-
-  return data;
+      const body = await resp.json();
+      return (body.metrics ?? []) as MetricPoint[];
+    },
+  });
 }
 
 export function useLatencyData(range: string) {
-  const [data, setData] = useState<MetricPoint[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const resp = await fetch(`/api/monitoring/latency?range=${range}`);
-        if (resp.ok) {
-          const body = await resp.json();
-          setData(body.metrics ?? []);
-        }
-      } catch {
-        setData([]);
+  return useQuery({
+    queryKey: ['latencyData', range],
+    queryFn: async () => {
+      const resp = await fetch(`/api/monitoring/latency?range=${range}`);
+      if (!resp.ok) {
+        throw new Error('failed to load latency');
       }
-    }
-    void load();
-  }, [range]);
-
-  return data;
+      const body = await resp.json();
+      return (body.metrics ?? []) as MetricPoint[];
+    },
+  });
 }
 
 export function useAlertStatus(thresholdHours: number) {
-  const [alert, setAlert] = useState(false);
-
-  useEffect(() => {
-    async function check() {
-      try {
-        const resp = await fetch('/api/monitoring/latency');
-        if (resp.ok) {
-          const body = await resp.json();
-          if (body.average_seconds > thresholdHours * 3600) {
-            setAlert(true);
-          } else {
-            setAlert(false);
-          }
-        }
-      } catch {
-        setAlert(false);
+  const { data } = useQuery({
+    queryKey: ['alertStatus', thresholdHours],
+    queryFn: async () => {
+      const resp = await fetch('/api/monitoring/latency');
+      if (!resp.ok) {
+        return false;
       }
-    }
-    void check();
-    const id = setInterval(check, 60000);
-    return () => clearInterval(id);
-  }, [thresholdHours]);
+      const body = await resp.json();
+      return body.average_seconds > thresholdHours * 3600;
+    },
+    refetchInterval: 60000,
+  });
 
-  return alert;
+  return data ?? false;
 }

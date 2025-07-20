@@ -1,17 +1,39 @@
 import React, { useState } from 'react';
 import {
-  Line,
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
   Tooltip,
-} from 'recharts';
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 import { useLatencyData } from '../hooks/useMonitoringData';
+
+ChartJS.register(
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
 
 export function LatencyChart() {
   const [range, setRange] = useState('24h');
-  const data = useLatencyData(range);
+  const { data } = useLatencyData(range);
+
+  const chartData = {
+    labels: data?.map((d) => d.timestamp) ?? [],
+    datasets: [
+      {
+        label: 'latency',
+        data: data?.map((d) => d.value) ?? [],
+        borderColor: '#82ca9d',
+      },
+    ],
+  };
 
   return (
     <div>
@@ -27,18 +49,11 @@ export function LatencyChart() {
         <option value="7d">7d</option>
         <option value="30d">30d</option>
       </select>
-      <LineChart
-        width={400}
-        height={200}
-        data={data}
+      <Line
+        options={{ responsive: true }}
+        data={chartData}
         data-testid="latency-chart"
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="timestamp" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-      </LineChart>
+      />
     </div>
   );
 }

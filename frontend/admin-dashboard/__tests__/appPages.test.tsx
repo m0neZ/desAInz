@@ -4,6 +4,7 @@ import IdeasPage from '../app/ideas/page';
 import MockupsPage from '../app/mockups/page';
 import PublishPage from '../app/publish/page';
 import MetricsPage from '../app/metrics/page';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 jest.mock('../src/trpc', () => ({
   trpc: {
@@ -45,7 +46,12 @@ describe('dashboard pages render', () => {
   });
 
   it('metrics', () => {
-    render(<MetricsPage />);
+    const client = new QueryClient();
+    render(
+      <QueryClientProvider client={client}>
+        <MetricsPage />
+      </QueryClientProvider>
+    );
     expect(
       screen.getByRole('heading', { name: /metrics/i })
     ).toBeInTheDocument();

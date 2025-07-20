@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type HeatmapEntry } from '../../trpc';
+import { useHeatmap } from '../../lib/trpc/hooks';
 
 export default function HeatmapPage() {
   const { t } = useTranslation();
-  const [data, setData] = useState<HeatmapEntry[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      setData(await trpc.heatmap.list());
-    }
-    void load();
-  }, []);
+  const { data, isLoading } = useHeatmap();
 
   return (
     <div>
       <h1>{t('heatmap')}</h1>
-      <ul>
-        {data.map((entry) => (
-          <li key={entry.label}>
-            {entry.label}: {entry.count}
-          </li>
-        ))}
-      </ul>
+      {isLoading || !data ? (
+        <div>{t('loading')}</div>
+      ) : (
+        <ul>
+          {data.map((entry) => (
+            <li key={entry.label}>
+              {entry.label}: {entry.count}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type AuditLog } from '../../trpc';
+import { useAuditLogs } from '../../lib/trpc/hooks';
 
 export default function AuditLogsPage() {
   const { t } = useTranslation();
-  const [logs, setLogs] = useState<AuditLog[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const result = await trpc.auditLogs.list();
-        setLogs(result.items);
-      } catch {
-        setLogs([]);
-      }
-    }
-    void load();
-  }, []);
+  const { data, isLoading } = useAuditLogs();
 
   return (
     <div className="space-y-2">
       <h1>{t('auditLogs')}</h1>
-      <ul>
-        {logs.map((log) => (
-          <li
-            key={log.id}
-          >{`${log.timestamp} ${log.username} ${log.action}`}</li>
-        ))}
-      </ul>
+      {isLoading || !data ? (
+        <div>{t('loading')}</div>
+      ) : (
+        <ul>
+          {data.items.map((log) => (
+            <li
+              key={log.id}
+            >{`${log.timestamp} ${log.username} ${log.action}`}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type Signal } from '../../trpc';
+import { useSignals } from '../../lib/trpc/hooks';
 
 const StatusIndicator = dynamic(
   () => import('../../components/StatusIndicator')
@@ -20,14 +20,7 @@ const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
 
 export default function DashboardPage() {
   const { t } = useTranslation();
-  const [signals, setSignals] = useState<Signal[]>([]);
-
-  useEffect(() => {
-    async function load() {
-      setSignals(await trpc.signals.list());
-    }
-    void load();
-  }, []);
+  const { data: signals, isLoading } = useSignals();
 
   return (
     <div className="space-y-4">
@@ -36,13 +29,17 @@ export default function DashboardPage() {
       <TrendingKeywords />
       <AbTestSummary abTestId={1} />
       <h1>{t('signalStream')}</h1>
-      <ul>
-        {signals.map((s) => (
-          <li key={s.id}>
-            {s.source}: {s.content}
-          </li>
-        ))}
-      </ul>
+      {isLoading || !signals ? (
+        <div>{t('loading')}</div>
+      ) : (
+        <ul>
+          {signals.map((s) => (
+            <li key={s.id}>
+              {s.source}: {s.content}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

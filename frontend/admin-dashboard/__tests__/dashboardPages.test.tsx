@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuditLogsPage from '../src/pages/dashboard/audit-logs';
 import OptimizationsPage from '../src/pages/dashboard/optimizations';
 import MetricsPage from '../src/pages/dashboard/metrics';
@@ -13,21 +14,36 @@ jest.mock('../src/trpc', () => ({
 
 describe('dashboard data pages render', () => {
   it('audit logs', () => {
-    render(<AuditLogsPage />);
+    const client = new QueryClient();
+    render(
+      <QueryClientProvider client={client}>
+        <AuditLogsPage />
+      </QueryClientProvider>
+    );
     expect(
       screen.getByRole('heading', { name: /audit logs/i })
     ).toBeInTheDocument();
   });
 
   it('optimizations', () => {
-    render(<OptimizationsPage />);
+    const client = new QueryClient();
+    render(
+      <QueryClientProvider client={client}>
+        <OptimizationsPage />
+      </QueryClientProvider>
+    );
     expect(
       screen.getByRole('heading', { name: /optimizations/i })
     ).toBeInTheDocument();
   });
 
   it('metrics', () => {
-    render(<MetricsPage />);
+    const client = new QueryClient();
+    render(
+      <QueryClientProvider client={client}>
+        <MetricsPage />
+      </QueryClientProvider>
+    );
     expect(
       screen.getByRole('heading', { name: /metrics/i })
     ).toBeInTheDocument();

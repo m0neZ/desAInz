@@ -43,6 +43,36 @@ patches:
         type: NodePort
   - target:
       kind: Service
+      name: ai-mockup-generation
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: ai-mockup-generation
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: feedback-loop
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: feedback-loop
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
+      name: optimization
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: optimization
+      spec:
+        type: NodePort
+  - target:
+      kind: Service
       name: monitoring
     patch: |-
       apiVersion: v1

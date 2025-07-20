@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: feedback-loop
+  labels:
+    app: feedback-loop
+spec:
+  selector:
+    matchLabels:
+      app: feedback-loop
+  endpoints:
+    - path: /metrics
+      targetPort: 80
+      interval: 30s

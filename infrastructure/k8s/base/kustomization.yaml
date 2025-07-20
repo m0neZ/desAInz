@@ -11,6 +11,15 @@ resources:
   - scoring-engine-deployment.yaml
   - scoring-engine-service.yaml
   - scoring-engine-servicemonitor.yaml
+  - ai-mockup-generation-deployment.yaml
+  - ai-mockup-generation-service.yaml
+  - ai-mockup-generation-servicemonitor.yaml
+  - feedback-loop-deployment.yaml
+  - feedback-loop-service.yaml
+  - feedback-loop-servicemonitor.yaml
+  - optimization-deployment.yaml
+  - optimization-service.yaml
+  - optimization-servicemonitor.yaml
   - monitoring-deployment.yaml
   - monitoring-service.yaml
   - monitoring-servicemonitor.yaml

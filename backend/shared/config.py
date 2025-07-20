@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     redis_url: RedisDsn = RedisDsn("redis://localhost:6379/0")
     score_cache_ttl: int = 3600
     trending_ttl: int = 3600
+    trending_max_keywords: int = 100
     s3_endpoint: str | None = None
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
@@ -36,7 +37,7 @@ class Settings(BaseSettings):
             return [v.strip() for v in value.split(",") if v.strip()]
         return value
 
-    @field_validator("score_cache_ttl", "trending_ttl")
+    @field_validator("score_cache_ttl", "trending_ttl", "trending_max_keywords")
     @classmethod
     def _positive(cls, value: int) -> int:
         if value <= 0:

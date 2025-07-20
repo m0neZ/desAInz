@@ -4,11 +4,15 @@ from __future__ import annotations
 
 import re
 from typing import Iterable
+import math
+import time
 
 from backend.shared.cache import get_sync_client
 from backend.shared.config import settings
 
 TRENDING_KEY = "trending:keywords"
+TRENDING_TS_KEY = "trending:timestamps"
+_DECAY_BASE = math.e
 _WORD_RE = re.compile(r"[A-Za-z0-9]+")
 
 
@@ -23,9 +27,12 @@ def store_keywords(keywords: Iterable[str]) -> None:
     """Increment counts for ``keywords`` and refresh TTL."""
     client = get_sync_client()
     pipe = client.pipeline()
+    now = int(time.time())
     for word in keywords:
         pipe.zincrby(TRENDING_KEY, 1, word)
+        pipe.zadd(TRENDING_TS_KEY, {word: now})
     pipe.expire(TRENDING_KEY, settings.trending_ttl)
+    pipe.expire(TRENDING_TS_KEY, settings.trending_ttl)
     pipe.execute()
 
 
@@ -39,3 +46,41 @@ def get_trending(limit: int = 10) -> list[str]:
 def get_top_keywords(limit: int) -> list[str]:
     """Return the top ``limit`` keywords ordered by popularity."""
     return get_trending(limit)
+
+
+def trim_keywords(max_size: int) -> None:
+    """Decay scores, drop stale entries and limit sorted set size."""
+    client = get_sync_client()
+    now = int(time.time())
+    cutoff = now - settings.trending_ttl
+    stale_words = client.zrangebyscore(TRENDING_TS_KEY, 0, cutoff)
+    pipe = client.pipeline()
+    if stale_words:
+        pipe.zrem(TRENDING_KEY, *stale_words)
+        pipe.zrem(TRENDING_TS_KEY, *stale_words)
+    all_words = client.zrange(TRENDING_KEY, 0, -1)
+    for word in all_words:
+        w = word.decode("utf-8") if isinstance(word, bytes) else word
+        score = client.zscore(TRENDING_KEY, w)
+        last_seen = client.zscore(TRENDING_TS_KEY, w)
+        if score is None or last_seen is None:
+            pipe.zrem(TRENDING_KEY, w)
+            pipe.zrem(TRENDING_TS_KEY, w)
+            continue
+        elapsed = now - int(last_seen)
+        decay = _DECAY_BASE ** (-elapsed / settings.trending_ttl)
+        new_score = float(score) * decay
+        if new_score <= 0:
+            pipe.zrem(TRENDING_KEY, w)
+            pipe.zrem(TRENDING_TS_KEY, w)
+        else:
+            pipe.zadd(TRENDING_KEY, {w: new_score})
+    pipe.execute()
+    size = client.zcard(TRENDING_KEY)
+    if size > max_size:
+        excess = client.zrange(TRENDING_KEY, 0, size - max_size - 1)
+        if excess:
+            pipe = client.pipeline()
+            pipe.zrem(TRENDING_KEY, *excess)
+            pipe.zrem(TRENDING_TS_KEY, *excess)
+            pipe.execute()

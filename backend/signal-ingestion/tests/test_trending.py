@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from types import SimpleNamespace
 from pathlib import Path
+import time
 
 import fakeredis
 
@@ -25,12 +26,17 @@ def test_store_keywords_sets_ttl(monkeypatch):
     monkeypatch.setattr(trending, "get_sync_client", lambda: fake)
     trending.store_keywords(["foo", "bar"])
     ttl1 = fake.ttl(trending.TRENDING_KEY)
+    ts_ttl1 = fake.ttl(trending.TRENDING_TS_KEY)
     assert 0 < ttl1 <= settings.trending_ttl
+    assert 0 < ts_ttl1 <= settings.trending_ttl
     trending.store_keywords(["foo"])
     ttl2 = fake.ttl(trending.TRENDING_KEY)
+    ts_ttl2 = fake.ttl(trending.TRENDING_TS_KEY)
     assert ttl2 > 0
     assert ttl2 <= settings.trending_ttl
     assert ttl2 >= ttl1 - 1
+    assert ts_ttl2 > 0
+    assert ts_ttl2 <= settings.trending_ttl
 
 
 def test_get_top_keywords_sorted(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -39,6 +45,31 @@ def test_get_top_keywords_sorted(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(trending, "get_sync_client", lambda: fake)
     fake.zadd(trending.TRENDING_KEY, {"foo": 1, "bar": 3, "baz": 2})
     assert trending.get_top_keywords(2) == ["bar", "baz"]
+
+
+def test_trim_keywords_removes_stale_and_decays(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Stale keywords are dropped and scores decay over time."""
+    fake = fakeredis.FakeRedis()
+    monkeypatch.setattr(trending, "get_sync_client", lambda: fake)
+    now = int(time.time())
+    fake.zadd(
+        trending.TRENDING_KEY,
+        {"old": 10.0, "new": 5.0},
+    )
+    fake.zadd(
+        trending.TRENDING_TS_KEY,
+        {
+            "old": now - settings.trending_ttl - 10,
+            "new": now - int(settings.trending_ttl * 0.25),
+        },
+    )
+    trending.trim_keywords(10)
+    assert fake.zscore(trending.TRENDING_KEY, "old") is None
+    old_score = fake.zscore(trending.TRENDING_KEY, "new")
+    assert old_score is not None
+    assert old_score < 5.0
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")

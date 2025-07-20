@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 from threading import Event
+from fastapi.testclient import TestClient
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -41,3 +42,38 @@ def test_consume_signals_stores_embeddings() -> None:
         assert row is not None
         assert row.source == "src"
         assert row.embedding[0] == 1.0
+
+
+def test_consumer_closed_on_shutdown(monkeypatch) -> None:
+    """Ensure the Kafka consumer is closed on application shutdown."""
+    closed = False
+
+    class DummyConsumer:
+        def __iter__(self) -> object:
+            return iter([])
+
+        def close(self) -> None:
+            nonlocal closed
+            closed = True
+
+    import scoring_engine.app as app_module
+
+    monkeypatch.setenv("KAFKA_SKIP", "0")
+    monkeypatch.setattr(app_module, "_create_consumer", lambda: DummyConsumer())
+
+    class DummyThread:
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        def start(self) -> None:
+            pass
+
+        def join(self, timeout: float | None = None) -> None:
+            pass
+
+    monkeypatch.setattr(app_module, "Thread", DummyThread)
+
+    with TestClient(app_module.app):
+        pass
+
+    assert closed

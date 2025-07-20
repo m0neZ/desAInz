@@ -57,3 +57,7 @@ class KafkaConsumerWrapper:
             schema = self._schemas[message.topic]
             validate(value, schema)
             yield message.topic, value
+
+    def close(self) -> None:
+        """Close the underlying Kafka consumer."""
+        self._consumer.close()

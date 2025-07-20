@@ -2,25 +2,17 @@
 
 from __future__ import annotations
 
+import json
 from datetime import datetime
 from enum import Enum
 from typing import Any
-import json
 
-from sqlalchemy import (
-    DateTime,
-    Enum as SqlEnum,
-    ForeignKey,
-    Integer,
-    String,
-    select,
-    update,
-)
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from backend.shared.db import models as shared_models
+
+from sqlalchemy import DateTime
+from sqlalchemy import Enum as SqlEnum
+from sqlalchemy import ForeignKey, Integer, String, select, update
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 from .settings import settings
@@ -54,7 +46,7 @@ class PublishTask(Base):
 
     __tablename__ = "publish_task"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)  # noqa: A003
     marketplace: Mapped[Marketplace] = mapped_column(
         SqlEnum(Marketplace), nullable=False
     )
@@ -77,7 +69,7 @@ class WebhookEvent(Base):
 
     __tablename__ = "webhook_event"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)  # noqa: A003
     task_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("publish_task.id"), nullable=False
     )
@@ -149,3 +141,25 @@ async def get_task(session: AsyncSession, task_id: int) -> PublishTask | None:
     """Retrieve a task by ID."""
     result = await session.execute(select(PublishTask).where(PublishTask.id == task_id))
     return result.scalars().first()
+
+
+async def get_listing(
+    session: AsyncSession, listing_id: int
+) -> shared_models.Listing | None:
+    """Return listing with ``listing_id``."""
+    result = await session.execute(
+        select(shared_models.Listing).where(shared_models.Listing.id == listing_id)
+    )
+    return result.scalars().first()
+
+
+async def update_listing(session: AsyncSession, listing_id: int, **values: Any) -> None:
+    """Update listing attributes using provided keyword ``values``."""
+    if not values:
+        return
+    await session.execute(
+        update(shared_models.Listing)
+        .where(shared_models.Listing.id == listing_id)
+        .values(**values)
+    )
+    await session.commit()

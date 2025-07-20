@@ -2,45 +2,53 @@
 
 from __future__ import annotations
 
-import logging
 import asyncio
+import json
+import logging
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
-import json
+
+from backend.shared import (
+    add_error_handlers,
+    configure_sentry,
+    init_feature_flags,
+    is_enabled,
+)
+from backend.shared.config import settings as shared_settings
+from backend.shared.db import models as shared_models
+from backend.shared.db import session_scope
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.tracing import configure_tracing
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel, ConfigDict
+
 from redis.asyncio import Redis
 
-from .logging_config import configure_logging
-from .settings import settings
-from .rate_limiter import MarketplaceRateLimiter
-from sqlalchemy import update
+from sqlalchemy import func, update
 
+from . import notifications
 from .db import (
     Marketplace,
     PublishStatus,
     PublishTask,
     SessionLocal,
     create_task,
+    get_listing,
     get_task,
     init_db,
+    update_listing,
 )
-from .rules import load_rules, validate_mockup
+from .logging_config import configure_logging
 from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
-from . import notifications
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
-from backend.shared.metrics import register_metrics
-from backend.shared.db import session_scope
-from backend.shared.db import models as shared_models
-from sqlalchemy import func
-from backend.shared import init_feature_flags, is_enabled
-from backend.shared import add_error_handlers, configure_sentry
-from backend.shared.config import settings as shared_settings
+from .rate_limiter import MarketplaceRateLimiter
+from .rules import load_rules, validate_mockup
+from .settings import settings
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -140,6 +148,14 @@ class MetadataPatch(BaseModel):
     """Arbitrary metadata payload."""
 
     model_config = ConfigDict(extra="allow")
+
+
+class ListingPatch(BaseModel):
+    """Fields allowed when updating a listing."""
+
+    model_config = ConfigDict(extra="forbid")
+    price: float | None = None
+    state: str | None = None
 
 
 async def _background_publish(task_id: int) -> None:
@@ -253,6 +269,34 @@ async def retry_task(task_id: int, background: BackgroundTasks) -> dict[str, str
             raise HTTPException(status_code=404)
     background.add_task(_background_publish, task_id)
     return {"status": "scheduled"}
+
+
+@app.get("/listings/{listing_id}")
+async def get_listing_details(listing_id: int) -> dict[str, Any]:
+    """Return listing information for ``listing_id``."""
+    async with SessionLocal() as session:
+        listing = await get_listing(session, listing_id)
+        if listing is None:
+            raise HTTPException(status_code=404)
+        return {
+            "id": listing.id,
+            "mockup_id": listing.mockup_id,
+            "price": listing.price,
+            "state": listing.state,
+            "created_at": listing.created_at.isoformat(),
+        }
+
+
+@app.patch("/listings/{listing_id}")
+async def patch_listing(listing_id: int, body: ListingPatch) -> dict[str, str]:
+    """Update fields on ``listing_id``."""
+    async with SessionLocal() as session:
+        listing = await get_listing(session, listing_id)
+        if listing is None:
+            raise HTTPException(status_code=404)
+        updates = {k: v for k, v in body.model_dump(exclude_none=True).items()}
+        await update_listing(session, listing_id, **updates)
+    return {"status": "updated"}
 
 
 @app.get("/metrics/{listing_id}")

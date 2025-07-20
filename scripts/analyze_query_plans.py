@@ -5,7 +5,8 @@ Analyze query plans and suggest missing indexes.
 This script connects to the database defined by ``DATABASE_URL`` and
 inspects ``pg_stat_statements`` for the slowest queries. Each query is then
 passed to ``EXPLAIN`` so that the query planner output can be reviewed.
-The goal is to identify missing indexes or other optimisations.
+The goal is to identify missing indexes or other optimisations. The
+``pg_stat_statements`` extension must be installed for the analysis to work.
 """
 
 from __future__ import annotations
@@ -25,7 +26,15 @@ SLOW_QUERY_SQL = """
     LIMIT %s
 """
 
+CHECK_EXTENSION_SQL = "SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements'"
+
 DEFAULT_LIMIT = 5
+
+
+def _extension_available(cur: DictCursor) -> bool:
+    """Return ``True`` if ``pg_stat_statements`` extension is installed."""
+    cur.execute(CHECK_EXTENSION_SQL)
+    return cur.fetchone() is not None
 
 
 def _fetch_slow_queries(cur: DictCursor, limit: int) -> Iterable[str]:
@@ -48,6 +57,9 @@ def main() -> None:
     conn = psycopg2.connect(dsn)
     try:
         with conn.cursor(cursor_factory=DictCursor) as cur:
+            if not _extension_available(cur):
+                logging.error("pg_stat_statements extension is not installed")
+                return
             for query in _fetch_slow_queries(cur, limit):
                 plan = _explain_query(cur, query)
                 logging.info("Query: %s\n%s", query, plan)

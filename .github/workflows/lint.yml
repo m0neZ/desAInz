@@ -36,6 +36,8 @@ jobs:
         run: mypy backend --explicit-package-bases --exclude "tests"
       - name: Run ESLint/Prettier/Stylelint
         run: npm run lint
+      - name: Run CSS lint
+        run: npm run lint:css
       - name: Run Flow
         run: |
           npm run flow

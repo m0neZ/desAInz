@@ -4,6 +4,9 @@ import { SessionProvider } from 'next-auth/react';
 import '../styles/globals.css';
 import AdminLayout from '../layouts/AdminLayout';
 import '../i18n';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export default function MyApp({
   Component,
@@ -11,9 +14,11 @@ export default function MyApp({
 }: AppProps<{ session: Session }>) {
   return (
     <SessionProvider session={pageProps.session}>
-      <AdminLayout>
-        <Component {...pageProps} />
-      </AdminLayout>
+      <QueryClientProvider client={queryClient}>
+        <AdminLayout>
+          <Component {...pageProps} />
+        </AdminLayout>
+      </QueryClientProvider>
     </SessionProvider>
   );
 }

@@ -45,6 +45,27 @@ Use these prefixes so the release script can determine the next semantic version
 
 Run `./scripts/release.sh <registry>` after your changes are merged. The script updates `CHANGELOG.md`, creates a git tag, builds Docker images and pushes them with the new version number.
 
+## Database Migrations
+
+Migrations for each service live under `backend/shared/db/migrations`. After changing models, generate a new revision:
+
+```bash
+alembic -c backend/shared/db/<config>.ini revision -m "add feature" --autogenerate
+```
+
+Before merging branches ensure only one revision head exists. If multiple heads are reported by `alembic heads`, create a merge revision:
+
+```bash
+alembic -c backend/shared/db/<config>.ini merge -m "merge heads" HEADS
+```
+
+Run the migration tests to verify the chain is valid:
+
+```bash
+pytest tests/test_migrations.py tests/integration/test_alembic_heads.py
+```
+
+
 ## Third-Party Licenses
 
 Generate the bundled `LICENSES` file with:

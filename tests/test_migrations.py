@@ -13,8 +13,8 @@ sys.path.append(str(REPO_ROOT / "backend" / "signal-ingestion" / "src"))
 
 from alembic import command
 from alembic.config import Config
-from alembic.script import ScriptDirectory
 import pytest
+from tests.utils import assert_single_head
 
 
 def _run_migration(config_path: str, tmp_path: Path) -> None:
@@ -25,14 +25,6 @@ def _run_migration(config_path: str, tmp_path: Path) -> None:
 
     command.upgrade(cfg, "head")
     command.downgrade(cfg, "base")
-
-
-def _assert_single_head(config_path: str) -> None:
-    """Run ``alembic heads`` and assert a single head exists."""
-    cfg = Config(config_path)
-    script = ScriptDirectory.from_config(cfg)
-    heads = script.get_heads()
-    assert len(heads) == 1, f"{config_path} has multiple heads: {heads}"
 
 
 @pytest.mark.parametrize(
@@ -60,4 +52,4 @@ def test_migrations(config_path: str, tmp_path: Path) -> None:
 )
 def test_single_head(config_path: str) -> None:
     """Ensure each environment has a single Alembic head."""
-    _assert_single_head(config_path)
+    assert_single_head(config_path)

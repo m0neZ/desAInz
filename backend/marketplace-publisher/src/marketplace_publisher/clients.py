@@ -268,9 +268,19 @@ class SeleniumFallback:
         self.screenshot_dir.mkdir(parents=True, exist_ok=True)
 
     def publish(
-        self, marketplace: Marketplace, design_path: Path, metadata: dict[str, Any]
+        self,
+        marketplace: Marketplace,
+        design_path: Path,
+        metadata: dict[str, Any],
+        max_attempts: int = 3,
     ) -> None:
-        """Automate browser interactions for publishing a design."""
+        """
+        Automate browser interactions for publishing a design.
+
+        The method retries failed attempts using exponential backoff. On each
+        failure a screenshot and browser network logs are written to
+        ``screenshot_dir``.
+        """
         if self.driver is None:
             return
         selectors = rules.get_selectors(marketplace)
@@ -299,10 +309,19 @@ class SeleniumFallback:
                 break
             except Exception:
                 attempts += 1
+                ts = int(time.time())
                 screenshot_path = (
-                    self.screenshot_dir
-                    / f"{marketplace.value}_{int(time.time())}_{attempts}.png"
+                    self.screenshot_dir / f"{marketplace.value}_{ts}_{attempts}.png"
+                )
+                log_path = (
+                    self.screenshot_dir / f"{marketplace.value}_{ts}_{attempts}.log"
                 )
                 self.driver.save_screenshot(str(screenshot_path))
-                if attempts >= 3:
+                try:
+                    logs = self.driver.get_log("browser")
+                    log_path.write_text("\n".join(str(entry) for entry in logs))
+                except Exception:  # pragma: no cover - logging optional
+                    pass
+                if attempts >= max_attempts:
                     raise
+                time.sleep(min(2**attempts, 30))

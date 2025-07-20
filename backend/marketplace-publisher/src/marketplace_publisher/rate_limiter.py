@@ -6,7 +6,8 @@ import asyncio
 from collections.abc import Mapping
 from typing import Any
 
-from redis.asyncio import Redis, WatchError
+from redis.asyncio import WatchError
+from backend.shared.cache import AsyncRedis
 
 from .db import Marketplace
 
@@ -16,7 +17,7 @@ class MarketplaceRateLimiter:
 
     def __init__(
         self,
-        redis: Redis,
+        redis: AsyncRedis,
         limits: Mapping[Marketplace, int],
         window: int,
     ) -> None:
@@ -53,16 +54,16 @@ class MarketplaceRateLimiter:
                     await pipe.watch(key)
                     raw: Any = await pipe.get(key)
                     if raw is None:
-                        pipe.multi()  # type: ignore[no-untyped-call]
+                        pipe.multi()
                         pipe.set(key, limit - 1, ex=self._window)
                         await pipe.execute()
                         return True
                     tokens = int(raw)
                     if tokens <= 0:
-                        await pipe.unwatch()  # type: ignore[no-untyped-call]
+                        await pipe.unwatch()
                         await asyncio.sleep(0)
                         return False
-                    pipe.multi()  # type: ignore[no-untyped-call]
+                    pipe.multi()
                     pipe.decr(key)
                     await pipe.execute()
                     return True

@@ -8,7 +8,6 @@ from typing import Iterator
 import os
 import time
 
-import redis
 from redis.lock import Lock as RedisLock
 from celery import Task
 from prometheus_client import Counter, Gauge
@@ -59,7 +58,9 @@ GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
 GPU_QUEUE_PREFIX = os.getenv("GPU_QUEUE_PREFIX", "gpu")
 GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
 
-redis_client = redis.Redis.from_url(REDIS_URL)
+from backend.shared.cache import SyncRedis, get_sync_client
+
+redis_client: SyncRedis = get_sync_client()
 
 generator = MockupGenerator()
 

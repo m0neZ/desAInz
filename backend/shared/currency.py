@@ -7,11 +7,11 @@ import logging
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict
 
+from backend.shared.cache import SyncRedis, get_sync_client
 from backend.shared.config import settings
 import os
 
 import requests
-import redis
 from apscheduler.schedulers.background import BackgroundScheduler
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ EXCHANGE_API_URL = os.environ.get(
 BASE_CURRENCY = os.environ.get("BASE_CURRENCY", "USD")
 REDIS_KEY = "exchange_rates"
 
-redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+redis_client: SyncRedis = get_sync_client()
 scheduler = BackgroundScheduler()
 
 

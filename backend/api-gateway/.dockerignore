@@ -9,4 +9,5 @@ frontend/admin-dashboard/node_modules/
 flow-typed/
 docs/
 tests/
+.pytest_cache/
 .git/

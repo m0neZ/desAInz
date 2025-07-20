@@ -1,0 +1,9 @@
+node_modules/
+__tests__/
+__mocks__/
+coverage/
+e2e/
+.next/
+*.log
+.env
+.pytest_cache/

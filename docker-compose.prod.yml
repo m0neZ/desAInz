@@ -197,7 +197,9 @@ services:
       - kafka
 
   feedback-loop:
-    build: ./backend/feedback-loop
+    build:
+      context: .
+      dockerfile: backend/feedback-loop/Dockerfile
     ports:
       - "8005:8000"
 

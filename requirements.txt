@@ -19,6 +19,7 @@ opentelemetry-exporter-jaeger
 apscheduler
 pgvector
 watchtower
+watchdog
 Flask
 pydantic-settings
 psycopg2-binary

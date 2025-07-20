@@ -6,6 +6,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
+from typing import Any
+
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
+
 import yaml
 
 from .db import Marketplace
@@ -39,12 +44,52 @@ class RulesRegistry:
 
 
 rules_registry: RulesRegistry | None = None
+_rules_path: Path | None = None
+_observer: Observer | None = None
 
 
-def load_rules(path: Path) -> None:
-    """Load marketplace rules from ``path`` into the global registry."""
+def _reload_rules() -> None:
+    """Reload rules from ``_rules_path`` into the global registry."""
+    if _rules_path is None:
+        msg = "rules path not set"
+        raise RuntimeError(msg)
     global rules_registry  # noqa: PLW0603
-    rules_registry = RulesRegistry(path)
+    rules_registry = RulesRegistry(_rules_path)
+
+
+class _RulesFileHandler(FileSystemEventHandler):  # type: ignore[misc]
+    """Reload rules when the watched file changes."""
+
+    def __init__(self, path: Path) -> None:
+        self._path = path.resolve()
+
+    def on_modified(self, event: Any) -> None:
+        if Path(event.src_path).resolve() == self._path:
+            _reload_rules()
+
+
+def stop_watching_rules() -> None:
+    """Stop watching the rules file for changes."""
+
+    global _observer
+    if _observer is not None:
+        _observer.stop()
+        _observer.join()
+        _observer = None
+
+
+def load_rules(path: Path, watch: bool = False) -> None:
+    """Load marketplace rules from ``path`` and optionally watch for changes."""
+
+    global _rules_path, _observer
+    _rules_path = path
+    _reload_rules()
+    if watch and _observer is None:
+        handler = _RulesFileHandler(path)
+        _observer = Observer()
+        _observer.daemon = True
+        _observer.schedule(handler, str(path.parent), recursive=False)
+        _observer.start()
 
 
 def get_upload_limit(marketplace: Marketplace) -> int | None:

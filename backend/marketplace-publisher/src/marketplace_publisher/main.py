@@ -84,7 +84,7 @@ async def startup() -> None:
         / "config"
         / "marketplace_rules.yaml"
     )
-    load_rules(rules_path)
+    load_rules(rules_path, watch=True)
     init_feature_flags()
 
 

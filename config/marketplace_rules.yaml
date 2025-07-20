@@ -1,0 +1,40 @@
+redbubble:
+  max_file_size_mb: 10
+  max_width: 8000
+  max_height: 8000
+  upload_limit: 50
+  selectors:
+    url: "https://www.redbubble.com/upload"
+    upload_input: "#upload"
+    title_input: "#title"
+    submit_button: "#submit"
+amazon_merch:
+  max_file_size_mb: 25
+  max_width: 15000
+  max_height: 15000
+  upload_limit: 100
+  selectors:
+    url: "https://merch.amazon.com/create"
+    upload_input: "#upload"
+    title_input: "#title"
+    submit_button: "#submit"
+etsy:
+  max_file_size_mb: 20
+  max_width: 10000
+  max_height: 10000
+  upload_limit: 80
+  selectors:
+    url: "https://www.etsy.com/new"
+    upload_input: "#upload"
+    title_input: "#title"
+    submit_button: "#submit"
+society6:
+  max_file_size_mb: 15
+  max_width: 10000
+  max_height: 10000
+  upload_limit: 70
+  selectors:
+    url: "https://www.society6.com/sell"
+    upload_input: "#upload"
+    title_input: "#title"
+    submit_button: "#submit"

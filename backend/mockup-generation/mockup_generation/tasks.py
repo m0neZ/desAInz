@@ -22,6 +22,8 @@ from .post_processor import (
     convert_to_cmyk,
     ensure_not_nsfw,
     remove_background,
+    validate_dimensions,
+    validate_file_size,
     validate_color_space,
     validate_dpi_image,
 )
@@ -167,7 +169,11 @@ def generate_mockup(
                 raise ValueError("Invalid DPI")
             if not validate_color_space(processed):
                 raise ValueError("Invalid color space")
+            if not validate_dimensions(processed):
+                raise ValueError("Invalid dimensions")
             compress_lossless(processed, output_path)
+            if not validate_file_size(output_path):
+                raise ValueError("File size too large")
             obj_name = f"generated-mockups/{output_path.name}"
             if hasattr(client, "fput_object"):
                 client.fput_object(settings.s3_bucket, obj_name, str(output_path))

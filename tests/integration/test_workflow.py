@@ -10,7 +10,7 @@ from unittest.mock import MagicMock
 import pytest
 import vcr
 from PIL import Image
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 # Stub external dependencies before importing service modules
 from backend.shared.kafka import utils as kafka_utils
@@ -46,11 +46,14 @@ from scoring_engine import scoring, weight_repository  # noqa: E402
     "tests/integration/cassettes/workflow.yaml", record_mode="new_episodes"
 )
 @pytest.mark.asyncio()
-async def test_end_to_end(monkeypatch, tmp_path) -> None:
+async def test_end_to_end(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
     """Run ingestion, scoring, generation and publishing together."""
-    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
-    session_factory = async_sessionmaker(engine, expire_on_commit=False)
-    monkeypatch.setattr(ing_db, "engine", engine)
+    monkeypatch.setattr(ing_db, "engine", sqlite_engine)
     monkeypatch.setattr(ing_db, "SessionLocal", session_factory)
     await ing_db.init_db()
 

@@ -10,14 +10,15 @@ import fakeredis.aioredis
 from PIL import Image
 
 from fastapi.testclient import TestClient
+import pytest
 from scoring_engine.app import app as scoring_app
 import scoring_engine.app as scoring_module
 from scoring_engine.weight_repository import update_weights
 from mockup_generation.generator import MockupGenerator
 
 
-def _setup_scoring() -> ThreadPoolExecutor:
-    scoring_module.redis_client = fakeredis.aioredis.FakeRedis()
+def _setup_scoring(redis_client: fakeredis.aioredis.FakeRedis) -> ThreadPoolExecutor:
+    scoring_module.redis_client = redis_client
     update_weights(
         freshness=1.0,
         engagement=1.0,
@@ -52,9 +53,13 @@ def _worker(client, gen: MockupGenerator, tmp: Path, idx: int) -> None:
     gen.generate("test", str(tmp / f"{idx}.png"), num_inference_steps=1)
 
 
-def test_parallel_services(monkeypatch, tmp_path) -> None:
+def test_parallel_services(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    fake_redis: fakeredis.aioredis.FakeRedis,
+) -> None:
     """Run scoring and generation concurrently without errors."""
-    executor = _setup_scoring()
+    executor = _setup_scoring(fake_redis)
     gen = MockupGenerator()
     monkeypatch.setattr(MockupGenerator, "load", _fake_load)
 

@@ -2,6 +2,12 @@
 
 This guide explains how to run desAInz locally with Docker Compose, deploy it to Kubernetes, and push containers to AWS, GCP and Azure. All services rely on the environment variables listed in [configuration](configuration.md). Sample values are available under `.env.dev.example`, `.env.staging.example` and `.env.prod.example`.
 
+## Prerequisites
+
+* Docker Engine with the Buildx plugin installed
+* QEMU emulation binaries for cross-platform builds
+* `docker buildx` configured as the default builder
+
 ## Docker Compose
 
 1. Create a `.env` file by copying the appropriate example file and adjusting the values.
@@ -49,7 +55,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 
    ```bash
    aws ecr create-repository --repository-name desainz
-   docker build -t desainz .
+   ./scripts/build-images.sh
    docker tag desainz:latest <account>.dkr.ecr.<region>.amazonaws.com/desainz:latest
    docker push <account>.dkr.ecr.<region>.amazonaws.com/desainz:latest
    ```
@@ -61,7 +67,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 
    ```bash
    gcloud artifacts repositories create desainz --repository-format=docker --location=<region>
-   docker build -t gcr.io/<project>/desainz .
+   ./scripts/build-images.sh
    docker push gcr.io/<project>/desainz
    ```
 2. Deploy to Cloud Run or GKE. Use GCP Secret Manager to supply sensitive values.
@@ -72,7 +78,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 
    ```bash
    az acr create --name desainz --resource-group <rg> --sku Basic
-   docker build -t desainz .
+   ./scripts/build-images.sh
    az acr login --name desainz
    docker tag desainz:latest desainz.azurecr.io/desainz:latest
    docker push desainz.azurecr.io/desainz:latest

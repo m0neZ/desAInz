@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy import select
 import warnings
 
@@ -27,11 +27,14 @@ from marketplace_publisher import main  # noqa: E402
 
 
 @pytest.mark.asyncio()
-async def test_webhook_updates_task_state(monkeypatch, tmp_path: Path) -> None:
+async def test_webhook_updates_task_state(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
     """Posting to the webhook should update task status."""
-    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
-    session_factory = async_sessionmaker(engine, expire_on_commit=False)
-    monkeypatch.setattr(db, "engine", engine)
+    monkeypatch.setattr(db, "engine", sqlite_engine)
     monkeypatch.setattr(db, "SessionLocal", session_factory)
     from datetime import datetime, UTC
     from types import SimpleNamespace

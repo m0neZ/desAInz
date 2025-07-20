@@ -7,6 +7,7 @@ import sys
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 # API Gateway setup
 sys.path.append(
@@ -52,14 +53,14 @@ publisher_client = TestClient(mp_main.app)
 
 
 @pytest.mark.asyncio()
-async def test_update_task_metadata_validation(monkeypatch, tmp_path: Path) -> None:
+async def test_update_task_metadata_validation(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
     """Non-object metadata payload should be rejected."""
-    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
-    monkeypatch.setattr(
-        mp_main, "engine", create_async_engine("sqlite+aiosqlite:///:memory:")
-    )
-    session_factory = async_sessionmaker(mp_main.engine, expire_on_commit=False)
+    monkeypatch.setattr(mp_main, "engine", sqlite_engine)
     monkeypatch.setattr(mp_main, "SessionLocal", session_factory)
     await mp_main.init_db()
     async with session_factory() as session:

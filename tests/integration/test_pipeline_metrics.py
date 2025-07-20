@@ -39,8 +39,8 @@ import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy.ext.asyncio import (  # noqa: E402
     AsyncSession,
+    AsyncEngine,
     async_sessionmaker,
-    create_async_engine,
 )
 from sqlalchemy import select  # noqa: E402
 
@@ -65,13 +65,14 @@ class DummyAdapter:
 
 @pytest.mark.asyncio()
 async def test_pipeline_with_metrics(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
 ) -> None:
     """Run ingestion, generation, publishing and metrics collection."""
     proc = psutil.Process()
-    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
-    session_factory = async_sessionmaker(engine, expire_on_commit=False)
-    monkeypatch.setattr(ing_db, "engine", engine)
+    monkeypatch.setattr(ing_db, "engine", sqlite_engine)
     monkeypatch.setattr(ing_db, "SessionLocal", session_factory)
     await ing_db.init_db()
 

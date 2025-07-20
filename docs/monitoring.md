@@ -29,3 +29,9 @@ Run:
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.tracing.yml up -d otel-collector
 ```
+
+## Grafana Dashboards
+
+Prebuilt dashboard JSON files reside in `infrastructure/grafana`.
+Import them into Grafana via **Dashboards → Import** and select the
+TimescaleDB data source when prompted.

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
@@ -88,9 +89,12 @@ async def overview() -> dict[str, float]:
 
 
 @app.get("/analytics")
-async def analytics() -> dict[str, int]:
-    """Return placeholder analytics dashboard data."""
-    return {"active_users": 0, "error_rate": 0}
+async def analytics() -> dict[str, float]:
+    """Return metrics derived from the TimescaleDB store."""
+    since = datetime.utcnow() - timedelta(days=1)
+    active = metrics_store.get_active_users(since)
+    error_rate = metrics_store.get_error_rate(since)
+    return {"active_users": float(active), "error_rate": error_rate}
 
 
 @app.get("/status")

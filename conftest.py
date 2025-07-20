@@ -3,7 +3,7 @@
 from tests.conftest import *  # noqa: F401,F403
 import warnings
 import os
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 import redis
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -60,6 +60,10 @@ sys.modules.setdefault(
     "opentelemetry.trace",
     SimpleNamespace(set_tracer_provider=lambda *a, **k: None),
 )
+
+# Stub LaunchDarkly client to avoid heavy dependency.
+ld_mod = sys.modules.setdefault("ldclient", ModuleType("ldclient"))
+ld_mod.LDClient = object
 
 os.makedirs("/run/secrets", exist_ok=True)
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")

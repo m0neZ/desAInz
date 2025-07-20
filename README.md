@@ -74,3 +74,7 @@ make prod-up
 ```
 
 The `docker-compose.prod.yml` file uses prebuilt images and is intended for use on servers.
+
+## Implementation Plan
+
+See [docs/implementation_plan.md](docs/implementation_plan.md) for the milestone roadmap derived from the [Design Idea Engine Complete Blueprint](docs/blueprints/DesignIdeaEngineCompleteBlueprint.md).

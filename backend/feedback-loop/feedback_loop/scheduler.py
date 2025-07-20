@@ -43,6 +43,10 @@ def setup_scheduler(
         weights = update_weights_from_db(scoring_api)
         logger.info("updated marketplace weights %s", weights)
 
+    def daily_summary() -> None:
+        ab_manager.record_summary()
+        logger.info("recorded daily A/B test summary")
+
     scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
     # Run weight update a few minutes after the midnight ingestion so the
     # latest metrics are available before updating the scoring engine.
@@ -52,6 +56,13 @@ def setup_scheduler(
         "cron",
         hour=1,
         minute=0,
+        next_run_time=None,
+    )
+    scheduler.add_job(
+        daily_summary,
+        "cron",
+        hour=0,
+        minute=10,
         next_run_time=None,
     )
     if listing_ids:

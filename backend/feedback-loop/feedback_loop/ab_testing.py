@@ -4,9 +4,19 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from contextlib import contextmanager
+from datetime import date, datetime, timezone
 from typing import Iterator, Mapping
 
-from sqlalchemy import Boolean, Integer, String, create_engine, select
+from sqlalchemy import (
+    Boolean,
+    Date,
+    DateTime,
+    Integer,
+    String,
+    create_engine,
+    func,
+    select,
+)
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 import numpy as np
@@ -22,8 +32,22 @@ class TestResult(Base):
     __tablename__ = "test_results"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    timestamp: Mapped[datetime] = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc)
+    )
     variant: Mapped[str] = mapped_column(String(1))
     success: Mapped[bool] = mapped_column(Boolean)
+
+
+class DailySummary(Base):
+    """Aggregated conversions for a single day."""
+
+    __tablename__ = "daily_summaries"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    day: Mapped[date] = mapped_column(Date, unique=True)
+    conversions_a: Mapped[int] = mapped_column(Integer, default=0)
+    conversions_b: Mapped[int] = mapped_column(Integer, default=0)
 
 
 @dataclass
@@ -61,6 +85,7 @@ class ABTestManager:
     def __init__(self, database_url: str = "sqlite:///abtest.db") -> None:
         """Initialize manager with given database URL."""
         self.engine, self.SessionLocal = create_engine_and_session(database_url)
+        self.daily_summary_class = DailySummary
 
     @contextmanager
     def session_scope(self) -> Iterator[Session]:
@@ -112,3 +137,29 @@ class ABTestManager:
             variant_a=total_budget * share_a,
             variant_b=total_budget * share_b,
         )
+
+    def record_summary(self) -> None:
+        """Aggregate today's conversions and persist them."""
+        today = date.today()
+        with self.session_scope() as session:
+            counts = {"A": 0, "B": 0}
+            stmt = (
+                select(TestResult.variant, func.count())
+                .where(
+                    TestResult.success.is_(True),
+                    func.date(TestResult.timestamp) == today,
+                )
+                .group_by(TestResult.variant)
+            )
+            for variant, cnt in session.execute(stmt):
+                counts[variant] = int(cnt)
+            if counts["A"] == 0 and counts["B"] == 0:
+                return
+            summary = session.execute(
+                select(DailySummary).where(DailySummary.day == today)
+            ).scalar_one_or_none()
+            if summary is None:
+                summary = DailySummary(day=today)
+                session.add(summary)
+            summary.conversions_a = counts["A"]
+            summary.conversions_b = counts["B"]

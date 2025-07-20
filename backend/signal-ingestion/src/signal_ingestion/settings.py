@@ -20,23 +20,41 @@ class Settings(BaseSettings):  # type: ignore[misc]
     ingest_interval_minutes: int = 60
     http_proxies: HttpUrl | None = None
     adapter_rate_limit: int = 5
+    enabled_adapters: list[str] | None = None
 
-    @field_validator(
+    @field_validator(  # type: ignore[misc]
         "dedup_error_rate",
         "dedup_capacity",
         "dedup_ttl",
         "ingest_interval_minutes",
         "adapter_rate_limit",
+        "enabled_adapters",
     )
     @classmethod
-    def _positive(cls, value: float | int) -> float | int:
+    def _positive(
+        cls, value: float | int | list[str] | None
+    ) -> float | int | list[str] | None:
         if isinstance(value, float):
             if not 0 <= value <= 1:
                 raise ValueError("dedup_error_rate must be in [0,1]")
             return value
+        if isinstance(value, list) or value is None:
+            return value
         if value <= 0:
             raise ValueError("must be positive")
         return value
+
+    @field_validator("enabled_adapters", mode="before")  # type: ignore[misc]
+    @classmethod
+    def _split_adapters(cls, value: str | list[str] | None) -> list[str] | None:
+        if value is None:
+            return None
+        if isinstance(value, list):
+            return value
+        value = value.strip()
+        if not value:
+            return []
+        return [v.strip() for v in value.split(",") if v.strip()]
 
 
 Settings.model_rebuild()

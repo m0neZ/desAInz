@@ -12,7 +12,13 @@ from .tasks import ADAPTERS as TASK_ADAPTERS, schedule_ingestion
 
 
 async def ingest(session: AsyncSession) -> None:
-    """Schedule ingestion tasks for all adapters."""
+    """Schedule ingestion tasks for enabled adapters."""
     await purge_old_signals(session, settings.signal_retention_days)
-    adapter_names = list(TASK_ADAPTERS.keys())
-    await asyncio.to_thread(schedule_ingestion, adapter_names)
+    if settings.enabled_adapters is None:
+        adapter_names = list(TASK_ADAPTERS.keys())
+    else:
+        adapter_names = [
+            name for name in TASK_ADAPTERS.keys() if name in settings.enabled_adapters
+        ]
+    if adapter_names:
+        await asyncio.to_thread(schedule_ingestion, adapter_names)

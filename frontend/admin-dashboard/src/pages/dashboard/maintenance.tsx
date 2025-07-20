@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
+import { fetchWithAuth } from '../../hooks/useAuthFetch';
 
 const Button = dynamic(() => import('../../components/Button'));
 
@@ -9,9 +10,8 @@ export default function MaintenancePage() {
   const [status, setStatus] = useState('');
 
   const runCleanup = async () => {
-    const resp = await fetch('/maintenance/cleanup', {
+    const resp = await fetchWithAuth('/maintenance/cleanup', {
       method: 'POST',
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
     });
     if (resp.ok) {
       setStatus(t('cleanupTriggered'));

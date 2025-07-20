@@ -95,3 +95,25 @@ def test_revoked_token_rejected() -> None:
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 403
+
+
+def test_refresh_token_flow() -> None:
+    """Valid refresh token yields new credentials."""
+    with session_scope() as session:
+        session.add(UserRole(username="refresh", role="viewer"))
+    resp = client.post("/auth/token", json={"username": "refresh"})
+    assert resp.status_code == 200
+    body = cast(dict[str, str], resp.json())
+    refresh_token = body["refresh_token"]
+    resp2 = client.post("/auth/refresh", json={"refresh_token": refresh_token})
+    assert resp2.status_code == 200
+    data = cast(dict[str, str], resp2.json())
+    assert "access_token" in data
+    assert "refresh_token" in data
+    assert data["refresh_token"] != refresh_token
+
+
+def test_refresh_token_invalid() -> None:
+    """Invalid refresh token returns 401."""
+    resp = client.post("/auth/refresh", json={"refresh_token": "bad"})
+    assert resp.status_code == 401

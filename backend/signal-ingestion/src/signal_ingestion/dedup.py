@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import redis
 
+from backend.shared.config import settings as shared_settings
 from .settings import settings
 
-redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
+redis_client = redis.Redis.from_url(shared_settings.redis_url, decode_responses=True)
 BLOOM_KEY = "signals:bloom"
 
 

@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from types import ModuleType, SimpleNamespace
+from types import ModuleType
+import os
 
 import pytest
 from pydantic import ValidationError
@@ -20,21 +21,16 @@ def _load_settings(path: Path) -> type:
     assert spec and spec.loader
     sys.path.insert(0, str(ROOT))
 
-    dummy_shared = ModuleType("backend.shared.config")
-    dummy_shared.settings = SimpleNamespace(
-        redis_url="redis://localhost:6379/0",
-        database_url="sqlite:///db",
-        effective_database_url="sqlite:///db",
-    )
-    sys.modules.setdefault("backend.shared.config", dummy_shared)
-    backend_shared = ModuleType("backend.shared")
-    backend_shared.config = dummy_shared
-    sys.modules.setdefault("backend.shared", backend_shared)
+    os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")
+    os.environ.setdefault("DATABASE_URL", "sqlite:///db")
+
+    sys.modules.pop("backend.shared.config", None)
+    sys.modules.pop("backend.shared", None)
     selenium_mod = sys.modules.setdefault("selenium", ModuleType("selenium"))
     webdriver_mod = ModuleType("selenium.webdriver")
     selenium_mod.webdriver = webdriver_mod
     sys.modules.setdefault("selenium.webdriver", webdriver_mod)
-    webdriver_mod.Firefox = lambda *a, **k: SimpleNamespace(get=lambda *a, **k: None)
+    webdriver_mod.Firefox = lambda *a, **k: None
     sys.modules.setdefault(
         "opentelemetry.sdk.resources", ModuleType("opentelemetry.sdk.resources")
     )

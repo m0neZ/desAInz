@@ -139,3 +139,17 @@ class MockupGenerator:
                 time.sleep(2**attempt)
 
         raise RuntimeError("Failed to generate image via fallback provider")
+
+    def cleanup(self) -> None:
+        """Release the diffusion pipeline and free CUDA memory."""
+        with self._lock:
+            if self.pipeline is not None:
+                try:
+                    self.pipeline.to("cpu")
+                except Exception:  # pragma: no cover - device transfer optional
+                    pass
+                self.pipeline = None
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            if hasattr(torch.cuda, "ipc_collect"):
+                torch.cuda.ipc_collect()

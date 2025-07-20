@@ -12,6 +12,7 @@ Welcome to desAInz's documentation!
    blueprints/DesignIdeaEngineCompleteBlueprint
    implementation_plan
    admin_dashboard_trpc
+   frontend/index
    staging_manual_qa
    migrations
    privacy

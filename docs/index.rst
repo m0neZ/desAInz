@@ -10,6 +10,7 @@ Welcome to desAInz's documentation!
    architecture
    marketplace_file_sizes
    blueprints/DesignIdeaEngineCompleteBlueprint
+   implementation_plan
    admin_dashboard_trpc
    staging_manual_qa
    migrations

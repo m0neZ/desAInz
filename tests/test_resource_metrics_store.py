@@ -25,12 +25,14 @@ def test_add_and_get_metrics(url: str | None, tmp_path: Path) -> None:
         db_path = tmp_path / "metrics.db"
         store = MetricsStore(f"sqlite:///{db_path}")
     else:
+        try:
+            with psycopg2.connect(url) as conn:
+                with conn.cursor() as cur:
+                    cur.execute("TRUNCATE metrics")
+                conn.commit()
+        except psycopg2.OperationalError:
+            pytest.skip("PostgreSQL not available")
         store = MetricsStore(url)
-        # ensure clean table for test isolation
-        with psycopg2.connect(url) as conn:
-            with conn.cursor() as cur:
-                cur.execute("TRUNCATE metrics")
-            conn.commit()
 
     metric = ResourceMetric(
         timestamp=datetime.now(timezone.utc), cpu_percent=1.0, memory_mb=2.0

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import argparse
 import asyncio
 import json
 import logging
+import os
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
@@ -344,6 +346,16 @@ async def ready() -> dict[str, str]:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    parser = argparse.ArgumentParser(
+        description="Run the marketplace publisher service."
+    )
+    parser.add_argument(
+        "--no-selenium", action="store_true", help="Disable Selenium fallback"
+    )
+    args = parser.parse_args()
+    if args.no_selenium:
+        os.environ["SELENIUM_SKIP"] = "1"
+
     import uvicorn
 
     uvicorn.run(

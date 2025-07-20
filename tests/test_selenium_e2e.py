@@ -86,3 +86,4 @@ def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
     with pytest.raises(Exception):
         fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert list(tmp_path.glob("*.png"))
+    assert list(tmp_path.glob("*.log"))

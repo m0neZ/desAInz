@@ -6,9 +6,6 @@ from pathlib import Path
 from threading import Lock
 from typing import Callable, Mapping, Tuple, cast, TYPE_CHECKING
 
-import cv2
-import numpy
-import yaml
 from PIL import Image
 
 if TYPE_CHECKING:  # pragma: no cover - type imports
@@ -28,6 +25,8 @@ _LIMITS: Mapping[str, Mapping[str, int]] = {}
 
 def _load_limits() -> Mapping[str, Mapping[str, int]]:
     """Load marketplace limits from the YAML configuration file."""
+    import yaml
+
     path = Path(__file__).resolve().parents[3] / "config" / "marketplace_rules.yaml"
     if not path.exists():
         return {}
@@ -39,7 +38,11 @@ _LIMITS = _load_limits()
 
 def _strictest(field: str, default: int) -> int:
     """Return the smallest configured value for ``field`` or ``default``."""
-    values = [v.get(field) for v in _LIMITS.values() if v.get(field) is not None]
+    values: list[int] = []
+    for v in _LIMITS.values():
+        val = v.get(field)
+        if val is not None:
+            values.append(val)
     return min(values) if values else default
 
 
@@ -74,6 +77,9 @@ def _load_clip() -> None:
 
 def remove_background(image: Image.Image) -> Image.Image:
     """Remove white background using OpenCV."""
+    import cv2
+    import numpy
+
     open_cv_image = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(open_cv_image, cv2.COLOR_BGR2GRAY)
     _, thresh = cv2.threshold(gray, 250, 255, cv2.THRESH_BINARY_INV)
@@ -140,7 +146,8 @@ def validate_dimensions(
 ) -> bool:
     """Return ``True`` if ``image`` fits within ``max_width`` and ``max_height``."""
     width, height = image.size
-    return width <= max_width and height <= max_height
+    width_i, height_i = cast(Tuple[int, int], (width, height))
+    return width_i <= max_width and height_i <= max_height
 
 
 def validate_file_size(path: Path, max_file_size_mb: int = MAX_FILE_SIZE_MB) -> bool:

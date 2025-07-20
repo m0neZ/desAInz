@@ -23,3 +23,4 @@ def log_admin_action(
             )
         )
         session.flush()
+        session.commit()

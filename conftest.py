@@ -8,6 +8,58 @@ import redis
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy
+import sys
+
+sys.modules.setdefault(
+    "selenium",
+    SimpleNamespace(
+        webdriver=SimpleNamespace(
+            Firefox=lambda *a, **k: SimpleNamespace(get=lambda *a, **k: None)
+        )
+    ),
+)
+
+sys.modules.setdefault(
+    "selenium.webdriver",
+    SimpleNamespace(Firefox=lambda *a, **k: SimpleNamespace(get=lambda *a, **k: None)),
+)
+
+sys.modules.setdefault(
+    "opentelemetry.exporter.otlp.proto.grpc.trace_exporter",
+    SimpleNamespace(OTLPSpanExporter=object),
+)
+sys.modules.setdefault(
+    "opentelemetry.exporter.otlp.proto.http.trace_exporter",
+    SimpleNamespace(OTLPSpanExporter=object),
+)
+sys.modules.setdefault(
+    "opentelemetry.instrumentation.fastapi",
+    SimpleNamespace(
+        FastAPIInstrumentor=SimpleNamespace(instrument_app=lambda *a, **k: None)
+    ),
+)
+sys.modules.setdefault(
+    "opentelemetry.instrumentation.flask",
+    SimpleNamespace(
+        FlaskInstrumentor=lambda: SimpleNamespace(instrument_app=lambda *a, **k: None)
+    ),
+)
+sys.modules.setdefault(
+    "opentelemetry.sdk.trace.export",
+    SimpleNamespace(BatchSpanProcessor=object),
+)
+sys.modules.setdefault(
+    "opentelemetry.sdk.trace",
+    SimpleNamespace(TracerProvider=object),
+)
+sys.modules.setdefault(
+    "opentelemetry.sdk.resources",
+    SimpleNamespace(Resource=SimpleNamespace(create=lambda *a, **k: None)),
+)
+sys.modules.setdefault(
+    "opentelemetry.trace",
+    SimpleNamespace(set_tracer_provider=lambda *a, **k: None),
+)
 
 os.makedirs("/run/secrets", exist_ok=True)
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")

@@ -115,3 +115,29 @@ class MetricsStore:
                 )
             )
         return result
+
+    def create_hourly_continuous_aggregate(self) -> None:
+        """Create an hourly materialized view when using PostgreSQL."""
+        if self._use_sqlite:
+            return
+
+        stmt_ts = (
+            "CREATE MATERIALIZED VIEW IF NOT EXISTS metrics_hourly "
+            "WITH (timescaledb.continuous) AS "
+            "SELECT time_bucket('1 hour', timestamp) AS bucket, "
+            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory "
+            "FROM metrics GROUP BY bucket"
+        )
+        fallback_stmt = (
+            "CREATE MATERIALIZED VIEW IF NOT EXISTS metrics_hourly AS "
+            "SELECT date_trunc('hour', timestamp) AS bucket, "
+            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory "
+            "FROM metrics GROUP BY bucket"
+        )
+        with self._get_pg_conn() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(stmt_ts)
+                except psycopg2.Error:
+                    cur.execute(fallback_stmt)
+                conn.commit()

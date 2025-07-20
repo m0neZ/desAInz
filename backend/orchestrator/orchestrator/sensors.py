@@ -6,8 +6,10 @@ import os
 from typing import Iterator, Union
 
 from dagster import (
+    DagsterRunStatus,
     RunFailureSensorContext,
     RunRequest,
+    RunsFilter,
     SensorEvaluationContext,
     SkipReason,
     run_failure_sensor,
@@ -17,6 +19,8 @@ from dagster import (
 from monitoring.pagerduty import notify_listing_issue
 
 from .jobs import idea_job
+
+MAX_RESCHEDULE_ATTEMPTS = 3
 
 
 @sensor(job=idea_job, minimum_interval_seconds=3600)  # type: ignore[misc]
@@ -41,3 +45,21 @@ def run_failure_notifier(context: RunFailureSensorContext) -> None:
         notify_listing_issue(int(cleaned, 16), "failed")
     except Exception as exc:  # pragma: no cover - best effort
         context.log.warning("notification failed: %s", exc)
+
+
+@sensor(minimum_interval_seconds=60)  # type: ignore[misc]
+def reschedule_failed_runs(
+    context: SensorEvaluationContext,
+) -> Iterator[RunRequest]:
+    """Reschedule failed runs until ``MAX_RESCHEDULE_ATTEMPTS`` is reached."""
+    filters = RunsFilter(statuses=[DagsterRunStatus.FAILURE])
+    for run in context.instance.get_runs(filters=filters):
+        attempts = int(run.tags.get("retry_attempt", "0"))
+        if attempts >= MAX_RESCHEDULE_ATTEMPTS:
+            continue
+        yield RunRequest(
+            run_key=f"{run.run_id}:{attempts + 1}",
+            job_name=run.job_name,
+            run_config=run.run_config,
+            tags={**run.tags, "retry_attempt": str(attempts + 1)},
+        )

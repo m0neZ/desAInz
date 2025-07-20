@@ -100,6 +100,13 @@ async def start_metrics_collection() -> None:
     asyncio.create_task(_run())
 
 
+@app.on_event("startup")
+async def create_continuous_aggregate() -> None:
+    """Create hourly aggregate view if PostgreSQL is used."""
+    if not store._use_sqlite:
+        store.create_hourly_continuous_aggregate()
+
+
 class MetricIn(BaseModel):
     """Request body for submitting a resource metric."""
 

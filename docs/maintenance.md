@@ -9,6 +9,8 @@ the following actions:
   are removed.
 - **Purge stale signals and logs**: any signal entries older than thirty days
   are deleted along with log files under the directory specified by `LOG_DIR`.
+- **Delete old S3 objects**: objects older than the configured retention period
+  are removed from the bucket defined by `S3_BUCKET`.
 - **Remove audit log entries**: records older than eighteen months are purged to
   keep the audit table compact.
 
@@ -27,6 +29,8 @@ Environment variables can override the storage paths:
 
 - `COLD_STORAGE_PATH` – directory for archived mockups (defaults to `cold_storage`)
 - `LOG_DIR` – directory containing log files (defaults to `logs`)
+- `S3_BUCKET` – target bucket for object cleanup
+- `S3_RETENTION_DAYS` – optional retention period in days (defaults to 90)
 
 ## Log Rotation
 

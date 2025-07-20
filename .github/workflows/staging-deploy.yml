@@ -17,9 +17,13 @@ jobs:
       - name: Mirror secrets from production
         run: |
           ./scripts/sync_staging_secrets.sh prod staging
-      - name: Deploy services
-        run: |
-          for svc in orchestrator ai-mockup-generation data-storage signal-ingestion scoring-engine marketplace-publisher feedback-loop; do
-            ./scripts/deploy.sh "$svc" "example/$svc:main" staging
-          done
+      - name: Blue/green rollout
+        uses: ./.github/actions/blue-green-rollout
+        with:
+          namespace: staging
+          services: >-
+            orchestrator ai-mockup-generation data-storage signal-ingestion
+            scoring-engine marketplace-publisher feedback-loop
+          registry: example
+          tag: main
 

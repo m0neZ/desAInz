@@ -34,3 +34,8 @@ def get_trending(limit: int = 10) -> list[str]:
     client = get_sync_client()
     words = client.zrevrange(TRENDING_KEY, 0, limit - 1)
     return [w.decode("utf-8") if isinstance(w, bytes) else w for w in words]
+
+
+def get_top_keywords(limit: int) -> list[str]:
+    """Return the top ``limit`` keywords ordered by popularity."""
+    return get_trending(limit)

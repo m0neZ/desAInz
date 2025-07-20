@@ -14,6 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import get_session, init_db
 from .scheduler import create_scheduler
 from .ingestion import ingest
+from .trending import get_top_keywords
 from .logging_config import configure_logging
 from .settings import settings
 from backend.shared.config import settings as shared_settings
@@ -107,6 +108,12 @@ async def ingest_signals(
     """Trigger signal ingestion."""
     await ingest(session)
     return {"status": "ingested"}
+
+
+@app.get("/trending")
+async def trending(limit: int = 10) -> list[str]:
+    """Return up to ``limit`` trending keywords."""
+    return get_top_keywords(limit)
 
 
 if __name__ == "__main__":  # pragma: no cover

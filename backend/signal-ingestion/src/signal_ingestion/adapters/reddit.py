@@ -10,20 +10,41 @@ from .base import BaseAdapter
 
 
 class RedditAdapter(BaseAdapter):
-    """Adapter for Reddit API using a JSON feed."""
+    """Adapter for Reddit API using the public JSON endpoints."""
 
     def __init__(
         self,
         base_url: str | None = None,
         proxies: list[str] | None = None,
         rate_limit: int = 5,
+        fetch_limit: int | None = None,
+        user_agent: str | None = None,
     ) -> None:
-        """Initialize adapter with optional ``base_url``."""
+        """Initialize adapter with endpoint configuration."""
+        self.fetch_limit = fetch_limit or int(
+            os.environ.get("REDDIT_FETCH_LIMIT", "1")
+        )
+        self.user_agent = user_agent or os.environ.get("REDDIT_USER_AGENT", "signal-bot")
         super().__init__(
-            base_url or "https://jsonplaceholder.typicode.com", proxies, rate_limit
+            base_url or "https://www.reddit.com", proxies, rate_limit
         )
 
     async def fetch(self) -> list[dict[str, Any]]:
-        """Return a list with top post data from ``r/python``."""
-        resp = await self._request("/posts/3")
-        return [resp.json()]
+        """Return the top posts from ``r/python``."""
+        headers = {"User-Agent": self.user_agent}
+        remaining = self.fetch_limit
+        resp = await self._request(f"/r/python/top.json?limit={remaining}", headers=headers)
+        data = resp.json()
+        posts = data["data"]["children"]
+        after = data["data"].get("after")
+        while after and len(posts) < self.fetch_limit:
+            remaining = self.fetch_limit - len(posts)
+            resp = await self._request(
+                f"/r/python/top.json?limit={remaining}&after={after}",
+                headers=headers,
+            )
+            page = resp.json()
+            posts.extend(page["data"]["children"])
+            after = page["data"].get("after")
+        data["data"]["children"] = posts[: self.fetch_limit]
+        return [data]

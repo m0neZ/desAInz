@@ -21,6 +21,19 @@ class Settings(BaseSettings):  # type: ignore[misc]
     http_proxies: HttpUrl | None = None
     adapter_rate_limit: int = 5
     enabled_adapters: list[str] | None = None
+    instagram_token: str | None = None
+    instagram_user_id: str | None = None
+    instagram_fetch_limit: int = 1
+    reddit_user_agent: str = "signal-bot"
+    reddit_fetch_limit: int = 1
+    youtube_api_key: str | None = None
+    youtube_fetch_limit: int = 1
+    tiktok_video_urls: str | None = None
+    tiktok_fetch_limit: int = 1
+    nostalgia_query: str = 'subject:"nostalgia"'
+    nostalgia_fetch_limit: int = 1
+    events_country_code: str = "US"
+    events_fetch_limit: int = 1
 
     @field_validator(  # type: ignore[misc]
         "dedup_error_rate",
@@ -28,6 +41,12 @@ class Settings(BaseSettings):  # type: ignore[misc]
         "dedup_ttl",
         "ingest_interval_minutes",
         "adapter_rate_limit",
+        "instagram_fetch_limit",
+        "reddit_fetch_limit",
+        "youtube_fetch_limit",
+        "tiktok_fetch_limit",
+        "nostalgia_fetch_limit",
+        "events_fetch_limit",
         "enabled_adapters",
     )
     @classmethod

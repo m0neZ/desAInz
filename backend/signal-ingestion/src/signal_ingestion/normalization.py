@@ -49,8 +49,8 @@ def normalize_instagram(data: Dict[str, Any]) -> NormalizedSignal:
     """Normalize Instagram data into a :class:`NormalizedSignal`."""
     return NormalizedSignal(
         id=str(data.get("id", "")),
-        title=data.get("title") or data.get("author_name"),
-        url=data.get("author_url"),
+        title=data.get("caption") or data.get("title") or data.get("author_name"),
+        url=data.get("permalink") or data.get("author_url"),
         source="instagram",
     )
 

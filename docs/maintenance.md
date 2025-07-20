@@ -28,6 +28,18 @@ Environment variables can override the storage paths:
 - `COLD_STORAGE_PATH` – directory for archived mockups (defaults to `cold_storage`)
 - `LOG_DIR` – directory containing log files (defaults to `logs`)
 
+## Log Rotation
+
+The `scripts/rotate_logs.sh` helper rotates application logs. It moves `*.log`
+files in `LOG_DIR` into an `archive` directory with a timestamp suffix and
+removes archives older than seven days.
+
+Run the script via cron:
+
+```bash
+0 1 * * * /app/scripts/rotate_logs.sh
+```
+
 ## Dependency Updates
 
 Dependencies for Python, JavaScript, and GitHub Actions are kept current via Dependabot.
@@ -44,3 +56,9 @@ python scripts/analyze_query_plans.py
 ```
 
 The `daily_query_plan_schedule` Dagster schedule runs the analysis once a day.
+
+## Nightly Backups
+
+In production Docker Compose deployments a `backup` service runs `scripts/backup.py`
+using cron. The container uploads a PostgreSQL dump to the bucket defined by
+`BACKUP_BUCKET` every night at midnight UTC.

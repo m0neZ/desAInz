@@ -216,6 +216,15 @@ services:
       dockerfile: backend/orchestrator/Dockerfile
     ports:
       - "3001:3000"
+
+  backup:
+    image: ghcr.io/example/backup:latest
+    environment:
+      - BACKUP_BUCKET=${BACKUP_BUCKET}
+    command: >-
+      sh -c "echo '0 0 * * * python /app/backup.py >> /var/log/backup.log 2>&1' > /etc/crontab && cron -f"
+    depends_on:
+      - postgres
 volumes:
   postgres-data:
   redis-data:

@@ -20,6 +20,7 @@ class MarketplaceRules:
     max_height: int
     upload_limit: int
     allowed_formats: list[str] | None = None
+    selectors: Mapping[str, str] | None = None
 
 
 class RulesRegistry:
@@ -53,6 +54,15 @@ def get_upload_limit(marketplace: Marketplace) -> int | None:
         raise RuntimeError(msg)
     rules = rules_registry.get(marketplace)
     return rules.upload_limit if rules else None
+
+
+def get_selectors(marketplace: Marketplace) -> Mapping[str, str] | None:
+    """Return Selenium selectors for ``marketplace`` if configured."""
+    if rules_registry is None:
+        msg = "rules not loaded"
+        raise RuntimeError(msg)
+    rules = rules_registry.get(marketplace)
+    return rules.selectors if rules else None
 
 
 def validate_mockup(marketplace: Marketplace, path: Path) -> None:

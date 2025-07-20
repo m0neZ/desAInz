@@ -86,3 +86,28 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 2. Run containers in Azure Container Instances or AKS. Mount secrets from Azure Key Vault using CSI drivers.
 
 All deployments share the same environment variables. Ensure that values for credentials, API keys and connection strings are stored securely using the secret management solution of your platform.
+
+## Rollback
+
+Blue/green deployments update services by switching the `color` selector of the
+Kubernetes `Service`. If an issue is detected after a rollout, direct traffic
+back to the previous version by patching the service to the old color. Retrieve
+the current color with:
+
+```bash
+kubectl get svc <service> -n <namespace> -o jsonpath='{.spec.selector.color}'
+```
+
+Then patch the selector to the desired color:
+
+```bash
+kubectl patch svc <service> -n <namespace> \
+  -p '{"spec":{"selector":{"app":"<service>","color":"<previous_color>"}}}'
+```
+
+Alternatively, redeploy the desired tag using the `deploy.sh` helper which will
+update the service selector and scale down the newer deployment:
+
+```bash
+./scripts/deploy.sh <service> example/<service>:<tag> <namespace>
+```

@@ -1,0 +1,22 @@
+name: Blue Green Rollout
+inputs:
+  namespace:
+    description: "Kubernetes namespace"
+    required: true
+  services:
+    description: "Space separated list of services"
+    required: true
+  registry:
+    description: "Container registry prefix"
+    required: true
+  tag:
+    description: "Image tag"
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        for svc in ${{ inputs.services }}; do
+          ./scripts/deploy.sh "$svc" "${{ inputs.registry }}/$svc:${{ inputs.tag }}" "${{ inputs.namespace }}"
+        done

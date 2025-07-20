@@ -11,6 +11,8 @@ from typing import Any
 import requests
 from dagster import Failure, RetryPolicy, op
 
+import time
+
 from scripts import maintenance
 
 
@@ -21,6 +23,37 @@ def _auth_headers(context: Any) -> dict[str, str]:
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
+
+
+def _post_with_retry(
+    context: Any,
+    url: str,
+    *,
+    json: Any | None = None,
+    headers: dict[str, str] | None = None,
+    timeout: int = 30,
+    retries: int = 3,
+) -> requests.Response:
+    """Send a POST request with simple exponential backoff."""
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.post(url, json=json, headers=headers, timeout=timeout)
+            response.raise_for_status()
+            return response
+        except requests.RequestException as exc:  # noqa: BLE001
+            if attempt == retries:
+                context.log.error(
+                    "request to %s failed after %d attempts: %s", url, attempt, exc
+                )
+                raise
+            context.log.warning(
+                "request to %s failed: %s (attempt %d/%d)",
+                url,
+                exc,
+                attempt,
+                retries,
+            )
+            time.sleep(2 ** (attempt - 1))
 
 
 @op  # type: ignore[misc]
@@ -35,8 +68,9 @@ def ingest_signals(  # type: ignore[no-untyped-def]
     )
     headers = _auth_headers(context)
     try:
-        response = requests.post(f"{base_url}/ingest", headers=headers, timeout=30)
-        response.raise_for_status()
+        response = _post_with_retry(
+            context, f"{base_url}/ingest", headers=headers, timeout=30
+        )
     except requests.RequestException as exc:  # noqa: BLE001
         raise Failure(f"ingestion failed: {exc}") from exc
 
@@ -76,16 +110,16 @@ def score_signals(  # type: ignore[no-untyped-def]
             "embedding": [0.0],
         }
         try:
-            resp = requests.post(
+            resp = _post_with_retry(
+                context,
                 f"{base_url}/score",
                 json=payload,
                 headers=_auth_headers(context),
                 timeout=30,
             )
-            resp.raise_for_status()
             score = float(resp.json().get("score", 0))
         except requests.RequestException as exc:  # noqa: BLE001
-            context.log.warning("scoring failed: %s", exc)
+            context.log.warning("scoring failed after retries: %s", exc)
             score = 0.0
         scores.append(score)
     return scores
@@ -103,18 +137,18 @@ def generate_content(  # type: ignore[no-untyped-def]
         "http://mockup-generation:8000",
     )
     try:
-        resp = requests.post(
+        resp = _post_with_retry(
+            context,
             f"{base_url}/generate",
             json={"scores": scores},
             headers=_auth_headers(context),
             timeout=60,
         )
-        resp.raise_for_status()
         items = resp.json().get("items", [])
         if not isinstance(items, list):
             items = []
     except requests.RequestException as exc:  # noqa: BLE001
-        context.log.warning("generation failed: %s", exc)
+        context.log.warning("generation failed after retries: %s", exc)
         items = []
     return [str(item) for item in items]
 
@@ -140,17 +174,17 @@ def publish_content(  # type: ignore[no-untyped-def]
     for item in items:
         payload = {"marketplace": "redbubble", "design_path": item}
         try:
-            resp = requests.post(
+            resp = _post_with_retry(
+                context,
                 f"{base_url}/publish",
                 json=payload,
                 headers=_auth_headers(context),
                 timeout=30,
             )
-            resp.raise_for_status()
             task_id = resp.json().get("task_id")
             context.log.debug("created publish task %s", task_id)
         except requests.RequestException as exc:  # noqa: BLE001
-            context.log.warning("failed to publish %s: %s", item, exc)
+            context.log.warning("failed to publish %s after retries: %s", item, exc)
 
 
 @op  # type: ignore[misc]

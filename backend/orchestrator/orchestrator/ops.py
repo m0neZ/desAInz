@@ -214,3 +214,17 @@ def analyze_query_plans_op(  # type: ignore[no-untyped-def]
     from scripts import analyze_query_plans
 
     analyze_query_plans.main()
+
+
+@op  # type: ignore[misc]
+def run_daily_summary(  # type: ignore[no-untyped-def]
+    context,
+) -> None:
+    """Execute the daily summary script and log the result."""
+    context.log.info("generating daily summary")
+    from scripts.daily_summary import generate_daily_summary
+
+    import asyncio
+
+    summary = asyncio.run(generate_daily_summary())
+    context.log.debug("summary: %s", summary)

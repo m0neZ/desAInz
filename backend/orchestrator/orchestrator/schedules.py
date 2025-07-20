@@ -2,7 +2,12 @@
 
 from dagster import ScheduleEvaluationContext, schedule
 
-from .jobs import backup_job, cleanup_job, analyze_query_plans_job
+from .jobs import (
+    backup_job,
+    cleanup_job,
+    analyze_query_plans_job,
+    daily_summary_job,
+)
 
 
 @schedule(cron_schedule="0 0 * * *", job=backup_job, execution_timezone="UTC")
@@ -22,4 +27,10 @@ def hourly_cleanup_schedule(_context: ScheduleEvaluationContext) -> dict[str, ob
 )
 def daily_query_plan_schedule(_context: ScheduleEvaluationContext) -> dict[str, object]:
     """Trigger ``analyze_query_plans_job`` every morning."""
+    return {}
+
+
+@schedule(cron_schedule="5 0 * * *", job=daily_summary_job, execution_timezone="UTC")
+def daily_summary_schedule(_context: ScheduleEvaluationContext) -> dict[str, object]:
+    """Trigger ``daily_summary_job`` every day."""
     return {}

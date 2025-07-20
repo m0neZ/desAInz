@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import Lock
-from typing import Callable, Tuple, cast, TYPE_CHECKING
+from typing import Callable, Mapping, Tuple, cast, TYPE_CHECKING
 
 import cv2
 import numpy
+import yaml
 from PIL import Image
 
 if TYPE_CHECKING:  # pragma: no cover - type imports
@@ -21,6 +22,30 @@ _clip_model: Module | None = None
 _clip_preprocess: Callable[[Image.Image], Tensor] | None = None
 _clip_lock = Lock()
 _nsfw_tokens: Tensor | None = None
+
+_LIMITS: Mapping[str, Mapping[str, int]] = {}
+
+
+def _load_limits() -> Mapping[str, Mapping[str, int]]:
+    """Load marketplace limits from the YAML configuration file."""
+    path = Path(__file__).resolve().parents[3] / "config" / "marketplace_rules.yaml"
+    if not path.exists():
+        return {}
+    return cast(Mapping[str, Mapping[str, int]], yaml.safe_load(path.read_text()))
+
+
+_LIMITS = _load_limits()
+
+
+def _strictest(field: str, default: int) -> int:
+    """Return the smallest configured value for ``field`` or ``default``."""
+    values = [v.get(field) for v in _LIMITS.values() if v.get(field) is not None]
+    return min(values) if values else default
+
+
+MAX_FILE_SIZE_MB = _strictest("max_file_size_mb", 25)
+MAX_WIDTH = _strictest("max_width", 15000)
+MAX_HEIGHT = _strictest("max_height", 15000)
 
 
 def _load_clip() -> None:
@@ -106,3 +131,19 @@ def validate_dpi_image(
 def compress_lossless(image: Image.Image, output_path: Path) -> None:
     """Save ``image`` at ``output_path`` using lossless compression."""
     image.save(output_path, format="PNG", optimize=True)
+
+
+def validate_dimensions(
+    image: Image.Image,
+    max_width: int = MAX_WIDTH,
+    max_height: int = MAX_HEIGHT,
+) -> bool:
+    """Return ``True`` if ``image`` fits within ``max_width`` and ``max_height``."""
+    width, height = image.size
+    return width <= max_width and height <= max_height
+
+
+def validate_file_size(path: Path, max_file_size_mb: int = MAX_FILE_SIZE_MB) -> bool:
+    """Return ``True`` if ``path`` does not exceed ``max_file_size_mb``."""
+    size_mb = path.stat().st_size / (1024 * 1024)
+    return size_mb <= max_file_size_mb

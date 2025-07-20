@@ -32,7 +32,7 @@ def test_trigger_sla_violation_sends_request(
 def test_notify_listing_issue_sends_request(
     requests_mock: Any, monkeypatch: Any
 ) -> None:
-    """notify_listing_issue should POST listing alert when routing key present."""
+    """POST listing alert when routing key is present."""
     monkeypatch.setenv("PAGERDUTY_ROUTING_KEY", "key")
     requests_mock.post(PAGERDUTY_URL, status_code=202)
     pagerduty.notify_listing_issue(123, "removed")

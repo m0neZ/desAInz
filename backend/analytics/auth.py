@@ -23,7 +23,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = shared_jwt.ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 def require_role(required_role: str) -> Callable[[Dict[str, Any]], Dict[str, Any]]:
-    """Return dependency validating the authenticated user has ``required_role``."""
+    """Return a dependency that checks the user has ``required_role``."""
 
     def _checker(payload: Dict[str, Any] = Depends(verify_token)) -> Dict[str, Any]:
         username = cast(str | None, payload.get("sub"))

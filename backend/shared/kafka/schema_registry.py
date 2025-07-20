@@ -20,7 +20,7 @@ class SchemaRegistryClient:
     """Simple client for interacting with a schema registry."""
 
     def __init__(self, url: str, token: str | None = None) -> None:
-        """Initialize the client with the registry ``url`` and optional ``token``."""
+        """Initialize client with registry ``url`` and optional ``token``."""
         self._url = url.rstrip("/")
         self._token = token or os.getenv("SCHEMA_REGISTRY_TOKEN")
 

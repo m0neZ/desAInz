@@ -11,7 +11,7 @@ class UserRateLimiter:
     """Manage request quotas for individual users."""
 
     def __init__(self, redis: AsyncRedis, limit: int, window: int) -> None:
-        """Instantiate the limiter with ``limit`` tokens per ``window`` seconds."""
+        """Instantiate limiter with ``limit`` tokens per ``window`` seconds."""
         self._redis = redis
         self._limit = limit
         self._window = window

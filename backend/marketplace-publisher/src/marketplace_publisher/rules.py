@@ -79,7 +79,7 @@ def stop_watching_rules() -> None:
 
 
 def load_rules(path: Path, watch: bool = False) -> None:
-    """Load marketplace rules from ``path`` and optionally watch for changes."""
+    """Load rules from ``path`` and optionally watch for changes."""
 
     global _rules_path, _observer
     _rules_path = path

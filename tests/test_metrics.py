@@ -12,6 +12,7 @@ def test_average_cpu_memory() -> None:
             datetime.now(timezone.utc) - timedelta(minutes=i),
             50 + i,
             512,
+            disk_usage_mb=1024.0,
         )
         for i in range(5)
     ]
@@ -27,6 +28,7 @@ def test_top_recommendations() -> None:
             datetime.now(timezone.utc) - timedelta(minutes=i),
             90,
             2048,
+            disk_usage_mb=11 * 1024.0,
         )
         for i in range(20)
     ]

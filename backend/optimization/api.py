@@ -79,11 +79,12 @@ store = MetricsStore()
 
 
 def record_resource_usage(target_store: MetricsStore = store) -> None:
-    """Capture current CPU and memory usage and store the metric."""
+    """Capture current CPU, memory and disk usage and store the metric."""
     metric = ResourceMetric(
         timestamp=datetime.now(timezone.utc),
         cpu_percent=psutil.cpu_percent(),
         memory_mb=psutil.virtual_memory().used / (1024 * 1024),
+        disk_usage_mb=psutil.disk_usage("/").used / (1024 * 1024),
     )
     target_store.add_metric(metric)
 
@@ -113,6 +114,7 @@ class MetricIn(BaseModel):
     timestamp: datetime
     cpu_percent: float
     memory_mb: float
+    disk_usage_mb: float | None = None
 
 
 @app.post("/metrics")
@@ -123,6 +125,7 @@ def add_metric(metric: MetricIn) -> dict[str, str]:
             timestamp=metric.timestamp,
             cpu_percent=metric.cpu_percent,
             memory_mb=metric.memory_mb,
+            disk_usage_mb=metric.disk_usage_mb,
         )
     )
     return {"status": "ok"}

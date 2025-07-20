@@ -14,3 +14,4 @@ def test_record_resource_usage(tmp_path: Path) -> None:
     metrics = store.get_metrics()
     assert len(metrics) == 1
     assert metrics[0].timestamp.tzinfo is not None
+    assert metrics[0].disk_usage_mb is not None

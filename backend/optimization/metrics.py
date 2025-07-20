@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 import pandas as pd
 
@@ -16,6 +16,7 @@ class ResourceMetric:
     timestamp: datetime
     cpu_percent: float
     memory_mb: float
+    disk_usage_mb: Optional[float] = None
 
 
 class MetricsAnalyzer:
@@ -29,12 +30,15 @@ class MetricsAnalyzer:
                     "timestamp": m.timestamp,
                     "cpu_percent": m.cpu_percent,
                     "memory_mb": m.memory_mb,
+                    "disk_usage_mb": m.disk_usage_mb,
                 }
                 for m in metrics
             ]
         )
         if self._df.empty:
-            self._df = pd.DataFrame(columns=["timestamp", "cpu_percent", "memory_mb"])
+            self._df = pd.DataFrame(
+                columns=["timestamp", "cpu_percent", "memory_mb", "disk_usage_mb"]
+            )
         self._df.sort_values("timestamp", inplace=True)
         self._df.reset_index(drop=True, inplace=True)
 
@@ -48,6 +52,13 @@ class MetricsAnalyzer:
         data = self._df.tail(last_n) if last_n else self._df
         return float(data["memory_mb"].mean()) if not data.empty else 0.0
 
+    def average_disk_usage(self, last_n: int | None = None) -> float:
+        """Return the average disk usage in MB if available."""
+        if "disk_usage_mb" not in self._df.columns:
+            return 0.0
+        data = self._df.tail(last_n) if last_n else self._df
+        return float(data["disk_usage_mb"].mean()) if not data.empty else 0.0
+
     def recommend_optimizations(self) -> List[str]:
         """Provide optimization recommendations based on trends."""
         recommendations: List[str] = []
@@ -58,6 +69,10 @@ class MetricsAnalyzer:
         if self.average_memory(10) > 1024:
             recommendations.append(
                 "Investigate memory leaks or reduce memory footprint"
+            )
+        if self.average_disk_usage(10) > 10 * 1024:
+            recommendations.append(
+                "Disk usage exceeds 10GB; clean up or increase storage"
             )
         return recommendations
 
@@ -72,6 +87,10 @@ class MetricsAnalyzer:
         if self.average_memory() > 1024:
             recommendations.append(
                 "Average memory usage exceeds 1GB; consider memory optimization"
+            )
+        if self.average_disk_usage() > 10 * 1024:
+            recommendations.append(
+                "Disk usage is high on average; plan for storage expansion"
             )
 
         recommendations.extend(self.recommend_optimizations())

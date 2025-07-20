@@ -14,12 +14,14 @@ def test_average_cpu_memory() -> None:
             timestamp=datetime.now(timezone.utc) - timedelta(minutes=i),
             cpu_percent=10 * i,
             memory_mb=256.0,
+            disk_usage_mb=1024.0,
         )
         for i in range(4)
     ]
     analyzer = MetricsAnalyzer(metrics)
     assert analyzer.average_cpu() == sum(10 * i for i in range(4)) / 4
     assert analyzer.average_memory() == 256.0
+    assert analyzer.average_disk_usage() == 1024.0
 
 
 def test_top_recommendations() -> None:
@@ -29,6 +31,7 @@ def test_top_recommendations() -> None:
             timestamp=datetime.now(timezone.utc) - timedelta(minutes=i),
             cpu_percent=90,
             memory_mb=2048,
+            disk_usage_mb=12 * 1024.0,
         )
         for i in range(15)
     ]
@@ -36,4 +39,5 @@ def test_top_recommendations() -> None:
     recs = analyzer.top_recommendations()
     assert recs
     assert any("CPU" in r for r in recs)
+    assert any("Disk usage" in r for r in recs)
     assert len(recs) <= 3

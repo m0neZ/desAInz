@@ -35,10 +35,14 @@ def test_add_and_get_metrics(url: str | None, tmp_path: Path) -> None:
         store = MetricsStore(url)
 
     metric = ResourceMetric(
-        timestamp=datetime.now(timezone.utc), cpu_percent=1.0, memory_mb=2.0
+        timestamp=datetime.now(timezone.utc),
+        cpu_percent=1.0,
+        memory_mb=2.0,
+        disk_usage_mb=3.0,
     )
     store.add_metric(metric)
     metrics = store.get_metrics()
     assert len(metrics) == 1
     assert metrics[0].cpu_percent == 1.0
     assert metrics[0].memory_mb == 2.0
+    assert metrics[0].disk_usage_mb == 3.0

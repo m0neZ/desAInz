@@ -10,6 +10,13 @@ const StatusIndicator = dynamic(
 const LatencyIndicator = dynamic(
   () => import('../../components/LatencyIndicator')
 );
+const TrendingKeywords = dynamic(
+  () => import('../../components/TrendingKeywords'),
+  { ssr: false }
+);
+const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
+  ssr: false,
+});
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -26,6 +33,8 @@ export default function DashboardPage() {
     <div className="space-y-4">
       <StatusIndicator />
       <LatencyIndicator />
+      <TrendingKeywords />
+      <AbTestSummary abTestId={1} />
       <h1>{t('signalStream')}</h1>
       <ul>
         {signals.map((s) => (

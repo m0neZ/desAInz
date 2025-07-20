@@ -59,6 +59,12 @@ export interface AuditLogResponse {
   items: AuditLog[];
 }
 
+export interface ABTestSummary {
+  ab_test_id: number;
+  conversions: number;
+  impressions: number;
+}
+
 export interface AppRouter {
   ping: {
     input: void;
@@ -137,6 +143,12 @@ export const trpc = {
   },
   optimizations: {
     list: () => getJson<string[]>('/optimizations'),
+  },
+  trending: {
+    list: (limit = 10) => getJson<string[]>(`/trending?limit=${limit}`),
+  },
+  abTests: {
+    summary: (id: number) => getJson<ABTestSummary>(`/ab_test_results/${id}`),
   },
 };
 

@@ -37,6 +37,8 @@
   "metrics": "Métricas",
   "revenue": "Ingresos",
   "conversions": "Conversiones",
+  "trendingKeywords": "Palabras Clave en Tendencia",
+  "abTestStats": "Estadísticas de Pruebas A/B",
   "english": "Inglés",
   "spanish": "Español"
 }

@@ -10,13 +10,11 @@ redis_client: SyncRedis = get_sync_client()
 BLOOM_KEY = "signals:bloom"
 
 
-def initialize() -> None:
+def initialize(error_rate: float, capacity: int, ttl: int) -> None:
     """Create the bloom filter if it does not already exist."""
     if not redis_client.exists(BLOOM_KEY):
-        redis_client.bf().create(
-            BLOOM_KEY, settings.dedup_error_rate, settings.dedup_capacity
-        )
-        redis_client.expire(BLOOM_KEY, settings.dedup_ttl)
+        redis_client.bf().create(BLOOM_KEY, error_rate, capacity)
+        redis_client.expire(BLOOM_KEY, ttl)
 
 
 def is_duplicate(key: str) -> bool:
@@ -30,4 +28,4 @@ def add_key(key: str) -> None:
     redis_client.expire(BLOOM_KEY, settings.dedup_ttl)
 
 
-initialize()
+initialize(settings.dedup_error_rate, settings.dedup_capacity, settings.dedup_ttl)

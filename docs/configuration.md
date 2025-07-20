@@ -31,3 +31,6 @@ application settings classes.
 | `ENABLED_ADAPTERS` | Comma separated list of ingestion adapters to run; if unset all adapters are used |
 | `PAGERDUTY_ROUTING_KEY` | Integration key for sending PagerDuty incidents |
 | `ENABLE_PAGERDUTY` | Set to `true` to enable PagerDuty notifications |
+| `DEDUP_ERROR_RATE` | Probability of false positives in the Bloom filter |
+| `DEDUP_CAPACITY` | Estimated maximum number of entries in the Bloom filter |
+| `DEDUP_TTL` | Time-to-live in seconds for deduplication keys |

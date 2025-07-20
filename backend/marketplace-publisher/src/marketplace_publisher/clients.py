@@ -10,8 +10,10 @@ import requests
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+import time
 
 from .db import Marketplace
+from . import rules
 
 
 class BaseClient:
@@ -216,7 +218,7 @@ class ZazzleClient(BaseClient):
 class SeleniumFallback:
     """Publish a design using browser automation if APIs fail."""
 
-    def __init__(self) -> None:
+    def __init__(self, screenshot_dir: Path | None = None) -> None:
         """Start a headless Firefox driver."""
         options = Options()
         options.add_argument("--headless")
@@ -224,23 +226,45 @@ class SeleniumFallback:
             self.driver = None
         else:
             self.driver = webdriver.Firefox(options=options)
+        self.screenshot_dir = screenshot_dir or Path("screenshots")
+        self.screenshot_dir.mkdir(parents=True, exist_ok=True)
 
     def publish(
         self, marketplace: Marketplace, design_path: Path, metadata: dict[str, Any]
     ) -> None:
         """Automate browser interactions for publishing a design."""
-        url = {
-            Marketplace.redbubble: "https://www.redbubble.com/upload",
-            Marketplace.amazon_merch: "https://merch.amazon.com/create",
-            Marketplace.etsy: "https://www.etsy.com/new",
-        }[marketplace]
         if self.driver is None:
             return
-        self.driver.get(url)
-        # This is a placeholder; real implementation would interact with the page.
-        upload = self.driver.find_element("id", "upload")
-        upload.send_keys(str(design_path))
-        title = self.driver.find_element("id", "title")
-        title.send_keys(metadata.get("title", ""))
-        submit = self.driver.find_element("id", "submit")
-        submit.click()
+        selectors = rules.get_selectors(marketplace)
+        if selectors is None:
+            msg = f"selectors not configured for {marketplace.value}"
+            raise RuntimeError(msg)
+
+        url = selectors.get("url")
+        if not url:
+            msg = f"url selector missing for {marketplace.value}"
+            raise RuntimeError(msg)
+
+        attempts = 0
+        while True:
+            try:
+                self.driver.get(url)
+                self.driver.find_element(
+                    "css selector", selectors["upload_input"]
+                ).send_keys(str(design_path))
+                self.driver.find_element(
+                    "css selector", selectors["title_input"]
+                ).send_keys(metadata.get("title", ""))
+                self.driver.find_element(
+                    "css selector", selectors["submit_button"]
+                ).click()
+                break
+            except Exception:
+                attempts += 1
+                screenshot_path = (
+                    self.screenshot_dir
+                    / f"{marketplace.value}_{int(time.time())}_{attempts}.png"
+                )
+                self.driver.save_screenshot(str(screenshot_path))
+                if attempts >= 3:
+                    raise

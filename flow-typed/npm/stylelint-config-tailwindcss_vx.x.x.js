@@ -1,4 +1,4 @@
-// flow-typed signature: 22e65851958882870933f829ffa684c8
+// flow-typed signature: 87ca8cf9804ef4aace1044daff5b5d88
 // flow-typed version: <<STUB>>/stylelint-config-tailwindcss_v^1.0.0/flow_v0.275.0
 
 /**
@@ -15,4 +15,24 @@
 
 declare module 'stylelint-config-tailwindcss' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module 'stylelint-config-tailwindcss/scss' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module 'stylelint-config-tailwindcss/index' {
+  declare module.exports: $Exports<'stylelint-config-tailwindcss'>;
+}
+declare module 'stylelint-config-tailwindcss/index.js' {
+  declare module.exports: $Exports<'stylelint-config-tailwindcss'>;
+}
+declare module 'stylelint-config-tailwindcss/scss.js' {
+  declare module.exports: $Exports<'stylelint-config-tailwindcss/scss'>;
 }

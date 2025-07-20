@@ -1,4 +1,4 @@
-// flow-typed signature: d459d84cb6aad2c7c8ff1868414c75b0
+// flow-typed signature: 61065a19f102a0ea66c080cbaf185594
 // flow-typed version: <<STUB>>/eslint-plugin-n_v^17.21.0/flow_v0.275.0
 
 /**
@@ -15,4 +15,945 @@
 
 declare module 'eslint-plugin-n' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module 'eslint-plugin-n/configs/recommended-module' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/configs/recommended-script' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/all-rules' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/configs/_commons' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/configs/all' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/configs/recommended-module' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/configs/recommended-script' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/configs/recommended' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/callback-return' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/exports-style' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/file-extension-in-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/global-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/handle-callback-err' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/hashbang' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-callback-literal' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-deprecated-api' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-exports-assign' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-extraneous-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-extraneous-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-hide-core-modules' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-missing-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-missing-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-mixed-requires' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-new-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-path-concat' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-process-env' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-process-exit' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-restricted-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-restricted-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-sync' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-top-level-await' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-bin' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-require' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/es-builtins' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/es-syntax' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/node-builtins' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/buffer' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/console' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/process' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/text-decoder' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/text-encoder' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/url-search-params' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-global/url' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-node-protocol' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-promises/dns' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/prefer-promises/fs' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/process-exit-as-throw' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/rules/shebang' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/assert' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/async_hooks' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/buffer' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/child_process' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/cluster' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/console' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/crypto' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dgram' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/diagnostics_channel' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dns' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/domain' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/events' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/fs' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http2' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/https' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/inspector' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/module' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/net' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/os' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/path' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/perf_hooks' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/process' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/punycode' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/querystring' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/readline' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/repl' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sea' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sqlite' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/stream' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/string_decoder' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/test' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/timers' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tls' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/trace_events' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tty' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/url' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/util' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/v8' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/vm' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/wasi' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/worker_threads' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/zlib' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-globals' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/node-import-meta' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/unsupported-features/types' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/cache' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-existence' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-extraneous' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-prefer-global' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-publish' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-restricted' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/check-unsupported-builtins' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/enumerate-property-names' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/eslint-compat' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/exists' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/extend-trackmap-with-node-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-allow-modules' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-configured-node-version' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-convert-path' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-full-type-name' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-npmignore' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-package-json' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-parser-services' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-resolve-paths' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-resolver-config' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-semver-range' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-try-extensions' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-tsconfig' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-type-of-node' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/get-typescript-extension-map' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/has-parent-node' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/import-target' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/is-bin-file' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/is-typescript' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/iterate-process-get-builtin-module-references' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/map-typescript-extension' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/merge-visitors-in-place' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/strip-import-path-params' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/unprefix-node-colon' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/visit-import' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-n/lib/util/visit-require' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module 'eslint-plugin-n/configs/recommended-module.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/configs/recommended-module'>;
+}
+declare module 'eslint-plugin-n/configs/recommended-script.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/configs/recommended-script'>;
+}
+declare module 'eslint-plugin-n/lib/all-rules.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/all-rules'>;
+}
+declare module 'eslint-plugin-n/lib/configs/_commons.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/configs/_commons'>;
+}
+declare module 'eslint-plugin-n/lib/configs/all.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/configs/all'>;
+}
+declare module 'eslint-plugin-n/lib/configs/recommended-module.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/configs/recommended-module'>;
+}
+declare module 'eslint-plugin-n/lib/configs/recommended-script.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/configs/recommended-script'>;
+}
+declare module 'eslint-plugin-n/lib/configs/recommended.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/configs/recommended'>;
+}
+declare module 'eslint-plugin-n/lib/index' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib'>;
+}
+declare module 'eslint-plugin-n/lib/index.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib'>;
+}
+declare module 'eslint-plugin-n/lib/rules/callback-return.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/callback-return'>;
+}
+declare module 'eslint-plugin-n/lib/rules/exports-style.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/exports-style'>;
+}
+declare module 'eslint-plugin-n/lib/rules/file-extension-in-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/file-extension-in-import'>;
+}
+declare module 'eslint-plugin-n/lib/rules/global-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/global-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/handle-callback-err.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/handle-callback-err'>;
+}
+declare module 'eslint-plugin-n/lib/rules/hashbang.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/hashbang'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-callback-literal.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-callback-literal'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-deprecated-api.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-deprecated-api'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-exports-assign.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-exports-assign'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-extraneous-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-extraneous-import'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-extraneous-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-extraneous-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-hide-core-modules.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-hide-core-modules'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-missing-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-missing-import'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-missing-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-missing-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-mixed-requires.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-mixed-requires'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-new-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-new-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-path-concat.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-path-concat'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-process-env.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-process-env'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-process-exit.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-process-exit'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-restricted-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-restricted-import'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-restricted-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-restricted-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-sync.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-sync'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-top-level-await.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-top-level-await'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-bin.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unpublished-bin'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unpublished-import'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unpublished-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unpublished-require'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/es-builtins.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unsupported-features/es-builtins'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/es-syntax.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unsupported-features/es-syntax'>;
+}
+declare module 'eslint-plugin-n/lib/rules/no-unsupported-features/node-builtins.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/no-unsupported-features/node-builtins'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/buffer.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/buffer'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/console.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/console'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/process.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/process'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/text-decoder.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/text-decoder'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/text-encoder.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/text-encoder'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/url-search-params.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/url-search-params'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-global/url.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-global/url'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-node-protocol.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-node-protocol'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-promises/dns.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-promises/dns'>;
+}
+declare module 'eslint-plugin-n/lib/rules/prefer-promises/fs.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/prefer-promises/fs'>;
+}
+declare module 'eslint-plugin-n/lib/rules/process-exit-as-throw.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/process-exit-as-throw'>;
+}
+declare module 'eslint-plugin-n/lib/rules/shebang.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/rules/shebang'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/assert.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/assert'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/async_hooks.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/async_hooks'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/buffer.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/buffer'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/child_process.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/child_process'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/cluster.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/cluster'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/console.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/console'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/crypto.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/crypto'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dgram.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dgram'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/diagnostics_channel.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/diagnostics_channel'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dns.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/dns'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/domain.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/domain'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/events.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/events'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/fs.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/fs'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http2.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/http2'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/https.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/https'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/inspector.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/inspector'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/module.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/module'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/net.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/net'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/os.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/os'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/path.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/path'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/perf_hooks.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/perf_hooks'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/process.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/process'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/punycode.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/punycode'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/querystring.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/querystring'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/readline.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/readline'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/repl.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/repl'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sea.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sea'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sqlite.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/sqlite'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/stream.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/stream'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/string_decoder.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/string_decoder'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/test.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/test'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/timers.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/timers'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tls.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tls'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/trace_events.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/trace_events'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tty.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/tty'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/url.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/url'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/util.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/util'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/v8.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/v8'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/vm.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/vm'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/wasi.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/wasi'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/worker_threads.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/worker_threads'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/zlib.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins-modules/zlib'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-builtins.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-builtins'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-globals.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-globals'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/node-import-meta.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/node-import-meta'>;
+}
+declare module 'eslint-plugin-n/lib/unsupported-features/types.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/unsupported-features/types'>;
+}
+declare module 'eslint-plugin-n/lib/util/cache.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/cache'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-existence.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-existence'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-extraneous.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-extraneous'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-prefer-global.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-prefer-global'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-publish.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-publish'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-restricted.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-restricted'>;
+}
+declare module 'eslint-plugin-n/lib/util/check-unsupported-builtins.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/check-unsupported-builtins'>;
+}
+declare module 'eslint-plugin-n/lib/util/enumerate-property-names.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/enumerate-property-names'>;
+}
+declare module 'eslint-plugin-n/lib/util/eslint-compat.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/eslint-compat'>;
+}
+declare module 'eslint-plugin-n/lib/util/exists.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/exists'>;
+}
+declare module 'eslint-plugin-n/lib/util/extend-trackmap-with-node-prefix.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/extend-trackmap-with-node-prefix'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-allow-modules.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-allow-modules'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-configured-node-version.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-configured-node-version'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-convert-path.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-convert-path'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-full-type-name.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-full-type-name'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-npmignore.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-npmignore'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-package-json.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-package-json'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-parser-services.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-parser-services'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-resolve-paths.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-resolve-paths'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-resolver-config.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-resolver-config'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-semver-range.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-semver-range'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-try-extensions.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-try-extensions'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-tsconfig.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-tsconfig'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-type-of-node.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-type-of-node'>;
+}
+declare module 'eslint-plugin-n/lib/util/get-typescript-extension-map.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/get-typescript-extension-map'>;
+}
+declare module 'eslint-plugin-n/lib/util/has-parent-node.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/has-parent-node'>;
+}
+declare module 'eslint-plugin-n/lib/util/import-target.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/import-target'>;
+}
+declare module 'eslint-plugin-n/lib/util/is-bin-file.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/is-bin-file'>;
+}
+declare module 'eslint-plugin-n/lib/util/is-typescript.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/is-typescript'>;
+}
+declare module 'eslint-plugin-n/lib/util/iterate-process-get-builtin-module-references.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/iterate-process-get-builtin-module-references'>;
+}
+declare module 'eslint-plugin-n/lib/util/map-typescript-extension.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/map-typescript-extension'>;
+}
+declare module 'eslint-plugin-n/lib/util/merge-visitors-in-place.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/merge-visitors-in-place'>;
+}
+declare module 'eslint-plugin-n/lib/util/strip-import-path-params.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/strip-import-path-params'>;
+}
+declare module 'eslint-plugin-n/lib/util/unprefix-node-colon.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/unprefix-node-colon'>;
+}
+declare module 'eslint-plugin-n/lib/util/visit-import.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/visit-import'>;
+}
+declare module 'eslint-plugin-n/lib/util/visit-require.js' {
+  declare module.exports: $Exports<'eslint-plugin-n/lib/util/visit-require'>;
 }

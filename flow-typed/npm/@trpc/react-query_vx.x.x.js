@@ -1,4 +1,4 @@
-// flow-typed signature: 81b2d89a0fd154a1c80db23321f4dac0
+// flow-typed signature: 077d6def18b7bc47423a93a8cb6551b5
 // flow-typed version: <<STUB>>/@trpc/react-query_v^11.4.3/flow_v0.275.0
 
 /**
@@ -15,4 +15,41 @@
 
 declare module '@trpc/react-query' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@trpc/react-query/rsc' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/react-query/server' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/react-query/shared' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@trpc/react-query/rsc/index' {
+  declare module.exports: $Exports<'@trpc/react-query/rsc'>;
+}
+declare module '@trpc/react-query/rsc/index.js' {
+  declare module.exports: $Exports<'@trpc/react-query/rsc'>;
+}
+declare module '@trpc/react-query/server/index' {
+  declare module.exports: $Exports<'@trpc/react-query/server'>;
+}
+declare module '@trpc/react-query/server/index.js' {
+  declare module.exports: $Exports<'@trpc/react-query/server'>;
+}
+declare module '@trpc/react-query/shared/index' {
+  declare module.exports: $Exports<'@trpc/react-query/shared'>;
+}
+declare module '@trpc/react-query/shared/index.js' {
+  declare module.exports: $Exports<'@trpc/react-query/shared'>;
 }

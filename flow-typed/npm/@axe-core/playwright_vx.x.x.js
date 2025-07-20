@@ -1,4 +1,4 @@
-// flow-typed signature: af530115d5380b440748342834045b1e
+// flow-typed signature: 34d9c9a5b1ae6883148a4af81974f09c
 // flow-typed version: <<STUB>>/@axe-core/playwright_v^4.10.2/flow_v0.275.0
 
 /**
@@ -15,4 +15,21 @@
 
 declare module '@axe-core/playwright' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@axe-core/playwright/dist' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@axe-core/playwright/dist/index' {
+  declare module.exports: $Exports<'@axe-core/playwright/dist'>;
+}
+declare module '@axe-core/playwright/dist/index.js' {
+  declare module.exports: $Exports<'@axe-core/playwright/dist'>;
 }

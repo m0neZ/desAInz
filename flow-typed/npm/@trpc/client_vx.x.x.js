@@ -1,4 +1,4 @@
-// flow-typed signature: c9aaac7bd11441ec4ff5e0ac882ae46a
+// flow-typed signature: 82d79ae3ad74da703f1f2cca959676df
 // flow-typed version: <<STUB>>/@trpc/client_v^11.4.3/flow_v0.275.0
 
 /**
@@ -15,4 +15,81 @@
 
 declare module '@trpc/client' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@trpc/client/links/httpBatchLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/links/httpLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/links/loggerLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/links/splitLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/links/wsLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/links/wsLink/wsLink' {
+  declare module.exports: any;
+}
+
+declare module '@trpc/client/unstable-internals' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@trpc/client/links/httpBatchLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/httpBatchLink'>;
+}
+declare module '@trpc/client/links/httpBatchLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/httpBatchLink'>;
+}
+declare module '@trpc/client/links/httpLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/httpLink'>;
+}
+declare module '@trpc/client/links/httpLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/httpLink'>;
+}
+declare module '@trpc/client/links/loggerLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/loggerLink'>;
+}
+declare module '@trpc/client/links/loggerLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/loggerLink'>;
+}
+declare module '@trpc/client/links/splitLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/splitLink'>;
+}
+declare module '@trpc/client/links/splitLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/splitLink'>;
+}
+declare module '@trpc/client/links/wsLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/wsLink'>;
+}
+declare module '@trpc/client/links/wsLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/wsLink'>;
+}
+declare module '@trpc/client/links/wsLink/wsLink/index' {
+  declare module.exports: $Exports<'@trpc/client/links/wsLink/wsLink'>;
+}
+declare module '@trpc/client/links/wsLink/wsLink/index.js' {
+  declare module.exports: $Exports<'@trpc/client/links/wsLink/wsLink'>;
+}
+declare module '@trpc/client/unstable-internals/index' {
+  declare module.exports: $Exports<'@trpc/client/unstable-internals'>;
+}
+declare module '@trpc/client/unstable-internals/index.js' {
+  declare module.exports: $Exports<'@trpc/client/unstable-internals'>;
 }

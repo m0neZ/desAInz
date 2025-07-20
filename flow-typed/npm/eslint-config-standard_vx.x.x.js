@@ -1,4 +1,4 @@
-// flow-typed signature: 23663ab94a90113387c8e09b2fb37c06
+// flow-typed signature: a6aa6c2a6df6f8e2326410f2f7dc8fcb
 // flow-typed version: <<STUB>>/eslint-config-standard_v^17.1.0/flow_v0.275.0
 
 /**
@@ -15,4 +15,19 @@
 
 declare module 'eslint-config-standard' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+
+
+// Filename aliases
+declare module 'eslint-config-standard/index' {
+  declare module.exports: $Exports<'eslint-config-standard'>;
+}
+declare module 'eslint-config-standard/index.js' {
+  declare module.exports: $Exports<'eslint-config-standard'>;
 }

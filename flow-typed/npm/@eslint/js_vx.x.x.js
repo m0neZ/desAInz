@@ -1,4 +1,4 @@
-// flow-typed signature: 8b3f3be3f1f0446f3cb79271eb65c483
+// flow-typed signature: d26800bfc308bed4d62236a154e1c0ad
 // flow-typed version: <<STUB>>/@eslint/js_v^9.31.0/flow_v0.275.0
 
 /**
@@ -15,4 +15,35 @@
 
 declare module '@eslint/js' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@eslint/js/src/configs/eslint-all' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/js/src/configs/eslint-recommended' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/js/src' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@eslint/js/src/configs/eslint-all.js' {
+  declare module.exports: $Exports<'@eslint/js/src/configs/eslint-all'>;
+}
+declare module '@eslint/js/src/configs/eslint-recommended.js' {
+  declare module.exports: $Exports<'@eslint/js/src/configs/eslint-recommended'>;
+}
+declare module '@eslint/js/src/index' {
+  declare module.exports: $Exports<'@eslint/js/src'>;
+}
+declare module '@eslint/js/src/index.js' {
+  declare module.exports: $Exports<'@eslint/js/src'>;
 }

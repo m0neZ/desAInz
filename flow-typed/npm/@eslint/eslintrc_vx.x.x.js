@@ -1,4 +1,4 @@
-// flow-typed signature: 0dcbb0e40d834e0a4a7fa512a7b93acb
+// flow-typed signature: f20957a7395ac5ca8413cd5d5c79322a
 // flow-typed version: <<STUB>>/@eslint/eslintrc_v^3.3.1/flow_v0.275.0
 
 /**
@@ -15,4 +15,171 @@
 
 declare module '@eslint/eslintrc' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@eslint/eslintrc/conf/config-schema' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/conf/environments' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/cascading-config-array-factory' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array-factory' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array/config-array' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array/config-dependency' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array/extracted-config' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array/ignore-pattern' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/config-array/override-tester' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/flat-compat' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/index-universal' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/ajv' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/config-ops' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/config-validator' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/deep-merge-arrays' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/deprecation-warnings' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/naming' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/relative-module-resolver' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/lib/shared/types' {
+  declare module.exports: any;
+}
+
+declare module '@eslint/eslintrc/universal' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@eslint/eslintrc/conf/config-schema.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/conf/config-schema'>;
+}
+declare module '@eslint/eslintrc/conf/environments.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/conf/environments'>;
+}
+declare module '@eslint/eslintrc/lib/cascading-config-array-factory.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/cascading-config-array-factory'>;
+}
+declare module '@eslint/eslintrc/lib/config-array-factory.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array-factory'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/config-array.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array/config-array'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/config-dependency.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array/config-dependency'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/extracted-config.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array/extracted-config'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/ignore-pattern.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array/ignore-pattern'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/index' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/index.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array'>;
+}
+declare module '@eslint/eslintrc/lib/config-array/override-tester.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/config-array/override-tester'>;
+}
+declare module '@eslint/eslintrc/lib/flat-compat.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/flat-compat'>;
+}
+declare module '@eslint/eslintrc/lib/index-universal.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/index-universal'>;
+}
+declare module '@eslint/eslintrc/lib/index' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib'>;
+}
+declare module '@eslint/eslintrc/lib/index.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib'>;
+}
+declare module '@eslint/eslintrc/lib/shared/ajv.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/ajv'>;
+}
+declare module '@eslint/eslintrc/lib/shared/config-ops.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/config-ops'>;
+}
+declare module '@eslint/eslintrc/lib/shared/config-validator.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/config-validator'>;
+}
+declare module '@eslint/eslintrc/lib/shared/deep-merge-arrays.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/deep-merge-arrays'>;
+}
+declare module '@eslint/eslintrc/lib/shared/deprecation-warnings.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/deprecation-warnings'>;
+}
+declare module '@eslint/eslintrc/lib/shared/naming.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/naming'>;
+}
+declare module '@eslint/eslintrc/lib/shared/relative-module-resolver.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/relative-module-resolver'>;
+}
+declare module '@eslint/eslintrc/lib/shared/types.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/lib/shared/types'>;
+}
+declare module '@eslint/eslintrc/universal.js' {
+  declare module.exports: $Exports<'@eslint/eslintrc/universal'>;
 }

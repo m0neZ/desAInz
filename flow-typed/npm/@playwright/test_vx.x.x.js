@@ -1,4 +1,4 @@
-// flow-typed signature: b61e920ed268aa25c20354b0562c9371
+// flow-typed signature: 40cf0055e964e3938d98dd1ba937d53f
 // flow-typed version: <<STUB>>/@playwright/test_v^1.54.1/flow_v0.275.0
 
 /**
@@ -15,4 +15,31 @@
 
 declare module '@playwright/test' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module '@playwright/test/cli' {
+  declare module.exports: any;
+}
+
+declare module '@playwright/test/reporter' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module '@playwright/test/cli.js' {
+  declare module.exports: $Exports<'@playwright/test/cli'>;
+}
+declare module '@playwright/test/index' {
+  declare module.exports: $Exports<'@playwright/test'>;
+}
+declare module '@playwright/test/index.js' {
+  declare module.exports: $Exports<'@playwright/test'>;
+}
+declare module '@playwright/test/reporter.js' {
+  declare module.exports: $Exports<'@playwright/test/reporter'>;
 }

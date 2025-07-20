@@ -1,4 +1,4 @@
-// flow-typed signature: b2f043223828446fedd00a50a71311bb
+// flow-typed signature: 8a3c0e81ed5c21f109c5d1cb09b2a7f3
 // flow-typed version: <<STUB>>/stylelint-config-standard_v^38.0.0/flow_v0.275.0
 
 /**
@@ -15,4 +15,19 @@
 
 declare module 'stylelint-config-standard' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+
+
+// Filename aliases
+declare module 'stylelint-config-standard/index' {
+  declare module.exports: $Exports<'stylelint-config-standard'>;
+}
+declare module 'stylelint-config-standard/index.js' {
+  declare module.exports: $Exports<'stylelint-config-standard'>;
 }

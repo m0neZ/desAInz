@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.swp
+*.log
+*.env
+.env
+node_modules/
+frontend/admin-dashboard/node_modules/
+flow-typed/
+docs/
+tests/
+.git/

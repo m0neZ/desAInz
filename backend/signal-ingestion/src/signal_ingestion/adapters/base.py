@@ -58,7 +58,8 @@ class BaseAdapter:
         async with self._rate_limiter:
             proxy = next(self._proxies_cycle)
             async with httpx.AsyncClient(proxy=cast(Any, proxy)) as client:
-                resp = await client.get(f"{self.base_url}{path}", headers=headers)
+                url = path if path.startswith("http") else f"{self.base_url}{path}"
+                resp = await client.get(url, headers=headers)
                 resp.raise_for_status()
                 return resp
 

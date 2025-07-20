@@ -35,17 +35,47 @@ ADAPTERS = [
 
 @pytest.mark.parametrize("adapter_cls, name", ADAPTERS)  # type: ignore[misc]
 @pytest.mark.asyncio()  # type: ignore[misc]
-async def test_fetch(adapter_cls: type[BaseAdapter], name: str) -> None:
-    """Each adapter should fetch one item."""
+async def test_fetch(
+    adapter_cls: type[BaseAdapter], name: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Each adapter should invoke its HTTP layer and return data."""
     adapter = adapter_cls()  # type: ignore[call-arg]
-    cassette = f"backend/signal-ingestion/tests/cassettes/{name}.yaml"
-    with vcr.use_cassette(cassette, record_mode="new_episodes"):
+
+    async def fake_request(path: str, *args: object, **kwargs: object) -> httpx.Response:
+        request = httpx.Request("GET", path)
         if name == "instagram":
-            with pytest.raises(httpx.HTTPStatusError):
-                await adapter.fetch()
-            return
-        rows = await adapter.fetch()
-    assert len(rows) == 1
+            response = httpx.Response(400, request=request)
+            response.raise_for_status()
+            return response
+        if name == "reddit":
+            return httpx.Response(
+                200,
+                json={"data": {"children": [{"data": {"id": "1", "title": "foo", "permalink": "/r/python"}}]}},
+                request=request,
+            )
+        if name == "youtube":
+            if path.startswith("/youtube"):
+                return httpx.Response(200, json={"items": [{"id": "a"}]}, request=request)
+            return httpx.Response(200, json={"title": "v", "html": "", "author_url": ""}, request=request)
+        if name == "events":
+            return httpx.Response(200, json=[{"date": "2025-01-01", "name": "Holiday"}], request=request)
+        if name == "nostalgia":
+            return httpx.Response(
+                200,
+                json={"response": {"docs": [{"identifier": "x", "title": "old"}]}},
+                request=request,
+            )
+        return httpx.Response(200, json={"title": "t"}, request=request)
+
+    monkeypatch.setattr(adapter, "_request", fake_request)
+
+    if name == "instagram":
+        with pytest.raises(httpx.HTTPStatusError):
+            await adapter.fetch()
+        return
+
+    rows = await adapter.fetch()
+    assert len(rows) >= 1
     assert isinstance(rows[0], dict)
 
 

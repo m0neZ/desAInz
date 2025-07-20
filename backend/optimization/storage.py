@@ -30,7 +30,7 @@ class MetricsStore:
                 conn.execute(
                     (
                         "CREATE TABLE IF NOT EXISTS metrics (timestamp TEXT, "
-                        "cpu REAL, memory REAL)"
+                        "cpu REAL, memory REAL, disk REAL)"
                     )
                 )
         else:
@@ -40,7 +40,7 @@ class MetricsStore:
                         (
                             "CREATE TABLE IF NOT EXISTS metrics (timestamp "
                             "TIMESTAMPTZ, cpu DOUBLE PRECISION, memory DOUBLE "
-                            "PRECISION)"
+                            "PRECISION, disk DOUBLE PRECISION)"
                         )
                     )
                     conn.commit()
@@ -69,22 +69,24 @@ class MetricsStore:
         if self._use_sqlite:
             with self._get_sqlite_conn() as conn:
                 conn.execute(
-                    "INSERT INTO metrics VALUES (?, ?, ?)",
+                    "INSERT INTO metrics VALUES (?, ?, ?, ?)",
                     (
                         metric.timestamp.isoformat(),
                         metric.cpu_percent,
                         metric.memory_mb,
+                        metric.disk_usage_mb,
                     ),
                 )
         else:
             with self._get_pg_conn() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "INSERT INTO metrics VALUES (%s, %s, %s)",
+                        "INSERT INTO metrics VALUES (%s, %s, %s, %s)",
                         (
                             metric.timestamp.isoformat(),
                             metric.cpu_percent,
                             metric.memory_mb,
+                            metric.disk_usage_mb,
                         ),
                     )
                     conn.commit()
@@ -94,15 +96,15 @@ class MetricsStore:
         if self._use_sqlite:
             with self._get_sqlite_conn() as conn:
                 rows = conn.execute(
-                    "SELECT timestamp, cpu, memory FROM metrics"
+                    "SELECT timestamp, cpu, memory, disk FROM metrics"
                 ).fetchall()
         else:
             with self._get_pg_conn() as conn:
                 with conn.cursor() as cur:
-                    cur.execute("SELECT timestamp, cpu, memory FROM metrics")
+                    cur.execute("SELECT timestamp, cpu, memory, disk FROM metrics")
                     rows = cur.fetchall()
         result: List[ResourceMetric] = []
-        for ts, cpu, memory in rows:
+        for ts, cpu, memory, disk in rows:
             if isinstance(ts, datetime):
                 timestamp = ts
             else:
@@ -112,6 +114,7 @@ class MetricsStore:
                     timestamp=timestamp,
                     cpu_percent=cpu,
                     memory_mb=memory,
+                    disk_usage_mb=disk,
                 )
             )
         return result
@@ -125,13 +128,15 @@ class MetricsStore:
             "CREATE MATERIALIZED VIEW IF NOT EXISTS metrics_hourly "
             "WITH (timescaledb.continuous) AS "
             "SELECT time_bucket('1 hour', timestamp) AS bucket, "
-            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory "
+            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory, "
+            "AVG(disk) AS avg_disk "
             "FROM metrics GROUP BY bucket"
         )
         fallback_stmt = (
             "CREATE MATERIALIZED VIEW IF NOT EXISTS metrics_hourly AS "
             "SELECT date_trunc('hour', timestamp) AS bucket, "
-            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory "
+            "AVG(cpu) AS avg_cpu, AVG(memory) AS avg_memory, "
+            "AVG(disk) AS avg_disk "
             "FROM metrics GROUP BY bucket"
         )
         with self._get_pg_conn() as conn:

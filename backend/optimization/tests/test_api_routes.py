@@ -21,6 +21,7 @@ def test_recommendation_routes(tmp_path: Path) -> None:
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "cpu_percent": 85.0,
         "memory_mb": 2048.0,
+        "disk_usage_mb": 4096.0,
     }
     resp = client.post("/metrics", json=metric)
     assert resp.status_code == 200

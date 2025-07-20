@@ -15,10 +15,12 @@ class Settings(BaseSettings):
     log_file: str = "app.log"
     sla_threshold_hours: float = 2.0
     SLA_THRESHOLD_HOURS: float = 2.0
+    sla_alert_cooldown_hours: float = 1.0
+    SLA_ALERT_COOLDOWN_HOURS: float = 1.0
     enable_pagerduty: bool = True
     ENABLE_PAGERDUTY: bool = True
 
-    @field_validator("sla_threshold_hours")
+    @field_validator("sla_threshold_hours", "sla_alert_cooldown_hours")
     @classmethod
     def _positive(cls, value: float) -> float:
         if value <= 0:

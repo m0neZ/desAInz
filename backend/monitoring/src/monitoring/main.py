@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+from datetime import datetime
 from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
@@ -23,7 +24,7 @@ from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
 
-from .pagerduty import trigger_sla_violation
+from .pagerduty import SLA_LAST_ALERT_KEY, trigger_sla_violation
 from .metrics_store import (
     PublishLatencyMetric,
     TimescaleMetricsStore,
@@ -168,7 +169,17 @@ def _check_sla() -> float:
         return avg
     threshold = getattr(settings, "SLA_THRESHOLD_HOURS", settings.sla_threshold_hours)
     if avg > threshold * 3600:
-        trigger_sla_violation(avg / 3600)
+        cooldown = getattr(
+            settings, "SLA_ALERT_COOLDOWN_HOURS", settings.sla_alert_cooldown_hours
+        )
+        last = sync_get(SLA_LAST_ALERT_KEY)
+        now = datetime.utcnow().timestamp()
+        try:
+            last_ts = float(last) if last is not None else None
+        except (TypeError, ValueError):
+            last_ts = None
+        if last_ts is None or now - last_ts > cooldown * 3600:
+            trigger_sla_violation(avg / 3600)
     return avg
 
 

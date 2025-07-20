@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime
 from typing import Any
 
+from backend.shared.cache import sync_set
 from .settings import settings
 
 import requests
 
 PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"
+# Key storing the UNIX timestamp of the last PagerDuty SLA alert in Redis.
+SLA_LAST_ALERT_KEY = "sla:last_alert"
 
 
 def trigger_sla_violation(duration_hours: float) -> None:
@@ -31,6 +35,10 @@ def trigger_sla_violation(duration_hours: float) -> None:
     try:
         requests.post(PAGERDUTY_URL, json=payload, timeout=5)
     except requests.RequestException:
+        pass
+    try:
+        sync_set(SLA_LAST_ALERT_KEY, str(datetime.utcnow().timestamp()))
+    except Exception:  # pragma: no cover - redis optional
         pass
 
 

@@ -11,6 +11,8 @@ from typing import Iterable
 
 from openapi_schema_validator import OAS30Validator
 
+import types
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -42,15 +44,38 @@ def ensure_doc(service: str) -> None:
     if DOCS_INDEX.exists():
         lines = DOCS_INDEX.read_text(encoding="utf-8").splitlines()
     else:
-        lines = ["OpenAPI Specifications", "======================", "", ".. toctree::", "   :maxdepth: 1", ""]
+        lines = [
+            "OpenAPI Specifications",
+            "======================",
+            "",
+            ".. toctree::",
+            "   :maxdepth: 1",
+            "",
+        ]
 
     entry = f"   openapi/{service}"
     if entry not in lines:
         lines.append(entry)
         DOCS_INDEX.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+
 OPENAPI_DIR = PROJECT_ROOT / "openapi"
 OPENAPI_DIR.mkdir(exist_ok=True)
+
+
+def _patch_shared_dependencies() -> None:
+    """Stub modules that require external services."""
+    currency = types.ModuleType("backend.shared.currency")
+
+    def _convert_price(amount: float, currency: str) -> float:
+        return amount
+
+    def _start_rate_updater() -> None:  # pragma: no cover - stub
+        return None
+
+    setattr(currency, "convert_price", _convert_price)
+    setattr(currency, "start_rate_updater", _start_rate_updater)
+    sys.modules.setdefault("backend.shared.currency", currency)
 
 
 def generate_from_file(main_file: Path) -> None:
@@ -67,6 +92,7 @@ def generate_from_file(main_file: Path) -> None:
     package = package_dir.name if (package_dir / "__init__.py").exists() else ""
     module_name = f"{package}.main" if package else "main"
     spec_obj = importlib.util.spec_from_file_location(module_name, main_file)
+    assert spec_obj is not None
     module = importlib.util.module_from_spec(spec_obj)
     if package and package not in sys.modules:
         pkg_spec = importlib.machinery.ModuleSpec(package, loader=None)
@@ -74,6 +100,7 @@ def generate_from_file(main_file: Path) -> None:
         pkg.__path__ = [str(package_dir)]
         sys.modules[package] = pkg
     sys.modules[module_name] = module
+    _patch_shared_dependencies()
     assert spec_obj.loader is not None
     spec_obj.loader.exec_module(module)
     app = getattr(module, "app", None)
@@ -156,5 +183,3 @@ spec = {
 )
 OAS30Validator.check_schema(spec)
 ensure_doc("scoring-engine")
-
-

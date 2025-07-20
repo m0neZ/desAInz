@@ -1,0 +1,29 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "TimescaleDB",
+      "type": "timeseries",
+      "title": "Average Score",
+      "targets": [
+        {
+          "rawSql": "SELECT time_bucket('1 hour', timestamp) AS time, AVG(score) FROM scores GROUP BY time ORDER BY time",
+          "refId": "A",
+          "format": "time_series"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 38,
+  "style": "dark",
+  "time": {"from": "now-24h", "to": "now"},
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Score Overview",
+  "version": 1
+}

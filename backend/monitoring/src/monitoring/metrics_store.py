@@ -189,3 +189,48 @@ class TimescaleMetricsStore:
                 cur.execute(stmt)
                 pg_conn.commit()
         self._send_loki_log("continuous_aggregate_created")
+
+    def get_active_users(self, since: datetime) -> int:
+        """Return the number of unique ideas with scores since ``since``."""
+        with self._get_conn() as conn:
+            if self._use_sqlite:
+                cur = conn.execute(
+                    "SELECT COUNT(DISTINCT idea_id) FROM scores WHERE timestamp >= ?",
+                    (since.isoformat(),),
+                )
+                row = cur.fetchone()
+                return int(row[0] if row is not None else 0)
+            pg_conn = cast(psycopg2.extensions.connection, conn)
+            with pg_conn.cursor() as cur:
+                cur.execute(
+                    "SELECT COUNT(DISTINCT idea_id) FROM scores WHERE timestamp >= %s",
+                    (since,),
+                )
+                result = cur.fetchone()
+            return int(result[0] if result is not None else 0)
+
+    def get_error_rate(self, since: datetime) -> float:
+        """Return fraction of score rows below 0.5 since ``since``."""
+        with self._get_conn() as conn:
+            if self._use_sqlite:
+                cur = conn.execute(
+                    (
+                        "SELECT SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END), "
+                        "COUNT(*) FROM scores WHERE timestamp >= ?"
+                    ),
+                    (since.isoformat(),),
+                )
+                errors, total = cur.fetchone() or (0, 0)
+            else:
+                pg_conn = cast(psycopg2.extensions.connection, conn)
+                with pg_conn.cursor() as cur:
+                    cur.execute(
+                        (
+                            "SELECT SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END), "
+                            "COUNT(*) FROM scores WHERE timestamp >= %s"
+                        ),
+                        (since,),
+                    )
+                    result = cur.fetchone()
+                    errors, total = result if result is not None else (0, 0)
+        return 0.0 if total == 0 else float(errors) / float(total)

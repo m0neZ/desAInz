@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from .settings import settings
+
 import requests
 
 PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"
@@ -12,6 +14,8 @@ PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"
 
 def trigger_sla_violation(duration_hours: float) -> None:
     """Send a PagerDuty alert for SLA breach if routing key configured."""
+    if not settings.enable_pagerduty:
+        return
     routing_key = os.environ.get("PAGERDUTY_ROUTING_KEY")
     if not routing_key:
         return
@@ -32,6 +36,8 @@ def trigger_sla_violation(duration_hours: float) -> None:
 
 def notify_listing_issue(listing_id: int, state: str) -> None:
     """Alert administrators that ``listing_id`` needs attention."""
+    if not settings.enable_pagerduty:
+        return
     routing_key = os.environ.get("PAGERDUTY_ROUTING_KEY")
     if not routing_key:
         return

@@ -1,78 +1,98 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "signal-ingestion",
-    "version": "0.1.0"
-  },
-  "paths": {
-    "/health": {
-      "get": {
-        "summary": "Health",
-        "description": "Return service liveness.",
-        "operationId": "health_health_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Health Health Get"
-                }
-              }
+    "openapi": "3.1.0",
+    "info": {"title": "signal-ingestion", "version": "0.1.0"},
+    "paths": {
+        "/health": {
+            "get": {
+                "summary": "Health",
+                "description": "Return service liveness.",
+                "operationId": "health_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Health Health Get",
+                                }
+                            }
+                        },
+                    }
+                },
             }
-          }
-        }
-      }
+        },
+        "/ready": {
+            "get": {
+                "summary": "Ready",
+                "description": "Return service readiness.",
+                "operationId": "ready_ready_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Ready Ready Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/ingest": {
+            "post": {
+                "summary": "Ingest Signals",
+                "description": "Trigger signal ingestion.",
+                "operationId": "ingest_signals_ingest_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Ingest Signals Ingest Post",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/trending": {
+            "get": {
+                "summary": "Trending",
+                "description": "Return trending keywords.",
+                "operationId": "trending_trending_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {"type": "integer"},
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {"type": "string"},
+                                    "type": "array",
+                                    "title": "Response Trending Trending Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
     },
-    "/ready": {
-      "get": {
-        "summary": "Ready",
-        "description": "Return service readiness.",
-        "operationId": "ready_ready_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Ready Ready Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/ingest": {
-      "post": {
-        "summary": "Ingest Signals",
-        "description": "Trigger signal ingestion.",
-        "operationId": "ingest_signals_ingest_post",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Ingest Signals Ingest Post"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }

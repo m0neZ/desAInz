@@ -9,7 +9,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):  # type: ignore[misc]
     """Store configuration derived from environment variables."""
 
-    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
+    model_config = SettingsConfigDict(
+        env_file=".env", secrets_dir="/run/secrets"
+    )
 
     app_name: str = "signal-ingestion"
     log_level: str = "INFO"
@@ -18,6 +20,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     dedup_capacity: int = 100_000
     dedup_ttl: int = 86_400
     ingest_interval_minutes: int = 60
+    ingest_cron_schedule: str | None = None
     http_proxies: HttpUrl | None = None
     adapter_rate_limit: int = 5
     enabled_adapters: list[str] | None = None
@@ -34,6 +37,14 @@ class Settings(BaseSettings):  # type: ignore[misc]
     nostalgia_fetch_limit: int = 1
     events_country_code: str = "US"
     events_fetch_limit: int = 1
+
+    @field_validator("ingest_cron_schedule", mode="before")  # type: ignore[misc]
+    @classmethod
+    def _empty_to_none(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        value = value.strip()
+        return value or None
 
     @field_validator(  # type: ignore[misc]
         "dedup_error_rate",
@@ -65,7 +76,9 @@ class Settings(BaseSettings):  # type: ignore[misc]
 
     @field_validator("enabled_adapters", mode="before")  # type: ignore[misc]
     @classmethod
-    def _split_adapters(cls, value: str | list[str] | None) -> list[str] | None:
+    def _split_adapters(
+        cls, value: str | list[str] | None
+    ) -> list[str] | None:
         if value is None:
             return None
         if isinstance(value, list):

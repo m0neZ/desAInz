@@ -33,6 +33,7 @@ Welcome to desAInz's documentation!
    feature-flags
    openapi_specs
    logs_with_loki
+   monitoring
    source/index
 
 Kafka Utilities

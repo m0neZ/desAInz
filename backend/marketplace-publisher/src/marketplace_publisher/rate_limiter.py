@@ -7,7 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from redis.asyncio import WatchError
-from backend.shared.cache import AsyncRedis
+from backend.shared.cache import AsyncRedis, get_async_client
 
 from .db import Marketplace
 
@@ -17,19 +17,19 @@ class MarketplaceRateLimiter:
 
     def __init__(
         self,
-        redis: AsyncRedis,
         limits: Mapping[Marketplace, int],
         window: int,
+        redis: AsyncRedis | None = None,
     ) -> None:
         """
         Instantiate the rate limiter.
 
         Args:
-            redis: Redis client instance.
+            redis: Redis client instance. If ``None``, a default client is used.
             limits: Allowed requests per window for each marketplace.
             window: Window size in seconds.
         """
-        self._redis = redis
+        self._redis = redis or get_async_client()
         self._limits = limits
         self._window = window
 

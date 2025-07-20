@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, TypeAlias
+from typing import Optional, TypeAlias
 
 import redis
 from redis import asyncio as aioredis
@@ -19,8 +19,10 @@ __all__ = [
     "get_async_client",
     "sync_get",
     "sync_set",
+    "sync_delete",
     "async_get",
     "async_set",
+    "async_delete",
 ]
 
 
@@ -34,30 +36,50 @@ def get_async_client() -> AsyncRedis:
     return aioredis.Redis.from_url(settings.redis_url, decode_responses=True)
 
 
-def sync_get(key: str) -> Optional[str]:
-    """Return the value for ``key`` using the default synchronous client."""
-    return get_sync_client().get(key)
+def sync_get(key: str, client: SyncRedis | None = None) -> Optional[str]:
+    """Return the value for ``key`` using the provided or default sync client."""
+    cli = client or get_sync_client()
+    return cli.get(key)
 
 
-def sync_set(key: str, value: str, ttl: int | None = None) -> None:
+def sync_set(
+    key: str, value: str, ttl: int | None = None, client: SyncRedis | None = None
+) -> None:
     """Set ``key`` to ``value`` optionally expiring after ``ttl`` seconds."""
-    client = get_sync_client()
+    cli = client or get_sync_client()
     if ttl is None:
-        client.set(key, value)
+        cli.set(key, value)
     else:
-        client.setex(key, ttl, value)
+        cli.setex(key, ttl, value)
 
 
-async def async_get(key: str) -> Optional[str]:
-    """Return the value for ``key`` using the default asynchronous client."""
-    client = get_async_client()
-    return await client.get(key)
+def sync_delete(key: str, client: SyncRedis | None = None) -> None:
+    """Delete ``key`` using the provided or default sync client."""
+    cli = client or get_sync_client()
+    cli.delete(key)
 
 
-async def async_set(key: str, value: str, ttl: int | None = None) -> None:
+async def async_get(key: str, client: AsyncRedis | None = None) -> Optional[str]:
+    """Return the value for ``key`` using the provided or default async client."""
+    cli = client or get_async_client()
+    return await cli.get(key)
+
+
+async def async_set(
+    key: str,
+    value: str,
+    ttl: int | None = None,
+    client: AsyncRedis | None = None,
+) -> None:
     """Set ``key`` to ``value`` optionally expiring after ``ttl`` seconds."""
-    client = get_async_client()
+    cli = client or get_async_client()
     if ttl is None:
-        await client.set(key, value)
+        await cli.set(key, value)
     else:
-        await client.setex(key, ttl, value)
+        await cli.setex(key, ttl, value)
+
+
+async def async_delete(key: str, client: AsyncRedis | None = None) -> None:
+    """Delete ``key`` using the provided or default async client."""
+    cli = client or get_async_client()
+    await cli.delete(key)

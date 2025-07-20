@@ -31,9 +31,16 @@ def _import_main(monkeypatch):
 def test_average_latency_cached(monkeypatch):
     """Average latency is cached between calls."""
     fake = fakeredis.FakeRedis()
-    monkeypatch.setattr(ms, "get_sync_client", lambda: fake)
+    monkeypatch.setattr(ms, "sync_delete", lambda key: fake.delete(key))
     main = _import_main(monkeypatch)
-    monkeypatch.setattr(main, "get_sync_client", lambda: fake)
+    monkeypatch.setattr(main, "sync_get", lambda key: fake.get(key))
+    monkeypatch.setattr(
+        main,
+        "sync_set",
+        lambda key, value, ttl=None: (
+            fake.setex(key, ttl, value) if ttl else fake.set(key, value)
+        ),
+    )
     calls: list[int] = []
 
     def fake_record() -> list[float]:
@@ -51,9 +58,16 @@ def test_average_latency_cached(monkeypatch):
 def test_cache_invalidated_on_new_metric(monkeypatch):
     """Cache is cleared when metrics are recorded."""
     fake = fakeredis.FakeRedis()
-    monkeypatch.setattr(ms, "get_sync_client", lambda: fake)
+    monkeypatch.setattr(ms, "sync_delete", lambda key: fake.delete(key))
     main = _import_main(monkeypatch)
-    monkeypatch.setattr(main, "get_sync_client", lambda: fake)
+    monkeypatch.setattr(main, "sync_get", lambda key: fake.get(key))
+    monkeypatch.setattr(
+        main,
+        "sync_set",
+        lambda key, value, ttl=None: (
+            fake.setex(key, ttl, value) if ttl else fake.set(key, value)
+        ),
+    )
     calls: list[int] = []
 
     def fake_record() -> list[float]:

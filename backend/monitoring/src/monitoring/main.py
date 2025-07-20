@@ -29,7 +29,7 @@ from .metrics_store import (
     TimescaleMetricsStore,
     LATENCY_CACHE_KEY,
 )
-from backend.shared.cache import get_sync_client
+from backend.shared.cache import sync_get, sync_set
 
 from .logging_config import configure_logging
 from .settings import settings
@@ -146,8 +146,7 @@ def _record_latencies() -> Iterable[float]:
 
 def get_average_latency() -> float:
     """Return cached average latency or compute and store it."""
-    client = get_sync_client()
-    cached = client.get(LATENCY_CACHE_KEY)
+    cached = sync_get(LATENCY_CACHE_KEY)
     if cached is not None:
         try:
             return float(cached)
@@ -156,7 +155,7 @@ def get_average_latency() -> float:
     latencies = _record_latencies()
     avg = sum(latencies) / max(len(latencies), 1)
     try:
-        client.setex(LATENCY_CACHE_KEY, 300, str(avg))
+        sync_set(LATENCY_CACHE_KEY, str(avg), ttl=300)
     except Exception:  # pragma: no cover - redis optional
         pass
     return avg

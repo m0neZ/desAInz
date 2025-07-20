@@ -56,9 +56,9 @@ add_error_handlers(app)
 register_metrics(app)
 
 rate_limiter = UserRateLimiter(
-    get_async_client(),
     settings.rate_limit_per_user,
     settings.rate_limit_window,
+    get_async_client(),
 )
 
 

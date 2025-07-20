@@ -72,7 +72,6 @@ def _identify_user(request: Request) -> str:
 
 
 rate_limiter = MarketplaceRateLimiter(
-    get_async_client(),
     {
         Marketplace.redbubble: settings.rate_limit_redbubble,
         Marketplace.amazon_merch: settings.rate_limit_amazon_merch,
@@ -80,6 +79,7 @@ rate_limiter = MarketplaceRateLimiter(
         Marketplace.society6: settings.rate_limit_society6,
     },
     settings.rate_limit_window,
+    None,
 )
 
 

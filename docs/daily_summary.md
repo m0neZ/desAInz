@@ -11,3 +11,10 @@ Run the script manually or schedule it via cron:
 ```bash
 ./scripts/daily_summary.py
 ```
+
+The monitoring service exposes the same information via the
+`/daily_summary` HTTP endpoint:
+
+```bash
+curl http://monitoring:8000/daily_summary
+```

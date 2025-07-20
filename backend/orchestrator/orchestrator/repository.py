@@ -2,21 +2,35 @@
 
 from dagster import Definitions
 
-from .jobs import analyze_query_plans_job, backup_job, cleanup_job, idea_job
+from .jobs import (
+    analyze_query_plans_job,
+    backup_job,
+    cleanup_job,
+    idea_job,
+    daily_summary_job,
+)
 from .schedules import (
     daily_backup_schedule,
     hourly_cleanup_schedule,
     daily_query_plan_schedule,
+    daily_summary_schedule,
 )
 from .sensors import idea_sensor, run_failure_notifier
 
 
 defs = Definitions(
-    jobs=[idea_job, backup_job, cleanup_job, analyze_query_plans_job],
+    jobs=[
+        idea_job,
+        backup_job,
+        cleanup_job,
+        analyze_query_plans_job,
+        daily_summary_job,
+    ],
     schedules=[
         daily_backup_schedule,
         hourly_cleanup_schedule,
         daily_query_plan_schedule,
+        daily_summary_schedule,
     ],
     sensors=[idea_sensor, run_failure_notifier],
 )

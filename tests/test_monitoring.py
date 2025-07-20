@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import sys
+from typing import Any
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "monitoring" / "src")
@@ -38,3 +39,23 @@ def test_health_ready_endpoints() -> None:
     response = client.get("/ready")
     assert response.status_code == 200
     assert response.json() == {"status": "ready"}
+
+
+def test_daily_summary_endpoint(monkeypatch: Any) -> None:
+    """Daily summary endpoint returns generated summary."""
+    from unittest.mock import AsyncMock
+
+    monkeypatch.setattr(
+        "monitoring.main.generate_daily_summary",
+        AsyncMock(
+            return_value={
+                "ideas_generated": 1,
+                "mockup_success_rate": 1.0,
+                "marketplace_stats": {},
+            }
+        ),
+    )
+    response = client.get("/daily_summary")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["ideas_generated"] == 1

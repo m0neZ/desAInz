@@ -37,6 +37,7 @@ LAST_ALERT_KEY = "sla:last_alert"
 
 from .logging_config import configure_logging
 from .settings import settings
+from scripts.daily_summary import generate_daily_summary
 
 metrics_store = TimescaleMetricsStore()
 
@@ -207,6 +208,13 @@ async def latency() -> dict[str, float]:
     """Return average signal-to-publish latency without triggering alerts."""
     avg = get_average_latency()
     return {"average_seconds": avg}
+
+
+@app.get("/daily_summary")
+async def daily_summary() -> dict[str, object]:
+    """Return the daily summary generated from recent activity."""
+    summary = await generate_daily_summary()
+    return dict(summary)
 
 
 @app.get("/logs")

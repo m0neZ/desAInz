@@ -12,6 +12,7 @@ from orchestrator.jobs import (  # noqa: E402
     backup_job,
     cleanup_job,
     idea_job,
+    daily_summary_job,
 )
 import pytest  # noqa: E402
 from dagster import DagsterInstance, RunRequest, build_sensor_context  # noqa: E402
@@ -20,6 +21,7 @@ from orchestrator.schedules import (  # noqa: E402
     daily_backup_schedule,
     daily_query_plan_schedule,
     hourly_cleanup_schedule,
+    daily_summary_schedule,
 )
 from orchestrator.sensors import idea_sensor  # noqa: E402
 
@@ -53,6 +55,13 @@ def test_query_plan_schedule_definition() -> None:
 
     assert daily_query_plan_schedule.job.name == "analyze_query_plans_job"
     assert daily_query_plan_schedule.cron_schedule == "30 6 * * *"
+
+
+def test_daily_summary_schedule_definition() -> None:
+    """Daily summary schedule is correctly configured."""
+
+    assert daily_summary_schedule.job == daily_summary_job
+    assert daily_summary_schedule.cron_schedule == "5 0 * * *"
 
 
 def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:

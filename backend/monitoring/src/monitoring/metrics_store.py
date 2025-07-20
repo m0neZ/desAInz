@@ -6,13 +6,15 @@ import os
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterator, MutableMapping
+from typing import Iterator, MutableMapping, cast
 
 from backend.shared.cache import get_sync_client
 
 import requests
 
+import sqlite3
 import psycopg2
+from psycopg2.pool import SimpleConnectionPool
 
 LATENCY_CACHE_KEY = "monitoring:latency_avg"
 
@@ -49,10 +51,18 @@ class TimescaleMetricsStore:
 
     def __init__(self, db_url: str | None = None, loki_url: str | None = None) -> None:
         """Initialize the store, ensure tables exist and configure logging."""
-        self.db_url = db_url or os.environ.get(
-            "METRICS_DB_URL", "postgresql://localhost/metrics"
-        )
+        env_url = os.environ.get("METRICS_DB_URL", "postgresql://localhost/metrics")
+        self.db_url: str = db_url or env_url
         self.loki_url = loki_url or os.environ.get("LOKI_URL")
+
+        self._use_sqlite = self.db_url.startswith("sqlite://")
+        if self._use_sqlite:
+            self.db_path = self.db_url.replace("sqlite://", "")
+            self._pool: SimpleConnectionPool | None = None
+        else:
+            maxconn = int(os.environ.get("METRICS_DB_POOL_SIZE", "5"))
+            self._pool = SimpleConnectionPool(1, maxconn, dsn=self.db_url)
+
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute(
@@ -69,6 +79,11 @@ class TimescaleMetricsStore:
                 )
             )
             conn.commit()
+
+    def __del__(self) -> None:
+        """Close the connection pool when the store is garbage-collected."""
+        if self._pool is not None:
+            self._pool.closeall()
 
     def _send_loki_log(
         self, message: str, labels: MutableMapping[str, str] | None = None
@@ -92,23 +107,41 @@ class TimescaleMetricsStore:
             pass
 
     @contextmanager
-    def _get_conn(self) -> Iterator[psycopg2.extensions.connection]:
+    def _get_conn(
+        self,
+    ) -> Iterator[psycopg2.extensions.connection | sqlite3.Connection]:
         """Yield a database connection."""
-        conn = psycopg2.connect(self.db_url)
-        try:
-            yield conn
-        finally:
-            conn.close()
+        if self._use_sqlite:
+            conn = sqlite3.connect(self.db_path)
+            try:
+                yield conn
+            finally:
+                conn.commit()
+                conn.close()
+        else:
+            assert self._pool is not None
+            conn = self._pool.getconn()
+            try:
+                yield conn
+            finally:
+                self._pool.putconn(conn)
 
     def add_score(self, metric: ScoreMetric) -> None:
         """Insert a score metric row."""
         with self._get_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO scores VALUES (%s, %s, %s)",
-                    (metric.idea_id, metric.timestamp, metric.score),
+            if self._use_sqlite:
+                conn.execute(
+                    "INSERT INTO scores VALUES (?, ?, ?)",
+                    (metric.idea_id, metric.timestamp.isoformat(), metric.score),
                 )
-                conn.commit()
+            else:
+                pg_conn = cast(psycopg2.extensions.connection, conn)
+                with pg_conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO scores VALUES (%s, %s, %s)",
+                        (metric.idea_id, metric.timestamp, metric.score),
+                    )
+                    pg_conn.commit()
         self._send_loki_log(
             "score_metric", {"idea_id": str(metric.idea_id), "type": "score"}
         )
@@ -116,12 +149,23 @@ class TimescaleMetricsStore:
     def add_latency(self, metric: PublishLatencyMetric) -> None:
         """Insert a publish latency metric row."""
         with self._get_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO publish_latency VALUES (%s, %s, %s)",
-                    (metric.idea_id, metric.timestamp, metric.latency_seconds),
+            if self._use_sqlite:
+                conn.execute(
+                    "INSERT INTO publish_latency VALUES (?, ?, ?)",
+                    (
+                        metric.idea_id,
+                        metric.timestamp.isoformat(),
+                        metric.latency_seconds,
+                    ),
                 )
-                conn.commit()
+            else:
+                pg_conn = cast(psycopg2.extensions.connection, conn)
+                with pg_conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO publish_latency VALUES (%s, %s, %s)",
+                        (metric.idea_id, metric.timestamp, metric.latency_seconds),
+                    )
+                    pg_conn.commit()
         invalidate_latency_cache()
         self._send_loki_log(
             "latency_metric",
@@ -137,8 +181,11 @@ class TimescaleMetricsStore:
             "AVG(latency_seconds) AS avg_latency "
             "FROM publish_latency GROUP BY bucket"
         )
+        if self._use_sqlite:
+            return
         with self._get_conn() as conn:
-            with conn.cursor() as cur:
+            pg_conn = cast(psycopg2.extensions.connection, conn)
+            with pg_conn.cursor() as cur:
                 cur.execute(stmt)
-                conn.commit()
+                pg_conn.commit()
         self._send_loki_log("continuous_aggregate_created")

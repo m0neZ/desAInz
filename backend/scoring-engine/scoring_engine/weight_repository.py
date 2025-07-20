@@ -10,6 +10,9 @@ from backend.shared.db.models import Weights
 from backend.shared.db.base import Base
 
 
+# Weight update smoothing factor for feedback adjustments
+FEEDBACK_SMOOTHING = 0.1
+
 # Create table if not exists
 Base.metadata.create_all(bind=engine)
 
@@ -68,8 +71,8 @@ def get_weights() -> WeightParams:
     return params
 
 
-def update_weights(**kwargs: float) -> WeightParams:
-    """Update weight values and return new model."""
+def update_weights(*, smoothing: float = 1.0, **kwargs: float) -> WeightParams:
+    """Update weight values using optional smoothing and return new model."""
     with session_scope() as session:
         weights = session.get(Weights, 1)
         if weights is None:
@@ -77,7 +80,9 @@ def update_weights(**kwargs: float) -> WeightParams:
             session.add(weights)
         for key, value in kwargs.items():
             if hasattr(weights, key):
-                setattr(weights, key, float(value))
+                current = float(getattr(weights, key))
+                target = float(value)
+                setattr(weights, key, current * (1 - smoothing) + target * smoothing)
         session.flush()
         params = _to_params(weights)
     return params

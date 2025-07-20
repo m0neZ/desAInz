@@ -26,3 +26,4 @@ application settings classes.
 | `LOG_LEVEL` | Logging verbosity |
 | `APPROVE_PUBLISHING` | Require publishing approval flag |
 | `ALLOWED_ORIGINS` | Comma separated whitelist of origins for CORS |
+| `ENABLED_ADAPTERS` | Comma separated list of ingestion adapters to run; if unset all adapters are used |

@@ -23,6 +23,8 @@ async def ingest_job() -> None:
 def create_scheduler() -> AsyncIOScheduler:
     """Return scheduler configured to run ingestion periodically."""
     scheduler = AsyncIOScheduler()
+    if settings.enabled_adapters is not None and not settings.enabled_adapters:
+        return scheduler
     scheduler.add_job(
         ingest_job,
         trigger=IntervalTrigger(minutes=settings.ingest_interval_minutes),

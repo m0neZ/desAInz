@@ -22,3 +22,7 @@ Start the Dagster webserver to inspect pipeline status and logs:
 Then open http://localhost:3000 in your browser. The server loads
 `backend/orchestrator/workspace.yaml` and `backend/orchestrator/dagster.yaml`
 for configuration.
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and adjust the values.

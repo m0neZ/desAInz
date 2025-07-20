@@ -1,3 +1,5 @@
+"""Tests for the maintenance S3 utilities."""
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta
@@ -28,7 +30,11 @@ def test_purge_old_s3_objects(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
         maintenance,
         "datetime",
-        type("T", (datetime,), {"utcnow": classmethod(lambda cls: datetime.utcnow() + timedelta(days=91))}),
+        type(
+            "T",
+            (datetime,),
+            {"utcnow": classmethod(lambda cls: datetime.utcnow() + timedelta(days=91))},
+        ),
     )
     monkeypatch.setattr(config.settings, "s3_bucket", bucket, raising=False)
     monkeypatch.setattr(config.settings, "s3_endpoint", None, raising=False)

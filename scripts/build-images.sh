@@ -1,37 +1,15 @@
 #!/usr/bin/env bash
-# Build Docker images for all microservices.
+# Build Docker images for all microservices using Docker Buildx.
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-SERVICES=(
-  backend/api-gateway
-  backend/feedback-loop
-  backend/marketplace-publisher
-  backend/mockup-generation
-  backend/monitoring
-  backend/orchestrator
-  backend/scoring-engine
-  backend/signal-ingestion
-  frontend/admin-dashboard
-  docker/postgres
-  docker/pgbouncer
-  docker/redis
-  docker/kafka
-  docker/minio
-  docker/backup
-)
+cd "$ROOT_DIR"
 
-for svc in "${SERVICES[@]}"; do
-  path="$ROOT_DIR/$svc"
-  if [[ -f "$path/Dockerfile" ]]; then
-    name="$(basename "$svc")"
-    context="$path"
-    if [[ "$svc" == "backend/orchestrator" ]]; then
-      context="$ROOT_DIR"
-    fi
-    echo "Building ${name}:latest from $path"
-    docker build -t "${name}:latest" -f "$path/Dockerfile" "$context"
-  fi
-done
+if ! docker buildx inspect >/dev/null 2>&1; then
+  docker buildx create --use
+fi
+
+docker buildx bake -f docker-compose.yml \
+  --set '*.platform=linux/amd64,linux/arm64' --progress plain "$@"

@@ -48,6 +48,7 @@ from .db import (
 from .logging_config import configure_logging
 from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
+from . import publisher
 from .rate_limiter import MarketplaceRateLimiter
 from .rules import load_rules, validate_mockup
 from .settings import settings
@@ -173,7 +174,7 @@ async def _background_publish(task_id: int) -> None:
                 metadata = json.loads(task.metadata_json)
             except json.JSONDecodeError:
                 logger.warning("invalid metadata for task %s", task_id)
-        success = await publish_with_retry(
+        listing_id = await publish_with_retry(
             session,
             task_id,
             task.marketplace,
@@ -183,11 +184,24 @@ async def _background_publish(task_id: int) -> None:
         )
         refreshed = await get_task(session, task_id)
         if (
-            not success
+            listing_id is None
             and refreshed is not None
             and refreshed.attempts < settings.max_attempts
         ):
             asyncio.create_task(_background_publish(task_id))
+        if listing_id is not None:
+            client = publisher.CLIENTS[task.marketplace]
+            data = await asyncio.to_thread(client.get_listing_metrics, int(listing_id))
+            with session_scope() as sync:
+                sync.add(
+                    shared_models.MarketplacePerformanceMetric(
+                        listing_id=int(listing_id),
+                        views=int(data.get("views", 0)),
+                        favorites=int(data.get("favorites", 0)),
+                        orders=int(data.get("orders", 0)),
+                        revenue=float(data.get("revenue", 0.0)),
+                    )
+                )
 
 
 @app.post("/publish")

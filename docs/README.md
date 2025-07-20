@@ -9,6 +9,7 @@ The `blueprints` folder contains the full system blueprint.
 - [Log Aggregation](logs_with_loki.md)
 - [GPU Mockup Generation](mockup_generation.md)
 - Kafka schemas under `schemas/` are loaded into the registry configured by `SCHEMA_REGISTRY_URL`.
+- OpenAPI schemas under `openapi/` can be regenerated with `python scripts/generate_openapi.py`.
 
 The `scripts` directory provides helper scripts for setting up storage and CDN resources:
 

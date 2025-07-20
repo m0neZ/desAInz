@@ -4,15 +4,16 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict
 
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+import requests
+
 from backend.shared.cache import SyncRedis, get_sync_client
 from backend.shared.config import settings
-import os
-
-import requests
-from apscheduler.schedulers.background import BackgroundScheduler
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,7 @@ EXCHANGE_API_URL = os.environ.get(
 )
 BASE_CURRENCY = os.environ.get("BASE_CURRENCY", "USD")
 REDIS_KEY = "exchange_rates"
+UPDATE_INTERVAL_MINUTES = int(os.environ.get("EXCHANGE_UPDATE_MINUTES", "60"))
 
 redis_client: SyncRedis = get_sync_client()
 scheduler = BackgroundScheduler()
@@ -44,7 +46,14 @@ def update_rates() -> None:
 
 def start_rate_updater() -> None:
     """Start scheduler for periodic exchange rate updates."""
-    scheduler.add_job(update_rates, "interval", hours=1, next_run_time=None)
+    if scheduler.running:
+        return
+    scheduler.add_job(
+        update_rates,
+        trigger=IntervalTrigger(minutes=UPDATE_INTERVAL_MINUTES),
+        next_run_time=None,
+    )
+    update_rates()
     scheduler.start()
 
 

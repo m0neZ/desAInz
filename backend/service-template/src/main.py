@@ -14,6 +14,7 @@ from .settings import settings
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
+from backend.shared.currency import start_rate_updater
 
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
@@ -33,6 +34,12 @@ configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
+
+
+@app.on_event("startup")
+async def start_rates() -> None:
+    """Start background exchange rate updates."""
+    start_rate_updater()
 
 
 def _identify_user(request: Request) -> str:

@@ -18,6 +18,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     dedup_capacity: int = 100_000
     dedup_ttl: int = 86_400
     ingest_interval_minutes: int = 60
+    ingest_cron: str | None = None
     http_proxies: HttpUrl | None = None
     adapter_rate_limit: int = 5
     enabled_adapters: list[str] | None = None
@@ -74,6 +75,13 @@ class Settings(BaseSettings):  # type: ignore[misc]
         if not value:
             return []
         return [v.strip() for v in value.split(",") if v.strip()]
+
+    @field_validator("ingest_cron", mode="before")  # type: ignore[misc]
+    @classmethod
+    def _empty_to_none(cls, value: str | None) -> str | None:
+        if value is not None and not value.strip():
+            return None
+        return value
 
 
 Settings.model_rebuild()

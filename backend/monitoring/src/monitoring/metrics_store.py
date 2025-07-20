@@ -8,9 +8,22 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterator, MutableMapping
 
+from backend.shared.cache import get_sync_client
+
 import requests
 
 import psycopg2
+
+LATENCY_CACHE_KEY = "monitoring:latency_avg"
+
+
+def invalidate_latency_cache() -> None:
+    """Remove cached average latency from Redis."""
+    try:
+        client = get_sync_client()
+        client.delete(LATENCY_CACHE_KEY)
+    except Exception:  # pragma: no cover - redis optional
+        pass
 
 
 @dataclass
@@ -109,6 +122,7 @@ class TimescaleMetricsStore:
                     (metric.idea_id, metric.timestamp, metric.latency_seconds),
                 )
                 conn.commit()
+        invalidate_latency_cache()
         self._send_loki_log(
             "latency_metric",
             {"idea_id": str(metric.idea_id), "type": "publish_latency"},

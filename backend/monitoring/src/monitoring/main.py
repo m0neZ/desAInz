@@ -24,7 +24,12 @@ from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
 
 from .pagerduty import trigger_sla_violation
-from .metrics_store import PublishLatencyMetric, TimescaleMetricsStore
+from .metrics_store import (
+    PublishLatencyMetric,
+    TimescaleMetricsStore,
+    LATENCY_CACHE_KEY,
+)
+from backend.shared.cache import get_sync_client
 
 from .logging_config import configure_logging
 from .settings import settings
@@ -139,12 +144,29 @@ def _record_latencies() -> Iterable[float]:
     return latencies
 
 
+def get_average_latency() -> float:
+    """Return cached average latency or compute and store it."""
+    client = get_sync_client()
+    cached = client.get(LATENCY_CACHE_KEY)
+    if cached is not None:
+        try:
+            return float(cached)
+        except (TypeError, ValueError):
+            pass
+    latencies = _record_latencies()
+    avg = sum(latencies) / max(len(latencies), 1)
+    try:
+        client.setex(LATENCY_CACHE_KEY, 300, str(avg))
+    except Exception:  # pragma: no cover - redis optional
+        pass
+    return avg
+
+
 def _check_sla() -> float:
     """Check average latency and trigger PagerDuty if above threshold."""
-    latencies = _record_latencies()
-    if not latencies:
-        return 0.0
-    avg = sum(latencies) / len(latencies)
+    avg = get_average_latency()
+    if avg == 0.0:
+        return avg
     threshold = getattr(settings, "SLA_THRESHOLD_HOURS", settings.sla_threshold_hours)
     if avg > threshold * 3600:
         trigger_sla_violation(avg / 3600)
@@ -161,8 +183,7 @@ async def sla() -> dict[str, float]:
 @app.get("/latency")
 async def latency() -> dict[str, float]:
     """Return average signal-to-publish latency without triggering alerts."""
-    latencies = _record_latencies()
-    avg = sum(latencies) / max(len(latencies), 1)
+    avg = get_average_latency()
     return {"average_seconds": avg}
 
 

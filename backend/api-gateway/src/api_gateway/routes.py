@@ -10,15 +10,25 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 import sqlalchemy as sa
 
-from .auth import verify_token, require_role, revoke_token
+from .auth import (
+    verify_token,
+    require_role,
+    revoke_token,
+    SECRET_KEY,
+    ALGORITHM,
+)
+from jose import JWTError, jwt
 from .models import MetadataPatch, RoleAssignment, UsernameRequest
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
+from backend.shared.cache import get_async_client
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
 from scripts import maintenance
 from signal_ingestion.trending import get_trending
+from .rate_limiter import UserRateLimiter
+from .settings import settings
 
 PUBLISHER_URL = os.environ.get(
     "PUBLISHER_URL",
@@ -30,9 +40,85 @@ OPTIMIZATION_URL = os.environ.get(
     "OPTIMIZATION_URL",
     "http://optimization:8000",
 )
+MONITORING_URL = os.environ.get(
+    "MONITORING_URL",
+    "http://monitoring:8000",
+)
+ANALYTICS_URL = os.environ.get(
+    "ANALYTICS_URL",
+    "http://analytics:8000",
+)
 auth_scheme = HTTPBearer()
 
 router = APIRouter()
+
+optimization_limiter = UserRateLimiter(
+    settings.rate_limit_per_user,
+    settings.rate_limit_window,
+    get_async_client(),
+)
+monitoring_limiter = UserRateLimiter(
+    settings.rate_limit_per_user,
+    settings.rate_limit_window,
+    get_async_client(),
+)
+analytics_limiter = UserRateLimiter(
+    settings.rate_limit_per_user,
+    settings.rate_limit_window,
+    get_async_client(),
+)
+
+
+def _identify_user(request: Request) -> str:
+    """Return identifier for rate limiting."""
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ", 1)[1]
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            sub = cast(str | None, payload.get("sub"))
+            if sub is not None:
+                return sub
+        except JWTError:  # pragma: no cover - invalid token
+            pass
+    return cast(str, request.client.host)
+
+
+async def _enforce_rate_limit(request: Request, limiter: UserRateLimiter) -> None:
+    """Raise 429 if ``limiter`` has no remaining tokens for the user."""
+    if not await limiter.acquire(_identify_user(request)):
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Rate limit exceeded")
+
+
+async def limit_optimization(request: Request) -> None:
+    """Rate limit dependency for the optimization router."""
+    await _enforce_rate_limit(request, optimization_limiter)
+
+
+async def limit_monitoring(request: Request) -> None:
+    """Rate limit dependency for the monitoring router."""
+    await _enforce_rate_limit(request, monitoring_limiter)
+
+
+async def limit_analytics(request: Request) -> None:
+    """Rate limit dependency for the analytics router."""
+    await _enforce_rate_limit(request, analytics_limiter)
+
+
+optimization_router = APIRouter(
+    tags=["Optimization"],
+    dependencies=[Depends(limit_optimization)],
+)
+monitoring_router = APIRouter(
+    prefix="/monitoring",
+    tags=["Monitoring"],
+    dependencies=[Depends(limit_monitoring)],
+)
+analytics_router = APIRouter(
+    prefix="/analytics",
+    tags=["Analytics"],
+    dependencies=[Depends(limit_analytics)],
+)
 
 
 @router.get("/status", tags=["Status"], summary="Public status")
@@ -146,7 +232,10 @@ async def trpc_endpoint(
     return cast(Dict[str, Any], response.json())
 
 
-@router.get("/optimizations", tags=["Optimization"], summary="Optimization suggestions")
+@optimization_router.get(
+    "/optimizations",
+    summary="Optimization suggestions",
+)
 async def optimizations() -> list[str]:
     """Return cost optimization suggestions from the optimization service."""
     url = f"{OPTIMIZATION_URL}/optimizations"
@@ -163,8 +252,53 @@ async def trending(limit: int = 10) -> list[str]:
     return get_trending(limit)
 
 
-@router.get(
-    "/recommendations", tags=["Optimization"], summary="Top optimization actions"
+@monitoring_router.get("/overview", summary="System overview")
+async def monitoring_overview() -> Dict[str, Any]:
+    """Proxy overview metrics from the monitoring service."""
+    url = f"{MONITORING_URL}/overview"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@monitoring_router.get("/status", summary="Service status")
+async def monitoring_status() -> Dict[str, Any]:
+    """Proxy service status from the monitoring service."""
+    url = f"{MONITORING_URL}/status"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@analytics_router.get("/ab_test_results/{ab_test_id}", summary="A/B test results")
+async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
+    """Proxy aggregated A/B test results."""
+    url = f"{ANALYTICS_URL}/ab_test_results/{ab_test_id}"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@analytics_router.get("/low_performers", summary="Lowest performing listings")
+async def low_performers(limit: int = 10) -> list[Dict[str, Any]]:
+    """Proxy low performer data from the analytics service."""
+    url = f"{ANALYTICS_URL}/low_performers?limit={limit}"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[Dict[str, Any]], resp.json())
+
+
+@optimization_router.get(
+    "/recommendations",
+    summary="Top optimization actions",
 )
 async def recommendations() -> list[str]:
     """Return top optimization actions from the optimization service."""
@@ -277,3 +411,8 @@ async def retry_publish_task(
         {"task_id": task_id},
     )
     return {"status": "scheduled"}
+
+
+router.include_router(optimization_router)
+router.include_router(monitoring_router)
+router.include_router(analytics_router)

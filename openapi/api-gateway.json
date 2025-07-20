@@ -93,7 +93,7 @@
     "/auth/token": {
       "post": {
         "summary": "Issue Token",
-        "description": "Return a JWT token for ``username`` if it exists.",
+        "description": "Return JWT tokens for ``username`` if it exists.",
         "operationId": "issue_token_auth_token_post",
         "requestBody": {
           "content": {
@@ -163,6 +163,40 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Refresh Auth Token",
+        "description": "Issue new access and refresh tokens using a refresh token.",
+        "operationId": "refresh_auth_token_auth_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": { "type": "string" },
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": { "type": "string" },
+                  "type": "object",
+                  "title": "Response Refresh Auth Token Auth Refresh Post"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" }
+        }
       }
     },
     "/roles": {

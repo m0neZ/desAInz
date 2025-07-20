@@ -16,7 +16,9 @@ from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
 from backend.shared.db import session_scope
-from backend.shared.db.models import AuditLog, UserRole
+from backend.shared.db.models import AuditLog, UserRole, RefreshToken
+from uuid import uuid4
+from datetime import timedelta
 from scripts import maintenance
 from signal_ingestion.trending import get_trending
 
@@ -43,16 +45,28 @@ async def status_endpoint() -> Dict[str, str]:
 
 @router.post("/auth/token", tags=["Authentication"], summary="Issue JWT token")
 async def issue_token(body: UsernameRequest) -> Dict[str, str]:
-    """Return a JWT token for ``username`` if it exists."""
+    """Return JWT tokens for ``username`` if it exists."""
     username = body.username
     with session_scope() as session:
         exists = session.execute(
             select(UserRole.id).where(UserRole.username == username)
         ).scalar_one_or_none()
-    if exists is None:
-        raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
+        if exists is None:
+            raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
+        refresh = str(uuid4())
+        session.add(
+            RefreshToken(
+                token=refresh,
+                username=username,
+                expires_at=datetime.now(UTC) + timedelta(days=30),
+            )
+        )
     token = create_access_token({"sub": username})
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "access_token": token,
+        "refresh_token": refresh,
+        "token_type": "bearer",
+    }
 
 
 @router.post("/auth/revoke", tags=["Authentication"], summary="Revoke JWT token")
@@ -67,6 +81,36 @@ async def revoke_auth_token(
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid token")
     revoke_token(str(jti), datetime.fromtimestamp(exp, tz=UTC))
     return {"status": "revoked"}
+
+
+@router.post("/auth/refresh", tags=["Authentication"], summary="Refresh JWT token")
+async def refresh_auth_token(body: Dict[str, str]) -> Dict[str, str]:
+    """Issue new tokens using ``refresh_token`` in ``body``."""
+    token = body.get("refresh_token")
+    if token is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Missing token")
+    with session_scope() as session:
+        entry = session.execute(
+            select(RefreshToken).where(RefreshToken.token == token)
+        ).scalar_one_or_none()
+        if entry is None or entry.expires_at < datetime.now(UTC):
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        username = entry.username
+        session.delete(entry)
+        new_refresh = str(uuid4())
+        session.add(
+            RefreshToken(
+                token=new_refresh,
+                username=username,
+                expires_at=datetime.now(UTC) + timedelta(days=30),
+            )
+        )
+    access = create_access_token({"sub": username})
+    return {
+        "access_token": access,
+        "refresh_token": new_refresh,
+        "token_type": "bearer",
+    }
 
 
 @router.get("/roles", tags=["Roles"], summary="List user roles")

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { fetchWithAuth } from '../hooks/useAuthFetch';
 
 interface Assignment {
   username: string;
@@ -9,9 +10,7 @@ export function RolesList() {
   const [roles, setRoles] = useState<Assignment[]>([]);
   useEffect(() => {
     async function load() {
-      const resp = await fetch('/roles', {
-        headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
-      });
+      const resp = await fetchWithAuth('/roles');
       if (resp.ok) {
         setRoles(await resp.json());
       }

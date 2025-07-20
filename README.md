@@ -60,7 +60,12 @@ identify missing indexes.
 
 ## Configuration and Secrets
 
-Local development uses dotenv files. Copy the `.env.example` in each service to `.env` and adjust the values for your environment. The services automatically load these variables using Pydantic `BaseSettings`.
+Local development uses dotenv files. Copy the `.env.example` in **every** `backend` service directory to `.env` and adjust the values for your environment. The services automatically load these variables using Pydantic `BaseSettings`.
+For convenience you can run:
+
+```bash
+for f in backend/*/.env.example; do cp "$f" "$(dirname "$f")/.env"; done
+```
 
 In production, secrets are stored in HashiCorp Vault or AWS Secrets Manager and surfaced to the containers via Docker secrets or Kubernetes Secrets. The settings modules read from `/run/secrets` if present. Do not rely on `.env` files in production.
 

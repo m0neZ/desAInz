@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import asyncio
-from redis.asyncio import Redis, WatchError
+from redis.asyncio import WatchError
+from backend.shared.cache import AsyncRedis
 
 
 class UserRateLimiter:
     """Manage request quotas for individual users."""
 
-    def __init__(self, redis: Redis, limit: int, window: int) -> None:
+    def __init__(self, redis: AsyncRedis, limit: int, window: int) -> None:
         """Instantiate the limiter with ``limit`` tokens per ``window`` seconds."""
         self._redis = redis
         self._limit = limit

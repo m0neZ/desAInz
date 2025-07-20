@@ -9,7 +9,7 @@ from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from jose import JWTError, jwt
-from redis.asyncio import Redis
+from backend.shared.cache import get_async_client
 
 from .routes import router
 from backend.shared.tracing import configure_tracing
@@ -56,7 +56,7 @@ add_error_handlers(app)
 register_metrics(app)
 
 rate_limiter = UserRateLimiter(
-    Redis.from_url(str(settings.redis_url)),
+    get_async_client(),
     settings.rate_limit_per_user,
     settings.rate_limit_window,
 )

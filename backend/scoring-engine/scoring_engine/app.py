@@ -17,7 +17,7 @@ from typing import Any, Callable, Coroutine, cast
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from redis.asyncio import Redis
+from backend.shared.cache import AsyncRedis, get_async_client
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
     Counter,
@@ -92,7 +92,7 @@ add_error_handlers(app)
 register_metrics(app)
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
-redis_client = Redis.from_url(REDIS_URL)
+redis_client: AsyncRedis = get_async_client()
 start_centroid_scheduler()
 
 

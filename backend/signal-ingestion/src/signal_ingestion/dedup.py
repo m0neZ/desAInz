@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-import redis
-
+from backend.shared.cache import SyncRedis, get_sync_client
 from backend.shared.config import settings as shared_settings
 from .settings import settings
 
-redis_client = redis.Redis.from_url(shared_settings.redis_url, decode_responses=True)
+redis_client: SyncRedis = get_sync_client()
 BLOOM_KEY = "signals:bloom"
 
 

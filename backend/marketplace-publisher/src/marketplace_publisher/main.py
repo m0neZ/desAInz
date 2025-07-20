@@ -27,7 +27,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel, ConfigDict
 
-from redis.asyncio import Redis
+from backend.shared.cache import get_async_client
 
 from sqlalchemy import func, update
 
@@ -72,7 +72,7 @@ def _identify_user(request: Request) -> str:
 
 
 rate_limiter = MarketplaceRateLimiter(
-    Redis.from_url(settings.redis_url),
+    get_async_client(),
     {
         Marketplace.redbubble: settings.rate_limit_redbubble,
         Marketplace.amazon_merch: settings.rate_limit_amazon_merch,

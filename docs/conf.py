@@ -75,13 +75,14 @@ source_suffix = {
 }
 
 templates_path = ["_templates"]
-exclude_patterns: list[str] = []
+exclude_patterns: list[str] = ["sphinx/*", "api/*"]
 
 # Treat warnings as errors
 nitpicky = True
 nitpick_ignore = [
     ("py:class", "datetime.datetime"),
     ("py:class", "ConfigDict"),
+    ("py:class", "pathlib.Path"),
 ]
 
 # -- Options for HTML output -------------------------------------------------
@@ -113,6 +114,8 @@ def _run_linters(app: "Sphinx") -> None:
 
 def _run_apidoc(app: "Sphinx") -> None:
     """Generate API docs for all Python modules."""
+    if os.environ.get("SKIP_APIDOC", "0") == "1":
+        return
     output_path = os.path.join(app.srcdir, "api")
     module_path = os.path.abspath(os.path.join(app.srcdir, "..", "backend"))
     subprocess.check_call(

@@ -18,3 +18,46 @@ Welcome to desAInz's documentation!
    orchestrator
    scoring_engine
    signal_ingestion
+
+API Reference
+-------------
+
+.. automodule:: backend.analytics
+    :noindex:
+    :members:
+
+.. automodule:: api_gateway
+    :noindex:
+    :members:
+
+.. automodule:: feedback_loop
+    :noindex:
+    :members:
+
+.. automodule:: marketplace_publisher
+    :noindex:
+    :members:
+
+.. automodule:: mockup_generation
+    :noindex:
+    :members:
+
+.. automodule:: monitoring
+    :noindex:
+    :members:
+
+.. automodule:: backend.optimization
+    :noindex:
+    :members:
+
+.. automodule:: orchestrator
+    :noindex:
+    :members:
+
+.. automodule:: scoring_engine
+    :noindex:
+    :members:
+
+.. automodule:: signal_ingestion
+    :noindex:
+    :members:

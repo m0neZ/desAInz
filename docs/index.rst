@@ -15,7 +15,6 @@ Welcome to desAInz's documentation!
    migrations
    privacy
    backup
-   api/modules
    quickstart
    deployment
    cloud_deployment

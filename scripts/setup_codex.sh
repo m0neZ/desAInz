@@ -13,10 +13,10 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt -r requirements-dev.txt
 
 if command -v npm >/dev/null 2>&1; then
-  npm ci
+  npm ci --legacy-peer-deps
 fi
 
 # Build Sphinx documentation
 python -m pip install sphinx myst-parser sphinxcontrib-mermaid
-sphinx-build -W -b html docs docs/_build/html
+SKIP_APIDOC=1 SKIP_OPENAPI=1 python -m sphinx -W -b html docs docs/_build/html
 

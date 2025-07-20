@@ -24,3 +24,8 @@ services:
       service: kafka
     environment:
       KAFKA_BROKER_ID: 99
+
+  otel-collector:
+    extends:
+      file: docker-compose.dev.yml
+      service: otel-collector

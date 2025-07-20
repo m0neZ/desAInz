@@ -130,6 +130,14 @@ services:
       - "prometheus.path=/metrics"
       - "prometheus.port=8000"
 
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    profiles:
+      - monitoring
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+
   loki:
     image: grafana/loki:latest
     profiles:

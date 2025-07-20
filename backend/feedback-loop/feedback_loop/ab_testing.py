@@ -105,6 +105,19 @@ class ABTestManager:
         with self.session_scope() as session:
             session.add(TestResult(variant=variant, success=success))
 
+    def conversion_totals(self) -> Mapping[str, int]:
+        """Return cumulative conversions for each variant."""
+        with self.session_scope() as session:
+            results = session.execute(
+                select(TestResult.variant, func.count())
+                .where(TestResult.success.is_(True))
+                .group_by(TestResult.variant)
+            ).all()
+        totals: dict[str, int] = {"A": 0, "B": 0}
+        for variant, count in results:
+            totals[variant] = int(count)
+        return totals
+
     def _variant_stats(self) -> Mapping[str, tuple[int, int]]:
         """Return successes and failures for each variant."""
         with self.session_scope() as session:

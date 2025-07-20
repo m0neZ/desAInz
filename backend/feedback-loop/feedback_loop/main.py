@@ -34,6 +34,13 @@ class AllocationResponse(BaseModel):
     variant_b: float
 
 
+class StatsResponse(BaseModel):
+    """Conversion totals for A/B test variants."""
+
+    conversions_a: int
+    conversions_b: int
+
+
 manager = ABTestManager(
     database_url=os.environ.get("ABTEST_DB_URL", "sqlite:///abtest.db")
 )
@@ -106,6 +113,16 @@ async def get_allocation(total_budget: float = 100.0) -> AllocationResponse:
     allocation = manager.allocate_budget(total_budget)
     return AllocationResponse(
         variant_a=allocation.variant_a, variant_b=allocation.variant_b
+    )
+
+
+@app.get("/stats", response_model=StatsResponse)
+async def get_stats() -> StatsResponse:
+    """Return total conversions for both variants."""
+    totals = manager.conversion_totals()
+    return StatsResponse(
+        conversions_a=totals["A"],
+        conversions_b=totals["B"],
     )
 
 

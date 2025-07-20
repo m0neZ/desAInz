@@ -93,3 +93,21 @@ weights requires the ``X-Weights-Token`` header::
        "seasonality": 0.1
    }
    -> 200
+
+Feedback Loop
+-------------
+
+Examples derived from ``backend/feedback-loop/tests/test_main.py``::
+
+   POST /impression?variant=A
+   -> 200
+   POST /conversion?variant=B
+   -> 200
+   GET /allocation?total_budget=100
+   -> 200
+   GET /stats
+   -> 200
+   {
+       "conversions_a": 3,
+       "conversions_b": 2
+   }

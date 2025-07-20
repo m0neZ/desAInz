@@ -37,6 +37,12 @@ Run Flow across the repository with:
 npm run flow
 ```
 
+## Dashboard Stats
+
+The admin dashboard shows trending keywords and basic A/B test statistics.
+These widgets use React Query and lightweight tRPC calls via hooks located in
+`frontend/admin-dashboard/src/lib/trpc/`.
+
 ## Debugging with VSCode
 
 VSCode launch configurations are provided in `.vscode/launch.json`.

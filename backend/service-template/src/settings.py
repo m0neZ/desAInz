@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     @field_validator("log_level")
     @classmethod
     def _valid_level(cls, value: str) -> str:
+        """Validate the provided logging level."""
+
         return value
 
 

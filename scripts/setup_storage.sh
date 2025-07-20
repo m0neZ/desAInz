@@ -7,11 +7,38 @@ set -euo pipefail
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $0 <bucket-name> [--minio]" >&2
+  echo "Requires the AWS CLI for S3 or the mc client for MinIO." >&2
   exit 1
 fi
 
 BUCKET="$1"
 USE_MINIO="${2:-}"
+
+# Detect available CLI tools when --minio is not explicitly provided.
+if [[ -z "$USE_MINIO" ]]; then
+  if command -v aws >/dev/null 2>&1; then
+    USE_MINIO=""
+  elif command -v mc >/dev/null 2>&1; then
+    echo "AWS CLI not found. Falling back to 'mc' (MinIO)." >&2
+    USE_MINIO="--minio"
+  else
+    echo "Neither AWS CLI nor 'mc' found. Install one of them or pass --minio." >&2
+    exit 1
+  fi
+fi
+
+# Validate that the chosen CLI exists.
+if [[ "$USE_MINIO" == "--minio" ]]; then
+  if ! command -v mc >/dev/null 2>&1; then
+    echo "MinIO client 'mc' not found. Install it or remove --minio to use AWS S3." >&2
+    exit 1
+  fi
+else
+  if ! command -v aws >/dev/null 2>&1; then
+    echo "AWS CLI not found. Install it from https://aws.amazon.com/cli/." >&2
+    exit 1
+  fi
+fi
 
 create_bucket() {
   if [ "$USE_MINIO" = "--minio" ]; then

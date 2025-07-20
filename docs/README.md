@@ -12,12 +12,21 @@ The `blueprints` folder contains the full system blueprint.
 
 The `scripts` directory provides helper scripts for setting up storage and CDN resources:
 
-- `setup_storage.sh` - create the S3/MinIO bucket structure
+- `setup_storage.sh` - create the S3/MinIO bucket structure.
+  It can also configure lifecycle rules on AWS S3 buckets.
 - `configure_cdn.sh` - create a CloudFront distribution
 - `invalidate_cache.sh` - invalidate CDN caches when mockups change
 - Base Kubernetes manifests can be found in `infrastructure/k8s` with instructions for
   customizing them for local Minikube testing.
   This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.
+
+Example lifecycle rule for AWS S3 buckets:
+
+```bash
+aws s3api put-bucket-lifecycle-configuration --bucket <bucket> \
+  --lifecycle-configuration '{"Rules":[{"ID":"ArchiveOld","Status":"Enabled",\
+"Filter":{"Prefix":""},"Transitions":[{"Days":365,"StorageClass":"GLACIER"}]}]}'
+```
 
 ## Service Template
 

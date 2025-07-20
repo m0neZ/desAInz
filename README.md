@@ -23,7 +23,9 @@ make helm-deploy  # deploy charts with Helm
 
 ## Storage setup
 
-Create the buckets required by the blueprint and apply the lifecycle policy:
+Create the buckets required by the blueprint and apply the lifecycle policy.
+The script automatically detects whether the AWS CLI or `mc` is available and
+will print a hint if neither is installed:
 
 ```bash
 scripts/setup_storage.sh desainz-bucket --minio  # omit --minio for AWS S3

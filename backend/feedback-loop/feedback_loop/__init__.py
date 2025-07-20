@@ -7,6 +7,7 @@ from types import ModuleType
 from typing import Any
 
 from .ab_testing import ABTestManager, BudgetAllocation
+from .settings import settings
 
 
 def _load(module: str) -> ModuleType:
@@ -65,4 +66,5 @@ __all__ = [
     "schedule_marketplace_ingestion",
     "aggregate_marketplace_metrics",
     "update_weights_from_db",
+    "settings",
 ]

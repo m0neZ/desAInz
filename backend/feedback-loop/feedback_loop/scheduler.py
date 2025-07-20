@@ -6,14 +6,12 @@ import logging
 from typing import Iterable
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 
 from .ab_testing import ABTestManager
-from .ingestion import (
-    ingest_metrics,
-    schedule_marketplace_ingestion,
-    update_weights_from_db,
-)
+from .ingestion import ingest_metrics, schedule_marketplace_ingestion
 from .weight_updater import update_weights
+from .settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -39,34 +37,20 @@ def setup_scheduler(
         logger.info("budget allocation %s", allocation)
         logger.info("updated weights payload %s", weights)
 
-    def nightly_marketplace_update() -> None:
-        weights = update_weights_from_db(scoring_api)
-        logger.info("updated marketplace weights %s", weights)
-
-    def daily_summary() -> None:
-        ab_manager.record_summary()
-        logger.info("recorded daily A/B test summary")
-
-    scheduler.add_job(hourly_ingest, "interval", hours=1, next_run_time=None)
-    # Run weight update a few minutes after the midnight ingestion so the
-    # latest metrics are available before updating the scoring engine.
-    scheduler.add_job(nightly_update, "cron", hour=0, minute=5, next_run_time=None)
     scheduler.add_job(
-        nightly_marketplace_update,
-        "cron",
-        hour=1,
-        minute=0,
+        hourly_ingest,
+        trigger=IntervalTrigger(minutes=settings.publisher_metrics_interval_minutes),
         next_run_time=None,
     )
     scheduler.add_job(
-        daily_summary,
-        "cron",
-        hour=0,
-        minute=10,
+        nightly_update,
+        trigger=IntervalTrigger(minutes=settings.weight_update_interval_minutes),
         next_run_time=None,
     )
     if listing_ids:
         schedule_marketplace_ingestion(
-            scheduler, list(listing_ids), interval_minutes=60
+            scheduler,
+            list(listing_ids),
+            interval_minutes=settings.publisher_metrics_interval_minutes,
         )
     return scheduler

@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc, type AnalyticsData } from '../../trpc';
+import { useAnalyticsSummary } from '../../lib/trpc/hooks';
 
 export default function AnalyticsPage() {
   const { t } = useTranslation();
-  const [data, setData] = useState<AnalyticsData | null>(null);
+  const { data, isLoading } = useAnalyticsSummary();
 
-  useEffect(() => {
-    async function load() {
-      setData(await trpc.analytics.summary());
-    }
-    void load();
-  }, []);
-
-  if (!data) {
-    return <div>Loading...</div>;
+  if (isLoading || !data) {
+    return <div>{t('loading')}</div>;
   }
   return (
     <div>

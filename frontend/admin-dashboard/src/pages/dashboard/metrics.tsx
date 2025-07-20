@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
-import { trpc } from '../../trpc';
+import { useMetrics } from '../../lib/trpc/hooks';
 
 export default function MetricsPage() {
   const { t } = useTranslation();
-  const [metrics, setMetrics] = useState('');
-
-  useEffect(() => {
-    async function load() {
-      try {
-        setMetrics(await trpc.metrics.list());
-      } catch {
-        setMetrics('');
-      }
-    }
-    void load();
-  }, []);
+  const { data: metrics, isLoading } = useMetrics();
 
   return (
     <div className="space-y-2">
       <h1>{t('metrics')}</h1>
-      <pre>{metrics}</pre>
+      {isLoading || !metrics ? <div>{t('loading')}</div> : <pre>{metrics}</pre>}
     </div>
   );
 }

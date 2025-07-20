@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { AnalyticsChart } from '../src/components/AnalyticsChart';
 import { LatencyChart } from '../src/components/LatencyChart';
 import { AlertStatusIndicator } from '../src/components/AlertStatusIndicator';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 beforeEach(() => {
   global.fetch = jest.fn((url: string) => {
@@ -28,7 +29,12 @@ afterEach(() => {
 });
 
 test('analytics chart loads data', async () => {
-  render(<AnalyticsChart />);
+  const client = new QueryClient();
+  render(
+    <QueryClientProvider client={client}>
+      <AnalyticsChart />
+    </QueryClientProvider>
+  );
   await waitFor(() => screen.getByTestId('analytics-chart'));
   expect(global.fetch).toHaveBeenCalledWith(
     '/api/monitoring/analytics?range=24h'
@@ -36,7 +42,12 @@ test('analytics chart loads data', async () => {
 });
 
 test('latency chart loads data', async () => {
-  render(<LatencyChart />);
+  const client = new QueryClient();
+  render(
+    <QueryClientProvider client={client}>
+      <LatencyChart />
+    </QueryClientProvider>
+  );
   await waitFor(() => screen.getByTestId('latency-chart'));
   expect(global.fetch).toHaveBeenCalledWith(
     '/api/monitoring/latency?range=24h'
@@ -44,7 +55,11 @@ test('latency chart loads data', async () => {
 });
 
 test('alert indicator displays alert', async () => {
-  render(<AlertStatusIndicator />);
-  await waitFor(() => screen.getByTestId('alert-status'));
-  expect(screen.getByText('ALERT')).toBeInTheDocument();
+  const client = new QueryClient();
+  render(
+    <QueryClientProvider client={client}>
+      <AlertStatusIndicator />
+    </QueryClientProvider>
+  );
+  await waitFor(() => screen.getByText('ALERT'));
 });

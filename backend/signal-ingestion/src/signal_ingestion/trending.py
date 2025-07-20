@@ -27,3 +27,10 @@ def store_keywords(keywords: Iterable[str]) -> None:
         pipe.zincrby(TRENDING_KEY, 1, word)
     pipe.expire(TRENDING_KEY, settings.trending_ttl)
     pipe.execute()
+
+
+def get_trending(limit: int = 10) -> list[str]:
+    """Return up to ``limit`` most popular keywords."""
+    client = get_sync_client()
+    words = client.zrevrange(TRENDING_KEY, 0, limit - 1)
+    return [w.decode("utf-8") if isinstance(w, bytes) else w for w in words]

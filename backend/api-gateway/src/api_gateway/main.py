@@ -56,7 +56,7 @@ add_error_handlers(app)
 register_metrics(app)
 
 rate_limiter = UserRateLimiter(
-    Redis.from_url(settings.redis_url),
+    Redis.from_url(str(settings.redis_url)),
     settings.rate_limit_per_user,
     settings.rate_limit_window,
 )

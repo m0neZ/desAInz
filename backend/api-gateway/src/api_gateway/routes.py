@@ -17,8 +17,8 @@ from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole
-from mockup_generation.model_repository import list_models, set_default
 from scripts import maintenance
+from signal_ingestion.trending import get_trending
 
 PUBLISHER_URL = os.environ.get(
     "PUBLISHER_URL",
@@ -157,6 +157,12 @@ async def optimizations() -> list[str]:
     return cast(list[str], resp.json())
 
 
+@router.get("/trending", tags=["Trending"], summary="Popular keywords")
+async def trending(limit: int = 10) -> list[str]:
+    """Return up to ``limit`` trending keywords."""
+    return get_trending(limit)
+
+
 @router.get(
     "/recommendations", tags=["Optimization"], summary="Top optimization actions"
 )
@@ -210,6 +216,8 @@ async def get_models(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[dict[str, Any]]:
     """Return all available AI models."""
+    from mockup_generation.model_repository import list_models
+
     log_admin_action(payload.get("sub", "unknown"), "list_models")
     return [m.__dict__ for m in list_models()]
 
@@ -220,6 +228,8 @@ async def switch_default_model(
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, str]:
     """Switch the default model used for mockup generation."""
+    from mockup_generation.model_repository import set_default
+
     try:
         set_default(model_id)
     except ValueError as exc:

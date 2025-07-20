@@ -33,3 +33,13 @@ Each service scales between two and five replicas based on CPU and memory usage.
 The `signal-ingestion` deployment also reacts to queue pressure using a custom
 `celery_queue_length` metric.  When the average queue length exceeds 30 pending
 tasks, additional workers are spawned automatically.
+
+## GPU Slot Metrics
+
+GPU-bound workloads now expose lock usage information through Prometheus.
+The context manager `tasks.gpu_slot` updates two metrics:
+
+- ``gpu_slots_in_use`` – a gauge tracking the number of acquired GPU locks.
+- ``gpu_slot_acquire_total`` – a counter incremented whenever a slot is obtained.
+
+These metrics appear alongside existing ones on the ``/metrics`` endpoint.

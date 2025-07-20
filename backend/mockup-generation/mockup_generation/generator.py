@@ -37,9 +37,9 @@ class MockupGenerator:
         self.pipeline: Optional[StableDiffusionXLPipeline] = None
         self._lock = Lock()
 
-    def load(self) -> None:
+    def load(self, model_identifier: str | None = None) -> None:
         """Load or reload the diffusion pipeline on the available device."""
-        current = get_default_model_id()
+        current = model_identifier or get_default_model_id()
         with self._lock:
             if self.pipeline is None or self.model_id != current:
                 self.model_id = current
@@ -50,7 +50,12 @@ class MockupGenerator:
                 self.pipeline.enable_attention_slicing()
 
     def generate(
-        self, prompt: str, output_path: str, *, num_inference_steps: int = 30
+        self,
+        prompt: str,
+        output_path: str,
+        *,
+        num_inference_steps: int = 30,
+        model_identifier: str | None = None,
     ) -> GenerationResult:
         """
         Generate an image.
@@ -62,13 +67,14 @@ class MockupGenerator:
             prompt: Text prompt describing the desired image.
             output_path: Filesystem path to save the resulting image.
             num_inference_steps: Number of inference steps for the model.
+            model_identifier: Optional model ID to load instead of the default.
 
         Returns:
             GenerationResult containing the image path and duration.
         """
         from time import perf_counter
 
-        self.load()
+        self.load(model_identifier)
         assert self.pipeline is not None
         start = perf_counter()
         try:

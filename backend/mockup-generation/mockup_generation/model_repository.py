@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 from sqlalchemy import delete, select, update
 
@@ -85,6 +85,22 @@ def list_models() -> List[ModelInfo]:
             )
             for row in rows
         ]
+
+
+def get_model(model_id: int) -> Optional[ModelInfo]:
+    """Return a model entry by primary key."""
+    with session_scope() as session:
+        row = session.get(AIModel, model_id)
+        if row is None:
+            return None
+        return ModelInfo(
+            id=row.id,
+            name=row.name,
+            version=row.version,
+            model_id=row.model_id,
+            details=row.details,
+            is_default=row.is_default,
+        )
 
 
 def set_default(model_id: int) -> None:

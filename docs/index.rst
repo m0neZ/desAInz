@@ -17,6 +17,7 @@ Welcome to desAInz's documentation!
    privacy
    backup
    quickstart
+   recommendations
    deployment
    cloud_deployment
    troubleshooting

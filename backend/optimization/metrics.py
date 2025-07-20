@@ -59,6 +59,31 @@ class MetricsAnalyzer:
         data = self._df.tail(last_n) if last_n else self._df
         return float(data["disk_usage_mb"].mean()) if not data.empty else 0.0
 
+    def _trend(self, column: str, last_n: int | None = None) -> float:
+        """Return slope per minute for ``column`` over the selected window."""
+        data = self._df.tail(last_n) if last_n else self._df
+        if data.empty or len(data) < 2:
+            return 0.0
+        delta_v = data[column].iloc[-1] - data[column].iloc[0]
+        delta_t = (
+            data["timestamp"].iloc[-1] - data["timestamp"].iloc[0]
+        ).total_seconds() / 60
+        return float(delta_v / delta_t) if delta_t else 0.0
+
+    def cpu_trend(self, last_n: int | None = None) -> float:
+        """Return CPU usage trend slope per minute."""
+        return self._trend("cpu_percent", last_n)
+
+    def memory_trend(self, last_n: int | None = None) -> float:
+        """Return memory usage trend slope per minute."""
+        return self._trend("memory_mb", last_n)
+
+    def disk_usage_trend(self, last_n: int | None = None) -> float:
+        """Return disk usage trend slope per minute."""
+        if "disk_usage_mb" not in self._df.columns:
+            return 0.0
+        return self._trend("disk_usage_mb", last_n)
+
     def recommend_optimizations(self) -> List[str]:
         """Provide optimization recommendations based on trends."""
         recommendations: List[str] = []
@@ -73,6 +98,18 @@ class MetricsAnalyzer:
         if self.average_disk_usage(10) > 10 * 1024:
             recommendations.append(
                 "Disk usage exceeds 10GB; clean up or increase storage"
+            )
+        if self.cpu_trend(20) > 0.5:
+            recommendations.append(
+                "CPU usage is trending upward; evaluate auto-scaling to control costs"
+            )
+        if self.memory_trend(20) > 50:
+            recommendations.append(
+                "Memory consumption is increasing; investigate to avoid over-provisioning"
+            )
+        if self.disk_usage_trend(20) > 100:
+            recommendations.append(
+                "Disk usage is growing quickly; remove unused data or expand storage"
             )
         return recommendations
 
@@ -91,6 +128,18 @@ class MetricsAnalyzer:
         if self.average_disk_usage() > 10 * 1024:
             recommendations.append(
                 "Disk usage is high on average; plan for storage expansion"
+            )
+        if self.cpu_trend() > 0.5:
+            recommendations.append(
+                "CPU usage trend indicates growth; optimize workload distribution"
+            )
+        if self.memory_trend() > 50:
+            recommendations.append(
+                "Increasing memory trend detected; review application memory usage"
+            )
+        if self.disk_usage_trend() > 100:
+            recommendations.append(
+                "Disk consumption trend rising; regularly clean up stale files"
             )
 
         recommendations.extend(self.recommend_optimizations())

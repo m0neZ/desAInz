@@ -37,3 +37,21 @@ def test_top_recommendations() -> None:
     assert recs != []
     assert len(recs) <= 3
     assert any("Average CPU" in r for r in recs)
+
+
+def test_trend_methods() -> None:
+    """Check that trend utilities return positive slopes."""
+    now = datetime.now(timezone.utc)
+    metrics = [
+        ResourceMetric(
+            now - timedelta(minutes=5 - i),
+            cpu_percent=20 * i,
+            memory_mb=128 * i,
+            disk_usage_mb=256 * i,
+        )
+        for i in range(6)
+    ]
+    analyzer = MetricsAnalyzer(metrics)
+    assert analyzer.cpu_trend() > 0
+    assert analyzer.memory_trend() > 0
+    assert analyzer.disk_usage_trend() > 0

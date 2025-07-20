@@ -41,3 +41,21 @@ def test_top_recommendations() -> None:
     assert any("CPU" in r for r in recs)
     assert any("Disk usage" in r for r in recs)
     assert len(recs) <= 3
+
+
+def test_trend_calculation() -> None:
+    """Verify trend slopes for CPU, memory and disk."""
+    now = datetime.now(timezone.utc)
+    metrics = [
+        ResourceMetric(
+            timestamp=now - timedelta(minutes=5 - i),
+            cpu_percent=10 * i,
+            memory_mb=100 * i,
+            disk_usage_mb=200 * i,
+        )
+        for i in range(6)
+    ]
+    analyzer = MetricsAnalyzer(metrics)
+    assert analyzer.cpu_trend() > 0
+    assert analyzer.memory_trend() > 0
+    assert analyzer.disk_usage_trend() > 0

@@ -32,3 +32,35 @@ def test_feedback_weight_update() -> None:
     data = resp.json()
     for key, val in payload.items():
         assert data[key] == val
+
+
+def test_feedback_weight_smoothing() -> None:
+    """Repeated feedback should adjust weights gradually."""
+    client = TestClient(app)
+    reset_payload = {
+        "freshness": 1.0,
+        "engagement": 1.0,
+        "novelty": 1.0,
+        "community_fit": 1.0,
+        "seasonality": 1.0,
+    }
+    client.put("/weights", json=reset_payload)
+
+    payload = {
+        "freshness": 0.0,
+        "engagement": 0.0,
+        "novelty": 0.0,
+        "community_fit": 0.0,
+        "seasonality": 0.0,
+    }
+    smoothing = scoring_module.weight_repository.FEEDBACK_SMOOTHING
+    iterations = 5
+    for _ in range(iterations):
+        resp = client.post("/weights/feedback", json=payload)
+        assert resp.status_code == 200
+
+    resp = client.get("/weights")
+    data = resp.json()
+    expected = (1 - smoothing) ** iterations
+    for key in payload:
+        assert round(data[key], 5) == round(expected, 5)

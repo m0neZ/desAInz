@@ -141,6 +141,19 @@ spec = {
                 "responses": {"200": {"description": "OK"}},
             },
         },
+        "/weights/feedback": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
+                        }
+                    },
+                    "required": True,
+                },
+                "responses": {"200": {"description": "OK"}},
+            },
+        },
         "/score": {
             "post": {
                 "requestBody": {

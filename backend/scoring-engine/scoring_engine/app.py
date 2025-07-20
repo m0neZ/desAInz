@@ -37,7 +37,12 @@ from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 from .scoring import Signal, calculate_score
-from .weight_repository import get_weights, update_weights, get_centroid
+from .weight_repository import (
+    FEEDBACK_SMOOTHING,
+    get_weights,
+    update_weights,
+    get_centroid,
+)
 from .centroid_job import start_centroid_scheduler
 
 # Cache metric keys
@@ -246,8 +251,10 @@ async def update_weights_endpoint(
 
 @app.post("/weights/feedback")
 async def feedback_weights(body: WeightsUpdate) -> JSONResponse:
-    """Update weights from feedback loop."""
-    weights = await run_in_threadpool(update_weights, **body.model_dump())
+    """Update weights from feedback loop with smoothing."""
+    weights = await run_in_threadpool(
+        update_weights, smoothing=FEEDBACK_SMOOTHING, **body.model_dump()
+    )
     return JSONResponse(
         {
             "freshness": weights.freshness,

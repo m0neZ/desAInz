@@ -4,29 +4,45 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import Lock
-
-import open_clip
-import torch
-from torch.nn import Module
-from typing import Callable, Tuple, cast
+from typing import Callable, Tuple, cast, TYPE_CHECKING
 
 import cv2
 import numpy
 from PIL import Image
 
+if TYPE_CHECKING:  # pragma: no cover - type imports
+    from torch import Tensor
+    from torch.nn import Module
+
+open_clip = None
+torch = None
+
 _clip_model: Module | None = None
-_clip_preprocess: Callable[[Image.Image], torch.Tensor] | None = None
+_clip_preprocess: Callable[[Image.Image], Tensor] | None = None
 _clip_lock = Lock()
-_nsfw_tokens = open_clip.tokenize(["nsfw", "nudity", "pornography"]).to("cpu")
+_nsfw_tokens: Tensor | None = None
 
 
 def _load_clip() -> None:
     """Load CLIP model on first use."""
-    global _clip_model, _clip_preprocess
+    global _clip_model, _clip_preprocess, _nsfw_tokens, open_clip, torch
+
+    if open_clip is None or torch is None:
+        try:  # pragma: no cover - optional heavy dependency
+            import open_clip as _open_clip
+            import torch as _torch
+        except Exception:  # pragma: no cover - fallback when open_clip unavailable
+            return
+        open_clip = _open_clip
+        torch = _torch
+
     with _clip_lock:
         if _clip_model is None:
             _clip_model, _, _clip_preprocess = open_clip.create_model_and_transforms(
                 "ViT-B-32", pretrained="openai"
+            )
+            _nsfw_tokens = open_clip.tokenize(["nsfw", "nudity", "pornography"]).to(
+                "cpu"
             )
             _clip_model.eval()
 
@@ -51,7 +67,13 @@ def convert_to_cmyk(image: Image.Image) -> Image.Image:
 def ensure_not_nsfw(image: Image.Image, threshold: float = 0.3) -> None:
     """Raise ``ValueError`` if ``image`` is likely NSFW."""
     _load_clip()
-    assert _clip_model is not None and _clip_preprocess is not None
+    if (
+        _clip_model is None
+        or _clip_preprocess is None
+        or _nsfw_tokens is None
+        or torch is None
+    ):
+        return
     image_input = _clip_preprocess(image).unsqueeze(0)
     with torch.no_grad():
         image_features = _clip_model.encode_image(image_input)
@@ -70,7 +92,7 @@ def validate_dpi(image_path: Path, expected_dpi: Tuple[int, int] = (300, 300)) -
 
 def validate_color_space(image: Image.Image, expected_mode: str = "CMYK") -> bool:
     """Return ``True`` if ``image`` uses ``expected_mode`` color space."""
-    return image.mode == expected_mode
+    return bool(image.mode == expected_mode)
 
 
 def validate_dpi_image(

@@ -5,20 +5,28 @@ from __future__ import annotations
 import logging
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
 
-from .database import SessionLocal
-from .ingestion import ingest
+from . import tasks
 from .settings import settings
 from .trending import trim_keywords
 
 logger = logging.getLogger(__name__)
 
 
-async def ingest_job() -> None:
-    """Run the ingestion routine in a database session."""
-    async with SessionLocal() as session:
-        await ingest(session)
+def ingest_job() -> None:
+    """Enqueue ingestion tasks for enabled adapters."""
+    if settings.enabled_adapters is None:
+        adapter_names = list(tasks.ADAPTERS.keys())
+    else:
+        adapter_names = [
+            name for name in tasks.ADAPTERS.keys() if name in settings.enabled_adapters
+        ]
+    for name in adapter_names:
+        tasks.app.send_task(
+            "signal_ingestion.ingest_adapter", args=[name], queue=tasks.queue_for(name)
+        )
 
 
 def create_scheduler() -> AsyncIOScheduler:
@@ -26,9 +34,14 @@ def create_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler()
     if settings.enabled_adapters is not None and not settings.enabled_adapters:
         return scheduler
+    trigger = (
+        CronTrigger.from_crontab(settings.ingest_cron)
+        if settings.ingest_cron
+        else IntervalTrigger(minutes=settings.ingest_interval_minutes)
+    )
     scheduler.add_job(
         ingest_job,
-        trigger=IntervalTrigger(minutes=settings.ingest_interval_minutes),
+        trigger=trigger,
         id="ingest",
         replace_existing=True,
     )

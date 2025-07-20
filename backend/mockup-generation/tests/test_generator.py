@@ -21,6 +21,8 @@ from mockup_generation.generator import MockupGenerator, GenerationError  # noqa
 
 
 class DummySession:
+    """HTTP client that always raises ``RequestException``."""
+
     def post(self, *a, **k):
         from requests.exceptions import RequestException
 

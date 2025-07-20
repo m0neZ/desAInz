@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Callable, Coroutine, Iterable
@@ -31,6 +32,8 @@ from .metrics_store import (
     LATENCY_CACHE_KEY,
 )
 from backend.shared.cache import sync_get, sync_set
+
+LAST_ALERT_KEY = "sla:last_alert"
 
 from .logging_config import configure_logging
 from .settings import settings
@@ -166,13 +169,29 @@ def get_average_latency() -> float:
 
 
 def _check_sla() -> float:
-    """Check average latency and trigger PagerDuty if above threshold."""
+    """Return average latency and trigger PagerDuty when breached."""
     avg = get_average_latency()
     if avg == 0.0:
         return avg
     threshold = getattr(settings, "SLA_THRESHOLD_HOURS", settings.sla_threshold_hours)
     if avg > threshold * 3600:
-        trigger_sla_violation(avg / 3600)
+        last = sync_get(LAST_ALERT_KEY)
+        cooldown = getattr(
+            settings,
+            "SLA_ALERT_COOLDOWN_MINUTES",
+            settings.sla_alert_cooldown_minutes,
+        )
+        now = time.time()
+        try:
+            last_ts = float(last) if last is not None else 0.0
+        except (TypeError, ValueError):
+            last_ts = 0.0
+        if last is None or now - last_ts >= cooldown * 60:
+            trigger_sla_violation(avg / 3600)
+            try:
+                sync_set(LAST_ALERT_KEY, str(now))
+            except Exception:  # pragma: no cover - redis optional
+                pass
     return avg
 
 

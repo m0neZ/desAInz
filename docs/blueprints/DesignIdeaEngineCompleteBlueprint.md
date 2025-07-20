@@ -1345,8 +1345,9 @@ erDiagram
   - Contract tests for each external API; use VCR.py cassettes to keep CI fast.
 
 - **Monitoring & Alerts**:
-  - Average time from signal ingestion to publishing is tracked via the `signal_to_publish_seconds` metric and displayed in the monitoring dashboard.
-  - PagerDuty alerts trigger if this average exceeds the configured `SLA_THRESHOLD_HOURS`.
+- Average time from signal ingestion to publishing is tracked via the `signal_to_publish_seconds` metric and displayed in the monitoring dashboard.
+- PagerDuty alerts trigger if this average exceeds the configured `SLA_THRESHOLD_HOURS`.
+- Alerts are suppressed for `SLA_ALERT_COOLDOWN_MINUTES` after each incident.
 
 ### **Key Takeaways**
 

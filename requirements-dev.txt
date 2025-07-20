@@ -9,6 +9,7 @@ vcrpy
 pytest
 pytest-cov
 fakeredis
+tenacity
 responses
 Pillow
 redis

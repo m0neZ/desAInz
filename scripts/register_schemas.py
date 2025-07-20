@@ -3,23 +3,41 @@
 from __future__ import annotations
 
 import json
+import os
 import pathlib
 from typing import Iterable
 
-import requests
+import importlib.util
+import sys
+
+MODULE_PATH = (
+    pathlib.Path(__file__).resolve().parent.parent
+    / "backend"
+    / "shared"
+    / "kafka"
+    / "schema_registry.py"
+)
+spec = importlib.util.spec_from_file_location("schema_registry", MODULE_PATH)
+assert spec is not None
+schema_registry = importlib.util.module_from_spec(spec)
+sys.modules["schema_registry"] = schema_registry
+assert spec.loader
+spec.loader.exec_module(schema_registry)
+SchemaRegistryClient = schema_registry.SchemaRegistryClient
 
 
 SCHEMAS_DIR = pathlib.Path(__file__).resolve().parent.parent / "schemas"
-REGISTRY_URL = "http://schema-registry:8081"
+REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8081")
+REGISTRY_TOKEN = os.getenv("SCHEMA_REGISTRY_TOKEN")
+
+
+_CLIENT = SchemaRegistryClient(REGISTRY_URL, token=REGISTRY_TOKEN)
 
 
 def _register(schema_path: pathlib.Path) -> None:
     subject = schema_path.stem
     schema = json.loads(schema_path.read_text())
-    payload = {"schema": json.dumps(schema)}
-    url = f"{REGISTRY_URL}/subjects/{subject}/versions"
-    response = requests.post(url, json=payload, timeout=5)
-    response.raise_for_status()
+    _CLIENT.register(subject, schema)
 
 
 def register_all() -> None:

@@ -23,6 +23,7 @@ application settings classes.
 | `S3_BUCKET` | Bucket name for storing assets |
 | `KAFKA_BOOTSTRAP_SERVERS` | Kafka broker list |
 | `SCHEMA_REGISTRY_URL` | Schema Registry endpoint |
+| `SCHEMA_REGISTRY_TOKEN` | Authentication token for the schema registry |
 | `LOG_LEVEL` | Logging verbosity |
 | `APPROVE_PUBLISHING` | Require publishing approval flag |
 | `ALLOWED_ORIGINS` | Comma separated whitelist of origins for CORS |

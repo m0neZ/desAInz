@@ -93,7 +93,6 @@ register_metrics(app)
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
-start_centroid_scheduler()
 
 
 # Background Kafka consumer setup
@@ -144,6 +143,12 @@ async def start_consumer() -> None:
         target=consume_signals, args=(_stop_event, _consumer), daemon=True
     )
     _consumer_thread.start()
+
+
+@app.on_event("startup")
+async def start_centroids() -> None:
+    """Initialize centroid computation scheduler."""
+    start_centroid_scheduler()
 
 
 @app.on_event("shutdown")

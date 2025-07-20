@@ -1,11 +1,13 @@
-"""Periodic job for computing embedding centroids."""
+"""Background scheduler for computing embedding centroids."""
 
 from __future__ import annotations
 
 import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 from sqlalchemy import select
+from datetime import datetime
 import numpy as np
 
 from backend.shared.db import session_scope
@@ -40,6 +42,7 @@ def compute_and_store_centroids() -> None:
 def start_centroid_scheduler() -> None:
     """Start background scheduler for centroid updates."""
     scheduler.add_job(
-        compute_and_store_centroids, "interval", hours=1, next_run_time=None
+        compute_and_store_centroids,
+        trigger=IntervalTrigger(hours=1, start_date=datetime.utcnow()),
     )
     scheduler.start()

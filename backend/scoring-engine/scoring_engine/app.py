@@ -14,7 +14,7 @@ from threading import Event, Thread
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from redis.asyncio import Redis
@@ -213,8 +213,17 @@ async def read_weights() -> JSONResponse:
 
 
 @app.put("/weights")
-async def update_weights_endpoint(body: WeightsUpdate) -> JSONResponse:
-    """Update weighting parameters via JSON payload."""
+async def update_weights_endpoint(
+    request: Request, body: WeightsUpdate
+) -> JSONResponse:
+    """
+    Update weighting parameters via JSON payload.
+
+    Requires ``X-Weights-Token`` header matching ``settings.weights_token``.
+    """
+    token = request.headers.get("X-Weights-Token")
+    if settings.weights_token and token != settings.weights_token:
+        raise HTTPException(status_code=401, detail="invalid token")
     weights = await run_in_threadpool(update_weights, **body.model_dump())
     return JSONResponse(
         {

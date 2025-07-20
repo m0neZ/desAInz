@@ -67,3 +67,29 @@ Examples based on ``tests/test_api_models.py``::
    POST /models/2/default  (with valid Authorization header)
    -> 200
 
+
+Scoring Engine
+--------------
+
+Endpoints verifying the scoring weights can be retrieved and updated. Updating
+weights requires the ``X-Weights-Token`` header::
+
+   GET /weights
+   -> 200
+   {
+       "freshness": 0.1,
+       "engagement": 0.2,
+       "novelty": 0.3,
+       "community_fit": 0.2,
+       "seasonality": 0.2
+   }
+
+   PUT /weights  (with X-Weights-Token header)
+   {
+       "freshness": 0.5,
+       "engagement": 0.1,
+       "novelty": 0.2,
+       "community_fit": 0.1,
+       "seasonality": 0.1
+   }
+   -> 200

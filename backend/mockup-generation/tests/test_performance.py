@@ -14,3 +14,19 @@ def test_generation_speed(tmp_path) -> None:
     generator.generate("test", str(tmp_path / "img.png"), num_inference_steps=1)
     duration = time.perf_counter() - start
     assert duration < 30
+
+
+def test_cleanup_reduces_memory() -> None:
+    """Pipeline resources are released after cleanup."""
+    import psutil
+    import gc
+
+    generator = MockupGenerator()
+    generator.pipeline = bytearray(50 * 1024 * 1024)
+    proc = psutil.Process()
+    before = proc.memory_info().rss
+    generator.cleanup()
+    gc.collect()
+    after = proc.memory_info().rss
+    assert generator.pipeline is None
+    assert after <= before

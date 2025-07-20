@@ -47,9 +47,15 @@ class DummyClient:
 class DummyGenerator:
     """Write a dummy file and return its path."""
 
+    def __init__(self) -> None:
+        self.cleaned = False
+
     def generate(self, prompt: str, output: str, num_inference_steps: int = 30):
         Path(output).write_text("x")
         return types.SimpleNamespace(image_path=output)
+
+    def cleanup(self) -> None:
+        self.cleaned = True
 
 
 class DummyListing:
@@ -71,7 +77,8 @@ def test_generate_mockup_upload(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     """Image is uploaded using the storage client."""
-    monkeypatch.setattr(tasks, "generator", DummyGenerator())
+    gen = DummyGenerator()
+    monkeypatch.setattr(tasks, "generator", gen)
     monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
     monkeypatch.setattr(tasks, "_get_storage_client", lambda: DummyClient())
     monkeypatch.setattr(tasks, "remove_background", lambda img: img)
@@ -87,3 +94,4 @@ def test_generate_mockup_upload(
 
     res = tasks.generate_mockup.run([["kw"]], str(tmp_path))
     assert res[0]["uri"].startswith("http://test/b/generated-mockups/mockup_0.png")
+    assert gen.cleaned

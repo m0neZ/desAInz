@@ -172,5 +172,6 @@ def generate_mockup(
                     "tags": metadata.tags,
                 }
             )
+        generator.cleanup()
 
     return results

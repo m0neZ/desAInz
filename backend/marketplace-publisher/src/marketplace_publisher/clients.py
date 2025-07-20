@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import os
-import requests
+import requests  # type: ignore[import-untyped]
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import json
 import time
 
 from .db import Marketplace
@@ -59,7 +61,8 @@ class BaseClient:
                 timeout=30,
             )
             response.raise_for_status()
-            self._token = response.json().get("access_token")
+            data = cast(dict[str, Any], response.json())
+            self._token = cast(str | None, data.get("access_token"))
             return self._token
         return None
 
@@ -71,7 +74,7 @@ class BaseClient:
         oauth = OAuth2Session(
             self._client_id, redirect_uri=self.redirect_uri, scope=self.scope
         )
-        url, state = oauth.authorization_url(self.authorize_url)
+        url, state = cast(tuple[str, str], oauth.authorization_url(self.authorize_url))
         self._state = state
         return url
 
@@ -127,7 +130,7 @@ class BaseClient:
             timeout=30,
         )
         response.raise_for_status()
-        return response.json()
+        return cast(dict[str, Any], response.json())
 
 
 class RedbubbleClient(BaseClient):
@@ -218,21 +221,34 @@ class ZazzleClient(BaseClient):
 class SeleniumFallback:
     """Publish a design using browser automation if APIs fail."""
 
-    def __init__(self, screenshot_dir: Path | None = None) -> None:
-        """Start a headless Firefox driver."""
+    def __init__(
+        self, screenshot_dir: Path | None = None, max_attempts: int = 3
+    ) -> None:
+        """Initialize the fallback driver.
+
+        Args:
+            screenshot_dir: Directory to store screenshots and logs.
+            max_attempts: Number of attempts before giving up.
+        """
         options = Options()
         options.add_argument("--headless")
+        caps = DesiredCapabilities.FIREFOX.copy()
+        caps["goog:loggingPrefs"] = {"performance": "ALL"}
         if os.getenv("SELENIUM_SKIP") == "1":
             self.driver = None
         else:
-            self.driver = webdriver.Firefox(options=options)
+            self.driver = webdriver.Firefox(options=options, desired_capabilities=caps)
         self.screenshot_dir = screenshot_dir or Path("screenshots")
         self.screenshot_dir.mkdir(parents=True, exist_ok=True)
+        self.max_attempts = max_attempts
 
     def publish(
         self, marketplace: Marketplace, design_path: Path, metadata: dict[str, Any]
     ) -> None:
-        """Automate browser interactions for publishing a design."""
+        """Automate browser interactions for publishing a design.
+
+        Captures a screenshot and network log on each failed attempt.
+        """
         if self.driver is None:
             return
         selectors = rules.get_selectors(marketplace)
@@ -266,5 +282,16 @@ class SeleniumFallback:
                     / f"{marketplace.value}_{int(time.time())}_{attempts}.png"
                 )
                 self.driver.save_screenshot(str(screenshot_path))
-                if attempts >= 3:
+                try:
+                    logs = self.driver.get_log("performance")
+                except Exception:
+                    logs = []
+                if logs:
+                    log_path = (
+                        self.screenshot_dir
+                        / f"{marketplace.value}_{int(time.time())}_{attempts}.json"
+                    )
+                    log_path.write_text(json.dumps(logs))
+                if attempts >= self.max_attempts:
                     raise
+                time.sleep(2**attempts)

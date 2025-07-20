@@ -76,7 +76,7 @@ def test_selenium_publish_success(tmp_path: Path) -> None:
 
 
 def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
-    """Failures should store a screenshot in the specified directory."""
+    """Failures should store screenshot and network log files."""
     page = _write_page(tmp_path)
     rules_path = _write_rules(tmp_path, page, bad=True)
     rules.load_rules(rules_path)
@@ -86,3 +86,4 @@ def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
     with pytest.raises(Exception):
         fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert list(tmp_path.glob("*.png"))
+    assert list(tmp_path.glob("*.json"))

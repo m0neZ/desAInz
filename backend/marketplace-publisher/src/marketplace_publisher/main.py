@@ -8,6 +8,7 @@ import logging
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
+import os
 
 from backend.shared import (
     add_error_handlers,
@@ -344,7 +345,20 @@ async def ready() -> dict[str, str]:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    import argparse
     import uvicorn
+
+    parser = argparse.ArgumentParser(
+        description="Run the marketplace publisher service."
+    )
+    parser.add_argument(
+        "--no-selenium",
+        action="store_true",
+        help="Disable Selenium based fallback publishing",
+    )
+    args = parser.parse_args()
+    if args.no_selenium:
+        os.environ["SELENIUM_SKIP"] = "1"
 
     uvicorn.run(
         "main:app",

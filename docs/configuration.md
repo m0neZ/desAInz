@@ -29,3 +29,5 @@ application settings classes.
 | `ALLOWED_ORIGINS` | Comma separated whitelist of origins for CORS |
 | `WEIGHTS_TOKEN` | Token required for updating scoring weights |
 | `ENABLED_ADAPTERS` | Comma separated list of ingestion adapters to run; if unset all adapters are used |
+| `PAGERDUTY_ROUTING_KEY` | Integration key for sending PagerDuty incidents |
+| `ENABLE_PAGERDUTY` | Set to `true` to enable PagerDuty notifications |

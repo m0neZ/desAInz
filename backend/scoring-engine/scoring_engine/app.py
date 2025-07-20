@@ -99,6 +99,7 @@ start_centroid_scheduler()
 # Background Kafka consumer setup
 _stop_event = Event()
 _consumer_thread: Thread | None = None
+_consumer: KafkaConsumerWrapper | None = None
 
 
 def _create_consumer() -> KafkaConsumerWrapper:
@@ -134,13 +135,13 @@ def consume_signals(stop_event: Event, consumer: KafkaConsumerWrapper) -> None:
 @app.on_event("startup")
 async def start_consumer() -> None:
     """Launch background Kafka consumer."""
-    global _consumer_thread
+    global _consumer_thread, _consumer
     if os.getenv("KAFKA_SKIP") == "1":
         return
-    consumer = _create_consumer()
+    _consumer = _create_consumer()
     _stop_event.clear()
     _consumer_thread = Thread(
-        target=consume_signals, args=(_stop_event, consumer), daemon=True
+        target=consume_signals, args=(_stop_event, _consumer), daemon=True
     )
     _consumer_thread.start()
 
@@ -151,6 +152,8 @@ async def stop_consumer() -> None:
     _stop_event.set()
     if _consumer_thread is not None:
         _consumer_thread.join(timeout=5)
+    if _consumer is not None:
+        _consumer.close()
 
 
 async def trending_factor(topics: list[str]) -> float:

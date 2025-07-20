@@ -28,6 +28,48 @@ class Settings(BaseSettings):
     unleash_app_name: str = "marketplace-publisher"
     slack_webhook_url: HttpUrl | None = None
 
+    redbubble_client_id: str | None = None
+    redbubble_client_secret: str | None = None
+    redbubble_api_key: str | None = None
+    redbubble_redirect_uri: HttpUrl | None = None
+    redbubble_authorize_url: HttpUrl | None = (
+        "https://www.redbubble.com/oauth/authorize"
+    )
+    redbubble_token_url: HttpUrl | None = "https://www.redbubble.com/oauth/token"
+    redbubble_scope: str | None = "read write"
+
+    amazon_merch_client_id: str | None = None
+    amazon_merch_client_secret: str | None = None
+    amazon_merch_api_key: str | None = None
+    amazon_merch_redirect_uri: HttpUrl | None = None
+    amazon_merch_authorize_url: HttpUrl | None = "https://www.amazon.com/ap/oa"
+    amazon_merch_token_url: HttpUrl | None = "https://api.amazon.com/auth/o2/token"
+    amazon_merch_scope: str | None = "merch_edit merch_read"
+
+    etsy_client_id: str | None = None
+    etsy_client_secret: str | None = None
+    etsy_api_key: str | None = None
+    etsy_redirect_uri: HttpUrl | None = None
+    etsy_authorize_url: HttpUrl | None = "https://www.etsy.com/oauth/connect"
+    etsy_token_url: HttpUrl | None = "https://api.etsy.com/v3/public/oauth/token"
+    etsy_scope: str | None = "listings_r listings_w"
+
+    society6_client_id: str | None = None
+    society6_client_secret: str | None = None
+    society6_api_key: str | None = None
+    society6_redirect_uri: HttpUrl | None = None
+    society6_authorize_url: HttpUrl | None = "https://society6.com/oauth/authorize"
+    society6_token_url: HttpUrl | None = "https://society6.com/oauth/token"
+    society6_scope: str | None = "create read"
+
+    zazzle_client_id: str | None = None
+    zazzle_client_secret: str | None = None
+    zazzle_api_key: str | None = None
+    zazzle_redirect_uri: HttpUrl | None = None
+    zazzle_authorize_url: HttpUrl | None = "https://api.zazzle.com/v1/oauth/authorize"
+    zazzle_token_url: HttpUrl | None = "https://api.zazzle.com/v1/oauth/token"
+    zazzle_scope: str | None = "manage_products"
+
     @field_validator(
         "rate_limit_redbubble",
         "rate_limit_amazon_merch",

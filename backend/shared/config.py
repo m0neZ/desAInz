@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
     secret_key: str | None = None
+    weights_token: str | None = None
     allowed_origins: list[str] = Field(default_factory=list)
 
     @field_validator("allowed_origins", mode="before")

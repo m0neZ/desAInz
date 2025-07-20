@@ -6,6 +6,8 @@ import math
 from datetime import datetime, timezone
 from typing import Iterable
 
+from numpy.typing import NDArray
+
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
@@ -31,7 +33,7 @@ class Signal:
         self.metadata = metadata
 
 
-_SCALER = StandardScaler()
+_SCALER: StandardScaler = StandardScaler()
 
 
 def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> float:
@@ -48,7 +50,9 @@ def compute_engagement(current: float, median: float) -> float:
     return float(scaled[0][0])
 
 
-def compute_novelty(embedding: np.ndarray, centroid: np.ndarray) -> float:
+def compute_novelty(
+    embedding: NDArray[np.floating], centroid: NDArray[np.floating]
+) -> float:
     """One minus cosine similarity to centroid."""
     dot = float(np.dot(embedding, centroid))
     norm = float(np.linalg.norm(embedding) * np.linalg.norm(centroid))

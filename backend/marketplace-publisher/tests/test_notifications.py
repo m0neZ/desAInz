@@ -1,3 +1,5 @@
+"""Tests for notification helpers."""  # noqa: E402
+
 from __future__ import annotations
 
 import sys
@@ -58,7 +60,9 @@ async def test_notify_failure_sends_slack_and_pagerduty(monkeypatch: Any) -> Non
 
 
 @pytest.mark.asyncio()
-async def test_notify_failure_handles_timeout(monkeypatch: Any, caplog: pytest.LogCaptureFixture) -> None:
+async def test_notify_failure_handles_timeout(
+    monkeypatch: Any, caplog: pytest.LogCaptureFixture
+) -> None:
     """Timeouts should be logged without raising exceptions."""
     pd_calls: list[tuple[int, str]] = []
 
@@ -80,8 +84,10 @@ async def test_notify_failure_handles_timeout(monkeypatch: Any, caplog: pytest.L
 
 
 @pytest.mark.asyncio()
-async def test_notify_failure_pagerduty_timeout(monkeypatch: Any, caplog: pytest.LogCaptureFixture) -> None:
-    """PagerDuty timeouts should be logged without raising exceptions."""
+async def test_notify_failure_pagerduty_timeout(
+    monkeypatch: Any, caplog: pytest.LogCaptureFixture
+) -> None:
+    """Handle PagerDuty timeouts gracefully."""
     caplog.set_level(logging.WARNING)
 
     def boom(*args: Any, **kwargs: Any) -> None:

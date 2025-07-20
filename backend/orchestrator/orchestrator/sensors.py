@@ -5,7 +5,16 @@ from __future__ import annotations
 import os
 from typing import Iterator, Union
 
-from dagster import RunRequest, SensorEvaluationContext, SkipReason, sensor
+from dagster import (
+    RunFailureSensorContext,
+    RunRequest,
+    SensorEvaluationContext,
+    SkipReason,
+    run_failure_sensor,
+    sensor,
+)
+
+from monitoring.pagerduty import notify_listing_issue
 
 from .jobs import idea_job
 
@@ -22,3 +31,13 @@ def idea_sensor(
         )
     else:
         yield SkipReason("AUTO_RUN_IDEA not enabled")
+
+
+@run_failure_sensor(monitor_all_code_locations=True)  # type: ignore[misc]
+def run_failure_notifier(context: RunFailureSensorContext) -> None:
+    """Notify Slack when a run fails."""
+    try:
+        cleaned = context.dagster_run.run_id.replace("-", "")
+        notify_listing_issue(int(cleaned, 16), "failed")
+    except Exception as exc:  # pragma: no cover - best effort
+        context.log.warning("notification failed: %s", exc)

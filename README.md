@@ -20,6 +20,10 @@ make docker-build # build local Docker images
 make docker-push  # push images to REGISTRY with TAG
 make helm-deploy  # deploy charts with Helm
 ```
+### Compose files
+
+`docker-compose.dev.yml` builds images from local sources for development. `docker-compose.prod.yml` uses published images and is meant for production.
+
 
 ## Storage setup
 
@@ -61,8 +65,7 @@ Execute `scripts/analyze_query_plans.py` periodically to inspect query plans and
 identify missing indexes.
 
 ## Configuration and Secrets
-
-Local development uses dotenv files. Copy the `.env.example` in **every** `backend` service directory to `.env` and adjust the values for your environment. The services automatically load these variables using Pydantic `BaseSettings`.
+Local development uses dotenv files. Copy the root `.env.example` to `.env` and the `.env.example` in **every** `backend` service directory to their respective `.env` files. The services automatically load these variables using Pydantic `BaseSettings`.
 For convenience you can run:
 
 ```bash

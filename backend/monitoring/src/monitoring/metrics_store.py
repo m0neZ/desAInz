@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterator, MutableMapping, cast
 
-from backend.shared.cache import get_sync_client
+from backend.shared.cache import sync_delete
 
 import requests
 
@@ -22,8 +22,7 @@ LATENCY_CACHE_KEY = "monitoring:latency_avg"
 def invalidate_latency_cache() -> None:
     """Remove cached average latency from Redis."""
     try:
-        client = get_sync_client()
-        client.delete(LATENCY_CACHE_KEY)
+        sync_delete(LATENCY_CACHE_KEY)
     except Exception:  # pragma: no cover - redis optional
         pass
 
@@ -82,8 +81,9 @@ class TimescaleMetricsStore:
 
     def __del__(self) -> None:
         """Close the connection pool when the store is garbage-collected."""
-        if self._pool is not None:
-            self._pool.closeall()
+        pool = getattr(self, "_pool", None)
+        if pool is not None:
+            pool.closeall()
 
     def _send_loki_log(
         self, message: str, labels: MutableMapping[str, str] | None = None

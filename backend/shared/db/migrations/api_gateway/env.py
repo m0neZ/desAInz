@@ -15,7 +15,6 @@ config = context.config
 fileConfig(config.config_file_name)
 
 
-
 def run_migrations_offline() -> None:
     """Run migrations in offline mode."""
     url = config.get_main_option("sqlalchemy.url") or os.getenv(

@@ -1,3 +1,5 @@
+"""Integration tests for orchestrator ops."""  # noqa: E402
+
 from __future__ import annotations
 
 import json
@@ -21,6 +23,7 @@ from orchestrator.jobs import idea_job
 
 @contextmanager
 def run_mock_server() -> Iterator[tuple[str, list[str]]]:
+    """Run a simple HTTP server collecting request paths."""
     calls: list[str] = []
 
     class Handler(BaseHTTPRequestHandler):

@@ -8,7 +8,7 @@ from .schedules import (
     hourly_cleanup_schedule,
     daily_query_plan_schedule,
 )
-from .sensors import idea_sensor
+from .sensors import idea_sensor, run_failure_notifier
 
 
 defs = Definitions(
@@ -18,5 +18,5 @@ defs = Definitions(
         hourly_cleanup_schedule,
         daily_query_plan_schedule,
     ],
-    sensors=[idea_sensor],
+    sensors=[idea_sensor, run_failure_notifier],
 )

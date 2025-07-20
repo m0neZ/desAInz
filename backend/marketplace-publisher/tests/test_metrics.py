@@ -1,3 +1,5 @@
+"""Tests for marketplace metrics endpoints."""  # noqa: E402
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -8,6 +10,7 @@ import pytest
 
 @pytest.fixture()
 def _setup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """Create a temporary DB with sample metric."""
     async_url = f"sqlite+aiosqlite:///{tmp_path}/metrics.db"
     sync_url = f"sqlite:///{tmp_path}/metrics.db"
     monkeypatch.setenv("DATABASE_URL", async_url)
@@ -30,6 +33,7 @@ def _setup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
 
 
 def test_metrics_route(_setup) -> None:
+    """GET /metrics should return stored data."""
     app = _setup
     with TestClient(app) as client:
         resp = client.get("/metrics/1")

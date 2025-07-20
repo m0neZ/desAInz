@@ -119,6 +119,8 @@ pytestmark = pytest.mark.filterwarnings("ignore::UserWarning")
 
 
 class DummyResult:
+    """Return object from DummyCelery."""
+
     def __init__(self, id_: str) -> None:
         self.id = id_
 

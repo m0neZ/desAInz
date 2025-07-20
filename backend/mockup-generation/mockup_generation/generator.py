@@ -5,16 +5,14 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from threading import Lock
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
-from PIL import Image
-
-import requests
-from diffusers import StableDiffusionXLPipeline
-import torch
 from .settings import settings
-
 from .model_repository import get_default_model_id
+
+if TYPE_CHECKING:  # pragma: no cover - type checking only
+    from PIL import Image
+    from diffusers import StableDiffusionXLPipeline
 
 
 logger = logging.getLogger(__name__)
@@ -38,7 +36,7 @@ class MockupGenerator:
     def __init__(self) -> None:
         """Prepare the generator without loading the model."""
         self.model_id = get_default_model_id()
-        self.pipeline: Optional[StableDiffusionXLPipeline] = None
+        self.pipeline: Optional["StableDiffusionXLPipeline"] = None
         self._lock = Lock()
 
     def load(self, model_identifier: str | None = None) -> None:
@@ -46,6 +44,9 @@ class MockupGenerator:
         current = model_identifier or get_default_model_id()
         with self._lock:
             if self.pipeline is None or self.model_id != current:
+                from diffusers import StableDiffusionXLPipeline
+                import torch
+
                 self.model_id = current
                 device = "cuda" if torch.cuda.is_available() else "cpu"
                 self.pipeline = StableDiffusionXLPipeline.from_pretrained(
@@ -108,6 +109,8 @@ class MockupGenerator:
         from io import BytesIO
         import base64
         import time
+        import requests
+        from PIL import Image
 
         session = requests.Session()
         provider = settings.fallback_provider.lower()
@@ -161,6 +164,8 @@ class MockupGenerator:
                 except Exception:  # pragma: no cover - device transfer optional
                     pass
                 self.pipeline = None
+        import torch
+
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
             if hasattr(torch.cuda, "ipc_collect"):

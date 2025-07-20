@@ -1,4 +1,4 @@
-// flow-typed signature: b08b56abd6d7ff2701a34a9fde832b0c
+// flow-typed signature: 83c5e9cf7244024df76d73af40e0357f
 // flow-typed version: <<STUB>>/eslint-config-next_v^15.4.1/flow_v0.275.0
 
 /**
@@ -15,4 +15,38 @@
 
 declare module 'eslint-config-next' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module 'eslint-config-next/core-web-vitals' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-config-next/parser' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-config-next/typescript' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module 'eslint-config-next/core-web-vitals.js' {
+  declare module.exports: $Exports<'eslint-config-next/core-web-vitals'>;
+}
+declare module 'eslint-config-next/index' {
+  declare module.exports: $Exports<'eslint-config-next'>;
+}
+declare module 'eslint-config-next/index.js' {
+  declare module.exports: $Exports<'eslint-config-next'>;
+}
+declare module 'eslint-config-next/parser.js' {
+  declare module.exports: $Exports<'eslint-config-next/parser'>;
+}
+declare module 'eslint-config-next/typescript.js' {
+  declare module.exports: $Exports<'eslint-config-next/typescript'>;
 }

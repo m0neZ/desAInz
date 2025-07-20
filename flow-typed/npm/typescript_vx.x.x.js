@@ -1,4 +1,4 @@
-// flow-typed signature: 43f8e2e3506c0cc112f5d39cc7ace72d
+// flow-typed signature: 1d1d2efc1e6dcbf3f03534399d2e88f6
 // flow-typed version: <<STUB>>/typescript_v^5.8.3/flow_v0.275.0
 
 /**
@@ -15,4 +15,74 @@
 
 declare module 'typescript' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module 'typescript/lib/_tsc' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/_tsserver' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/_typingsInstaller' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/tsc' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/tsserver' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/tsserverlibrary' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/typescript' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/typingsInstaller' {
+  declare module.exports: any;
+}
+
+declare module 'typescript/lib/watchGuard' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module 'typescript/lib/_tsc.js' {
+  declare module.exports: $Exports<'typescript/lib/_tsc'>;
+}
+declare module 'typescript/lib/_tsserver.js' {
+  declare module.exports: $Exports<'typescript/lib/_tsserver'>;
+}
+declare module 'typescript/lib/_typingsInstaller.js' {
+  declare module.exports: $Exports<'typescript/lib/_typingsInstaller'>;
+}
+declare module 'typescript/lib/tsc.js' {
+  declare module.exports: $Exports<'typescript/lib/tsc'>;
+}
+declare module 'typescript/lib/tsserver.js' {
+  declare module.exports: $Exports<'typescript/lib/tsserver'>;
+}
+declare module 'typescript/lib/tsserverlibrary.js' {
+  declare module.exports: $Exports<'typescript/lib/tsserverlibrary'>;
+}
+declare module 'typescript/lib/typescript.js' {
+  declare module.exports: $Exports<'typescript/lib/typescript'>;
+}
+declare module 'typescript/lib/typingsInstaller.js' {
+  declare module.exports: $Exports<'typescript/lib/typingsInstaller'>;
+}
+declare module 'typescript/lib/watchGuard.js' {
+  declare module.exports: $Exports<'typescript/lib/watchGuard'>;
 }

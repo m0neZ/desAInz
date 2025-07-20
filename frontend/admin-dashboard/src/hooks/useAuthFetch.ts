@@ -1,3 +1,5 @@
+/* global RequestInfo, RequestInit */
+
 export async function refreshTokens(): Promise<boolean> {
   const refresh = localStorage.getItem('refresh_token');
   if (!refresh) return false;

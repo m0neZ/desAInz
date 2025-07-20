@@ -1,4 +1,4 @@
-// flow-typed signature: 0d67e5a3d21e303af4ccf30f5a1a2b47
+// flow-typed signature: 408c4c73860d1c929b1b31b43ae2e1a1
 // flow-typed version: <<STUB>>/next_v15.4.1/flow_v0.275.0
 
 /**
@@ -15,4 +15,22423 @@
 
 declare module 'next' {
   declare module.exports: any;
+}
+
+/**
+ * We include stubs for each file inside this npm package in case you need to
+ * require those files directly. Feel free to delete any files that aren't
+ * needed.
+ */
+declare module 'next/amp' {
+  declare module.exports: any;
+}
+
+declare module 'next/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/babel' {
+  declare module.exports: any;
+}
+
+declare module 'next/cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/compat/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/app-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/document' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/navigation.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/og' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/script' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/api/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/adapter/build-complete' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/after-production-compile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/analysis/extract-const-value' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/analysis/get-page-static-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/analysis/parse-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/loader/get-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/loader/transform' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/loader/util' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/amp-attributes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/commonjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/jsx-pragma' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/next-font-unsupported' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/next-page-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/next-page-disallow-re-export-all-exports' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/next-ssg-transform' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/optimize-hook-destructuring' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/plugins/react-loadable-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/babel/preset' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/build-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/collect-build-traces' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/compiler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/create-compiler-aliases' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/define-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/deployment-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/duration-to-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/entries' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/generate-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/get-babel-config-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/get-babel-loader-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/handle-entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/handle-externals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/is-writeable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/__mocks__/empty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/__mocks__/fileMock' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/__mocks__/nextFontMock' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/__mocks__/styleMock' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/jest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/jest/object-proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/load-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/load-jsconfig' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/manifests/formatter/format-manifest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/next-config-ts/require-hook' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/next-config-ts/transpile-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/next-dir-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/normalize-catchall-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/output/format' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/output' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/output/log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/output/store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/page-extensions-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/fetch/whatwg-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object-assign' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object.assign/auto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object.assign/implementation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object.assign' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object.assign/polyfill' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/object.assign/shim' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/polyfill-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/polyfill-nomodule' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/polyfills/process' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/preview-key-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/progress' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/rendering-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/segment-config/app/app-segment-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/segment-config/app/app-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/segment-config/app/collect-root-param-keys' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/segment-config/middleware/middleware-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/segment-config/pages/pages-segment-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/spinner' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/static-paths/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/static-paths/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/static-paths/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/static-paths/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/swc/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/swc/jest-transformer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/swc/options' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/swc/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/app-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/edge-app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/edge-ssr-app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/edge-ssr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/pages-api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/pages-edge-api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/templates/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turbopack-build/impl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turbopack-build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace/env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace/result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace/tcp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/turborepo-access-trace/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/type-check' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack-build/impl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack-build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack-config-rules/resolve' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/alias/react-dom-server-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/alias/react-dom-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/cache-invalidation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/base' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/file-resolve' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/global' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/modules' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/next-font' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/css/plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/images' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/blocks/images/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/config/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/camelcase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/CssSyntaxError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/runtime/api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/runtime/getUrl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/css-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/devtool/devtool-style-inject' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/empty-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/error-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/get-module-build-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/codegen' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/interface' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/minify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/metadata/discover' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/metadata/resolve-route-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/metadata/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/modularize-import-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-app-loader/create-app-route-code' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-app-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-barrel-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-client-pages-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-edge-app-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-edge-function-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-edge-ssr-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-edge-ssr-loader/render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-error-browser-binary-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-action-entry-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-client-entry-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-client-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-css-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/action-validate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/cache-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/module-proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/server-reference' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/track-dynamic-import' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-flight-server-reference-proxy-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-font-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-font-loader/postcss-next-font' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-image-loader/blur' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-invalid-import-error-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-metadata-image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-metadata-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-middleware-asset-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-middleware-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-middleware-wasm-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-style-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/isEqualLocals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/next-swc-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/Error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/Warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/join-function' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/value-processor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/loaders/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/app-build-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/build-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/copy-file-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/css-chunking-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/css-minimizer-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/devtools-ignore-list-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/eval-source-map-dev-tool-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/flight-client-entry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/flight-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/jsconfig-paths-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/memory-with-gc-cache-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/middleware-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/mini-css-extract-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/minify-webpack-plugin/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/next-drop-client-page-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/next-font-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/next-trace-entrypoints-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/next-types-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/next-types-plugin/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/nextjs-require-cache-hot-reloader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/optional-peer-dependency-resolve-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/pages-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/profiling-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/react-loadable-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/rspack-flight-client-entry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/rspack-profiling-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/slow-module-detection-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/subresource-integrity-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/telemetry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseBabel' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseCss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseScss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/stringify-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/webpack/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/build/write-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/internal/turbo-trace-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-export' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-lint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-start' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-telemetry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/cli/next-test' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/add-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/add-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-bootstrap' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-call-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-dir/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-dir/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-find-source-map-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-globals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-index' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-link-gc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-next-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-next-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/app-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/assign-location' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/compat/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/app-router-announcer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/app-router-headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/app-router-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/app-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/bailout-to-client-rendering' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/bfcache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/forbidden' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/global-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/global-not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/builtin/unauthorized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/client-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/client-segment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/dev-root-http-access-fallback-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/errors/graceful-degrade-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/forbidden' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/handle-isr-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/hooks-server-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/http-access-fallback/error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/http-access-fallback/error-fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/http-access-fallback/http-access-fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/is-next-router-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/layout-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/links' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/match-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/metadata/async-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/metadata/metadata-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/metadata/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/nav-failure-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/navigation-untracked' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/navigation.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/noop-head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/promise-queue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/redirect-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/redirect-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/redirect-status-code' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/redirect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/render-from-template-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/aliased-prefetch-navigations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/apply-flight-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/apply-router-state-patch-to-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/clear-cache-node-data-for-segment-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/compute-changed-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/create-href-from-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/create-initial-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/create-router-cache-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/fetch-server-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/fill-cache-with-new-subtree-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/fill-lazy-items-till-leaf-with-head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/handle-mutable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/handle-segment-mismatch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/invalidate-cache-below-flight-segmentpath' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/invalidate-cache-by-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/is-navigating-to-new-root-layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/ppr-navigations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/prefetch-cache-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/find-head-in-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/get-segment-value' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/has-interception-route-in-current-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/hmr-refresh-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/navigate-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/prefetch-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/refresh-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/restore-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/server-action-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/reducers/server-patch-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/refetch-inactive-parallel-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/router-reducer-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/router-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/set-cache-busting-search-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/router-reducer/should-hard-navigate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/cache-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/lru' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/prefetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/scheduler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache-impl/tuple-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/segment-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/static-generation-bailout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/styles/access-error-styles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/unauthorized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/unresolved-thenable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/unstable-rethrow.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/unstable-rethrow' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/unstable-rethrow.server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/components/use-action-queue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/detect-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/amp-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/error-overlay/websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/fouc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-middleware-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/app/hot-reloader-app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/app/use-websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/get-socket-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/pages/hot-reloader-pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/pages/websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/hot-reloader/turbopack-hot-reloader-common' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/noop-turbopack-hmr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/on-demand-entries-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/report-hmr-latency' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/dev/runtime-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/flight-data-helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/form-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/get-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/has-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/head-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/image-component' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/legacy/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/lib/console' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/next-dev-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/next-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/next-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/normalize-locale-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/normalize-trailing-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/page-bootstrap' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/page-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/portal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/react-client-callbacks/error-boundary-callbacks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/react-client-callbacks/on-recoverable-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/react-client-callbacks/report-global-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/remove-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/remove-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request-idle-callback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/params.browser.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/params.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/params.browser.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/search-params.browser.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/search-params.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/request/search-params.browser.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/resolve-href' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/route-announcer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/script' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/set-attributes-from-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/tracing/report-to-socket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/tracing/tracer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/trusted-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/use-client-disallowed' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/use-intersection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/use-merged-ref' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/web-vitals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/client/with-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@ampproject/toolbox-optimizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecoratedDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2203' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2203R' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2301' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2305' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2311' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayLikeToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayWithHoles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayWithoutHoles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/assertClassBrand' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/assertThisInitialized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncGeneratorDelegate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncIterator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncToGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/awaitAsyncGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/AwaitValue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/callSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/checkInRHS' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/checkPrivateRedeclaration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCallCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticAccess' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticFieldDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classExtractFieldDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classNameTDZError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldInitSpec' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseBase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseKey' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateGetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodInitSpec' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateSetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/construct' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/createClass' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelperLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/createSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/decorate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/defaults' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineAccessor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineEnumerableProperties' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineProperty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/dispose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecoratedDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203R' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2301' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2305' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2311' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayLikeToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithHoles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithoutHoles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/assertClassBrand' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/assertThisInitialized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncGeneratorDelegate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncIterator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncToGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/awaitAsyncGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/AwaitValue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/callSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/checkInRHS' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/checkPrivateRedeclaration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCallCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticAccess' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticFieldDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classExtractFieldDescriptor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classNameTDZError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldInitSpec' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseBase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseKey' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateGetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodInitSpec' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateSetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldDestructureSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/construct' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createClass' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelperLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/decorate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defaults' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineAccessor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineEnumerableProperties' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineProperty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/dispose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/extends' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/get' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/getPrototypeOf' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/identity' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/importDeferProxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/inherits' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/inheritsLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/initializerDefineProperty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/initializerWarningHelper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/instanceof' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireDefault' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireWildcard' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/isNativeFunction' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/isNativeReflectConstruct' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArrayLimit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/jsx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/maybeArrayLike' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/newArrowCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableRest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableSpread' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nullishReceiverError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectDestructuringEmpty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutProperties' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/OverloadYield' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/possibleConstructorReturn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/readOnlyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/regeneratorRuntime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/set' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/setFunctionName' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/setPrototypeOf' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/skipFirstGeneratorNext' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/slicedToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropBase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteral' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteralLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/tdz' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/temporalRef' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/temporalUndefined' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toConsumableArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toPrimitive' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toPropertyKey' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toSetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/tsRewriteRelativeImportExtensions' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/typeof' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/unsupportedIterableToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/using' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/usingCtx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapAsyncGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapNativeSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapRegExp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/writeOnlyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/extends' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/get' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/getPrototypeOf' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/identity' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/importDeferProxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/inherits' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/inheritsLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/initializerDefineProperty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/initializerWarningHelper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/instanceof' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/interopRequireDefault' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/interopRequireWildcard' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/isNativeFunction' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/isNativeReflectConstruct' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/iterableToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/iterableToArrayLimit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/jsx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/maybeArrayLike' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/newArrowCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/nonIterableRest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/nonIterableSpread' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/nullishReceiverError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectDestructuringEmpty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectSpread' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectSpread2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectWithoutProperties' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectWithoutPropertiesLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/OverloadYield' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/possibleConstructorReturn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/readOnlyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/regeneratorRuntime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/set' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/setFunctionName' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/setPrototypeOf' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/skipFirstGeneratorNext' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/slicedToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropBase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropGet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropSet' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteral' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteralLoose' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/tdz' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/temporalRef' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/temporalUndefined' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/toArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/toConsumableArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/toPrimitive' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/toPropertyKey' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/toSetter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/tsRewriteRelativeImportExtensions' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/typeof' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/unsupportedIterableToArray' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/using' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/usingCtx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapAsyncGenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapNativeSuper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapRegExp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/helpers/writeOnlyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@babel/runtime/regenerator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/ponyfill' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/abort-controller.js.text' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/console.js.text' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/events.js.text' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/load' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/stream' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/timers.js.text' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@edge-runtime/primitives/url.js.text' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@hapi/accept' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@mswjs/interceptors/ClientRequest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@napi-rs/triples' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/fontkit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/format-available-values' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-css-from-google-fonts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-font-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-resource' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/find-font-files-in-css' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/get-fallback-font-override-metrics' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/get-font-axes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/get-google-fonts-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/get-proxy-agent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/google-fonts-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/retry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/sort-fonts-variant-values' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/google/validate-google-font-function-call' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/local/get-fallback-metrics-from-font-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/local' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/local/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/local/pick-font-file-for-fallback-generation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/local/validate-local-font-function-call' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/next-font-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/dist/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/google' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/google/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/local' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/font/local/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/internal/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/internal/ReactRefreshModule.runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/ReactRefreshWebpackPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@opentelemetry/api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@vercel/nft' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@vercel/og/index.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/@vercel/og/index.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/acorn/acorn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/amphtml-validator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/amphtml-validator/validator_wasm' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/anser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/assert/assert' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/async-retry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/async-sema' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel-packages/packages-bundle' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/bundle' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/code-frame' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core-lib-block-hoist-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core-lib-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core-lib-normalize-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core-lib-normalize-opts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core-lib-plugin-pass' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/core' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/eslint-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/generator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-proposal-class-properties' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-proposal-export-namespace-from' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-proposal-numeric-separator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-proposal-object-rest-spread' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-syntax-bigint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-syntax-dynamic-import' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-syntax-import-attributes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-syntax-jsx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-transform-define' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-transform-modules-commonjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-transform-react-remove-prop-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/plugin-transform-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/preset-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/preset-react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/preset-typescript' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/traverse' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/babel/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/browserify-zlib' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/browserslist' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/buffer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/busboy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/bytes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/ci-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/cli-select' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/client-only/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/client-only' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/commander' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/comment-json' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/compression' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/conf' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/content-disposition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/content-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/cookie' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/cross-spawn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/crypto-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/css.escape/css.escape' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/cssnano-simple' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/data-uri-to-buffer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/debug' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/devalue/devalue.umd' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/domain-browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/edge-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/events/events' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/find-up' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/fresh' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/glob/glob' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/gzip-size' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/http-proxy-agent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/http-proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/https-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/https-proxy-agent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/icss-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/ignore-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/image-size' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/is-animated' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/is-docker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/is-wsl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/jest-worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/jest-worker/processChild' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/jest-worker/threadChild' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/json5' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/jsonwebtoken' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/loader-runner/LoaderRunner' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/loader-utils2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/loader-utils3' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/lodash.curry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/lru-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/mini-css-extract-plugin/cjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/mini-css-extract-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/mini-css-extract-plugin/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/native-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/neo-async/async' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-devtools' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-experimental.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-turbo.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page-turbo.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-page.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-experimental.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-turbo.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route-turbo.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/app-route.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo-experimental.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-api-turbo.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-api-turbo.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-api.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-api.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-turbo.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages-turbo.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages.runtime.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/pages.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/next-server/server.runtime.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/node-html-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/ora' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/os-browserify/browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/p-limit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/p-queue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/path-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/path-to-regexp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/picomatch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-flexbugs-fixes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-modules-extract-imports' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-modules-local-by-default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-modules-scope' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-modules-values' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-plugin-stub-for-cssnano-simple' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-safe-parser/safe-parse' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-scss/scss-syntax' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/postcss-value-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/process/browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/punycode/punycode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/querystring-es3' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/raw-body' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.bun.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-test-utils.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/client.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/profiling.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/react-dom.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/server.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/static.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom-experimental/unstable_testing.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-client.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-client.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-profiling.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-profiling.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.bun.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-test-utils.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/client.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/profiling.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/react-dom.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/server.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-dom/static.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/cjs/react.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/jsx-dev-runtime.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/jsx-runtime.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-experimental/react.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-is/cjs/react-is.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-is/cjs/react-is.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-is' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/babel' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-babel.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-babel.production.min' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.production.min' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-refresh/runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-node-register' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/node-register' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-node-register' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/client.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/client.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/client.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/client.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/node-register' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/server.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/server.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/server.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/static.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/static.edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/static.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react-server-dom-webpack/static.node.unbundled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.profiling' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react.react-server.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/cjs/react.react-server.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/jsx-dev-runtime.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/jsx-runtime.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/react/react.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/regenerator-runtime/path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/regenerator-runtime/runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/safe-stable-stringify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/sass-loader/cjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/index.native' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/unstable_mock' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler-experimental/unstable_post_task' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.native.development' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.native.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.production' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/index.native' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/unstable_mock' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/scheduler/unstable_post_task' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/schema-utils2' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/schema-utils3' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/semver' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/send' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/server-only/empty' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/server-only' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/setimmediate/setImmediate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/shell-quote' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/source-map/source-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/source-map08/source-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/stacktrace-parser/stack-trace-parser.cjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/stream-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/stream-http' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/string_decoder/string_decoder' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/string-hash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/strip-ansi' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/tar' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/terser/bundle.min' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/text-table' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/timers-browserify/main' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/tty-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/ua-parser-js/ua-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/unistore/unistore' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/util/util' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/vm-browserify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/watchpack/watchpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/web-vitals-attribution/web-vitals.attribution' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/web-vitals/web-vitals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack-sources1' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack-sources3' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/BasicEvaluatedExpression' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/bundle5' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/ExternalsPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/FetchCompileAsyncWasmPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/FetchCompileWasmPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/FetchCompileWasmTemplatePlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/GraphHelpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/HotModuleReplacement.runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/JavascriptHotModuleReplacement.runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/lazy-compilation-node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/lazy-compilation-web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/LibraryTemplatePlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/LimitChunkCountPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/ModuleFilenameHelpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/NodeEnvironmentPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/NodeTargetPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/NodeTemplatePlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/NormalModule' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/package' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/SingleEntryPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/SourceMapDevToolModuleOptionsPlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/sources' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/webpack-lib' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/webpack/WebWorkerTemplatePlugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/ws' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/zod-validation-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/compiled/zod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/diagnostics/build-diagnostics' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/diagnostics/build-diagnostics.test' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/app-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/document' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/navigation.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/og' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/script' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/api/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/adapter/build-complete' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/after-production-compile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/analysis/extract-const-value' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/analysis/get-page-static-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/analysis/parse-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/loader/get-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/loader/transform' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/loader/util' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/amp-attributes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/commonjs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/jsx-pragma' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/next-font-unsupported' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/next-page-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/next-page-disallow-re-export-all-exports' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/next-ssg-transform' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/optimize-hook-destructuring' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/plugins/react-loadable-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/babel/preset' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/build-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/collect-build-traces' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/compiler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/create-compiler-aliases' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/define-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/deployment-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/duration-to-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/entries' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/generate-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/get-babel-config-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/get-babel-loader-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/handle-entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/handle-externals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/is-writeable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/load-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/load-jsconfig' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/manifests/formatter/format-manifest' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/next-config-ts/require-hook' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/next-config-ts/transpile-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/next-dir-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/normalize-catchall-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/output/format' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/output' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/output/log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/output/store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/page-extensions-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/fetch/whatwg-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object-assign' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object.assign/auto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object.assign/implementation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object.assign' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object.assign/polyfill' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/object.assign/shim' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/polyfills/process' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/preview-key-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/progress' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/rendering-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/segment-config/app/app-segment-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/segment-config/app/app-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/segment-config/app/collect-root-param-keys' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/segment-config/middleware/middleware-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/segment-config/pages/pages-segment-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/spinner' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/static-paths/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/static-paths/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/static-paths/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/static-paths/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/swc/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/swc/jest-transformer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/swc/options' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/swc/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/app-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/edge-app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/edge-ssr-app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/edge-ssr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/pages-api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/pages-edge-api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/templates/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turbopack-build/impl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turbopack-build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace/env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace/result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace/tcp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/turborepo-access-trace/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/type-check' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack-build/impl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack-build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack-config-rules/resolve' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/alias/react-dom-server-experimental' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/alias/react-dom-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/cache-invalidation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/base' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/file-resolve' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/global' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/modules' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/next-font' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/css/plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/images' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/blocks/images/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/config/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/camelcase' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/CssSyntaxError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/getUrl' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/devtool/devtool-style-inject' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/empty-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/error-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/get-module-build-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/codegen' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/interface' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/minify' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/metadata/discover' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/metadata/resolve-route-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/metadata/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/modularize-import-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-app-loader/create-app-route-code' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-app-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-barrel-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-client-pages-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-app-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-function-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader/render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-error-browser-binary-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-action-entry-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-client-entry-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-client-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-css-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/action-client-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/action-validate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/cache-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/module-proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/server-reference' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/track-dynamic-import' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-server-reference-proxy-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-font-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-font-loader/postcss-next-font' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-image-loader/blur' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-invalid-import-error-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-metadata-image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-metadata-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-asset-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-wasm-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/isEqualLocals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/next-swc-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/Error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/Warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/file-protocol' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/join-function' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/postcss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/value-processor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/loaders/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/app-build-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/build-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/copy-file-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/css-chunking-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/css-minimizer-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/devtools-ignore-list-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/eval-source-map-dev-tool-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/flight-client-entry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/flight-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/jsconfig-paths-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/memory-with-gc-cache-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/middleware-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/mini-css-extract-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/minify-webpack-plugin/src' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/next-drop-client-page-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/next-font-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/next-trace-entrypoints-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/next-types-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/next-types-plugin/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/nextjs-require-cache-hot-reloader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/optional-peer-dependency-resolve-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/pages-manifest-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/profiling-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/react-loadable-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/rspack-flight-client-entry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/rspack-profiling-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/slow-module-detection-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/subresource-integrity-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/telemetry-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseBabel' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseCss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseScss' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/stringify-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/webpack/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/build/write-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/add-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/add-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-bootstrap' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-build-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-call-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-dir/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-dir/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-find-source-map-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-globals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-index' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-link-gc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-next-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-next-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/app-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/assign-location' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/compat/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/app-router-announcer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/app-router-headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/app-router-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/app-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/bailout-to-client-rendering' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/bfcache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/forbidden' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/global-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/global-not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/builtin/unauthorized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/client-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/client-segment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/dev-root-http-access-fallback-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/errors/graceful-degrade-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/forbidden' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/handle-isr-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/hooks-server-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/http-access-fallback/error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/http-access-fallback/error-fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/http-access-fallback/http-access-fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/is-next-router-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/layout-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/links' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/match-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/metadata/async-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/metadata/metadata-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/metadata/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/nav-failure-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/navigation-untracked' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/navigation.react-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/noop-head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/not-found' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/promise-queue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/redirect-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/redirect-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/redirect-status-code' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/redirect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/render-from-template-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/aliased-prefetch-navigations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/apply-flight-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/apply-router-state-patch-to-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/clear-cache-node-data-for-segment-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/compute-changed-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/create-href-from-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/create-initial-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/create-router-cache-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/fetch-server-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/fill-cache-with-new-subtree-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/fill-lazy-items-till-leaf-with-head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/handle-mutable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/handle-segment-mismatch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/invalidate-cache-below-flight-segmentpath' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/invalidate-cache-by-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/is-navigating-to-new-root-layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/ppr-navigations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/prefetch-cache-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/find-head-in-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/get-segment-value' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/has-interception-route-in-current-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/hmr-refresh-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/navigate-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/prefetch-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/refresh-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/restore-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/server-action-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/reducers/server-patch-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/refetch-inactive-parallel-segments' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/router-reducer-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/router-reducer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/set-cache-busting-search-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/router-reducer/should-hard-navigate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/cache-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/lru' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/prefetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/scheduler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache-impl/tuple-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/segment-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/static-generation-bailout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/styles/access-error-styles' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/unauthorized' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/unresolved-thenable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/unstable-rethrow.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/unstable-rethrow' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/unstable-rethrow.server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/components/use-action-queue' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/detect-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/amp-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/error-overlay/websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/fouc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-middleware-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/app/hot-reloader-app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/app/use-websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/get-socket-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/pages/hot-reloader-pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/pages/websocket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/hot-reloader/turbopack-hot-reloader-common' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/noop-turbopack-hmr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/on-demand-entries-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/report-hmr-latency' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/dev/runtime-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/flight-data-helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/form-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/get-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/has-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/head-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/image-component' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/legacy/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/lib/console' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/next-dev-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/next-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/next-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/normalize-locale-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/normalize-trailing-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/page-bootstrap' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/page-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/portal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/react-client-callbacks/error-boundary-callbacks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/react-client-callbacks/on-recoverable-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/react-client-callbacks/report-global-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/remove-base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/remove-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request-idle-callback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/params.browser.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/params.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/params.browser.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/search-params.browser.dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/search-params.browser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/request/search-params.browser.prod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/resolve-href' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/route-announcer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/route-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/script' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/set-attributes-from-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/tracing/report-to-socket' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/tracing/tracer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/trusted-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/use-client-disallowed' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/use-intersection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/use-merged-ref' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/web-vitals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/client/with-router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/helpers/create-incremental-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/helpers/get-amp-html-validator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/helpers/get-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/helpers/is-dynamic-usage-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/routes/app-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/routes/app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/routes/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/routes/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/export/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/batcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/build-custom-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/client-and-server-references' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/coalesced-function' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/compile-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/create-client-router-filter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/detached-promise' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/detect-typo' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/download-swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/error-telemetry-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/customFormatter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/getESLintPromptValues' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/hasEslintConfiguration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/runLintCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/writeDefaultConfig' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/eslint/writeOutputFile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/fatal-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/file-exists' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/find-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/find-pages-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/find-root' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/format-cli-help-output' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/format-dynamic-import-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/format-server-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/fs/rename' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/fs/write-atomic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/generate-interception-routes-rewrites' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/get-files-in-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/get-network-host' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/get-package-version' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/get-project-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/has-necessary-dependencies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-cache-directory' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-npx-command' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-online' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-pkg-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-registry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/get-reserved-port' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/helpers/install' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/import-next-warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/inline-static-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/install-dependencies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/interop-default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-api-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-app-page-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-app-route-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-edge-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-internal-component' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/is-serializable-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/load-custom-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/memory/gc-observer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/memory/shutdown' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/memory/startup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/memory/trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/clone-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/default-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/alternate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/basic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/icon-mark' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/opengraph' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/generate/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/get-metadata-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/is-metadata-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/metadata-constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/metadata-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolve-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-basics' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-opengraph' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-title' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/alternative-urls-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/extra-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/manifest-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/metadata-interface' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/metadata-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/opengraph-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/resolvers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/metadata/types/twitter-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/mime-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/mkcert' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/multi-file-writer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/needs-experimental-react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/non-nullable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/oxford-comma-list' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/page-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/patch-incorrect-lockfile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/pick' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/picocolors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/pretty-bytes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/realpath' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/recursive-copy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/recursive-delete' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/recursive-readdir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/redirect-status' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/require-instrumentation-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/resolve-from' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/scheduler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/semver-noop' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/setup-exception-listeners' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/static-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/try-to-parse-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/turbopack-warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/diagnosticFormatter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/getTypeScriptConfiguration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/getTypeScriptIntent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/missingDependencyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/runTypeCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/writeAppTypeDeclarations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/typescript/writeConfigurationDefaults' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/verify-partytown-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/verify-root-layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/verify-typescript-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/verifyAndLint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/wait' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/with-promise-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/lib/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/dev-indicator-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/font/get-dev-overlay-font-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/get-next-error-feedback-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/launch-editor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/middleware-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/restart-dev-server-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/server/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/console-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/forward-logs-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/react-18-hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/react-19-hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/stack-frame' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/version-staleness' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/shared/webpack-module-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/client-entry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/intercept-console-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/replay-ssr-only-errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/stitched-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/use-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/use-forward-console-log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/forward-logs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/segment-explorer-node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/app/terminal-logging-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/pages/hydration-error-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/next-devtools/userspace/use-app-dev-rendering-indicator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/pages/_app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/pages/_document' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/pages/_error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/accept-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after/after-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after/after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after/awaiter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after/builtin-request-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/after/run-with-after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils/get-cookie-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils/node/api-resolver' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils/node/parse-body' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils/node/try-get-preview-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/api-utils/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/action-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/action-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/action-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/action-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/after-task-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/after-task-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/app-render-prerender-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/app-render-render-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/app-render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/async-local-storage' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/cache-signal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/collect-segment-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/create-component-styles-and-scripts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/create-component-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/create-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/create-flight-router-state-from-loader-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/csrf-protection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/dynamic-access-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/dynamic-access-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/dynamic-rendering' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/encryption-utils-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/encryption-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/encryption' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/entry-base' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/flight-render-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-asset-query-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-css-inlined-link-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-layer-assets' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-preloadable-fonts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-script-nonce-from-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-segment-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/get-short-dynamic-param-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/has-loading-component-in-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/interop-default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/make-get-server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/metadata-insertion/create-server-inserted-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/module-loading/track-dynamic-import' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/module-loading/track-module-loading.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/module-loading/track-module-loading.instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/parse-and-validate-flight-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/parse-loader-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/postponed-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/prospective-render-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/react-large-shell-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/react-server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/render-css-resource' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/render-to-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/required-scripts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/rsc/postpone' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/rsc/preloads' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/rsc/taint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/segment-explorer-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/strip-flight-headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/use-flight-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/walk-tree-with-flight-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/work-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/work-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/work-unit-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/app-render/work-unit-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/async-storage/draft-mode-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/async-storage/request-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/async-storage/with-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/async-storage/work-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/base-http/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/base-http' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/base-http/node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/base-http/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/base-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/body-streams' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/cache-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/ci-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/client-component-renderer-logger' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/config-schema' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/config-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/config-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/create-deduped-by-callsite-server-error-logger' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/crypto-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/browser-logs/receive-logs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/browser-logs/source-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/dev-indicator-server-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/get-source-map-from-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/hot-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/hot-reloader-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/hot-reloader-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/hot-reloader-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/log-requests' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/middleware-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/middleware-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/next-dev-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/node-stack-frames' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/on-demand-entry-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/parse-version-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/require-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/static-paths-worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dev/turbopack-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/dynamic-rendering-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/font-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/get-app-route-from-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/get-page-files' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/get-route-from-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/htmlescape' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/image-optimizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/instrumentation/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/instrumentation/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/internal-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/app-dir-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/app-info-log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/async-callback-set' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/cache-control' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/cache-handlers/default.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/cache-handlers/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/chrome-devtools-workspace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/clone-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/cpu-profile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/decode-query-path-parameter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/dedupe-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/dev-bundler-service' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/etag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/experimental/create-env-definitions' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/experimental/ppr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/find-page-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/fix-mojibake' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/format-hostname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/i18n-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/implicit-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/incremental-cache/file-system-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/incremental-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/incremental-cache/memory-cache.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/incremental-cache/shared-cache-controls.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/incremental-cache/tags-manifest.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/is-ipv6' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/lazy-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/lru-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/match-next-data-pathname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/mock-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/module-loader/module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/module-loader/node-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/module-loader/route-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/node-fs-methods' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/parse-stack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/patch-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/patch-set-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/render-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/block-cross-site' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/build-data-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/build-prefetch-segment-data-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/decode-path-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/filesystem' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/instrumentation-globals.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/is-postpone' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/proxy-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/resolve-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/router-server-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/setup-dev-bundler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/router-utils/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/server-action-request-meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/server-ipc/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/source-maps' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/start-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/streaming-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/to-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/trace/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/trace/tracer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/trace/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/lib/worker-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/load-components' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/load-default-error-components' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/load-manifest.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/match-bundle' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/next-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/next-typescript' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-baseline' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/console-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/date' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/error-inspect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/node-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/random' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment-extensions/web-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-environment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/node-polyfill-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/absolute-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/app/app-bundle-path-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/app/app-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/app/app-page-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/app/app-pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-bundle-path-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-page-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/locale-route-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/normalizers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/prefixing-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/next-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/prefetch-rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/segment-prefix-rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/request/suffix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/underscore-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/normalizers/wrap-normalizer-fn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/og/image-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/optimize-amp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/patch-error-inspect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/pipe-readable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/post-process' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/ReactDOMServerPages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/render-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request-meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/connection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/draft-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/fallback-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/pathname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/root-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/search-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/request/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/require-hook' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/require' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/response-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/response-cache/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/response-cache/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/response-cache/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/resume-data-cache/cache-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/resume-data-cache/resume-data-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/revalidation-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/app-page-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/app-route-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/locale-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/pages-api-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/pages-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-definitions/route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-kind' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-managers/default-route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-managers/dev-route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-managers/route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/app-page-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/app-route-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-pages-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/file-cache-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/cached-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/manifest-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/pages-api-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/pages-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matcher-providers/route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/app-page-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/app-route-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/locale-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/pages-api-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/pages-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matchers/route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/app-page-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/app-route-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/locale-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/pages-api-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/pages-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-matches/route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/module.render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/amp-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/app-router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/head-manager-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/hooks-client-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/image-config-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-dom' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/auto-implement-methods' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/clean-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/get-pathname-from-absolute-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/is-static-gen-enabled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/parsed-url-query-to-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/app-route/shared-modules' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/checks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages-api/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages-api/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/builtin/_error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/module.render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/amp-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/app-router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/head-manager-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/hooks-client-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/html-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/image-config-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/route-modules/route-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/send-payload' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/send-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/serve-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/server-route-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/server-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/setup-http-agent-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/stream-utils/encoded-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/stream-utils/node-web-streams-helper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/stream-utils/uint8array-helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/constant' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/client-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/entry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/server-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/rules/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/typescript/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/cache-life' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/cache-tag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/handlers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/use-cache-errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/use-cache/use-cache-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/adapter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/edge-route-module-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/exports' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/get-edge-preview-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/globals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/http' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/internal-edge-wait-until' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/next-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/sandbox/context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/sandbox/fetch-inline-assets' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/sandbox' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/sandbox/resource-managers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/sandbox/sandbox' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/adapters/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/adapters/next-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/adapters/reflect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/adapters/request-cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/fetch-event' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/image-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/revalidate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/unstable-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/unstable-no-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/url-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/spec-extension/user-agent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/server/web/web-on-close' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/amp-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/amp-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/amp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/app-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/app-router-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/bloom-filter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/canary-only' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/deep-freeze' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/deep-readonly' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/dset' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/encode-uri-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/error-source' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/errors/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/escape-regexp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/fnv1a' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/format-webpack-messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/get-hostname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/get-img-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/get-rspack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/get-webpack-bundler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/hash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/head-manager-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/hooks-client-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/html-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/i18n/detect-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/i18n/get-locale-redirect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/i18n/normalize-locale-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/image-blur-svg' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/image-config-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/image-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/image-external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/invariant-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/is-internal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/is-plain-object' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/is-thenable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/isomorphic/path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/bailout-to-csr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/dynamic-bailout-to-csr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/loadable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/preload-chunks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/loadable-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/loadable.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/magic-identifier' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/match-local-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/match-remote-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/mitt' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/modern-browserslist-target' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/no-fallback-error.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/normalized-asset-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/absolute-path-to-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/denormalize-app-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/denormalize-page-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/ensure-leading-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/get-page-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/normalize-data-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/normalize-page-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/normalize-path-sep' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/page-path/remove-page-path-tail' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/adapters' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/add-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/add-path-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/add-path-suffix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/app-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/as-path-to-search-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/cache-busting-search-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/compare-states' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/disable-smooth-scroll' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/escape-path-delimiters' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/format-next-pathname-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/format-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/get-asset-path-from-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/get-next-pathname-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/get-route-from-asset-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/html-bots' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/interception-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/interpolate-as' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/is-bot' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/is-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/is-local-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/middleware-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/omit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/parse-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/parse-relative-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/parse-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/path-has-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/path-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/prepare-destination' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/querystring' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/relativize-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/remove-path-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/remove-trailing-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/resolve-rewrites' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/route-regex' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/router/utils/sorted-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/runtime-config.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/segment-cache/output-export-prefetch-encoding' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/segment-cache/segment-value-encoding' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/segment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/server-inserted-html.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/server-reference-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/side-effect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/styled-jsx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/turbopack/compilation-events' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/turbopack/entry-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/turbopack/manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/turbopack/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/utils/error-once' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/utils/reflect-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/utils/warn-once' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/esm/shared/lib/zod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testing/server/config-testing-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testing/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testing/server/middleware-testing-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testing/server/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/httpget' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/default-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/msw' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/next-fixture' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/next-options' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/next-worker-fixture' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/page-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/report' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/playwright/step' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/proxy/fetch-api' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/proxy/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/proxy/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/server-edge' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/experimental/testmode/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/helpers/create-incremental-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/helpers/get-amp-html-validator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/helpers/get-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/helpers/is-dynamic-usage-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/routes/app-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/routes/app-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/routes/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/routes/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/export/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/batcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/build-custom-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/client-and-server-references' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/coalesced-function' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/compile-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/create-client-router-filter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/detached-promise' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/detect-typo' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/download-swc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/error-telemetry-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/customFormatter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/getESLintPromptValues' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/hasEslintConfiguration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/runLintCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/writeDefaultConfig' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/eslint/writeOutputFile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/fallback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/fatal-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/file-exists' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/find-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/find-pages-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/find-root' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/format-cli-help-output' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/format-dynamic-import-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/format-server-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/fs/rename' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/fs/write-atomic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/generate-interception-routes-rewrites' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/get-files-in-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/get-network-host' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/get-package-version' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/get-project-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/has-necessary-dependencies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-cache-directory' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-npx-command' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-online' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-pkg-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-registry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/get-reserved-port' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/helpers/install' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/import-next-warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/inline-static-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/install-dependencies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/interop-default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-api-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-app-page-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-app-route-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-edge-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-internal-component' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/is-serializable-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/load-custom-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/memory/gc-observer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/memory/shutdown' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/memory/startup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/memory/trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/clone-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/default-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/alternate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/basic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/icon-mark' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/opengraph' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/generate/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/get-metadata-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/is-metadata-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/metadata-constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/metadata-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolve-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolvers/resolve-basics' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolvers/resolve-icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolvers/resolve-opengraph' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolvers/resolve-title' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/resolvers/resolve-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/alternative-urls-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/extra-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/icons' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/manifest-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/metadata-interface' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/metadata-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/opengraph-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/resolvers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/metadata/types/twitter-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/mime-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/mkcert' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/multi-file-writer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/needs-experimental-react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/non-nullable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/oxford-comma-list' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/page-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/patch-incorrect-lockfile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/pick' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/picocolors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/pretty-bytes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/realpath' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/recursive-copy' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/recursive-delete' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/recursive-readdir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/redirect-status' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/require-instrumentation-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/resolve-from' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/scheduler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/semver-noop' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/setup-exception-listeners' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/static-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/try-to-parse-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/turbopack-warning' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/diagnosticFormatter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/getTypeScriptConfiguration' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/getTypeScriptIntent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/missingDependencyError' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/runTypeCheck' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/writeAppTypeDeclarations' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/typescript/writeConfigurationDefaults' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/verify-partytown-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/verify-root-layout' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/verify-typescript-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/verifyAndLint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/wait' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/with-promise-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/lib/worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/dev-overlay.shim' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/dev-indicator-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/font/get-dev-overlay-font-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/get-next-error-feedback-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/launch-editor' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/middleware-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/restart-dev-server-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/server/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/console-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/forward-logs-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/react-18-hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/react-19-hydration-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/stack-frame' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/version-staleness' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/shared/webpack-module-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/app-dev-overlay-error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/app-dev-overlay-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/client-entry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors/intercept-console-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors/replay-ssr-only-errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors/stitched-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors/use-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/errors/use-forward-console-log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/forward-logs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/segment-explorer-node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/app/terminal-logging-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/pages/hydration-error-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/pages/pages-dev-overlay-error-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/next-devtools/userspace/use-app-dev-rendering-indicator' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/pages/_app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/pages/_document' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/pages/_error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/accept-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after/after-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after/after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after/awaiter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after/builtin-request-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/after/run-with-after' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils/get-cookie-parser' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils/node/api-resolver' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils/node/parse-body' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils/node/try-get-preview-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/api-utils/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/action-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/action-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/action-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/action-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/after-task-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/after-task-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/app-render-prerender-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/app-render-render-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/app-render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/async-local-storage' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/cache-signal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/collect-segment-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/create-component-styles-and-scripts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/create-component-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/create-error-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/create-flight-router-state-from-loader-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/csrf-protection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/dynamic-access-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/dynamic-access-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/dynamic-rendering' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/encryption-utils-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/encryption-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/encryption' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/entry-base' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/flight-render-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-asset-query-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-css-inlined-link-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-layer-assets' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-preloadable-fonts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-script-nonce-from-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-segment-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/get-short-dynamic-param-type' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/has-loading-component-in-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/interop-default' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/make-get-server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/metadata-insertion/create-server-inserted-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/module-loading/track-dynamic-import' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/module-loading/track-module-loading.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/module-loading/track-module-loading.instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/parse-and-validate-flight-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/parse-loader-tree' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/postponed-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/prospective-render-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/react-large-shell-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/react-server.node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/render-css-resource' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/render-to-string' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/required-scripts' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/rsc/postpone' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/rsc/preloads' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/rsc/taint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/segment-explorer-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/strip-flight-headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/use-flight-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/walk-tree-with-flight-router-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/work-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/work-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/work-unit-async-storage-instance' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/app-render/work-unit-async-storage.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/async-storage/draft-mode-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/async-storage/request-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/async-storage/with-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/async-storage/work-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/base-http/helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/base-http' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/base-http/node' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/base-http/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/base-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/body-streams' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/cache-dir' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/ci-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/client-component-renderer-logger' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/config-schema' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/config-shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/config-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/create-deduped-by-callsite-server-error-logger' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/crypto-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/browser-logs/receive-logs' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/browser-logs/source-map' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/dev-indicator-server-state' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/get-source-map-from-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/hot-middleware' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/hot-reloader-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/hot-reloader-types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/hot-reloader-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/log-requests' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/middleware-turbopack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/middleware-webpack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/next-dev-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/node-stack-frames' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/on-demand-entry-handler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/parse-version-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/require-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/static-paths-worker' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dev/turbopack-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/dynamic-rendering-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/font-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/get-app-route-from-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/get-page-files' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/get-route-from-entrypoint' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/htmlescape' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/image-optimizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/instrumentation/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/instrumentation/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/internal-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/app-dir-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/app-info-log' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/async-callback-set' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/cache-control' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/cache-handlers/default.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/cache-handlers/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/chrome-devtools-workspace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/clone-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/cpu-profile' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/decode-query-path-parameter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/dedupe-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/dev-bundler-service' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/etag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/experimental/create-env-definitions' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/experimental/ppr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/find-page-file' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/fix-mojibake' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/format-hostname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/i18n-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/implicit-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/incremental-cache/file-system-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/incremental-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/incremental-cache/memory-cache.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/incremental-cache/shared-cache-controls.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/incremental-cache/tags-manifest.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/is-ipv6' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/lazy-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/lru-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/match-next-data-pathname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/mock-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/module-loader/module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/module-loader/node-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/module-loader/route-module-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/node-fs-methods' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/parse-stack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/patch-fetch' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/patch-set-header' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/render-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/block-cross-site' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/build-data-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/build-prefetch-segment-data-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/decode-path-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/filesystem' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/instrumentation-globals.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/is-postpone' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/proxy-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/resolve-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/router-server-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/setup-dev-bundler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/router-utils/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/server-action-request-meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/server-ipc/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/source-maps' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/start-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/streaming-metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/to-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/trace/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/trace/tracer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/trace/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/lib/worker-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/load-components' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/load-default-error-components' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/load-manifest.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/match-bundle' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/next-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/next-typescript' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/next' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-baseline' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/console-dev' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/date' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/error-inspect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/node-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/random' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment-extensions/web-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-environment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/node-polyfill-crypto' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/absolute-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/app/app-bundle-path-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/app/app-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/app/app-page-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/app/app-pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/app' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/pages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/pages/pages-bundle-path-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/pages/pages-filename-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/pages/pages-page-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/built/pages/pages-pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/locale-route-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/normalizers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/prefixing-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/base-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/next-data' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/pathname-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/prefetch-rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/segment-prefix-rsc' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/request/suffix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/underscore-normalizer' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/normalizers/wrap-normalizer-fn' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/og/image-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/optimize-amp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/patch-error-inspect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/pipe-readable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/post-process' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/ReactDOMServerPages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/render-result' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request-meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/connection' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/draft-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/fallback-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/pathname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/root-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/search-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/request/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/require-hook' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/require' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/response-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/response-cache/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/response-cache/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/response-cache/web' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/resume-data-cache/cache-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/resume-data-cache/resume-data-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/revalidation-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/app-page-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/app-route-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/locale-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/pages-api-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/pages-route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-definitions/route-definition' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-kind' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-managers/default-route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-managers/dev-route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-managers/route-matcher-manager' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/app-page-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/app-route-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/dev-pages-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/file-cache-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/file-reader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/helpers/cached-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/manifest-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/pages-api-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/pages-route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matcher-providers/route-matcher-provider' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/app-page-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/app-route-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/locale-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/pages-api-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/pages-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matchers/route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/app-page-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/app-route-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/locale-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/pages-api-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/pages-route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-matches/route-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/module.render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/amp-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/app-router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/head-manager-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/hooks-client-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/image-config-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-dom' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-compiler-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-dom-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-dom' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/helpers/auto-implement-methods' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/helpers/clean-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/helpers/get-pathname-from-absolute-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/helpers/is-static-gen-enabled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/helpers/parsed-url-query-to-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/app-route/shared-modules' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/checks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages-api/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages-api/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/builtin/_error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/module.compiled' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/module.render' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/amp-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/app-router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/entrypoints' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/head-manager-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/hooks-client-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/html-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/image-config-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/loadable-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/loadable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/router-context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/server-inserted-html' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/route-modules/route-module' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/send-payload' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/send-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/serve-static' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/server-route-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/server-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/setup-http-agent-env' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/stream-utils/encoded-tags' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/stream-utils/node-web-streams-helper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/stream-utils/uint8array-helpers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/constant' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/client-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/entry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/metadata' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/server-boundary' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/rules/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/typescript/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/cache-life' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/cache-tag' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/handlers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/use-cache-errors' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/use-cache/use-cache-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web-server' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/adapter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/edge-route-module-wrapper' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/exports' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/get-edge-preview-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/globals' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/http' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/internal-edge-wait-until' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/next-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/sandbox/context' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/sandbox/fetch-inline-assets' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/sandbox' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/sandbox/resource-managers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/sandbox/sandbox' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/adapters/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/adapters/next-request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/adapters/reflect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/adapters/request-cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/cookies' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/fetch-event' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/image-response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/request' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/response' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/revalidate' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/unstable-cache' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/unstable-no-store' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/url-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/spec-extension/user-agent' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/server/web/web-on-close' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/amp-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/amp-mode' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/amp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/app-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/app-router-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/bloom-filter' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/canary-only' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/deep-freeze' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/deep-readonly' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/dset' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/encode-uri-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/error-source' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/errors/constants' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/escape-regexp' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/fnv1a' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/format-webpack-messages' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/get-hostname' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/get-img-props' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/get-rspack' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/get-webpack-bundler' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/hash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/head-manager-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/head' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/hooks-client-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/html-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/i18n/detect-domain-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/i18n/get-locale-redirect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/i18n/normalize-locale-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/image-blur-svg' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/image-config-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/image-config' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/image-external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/image-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/invariant-error' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/is-internal' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/is-plain-object' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/is-thenable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/isomorphic/path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/lazy-dynamic/bailout-to-csr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/lazy-dynamic/dynamic-bailout-to-csr' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/lazy-dynamic/loadable' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/lazy-dynamic/preload-chunks' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/lazy-dynamic/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/loadable-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/loadable.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/magic-identifier' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/match-local-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/match-remote-pattern' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/mitt' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/modern-browserslist-target' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/no-fallback-error.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/normalized-asset-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/absolute-path-to-page' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/denormalize-app-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/denormalize-page-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/ensure-leading-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/get-page-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/normalize-data-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/normalize-page-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/normalize-path-sep' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/page-path/remove-page-path-tail' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router-context.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/adapters' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/add-locale' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/add-path-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/add-path-suffix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/app-paths' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/as-path-to-search-params' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/cache-busting-search-param' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/compare-states' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/disable-smooth-scroll' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/escape-path-delimiters' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/format-next-pathname-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/format-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/get-asset-path-from-route' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/get-next-pathname-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/get-route-from-asset-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/html-bots' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/interception-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/interpolate-as' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/is-bot' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/is-dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/is-local-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/middleware-route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/omit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/parse-path' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/parse-relative-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/parse-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/path-has-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/path-match' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/prepare-destination' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/querystring' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/relativize-url' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/remove-path-prefix' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/remove-trailing-slash' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/resolve-rewrites' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/route-matcher' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/route-regex' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/router/utils/sorted-routes' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/runtime-config.external' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/segment-cache/output-export-prefetch-encoding' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/segment-cache/segment-value-encoding' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/segment' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/server-inserted-html.shared-runtime' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/server-reference-info' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/side-effect' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/styled-jsx' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/turbopack/compilation-events' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/turbopack/entry-key' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/turbopack/manifest-loader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/turbopack/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/utils/error-once' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/utils/reflect-utils' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/utils/warn-once' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/shared/lib/zod' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/anonymous-meta' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/detached-flush' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/build' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/error-feedback' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/session-stopped' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/swc-load-failure' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/swc-plugins' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/events/version' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/flush-and-exit' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/post-telemetry-payload' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/post-telemetry-payload.test' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/project-id' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/telemetry/storage' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/report' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/report/index.test' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/report/to-json' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/report/to-telemetry' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/report/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/shared' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/trace-uploader' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/trace.test' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/dist/trace/upload-trace' {
+  declare module.exports: any;
+}
+
+declare module 'next/document' {
+  declare module.exports: any;
+}
+
+declare module 'next/dynamic' {
+  declare module.exports: any;
+}
+
+declare module 'next/error' {
+  declare module.exports: any;
+}
+
+declare module 'next/experimental/testing/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/experimental/testmode/playwright' {
+  declare module.exports: any;
+}
+
+declare module 'next/experimental/testmode/playwright/msw' {
+  declare module.exports: any;
+}
+
+declare module 'next/experimental/testmode/proxy' {
+  declare module.exports: any;
+}
+
+declare module 'next/font/google' {
+  declare module.exports: any;
+}
+
+declare module 'next/font/local' {
+  declare module.exports: any;
+}
+
+declare module 'next/form' {
+  declare module.exports: any;
+}
+
+declare module 'next/head' {
+  declare module.exports: any;
+}
+
+declare module 'next/headers' {
+  declare module.exports: any;
+}
+
+declare module 'next/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/jest' {
+  declare module.exports: any;
+}
+
+declare module 'next/legacy/image' {
+  declare module.exports: any;
+}
+
+declare module 'next/link' {
+  declare module.exports: any;
+}
+
+declare module 'next/navigation' {
+  declare module.exports: any;
+}
+
+declare module 'next/og' {
+  declare module.exports: any;
+}
+
+declare module 'next/router' {
+  declare module.exports: any;
+}
+
+declare module 'next/script' {
+  declare module.exports: any;
+}
+
+declare module 'next/server' {
+  declare module.exports: any;
+}
+
+declare module 'next/types' {
+  declare module.exports: any;
+}
+
+declare module 'next/web-vitals' {
+  declare module.exports: any;
+}
+
+// Filename aliases
+declare module 'next/amp.js' {
+  declare module.exports: $Exports<'next/amp'>;
+}
+declare module 'next/app.js' {
+  declare module.exports: $Exports<'next/app'>;
+}
+declare module 'next/babel.js' {
+  declare module.exports: $Exports<'next/babel'>;
+}
+declare module 'next/cache.js' {
+  declare module.exports: $Exports<'next/cache'>;
+}
+declare module 'next/client.js' {
+  declare module.exports: $Exports<'next/client'>;
+}
+declare module 'next/compat/router.js' {
+  declare module.exports: $Exports<'next/compat/router'>;
+}
+declare module 'next/config.js' {
+  declare module.exports: $Exports<'next/config'>;
+}
+declare module 'next/constants.js' {
+  declare module.exports: $Exports<'next/constants'>;
+}
+declare module 'next/dist/api/app-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/api/app-dynamic'>;
+}
+declare module 'next/dist/api/app.js' {
+  declare module.exports: $Exports<'next/dist/api/app'>;
+}
+declare module 'next/dist/api/constants.js' {
+  declare module.exports: $Exports<'next/dist/api/constants'>;
+}
+declare module 'next/dist/api/document.js' {
+  declare module.exports: $Exports<'next/dist/api/document'>;
+}
+declare module 'next/dist/api/dynamic.js' {
+  declare module.exports: $Exports<'next/dist/api/dynamic'>;
+}
+declare module 'next/dist/api/form.js' {
+  declare module.exports: $Exports<'next/dist/api/form'>;
+}
+declare module 'next/dist/api/head.js' {
+  declare module.exports: $Exports<'next/dist/api/head'>;
+}
+declare module 'next/dist/api/headers.js' {
+  declare module.exports: $Exports<'next/dist/api/headers'>;
+}
+declare module 'next/dist/api/image.js' {
+  declare module.exports: $Exports<'next/dist/api/image'>;
+}
+declare module 'next/dist/api/link.js' {
+  declare module.exports: $Exports<'next/dist/api/link'>;
+}
+declare module 'next/dist/api/navigation.js' {
+  declare module.exports: $Exports<'next/dist/api/navigation'>;
+}
+declare module 'next/dist/api/navigation.react-server.js' {
+  declare module.exports: $Exports<'next/dist/api/navigation.react-server'>;
+}
+declare module 'next/dist/api/og.js' {
+  declare module.exports: $Exports<'next/dist/api/og'>;
+}
+declare module 'next/dist/api/router.js' {
+  declare module.exports: $Exports<'next/dist/api/router'>;
+}
+declare module 'next/dist/api/script.js' {
+  declare module.exports: $Exports<'next/dist/api/script'>;
+}
+declare module 'next/dist/api/server.js' {
+  declare module.exports: $Exports<'next/dist/api/server'>;
+}
+declare module 'next/dist/build/adapter/build-complete.js' {
+  declare module.exports: $Exports<'next/dist/build/adapter/build-complete'>;
+}
+declare module 'next/dist/build/after-production-compile.js' {
+  declare module.exports: $Exports<'next/dist/build/after-production-compile'>;
+}
+declare module 'next/dist/build/analysis/extract-const-value.js' {
+  declare module.exports: $Exports<'next/dist/build/analysis/extract-const-value'>;
+}
+declare module 'next/dist/build/analysis/get-page-static-info.js' {
+  declare module.exports: $Exports<'next/dist/build/analysis/get-page-static-info'>;
+}
+declare module 'next/dist/build/analysis/parse-module.js' {
+  declare module.exports: $Exports<'next/dist/build/analysis/parse-module'>;
+}
+declare module 'next/dist/build/babel/loader/get-config.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/loader/get-config'>;
+}
+declare module 'next/dist/build/babel/loader/index' {
+  declare module.exports: $Exports<'next/dist/build/babel/loader'>;
+}
+declare module 'next/dist/build/babel/loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/loader'>;
+}
+declare module 'next/dist/build/babel/loader/transform.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/loader/transform'>;
+}
+declare module 'next/dist/build/babel/loader/util.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/loader/util'>;
+}
+declare module 'next/dist/build/babel/plugins/amp-attributes.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/amp-attributes'>;
+}
+declare module 'next/dist/build/babel/plugins/commonjs.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/commonjs'>;
+}
+declare module 'next/dist/build/babel/plugins/jsx-pragma.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/jsx-pragma'>;
+}
+declare module 'next/dist/build/babel/plugins/next-font-unsupported.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/next-font-unsupported'>;
+}
+declare module 'next/dist/build/babel/plugins/next-page-config.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/next-page-config'>;
+}
+declare module 'next/dist/build/babel/plugins/next-page-disallow-re-export-all-exports.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/next-page-disallow-re-export-all-exports'>;
+}
+declare module 'next/dist/build/babel/plugins/next-ssg-transform.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/next-ssg-transform'>;
+}
+declare module 'next/dist/build/babel/plugins/optimize-hook-destructuring.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/optimize-hook-destructuring'>;
+}
+declare module 'next/dist/build/babel/plugins/react-loadable-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/plugins/react-loadable-plugin'>;
+}
+declare module 'next/dist/build/babel/preset.js' {
+  declare module.exports: $Exports<'next/dist/build/babel/preset'>;
+}
+declare module 'next/dist/build/build-context.js' {
+  declare module.exports: $Exports<'next/dist/build/build-context'>;
+}
+declare module 'next/dist/build/collect-build-traces.js' {
+  declare module.exports: $Exports<'next/dist/build/collect-build-traces'>;
+}
+declare module 'next/dist/build/compiler.js' {
+  declare module.exports: $Exports<'next/dist/build/compiler'>;
+}
+declare module 'next/dist/build/create-compiler-aliases.js' {
+  declare module.exports: $Exports<'next/dist/build/create-compiler-aliases'>;
+}
+declare module 'next/dist/build/define-env.js' {
+  declare module.exports: $Exports<'next/dist/build/define-env'>;
+}
+declare module 'next/dist/build/deployment-id.js' {
+  declare module.exports: $Exports<'next/dist/build/deployment-id'>;
+}
+declare module 'next/dist/build/duration-to-string.js' {
+  declare module.exports: $Exports<'next/dist/build/duration-to-string'>;
+}
+declare module 'next/dist/build/entries.js' {
+  declare module.exports: $Exports<'next/dist/build/entries'>;
+}
+declare module 'next/dist/build/generate-build-id.js' {
+  declare module.exports: $Exports<'next/dist/build/generate-build-id'>;
+}
+declare module 'next/dist/build/get-babel-config-file.js' {
+  declare module.exports: $Exports<'next/dist/build/get-babel-config-file'>;
+}
+declare module 'next/dist/build/get-babel-loader-config.js' {
+  declare module.exports: $Exports<'next/dist/build/get-babel-loader-config'>;
+}
+declare module 'next/dist/build/handle-entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/build/handle-entrypoints'>;
+}
+declare module 'next/dist/build/handle-externals.js' {
+  declare module.exports: $Exports<'next/dist/build/handle-externals'>;
+}
+declare module 'next/dist/build/index' {
+  declare module.exports: $Exports<'next/dist/build'>;
+}
+declare module 'next/dist/build/index.js' {
+  declare module.exports: $Exports<'next/dist/build'>;
+}
+declare module 'next/dist/build/is-writeable.js' {
+  declare module.exports: $Exports<'next/dist/build/is-writeable'>;
+}
+declare module 'next/dist/build/jest/__mocks__/empty.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/__mocks__/empty'>;
+}
+declare module 'next/dist/build/jest/__mocks__/fileMock.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/__mocks__/fileMock'>;
+}
+declare module 'next/dist/build/jest/__mocks__/nextFontMock.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/__mocks__/nextFontMock'>;
+}
+declare module 'next/dist/build/jest/__mocks__/styleMock.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/__mocks__/styleMock'>;
+}
+declare module 'next/dist/build/jest/jest.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/jest'>;
+}
+declare module 'next/dist/build/jest/object-proxy.js' {
+  declare module.exports: $Exports<'next/dist/build/jest/object-proxy'>;
+}
+declare module 'next/dist/build/load-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/build/load-entrypoint'>;
+}
+declare module 'next/dist/build/load-jsconfig.js' {
+  declare module.exports: $Exports<'next/dist/build/load-jsconfig'>;
+}
+declare module 'next/dist/build/manifests/formatter/format-manifest.js' {
+  declare module.exports: $Exports<'next/dist/build/manifests/formatter/format-manifest'>;
+}
+declare module 'next/dist/build/next-config-ts/require-hook.js' {
+  declare module.exports: $Exports<'next/dist/build/next-config-ts/require-hook'>;
+}
+declare module 'next/dist/build/next-config-ts/transpile-config.js' {
+  declare module.exports: $Exports<'next/dist/build/next-config-ts/transpile-config'>;
+}
+declare module 'next/dist/build/next-dir-paths.js' {
+  declare module.exports: $Exports<'next/dist/build/next-dir-paths'>;
+}
+declare module 'next/dist/build/normalize-catchall-routes.js' {
+  declare module.exports: $Exports<'next/dist/build/normalize-catchall-routes'>;
+}
+declare module 'next/dist/build/output/format.js' {
+  declare module.exports: $Exports<'next/dist/build/output/format'>;
+}
+declare module 'next/dist/build/output/index' {
+  declare module.exports: $Exports<'next/dist/build/output'>;
+}
+declare module 'next/dist/build/output/index.js' {
+  declare module.exports: $Exports<'next/dist/build/output'>;
+}
+declare module 'next/dist/build/output/log.js' {
+  declare module.exports: $Exports<'next/dist/build/output/log'>;
+}
+declare module 'next/dist/build/output/store.js' {
+  declare module.exports: $Exports<'next/dist/build/output/store'>;
+}
+declare module 'next/dist/build/page-extensions-type.js' {
+  declare module.exports: $Exports<'next/dist/build/page-extensions-type'>;
+}
+declare module 'next/dist/build/polyfills/fetch/index' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/fetch'>;
+}
+declare module 'next/dist/build/polyfills/fetch/index.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/fetch'>;
+}
+declare module 'next/dist/build/polyfills/fetch/whatwg-fetch.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/fetch/whatwg-fetch'>;
+}
+declare module 'next/dist/build/polyfills/object-assign.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object-assign'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/auto.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign/auto'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/implementation.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign/implementation'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/index' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/index.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/polyfill.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign/polyfill'>;
+}
+declare module 'next/dist/build/polyfills/object.assign/shim.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/object.assign/shim'>;
+}
+declare module 'next/dist/build/polyfills/polyfill-module.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/polyfill-module'>;
+}
+declare module 'next/dist/build/polyfills/polyfill-nomodule.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/polyfill-nomodule'>;
+}
+declare module 'next/dist/build/polyfills/process.js' {
+  declare module.exports: $Exports<'next/dist/build/polyfills/process'>;
+}
+declare module 'next/dist/build/preview-key-utils.js' {
+  declare module.exports: $Exports<'next/dist/build/preview-key-utils'>;
+}
+declare module 'next/dist/build/progress.js' {
+  declare module.exports: $Exports<'next/dist/build/progress'>;
+}
+declare module 'next/dist/build/rendering-mode.js' {
+  declare module.exports: $Exports<'next/dist/build/rendering-mode'>;
+}
+declare module 'next/dist/build/segment-config/app/app-segment-config.js' {
+  declare module.exports: $Exports<'next/dist/build/segment-config/app/app-segment-config'>;
+}
+declare module 'next/dist/build/segment-config/app/app-segments.js' {
+  declare module.exports: $Exports<'next/dist/build/segment-config/app/app-segments'>;
+}
+declare module 'next/dist/build/segment-config/app/collect-root-param-keys.js' {
+  declare module.exports: $Exports<'next/dist/build/segment-config/app/collect-root-param-keys'>;
+}
+declare module 'next/dist/build/segment-config/middleware/middleware-config.js' {
+  declare module.exports: $Exports<'next/dist/build/segment-config/middleware/middleware-config'>;
+}
+declare module 'next/dist/build/segment-config/pages/pages-segment-config.js' {
+  declare module.exports: $Exports<'next/dist/build/segment-config/pages/pages-segment-config'>;
+}
+declare module 'next/dist/build/spinner.js' {
+  declare module.exports: $Exports<'next/dist/build/spinner'>;
+}
+declare module 'next/dist/build/static-paths/app.js' {
+  declare module.exports: $Exports<'next/dist/build/static-paths/app'>;
+}
+declare module 'next/dist/build/static-paths/pages.js' {
+  declare module.exports: $Exports<'next/dist/build/static-paths/pages'>;
+}
+declare module 'next/dist/build/static-paths/types.js' {
+  declare module.exports: $Exports<'next/dist/build/static-paths/types'>;
+}
+declare module 'next/dist/build/static-paths/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/static-paths/utils'>;
+}
+declare module 'next/dist/build/swc/helpers.js' {
+  declare module.exports: $Exports<'next/dist/build/swc/helpers'>;
+}
+declare module 'next/dist/build/swc/index' {
+  declare module.exports: $Exports<'next/dist/build/swc'>;
+}
+declare module 'next/dist/build/swc/index.js' {
+  declare module.exports: $Exports<'next/dist/build/swc'>;
+}
+declare module 'next/dist/build/swc/jest-transformer.js' {
+  declare module.exports: $Exports<'next/dist/build/swc/jest-transformer'>;
+}
+declare module 'next/dist/build/swc/options.js' {
+  declare module.exports: $Exports<'next/dist/build/swc/options'>;
+}
+declare module 'next/dist/build/swc/types.js' {
+  declare module.exports: $Exports<'next/dist/build/swc/types'>;
+}
+declare module 'next/dist/build/templates/app-page.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/app-page'>;
+}
+declare module 'next/dist/build/templates/app-route.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/app-route'>;
+}
+declare module 'next/dist/build/templates/edge-app-route.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/edge-app-route'>;
+}
+declare module 'next/dist/build/templates/edge-ssr-app.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/edge-ssr-app'>;
+}
+declare module 'next/dist/build/templates/edge-ssr.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/edge-ssr'>;
+}
+declare module 'next/dist/build/templates/helpers.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/helpers'>;
+}
+declare module 'next/dist/build/templates/middleware.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/middleware'>;
+}
+declare module 'next/dist/build/templates/pages-api.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/pages-api'>;
+}
+declare module 'next/dist/build/templates/pages-edge-api.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/pages-edge-api'>;
+}
+declare module 'next/dist/build/templates/pages.js' {
+  declare module.exports: $Exports<'next/dist/build/templates/pages'>;
+}
+declare module 'next/dist/build/turbopack-build/impl.js' {
+  declare module.exports: $Exports<'next/dist/build/turbopack-build/impl'>;
+}
+declare module 'next/dist/build/turbopack-build/index' {
+  declare module.exports: $Exports<'next/dist/build/turbopack-build'>;
+}
+declare module 'next/dist/build/turbopack-build/index.js' {
+  declare module.exports: $Exports<'next/dist/build/turbopack-build'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/env.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace/env'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/helpers.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace/helpers'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/index' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/index.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/result.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace/result'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/tcp.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace/tcp'>;
+}
+declare module 'next/dist/build/turborepo-access-trace/types.js' {
+  declare module.exports: $Exports<'next/dist/build/turborepo-access-trace/types'>;
+}
+declare module 'next/dist/build/type-check.js' {
+  declare module.exports: $Exports<'next/dist/build/type-check'>;
+}
+declare module 'next/dist/build/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/utils'>;
+}
+declare module 'next/dist/build/webpack-build/impl.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack-build/impl'>;
+}
+declare module 'next/dist/build/webpack-build/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack-build'>;
+}
+declare module 'next/dist/build/webpack-build/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack-build'>;
+}
+declare module 'next/dist/build/webpack-config-rules/resolve.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack-config-rules/resolve'>;
+}
+declare module 'next/dist/build/webpack-config.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack-config'>;
+}
+declare module 'next/dist/build/webpack/alias/react-dom-server-experimental.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/alias/react-dom-server-experimental'>;
+}
+declare module 'next/dist/build/webpack/alias/react-dom-server.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/alias/react-dom-server'>;
+}
+declare module 'next/dist/build/webpack/cache-invalidation.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/cache-invalidation'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/base.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/base'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/client.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/client'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/file-resolve.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/file-resolve'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/global.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/global'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/modules.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/modules'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/loaders/next-font.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/loaders/next-font'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/messages.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/messages'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/css/plugins.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/css/plugins'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/images/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/images'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/images/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/images'>;
+}
+declare module 'next/dist/build/webpack/config/blocks/images/messages.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/blocks/images/messages'>;
+}
+declare module 'next/dist/build/webpack/config/helpers.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/helpers'>;
+}
+declare module 'next/dist/build/webpack/config/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config'>;
+}
+declare module 'next/dist/build/webpack/config/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config'>;
+}
+declare module 'next/dist/build/webpack/config/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/config/utils'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/camelcase.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/camelcase'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/CssSyntaxError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/CssSyntaxError'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/plugins'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/plugins'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/runtime/api.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/runtime/api'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/runtime/getUrl.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/runtime/getUrl'>;
+}
+declare module 'next/dist/build/webpack/loaders/css-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/css-loader/src/utils'>;
+}
+declare module 'next/dist/build/webpack/loaders/devtool/devtool-style-inject.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/devtool/devtool-style-inject'>;
+}
+declare module 'next/dist/build/webpack/loaders/empty-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/empty-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/error-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/error-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/get-module-build-info.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/get-module-build-info'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/codegen.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src/codegen'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/interface.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src/interface'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src/loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/minify.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src/minify'>;
+}
+declare module 'next/dist/build/webpack/loaders/lightningcss-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/lightningcss-loader/src/utils'>;
+}
+declare module 'next/dist/build/webpack/loaders/metadata/discover.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/metadata/discover'>;
+}
+declare module 'next/dist/build/webpack/loaders/metadata/resolve-route-data.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/metadata/resolve-route-data'>;
+}
+declare module 'next/dist/build/webpack/loaders/metadata/types.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/metadata/types'>;
+}
+declare module 'next/dist/build/webpack/loaders/modularize-import-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/modularize-import-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-app-loader/create-app-route-code.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-app-loader/create-app-route-code'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-app-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-app-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-app-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-app-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-barrel-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-barrel-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-client-pages-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-client-pages-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-app-route-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-app-route-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-app-route-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-function-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-function-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-ssr-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-ssr-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-ssr-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-ssr-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-edge-ssr-loader/render.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-edge-ssr-loader/render'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-error-browser-binary-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-error-browser-binary-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-action-entry-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-action-entry-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-client-entry-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-client-entry-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-client-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-client-module-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-css-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-css-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/action-validate.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/action-validate'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/cache-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/cache-wrapper'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/module-proxy'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/server-reference.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/server-reference'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-loader/track-dynamic-import.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-loader/track-dynamic-import'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-flight-server-reference-proxy-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-flight-server-reference-proxy-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-font-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-font-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-font-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-font-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-font-loader/postcss-next-font.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-font-loader/postcss-next-font'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-image-loader/blur.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-image-loader/blur'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-image-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-image-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-image-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-image-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-invalid-import-error-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-invalid-import-error-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-metadata-image-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-metadata-image-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-metadata-route-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-metadata-route-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-middleware-asset-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-middleware-asset-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-middleware-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-middleware-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-middleware-wasm-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-middleware-wasm-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-route-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-route-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-route-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-route-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-style-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-style-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-style-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-style-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-style-loader/runtime/isEqualLocals.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-style-loader/runtime/isEqualLocals'>;
+}
+declare module 'next/dist/build/webpack/loaders/next-swc-loader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/next-swc-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/Error.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/postcss-loader/src/Error'>;
+}
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/postcss-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/postcss-loader/src'>;
+}
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/postcss-loader/src/utils'>;
+}
+declare module 'next/dist/build/webpack/loaders/postcss-loader/src/Warning.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/postcss-loader/src/Warning'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/join-function.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader/lib/join-function'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss'>;
+}
+declare module 'next/dist/build/webpack/loaders/resolve-url-loader/lib/value-processor.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/resolve-url-loader/lib/value-processor'>;
+}
+declare module 'next/dist/build/webpack/loaders/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/loaders/utils'>;
+}
+declare module 'next/dist/build/webpack/plugins/app-build-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/app-build-manifest-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/build-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/build-manifest-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/copy-file-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/copy-file-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/css-chunking-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/css-chunking-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/css-minimizer-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/css-minimizer-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/devtools-ignore-list-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/devtools-ignore-list-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/eval-source-map-dev-tool-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/eval-source-map-dev-tool-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/flight-client-entry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/flight-client-entry-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/flight-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/flight-manifest-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/jsconfig-paths-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/jsconfig-paths-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/memory-with-gc-cache-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/memory-with-gc-cache-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/middleware-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/middleware-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/mini-css-extract-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/mini-css-extract-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/minify-webpack-plugin/src/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/minify-webpack-plugin/src'>;
+}
+declare module 'next/dist/build/webpack/plugins/minify-webpack-plugin/src/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/minify-webpack-plugin/src'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-drop-client-page-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-drop-client-page-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-font-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-font-manifest-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-trace-entrypoints-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-types-plugin/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-types-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-types-plugin/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-types-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/next-types-plugin/shared.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/next-types-plugin/shared'>;
+}
+declare module 'next/dist/build/webpack/plugins/nextjs-require-cache-hot-reloader.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/nextjs-require-cache-hot-reloader'>;
+}
+declare module 'next/dist/build/webpack/plugins/optional-peer-dependency-resolve-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/optional-peer-dependency-resolve-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/pages-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/pages-manifest-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/profiling-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/profiling-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/react-loadable-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/react-loadable-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/rspack-flight-client-entry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/rspack-flight-client-entry-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/rspack-profiling-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/rspack-profiling-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/slow-module-detection-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/slow-module-detection-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/subresource-integrity-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/subresource-integrity-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/telemetry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/telemetry-plugin/telemetry-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc'>;
+}
+declare module 'next/dist/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/index' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseBabel.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseBabel'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseCss.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseCss'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseScss.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/parseScss'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError'>;
+}
+declare module 'next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError'>;
+}
+declare module 'next/dist/build/webpack/stringify-request.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/stringify-request'>;
+}
+declare module 'next/dist/build/webpack/utils.js' {
+  declare module.exports: $Exports<'next/dist/build/webpack/utils'>;
+}
+declare module 'next/dist/build/worker.js' {
+  declare module.exports: $Exports<'next/dist/build/worker'>;
+}
+declare module 'next/dist/build/write-build-id.js' {
+  declare module.exports: $Exports<'next/dist/build/write-build-id'>;
+}
+declare module 'next/dist/cli/internal/turbo-trace-server.js' {
+  declare module.exports: $Exports<'next/dist/cli/internal/turbo-trace-server'>;
+}
+declare module 'next/dist/cli/next-build.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-build'>;
+}
+declare module 'next/dist/cli/next-dev.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-dev'>;
+}
+declare module 'next/dist/cli/next-export.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-export'>;
+}
+declare module 'next/dist/cli/next-info.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-info'>;
+}
+declare module 'next/dist/cli/next-lint.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-lint'>;
+}
+declare module 'next/dist/cli/next-start.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-start'>;
+}
+declare module 'next/dist/cli/next-telemetry.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-telemetry'>;
+}
+declare module 'next/dist/cli/next-test.js' {
+  declare module.exports: $Exports<'next/dist/cli/next-test'>;
+}
+declare module 'next/dist/client/add-base-path.js' {
+  declare module.exports: $Exports<'next/dist/client/add-base-path'>;
+}
+declare module 'next/dist/client/add-locale.js' {
+  declare module.exports: $Exports<'next/dist/client/add-locale'>;
+}
+declare module 'next/dist/client/app-bootstrap.js' {
+  declare module.exports: $Exports<'next/dist/client/app-bootstrap'>;
+}
+declare module 'next/dist/client/app-build-id.js' {
+  declare module.exports: $Exports<'next/dist/client/app-build-id'>;
+}
+declare module 'next/dist/client/app-call-server.js' {
+  declare module.exports: $Exports<'next/dist/client/app-call-server'>;
+}
+declare module 'next/dist/client/app-dir/form.js' {
+  declare module.exports: $Exports<'next/dist/client/app-dir/form'>;
+}
+declare module 'next/dist/client/app-dir/link.js' {
+  declare module.exports: $Exports<'next/dist/client/app-dir/link'>;
+}
+declare module 'next/dist/client/app-find-source-map-url.js' {
+  declare module.exports: $Exports<'next/dist/client/app-find-source-map-url'>;
+}
+declare module 'next/dist/client/app-globals.js' {
+  declare module.exports: $Exports<'next/dist/client/app-globals'>;
+}
+declare module 'next/dist/client/app-index.js' {
+  declare module.exports: $Exports<'next/dist/client/app-index'>;
+}
+declare module 'next/dist/client/app-link-gc.js' {
+  declare module.exports: $Exports<'next/dist/client/app-link-gc'>;
+}
+declare module 'next/dist/client/app-next-dev.js' {
+  declare module.exports: $Exports<'next/dist/client/app-next-dev'>;
+}
+declare module 'next/dist/client/app-next-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/client/app-next-turbopack'>;
+}
+declare module 'next/dist/client/app-next.js' {
+  declare module.exports: $Exports<'next/dist/client/app-next'>;
+}
+declare module 'next/dist/client/app-webpack.js' {
+  declare module.exports: $Exports<'next/dist/client/app-webpack'>;
+}
+declare module 'next/dist/client/assign-location.js' {
+  declare module.exports: $Exports<'next/dist/client/assign-location'>;
+}
+declare module 'next/dist/client/compat/router.js' {
+  declare module.exports: $Exports<'next/dist/client/compat/router'>;
+}
+declare module 'next/dist/client/components/app-router-announcer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/app-router-announcer'>;
+}
+declare module 'next/dist/client/components/app-router-headers.js' {
+  declare module.exports: $Exports<'next/dist/client/components/app-router-headers'>;
+}
+declare module 'next/dist/client/components/app-router-instance.js' {
+  declare module.exports: $Exports<'next/dist/client/components/app-router-instance'>;
+}
+declare module 'next/dist/client/components/app-router.js' {
+  declare module.exports: $Exports<'next/dist/client/components/app-router'>;
+}
+declare module 'next/dist/client/components/bailout-to-client-rendering.js' {
+  declare module.exports: $Exports<'next/dist/client/components/bailout-to-client-rendering'>;
+}
+declare module 'next/dist/client/components/bfcache.js' {
+  declare module.exports: $Exports<'next/dist/client/components/bfcache'>;
+}
+declare module 'next/dist/client/components/builtin/default.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/default'>;
+}
+declare module 'next/dist/client/components/builtin/forbidden.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/forbidden'>;
+}
+declare module 'next/dist/client/components/builtin/global-error.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/global-error'>;
+}
+declare module 'next/dist/client/components/builtin/global-not-found.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/global-not-found'>;
+}
+declare module 'next/dist/client/components/builtin/layout.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/layout'>;
+}
+declare module 'next/dist/client/components/builtin/not-found.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/not-found'>;
+}
+declare module 'next/dist/client/components/builtin/unauthorized.js' {
+  declare module.exports: $Exports<'next/dist/client/components/builtin/unauthorized'>;
+}
+declare module 'next/dist/client/components/client-page.js' {
+  declare module.exports: $Exports<'next/dist/client/components/client-page'>;
+}
+declare module 'next/dist/client/components/client-segment.js' {
+  declare module.exports: $Exports<'next/dist/client/components/client-segment'>;
+}
+declare module 'next/dist/client/components/dev-root-http-access-fallback-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/dev-root-http-access-fallback-boundary'>;
+}
+declare module 'next/dist/client/components/error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/error-boundary'>;
+}
+declare module 'next/dist/client/components/errors/graceful-degrade-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/errors/graceful-degrade-boundary'>;
+}
+declare module 'next/dist/client/components/forbidden.js' {
+  declare module.exports: $Exports<'next/dist/client/components/forbidden'>;
+}
+declare module 'next/dist/client/components/handle-isr-error.js' {
+  declare module.exports: $Exports<'next/dist/client/components/handle-isr-error'>;
+}
+declare module 'next/dist/client/components/hooks-server-context.js' {
+  declare module.exports: $Exports<'next/dist/client/components/hooks-server-context'>;
+}
+declare module 'next/dist/client/components/http-access-fallback/error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/http-access-fallback/error-boundary'>;
+}
+declare module 'next/dist/client/components/http-access-fallback/error-fallback.js' {
+  declare module.exports: $Exports<'next/dist/client/components/http-access-fallback/error-fallback'>;
+}
+declare module 'next/dist/client/components/http-access-fallback/http-access-fallback.js' {
+  declare module.exports: $Exports<'next/dist/client/components/http-access-fallback/http-access-fallback'>;
+}
+declare module 'next/dist/client/components/is-next-router-error.js' {
+  declare module.exports: $Exports<'next/dist/client/components/is-next-router-error'>;
+}
+declare module 'next/dist/client/components/layout-router.js' {
+  declare module.exports: $Exports<'next/dist/client/components/layout-router'>;
+}
+declare module 'next/dist/client/components/links.js' {
+  declare module.exports: $Exports<'next/dist/client/components/links'>;
+}
+declare module 'next/dist/client/components/match-segments.js' {
+  declare module.exports: $Exports<'next/dist/client/components/match-segments'>;
+}
+declare module 'next/dist/client/components/metadata/async-metadata.js' {
+  declare module.exports: $Exports<'next/dist/client/components/metadata/async-metadata'>;
+}
+declare module 'next/dist/client/components/metadata/metadata-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/metadata/metadata-boundary'>;
+}
+declare module 'next/dist/client/components/metadata/types.js' {
+  declare module.exports: $Exports<'next/dist/client/components/metadata/types'>;
+}
+declare module 'next/dist/client/components/nav-failure-handler.js' {
+  declare module.exports: $Exports<'next/dist/client/components/nav-failure-handler'>;
+}
+declare module 'next/dist/client/components/navigation-untracked.js' {
+  declare module.exports: $Exports<'next/dist/client/components/navigation-untracked'>;
+}
+declare module 'next/dist/client/components/navigation.js' {
+  declare module.exports: $Exports<'next/dist/client/components/navigation'>;
+}
+declare module 'next/dist/client/components/navigation.react-server.js' {
+  declare module.exports: $Exports<'next/dist/client/components/navigation.react-server'>;
+}
+declare module 'next/dist/client/components/noop-head.js' {
+  declare module.exports: $Exports<'next/dist/client/components/noop-head'>;
+}
+declare module 'next/dist/client/components/not-found.js' {
+  declare module.exports: $Exports<'next/dist/client/components/not-found'>;
+}
+declare module 'next/dist/client/components/promise-queue.js' {
+  declare module.exports: $Exports<'next/dist/client/components/promise-queue'>;
+}
+declare module 'next/dist/client/components/redirect-boundary.js' {
+  declare module.exports: $Exports<'next/dist/client/components/redirect-boundary'>;
+}
+declare module 'next/dist/client/components/redirect-error.js' {
+  declare module.exports: $Exports<'next/dist/client/components/redirect-error'>;
+}
+declare module 'next/dist/client/components/redirect-status-code.js' {
+  declare module.exports: $Exports<'next/dist/client/components/redirect-status-code'>;
+}
+declare module 'next/dist/client/components/redirect.js' {
+  declare module.exports: $Exports<'next/dist/client/components/redirect'>;
+}
+declare module 'next/dist/client/components/render-from-template-context.js' {
+  declare module.exports: $Exports<'next/dist/client/components/render-from-template-context'>;
+}
+declare module 'next/dist/client/components/router-reducer/aliased-prefetch-navigations.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/aliased-prefetch-navigations'>;
+}
+declare module 'next/dist/client/components/router-reducer/apply-flight-data.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/apply-flight-data'>;
+}
+declare module 'next/dist/client/components/router-reducer/apply-router-state-patch-to-tree.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/apply-router-state-patch-to-tree'>;
+}
+declare module 'next/dist/client/components/router-reducer/clear-cache-node-data-for-segment-path.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/clear-cache-node-data-for-segment-path'>;
+}
+declare module 'next/dist/client/components/router-reducer/compute-changed-path.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/compute-changed-path'>;
+}
+declare module 'next/dist/client/components/router-reducer/create-href-from-url.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/create-href-from-url'>;
+}
+declare module 'next/dist/client/components/router-reducer/create-initial-router-state.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/create-initial-router-state'>;
+}
+declare module 'next/dist/client/components/router-reducer/create-router-cache-key.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/create-router-cache-key'>;
+}
+declare module 'next/dist/client/components/router-reducer/fetch-server-response.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/fetch-server-response'>;
+}
+declare module 'next/dist/client/components/router-reducer/fill-cache-with-new-subtree-data.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/fill-cache-with-new-subtree-data'>;
+}
+declare module 'next/dist/client/components/router-reducer/fill-lazy-items-till-leaf-with-head.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/fill-lazy-items-till-leaf-with-head'>;
+}
+declare module 'next/dist/client/components/router-reducer/handle-mutable.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/handle-mutable'>;
+}
+declare module 'next/dist/client/components/router-reducer/handle-segment-mismatch.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/handle-segment-mismatch'>;
+}
+declare module 'next/dist/client/components/router-reducer/invalidate-cache-below-flight-segmentpath.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/invalidate-cache-below-flight-segmentpath'>;
+}
+declare module 'next/dist/client/components/router-reducer/invalidate-cache-by-router-state.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/invalidate-cache-by-router-state'>;
+}
+declare module 'next/dist/client/components/router-reducer/is-navigating-to-new-root-layout.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/is-navigating-to-new-root-layout'>;
+}
+declare module 'next/dist/client/components/router-reducer/ppr-navigations.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/ppr-navigations'>;
+}
+declare module 'next/dist/client/components/router-reducer/prefetch-cache-utils.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/prefetch-cache-utils'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/find-head-in-cache.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/find-head-in-cache'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/get-segment-value.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/get-segment-value'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/has-interception-route-in-current-tree.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/has-interception-route-in-current-tree'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/hmr-refresh-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/hmr-refresh-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/navigate-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/navigate-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/prefetch-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/prefetch-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/refresh-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/refresh-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/restore-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/restore-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/server-action-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/server-action-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/reducers/server-patch-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/reducers/server-patch-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/refetch-inactive-parallel-segments.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/refetch-inactive-parallel-segments'>;
+}
+declare module 'next/dist/client/components/router-reducer/router-reducer-types.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/router-reducer-types'>;
+}
+declare module 'next/dist/client/components/router-reducer/router-reducer.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/router-reducer'>;
+}
+declare module 'next/dist/client/components/router-reducer/set-cache-busting-search-param.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/set-cache-busting-search-param'>;
+}
+declare module 'next/dist/client/components/router-reducer/should-hard-navigate.js' {
+  declare module.exports: $Exports<'next/dist/client/components/router-reducer/should-hard-navigate'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/cache-key.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/cache-key'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/cache.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/cache'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/lru.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/lru'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/navigation.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/navigation'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/prefetch.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/prefetch'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/scheduler.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/scheduler'>;
+}
+declare module 'next/dist/client/components/segment-cache-impl/tuple-map.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache-impl/tuple-map'>;
+}
+declare module 'next/dist/client/components/segment-cache.js' {
+  declare module.exports: $Exports<'next/dist/client/components/segment-cache'>;
+}
+declare module 'next/dist/client/components/static-generation-bailout.js' {
+  declare module.exports: $Exports<'next/dist/client/components/static-generation-bailout'>;
+}
+declare module 'next/dist/client/components/styles/access-error-styles.js' {
+  declare module.exports: $Exports<'next/dist/client/components/styles/access-error-styles'>;
+}
+declare module 'next/dist/client/components/unauthorized.js' {
+  declare module.exports: $Exports<'next/dist/client/components/unauthorized'>;
+}
+declare module 'next/dist/client/components/unresolved-thenable.js' {
+  declare module.exports: $Exports<'next/dist/client/components/unresolved-thenable'>;
+}
+declare module 'next/dist/client/components/unstable-rethrow.browser.js' {
+  declare module.exports: $Exports<'next/dist/client/components/unstable-rethrow.browser'>;
+}
+declare module 'next/dist/client/components/unstable-rethrow.js' {
+  declare module.exports: $Exports<'next/dist/client/components/unstable-rethrow'>;
+}
+declare module 'next/dist/client/components/unstable-rethrow.server.js' {
+  declare module.exports: $Exports<'next/dist/client/components/unstable-rethrow.server'>;
+}
+declare module 'next/dist/client/components/use-action-queue.js' {
+  declare module.exports: $Exports<'next/dist/client/components/use-action-queue'>;
+}
+declare module 'next/dist/client/detect-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/client/detect-domain-locale'>;
+}
+declare module 'next/dist/client/dev/amp-dev.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/amp-dev'>;
+}
+declare module 'next/dist/client/dev/error-overlay/websocket.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/error-overlay/websocket'>;
+}
+declare module 'next/dist/client/dev/fouc.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/fouc'>;
+}
+declare module 'next/dist/client/dev/hot-middleware-client.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-middleware-client'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/app/hot-reloader-app.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/app/hot-reloader-app'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/app/use-websocket.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/app/use-websocket'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/get-socket-url.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/get-socket-url'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/pages/hot-reloader-pages.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/pages/hot-reloader-pages'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/pages/websocket.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/pages/websocket'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/shared.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/shared'>;
+}
+declare module 'next/dist/client/dev/hot-reloader/turbopack-hot-reloader-common.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/hot-reloader/turbopack-hot-reloader-common'>;
+}
+declare module 'next/dist/client/dev/noop-turbopack-hmr.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/noop-turbopack-hmr'>;
+}
+declare module 'next/dist/client/dev/on-demand-entries-client.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/on-demand-entries-client'>;
+}
+declare module 'next/dist/client/dev/report-hmr-latency.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/report-hmr-latency'>;
+}
+declare module 'next/dist/client/dev/runtime-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/client/dev/runtime-error-handler'>;
+}
+declare module 'next/dist/client/flight-data-helpers.js' {
+  declare module.exports: $Exports<'next/dist/client/flight-data-helpers'>;
+}
+declare module 'next/dist/client/form-shared.js' {
+  declare module.exports: $Exports<'next/dist/client/form-shared'>;
+}
+declare module 'next/dist/client/form.js' {
+  declare module.exports: $Exports<'next/dist/client/form'>;
+}
+declare module 'next/dist/client/get-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/client/get-domain-locale'>;
+}
+declare module 'next/dist/client/has-base-path.js' {
+  declare module.exports: $Exports<'next/dist/client/has-base-path'>;
+}
+declare module 'next/dist/client/head-manager.js' {
+  declare module.exports: $Exports<'next/dist/client/head-manager'>;
+}
+declare module 'next/dist/client/image-component.js' {
+  declare module.exports: $Exports<'next/dist/client/image-component'>;
+}
+declare module 'next/dist/client/index' {
+  declare module.exports: $Exports<'next/dist/client'>;
+}
+declare module 'next/dist/client/index.js' {
+  declare module.exports: $Exports<'next/dist/client'>;
+}
+declare module 'next/dist/client/legacy/image.js' {
+  declare module.exports: $Exports<'next/dist/client/legacy/image'>;
+}
+declare module 'next/dist/client/lib/console.js' {
+  declare module.exports: $Exports<'next/dist/client/lib/console'>;
+}
+declare module 'next/dist/client/link.js' {
+  declare module.exports: $Exports<'next/dist/client/link'>;
+}
+declare module 'next/dist/client/next-dev-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/client/next-dev-turbopack'>;
+}
+declare module 'next/dist/client/next-dev.js' {
+  declare module.exports: $Exports<'next/dist/client/next-dev'>;
+}
+declare module 'next/dist/client/next-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/client/next-turbopack'>;
+}
+declare module 'next/dist/client/next.js' {
+  declare module.exports: $Exports<'next/dist/client/next'>;
+}
+declare module 'next/dist/client/normalize-locale-path.js' {
+  declare module.exports: $Exports<'next/dist/client/normalize-locale-path'>;
+}
+declare module 'next/dist/client/normalize-trailing-slash.js' {
+  declare module.exports: $Exports<'next/dist/client/normalize-trailing-slash'>;
+}
+declare module 'next/dist/client/page-bootstrap.js' {
+  declare module.exports: $Exports<'next/dist/client/page-bootstrap'>;
+}
+declare module 'next/dist/client/page-loader.js' {
+  declare module.exports: $Exports<'next/dist/client/page-loader'>;
+}
+declare module 'next/dist/client/portal/index' {
+  declare module.exports: $Exports<'next/dist/client/portal'>;
+}
+declare module 'next/dist/client/portal/index.js' {
+  declare module.exports: $Exports<'next/dist/client/portal'>;
+}
+declare module 'next/dist/client/react-client-callbacks/error-boundary-callbacks.js' {
+  declare module.exports: $Exports<'next/dist/client/react-client-callbacks/error-boundary-callbacks'>;
+}
+declare module 'next/dist/client/react-client-callbacks/on-recoverable-error.js' {
+  declare module.exports: $Exports<'next/dist/client/react-client-callbacks/on-recoverable-error'>;
+}
+declare module 'next/dist/client/react-client-callbacks/report-global-error.js' {
+  declare module.exports: $Exports<'next/dist/client/react-client-callbacks/report-global-error'>;
+}
+declare module 'next/dist/client/remove-base-path.js' {
+  declare module.exports: $Exports<'next/dist/client/remove-base-path'>;
+}
+declare module 'next/dist/client/remove-locale.js' {
+  declare module.exports: $Exports<'next/dist/client/remove-locale'>;
+}
+declare module 'next/dist/client/request-idle-callback.js' {
+  declare module.exports: $Exports<'next/dist/client/request-idle-callback'>;
+}
+declare module 'next/dist/client/request/params.browser.dev.js' {
+  declare module.exports: $Exports<'next/dist/client/request/params.browser.dev'>;
+}
+declare module 'next/dist/client/request/params.browser.js' {
+  declare module.exports: $Exports<'next/dist/client/request/params.browser'>;
+}
+declare module 'next/dist/client/request/params.browser.prod.js' {
+  declare module.exports: $Exports<'next/dist/client/request/params.browser.prod'>;
+}
+declare module 'next/dist/client/request/search-params.browser.dev.js' {
+  declare module.exports: $Exports<'next/dist/client/request/search-params.browser.dev'>;
+}
+declare module 'next/dist/client/request/search-params.browser.js' {
+  declare module.exports: $Exports<'next/dist/client/request/search-params.browser'>;
+}
+declare module 'next/dist/client/request/search-params.browser.prod.js' {
+  declare module.exports: $Exports<'next/dist/client/request/search-params.browser.prod'>;
+}
+declare module 'next/dist/client/resolve-href.js' {
+  declare module.exports: $Exports<'next/dist/client/resolve-href'>;
+}
+declare module 'next/dist/client/route-announcer.js' {
+  declare module.exports: $Exports<'next/dist/client/route-announcer'>;
+}
+declare module 'next/dist/client/route-loader.js' {
+  declare module.exports: $Exports<'next/dist/client/route-loader'>;
+}
+declare module 'next/dist/client/router.js' {
+  declare module.exports: $Exports<'next/dist/client/router'>;
+}
+declare module 'next/dist/client/script.js' {
+  declare module.exports: $Exports<'next/dist/client/script'>;
+}
+declare module 'next/dist/client/set-attributes-from-props.js' {
+  declare module.exports: $Exports<'next/dist/client/set-attributes-from-props'>;
+}
+declare module 'next/dist/client/tracing/report-to-socket.js' {
+  declare module.exports: $Exports<'next/dist/client/tracing/report-to-socket'>;
+}
+declare module 'next/dist/client/tracing/tracer.js' {
+  declare module.exports: $Exports<'next/dist/client/tracing/tracer'>;
+}
+declare module 'next/dist/client/trusted-types.js' {
+  declare module.exports: $Exports<'next/dist/client/trusted-types'>;
+}
+declare module 'next/dist/client/use-client-disallowed.js' {
+  declare module.exports: $Exports<'next/dist/client/use-client-disallowed'>;
+}
+declare module 'next/dist/client/use-intersection.js' {
+  declare module.exports: $Exports<'next/dist/client/use-intersection'>;
+}
+declare module 'next/dist/client/use-merged-ref.js' {
+  declare module.exports: $Exports<'next/dist/client/use-merged-ref'>;
+}
+declare module 'next/dist/client/web-vitals.js' {
+  declare module.exports: $Exports<'next/dist/client/web-vitals'>;
+}
+declare module 'next/dist/client/webpack.js' {
+  declare module.exports: $Exports<'next/dist/client/webpack'>;
+}
+declare module 'next/dist/client/with-router.js' {
+  declare module.exports: $Exports<'next/dist/client/with-router'>;
+}
+declare module 'next/dist/compiled/@ampproject/toolbox-optimizer/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@ampproject/toolbox-optimizer'>;
+}
+declare module 'next/dist/compiled/@ampproject/toolbox-optimizer/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@ampproject/toolbox-optimizer'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecoratedDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecoratedDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2203.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs2203'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2203R.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs2203R'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2301.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs2301'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2305.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs2305'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/applyDecs2311.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/applyDecs2311'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayLikeToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/arrayLikeToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayWithHoles.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/arrayWithHoles'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/arrayWithoutHoles.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/arrayWithoutHoles'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/assertClassBrand.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/assertClassBrand'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/assertThisInitialized.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/assertThisInitialized'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncGeneratorDelegate.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/asyncGeneratorDelegate'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncIterator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/asyncIterator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/asyncToGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/asyncToGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/awaitAsyncGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/awaitAsyncGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/AwaitValue.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/AwaitValue'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/callSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/callSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/checkInRHS.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/checkInRHS'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/checkPrivateRedeclaration.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/checkPrivateRedeclaration'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classApplyDescriptorSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCallCheck.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classCallCheck'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticAccess.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticAccess'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticFieldDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classCheckPrivateStaticFieldDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classExtractFieldDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classExtractFieldDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classNameTDZError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classNameTDZError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldGet2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldInitSpec.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldInitSpec'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseBase.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseBase'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseKey.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldLooseKey'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateFieldSet2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateGetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateGetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodInitSpec.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodInitSpec'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateMethodSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classPrivateSetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classPrivateSetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateFieldSpecSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/classStaticPrivateMethodSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/construct.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/construct'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/createClass.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/createClass'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelperLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/createForOfIteratorHelperLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/createSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/createSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/decorate.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/decorate'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/defaults.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/defaults'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineAccessor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/defineAccessor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineEnumerableProperties.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/defineEnumerableProperties'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/defineProperty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/defineProperty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/dispose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/dispose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecoratedDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecoratedDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203R.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2203R'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2301.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2301'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2305.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2305'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2311.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/applyDecs2311'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayLikeToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/arrayLikeToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithHoles.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithHoles'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithoutHoles.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/arrayWithoutHoles'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/assertClassBrand.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/assertClassBrand'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/assertThisInitialized.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/assertThisInitialized'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncGeneratorDelegate.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/asyncGeneratorDelegate'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncIterator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/asyncIterator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/asyncToGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/asyncToGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/awaitAsyncGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/awaitAsyncGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/AwaitValue.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/AwaitValue'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/callSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/callSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/checkInRHS.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/checkInRHS'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/checkPrivateRedeclaration.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/checkPrivateRedeclaration'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classApplyDescriptorSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCallCheck.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classCallCheck'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticAccess.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticAccess'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticFieldDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classCheckPrivateStaticFieldDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classExtractFieldDescriptor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classNameTDZError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classNameTDZError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldGet2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldInitSpec.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldInitSpec'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseBase.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseBase'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseKey.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldLooseKey'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateFieldSet2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateGetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateGetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodInitSpec.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodInitSpec'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateMethodSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateSetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classPrivateSetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldDestructureSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldDestructureSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateFieldSpecSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/classStaticPrivateMethodSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/construct.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/construct'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createClass.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/createClass'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelperLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/createForOfIteratorHelperLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/createSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/createSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/decorate.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/decorate'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defaults.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/defaults'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineAccessor.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/defineAccessor'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineEnumerableProperties.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/defineEnumerableProperties'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/defineProperty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/defineProperty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/dispose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/dispose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/extends.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/extends'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/get.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/get'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/getPrototypeOf.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/getPrototypeOf'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/identity.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/identity'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/importDeferProxy.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/importDeferProxy'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/inherits.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/inherits'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/inheritsLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/inheritsLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/initializerDefineProperty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/initializerDefineProperty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/initializerWarningHelper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/initializerWarningHelper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/instanceof.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/instanceof'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireDefault.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireDefault'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireWildcard.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/interopRequireWildcard'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/isNativeFunction.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/isNativeFunction'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/isNativeReflectConstruct.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/isNativeReflectConstruct'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArrayLimit.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/iterableToArrayLimit'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/jsx.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/jsx'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/maybeArrayLike.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/maybeArrayLike'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/newArrowCheck.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/newArrowCheck'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableRest.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableRest'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableSpread.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/nonIterableSpread'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/nullishReceiverError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/nullishReceiverError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectDestructuringEmpty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/objectDestructuringEmpty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/objectSpread2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutProperties.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutProperties'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/OverloadYield.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/OverloadYield'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/possibleConstructorReturn.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/possibleConstructorReturn'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/readOnlyError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/readOnlyError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/regeneratorRuntime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/regeneratorRuntime'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/set.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/set'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/setFunctionName.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/setFunctionName'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/setPrototypeOf.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/setPrototypeOf'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/skipFirstGeneratorNext.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/skipFirstGeneratorNext'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/slicedToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/slicedToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropBase.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/superPropBase'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/superPropGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/superPropSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/superPropSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteral.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteral'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteralLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/taggedTemplateLiteralLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/tdz.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/tdz'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/temporalRef.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/temporalRef'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/temporalUndefined.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/temporalUndefined'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/toArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toConsumableArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/toConsumableArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toPrimitive.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/toPrimitive'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toPropertyKey.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/toPropertyKey'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/toSetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/toSetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/tsRewriteRelativeImportExtensions.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/tsRewriteRelativeImportExtensions'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/typeof.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/typeof'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/unsupportedIterableToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/unsupportedIterableToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/using.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/using'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/usingCtx.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/usingCtx'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapAsyncGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/wrapAsyncGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapNativeSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/wrapNativeSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/wrapRegExp.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/wrapRegExp'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/esm/writeOnlyError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/esm/writeOnlyError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/extends.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/extends'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/get.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/get'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/getPrototypeOf.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/getPrototypeOf'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/identity.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/identity'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/importDeferProxy.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/importDeferProxy'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/inherits.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/inherits'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/inheritsLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/inheritsLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/initializerDefineProperty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/initializerDefineProperty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/initializerWarningHelper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/initializerWarningHelper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/instanceof.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/instanceof'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/interopRequireDefault.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/interopRequireDefault'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/interopRequireWildcard.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/interopRequireWildcard'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/isNativeFunction.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/isNativeFunction'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/isNativeReflectConstruct.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/isNativeReflectConstruct'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/iterableToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/iterableToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/iterableToArrayLimit.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/iterableToArrayLimit'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/jsx.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/jsx'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/maybeArrayLike.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/maybeArrayLike'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/newArrowCheck.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/newArrowCheck'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/nonIterableRest.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/nonIterableRest'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/nonIterableSpread.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/nonIterableSpread'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/nullishReceiverError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/nullishReceiverError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectDestructuringEmpty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/objectDestructuringEmpty'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectSpread.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/objectSpread'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectSpread2.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/objectSpread2'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectWithoutProperties.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/objectWithoutProperties'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/objectWithoutPropertiesLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/objectWithoutPropertiesLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/OverloadYield.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/OverloadYield'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/possibleConstructorReturn.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/possibleConstructorReturn'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/readOnlyError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/readOnlyError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/regeneratorRuntime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/regeneratorRuntime'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/set.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/set'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/setFunctionName.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/setFunctionName'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/setPrototypeOf.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/setPrototypeOf'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/skipFirstGeneratorNext.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/skipFirstGeneratorNext'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/slicedToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/slicedToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropBase.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/superPropBase'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropGet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/superPropGet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/superPropSet.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/superPropSet'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteral.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteral'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteralLoose.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/taggedTemplateLiteralLoose'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/tdz.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/tdz'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/temporalRef.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/temporalRef'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/temporalUndefined.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/temporalUndefined'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/toArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/toArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/toConsumableArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/toConsumableArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/toPrimitive.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/toPrimitive'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/toPropertyKey.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/toPropertyKey'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/toSetter.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/toSetter'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/tsRewriteRelativeImportExtensions.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/tsRewriteRelativeImportExtensions'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/typeof.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/typeof'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/unsupportedIterableToArray.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/unsupportedIterableToArray'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/using.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/using'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/usingCtx.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/usingCtx'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapAsyncGenerator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/wrapAsyncGenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapNativeSuper.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/wrapNativeSuper'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/wrapRegExp.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/wrapRegExp'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/helpers/writeOnlyError.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/helpers/writeOnlyError'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/regenerator/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/regenerator'>;
+}
+declare module 'next/dist/compiled/@babel/runtime/regenerator/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@babel/runtime/regenerator'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/cookies/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/cookies'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/cookies/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/cookies'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/ponyfill/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/ponyfill'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/ponyfill/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/ponyfill'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/abort-controller.js.text.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/abort-controller.js.text'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/console.js.text.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/console.js.text'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/crypto.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/crypto'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/events.js.text.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/events.js.text'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/fetch.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/fetch'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/load.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/load'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/stream.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/stream'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/timers.js.text.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/timers.js.text'>;
+}
+declare module 'next/dist/compiled/@edge-runtime/primitives/url.js.text.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@edge-runtime/primitives/url.js.text'>;
+}
+declare module 'next/dist/compiled/@hapi/accept/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@hapi/accept'>;
+}
+declare module 'next/dist/compiled/@hapi/accept/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@hapi/accept'>;
+}
+declare module 'next/dist/compiled/@mswjs/interceptors/ClientRequest/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@mswjs/interceptors/ClientRequest'>;
+}
+declare module 'next/dist/compiled/@mswjs/interceptors/ClientRequest/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@mswjs/interceptors/ClientRequest'>;
+}
+declare module 'next/dist/compiled/@napi-rs/triples/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@napi-rs/triples'>;
+}
+declare module 'next/dist/compiled/@napi-rs/triples/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@napi-rs/triples'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/constants.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/constants'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/fontkit/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/fontkit'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/fontkit/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/fontkit'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/format-available-values.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/format-available-values'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-css-from-google-fonts.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/fetch-css-from-google-fonts'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-font-file.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/fetch-font-file'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/fetch-resource.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/fetch-resource'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/find-font-files-in-css.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/find-font-files-in-css'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/get-fallback-font-override-metrics.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/get-fallback-font-override-metrics'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/get-font-axes.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/get-font-axes'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/get-google-fonts-url.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/get-google-fonts-url'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/get-proxy-agent.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/get-proxy-agent'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/google-fonts-metadata.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/google-fonts-metadata'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/loader'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/retry.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/retry'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/sort-fonts-variant-values.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/sort-fonts-variant-values'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/google/validate-google-font-function-call.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/google/validate-google-font-function-call'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/get-fallback-metrics-from-font-file.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local/get-fallback-metrics-from-font-file'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local/loader'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/pick-font-file-for-fallback-generation.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local/pick-font-file-for-fallback-generation'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/local/validate-local-font-function-call.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/local/validate-local-font-function-call'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/next-font-error.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/next-font-error'>;
+}
+declare module 'next/dist/compiled/@next/font/dist/types.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/dist/types'>;
+}
+declare module 'next/dist/compiled/@next/font/google/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/google'>;
+}
+declare module 'next/dist/compiled/@next/font/google/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/google'>;
+}
+declare module 'next/dist/compiled/@next/font/google/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/google/loader'>;
+}
+declare module 'next/dist/compiled/@next/font/local/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/local'>;
+}
+declare module 'next/dist/compiled/@next/font/local/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/local'>;
+}
+declare module 'next/dist/compiled/@next/font/local/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/font/local/loader'>;
+}
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/internal/helpers.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/react-refresh-utils/dist/internal/helpers'>;
+}
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/internal/ReactRefreshModule.runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/react-refresh-utils/dist/internal/ReactRefreshModule.runtime'>;
+}
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/react-refresh-utils/dist/loader'>;
+}
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/ReactRefreshWebpackPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/react-refresh-utils/dist/ReactRefreshWebpackPlugin'>;
+}
+declare module 'next/dist/compiled/@next/react-refresh-utils/dist/runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@next/react-refresh-utils/dist/runtime'>;
+}
+declare module 'next/dist/compiled/@opentelemetry/api/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@opentelemetry/api'>;
+}
+declare module 'next/dist/compiled/@opentelemetry/api/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@opentelemetry/api'>;
+}
+declare module 'next/dist/compiled/@vercel/nft/index' {
+  declare module.exports: $Exports<'next/dist/compiled/@vercel/nft'>;
+}
+declare module 'next/dist/compiled/@vercel/nft/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@vercel/nft'>;
+}
+declare module 'next/dist/compiled/@vercel/og/index.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@vercel/og/index.edge'>;
+}
+declare module 'next/dist/compiled/@vercel/og/index.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/@vercel/og/index.node'>;
+}
+declare module 'next/dist/compiled/acorn/acorn.js' {
+  declare module.exports: $Exports<'next/dist/compiled/acorn/acorn'>;
+}
+declare module 'next/dist/compiled/amphtml-validator/index' {
+  declare module.exports: $Exports<'next/dist/compiled/amphtml-validator'>;
+}
+declare module 'next/dist/compiled/amphtml-validator/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/amphtml-validator'>;
+}
+declare module 'next/dist/compiled/amphtml-validator/validator_wasm.js' {
+  declare module.exports: $Exports<'next/dist/compiled/amphtml-validator/validator_wasm'>;
+}
+declare module 'next/dist/compiled/anser/index' {
+  declare module.exports: $Exports<'next/dist/compiled/anser'>;
+}
+declare module 'next/dist/compiled/anser/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/anser'>;
+}
+declare module 'next/dist/compiled/assert/assert.js' {
+  declare module.exports: $Exports<'next/dist/compiled/assert/assert'>;
+}
+declare module 'next/dist/compiled/async-retry/index' {
+  declare module.exports: $Exports<'next/dist/compiled/async-retry'>;
+}
+declare module 'next/dist/compiled/async-retry/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/async-retry'>;
+}
+declare module 'next/dist/compiled/async-sema/index' {
+  declare module.exports: $Exports<'next/dist/compiled/async-sema'>;
+}
+declare module 'next/dist/compiled/async-sema/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/async-sema'>;
+}
+declare module 'next/dist/compiled/babel-packages/packages-bundle.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel-packages/packages-bundle'>;
+}
+declare module 'next/dist/compiled/babel/bundle.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/bundle'>;
+}
+declare module 'next/dist/compiled/babel/code-frame.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/code-frame'>;
+}
+declare module 'next/dist/compiled/babel/core-lib-block-hoist-plugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core-lib-block-hoist-plugin'>;
+}
+declare module 'next/dist/compiled/babel/core-lib-config.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core-lib-config'>;
+}
+declare module 'next/dist/compiled/babel/core-lib-normalize-file.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core-lib-normalize-file'>;
+}
+declare module 'next/dist/compiled/babel/core-lib-normalize-opts.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core-lib-normalize-opts'>;
+}
+declare module 'next/dist/compiled/babel/core-lib-plugin-pass.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core-lib-plugin-pass'>;
+}
+declare module 'next/dist/compiled/babel/core.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/core'>;
+}
+declare module 'next/dist/compiled/babel/eslint-parser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/eslint-parser'>;
+}
+declare module 'next/dist/compiled/babel/generator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/generator'>;
+}
+declare module 'next/dist/compiled/babel/parser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/parser'>;
+}
+declare module 'next/dist/compiled/babel/plugin-proposal-class-properties.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-proposal-class-properties'>;
+}
+declare module 'next/dist/compiled/babel/plugin-proposal-export-namespace-from.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-proposal-export-namespace-from'>;
+}
+declare module 'next/dist/compiled/babel/plugin-proposal-numeric-separator.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-proposal-numeric-separator'>;
+}
+declare module 'next/dist/compiled/babel/plugin-proposal-object-rest-spread.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-proposal-object-rest-spread'>;
+}
+declare module 'next/dist/compiled/babel/plugin-syntax-bigint.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-syntax-bigint'>;
+}
+declare module 'next/dist/compiled/babel/plugin-syntax-dynamic-import.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-syntax-dynamic-import'>;
+}
+declare module 'next/dist/compiled/babel/plugin-syntax-import-attributes.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-syntax-import-attributes'>;
+}
+declare module 'next/dist/compiled/babel/plugin-syntax-jsx.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-syntax-jsx'>;
+}
+declare module 'next/dist/compiled/babel/plugin-transform-define.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-transform-define'>;
+}
+declare module 'next/dist/compiled/babel/plugin-transform-modules-commonjs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-transform-modules-commonjs'>;
+}
+declare module 'next/dist/compiled/babel/plugin-transform-react-remove-prop-types.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-transform-react-remove-prop-types'>;
+}
+declare module 'next/dist/compiled/babel/plugin-transform-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/plugin-transform-runtime'>;
+}
+declare module 'next/dist/compiled/babel/preset-env.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/preset-env'>;
+}
+declare module 'next/dist/compiled/babel/preset-react.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/preset-react'>;
+}
+declare module 'next/dist/compiled/babel/preset-typescript.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/preset-typescript'>;
+}
+declare module 'next/dist/compiled/babel/traverse.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/traverse'>;
+}
+declare module 'next/dist/compiled/babel/types.js' {
+  declare module.exports: $Exports<'next/dist/compiled/babel/types'>;
+}
+declare module 'next/dist/compiled/browserify-zlib/index' {
+  declare module.exports: $Exports<'next/dist/compiled/browserify-zlib'>;
+}
+declare module 'next/dist/compiled/browserify-zlib/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/browserify-zlib'>;
+}
+declare module 'next/dist/compiled/browserslist/index' {
+  declare module.exports: $Exports<'next/dist/compiled/browserslist'>;
+}
+declare module 'next/dist/compiled/browserslist/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/browserslist'>;
+}
+declare module 'next/dist/compiled/buffer/index' {
+  declare module.exports: $Exports<'next/dist/compiled/buffer'>;
+}
+declare module 'next/dist/compiled/buffer/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/buffer'>;
+}
+declare module 'next/dist/compiled/busboy/index' {
+  declare module.exports: $Exports<'next/dist/compiled/busboy'>;
+}
+declare module 'next/dist/compiled/busboy/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/busboy'>;
+}
+declare module 'next/dist/compiled/bytes/index' {
+  declare module.exports: $Exports<'next/dist/compiled/bytes'>;
+}
+declare module 'next/dist/compiled/bytes/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/bytes'>;
+}
+declare module 'next/dist/compiled/ci-info/index' {
+  declare module.exports: $Exports<'next/dist/compiled/ci-info'>;
+}
+declare module 'next/dist/compiled/ci-info/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/ci-info'>;
+}
+declare module 'next/dist/compiled/cli-select/index' {
+  declare module.exports: $Exports<'next/dist/compiled/cli-select'>;
+}
+declare module 'next/dist/compiled/cli-select/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/cli-select'>;
+}
+declare module 'next/dist/compiled/client-only/error.js' {
+  declare module.exports: $Exports<'next/dist/compiled/client-only/error'>;
+}
+declare module 'next/dist/compiled/client-only/index' {
+  declare module.exports: $Exports<'next/dist/compiled/client-only'>;
+}
+declare module 'next/dist/compiled/client-only/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/client-only'>;
+}
+declare module 'next/dist/compiled/commander/index' {
+  declare module.exports: $Exports<'next/dist/compiled/commander'>;
+}
+declare module 'next/dist/compiled/commander/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/commander'>;
+}
+declare module 'next/dist/compiled/comment-json/index' {
+  declare module.exports: $Exports<'next/dist/compiled/comment-json'>;
+}
+declare module 'next/dist/compiled/comment-json/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/comment-json'>;
+}
+declare module 'next/dist/compiled/compression/index' {
+  declare module.exports: $Exports<'next/dist/compiled/compression'>;
+}
+declare module 'next/dist/compiled/compression/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/compression'>;
+}
+declare module 'next/dist/compiled/conf/index' {
+  declare module.exports: $Exports<'next/dist/compiled/conf'>;
+}
+declare module 'next/dist/compiled/conf/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/conf'>;
+}
+declare module 'next/dist/compiled/content-disposition/index' {
+  declare module.exports: $Exports<'next/dist/compiled/content-disposition'>;
+}
+declare module 'next/dist/compiled/content-disposition/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/content-disposition'>;
+}
+declare module 'next/dist/compiled/content-type/index' {
+  declare module.exports: $Exports<'next/dist/compiled/content-type'>;
+}
+declare module 'next/dist/compiled/content-type/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/content-type'>;
+}
+declare module 'next/dist/compiled/cookie/index' {
+  declare module.exports: $Exports<'next/dist/compiled/cookie'>;
+}
+declare module 'next/dist/compiled/cookie/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/cookie'>;
+}
+declare module 'next/dist/compiled/cross-spawn/index' {
+  declare module.exports: $Exports<'next/dist/compiled/cross-spawn'>;
+}
+declare module 'next/dist/compiled/cross-spawn/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/cross-spawn'>;
+}
+declare module 'next/dist/compiled/crypto-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/crypto-browserify'>;
+}
+declare module 'next/dist/compiled/crypto-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/crypto-browserify'>;
+}
+declare module 'next/dist/compiled/css.escape/css.escape.js' {
+  declare module.exports: $Exports<'next/dist/compiled/css.escape/css.escape'>;
+}
+declare module 'next/dist/compiled/cssnano-simple/index' {
+  declare module.exports: $Exports<'next/dist/compiled/cssnano-simple'>;
+}
+declare module 'next/dist/compiled/cssnano-simple/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/cssnano-simple'>;
+}
+declare module 'next/dist/compiled/data-uri-to-buffer/index' {
+  declare module.exports: $Exports<'next/dist/compiled/data-uri-to-buffer'>;
+}
+declare module 'next/dist/compiled/data-uri-to-buffer/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/data-uri-to-buffer'>;
+}
+declare module 'next/dist/compiled/debug/index' {
+  declare module.exports: $Exports<'next/dist/compiled/debug'>;
+}
+declare module 'next/dist/compiled/debug/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/debug'>;
+}
+declare module 'next/dist/compiled/devalue/devalue.umd.js' {
+  declare module.exports: $Exports<'next/dist/compiled/devalue/devalue.umd'>;
+}
+declare module 'next/dist/compiled/domain-browser/index' {
+  declare module.exports: $Exports<'next/dist/compiled/domain-browser'>;
+}
+declare module 'next/dist/compiled/domain-browser/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/domain-browser'>;
+}
+declare module 'next/dist/compiled/edge-runtime/index' {
+  declare module.exports: $Exports<'next/dist/compiled/edge-runtime'>;
+}
+declare module 'next/dist/compiled/edge-runtime/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/edge-runtime'>;
+}
+declare module 'next/dist/compiled/events/events.js' {
+  declare module.exports: $Exports<'next/dist/compiled/events/events'>;
+}
+declare module 'next/dist/compiled/find-up/index' {
+  declare module.exports: $Exports<'next/dist/compiled/find-up'>;
+}
+declare module 'next/dist/compiled/find-up/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/find-up'>;
+}
+declare module 'next/dist/compiled/fresh/index' {
+  declare module.exports: $Exports<'next/dist/compiled/fresh'>;
+}
+declare module 'next/dist/compiled/fresh/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/fresh'>;
+}
+declare module 'next/dist/compiled/glob/glob.js' {
+  declare module.exports: $Exports<'next/dist/compiled/glob/glob'>;
+}
+declare module 'next/dist/compiled/gzip-size/index' {
+  declare module.exports: $Exports<'next/dist/compiled/gzip-size'>;
+}
+declare module 'next/dist/compiled/gzip-size/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/gzip-size'>;
+}
+declare module 'next/dist/compiled/http-proxy-agent/index' {
+  declare module.exports: $Exports<'next/dist/compiled/http-proxy-agent'>;
+}
+declare module 'next/dist/compiled/http-proxy-agent/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/http-proxy-agent'>;
+}
+declare module 'next/dist/compiled/http-proxy/index' {
+  declare module.exports: $Exports<'next/dist/compiled/http-proxy'>;
+}
+declare module 'next/dist/compiled/http-proxy/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/http-proxy'>;
+}
+declare module 'next/dist/compiled/https-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/https-browserify'>;
+}
+declare module 'next/dist/compiled/https-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/https-browserify'>;
+}
+declare module 'next/dist/compiled/https-proxy-agent/index' {
+  declare module.exports: $Exports<'next/dist/compiled/https-proxy-agent'>;
+}
+declare module 'next/dist/compiled/https-proxy-agent/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/https-proxy-agent'>;
+}
+declare module 'next/dist/compiled/icss-utils/index' {
+  declare module.exports: $Exports<'next/dist/compiled/icss-utils'>;
+}
+declare module 'next/dist/compiled/icss-utils/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/icss-utils'>;
+}
+declare module 'next/dist/compiled/ignore-loader/index' {
+  declare module.exports: $Exports<'next/dist/compiled/ignore-loader'>;
+}
+declare module 'next/dist/compiled/ignore-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/ignore-loader'>;
+}
+declare module 'next/dist/compiled/image-size/index' {
+  declare module.exports: $Exports<'next/dist/compiled/image-size'>;
+}
+declare module 'next/dist/compiled/image-size/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/image-size'>;
+}
+declare module 'next/dist/compiled/is-animated/index' {
+  declare module.exports: $Exports<'next/dist/compiled/is-animated'>;
+}
+declare module 'next/dist/compiled/is-animated/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/is-animated'>;
+}
+declare module 'next/dist/compiled/is-docker/index' {
+  declare module.exports: $Exports<'next/dist/compiled/is-docker'>;
+}
+declare module 'next/dist/compiled/is-docker/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/is-docker'>;
+}
+declare module 'next/dist/compiled/is-wsl/index' {
+  declare module.exports: $Exports<'next/dist/compiled/is-wsl'>;
+}
+declare module 'next/dist/compiled/is-wsl/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/is-wsl'>;
+}
+declare module 'next/dist/compiled/jest-worker/index' {
+  declare module.exports: $Exports<'next/dist/compiled/jest-worker'>;
+}
+declare module 'next/dist/compiled/jest-worker/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/jest-worker'>;
+}
+declare module 'next/dist/compiled/jest-worker/processChild.js' {
+  declare module.exports: $Exports<'next/dist/compiled/jest-worker/processChild'>;
+}
+declare module 'next/dist/compiled/jest-worker/threadChild.js' {
+  declare module.exports: $Exports<'next/dist/compiled/jest-worker/threadChild'>;
+}
+declare module 'next/dist/compiled/json5/index' {
+  declare module.exports: $Exports<'next/dist/compiled/json5'>;
+}
+declare module 'next/dist/compiled/json5/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/json5'>;
+}
+declare module 'next/dist/compiled/jsonwebtoken/index' {
+  declare module.exports: $Exports<'next/dist/compiled/jsonwebtoken'>;
+}
+declare module 'next/dist/compiled/jsonwebtoken/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/jsonwebtoken'>;
+}
+declare module 'next/dist/compiled/loader-runner/LoaderRunner.js' {
+  declare module.exports: $Exports<'next/dist/compiled/loader-runner/LoaderRunner'>;
+}
+declare module 'next/dist/compiled/loader-utils2/index' {
+  declare module.exports: $Exports<'next/dist/compiled/loader-utils2'>;
+}
+declare module 'next/dist/compiled/loader-utils2/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/loader-utils2'>;
+}
+declare module 'next/dist/compiled/loader-utils3/index' {
+  declare module.exports: $Exports<'next/dist/compiled/loader-utils3'>;
+}
+declare module 'next/dist/compiled/loader-utils3/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/loader-utils3'>;
+}
+declare module 'next/dist/compiled/lodash.curry/index' {
+  declare module.exports: $Exports<'next/dist/compiled/lodash.curry'>;
+}
+declare module 'next/dist/compiled/lodash.curry/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/lodash.curry'>;
+}
+declare module 'next/dist/compiled/lru-cache/index' {
+  declare module.exports: $Exports<'next/dist/compiled/lru-cache'>;
+}
+declare module 'next/dist/compiled/lru-cache/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/lru-cache'>;
+}
+declare module 'next/dist/compiled/mini-css-extract-plugin/cjs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/mini-css-extract-plugin/cjs'>;
+}
+declare module 'next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement.js' {
+  declare module.exports: $Exports<'next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement'>;
+}
+declare module 'next/dist/compiled/mini-css-extract-plugin/index' {
+  declare module.exports: $Exports<'next/dist/compiled/mini-css-extract-plugin'>;
+}
+declare module 'next/dist/compiled/mini-css-extract-plugin/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/mini-css-extract-plugin'>;
+}
+declare module 'next/dist/compiled/mini-css-extract-plugin/loader.js' {
+  declare module.exports: $Exports<'next/dist/compiled/mini-css-extract-plugin/loader'>;
+}
+declare module 'next/dist/compiled/native-url/index' {
+  declare module.exports: $Exports<'next/dist/compiled/native-url'>;
+}
+declare module 'next/dist/compiled/native-url/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/native-url'>;
+}
+declare module 'next/dist/compiled/neo-async/async.js' {
+  declare module.exports: $Exports<'next/dist/compiled/neo-async/async'>;
+}
+declare module 'next/dist/compiled/next-devtools/index' {
+  declare module.exports: $Exports<'next/dist/compiled/next-devtools'>;
+}
+declare module 'next/dist/compiled/next-devtools/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-devtools'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-experimental.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-experimental.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-turbo-experimental.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-turbo.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-turbo.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-page-turbo.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page-turbo.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-page.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-page.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-page.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-experimental.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-experimental.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-turbo-experimental.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-turbo.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-turbo.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-route-turbo.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route-turbo.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/app-route.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/app-route.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/app-route.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo-experimental.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo-experimental.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js-turbo.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/dist_client_dev_noop-turbopack-hmr_js.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/pages-api-turbo.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-api-turbo.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/pages-api-turbo.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-api-turbo.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/pages-api.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-api.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/pages-api.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-api.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/pages-turbo.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-turbo.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/pages-turbo.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages-turbo.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/pages.runtime.dev.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages.runtime.dev'>;
+}
+declare module 'next/dist/compiled/next-server/pages.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/pages.runtime.prod'>;
+}
+declare module 'next/dist/compiled/next-server/server.runtime.prod.js' {
+  declare module.exports: $Exports<'next/dist/compiled/next-server/server.runtime.prod'>;
+}
+declare module 'next/dist/compiled/node-html-parser/index' {
+  declare module.exports: $Exports<'next/dist/compiled/node-html-parser'>;
+}
+declare module 'next/dist/compiled/node-html-parser/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/node-html-parser'>;
+}
+declare module 'next/dist/compiled/ora/index' {
+  declare module.exports: $Exports<'next/dist/compiled/ora'>;
+}
+declare module 'next/dist/compiled/ora/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/ora'>;
+}
+declare module 'next/dist/compiled/os-browserify/browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/os-browserify/browser'>;
+}
+declare module 'next/dist/compiled/p-limit/index' {
+  declare module.exports: $Exports<'next/dist/compiled/p-limit'>;
+}
+declare module 'next/dist/compiled/p-limit/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/p-limit'>;
+}
+declare module 'next/dist/compiled/p-queue/index' {
+  declare module.exports: $Exports<'next/dist/compiled/p-queue'>;
+}
+declare module 'next/dist/compiled/p-queue/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/p-queue'>;
+}
+declare module 'next/dist/compiled/path-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/path-browserify'>;
+}
+declare module 'next/dist/compiled/path-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/path-browserify'>;
+}
+declare module 'next/dist/compiled/path-to-regexp/index' {
+  declare module.exports: $Exports<'next/dist/compiled/path-to-regexp'>;
+}
+declare module 'next/dist/compiled/path-to-regexp/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/path-to-regexp'>;
+}
+declare module 'next/dist/compiled/picomatch/index' {
+  declare module.exports: $Exports<'next/dist/compiled/picomatch'>;
+}
+declare module 'next/dist/compiled/picomatch/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/picomatch'>;
+}
+declare module 'next/dist/compiled/postcss-flexbugs-fixes/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-flexbugs-fixes'>;
+}
+declare module 'next/dist/compiled/postcss-flexbugs-fixes/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-flexbugs-fixes'>;
+}
+declare module 'next/dist/compiled/postcss-modules-extract-imports/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-extract-imports'>;
+}
+declare module 'next/dist/compiled/postcss-modules-extract-imports/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-extract-imports'>;
+}
+declare module 'next/dist/compiled/postcss-modules-local-by-default/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-local-by-default'>;
+}
+declare module 'next/dist/compiled/postcss-modules-local-by-default/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-local-by-default'>;
+}
+declare module 'next/dist/compiled/postcss-modules-scope/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-scope'>;
+}
+declare module 'next/dist/compiled/postcss-modules-scope/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-scope'>;
+}
+declare module 'next/dist/compiled/postcss-modules-values/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-values'>;
+}
+declare module 'next/dist/compiled/postcss-modules-values/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-modules-values'>;
+}
+declare module 'next/dist/compiled/postcss-plugin-stub-for-cssnano-simple/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-plugin-stub-for-cssnano-simple'>;
+}
+declare module 'next/dist/compiled/postcss-plugin-stub-for-cssnano-simple/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-plugin-stub-for-cssnano-simple'>;
+}
+declare module 'next/dist/compiled/postcss-safe-parser/safe-parse.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-safe-parser/safe-parse'>;
+}
+declare module 'next/dist/compiled/postcss-scss/scss-syntax.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-scss/scss-syntax'>;
+}
+declare module 'next/dist/compiled/postcss-value-parser/index' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-value-parser'>;
+}
+declare module 'next/dist/compiled/postcss-value-parser/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/postcss-value-parser'>;
+}
+declare module 'next/dist/compiled/process/browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/process/browser'>;
+}
+declare module 'next/dist/compiled/punycode/punycode.js' {
+  declare module.exports: $Exports<'next/dist/compiled/punycode/punycode'>;
+}
+declare module 'next/dist/compiled/querystring-es3/index' {
+  declare module.exports: $Exports<'next/dist/compiled/querystring-es3'>;
+}
+declare module 'next/dist/compiled/querystring-es3/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/querystring-es3'>;
+}
+declare module 'next/dist/compiled/raw-body/index' {
+  declare module.exports: $Exports<'next/dist/compiled/raw-body'>;
+}
+declare module 'next/dist/compiled/raw-body/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/raw-body'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-client.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-profiling.profiling'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.browser.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server-legacy.node.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.bun.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.bun.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-test-utils.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-test-utils.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom-unstable_testing.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.development'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/cjs/react-dom.react-server.production'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/client'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/client.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/client.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/profiling'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/profiling.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/profiling.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/react-dom.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/react-dom.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/server.browser'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/server.edge'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/server.node'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/server.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/server.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/static.edge'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/static.node'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/static.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/static.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom-experimental/unstable_testing.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom-experimental/unstable_testing.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-client.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-client.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-client.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-client.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-profiling.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-profiling.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-profiling.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-profiling.profiling'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.node.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.bun.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.bun.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-test-utils.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom-test-utils.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom.production'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom.react-server.development'>;
+}
+declare module 'next/dist/compiled/react-dom/cjs/react-dom.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/cjs/react-dom.react-server.production'>;
+}
+declare module 'next/dist/compiled/react-dom/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/client'>;
+}
+declare module 'next/dist/compiled/react-dom/client.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/client.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom'>;
+}
+declare module 'next/dist/compiled/react-dom/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom'>;
+}
+declare module 'next/dist/compiled/react-dom/profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/profiling'>;
+}
+declare module 'next/dist/compiled/react-dom/profiling.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/profiling.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom/react-dom.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/react-dom.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/server.browser'>;
+}
+declare module 'next/dist/compiled/react-dom/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/server.edge'>;
+}
+declare module 'next/dist/compiled/react-dom/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/server'>;
+}
+declare module 'next/dist/compiled/react-dom/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/server.node'>;
+}
+declare module 'next/dist/compiled/react-dom/server.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/server.react-server'>;
+}
+declare module 'next/dist/compiled/react-dom/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/static.edge'>;
+}
+declare module 'next/dist/compiled/react-dom/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/static.node'>;
+}
+declare module 'next/dist/compiled/react-dom/static.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-dom/static.react-server'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-compiler-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-dev-runtime.react-server.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react-jsx-runtime.react-server.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react.react-server.development'>;
+}
+declare module 'next/dist/compiled/react-experimental/cjs/react.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/cjs/react.react-server.production'>;
+}
+declare module 'next/dist/compiled/react-experimental/compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/compiler-runtime'>;
+}
+declare module 'next/dist/compiled/react-experimental/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental'>;
+}
+declare module 'next/dist/compiled/react-experimental/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental'>;
+}
+declare module 'next/dist/compiled/react-experimental/jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/jsx-dev-runtime'>;
+}
+declare module 'next/dist/compiled/react-experimental/jsx-dev-runtime.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/jsx-dev-runtime.react-server'>;
+}
+declare module 'next/dist/compiled/react-experimental/jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/jsx-runtime'>;
+}
+declare module 'next/dist/compiled/react-experimental/jsx-runtime.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/jsx-runtime.react-server'>;
+}
+declare module 'next/dist/compiled/react-experimental/react.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-experimental/react.react-server'>;
+}
+declare module 'next/dist/compiled/react-is/cjs/react-is.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-is/cjs/react-is.development'>;
+}
+declare module 'next/dist/compiled/react-is/cjs/react-is.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-is/cjs/react-is.production'>;
+}
+declare module 'next/dist/compiled/react-is/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-is'>;
+}
+declare module 'next/dist/compiled/react-is/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-is'>;
+}
+declare module 'next/dist/compiled/react-refresh/babel.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/babel'>;
+}
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-babel.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/cjs/react-refresh-babel.development'>;
+}
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-babel.production.min.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/cjs/react-refresh-babel.production.min'>;
+}
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.development'>;
+}
+declare module 'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.production.min.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/cjs/react-refresh-runtime.production.min'>;
+}
+declare module 'next/dist/compiled/react-refresh/runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-refresh/runtime'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-client.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/cjs/react-server-dom-turbopack-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/client.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/client.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/client'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/client.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/client.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/server.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/server.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/server'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/server.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/static.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/static.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/static'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack-experimental/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack-experimental/static.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/client.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/client.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/client'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/client.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/client.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/server.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/server.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/server'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/server.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/static.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/static.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/static'>;
+}
+declare module 'next/dist/compiled/react-server-dom-turbopack/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-turbopack/static.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-client.node.unbundled.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-node-register.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-node-register'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-plugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-plugin'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/cjs/react-server-dom-webpack-server.node.unbundled.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/client.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/client.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/client'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/client.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/client.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/client.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/node-register.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/node-register'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/plugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/plugin'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/server.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/server.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/server'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/server.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/server.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/server.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/static.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/static.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/static'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/static.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack-experimental/static.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack-experimental/static.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.node.unbundled.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-node-register.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-node-register'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-plugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-plugin'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.browser.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.edge.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.development'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.unbundled.production'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/client.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/client.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/client.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/client.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/client.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/client'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/client.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/client.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/client.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/client.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/node-register.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/node-register'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/plugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/plugin'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/server.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/server.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/server.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/server.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/server'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/server.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/server.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/server.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/server.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/static.browser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/static.browser'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/static.edge.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/static.edge'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/static.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/static'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/static.node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/static.node'>;
+}
+declare module 'next/dist/compiled/react-server-dom-webpack/static.node.unbundled.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react-server-dom-webpack/static.node.unbundled'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-compiler-runtime.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-compiler-runtime.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-compiler-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-compiler-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-dev-runtime.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-dev-runtime.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-dev-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-dev-runtime.react-server.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-runtime.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-runtime.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.profiling.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-runtime.profiling'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react-jsx-runtime.react-server.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react.production'>;
+}
+declare module 'next/dist/compiled/react/cjs/react.react-server.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react.react-server.development'>;
+}
+declare module 'next/dist/compiled/react/cjs/react.react-server.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/cjs/react.react-server.production'>;
+}
+declare module 'next/dist/compiled/react/compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/compiler-runtime'>;
+}
+declare module 'next/dist/compiled/react/index' {
+  declare module.exports: $Exports<'next/dist/compiled/react'>;
+}
+declare module 'next/dist/compiled/react/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react'>;
+}
+declare module 'next/dist/compiled/react/jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/jsx-dev-runtime'>;
+}
+declare module 'next/dist/compiled/react/jsx-dev-runtime.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/jsx-dev-runtime.react-server'>;
+}
+declare module 'next/dist/compiled/react/jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/jsx-runtime'>;
+}
+declare module 'next/dist/compiled/react/jsx-runtime.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/jsx-runtime.react-server'>;
+}
+declare module 'next/dist/compiled/react/react.react-server.js' {
+  declare module.exports: $Exports<'next/dist/compiled/react/react.react-server'>;
+}
+declare module 'next/dist/compiled/regenerator-runtime/path.js' {
+  declare module.exports: $Exports<'next/dist/compiled/regenerator-runtime/path'>;
+}
+declare module 'next/dist/compiled/regenerator-runtime/runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/regenerator-runtime/runtime'>;
+}
+declare module 'next/dist/compiled/safe-stable-stringify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/safe-stable-stringify'>;
+}
+declare module 'next/dist/compiled/safe-stable-stringify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/safe-stable-stringify'>;
+}
+declare module 'next/dist/compiled/sass-loader/cjs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/sass-loader/cjs'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.development'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_mock.production'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.development'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler-unstable_post_task.production'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler.development'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.development'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler.native.production'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/cjs/scheduler.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/cjs/scheduler.production'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/index' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/index.native.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/index.native'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/unstable_mock.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/unstable_mock'>;
+}
+declare module 'next/dist/compiled/scheduler-experimental/unstable_post_task.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler-experimental/unstable_post_task'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.development'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.development'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler-unstable_post_task.production'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler.development'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.native.development.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler.native.development'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.native.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler.native.production'>;
+}
+declare module 'next/dist/compiled/scheduler/cjs/scheduler.production.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/cjs/scheduler.production'>;
+}
+declare module 'next/dist/compiled/scheduler/index' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler'>;
+}
+declare module 'next/dist/compiled/scheduler/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler'>;
+}
+declare module 'next/dist/compiled/scheduler/index.native.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/index.native'>;
+}
+declare module 'next/dist/compiled/scheduler/unstable_mock.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/unstable_mock'>;
+}
+declare module 'next/dist/compiled/scheduler/unstable_post_task.js' {
+  declare module.exports: $Exports<'next/dist/compiled/scheduler/unstable_post_task'>;
+}
+declare module 'next/dist/compiled/schema-utils2/index' {
+  declare module.exports: $Exports<'next/dist/compiled/schema-utils2'>;
+}
+declare module 'next/dist/compiled/schema-utils2/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/schema-utils2'>;
+}
+declare module 'next/dist/compiled/schema-utils3/index' {
+  declare module.exports: $Exports<'next/dist/compiled/schema-utils3'>;
+}
+declare module 'next/dist/compiled/schema-utils3/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/schema-utils3'>;
+}
+declare module 'next/dist/compiled/semver/index' {
+  declare module.exports: $Exports<'next/dist/compiled/semver'>;
+}
+declare module 'next/dist/compiled/semver/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/semver'>;
+}
+declare module 'next/dist/compiled/send/index' {
+  declare module.exports: $Exports<'next/dist/compiled/send'>;
+}
+declare module 'next/dist/compiled/send/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/send'>;
+}
+declare module 'next/dist/compiled/server-only/empty.js' {
+  declare module.exports: $Exports<'next/dist/compiled/server-only/empty'>;
+}
+declare module 'next/dist/compiled/server-only/index' {
+  declare module.exports: $Exports<'next/dist/compiled/server-only'>;
+}
+declare module 'next/dist/compiled/server-only/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/server-only'>;
+}
+declare module 'next/dist/compiled/setimmediate/setImmediate.js' {
+  declare module.exports: $Exports<'next/dist/compiled/setimmediate/setImmediate'>;
+}
+declare module 'next/dist/compiled/shell-quote/index' {
+  declare module.exports: $Exports<'next/dist/compiled/shell-quote'>;
+}
+declare module 'next/dist/compiled/shell-quote/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/shell-quote'>;
+}
+declare module 'next/dist/compiled/source-map/source-map.js' {
+  declare module.exports: $Exports<'next/dist/compiled/source-map/source-map'>;
+}
+declare module 'next/dist/compiled/source-map08/source-map.js' {
+  declare module.exports: $Exports<'next/dist/compiled/source-map08/source-map'>;
+}
+declare module 'next/dist/compiled/stacktrace-parser/stack-trace-parser.cjs.js' {
+  declare module.exports: $Exports<'next/dist/compiled/stacktrace-parser/stack-trace-parser.cjs'>;
+}
+declare module 'next/dist/compiled/stream-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/stream-browserify'>;
+}
+declare module 'next/dist/compiled/stream-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/stream-browserify'>;
+}
+declare module 'next/dist/compiled/stream-http/index' {
+  declare module.exports: $Exports<'next/dist/compiled/stream-http'>;
+}
+declare module 'next/dist/compiled/stream-http/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/stream-http'>;
+}
+declare module 'next/dist/compiled/string_decoder/string_decoder.js' {
+  declare module.exports: $Exports<'next/dist/compiled/string_decoder/string_decoder'>;
+}
+declare module 'next/dist/compiled/string-hash/index' {
+  declare module.exports: $Exports<'next/dist/compiled/string-hash'>;
+}
+declare module 'next/dist/compiled/string-hash/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/string-hash'>;
+}
+declare module 'next/dist/compiled/strip-ansi/index' {
+  declare module.exports: $Exports<'next/dist/compiled/strip-ansi'>;
+}
+declare module 'next/dist/compiled/strip-ansi/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/strip-ansi'>;
+}
+declare module 'next/dist/compiled/tar/index' {
+  declare module.exports: $Exports<'next/dist/compiled/tar'>;
+}
+declare module 'next/dist/compiled/tar/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/tar'>;
+}
+declare module 'next/dist/compiled/terser/bundle.min.js' {
+  declare module.exports: $Exports<'next/dist/compiled/terser/bundle.min'>;
+}
+declare module 'next/dist/compiled/text-table/index' {
+  declare module.exports: $Exports<'next/dist/compiled/text-table'>;
+}
+declare module 'next/dist/compiled/text-table/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/text-table'>;
+}
+declare module 'next/dist/compiled/timers-browserify/main.js' {
+  declare module.exports: $Exports<'next/dist/compiled/timers-browserify/main'>;
+}
+declare module 'next/dist/compiled/tty-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/tty-browserify'>;
+}
+declare module 'next/dist/compiled/tty-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/tty-browserify'>;
+}
+declare module 'next/dist/compiled/ua-parser-js/ua-parser.js' {
+  declare module.exports: $Exports<'next/dist/compiled/ua-parser-js/ua-parser'>;
+}
+declare module 'next/dist/compiled/unistore/unistore.js' {
+  declare module.exports: $Exports<'next/dist/compiled/unistore/unistore'>;
+}
+declare module 'next/dist/compiled/util/util.js' {
+  declare module.exports: $Exports<'next/dist/compiled/util/util'>;
+}
+declare module 'next/dist/compiled/vm-browserify/index' {
+  declare module.exports: $Exports<'next/dist/compiled/vm-browserify'>;
+}
+declare module 'next/dist/compiled/vm-browserify/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/vm-browserify'>;
+}
+declare module 'next/dist/compiled/watchpack/watchpack.js' {
+  declare module.exports: $Exports<'next/dist/compiled/watchpack/watchpack'>;
+}
+declare module 'next/dist/compiled/web-vitals-attribution/web-vitals.attribution.js' {
+  declare module.exports: $Exports<'next/dist/compiled/web-vitals-attribution/web-vitals.attribution'>;
+}
+declare module 'next/dist/compiled/web-vitals/web-vitals.js' {
+  declare module.exports: $Exports<'next/dist/compiled/web-vitals/web-vitals'>;
+}
+declare module 'next/dist/compiled/webpack-sources1/index' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack-sources1'>;
+}
+declare module 'next/dist/compiled/webpack-sources1/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack-sources1'>;
+}
+declare module 'next/dist/compiled/webpack-sources3/index' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack-sources3'>;
+}
+declare module 'next/dist/compiled/webpack-sources3/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack-sources3'>;
+}
+declare module 'next/dist/compiled/webpack/BasicEvaluatedExpression.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/BasicEvaluatedExpression'>;
+}
+declare module 'next/dist/compiled/webpack/bundle5.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/bundle5'>;
+}
+declare module 'next/dist/compiled/webpack/ExternalsPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/ExternalsPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/FetchCompileAsyncWasmPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/FetchCompileAsyncWasmPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/FetchCompileWasmPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/FetchCompileWasmPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/FetchCompileWasmTemplatePlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/FetchCompileWasmTemplatePlugin'>;
+}
+declare module 'next/dist/compiled/webpack/GraphHelpers.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/GraphHelpers'>;
+}
+declare module 'next/dist/compiled/webpack/HotModuleReplacement.runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/HotModuleReplacement.runtime'>;
+}
+declare module 'next/dist/compiled/webpack/JavascriptHotModuleReplacement.runtime.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/JavascriptHotModuleReplacement.runtime'>;
+}
+declare module 'next/dist/compiled/webpack/lazy-compilation-node.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/lazy-compilation-node'>;
+}
+declare module 'next/dist/compiled/webpack/lazy-compilation-web.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/lazy-compilation-web'>;
+}
+declare module 'next/dist/compiled/webpack/LibraryTemplatePlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/LibraryTemplatePlugin'>;
+}
+declare module 'next/dist/compiled/webpack/LimitChunkCountPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/LimitChunkCountPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/ModuleFilenameHelpers.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/ModuleFilenameHelpers'>;
+}
+declare module 'next/dist/compiled/webpack/NodeEnvironmentPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/NodeEnvironmentPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/NodeTargetPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/NodeTargetPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/NodeTemplatePlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/NodeTemplatePlugin'>;
+}
+declare module 'next/dist/compiled/webpack/NormalModule.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/NormalModule'>;
+}
+declare module 'next/dist/compiled/webpack/package.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/package'>;
+}
+declare module 'next/dist/compiled/webpack/SingleEntryPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/SingleEntryPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/SourceMapDevToolModuleOptionsPlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/SourceMapDevToolModuleOptionsPlugin'>;
+}
+declare module 'next/dist/compiled/webpack/sources.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/sources'>;
+}
+declare module 'next/dist/compiled/webpack/webpack-lib.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/webpack-lib'>;
+}
+declare module 'next/dist/compiled/webpack/webpack.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/webpack'>;
+}
+declare module 'next/dist/compiled/webpack/WebWorkerTemplatePlugin.js' {
+  declare module.exports: $Exports<'next/dist/compiled/webpack/WebWorkerTemplatePlugin'>;
+}
+declare module 'next/dist/compiled/ws/index' {
+  declare module.exports: $Exports<'next/dist/compiled/ws'>;
+}
+declare module 'next/dist/compiled/ws/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/ws'>;
+}
+declare module 'next/dist/compiled/zod-validation-error/index' {
+  declare module.exports: $Exports<'next/dist/compiled/zod-validation-error'>;
+}
+declare module 'next/dist/compiled/zod-validation-error/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/zod-validation-error'>;
+}
+declare module 'next/dist/compiled/zod/index' {
+  declare module.exports: $Exports<'next/dist/compiled/zod'>;
+}
+declare module 'next/dist/compiled/zod/index.js' {
+  declare module.exports: $Exports<'next/dist/compiled/zod'>;
+}
+declare module 'next/dist/diagnostics/build-diagnostics.js' {
+  declare module.exports: $Exports<'next/dist/diagnostics/build-diagnostics'>;
+}
+declare module 'next/dist/diagnostics/build-diagnostics.test.js' {
+  declare module.exports: $Exports<'next/dist/diagnostics/build-diagnostics.test'>;
+}
+declare module 'next/dist/esm/api/app-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/app-dynamic'>;
+}
+declare module 'next/dist/esm/api/app.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/app'>;
+}
+declare module 'next/dist/esm/api/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/constants'>;
+}
+declare module 'next/dist/esm/api/document.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/document'>;
+}
+declare module 'next/dist/esm/api/dynamic.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/dynamic'>;
+}
+declare module 'next/dist/esm/api/form.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/form'>;
+}
+declare module 'next/dist/esm/api/head.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/head'>;
+}
+declare module 'next/dist/esm/api/headers.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/headers'>;
+}
+declare module 'next/dist/esm/api/image.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/image'>;
+}
+declare module 'next/dist/esm/api/link.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/link'>;
+}
+declare module 'next/dist/esm/api/navigation.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/navigation'>;
+}
+declare module 'next/dist/esm/api/navigation.react-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/navigation.react-server'>;
+}
+declare module 'next/dist/esm/api/og.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/og'>;
+}
+declare module 'next/dist/esm/api/router.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/router'>;
+}
+declare module 'next/dist/esm/api/script.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/script'>;
+}
+declare module 'next/dist/esm/api/server.js' {
+  declare module.exports: $Exports<'next/dist/esm/api/server'>;
+}
+declare module 'next/dist/esm/build/adapter/build-complete.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/adapter/build-complete'>;
+}
+declare module 'next/dist/esm/build/after-production-compile.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/after-production-compile'>;
+}
+declare module 'next/dist/esm/build/analysis/extract-const-value.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/analysis/extract-const-value'>;
+}
+declare module 'next/dist/esm/build/analysis/get-page-static-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/analysis/get-page-static-info'>;
+}
+declare module 'next/dist/esm/build/analysis/parse-module.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/analysis/parse-module'>;
+}
+declare module 'next/dist/esm/build/babel/loader/get-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/loader/get-config'>;
+}
+declare module 'next/dist/esm/build/babel/loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/loader'>;
+}
+declare module 'next/dist/esm/build/babel/loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/loader'>;
+}
+declare module 'next/dist/esm/build/babel/loader/transform.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/loader/transform'>;
+}
+declare module 'next/dist/esm/build/babel/loader/util.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/loader/util'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/amp-attributes.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/amp-attributes'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/commonjs.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/commonjs'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/jsx-pragma.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/jsx-pragma'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/next-font-unsupported.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/next-font-unsupported'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/next-page-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/next-page-config'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/next-page-disallow-re-export-all-exports.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/next-page-disallow-re-export-all-exports'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/next-ssg-transform.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/next-ssg-transform'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/optimize-hook-destructuring.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/optimize-hook-destructuring'>;
+}
+declare module 'next/dist/esm/build/babel/plugins/react-loadable-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/plugins/react-loadable-plugin'>;
+}
+declare module 'next/dist/esm/build/babel/preset.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/babel/preset'>;
+}
+declare module 'next/dist/esm/build/build-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/build-context'>;
+}
+declare module 'next/dist/esm/build/collect-build-traces.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/collect-build-traces'>;
+}
+declare module 'next/dist/esm/build/compiler.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/compiler'>;
+}
+declare module 'next/dist/esm/build/create-compiler-aliases.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/create-compiler-aliases'>;
+}
+declare module 'next/dist/esm/build/define-env.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/define-env'>;
+}
+declare module 'next/dist/esm/build/deployment-id.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/deployment-id'>;
+}
+declare module 'next/dist/esm/build/duration-to-string.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/duration-to-string'>;
+}
+declare module 'next/dist/esm/build/entries.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/entries'>;
+}
+declare module 'next/dist/esm/build/generate-build-id.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/generate-build-id'>;
+}
+declare module 'next/dist/esm/build/get-babel-config-file.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/get-babel-config-file'>;
+}
+declare module 'next/dist/esm/build/get-babel-loader-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/get-babel-loader-config'>;
+}
+declare module 'next/dist/esm/build/handle-entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/handle-entrypoints'>;
+}
+declare module 'next/dist/esm/build/handle-externals.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/handle-externals'>;
+}
+declare module 'next/dist/esm/build/index' {
+  declare module.exports: $Exports<'next/dist/esm/build'>;
+}
+declare module 'next/dist/esm/build/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build'>;
+}
+declare module 'next/dist/esm/build/is-writeable.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/is-writeable'>;
+}
+declare module 'next/dist/esm/build/load-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/load-entrypoint'>;
+}
+declare module 'next/dist/esm/build/load-jsconfig.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/load-jsconfig'>;
+}
+declare module 'next/dist/esm/build/manifests/formatter/format-manifest.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/manifests/formatter/format-manifest'>;
+}
+declare module 'next/dist/esm/build/next-config-ts/require-hook.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/next-config-ts/require-hook'>;
+}
+declare module 'next/dist/esm/build/next-config-ts/transpile-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/next-config-ts/transpile-config'>;
+}
+declare module 'next/dist/esm/build/next-dir-paths.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/next-dir-paths'>;
+}
+declare module 'next/dist/esm/build/normalize-catchall-routes.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/normalize-catchall-routes'>;
+}
+declare module 'next/dist/esm/build/output/format.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/output/format'>;
+}
+declare module 'next/dist/esm/build/output/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/output'>;
+}
+declare module 'next/dist/esm/build/output/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/output'>;
+}
+declare module 'next/dist/esm/build/output/log.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/output/log'>;
+}
+declare module 'next/dist/esm/build/output/store.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/output/store'>;
+}
+declare module 'next/dist/esm/build/page-extensions-type.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/page-extensions-type'>;
+}
+declare module 'next/dist/esm/build/polyfills/fetch/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/fetch'>;
+}
+declare module 'next/dist/esm/build/polyfills/fetch/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/fetch'>;
+}
+declare module 'next/dist/esm/build/polyfills/fetch/whatwg-fetch.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/fetch/whatwg-fetch'>;
+}
+declare module 'next/dist/esm/build/polyfills/object-assign.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object-assign'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/auto.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign/auto'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/implementation.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign/implementation'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/polyfill.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign/polyfill'>;
+}
+declare module 'next/dist/esm/build/polyfills/object.assign/shim.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/object.assign/shim'>;
+}
+declare module 'next/dist/esm/build/polyfills/process.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/polyfills/process'>;
+}
+declare module 'next/dist/esm/build/preview-key-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/preview-key-utils'>;
+}
+declare module 'next/dist/esm/build/progress.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/progress'>;
+}
+declare module 'next/dist/esm/build/rendering-mode.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/rendering-mode'>;
+}
+declare module 'next/dist/esm/build/segment-config/app/app-segment-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/segment-config/app/app-segment-config'>;
+}
+declare module 'next/dist/esm/build/segment-config/app/app-segments.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/segment-config/app/app-segments'>;
+}
+declare module 'next/dist/esm/build/segment-config/app/collect-root-param-keys.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/segment-config/app/collect-root-param-keys'>;
+}
+declare module 'next/dist/esm/build/segment-config/middleware/middleware-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/segment-config/middleware/middleware-config'>;
+}
+declare module 'next/dist/esm/build/segment-config/pages/pages-segment-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/segment-config/pages/pages-segment-config'>;
+}
+declare module 'next/dist/esm/build/spinner.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/spinner'>;
+}
+declare module 'next/dist/esm/build/static-paths/app.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/static-paths/app'>;
+}
+declare module 'next/dist/esm/build/static-paths/pages.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/static-paths/pages'>;
+}
+declare module 'next/dist/esm/build/static-paths/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/static-paths/types'>;
+}
+declare module 'next/dist/esm/build/static-paths/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/static-paths/utils'>;
+}
+declare module 'next/dist/esm/build/swc/helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc/helpers'>;
+}
+declare module 'next/dist/esm/build/swc/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc'>;
+}
+declare module 'next/dist/esm/build/swc/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc'>;
+}
+declare module 'next/dist/esm/build/swc/jest-transformer.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc/jest-transformer'>;
+}
+declare module 'next/dist/esm/build/swc/options.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc/options'>;
+}
+declare module 'next/dist/esm/build/swc/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/swc/types'>;
+}
+declare module 'next/dist/esm/build/templates/app-page.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/app-page'>;
+}
+declare module 'next/dist/esm/build/templates/app-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/app-route'>;
+}
+declare module 'next/dist/esm/build/templates/edge-app-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/edge-app-route'>;
+}
+declare module 'next/dist/esm/build/templates/edge-ssr-app.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/edge-ssr-app'>;
+}
+declare module 'next/dist/esm/build/templates/edge-ssr.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/edge-ssr'>;
+}
+declare module 'next/dist/esm/build/templates/helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/helpers'>;
+}
+declare module 'next/dist/esm/build/templates/middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/middleware'>;
+}
+declare module 'next/dist/esm/build/templates/pages-api.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/pages-api'>;
+}
+declare module 'next/dist/esm/build/templates/pages-edge-api.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/pages-edge-api'>;
+}
+declare module 'next/dist/esm/build/templates/pages.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/templates/pages'>;
+}
+declare module 'next/dist/esm/build/turbopack-build/impl.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turbopack-build/impl'>;
+}
+declare module 'next/dist/esm/build/turbopack-build/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/turbopack-build'>;
+}
+declare module 'next/dist/esm/build/turbopack-build/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turbopack-build'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/env.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace/env'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace/helpers'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/result.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace/result'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/tcp.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace/tcp'>;
+}
+declare module 'next/dist/esm/build/turborepo-access-trace/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/turborepo-access-trace/types'>;
+}
+declare module 'next/dist/esm/build/type-check.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/type-check'>;
+}
+declare module 'next/dist/esm/build/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/utils'>;
+}
+declare module 'next/dist/esm/build/webpack-build/impl.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack-build/impl'>;
+}
+declare module 'next/dist/esm/build/webpack-build/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack-build'>;
+}
+declare module 'next/dist/esm/build/webpack-build/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack-build'>;
+}
+declare module 'next/dist/esm/build/webpack-config-rules/resolve.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack-config-rules/resolve'>;
+}
+declare module 'next/dist/esm/build/webpack-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack-config'>;
+}
+declare module 'next/dist/esm/build/webpack/alias/react-dom-server-experimental.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/alias/react-dom-server-experimental'>;
+}
+declare module 'next/dist/esm/build/webpack/alias/react-dom-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/alias/react-dom-server'>;
+}
+declare module 'next/dist/esm/build/webpack/cache-invalidation.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/cache-invalidation'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/base.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/base'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/client.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/client'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/file-resolve.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/file-resolve'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/global.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/global'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/modules.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/modules'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/loaders/next-font.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/loaders/next-font'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/messages.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/messages'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/css/plugins.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/css/plugins'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/images/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/images'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/images/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/images'>;
+}
+declare module 'next/dist/esm/build/webpack/config/blocks/images/messages.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/blocks/images/messages'>;
+}
+declare module 'next/dist/esm/build/webpack/config/helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/helpers'>;
+}
+declare module 'next/dist/esm/build/webpack/config/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config'>;
+}
+declare module 'next/dist/esm/build/webpack/config/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config'>;
+}
+declare module 'next/dist/esm/build/webpack/config/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/config/utils'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/camelcase.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/camelcase'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/CssSyntaxError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/CssSyntaxError'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/plugins'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/plugins'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-icss-parser'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-import-parser'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/plugins/postcss-url-parser'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/api.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/api'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/getUrl.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/runtime/getUrl'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/css-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/css-loader/src/utils'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/devtool/devtool-style-inject.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/devtool/devtool-style-inject'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/empty-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/empty-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/error-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/error-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/get-module-build-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/get-module-build-info'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/codegen.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/codegen'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/interface.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/interface'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/minify.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/minify'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/lightningcss-loader/src/utils'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/metadata/discover.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/metadata/discover'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/metadata/resolve-route-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/metadata/resolve-route-data'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/metadata/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/metadata/types'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/modularize-import-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/modularize-import-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-app-loader/create-app-route-code.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-app-loader/create-app-route-code'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-app-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-app-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-app-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-app-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-barrel-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-barrel-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-client-pages-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-client-pages-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-app-route-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-app-route-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-app-route-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-app-route-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-function-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-function-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader/render.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-edge-ssr-loader/render'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-error-browser-binary-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-error-browser-binary-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-action-entry-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-action-entry-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-client-entry-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-client-entry-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-client-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-client-module-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-css-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-css-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/action-client-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/action-client-wrapper'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/action-validate.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/action-validate'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/cache-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/cache-wrapper'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/module-proxy.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/module-proxy'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/server-reference.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/server-reference'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-loader/track-dynamic-import.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-loader/track-dynamic-import'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-flight-server-reference-proxy-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-flight-server-reference-proxy-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-font-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-font-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-font-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-font-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-font-loader/postcss-next-font.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-font-loader/postcss-next-font'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-image-loader/blur.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-image-loader/blur'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-image-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-image-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-image-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-image-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-invalid-import-error-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-invalid-import-error-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-metadata-image-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-metadata-image-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-metadata-route-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-metadata-route-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-asset-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-middleware-asset-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-middleware-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-middleware-wasm-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-middleware-wasm-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-route-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-route-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-route-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-route-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-style-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-style-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoLinkTag'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/injectStylesIntoStyleTag'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/isEqualLocals.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-style-loader/runtime/isEqualLocals'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/next-swc-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/next-swc-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/Error.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/postcss-loader/src/Error'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/postcss-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/postcss-loader/src'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/postcss-loader/src/utils'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/postcss-loader/src/Warning.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/postcss-loader/src/Warning'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/file-protocol.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/file-protocol'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/join-function.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/join-function'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/postcss.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/postcss'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/value-processor.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/resolve-url-loader/lib/value-processor'>;
+}
+declare module 'next/dist/esm/build/webpack/loaders/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/loaders/utils'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/app-build-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/app-build-manifest-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/build-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/build-manifest-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/copy-file-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/copy-file-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/css-chunking-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/css-chunking-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/css-minimizer-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/css-minimizer-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/devtools-ignore-list-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/devtools-ignore-list-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/eval-source-map-dev-tool-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/eval-source-map-dev-tool-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/flight-client-entry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/flight-client-entry-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/flight-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/flight-manifest-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/jsconfig-paths-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/jsconfig-paths-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/memory-with-gc-cache-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/memory-with-gc-cache-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/middleware-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/middleware-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/mini-css-extract-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/mini-css-extract-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/minify-webpack-plugin/src/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/minify-webpack-plugin/src'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/minify-webpack-plugin/src/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/minify-webpack-plugin/src'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-drop-client-page-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-drop-client-page-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-font-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-font-manifest-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-trace-entrypoints-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-trace-entrypoints-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-types-plugin/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-types-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-types-plugin/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-types-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/next-types-plugin/shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/next-types-plugin/shared'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/nextjs-require-cache-hot-reloader.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/nextjs-require-cache-hot-reloader'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/optional-peer-dependency-resolve-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/optional-peer-dependency-resolve-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/pages-manifest-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/pages-manifest-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/profiling-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/profiling-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/react-loadable-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/react-loadable-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/rspack-flight-client-entry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/rspack-flight-client-entry-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/rspack-profiling-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/rspack-profiling-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/slow-module-detection-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/slow-module-detection-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/subresource-integrity-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/subresource-integrity-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/telemetry-plugin.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/telemetry-plugin/telemetry-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/telemetry-plugin/update-telemetry-loader-context-from-swc'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/telemetry-plugin/use-cache-tracker-utils'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/getModuleTrace'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/index' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parse-dynamic-code-evaluation-error'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseBabel.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseBabel'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseCss.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseCss'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextAppLoaderError'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextFontError'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNextInvalidImportError'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseScss.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/parseScss'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/simpleWebpackError'>;
+}
+declare module 'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError'>;
+}
+declare module 'next/dist/esm/build/webpack/stringify-request.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/stringify-request'>;
+}
+declare module 'next/dist/esm/build/webpack/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/webpack/utils'>;
+}
+declare module 'next/dist/esm/build/worker.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/worker'>;
+}
+declare module 'next/dist/esm/build/write-build-id.js' {
+  declare module.exports: $Exports<'next/dist/esm/build/write-build-id'>;
+}
+declare module 'next/dist/esm/client/add-base-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/add-base-path'>;
+}
+declare module 'next/dist/esm/client/add-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/add-locale'>;
+}
+declare module 'next/dist/esm/client/app-bootstrap.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-bootstrap'>;
+}
+declare module 'next/dist/esm/client/app-build-id.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-build-id'>;
+}
+declare module 'next/dist/esm/client/app-call-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-call-server'>;
+}
+declare module 'next/dist/esm/client/app-dir/form.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-dir/form'>;
+}
+declare module 'next/dist/esm/client/app-dir/link.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-dir/link'>;
+}
+declare module 'next/dist/esm/client/app-find-source-map-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-find-source-map-url'>;
+}
+declare module 'next/dist/esm/client/app-globals.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-globals'>;
+}
+declare module 'next/dist/esm/client/app-index.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-index'>;
+}
+declare module 'next/dist/esm/client/app-link-gc.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-link-gc'>;
+}
+declare module 'next/dist/esm/client/app-next-dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-next-dev'>;
+}
+declare module 'next/dist/esm/client/app-next-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-next-turbopack'>;
+}
+declare module 'next/dist/esm/client/app-next.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-next'>;
+}
+declare module 'next/dist/esm/client/app-webpack.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/app-webpack'>;
+}
+declare module 'next/dist/esm/client/assign-location.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/assign-location'>;
+}
+declare module 'next/dist/esm/client/compat/router.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/compat/router'>;
+}
+declare module 'next/dist/esm/client/components/app-router-announcer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/app-router-announcer'>;
+}
+declare module 'next/dist/esm/client/components/app-router-headers.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/app-router-headers'>;
+}
+declare module 'next/dist/esm/client/components/app-router-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/app-router-instance'>;
+}
+declare module 'next/dist/esm/client/components/app-router.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/app-router'>;
+}
+declare module 'next/dist/esm/client/components/bailout-to-client-rendering.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/bailout-to-client-rendering'>;
+}
+declare module 'next/dist/esm/client/components/bfcache.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/bfcache'>;
+}
+declare module 'next/dist/esm/client/components/builtin/default.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/default'>;
+}
+declare module 'next/dist/esm/client/components/builtin/forbidden.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/forbidden'>;
+}
+declare module 'next/dist/esm/client/components/builtin/global-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/global-error'>;
+}
+declare module 'next/dist/esm/client/components/builtin/global-not-found.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/global-not-found'>;
+}
+declare module 'next/dist/esm/client/components/builtin/layout.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/layout'>;
+}
+declare module 'next/dist/esm/client/components/builtin/not-found.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/not-found'>;
+}
+declare module 'next/dist/esm/client/components/builtin/unauthorized.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/builtin/unauthorized'>;
+}
+declare module 'next/dist/esm/client/components/client-page.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/client-page'>;
+}
+declare module 'next/dist/esm/client/components/client-segment.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/client-segment'>;
+}
+declare module 'next/dist/esm/client/components/dev-root-http-access-fallback-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/dev-root-http-access-fallback-boundary'>;
+}
+declare module 'next/dist/esm/client/components/error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/error-boundary'>;
+}
+declare module 'next/dist/esm/client/components/errors/graceful-degrade-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/errors/graceful-degrade-boundary'>;
+}
+declare module 'next/dist/esm/client/components/forbidden.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/forbidden'>;
+}
+declare module 'next/dist/esm/client/components/handle-isr-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/handle-isr-error'>;
+}
+declare module 'next/dist/esm/client/components/hooks-server-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/hooks-server-context'>;
+}
+declare module 'next/dist/esm/client/components/http-access-fallback/error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/http-access-fallback/error-boundary'>;
+}
+declare module 'next/dist/esm/client/components/http-access-fallback/error-fallback.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/http-access-fallback/error-fallback'>;
+}
+declare module 'next/dist/esm/client/components/http-access-fallback/http-access-fallback.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/http-access-fallback/http-access-fallback'>;
+}
+declare module 'next/dist/esm/client/components/is-next-router-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/is-next-router-error'>;
+}
+declare module 'next/dist/esm/client/components/layout-router.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/layout-router'>;
+}
+declare module 'next/dist/esm/client/components/links.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/links'>;
+}
+declare module 'next/dist/esm/client/components/match-segments.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/match-segments'>;
+}
+declare module 'next/dist/esm/client/components/metadata/async-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/metadata/async-metadata'>;
+}
+declare module 'next/dist/esm/client/components/metadata/metadata-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/metadata/metadata-boundary'>;
+}
+declare module 'next/dist/esm/client/components/metadata/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/metadata/types'>;
+}
+declare module 'next/dist/esm/client/components/nav-failure-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/nav-failure-handler'>;
+}
+declare module 'next/dist/esm/client/components/navigation-untracked.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/navigation-untracked'>;
+}
+declare module 'next/dist/esm/client/components/navigation.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/navigation'>;
+}
+declare module 'next/dist/esm/client/components/navigation.react-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/navigation.react-server'>;
+}
+declare module 'next/dist/esm/client/components/noop-head.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/noop-head'>;
+}
+declare module 'next/dist/esm/client/components/not-found.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/not-found'>;
+}
+declare module 'next/dist/esm/client/components/promise-queue.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/promise-queue'>;
+}
+declare module 'next/dist/esm/client/components/redirect-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/redirect-boundary'>;
+}
+declare module 'next/dist/esm/client/components/redirect-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/redirect-error'>;
+}
+declare module 'next/dist/esm/client/components/redirect-status-code.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/redirect-status-code'>;
+}
+declare module 'next/dist/esm/client/components/redirect.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/redirect'>;
+}
+declare module 'next/dist/esm/client/components/render-from-template-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/render-from-template-context'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/aliased-prefetch-navigations.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/aliased-prefetch-navigations'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/apply-flight-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/apply-flight-data'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/apply-router-state-patch-to-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/apply-router-state-patch-to-tree'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/clear-cache-node-data-for-segment-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/clear-cache-node-data-for-segment-path'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/compute-changed-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/compute-changed-path'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/create-href-from-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/create-href-from-url'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/create-initial-router-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/create-initial-router-state'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/create-router-cache-key.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/create-router-cache-key'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/fetch-server-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/fetch-server-response'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/fill-cache-with-new-subtree-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/fill-cache-with-new-subtree-data'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/fill-lazy-items-till-leaf-with-head.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/fill-lazy-items-till-leaf-with-head'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/handle-mutable.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/handle-mutable'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/handle-segment-mismatch.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/handle-segment-mismatch'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/invalidate-cache-below-flight-segmentpath.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/invalidate-cache-below-flight-segmentpath'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/invalidate-cache-by-router-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/invalidate-cache-by-router-state'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/is-navigating-to-new-root-layout.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/is-navigating-to-new-root-layout'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/ppr-navigations.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/ppr-navigations'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/prefetch-cache-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/prefetch-cache-utils'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/find-head-in-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/find-head-in-cache'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/get-segment-value.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/get-segment-value'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/has-interception-route-in-current-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/has-interception-route-in-current-tree'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/hmr-refresh-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/hmr-refresh-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/navigate-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/navigate-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/prefetch-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/prefetch-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/refresh-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/refresh-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/restore-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/restore-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/server-action-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/server-action-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/reducers/server-patch-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/reducers/server-patch-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/refetch-inactive-parallel-segments.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/refetch-inactive-parallel-segments'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/router-reducer-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/router-reducer-types'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/router-reducer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/router-reducer'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/set-cache-busting-search-param.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/set-cache-busting-search-param'>;
+}
+declare module 'next/dist/esm/client/components/router-reducer/should-hard-navigate.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/router-reducer/should-hard-navigate'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/cache-key.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/cache-key'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/cache'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/lru.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/lru'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/navigation.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/navigation'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/prefetch.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/prefetch'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/scheduler.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/scheduler'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache-impl/tuple-map.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache-impl/tuple-map'>;
+}
+declare module 'next/dist/esm/client/components/segment-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/segment-cache'>;
+}
+declare module 'next/dist/esm/client/components/static-generation-bailout.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/static-generation-bailout'>;
+}
+declare module 'next/dist/esm/client/components/styles/access-error-styles.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/styles/access-error-styles'>;
+}
+declare module 'next/dist/esm/client/components/unauthorized.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/unauthorized'>;
+}
+declare module 'next/dist/esm/client/components/unresolved-thenable.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/unresolved-thenable'>;
+}
+declare module 'next/dist/esm/client/components/unstable-rethrow.browser.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/unstable-rethrow.browser'>;
+}
+declare module 'next/dist/esm/client/components/unstable-rethrow.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/unstable-rethrow'>;
+}
+declare module 'next/dist/esm/client/components/unstable-rethrow.server.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/unstable-rethrow.server'>;
+}
+declare module 'next/dist/esm/client/components/use-action-queue.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/components/use-action-queue'>;
+}
+declare module 'next/dist/esm/client/detect-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/detect-domain-locale'>;
+}
+declare module 'next/dist/esm/client/dev/amp-dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/amp-dev'>;
+}
+declare module 'next/dist/esm/client/dev/error-overlay/websocket.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/error-overlay/websocket'>;
+}
+declare module 'next/dist/esm/client/dev/fouc.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/fouc'>;
+}
+declare module 'next/dist/esm/client/dev/hot-middleware-client.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-middleware-client'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/app/hot-reloader-app.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/app/hot-reloader-app'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/app/use-websocket.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/app/use-websocket'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/get-socket-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/get-socket-url'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/pages/hot-reloader-pages.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/pages/hot-reloader-pages'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/pages/websocket.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/pages/websocket'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/shared'>;
+}
+declare module 'next/dist/esm/client/dev/hot-reloader/turbopack-hot-reloader-common.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/hot-reloader/turbopack-hot-reloader-common'>;
+}
+declare module 'next/dist/esm/client/dev/noop-turbopack-hmr.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/noop-turbopack-hmr'>;
+}
+declare module 'next/dist/esm/client/dev/on-demand-entries-client.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/on-demand-entries-client'>;
+}
+declare module 'next/dist/esm/client/dev/report-hmr-latency.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/report-hmr-latency'>;
+}
+declare module 'next/dist/esm/client/dev/runtime-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/dev/runtime-error-handler'>;
+}
+declare module 'next/dist/esm/client/flight-data-helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/flight-data-helpers'>;
+}
+declare module 'next/dist/esm/client/form-shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/form-shared'>;
+}
+declare module 'next/dist/esm/client/form.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/form'>;
+}
+declare module 'next/dist/esm/client/get-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/get-domain-locale'>;
+}
+declare module 'next/dist/esm/client/has-base-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/has-base-path'>;
+}
+declare module 'next/dist/esm/client/head-manager.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/head-manager'>;
+}
+declare module 'next/dist/esm/client/image-component.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/image-component'>;
+}
+declare module 'next/dist/esm/client/index' {
+  declare module.exports: $Exports<'next/dist/esm/client'>;
+}
+declare module 'next/dist/esm/client/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/client'>;
+}
+declare module 'next/dist/esm/client/legacy/image.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/legacy/image'>;
+}
+declare module 'next/dist/esm/client/lib/console.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/lib/console'>;
+}
+declare module 'next/dist/esm/client/link.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/link'>;
+}
+declare module 'next/dist/esm/client/next-dev-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/next-dev-turbopack'>;
+}
+declare module 'next/dist/esm/client/next-dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/next-dev'>;
+}
+declare module 'next/dist/esm/client/next-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/next-turbopack'>;
+}
+declare module 'next/dist/esm/client/next.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/next'>;
+}
+declare module 'next/dist/esm/client/normalize-locale-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/normalize-locale-path'>;
+}
+declare module 'next/dist/esm/client/normalize-trailing-slash.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/normalize-trailing-slash'>;
+}
+declare module 'next/dist/esm/client/page-bootstrap.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/page-bootstrap'>;
+}
+declare module 'next/dist/esm/client/page-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/page-loader'>;
+}
+declare module 'next/dist/esm/client/portal/index' {
+  declare module.exports: $Exports<'next/dist/esm/client/portal'>;
+}
+declare module 'next/dist/esm/client/portal/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/portal'>;
+}
+declare module 'next/dist/esm/client/react-client-callbacks/error-boundary-callbacks.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/react-client-callbacks/error-boundary-callbacks'>;
+}
+declare module 'next/dist/esm/client/react-client-callbacks/on-recoverable-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/react-client-callbacks/on-recoverable-error'>;
+}
+declare module 'next/dist/esm/client/react-client-callbacks/report-global-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/react-client-callbacks/report-global-error'>;
+}
+declare module 'next/dist/esm/client/remove-base-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/remove-base-path'>;
+}
+declare module 'next/dist/esm/client/remove-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/remove-locale'>;
+}
+declare module 'next/dist/esm/client/request-idle-callback.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request-idle-callback'>;
+}
+declare module 'next/dist/esm/client/request/params.browser.dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/params.browser.dev'>;
+}
+declare module 'next/dist/esm/client/request/params.browser.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/params.browser'>;
+}
+declare module 'next/dist/esm/client/request/params.browser.prod.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/params.browser.prod'>;
+}
+declare module 'next/dist/esm/client/request/search-params.browser.dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/search-params.browser.dev'>;
+}
+declare module 'next/dist/esm/client/request/search-params.browser.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/search-params.browser'>;
+}
+declare module 'next/dist/esm/client/request/search-params.browser.prod.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/request/search-params.browser.prod'>;
+}
+declare module 'next/dist/esm/client/resolve-href.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/resolve-href'>;
+}
+declare module 'next/dist/esm/client/route-announcer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/route-announcer'>;
+}
+declare module 'next/dist/esm/client/route-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/route-loader'>;
+}
+declare module 'next/dist/esm/client/router.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/router'>;
+}
+declare module 'next/dist/esm/client/script.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/script'>;
+}
+declare module 'next/dist/esm/client/set-attributes-from-props.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/set-attributes-from-props'>;
+}
+declare module 'next/dist/esm/client/tracing/report-to-socket.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/tracing/report-to-socket'>;
+}
+declare module 'next/dist/esm/client/tracing/tracer.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/tracing/tracer'>;
+}
+declare module 'next/dist/esm/client/trusted-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/trusted-types'>;
+}
+declare module 'next/dist/esm/client/use-client-disallowed.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/use-client-disallowed'>;
+}
+declare module 'next/dist/esm/client/use-intersection.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/use-intersection'>;
+}
+declare module 'next/dist/esm/client/use-merged-ref.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/use-merged-ref'>;
+}
+declare module 'next/dist/esm/client/web-vitals.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/web-vitals'>;
+}
+declare module 'next/dist/esm/client/webpack.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/webpack'>;
+}
+declare module 'next/dist/esm/client/with-router.js' {
+  declare module.exports: $Exports<'next/dist/esm/client/with-router'>;
+}
+declare module 'next/dist/esm/export/helpers/create-incremental-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/helpers/create-incremental-cache'>;
+}
+declare module 'next/dist/esm/export/helpers/get-amp-html-validator.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/helpers/get-amp-html-validator'>;
+}
+declare module 'next/dist/esm/export/helpers/get-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/helpers/get-params'>;
+}
+declare module 'next/dist/esm/export/helpers/is-dynamic-usage-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/helpers/is-dynamic-usage-error'>;
+}
+declare module 'next/dist/esm/export/index' {
+  declare module.exports: $Exports<'next/dist/esm/export'>;
+}
+declare module 'next/dist/esm/export/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/export'>;
+}
+declare module 'next/dist/esm/export/routes/app-page.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/routes/app-page'>;
+}
+declare module 'next/dist/esm/export/routes/app-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/routes/app-route'>;
+}
+declare module 'next/dist/esm/export/routes/pages.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/routes/pages'>;
+}
+declare module 'next/dist/esm/export/routes/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/routes/types'>;
+}
+declare module 'next/dist/esm/export/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/types'>;
+}
+declare module 'next/dist/esm/export/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/utils'>;
+}
+declare module 'next/dist/esm/export/worker.js' {
+  declare module.exports: $Exports<'next/dist/esm/export/worker'>;
+}
+declare module 'next/dist/esm/lib/batcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/batcher'>;
+}
+declare module 'next/dist/esm/lib/build-custom-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/build-custom-route'>;
+}
+declare module 'next/dist/esm/lib/client-and-server-references.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/client-and-server-references'>;
+}
+declare module 'next/dist/esm/lib/coalesced-function.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/coalesced-function'>;
+}
+declare module 'next/dist/esm/lib/compile-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/compile-error'>;
+}
+declare module 'next/dist/esm/lib/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/constants'>;
+}
+declare module 'next/dist/esm/lib/create-client-router-filter.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/create-client-router-filter'>;
+}
+declare module 'next/dist/esm/lib/detached-promise.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/detached-promise'>;
+}
+declare module 'next/dist/esm/lib/detect-typo.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/detect-typo'>;
+}
+declare module 'next/dist/esm/lib/download-swc.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/download-swc'>;
+}
+declare module 'next/dist/esm/lib/error-telemetry-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/error-telemetry-utils'>;
+}
+declare module 'next/dist/esm/lib/eslint/customFormatter.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/customFormatter'>;
+}
+declare module 'next/dist/esm/lib/eslint/getESLintPromptValues.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/getESLintPromptValues'>;
+}
+declare module 'next/dist/esm/lib/eslint/hasEslintConfiguration.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/hasEslintConfiguration'>;
+}
+declare module 'next/dist/esm/lib/eslint/runLintCheck.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/runLintCheck'>;
+}
+declare module 'next/dist/esm/lib/eslint/writeDefaultConfig.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/writeDefaultConfig'>;
+}
+declare module 'next/dist/esm/lib/eslint/writeOutputFile.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/eslint/writeOutputFile'>;
+}
+declare module 'next/dist/esm/lib/fallback.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/fallback'>;
+}
+declare module 'next/dist/esm/lib/fatal-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/fatal-error'>;
+}
+declare module 'next/dist/esm/lib/file-exists.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/file-exists'>;
+}
+declare module 'next/dist/esm/lib/find-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/find-config'>;
+}
+declare module 'next/dist/esm/lib/find-pages-dir.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/find-pages-dir'>;
+}
+declare module 'next/dist/esm/lib/find-root.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/find-root'>;
+}
+declare module 'next/dist/esm/lib/format-cli-help-output.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/format-cli-help-output'>;
+}
+declare module 'next/dist/esm/lib/format-dynamic-import-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/format-dynamic-import-path'>;
+}
+declare module 'next/dist/esm/lib/format-server-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/format-server-error'>;
+}
+declare module 'next/dist/esm/lib/fs/rename.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/fs/rename'>;
+}
+declare module 'next/dist/esm/lib/fs/write-atomic.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/fs/write-atomic'>;
+}
+declare module 'next/dist/esm/lib/generate-interception-routes-rewrites.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/generate-interception-routes-rewrites'>;
+}
+declare module 'next/dist/esm/lib/get-files-in-dir.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/get-files-in-dir'>;
+}
+declare module 'next/dist/esm/lib/get-network-host.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/get-network-host'>;
+}
+declare module 'next/dist/esm/lib/get-package-version.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/get-package-version'>;
+}
+declare module 'next/dist/esm/lib/get-project-dir.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/get-project-dir'>;
+}
+declare module 'next/dist/esm/lib/has-necessary-dependencies.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/has-necessary-dependencies'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-cache-directory.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-cache-directory'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-npx-command.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-npx-command'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-online.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-online'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-pkg-manager.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-pkg-manager'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-registry.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-registry'>;
+}
+declare module 'next/dist/esm/lib/helpers/get-reserved-port.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/get-reserved-port'>;
+}
+declare module 'next/dist/esm/lib/helpers/install.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/helpers/install'>;
+}
+declare module 'next/dist/esm/lib/import-next-warning.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/import-next-warning'>;
+}
+declare module 'next/dist/esm/lib/inline-static-env.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/inline-static-env'>;
+}
+declare module 'next/dist/esm/lib/install-dependencies.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/install-dependencies'>;
+}
+declare module 'next/dist/esm/lib/interop-default.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/interop-default'>;
+}
+declare module 'next/dist/esm/lib/is-api-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-api-route'>;
+}
+declare module 'next/dist/esm/lib/is-app-page-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-app-page-route'>;
+}
+declare module 'next/dist/esm/lib/is-app-route-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-app-route-route'>;
+}
+declare module 'next/dist/esm/lib/is-edge-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-edge-runtime'>;
+}
+declare module 'next/dist/esm/lib/is-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-error'>;
+}
+declare module 'next/dist/esm/lib/is-internal-component.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-internal-component'>;
+}
+declare module 'next/dist/esm/lib/is-serializable-props.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/is-serializable-props'>;
+}
+declare module 'next/dist/esm/lib/load-custom-routes.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/load-custom-routes'>;
+}
+declare module 'next/dist/esm/lib/memory/gc-observer.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/memory/gc-observer'>;
+}
+declare module 'next/dist/esm/lib/memory/shutdown.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/memory/shutdown'>;
+}
+declare module 'next/dist/esm/lib/memory/startup.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/memory/startup'>;
+}
+declare module 'next/dist/esm/lib/memory/trace.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/memory/trace'>;
+}
+declare module 'next/dist/esm/lib/metadata/clone-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/clone-metadata'>;
+}
+declare module 'next/dist/esm/lib/metadata/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/constants'>;
+}
+declare module 'next/dist/esm/lib/metadata/default-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/default-metadata'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/alternate.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/alternate'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/basic.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/basic'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/icon-mark.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/icon-mark'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/icons.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/icons'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/meta.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/meta'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/opengraph.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/opengraph'>;
+}
+declare module 'next/dist/esm/lib/metadata/generate/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/generate/utils'>;
+}
+declare module 'next/dist/esm/lib/metadata/get-metadata-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/get-metadata-route'>;
+}
+declare module 'next/dist/esm/lib/metadata/is-metadata-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/is-metadata-route'>;
+}
+declare module 'next/dist/esm/lib/metadata/metadata-constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/metadata-constants'>;
+}
+declare module 'next/dist/esm/lib/metadata/metadata-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/metadata-context'>;
+}
+declare module 'next/dist/esm/lib/metadata/metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/metadata'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolve-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolve-metadata'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-basics.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolvers/resolve-basics'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-icons.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolvers/resolve-icons'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-opengraph.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolvers/resolve-opengraph'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-title.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolvers/resolve-title'>;
+}
+declare module 'next/dist/esm/lib/metadata/resolvers/resolve-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/resolvers/resolve-url'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/alternative-urls-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/alternative-urls-types'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/extra-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/extra-types'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/icons.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/icons'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/manifest-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/manifest-types'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/metadata-interface.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/metadata-interface'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/metadata-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/metadata-types'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/opengraph-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/opengraph-types'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/resolvers.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/resolvers'>;
+}
+declare module 'next/dist/esm/lib/metadata/types/twitter-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/metadata/types/twitter-types'>;
+}
+declare module 'next/dist/esm/lib/mime-type.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/mime-type'>;
+}
+declare module 'next/dist/esm/lib/mkcert.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/mkcert'>;
+}
+declare module 'next/dist/esm/lib/multi-file-writer.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/multi-file-writer'>;
+}
+declare module 'next/dist/esm/lib/needs-experimental-react.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/needs-experimental-react'>;
+}
+declare module 'next/dist/esm/lib/non-nullable.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/non-nullable'>;
+}
+declare module 'next/dist/esm/lib/oxford-comma-list.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/oxford-comma-list'>;
+}
+declare module 'next/dist/esm/lib/page-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/page-types'>;
+}
+declare module 'next/dist/esm/lib/patch-incorrect-lockfile.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/patch-incorrect-lockfile'>;
+}
+declare module 'next/dist/esm/lib/pick.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/pick'>;
+}
+declare module 'next/dist/esm/lib/picocolors.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/picocolors'>;
+}
+declare module 'next/dist/esm/lib/pretty-bytes.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/pretty-bytes'>;
+}
+declare module 'next/dist/esm/lib/realpath.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/realpath'>;
+}
+declare module 'next/dist/esm/lib/recursive-copy.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/recursive-copy'>;
+}
+declare module 'next/dist/esm/lib/recursive-delete.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/recursive-delete'>;
+}
+declare module 'next/dist/esm/lib/recursive-readdir.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/recursive-readdir'>;
+}
+declare module 'next/dist/esm/lib/redirect-status.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/redirect-status'>;
+}
+declare module 'next/dist/esm/lib/require-instrumentation-client.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/require-instrumentation-client'>;
+}
+declare module 'next/dist/esm/lib/resolve-from.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/resolve-from'>;
+}
+declare module 'next/dist/esm/lib/scheduler.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/scheduler'>;
+}
+declare module 'next/dist/esm/lib/semver-noop.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/semver-noop'>;
+}
+declare module 'next/dist/esm/lib/setup-exception-listeners.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/setup-exception-listeners'>;
+}
+declare module 'next/dist/esm/lib/static-env.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/static-env'>;
+}
+declare module 'next/dist/esm/lib/try-to-parse-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/try-to-parse-path'>;
+}
+declare module 'next/dist/esm/lib/turbopack-warning.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/turbopack-warning'>;
+}
+declare module 'next/dist/esm/lib/typescript/diagnosticFormatter.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/diagnosticFormatter'>;
+}
+declare module 'next/dist/esm/lib/typescript/getTypeScriptConfiguration.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/getTypeScriptConfiguration'>;
+}
+declare module 'next/dist/esm/lib/typescript/getTypeScriptIntent.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/getTypeScriptIntent'>;
+}
+declare module 'next/dist/esm/lib/typescript/missingDependencyError.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/missingDependencyError'>;
+}
+declare module 'next/dist/esm/lib/typescript/runTypeCheck.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/runTypeCheck'>;
+}
+declare module 'next/dist/esm/lib/typescript/writeAppTypeDeclarations.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/writeAppTypeDeclarations'>;
+}
+declare module 'next/dist/esm/lib/typescript/writeConfigurationDefaults.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/typescript/writeConfigurationDefaults'>;
+}
+declare module 'next/dist/esm/lib/url.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/url'>;
+}
+declare module 'next/dist/esm/lib/verify-partytown-setup.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/verify-partytown-setup'>;
+}
+declare module 'next/dist/esm/lib/verify-root-layout.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/verify-root-layout'>;
+}
+declare module 'next/dist/esm/lib/verify-typescript-setup.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/verify-typescript-setup'>;
+}
+declare module 'next/dist/esm/lib/verifyAndLint.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/verifyAndLint'>;
+}
+declare module 'next/dist/esm/lib/wait.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/wait'>;
+}
+declare module 'next/dist/esm/lib/with-promise-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/with-promise-cache'>;
+}
+declare module 'next/dist/esm/lib/worker.js' {
+  declare module.exports: $Exports<'next/dist/esm/lib/worker'>;
+}
+declare module 'next/dist/esm/next-devtools/server/dev-indicator-middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/dev-indicator-middleware'>;
+}
+declare module 'next/dist/esm/next-devtools/server/font/get-dev-overlay-font-middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/font/get-dev-overlay-font-middleware'>;
+}
+declare module 'next/dist/esm/next-devtools/server/get-next-error-feedback-middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/get-next-error-feedback-middleware'>;
+}
+declare module 'next/dist/esm/next-devtools/server/launch-editor.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/launch-editor'>;
+}
+declare module 'next/dist/esm/next-devtools/server/middleware-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/middleware-response'>;
+}
+declare module 'next/dist/esm/next-devtools/server/restart-dev-server-middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/restart-dev-server-middleware'>;
+}
+declare module 'next/dist/esm/next-devtools/server/shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/server/shared'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/console-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/console-error'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/forward-logs-shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/forward-logs-shared'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/hydration-error'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/react-18-hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/react-18-hydration-error'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/react-19-hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/react-19-hydration-error'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/stack-frame.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/stack-frame'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/types'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/version-staleness.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/version-staleness'>;
+}
+declare module 'next/dist/esm/next-devtools/shared/webpack-module-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/shared/webpack-module-path'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-error-boundary'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-setup.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/app-dev-overlay-setup'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/client-entry.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/client-entry'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/index' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/intercept-console-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors/intercept-console-error'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/replay-ssr-only-errors.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors/replay-ssr-only-errors'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/stitched-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors/stitched-error'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/use-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors/use-error-handler'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/errors/use-forward-console-log.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/errors/use-forward-console-log'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/forward-logs.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/forward-logs'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/segment-explorer-node.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/segment-explorer-node'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/app/terminal-logging-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/app/terminal-logging-config'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/pages/hydration-error-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/pages/hydration-error-state'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-error-boundary'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-setup.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/pages/pages-dev-overlay-setup'>;
+}
+declare module 'next/dist/esm/next-devtools/userspace/use-app-dev-rendering-indicator.js' {
+  declare module.exports: $Exports<'next/dist/esm/next-devtools/userspace/use-app-dev-rendering-indicator'>;
+}
+declare module 'next/dist/esm/pages/_app.js' {
+  declare module.exports: $Exports<'next/dist/esm/pages/_app'>;
+}
+declare module 'next/dist/esm/pages/_document.js' {
+  declare module.exports: $Exports<'next/dist/esm/pages/_document'>;
+}
+declare module 'next/dist/esm/pages/_error.js' {
+  declare module.exports: $Exports<'next/dist/esm/pages/_error'>;
+}
+declare module 'next/dist/esm/server/accept-header.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/accept-header'>;
+}
+declare module 'next/dist/esm/server/after/after-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after/after-context'>;
+}
+declare module 'next/dist/esm/server/after/after.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after/after'>;
+}
+declare module 'next/dist/esm/server/after/awaiter.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after/awaiter'>;
+}
+declare module 'next/dist/esm/server/after/builtin-request-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after/builtin-request-context'>;
+}
+declare module 'next/dist/esm/server/after/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/after'>;
+}
+declare module 'next/dist/esm/server/after/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after'>;
+}
+declare module 'next/dist/esm/server/after/run-with-after.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/after/run-with-after'>;
+}
+declare module 'next/dist/esm/server/api-utils/get-cookie-parser.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils/get-cookie-parser'>;
+}
+declare module 'next/dist/esm/server/api-utils/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils'>;
+}
+declare module 'next/dist/esm/server/api-utils/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils'>;
+}
+declare module 'next/dist/esm/server/api-utils/node/api-resolver.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils/node/api-resolver'>;
+}
+declare module 'next/dist/esm/server/api-utils/node/parse-body.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils/node/parse-body'>;
+}
+declare module 'next/dist/esm/server/api-utils/node/try-get-preview-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils/node/try-get-preview-data'>;
+}
+declare module 'next/dist/esm/server/api-utils/web.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/api-utils/web'>;
+}
+declare module 'next/dist/esm/server/app-render/action-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/action-async-storage-instance'>;
+}
+declare module 'next/dist/esm/server/app-render/action-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/action-async-storage.external'>;
+}
+declare module 'next/dist/esm/server/app-render/action-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/action-handler'>;
+}
+declare module 'next/dist/esm/server/app-render/action-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/action-utils'>;
+}
+declare module 'next/dist/esm/server/app-render/after-task-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/after-task-async-storage-instance'>;
+}
+declare module 'next/dist/esm/server/app-render/after-task-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/after-task-async-storage.external'>;
+}
+declare module 'next/dist/esm/server/app-render/app-render-prerender-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/app-render-prerender-utils'>;
+}
+declare module 'next/dist/esm/server/app-render/app-render-render-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/app-render-render-utils'>;
+}
+declare module 'next/dist/esm/server/app-render/app-render.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/app-render'>;
+}
+declare module 'next/dist/esm/server/app-render/async-local-storage.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/async-local-storage'>;
+}
+declare module 'next/dist/esm/server/app-render/cache-signal.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/cache-signal'>;
+}
+declare module 'next/dist/esm/server/app-render/collect-segment-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/collect-segment-data'>;
+}
+declare module 'next/dist/esm/server/app-render/create-component-styles-and-scripts.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/create-component-styles-and-scripts'>;
+}
+declare module 'next/dist/esm/server/app-render/create-component-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/create-component-tree'>;
+}
+declare module 'next/dist/esm/server/app-render/create-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/create-error-handler'>;
+}
+declare module 'next/dist/esm/server/app-render/create-flight-router-state-from-loader-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/create-flight-router-state-from-loader-tree'>;
+}
+declare module 'next/dist/esm/server/app-render/csrf-protection.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/csrf-protection'>;
+}
+declare module 'next/dist/esm/server/app-render/dynamic-access-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/dynamic-access-async-storage-instance'>;
+}
+declare module 'next/dist/esm/server/app-render/dynamic-access-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/dynamic-access-async-storage.external'>;
+}
+declare module 'next/dist/esm/server/app-render/dynamic-rendering.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/dynamic-rendering'>;
+}
+declare module 'next/dist/esm/server/app-render/encryption-utils-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/encryption-utils-server'>;
+}
+declare module 'next/dist/esm/server/app-render/encryption-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/encryption-utils'>;
+}
+declare module 'next/dist/esm/server/app-render/encryption.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/encryption'>;
+}
+declare module 'next/dist/esm/server/app-render/entry-base.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/entry-base'>;
+}
+declare module 'next/dist/esm/server/app-render/flight-render-result.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/flight-render-result'>;
+}
+declare module 'next/dist/esm/server/app-render/get-asset-query-string.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-asset-query-string'>;
+}
+declare module 'next/dist/esm/server/app-render/get-css-inlined-link-tags.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-css-inlined-link-tags'>;
+}
+declare module 'next/dist/esm/server/app-render/get-layer-assets.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-layer-assets'>;
+}
+declare module 'next/dist/esm/server/app-render/get-preloadable-fonts.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-preloadable-fonts'>;
+}
+declare module 'next/dist/esm/server/app-render/get-script-nonce-from-header.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-script-nonce-from-header'>;
+}
+declare module 'next/dist/esm/server/app-render/get-segment-param.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-segment-param'>;
+}
+declare module 'next/dist/esm/server/app-render/get-short-dynamic-param-type.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/get-short-dynamic-param-type'>;
+}
+declare module 'next/dist/esm/server/app-render/has-loading-component-in-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/has-loading-component-in-tree'>;
+}
+declare module 'next/dist/esm/server/app-render/interop-default.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/interop-default'>;
+}
+declare module 'next/dist/esm/server/app-render/make-get-server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/make-get-server-inserted-html'>;
+}
+declare module 'next/dist/esm/server/app-render/metadata-insertion/create-server-inserted-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/metadata-insertion/create-server-inserted-metadata'>;
+}
+declare module 'next/dist/esm/server/app-render/module-loading/track-dynamic-import.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/module-loading/track-dynamic-import'>;
+}
+declare module 'next/dist/esm/server/app-render/module-loading/track-module-loading.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/module-loading/track-module-loading.external'>;
+}
+declare module 'next/dist/esm/server/app-render/module-loading/track-module-loading.instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/module-loading/track-module-loading.instance'>;
+}
+declare module 'next/dist/esm/server/app-render/parse-and-validate-flight-router-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/parse-and-validate-flight-router-state'>;
+}
+declare module 'next/dist/esm/server/app-render/parse-loader-tree.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/parse-loader-tree'>;
+}
+declare module 'next/dist/esm/server/app-render/postponed-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/postponed-state'>;
+}
+declare module 'next/dist/esm/server/app-render/prospective-render-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/prospective-render-utils'>;
+}
+declare module 'next/dist/esm/server/app-render/react-large-shell-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/react-large-shell-error'>;
+}
+declare module 'next/dist/esm/server/app-render/react-server.node.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/react-server.node'>;
+}
+declare module 'next/dist/esm/server/app-render/render-css-resource.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/render-css-resource'>;
+}
+declare module 'next/dist/esm/server/app-render/render-to-string.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/render-to-string'>;
+}
+declare module 'next/dist/esm/server/app-render/required-scripts.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/required-scripts'>;
+}
+declare module 'next/dist/esm/server/app-render/rsc/postpone.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/rsc/postpone'>;
+}
+declare module 'next/dist/esm/server/app-render/rsc/preloads.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/rsc/preloads'>;
+}
+declare module 'next/dist/esm/server/app-render/rsc/taint.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/rsc/taint'>;
+}
+declare module 'next/dist/esm/server/app-render/segment-explorer-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/segment-explorer-path'>;
+}
+declare module 'next/dist/esm/server/app-render/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/server-inserted-html'>;
+}
+declare module 'next/dist/esm/server/app-render/strip-flight-headers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/strip-flight-headers'>;
+}
+declare module 'next/dist/esm/server/app-render/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/types'>;
+}
+declare module 'next/dist/esm/server/app-render/use-flight-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/use-flight-response'>;
+}
+declare module 'next/dist/esm/server/app-render/walk-tree-with-flight-router-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/walk-tree-with-flight-router-state'>;
+}
+declare module 'next/dist/esm/server/app-render/work-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/work-async-storage-instance'>;
+}
+declare module 'next/dist/esm/server/app-render/work-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/work-async-storage.external'>;
+}
+declare module 'next/dist/esm/server/app-render/work-unit-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/work-unit-async-storage-instance'>;
+}
+declare module 'next/dist/esm/server/app-render/work-unit-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/app-render/work-unit-async-storage.external'>;
+}
+declare module 'next/dist/esm/server/async-storage/draft-mode-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/async-storage/draft-mode-provider'>;
+}
+declare module 'next/dist/esm/server/async-storage/request-store.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/async-storage/request-store'>;
+}
+declare module 'next/dist/esm/server/async-storage/with-store.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/async-storage/with-store'>;
+}
+declare module 'next/dist/esm/server/async-storage/work-store.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/async-storage/work-store'>;
+}
+declare module 'next/dist/esm/server/base-http/helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-http/helpers'>;
+}
+declare module 'next/dist/esm/server/base-http/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-http'>;
+}
+declare module 'next/dist/esm/server/base-http/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-http'>;
+}
+declare module 'next/dist/esm/server/base-http/node.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-http/node'>;
+}
+declare module 'next/dist/esm/server/base-http/web.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-http/web'>;
+}
+declare module 'next/dist/esm/server/base-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/base-server'>;
+}
+declare module 'next/dist/esm/server/body-streams.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/body-streams'>;
+}
+declare module 'next/dist/esm/server/cache-dir.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/cache-dir'>;
+}
+declare module 'next/dist/esm/server/ci-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/ci-info'>;
+}
+declare module 'next/dist/esm/server/client-component-renderer-logger.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/client-component-renderer-logger'>;
+}
+declare module 'next/dist/esm/server/config-schema.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/config-schema'>;
+}
+declare module 'next/dist/esm/server/config-shared.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/config-shared'>;
+}
+declare module 'next/dist/esm/server/config-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/config-utils'>;
+}
+declare module 'next/dist/esm/server/config.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/config'>;
+}
+declare module 'next/dist/esm/server/create-deduped-by-callsite-server-error-logger.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/create-deduped-by-callsite-server-error-logger'>;
+}
+declare module 'next/dist/esm/server/crypto-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/crypto-utils'>;
+}
+declare module 'next/dist/esm/server/dev/browser-logs/receive-logs.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/browser-logs/receive-logs'>;
+}
+declare module 'next/dist/esm/server/dev/browser-logs/source-map.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/browser-logs/source-map'>;
+}
+declare module 'next/dist/esm/server/dev/dev-indicator-server-state.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/dev-indicator-server-state'>;
+}
+declare module 'next/dist/esm/server/dev/get-source-map-from-file.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/get-source-map-from-file'>;
+}
+declare module 'next/dist/esm/server/dev/hot-middleware.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/hot-middleware'>;
+}
+declare module 'next/dist/esm/server/dev/hot-reloader-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/hot-reloader-turbopack'>;
+}
+declare module 'next/dist/esm/server/dev/hot-reloader-types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/hot-reloader-types'>;
+}
+declare module 'next/dist/esm/server/dev/hot-reloader-webpack.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/hot-reloader-webpack'>;
+}
+declare module 'next/dist/esm/server/dev/log-requests.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/log-requests'>;
+}
+declare module 'next/dist/esm/server/dev/messages.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/messages'>;
+}
+declare module 'next/dist/esm/server/dev/middleware-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/middleware-turbopack'>;
+}
+declare module 'next/dist/esm/server/dev/middleware-webpack.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/middleware-webpack'>;
+}
+declare module 'next/dist/esm/server/dev/next-dev-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/next-dev-server'>;
+}
+declare module 'next/dist/esm/server/dev/node-stack-frames.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/node-stack-frames'>;
+}
+declare module 'next/dist/esm/server/dev/on-demand-entry-handler.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/on-demand-entry-handler'>;
+}
+declare module 'next/dist/esm/server/dev/parse-version-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/parse-version-info'>;
+}
+declare module 'next/dist/esm/server/dev/require-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/require-cache'>;
+}
+declare module 'next/dist/esm/server/dev/static-paths-worker.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/static-paths-worker'>;
+}
+declare module 'next/dist/esm/server/dev/turbopack-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dev/turbopack-utils'>;
+}
+declare module 'next/dist/esm/server/dynamic-rendering-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/dynamic-rendering-utils'>;
+}
+declare module 'next/dist/esm/server/font-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/font-utils'>;
+}
+declare module 'next/dist/esm/server/get-app-route-from-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/get-app-route-from-entrypoint'>;
+}
+declare module 'next/dist/esm/server/get-page-files.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/get-page-files'>;
+}
+declare module 'next/dist/esm/server/get-route-from-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/get-route-from-entrypoint'>;
+}
+declare module 'next/dist/esm/server/htmlescape.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/htmlescape'>;
+}
+declare module 'next/dist/esm/server/image-optimizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/image-optimizer'>;
+}
+declare module 'next/dist/esm/server/instrumentation/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/instrumentation/types'>;
+}
+declare module 'next/dist/esm/server/instrumentation/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/instrumentation/utils'>;
+}
+declare module 'next/dist/esm/server/internal-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/internal-utils'>;
+}
+declare module 'next/dist/esm/server/lib/app-dir-module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/app-dir-module'>;
+}
+declare module 'next/dist/esm/server/lib/app-info-log.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/app-info-log'>;
+}
+declare module 'next/dist/esm/server/lib/async-callback-set.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/async-callback-set'>;
+}
+declare module 'next/dist/esm/server/lib/cache-control.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/cache-control'>;
+}
+declare module 'next/dist/esm/server/lib/cache-handlers/default.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/cache-handlers/default.external'>;
+}
+declare module 'next/dist/esm/server/lib/cache-handlers/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/cache-handlers/types'>;
+}
+declare module 'next/dist/esm/server/lib/chrome-devtools-workspace.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/chrome-devtools-workspace'>;
+}
+declare module 'next/dist/esm/server/lib/clone-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/clone-response'>;
+}
+declare module 'next/dist/esm/server/lib/cpu-profile.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/cpu-profile'>;
+}
+declare module 'next/dist/esm/server/lib/decode-query-path-parameter.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/decode-query-path-parameter'>;
+}
+declare module 'next/dist/esm/server/lib/dedupe-fetch.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/dedupe-fetch'>;
+}
+declare module 'next/dist/esm/server/lib/dev-bundler-service.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/dev-bundler-service'>;
+}
+declare module 'next/dist/esm/server/lib/etag.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/etag'>;
+}
+declare module 'next/dist/esm/server/lib/experimental/create-env-definitions.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/experimental/create-env-definitions'>;
+}
+declare module 'next/dist/esm/server/lib/experimental/ppr.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/experimental/ppr'>;
+}
+declare module 'next/dist/esm/server/lib/find-page-file.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/find-page-file'>;
+}
+declare module 'next/dist/esm/server/lib/fix-mojibake.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/fix-mojibake'>;
+}
+declare module 'next/dist/esm/server/lib/format-hostname.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/format-hostname'>;
+}
+declare module 'next/dist/esm/server/lib/i18n-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/i18n-provider'>;
+}
+declare module 'next/dist/esm/server/lib/implicit-tags.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/implicit-tags'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/file-system-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache/file-system-cache'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/memory-cache.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache/memory-cache.external'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/shared-cache-controls.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache/shared-cache-controls.external'>;
+}
+declare module 'next/dist/esm/server/lib/incremental-cache/tags-manifest.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/incremental-cache/tags-manifest.external'>;
+}
+declare module 'next/dist/esm/server/lib/is-ipv6.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/is-ipv6'>;
+}
+declare module 'next/dist/esm/server/lib/lazy-result.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/lazy-result'>;
+}
+declare module 'next/dist/esm/server/lib/lru-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/lru-cache'>;
+}
+declare module 'next/dist/esm/server/lib/match-next-data-pathname.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/match-next-data-pathname'>;
+}
+declare module 'next/dist/esm/server/lib/mock-request.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/mock-request'>;
+}
+declare module 'next/dist/esm/server/lib/module-loader/module-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/module-loader/module-loader'>;
+}
+declare module 'next/dist/esm/server/lib/module-loader/node-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/module-loader/node-module-loader'>;
+}
+declare module 'next/dist/esm/server/lib/module-loader/route-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/module-loader/route-module-loader'>;
+}
+declare module 'next/dist/esm/server/lib/node-fs-methods.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/node-fs-methods'>;
+}
+declare module 'next/dist/esm/server/lib/parse-stack.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/parse-stack'>;
+}
+declare module 'next/dist/esm/server/lib/patch-fetch.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/patch-fetch'>;
+}
+declare module 'next/dist/esm/server/lib/patch-set-header.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/patch-set-header'>;
+}
+declare module 'next/dist/esm/server/lib/render-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/render-server'>;
+}
+declare module 'next/dist/esm/server/lib/router-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-server'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/block-cross-site.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/block-cross-site'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/build-data-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/build-data-route'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/build-prefetch-segment-data-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/build-prefetch-segment-data-route'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/decode-path-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/decode-path-params'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/filesystem.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/filesystem'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/instrumentation-globals.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/instrumentation-globals.external'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/is-postpone.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/is-postpone'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/proxy-request.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/proxy-request'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/resolve-routes.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/resolve-routes'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/router-server-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/router-server-context'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/setup-dev-bundler.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/setup-dev-bundler'>;
+}
+declare module 'next/dist/esm/server/lib/router-utils/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/router-utils/types'>;
+}
+declare module 'next/dist/esm/server/lib/server-action-request-meta.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/server-action-request-meta'>;
+}
+declare module 'next/dist/esm/server/lib/server-ipc/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/server-ipc/utils'>;
+}
+declare module 'next/dist/esm/server/lib/source-maps.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/source-maps'>;
+}
+declare module 'next/dist/esm/server/lib/start-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/start-server'>;
+}
+declare module 'next/dist/esm/server/lib/streaming-metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/streaming-metadata'>;
+}
+declare module 'next/dist/esm/server/lib/to-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/to-route'>;
+}
+declare module 'next/dist/esm/server/lib/trace/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/trace/constants'>;
+}
+declare module 'next/dist/esm/server/lib/trace/tracer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/trace/tracer'>;
+}
+declare module 'next/dist/esm/server/lib/trace/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/trace/utils'>;
+}
+declare module 'next/dist/esm/server/lib/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/types'>;
+}
+declare module 'next/dist/esm/server/lib/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/utils'>;
+}
+declare module 'next/dist/esm/server/lib/worker-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/lib/worker-utils'>;
+}
+declare module 'next/dist/esm/server/load-components.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/load-components'>;
+}
+declare module 'next/dist/esm/server/load-default-error-components.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/load-default-error-components'>;
+}
+declare module 'next/dist/esm/server/load-manifest.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/load-manifest.external'>;
+}
+declare module 'next/dist/esm/server/match-bundle.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/match-bundle'>;
+}
+declare module 'next/dist/esm/server/next-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/next-server'>;
+}
+declare module 'next/dist/esm/server/next-typescript.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/next-typescript'>;
+}
+declare module 'next/dist/esm/server/next.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/next'>;
+}
+declare module 'next/dist/esm/server/node-environment-baseline.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-baseline'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/console-dev.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/console-dev'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/date.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/date'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/error-inspect.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/error-inspect'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/node-crypto.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/node-crypto'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/random.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/random'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/utils'>;
+}
+declare module 'next/dist/esm/server/node-environment-extensions/web-crypto.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment-extensions/web-crypto'>;
+}
+declare module 'next/dist/esm/server/node-environment.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-environment'>;
+}
+declare module 'next/dist/esm/server/node-polyfill-crypto.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/node-polyfill-crypto'>;
+}
+declare module 'next/dist/esm/server/normalizers/absolute-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/absolute-filename-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/app-bundle-path-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app/app-bundle-path-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/app-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app/app-filename-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/app-page-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app/app-page-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/app-pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app/app-pathname-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/app/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/app'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-bundle-path-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages/pages-bundle-path-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages/pages-filename-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-page-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages/pages-page-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/built/pages/pages-pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/built/pages/pages-pathname-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/locale-route-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/locale-route-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/normalizers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/normalizers'>;
+}
+declare module 'next/dist/esm/server/normalizers/prefixing-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/prefixing-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/base-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/base-path'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/next-data.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/next-data'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/pathname-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/prefetch-rsc.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/prefetch-rsc'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/prefix.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/prefix'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/rsc.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/rsc'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/segment-prefix-rsc.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/segment-prefix-rsc'>;
+}
+declare module 'next/dist/esm/server/normalizers/request/suffix.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/request/suffix'>;
+}
+declare module 'next/dist/esm/server/normalizers/underscore-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/underscore-normalizer'>;
+}
+declare module 'next/dist/esm/server/normalizers/wrap-normalizer-fn.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/normalizers/wrap-normalizer-fn'>;
+}
+declare module 'next/dist/esm/server/og/image-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/og/image-response'>;
+}
+declare module 'next/dist/esm/server/optimize-amp.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/optimize-amp'>;
+}
+declare module 'next/dist/esm/server/patch-error-inspect.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/patch-error-inspect'>;
+}
+declare module 'next/dist/esm/server/pipe-readable.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/pipe-readable'>;
+}
+declare module 'next/dist/esm/server/post-process.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/post-process'>;
+}
+declare module 'next/dist/esm/server/ReactDOMServerPages.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/ReactDOMServerPages'>;
+}
+declare module 'next/dist/esm/server/render-result.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/render-result'>;
+}
+declare module 'next/dist/esm/server/render.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/render'>;
+}
+declare module 'next/dist/esm/server/request-meta.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request-meta'>;
+}
+declare module 'next/dist/esm/server/request/connection.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/connection'>;
+}
+declare module 'next/dist/esm/server/request/cookies.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/cookies'>;
+}
+declare module 'next/dist/esm/server/request/draft-mode.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/draft-mode'>;
+}
+declare module 'next/dist/esm/server/request/fallback-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/fallback-params'>;
+}
+declare module 'next/dist/esm/server/request/headers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/headers'>;
+}
+declare module 'next/dist/esm/server/request/params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/params'>;
+}
+declare module 'next/dist/esm/server/request/pathname.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/pathname'>;
+}
+declare module 'next/dist/esm/server/request/root-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/root-params'>;
+}
+declare module 'next/dist/esm/server/request/search-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/search-params'>;
+}
+declare module 'next/dist/esm/server/request/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/request/utils'>;
+}
+declare module 'next/dist/esm/server/require-hook.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/require-hook'>;
+}
+declare module 'next/dist/esm/server/require.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/require'>;
+}
+declare module 'next/dist/esm/server/response-cache/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/response-cache'>;
+}
+declare module 'next/dist/esm/server/response-cache/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/response-cache'>;
+}
+declare module 'next/dist/esm/server/response-cache/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/response-cache/types'>;
+}
+declare module 'next/dist/esm/server/response-cache/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/response-cache/utils'>;
+}
+declare module 'next/dist/esm/server/response-cache/web.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/response-cache/web'>;
+}
+declare module 'next/dist/esm/server/resume-data-cache/cache-store.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/resume-data-cache/cache-store'>;
+}
+declare module 'next/dist/esm/server/resume-data-cache/resume-data-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/resume-data-cache/resume-data-cache'>;
+}
+declare module 'next/dist/esm/server/revalidation-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/revalidation-utils'>;
+}
+declare module 'next/dist/esm/server/route-definitions/app-page-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/app-page-route-definition'>;
+}
+declare module 'next/dist/esm/server/route-definitions/app-route-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/app-route-route-definition'>;
+}
+declare module 'next/dist/esm/server/route-definitions/locale-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/locale-route-definition'>;
+}
+declare module 'next/dist/esm/server/route-definitions/pages-api-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/pages-api-route-definition'>;
+}
+declare module 'next/dist/esm/server/route-definitions/pages-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/pages-route-definition'>;
+}
+declare module 'next/dist/esm/server/route-definitions/route-definition.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-definitions/route-definition'>;
+}
+declare module 'next/dist/esm/server/route-kind.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-kind'>;
+}
+declare module 'next/dist/esm/server/route-matcher-managers/default-route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-managers/default-route-matcher-manager'>;
+}
+declare module 'next/dist/esm/server/route-matcher-managers/dev-route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-managers/dev-route-matcher-manager'>;
+}
+declare module 'next/dist/esm/server/route-matcher-managers/route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-managers/route-matcher-manager'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/app-page-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/app-page-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/app-route-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/app-route-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/dev-pages-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/dev-pages-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/file-cache-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/file-cache-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/file-reader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/dev/helpers/file-reader/file-reader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/cached-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/helpers/cached-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/manifest-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/manifest-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/pages-api-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/pages-api-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/pages-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/pages-route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matcher-providers/route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matcher-providers/route-matcher-provider'>;
+}
+declare module 'next/dist/esm/server/route-matchers/app-page-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/app-page-route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matchers/app-route-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/app-route-route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matchers/locale-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/locale-route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matchers/pages-api-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/pages-api-route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matchers/pages-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/pages-route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matchers/route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matchers/route-matcher'>;
+}
+declare module 'next/dist/esm/server/route-matches/app-page-route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/app-page-route-match'>;
+}
+declare module 'next/dist/esm/server/route-matches/app-route-route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/app-route-route-match'>;
+}
+declare module 'next/dist/esm/server/route-matches/locale-route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/locale-route-match'>;
+}
+declare module 'next/dist/esm/server/route-matches/pages-api-route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/pages-api-route-match'>;
+}
+declare module 'next/dist/esm/server/route-matches/pages-route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/pages-route-match'>;
+}
+declare module 'next/dist/esm/server/route-matches/route-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-matches/route-match'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/module.compiled'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/module'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/module.render.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/module.render'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/amp-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/amp-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/app-router-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/app-router-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/entrypoints'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/head-manager-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/head-manager-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/hooks-client-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/hooks-client-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/image-config-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/image-config-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/router-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/router-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/contexts/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/contexts/server-inserted-html'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/entrypoints'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-compiler-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-dom.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-dom'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-jsx-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/rsc/react.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/rsc/react'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/entrypoints'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-compiler-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom-server'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-dom'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-jsx-runtime'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-page/vendored/ssr/react.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-page/vendored/ssr/react'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/auto-implement-methods.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/helpers/auto-implement-methods'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/clean-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/helpers/clean-url'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/get-pathname-from-absolute-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/helpers/get-pathname-from-absolute-path'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/is-static-gen-enabled.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/helpers/is-static-gen-enabled'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/helpers/parsed-url-query-to-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/helpers/parsed-url-query-to-params'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/module.compiled'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/module'>;
+}
+declare module 'next/dist/esm/server/route-modules/app-route/shared-modules.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/app-route/shared-modules'>;
+}
+declare module 'next/dist/esm/server/route-modules/checks.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/checks'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages-api/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages-api/module.compiled'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages-api/module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages-api/module'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/builtin/_error.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/builtin/_error'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/module.compiled'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/module'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/module.render.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/module.render'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/amp-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/amp-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/app-router-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/app-router-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/entrypoints'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/head-manager-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/head-manager-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/hooks-client-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/hooks-client-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/html-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/html-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/image-config-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/image-config-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/loadable'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/router-context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/router-context'>;
+}
+declare module 'next/dist/esm/server/route-modules/pages/vendored/contexts/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/pages/vendored/contexts/server-inserted-html'>;
+}
+declare module 'next/dist/esm/server/route-modules/route-module.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/route-modules/route-module'>;
+}
+declare module 'next/dist/esm/server/send-payload.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/send-payload'>;
+}
+declare module 'next/dist/esm/server/send-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/send-response'>;
+}
+declare module 'next/dist/esm/server/serve-static.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/serve-static'>;
+}
+declare module 'next/dist/esm/server/server-route-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/server-route-utils'>;
+}
+declare module 'next/dist/esm/server/server-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/server-utils'>;
+}
+declare module 'next/dist/esm/server/setup-http-agent-env.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/setup-http-agent-env'>;
+}
+declare module 'next/dist/esm/server/stream-utils/encoded-tags.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/stream-utils/encoded-tags'>;
+}
+declare module 'next/dist/esm/server/stream-utils/node-web-streams-helper.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/stream-utils/node-web-streams-helper'>;
+}
+declare module 'next/dist/esm/server/stream-utils/uint8array-helpers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/stream-utils/uint8array-helpers'>;
+}
+declare module 'next/dist/esm/server/typescript/constant.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/constant'>;
+}
+declare module 'next/dist/esm/server/typescript/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript'>;
+}
+declare module 'next/dist/esm/server/typescript/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/client-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/client-boundary'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/config.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/config'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/entry.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/entry'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/error.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/error'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/metadata.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/metadata'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/server-boundary.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/server-boundary'>;
+}
+declare module 'next/dist/esm/server/typescript/rules/server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/rules/server'>;
+}
+declare module 'next/dist/esm/server/typescript/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/typescript/utils'>;
+}
+declare module 'next/dist/esm/server/use-cache/cache-life.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/cache-life'>;
+}
+declare module 'next/dist/esm/server/use-cache/cache-tag.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/cache-tag'>;
+}
+declare module 'next/dist/esm/server/use-cache/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/constants'>;
+}
+declare module 'next/dist/esm/server/use-cache/handlers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/handlers'>;
+}
+declare module 'next/dist/esm/server/use-cache/use-cache-errors.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/use-cache-errors'>;
+}
+declare module 'next/dist/esm/server/use-cache/use-cache-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/use-cache/use-cache-wrapper'>;
+}
+declare module 'next/dist/esm/server/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/utils'>;
+}
+declare module 'next/dist/esm/server/web-server.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web-server'>;
+}
+declare module 'next/dist/esm/server/web/adapter.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/adapter'>;
+}
+declare module 'next/dist/esm/server/web/edge-route-module-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/edge-route-module-wrapper'>;
+}
+declare module 'next/dist/esm/server/web/error.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/error'>;
+}
+declare module 'next/dist/esm/server/web/exports/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/exports'>;
+}
+declare module 'next/dist/esm/server/web/exports/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/exports'>;
+}
+declare module 'next/dist/esm/server/web/get-edge-preview-props.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/get-edge-preview-props'>;
+}
+declare module 'next/dist/esm/server/web/globals.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/globals'>;
+}
+declare module 'next/dist/esm/server/web/http.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/http'>;
+}
+declare module 'next/dist/esm/server/web/internal-edge-wait-until.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/internal-edge-wait-until'>;
+}
+declare module 'next/dist/esm/server/web/next-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/next-url'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/context.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox/context'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/fetch-inline-assets.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox/fetch-inline-assets'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/index' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/resource-managers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox/resource-managers'>;
+}
+declare module 'next/dist/esm/server/web/sandbox/sandbox.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/sandbox/sandbox'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/adapters/headers.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/adapters/headers'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/adapters/next-request.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/adapters/next-request'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/adapters/reflect.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/adapters/reflect'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/adapters/request-cookies.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/adapters/request-cookies'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/cookies.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/cookies'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/fetch-event.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/fetch-event'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/image-response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/image-response'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/request.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/request'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/response.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/response'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/revalidate.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/revalidate'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/unstable-cache.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/unstable-cache'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/unstable-no-store.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/unstable-no-store'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/url-pattern.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/url-pattern'>;
+}
+declare module 'next/dist/esm/server/web/spec-extension/user-agent.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/spec-extension/user-agent'>;
+}
+declare module 'next/dist/esm/server/web/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/types'>;
+}
+declare module 'next/dist/esm/server/web/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/utils'>;
+}
+declare module 'next/dist/esm/server/web/web-on-close.js' {
+  declare module.exports: $Exports<'next/dist/esm/server/web/web-on-close'>;
+}
+declare module 'next/dist/esm/shared/lib/amp-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/amp-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/amp-mode.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/amp-mode'>;
+}
+declare module 'next/dist/esm/shared/lib/amp.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/amp'>;
+}
+declare module 'next/dist/esm/shared/lib/app-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/app-dynamic'>;
+}
+declare module 'next/dist/esm/shared/lib/app-router-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/app-router-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/bloom-filter.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/bloom-filter'>;
+}
+declare module 'next/dist/esm/shared/lib/canary-only.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/canary-only'>;
+}
+declare module 'next/dist/esm/shared/lib/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/constants'>;
+}
+declare module 'next/dist/esm/shared/lib/deep-freeze.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/deep-freeze'>;
+}
+declare module 'next/dist/esm/shared/lib/deep-readonly.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/deep-readonly'>;
+}
+declare module 'next/dist/esm/shared/lib/dset.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/dset'>;
+}
+declare module 'next/dist/esm/shared/lib/dynamic.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/dynamic'>;
+}
+declare module 'next/dist/esm/shared/lib/encode-uri-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/encode-uri-path'>;
+}
+declare module 'next/dist/esm/shared/lib/error-source.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/error-source'>;
+}
+declare module 'next/dist/esm/shared/lib/errors/constants.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/errors/constants'>;
+}
+declare module 'next/dist/esm/shared/lib/escape-regexp.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/escape-regexp'>;
+}
+declare module 'next/dist/esm/shared/lib/fnv1a.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/fnv1a'>;
+}
+declare module 'next/dist/esm/shared/lib/format-webpack-messages.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/format-webpack-messages'>;
+}
+declare module 'next/dist/esm/shared/lib/get-hostname.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/get-hostname'>;
+}
+declare module 'next/dist/esm/shared/lib/get-img-props.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/get-img-props'>;
+}
+declare module 'next/dist/esm/shared/lib/get-rspack.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/get-rspack'>;
+}
+declare module 'next/dist/esm/shared/lib/get-webpack-bundler.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/get-webpack-bundler'>;
+}
+declare module 'next/dist/esm/shared/lib/hash.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/hash'>;
+}
+declare module 'next/dist/esm/shared/lib/head-manager-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/head-manager-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/head.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/head'>;
+}
+declare module 'next/dist/esm/shared/lib/hooks-client-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/hooks-client-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/html-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/html-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/i18n/detect-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/i18n/detect-domain-locale'>;
+}
+declare module 'next/dist/esm/shared/lib/i18n/get-locale-redirect.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/i18n/get-locale-redirect'>;
+}
+declare module 'next/dist/esm/shared/lib/i18n/normalize-locale-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/i18n/normalize-locale-path'>;
+}
+declare module 'next/dist/esm/shared/lib/image-blur-svg.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/image-blur-svg'>;
+}
+declare module 'next/dist/esm/shared/lib/image-config-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/image-config-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/image-config.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/image-config'>;
+}
+declare module 'next/dist/esm/shared/lib/image-external.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/image-external'>;
+}
+declare module 'next/dist/esm/shared/lib/image-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/image-loader'>;
+}
+declare module 'next/dist/esm/shared/lib/invariant-error.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/invariant-error'>;
+}
+declare module 'next/dist/esm/shared/lib/is-internal.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/is-internal'>;
+}
+declare module 'next/dist/esm/shared/lib/is-plain-object.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/is-plain-object'>;
+}
+declare module 'next/dist/esm/shared/lib/is-thenable.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/is-thenable'>;
+}
+declare module 'next/dist/esm/shared/lib/isomorphic/path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/isomorphic/path'>;
+}
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/bailout-to-csr.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/lazy-dynamic/bailout-to-csr'>;
+}
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/dynamic-bailout-to-csr.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/lazy-dynamic/dynamic-bailout-to-csr'>;
+}
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/loadable.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/lazy-dynamic/loadable'>;
+}
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/preload-chunks.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/lazy-dynamic/preload-chunks'>;
+}
+declare module 'next/dist/esm/shared/lib/lazy-dynamic/types.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/lazy-dynamic/types'>;
+}
+declare module 'next/dist/esm/shared/lib/loadable-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/loadable-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/loadable.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/loadable.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/magic-identifier.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/magic-identifier'>;
+}
+declare module 'next/dist/esm/shared/lib/match-local-pattern.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/match-local-pattern'>;
+}
+declare module 'next/dist/esm/shared/lib/match-remote-pattern.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/match-remote-pattern'>;
+}
+declare module 'next/dist/esm/shared/lib/mitt.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/mitt'>;
+}
+declare module 'next/dist/esm/shared/lib/modern-browserslist-target.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/modern-browserslist-target'>;
+}
+declare module 'next/dist/esm/shared/lib/no-fallback-error.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/no-fallback-error.external'>;
+}
+declare module 'next/dist/esm/shared/lib/normalized-asset-prefix.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/normalized-asset-prefix'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/absolute-path-to-page.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/absolute-path-to-page'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/denormalize-app-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/denormalize-app-path'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/denormalize-page-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/denormalize-page-path'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/ensure-leading-slash.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/ensure-leading-slash'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/get-page-paths.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/get-page-paths'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/normalize-data-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/normalize-data-path'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/normalize-page-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/normalize-page-path'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/normalize-path-sep.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/normalize-path-sep'>;
+}
+declare module 'next/dist/esm/shared/lib/page-path/remove-page-path-tail.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/page-path/remove-page-path-tail'>;
+}
+declare module 'next/dist/esm/shared/lib/router-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router-context.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/router/adapters.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/adapters'>;
+}
+declare module 'next/dist/esm/shared/lib/router/router.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/router'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/add-locale.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/add-locale'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/add-path-prefix.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/add-path-prefix'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/add-path-suffix.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/add-path-suffix'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/app-paths.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/app-paths'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/as-path-to-search-params.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/as-path-to-search-params'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/cache-busting-search-param.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/cache-busting-search-param'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/compare-states.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/compare-states'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/disable-smooth-scroll.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/disable-smooth-scroll'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/escape-path-delimiters.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/escape-path-delimiters'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/format-next-pathname-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/format-next-pathname-info'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/format-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/format-url'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/get-asset-path-from-route.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/get-asset-path-from-route'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/get-next-pathname-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/get-next-pathname-info'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/get-route-from-asset-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/get-route-from-asset-path'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/html-bots.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/html-bots'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/index' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/index.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/interception-routes.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/interception-routes'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/interpolate-as.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/interpolate-as'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/is-bot.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/is-bot'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/is-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/is-dynamic'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/is-local-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/is-local-url'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/middleware-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/middleware-route-matcher'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/omit.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/omit'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/parse-path.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/parse-path'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/parse-relative-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/parse-relative-url'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/parse-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/parse-url'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/path-has-prefix.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/path-has-prefix'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/path-match.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/path-match'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/prepare-destination.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/prepare-destination'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/querystring.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/querystring'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/relativize-url.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/relativize-url'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/remove-path-prefix.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/remove-path-prefix'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/remove-trailing-slash.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/remove-trailing-slash'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/resolve-rewrites.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/resolve-rewrites'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/route-matcher'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/route-regex.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/route-regex'>;
+}
+declare module 'next/dist/esm/shared/lib/router/utils/sorted-routes.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/router/utils/sorted-routes'>;
+}
+declare module 'next/dist/esm/shared/lib/runtime-config.external.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/runtime-config.external'>;
+}
+declare module 'next/dist/esm/shared/lib/segment-cache/output-export-prefetch-encoding.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/segment-cache/output-export-prefetch-encoding'>;
+}
+declare module 'next/dist/esm/shared/lib/segment-cache/segment-value-encoding.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/segment-cache/segment-value-encoding'>;
+}
+declare module 'next/dist/esm/shared/lib/segment.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/segment'>;
+}
+declare module 'next/dist/esm/shared/lib/server-inserted-html.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/server-inserted-html.shared-runtime'>;
+}
+declare module 'next/dist/esm/shared/lib/server-reference-info.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/server-reference-info'>;
+}
+declare module 'next/dist/esm/shared/lib/side-effect.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/side-effect'>;
+}
+declare module 'next/dist/esm/shared/lib/styled-jsx.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/styled-jsx'>;
+}
+declare module 'next/dist/esm/shared/lib/turbopack/compilation-events.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/turbopack/compilation-events'>;
+}
+declare module 'next/dist/esm/shared/lib/turbopack/entry-key.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/turbopack/entry-key'>;
+}
+declare module 'next/dist/esm/shared/lib/turbopack/manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/turbopack/manifest-loader'>;
+}
+declare module 'next/dist/esm/shared/lib/turbopack/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/turbopack/utils'>;
+}
+declare module 'next/dist/esm/shared/lib/utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/utils'>;
+}
+declare module 'next/dist/esm/shared/lib/utils/error-once.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/utils/error-once'>;
+}
+declare module 'next/dist/esm/shared/lib/utils/reflect-utils.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/utils/reflect-utils'>;
+}
+declare module 'next/dist/esm/shared/lib/utils/warn-once.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/utils/warn-once'>;
+}
+declare module 'next/dist/esm/shared/lib/zod.js' {
+  declare module.exports: $Exports<'next/dist/esm/shared/lib/zod'>;
+}
+declare module 'next/dist/experimental/testing/server/config-testing-utils.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testing/server/config-testing-utils'>;
+}
+declare module 'next/dist/experimental/testing/server/index' {
+  declare module.exports: $Exports<'next/dist/experimental/testing/server'>;
+}
+declare module 'next/dist/experimental/testing/server/index.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testing/server'>;
+}
+declare module 'next/dist/experimental/testing/server/middleware-testing-utils.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testing/server/middleware-testing-utils'>;
+}
+declare module 'next/dist/experimental/testing/server/utils.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testing/server/utils'>;
+}
+declare module 'next/dist/experimental/testmode/context.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/context'>;
+}
+declare module 'next/dist/experimental/testmode/fetch.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/fetch'>;
+}
+declare module 'next/dist/experimental/testmode/httpget.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/httpget'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/default-config.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/default-config'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/index' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/index.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/msw.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/msw'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/next-fixture.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/next-fixture'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/next-options.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/next-options'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/next-worker-fixture.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/next-worker-fixture'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/page-route.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/page-route'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/report.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/report'>;
+}
+declare module 'next/dist/experimental/testmode/playwright/step.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/playwright/step'>;
+}
+declare module 'next/dist/experimental/testmode/proxy/fetch-api.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/proxy/fetch-api'>;
+}
+declare module 'next/dist/experimental/testmode/proxy/index' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/proxy'>;
+}
+declare module 'next/dist/experimental/testmode/proxy/index.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/proxy'>;
+}
+declare module 'next/dist/experimental/testmode/proxy/server.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/proxy/server'>;
+}
+declare module 'next/dist/experimental/testmode/proxy/types.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/proxy/types'>;
+}
+declare module 'next/dist/experimental/testmode/server-edge.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/server-edge'>;
+}
+declare module 'next/dist/experimental/testmode/server.js' {
+  declare module.exports: $Exports<'next/dist/experimental/testmode/server'>;
+}
+declare module 'next/dist/export/helpers/create-incremental-cache.js' {
+  declare module.exports: $Exports<'next/dist/export/helpers/create-incremental-cache'>;
+}
+declare module 'next/dist/export/helpers/get-amp-html-validator.js' {
+  declare module.exports: $Exports<'next/dist/export/helpers/get-amp-html-validator'>;
+}
+declare module 'next/dist/export/helpers/get-params.js' {
+  declare module.exports: $Exports<'next/dist/export/helpers/get-params'>;
+}
+declare module 'next/dist/export/helpers/is-dynamic-usage-error.js' {
+  declare module.exports: $Exports<'next/dist/export/helpers/is-dynamic-usage-error'>;
+}
+declare module 'next/dist/export/index' {
+  declare module.exports: $Exports<'next/dist/export'>;
+}
+declare module 'next/dist/export/index.js' {
+  declare module.exports: $Exports<'next/dist/export'>;
+}
+declare module 'next/dist/export/routes/app-page.js' {
+  declare module.exports: $Exports<'next/dist/export/routes/app-page'>;
+}
+declare module 'next/dist/export/routes/app-route.js' {
+  declare module.exports: $Exports<'next/dist/export/routes/app-route'>;
+}
+declare module 'next/dist/export/routes/pages.js' {
+  declare module.exports: $Exports<'next/dist/export/routes/pages'>;
+}
+declare module 'next/dist/export/routes/types.js' {
+  declare module.exports: $Exports<'next/dist/export/routes/types'>;
+}
+declare module 'next/dist/export/types.js' {
+  declare module.exports: $Exports<'next/dist/export/types'>;
+}
+declare module 'next/dist/export/utils.js' {
+  declare module.exports: $Exports<'next/dist/export/utils'>;
+}
+declare module 'next/dist/export/worker.js' {
+  declare module.exports: $Exports<'next/dist/export/worker'>;
+}
+declare module 'next/dist/lib/batcher.js' {
+  declare module.exports: $Exports<'next/dist/lib/batcher'>;
+}
+declare module 'next/dist/lib/build-custom-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/build-custom-route'>;
+}
+declare module 'next/dist/lib/client-and-server-references.js' {
+  declare module.exports: $Exports<'next/dist/lib/client-and-server-references'>;
+}
+declare module 'next/dist/lib/coalesced-function.js' {
+  declare module.exports: $Exports<'next/dist/lib/coalesced-function'>;
+}
+declare module 'next/dist/lib/compile-error.js' {
+  declare module.exports: $Exports<'next/dist/lib/compile-error'>;
+}
+declare module 'next/dist/lib/constants.js' {
+  declare module.exports: $Exports<'next/dist/lib/constants'>;
+}
+declare module 'next/dist/lib/create-client-router-filter.js' {
+  declare module.exports: $Exports<'next/dist/lib/create-client-router-filter'>;
+}
+declare module 'next/dist/lib/detached-promise.js' {
+  declare module.exports: $Exports<'next/dist/lib/detached-promise'>;
+}
+declare module 'next/dist/lib/detect-typo.js' {
+  declare module.exports: $Exports<'next/dist/lib/detect-typo'>;
+}
+declare module 'next/dist/lib/download-swc.js' {
+  declare module.exports: $Exports<'next/dist/lib/download-swc'>;
+}
+declare module 'next/dist/lib/error-telemetry-utils.js' {
+  declare module.exports: $Exports<'next/dist/lib/error-telemetry-utils'>;
+}
+declare module 'next/dist/lib/eslint/customFormatter.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/customFormatter'>;
+}
+declare module 'next/dist/lib/eslint/getESLintPromptValues.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/getESLintPromptValues'>;
+}
+declare module 'next/dist/lib/eslint/hasEslintConfiguration.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/hasEslintConfiguration'>;
+}
+declare module 'next/dist/lib/eslint/runLintCheck.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/runLintCheck'>;
+}
+declare module 'next/dist/lib/eslint/writeDefaultConfig.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/writeDefaultConfig'>;
+}
+declare module 'next/dist/lib/eslint/writeOutputFile.js' {
+  declare module.exports: $Exports<'next/dist/lib/eslint/writeOutputFile'>;
+}
+declare module 'next/dist/lib/fallback.js' {
+  declare module.exports: $Exports<'next/dist/lib/fallback'>;
+}
+declare module 'next/dist/lib/fatal-error.js' {
+  declare module.exports: $Exports<'next/dist/lib/fatal-error'>;
+}
+declare module 'next/dist/lib/file-exists.js' {
+  declare module.exports: $Exports<'next/dist/lib/file-exists'>;
+}
+declare module 'next/dist/lib/find-config.js' {
+  declare module.exports: $Exports<'next/dist/lib/find-config'>;
+}
+declare module 'next/dist/lib/find-pages-dir.js' {
+  declare module.exports: $Exports<'next/dist/lib/find-pages-dir'>;
+}
+declare module 'next/dist/lib/find-root.js' {
+  declare module.exports: $Exports<'next/dist/lib/find-root'>;
+}
+declare module 'next/dist/lib/format-cli-help-output.js' {
+  declare module.exports: $Exports<'next/dist/lib/format-cli-help-output'>;
+}
+declare module 'next/dist/lib/format-dynamic-import-path.js' {
+  declare module.exports: $Exports<'next/dist/lib/format-dynamic-import-path'>;
+}
+declare module 'next/dist/lib/format-server-error.js' {
+  declare module.exports: $Exports<'next/dist/lib/format-server-error'>;
+}
+declare module 'next/dist/lib/fs/rename.js' {
+  declare module.exports: $Exports<'next/dist/lib/fs/rename'>;
+}
+declare module 'next/dist/lib/fs/write-atomic.js' {
+  declare module.exports: $Exports<'next/dist/lib/fs/write-atomic'>;
+}
+declare module 'next/dist/lib/generate-interception-routes-rewrites.js' {
+  declare module.exports: $Exports<'next/dist/lib/generate-interception-routes-rewrites'>;
+}
+declare module 'next/dist/lib/get-files-in-dir.js' {
+  declare module.exports: $Exports<'next/dist/lib/get-files-in-dir'>;
+}
+declare module 'next/dist/lib/get-network-host.js' {
+  declare module.exports: $Exports<'next/dist/lib/get-network-host'>;
+}
+declare module 'next/dist/lib/get-package-version.js' {
+  declare module.exports: $Exports<'next/dist/lib/get-package-version'>;
+}
+declare module 'next/dist/lib/get-project-dir.js' {
+  declare module.exports: $Exports<'next/dist/lib/get-project-dir'>;
+}
+declare module 'next/dist/lib/has-necessary-dependencies.js' {
+  declare module.exports: $Exports<'next/dist/lib/has-necessary-dependencies'>;
+}
+declare module 'next/dist/lib/helpers/get-cache-directory.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-cache-directory'>;
+}
+declare module 'next/dist/lib/helpers/get-npx-command.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-npx-command'>;
+}
+declare module 'next/dist/lib/helpers/get-online.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-online'>;
+}
+declare module 'next/dist/lib/helpers/get-pkg-manager.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-pkg-manager'>;
+}
+declare module 'next/dist/lib/helpers/get-registry.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-registry'>;
+}
+declare module 'next/dist/lib/helpers/get-reserved-port.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/get-reserved-port'>;
+}
+declare module 'next/dist/lib/helpers/install.js' {
+  declare module.exports: $Exports<'next/dist/lib/helpers/install'>;
+}
+declare module 'next/dist/lib/import-next-warning.js' {
+  declare module.exports: $Exports<'next/dist/lib/import-next-warning'>;
+}
+declare module 'next/dist/lib/inline-static-env.js' {
+  declare module.exports: $Exports<'next/dist/lib/inline-static-env'>;
+}
+declare module 'next/dist/lib/install-dependencies.js' {
+  declare module.exports: $Exports<'next/dist/lib/install-dependencies'>;
+}
+declare module 'next/dist/lib/interop-default.js' {
+  declare module.exports: $Exports<'next/dist/lib/interop-default'>;
+}
+declare module 'next/dist/lib/is-api-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-api-route'>;
+}
+declare module 'next/dist/lib/is-app-page-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-app-page-route'>;
+}
+declare module 'next/dist/lib/is-app-route-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-app-route-route'>;
+}
+declare module 'next/dist/lib/is-edge-runtime.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-edge-runtime'>;
+}
+declare module 'next/dist/lib/is-error.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-error'>;
+}
+declare module 'next/dist/lib/is-internal-component.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-internal-component'>;
+}
+declare module 'next/dist/lib/is-serializable-props.js' {
+  declare module.exports: $Exports<'next/dist/lib/is-serializable-props'>;
+}
+declare module 'next/dist/lib/load-custom-routes.js' {
+  declare module.exports: $Exports<'next/dist/lib/load-custom-routes'>;
+}
+declare module 'next/dist/lib/memory/gc-observer.js' {
+  declare module.exports: $Exports<'next/dist/lib/memory/gc-observer'>;
+}
+declare module 'next/dist/lib/memory/shutdown.js' {
+  declare module.exports: $Exports<'next/dist/lib/memory/shutdown'>;
+}
+declare module 'next/dist/lib/memory/startup.js' {
+  declare module.exports: $Exports<'next/dist/lib/memory/startup'>;
+}
+declare module 'next/dist/lib/memory/trace.js' {
+  declare module.exports: $Exports<'next/dist/lib/memory/trace'>;
+}
+declare module 'next/dist/lib/metadata/clone-metadata.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/clone-metadata'>;
+}
+declare module 'next/dist/lib/metadata/constants.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/constants'>;
+}
+declare module 'next/dist/lib/metadata/default-metadata.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/default-metadata'>;
+}
+declare module 'next/dist/lib/metadata/generate/alternate.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/alternate'>;
+}
+declare module 'next/dist/lib/metadata/generate/basic.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/basic'>;
+}
+declare module 'next/dist/lib/metadata/generate/icon-mark.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/icon-mark'>;
+}
+declare module 'next/dist/lib/metadata/generate/icons.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/icons'>;
+}
+declare module 'next/dist/lib/metadata/generate/meta.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/meta'>;
+}
+declare module 'next/dist/lib/metadata/generate/opengraph.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/opengraph'>;
+}
+declare module 'next/dist/lib/metadata/generate/utils.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/generate/utils'>;
+}
+declare module 'next/dist/lib/metadata/get-metadata-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/get-metadata-route'>;
+}
+declare module 'next/dist/lib/metadata/is-metadata-route.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/is-metadata-route'>;
+}
+declare module 'next/dist/lib/metadata/metadata-constants.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/metadata-constants'>;
+}
+declare module 'next/dist/lib/metadata/metadata-context.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/metadata-context'>;
+}
+declare module 'next/dist/lib/metadata/metadata.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/metadata'>;
+}
+declare module 'next/dist/lib/metadata/resolve-metadata.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolve-metadata'>;
+}
+declare module 'next/dist/lib/metadata/resolvers/resolve-basics.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolvers/resolve-basics'>;
+}
+declare module 'next/dist/lib/metadata/resolvers/resolve-icons.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolvers/resolve-icons'>;
+}
+declare module 'next/dist/lib/metadata/resolvers/resolve-opengraph.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolvers/resolve-opengraph'>;
+}
+declare module 'next/dist/lib/metadata/resolvers/resolve-title.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolvers/resolve-title'>;
+}
+declare module 'next/dist/lib/metadata/resolvers/resolve-url.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/resolvers/resolve-url'>;
+}
+declare module 'next/dist/lib/metadata/types/alternative-urls-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/alternative-urls-types'>;
+}
+declare module 'next/dist/lib/metadata/types/extra-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/extra-types'>;
+}
+declare module 'next/dist/lib/metadata/types/icons.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/icons'>;
+}
+declare module 'next/dist/lib/metadata/types/manifest-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/manifest-types'>;
+}
+declare module 'next/dist/lib/metadata/types/metadata-interface.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/metadata-interface'>;
+}
+declare module 'next/dist/lib/metadata/types/metadata-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/metadata-types'>;
+}
+declare module 'next/dist/lib/metadata/types/opengraph-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/opengraph-types'>;
+}
+declare module 'next/dist/lib/metadata/types/resolvers.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/resolvers'>;
+}
+declare module 'next/dist/lib/metadata/types/twitter-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/metadata/types/twitter-types'>;
+}
+declare module 'next/dist/lib/mime-type.js' {
+  declare module.exports: $Exports<'next/dist/lib/mime-type'>;
+}
+declare module 'next/dist/lib/mkcert.js' {
+  declare module.exports: $Exports<'next/dist/lib/mkcert'>;
+}
+declare module 'next/dist/lib/multi-file-writer.js' {
+  declare module.exports: $Exports<'next/dist/lib/multi-file-writer'>;
+}
+declare module 'next/dist/lib/needs-experimental-react.js' {
+  declare module.exports: $Exports<'next/dist/lib/needs-experimental-react'>;
+}
+declare module 'next/dist/lib/non-nullable.js' {
+  declare module.exports: $Exports<'next/dist/lib/non-nullable'>;
+}
+declare module 'next/dist/lib/oxford-comma-list.js' {
+  declare module.exports: $Exports<'next/dist/lib/oxford-comma-list'>;
+}
+declare module 'next/dist/lib/page-types.js' {
+  declare module.exports: $Exports<'next/dist/lib/page-types'>;
+}
+declare module 'next/dist/lib/patch-incorrect-lockfile.js' {
+  declare module.exports: $Exports<'next/dist/lib/patch-incorrect-lockfile'>;
+}
+declare module 'next/dist/lib/pick.js' {
+  declare module.exports: $Exports<'next/dist/lib/pick'>;
+}
+declare module 'next/dist/lib/picocolors.js' {
+  declare module.exports: $Exports<'next/dist/lib/picocolors'>;
+}
+declare module 'next/dist/lib/pretty-bytes.js' {
+  declare module.exports: $Exports<'next/dist/lib/pretty-bytes'>;
+}
+declare module 'next/dist/lib/realpath.js' {
+  declare module.exports: $Exports<'next/dist/lib/realpath'>;
+}
+declare module 'next/dist/lib/recursive-copy.js' {
+  declare module.exports: $Exports<'next/dist/lib/recursive-copy'>;
+}
+declare module 'next/dist/lib/recursive-delete.js' {
+  declare module.exports: $Exports<'next/dist/lib/recursive-delete'>;
+}
+declare module 'next/dist/lib/recursive-readdir.js' {
+  declare module.exports: $Exports<'next/dist/lib/recursive-readdir'>;
+}
+declare module 'next/dist/lib/redirect-status.js' {
+  declare module.exports: $Exports<'next/dist/lib/redirect-status'>;
+}
+declare module 'next/dist/lib/require-instrumentation-client.js' {
+  declare module.exports: $Exports<'next/dist/lib/require-instrumentation-client'>;
+}
+declare module 'next/dist/lib/resolve-from.js' {
+  declare module.exports: $Exports<'next/dist/lib/resolve-from'>;
+}
+declare module 'next/dist/lib/scheduler.js' {
+  declare module.exports: $Exports<'next/dist/lib/scheduler'>;
+}
+declare module 'next/dist/lib/semver-noop.js' {
+  declare module.exports: $Exports<'next/dist/lib/semver-noop'>;
+}
+declare module 'next/dist/lib/setup-exception-listeners.js' {
+  declare module.exports: $Exports<'next/dist/lib/setup-exception-listeners'>;
+}
+declare module 'next/dist/lib/static-env.js' {
+  declare module.exports: $Exports<'next/dist/lib/static-env'>;
+}
+declare module 'next/dist/lib/try-to-parse-path.js' {
+  declare module.exports: $Exports<'next/dist/lib/try-to-parse-path'>;
+}
+declare module 'next/dist/lib/turbopack-warning.js' {
+  declare module.exports: $Exports<'next/dist/lib/turbopack-warning'>;
+}
+declare module 'next/dist/lib/typescript/diagnosticFormatter.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/diagnosticFormatter'>;
+}
+declare module 'next/dist/lib/typescript/getTypeScriptConfiguration.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/getTypeScriptConfiguration'>;
+}
+declare module 'next/dist/lib/typescript/getTypeScriptIntent.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/getTypeScriptIntent'>;
+}
+declare module 'next/dist/lib/typescript/missingDependencyError.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/missingDependencyError'>;
+}
+declare module 'next/dist/lib/typescript/runTypeCheck.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/runTypeCheck'>;
+}
+declare module 'next/dist/lib/typescript/writeAppTypeDeclarations.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/writeAppTypeDeclarations'>;
+}
+declare module 'next/dist/lib/typescript/writeConfigurationDefaults.js' {
+  declare module.exports: $Exports<'next/dist/lib/typescript/writeConfigurationDefaults'>;
+}
+declare module 'next/dist/lib/url.js' {
+  declare module.exports: $Exports<'next/dist/lib/url'>;
+}
+declare module 'next/dist/lib/verify-partytown-setup.js' {
+  declare module.exports: $Exports<'next/dist/lib/verify-partytown-setup'>;
+}
+declare module 'next/dist/lib/verify-root-layout.js' {
+  declare module.exports: $Exports<'next/dist/lib/verify-root-layout'>;
+}
+declare module 'next/dist/lib/verify-typescript-setup.js' {
+  declare module.exports: $Exports<'next/dist/lib/verify-typescript-setup'>;
+}
+declare module 'next/dist/lib/verifyAndLint.js' {
+  declare module.exports: $Exports<'next/dist/lib/verifyAndLint'>;
+}
+declare module 'next/dist/lib/wait.js' {
+  declare module.exports: $Exports<'next/dist/lib/wait'>;
+}
+declare module 'next/dist/lib/with-promise-cache.js' {
+  declare module.exports: $Exports<'next/dist/lib/with-promise-cache'>;
+}
+declare module 'next/dist/lib/worker.js' {
+  declare module.exports: $Exports<'next/dist/lib/worker'>;
+}
+declare module 'next/dist/next-devtools/dev-overlay.shim.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/dev-overlay.shim'>;
+}
+declare module 'next/dist/next-devtools/server/dev-indicator-middleware.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/dev-indicator-middleware'>;
+}
+declare module 'next/dist/next-devtools/server/font/get-dev-overlay-font-middleware.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/font/get-dev-overlay-font-middleware'>;
+}
+declare module 'next/dist/next-devtools/server/get-next-error-feedback-middleware.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/get-next-error-feedback-middleware'>;
+}
+declare module 'next/dist/next-devtools/server/launch-editor.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/launch-editor'>;
+}
+declare module 'next/dist/next-devtools/server/middleware-response.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/middleware-response'>;
+}
+declare module 'next/dist/next-devtools/server/restart-dev-server-middleware.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/restart-dev-server-middleware'>;
+}
+declare module 'next/dist/next-devtools/server/shared.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/server/shared'>;
+}
+declare module 'next/dist/next-devtools/shared/console-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/console-error'>;
+}
+declare module 'next/dist/next-devtools/shared/forward-logs-shared.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/forward-logs-shared'>;
+}
+declare module 'next/dist/next-devtools/shared/hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/hydration-error'>;
+}
+declare module 'next/dist/next-devtools/shared/react-18-hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/react-18-hydration-error'>;
+}
+declare module 'next/dist/next-devtools/shared/react-19-hydration-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/react-19-hydration-error'>;
+}
+declare module 'next/dist/next-devtools/shared/stack-frame.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/stack-frame'>;
+}
+declare module 'next/dist/next-devtools/shared/types.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/types'>;
+}
+declare module 'next/dist/next-devtools/shared/version-staleness.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/version-staleness'>;
+}
+declare module 'next/dist/next-devtools/shared/webpack-module-path.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/shared/webpack-module-path'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/app-dev-overlay-error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/app-dev-overlay-error-boundary'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/app-dev-overlay-setup.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/app-dev-overlay-setup'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/client-entry.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/client-entry'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/index' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/index.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/intercept-console-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors/intercept-console-error'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/replay-ssr-only-errors.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors/replay-ssr-only-errors'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/stitched-error.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors/stitched-error'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/use-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors/use-error-handler'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/errors/use-forward-console-log.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/errors/use-forward-console-log'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/forward-logs.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/forward-logs'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/segment-explorer-node.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/segment-explorer-node'>;
+}
+declare module 'next/dist/next-devtools/userspace/app/terminal-logging-config.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/app/terminal-logging-config'>;
+}
+declare module 'next/dist/next-devtools/userspace/pages/hydration-error-state.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/pages/hydration-error-state'>;
+}
+declare module 'next/dist/next-devtools/userspace/pages/pages-dev-overlay-error-boundary.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/pages/pages-dev-overlay-error-boundary'>;
+}
+declare module 'next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup'>;
+}
+declare module 'next/dist/next-devtools/userspace/use-app-dev-rendering-indicator.js' {
+  declare module.exports: $Exports<'next/dist/next-devtools/userspace/use-app-dev-rendering-indicator'>;
+}
+declare module 'next/dist/pages/_app.js' {
+  declare module.exports: $Exports<'next/dist/pages/_app'>;
+}
+declare module 'next/dist/pages/_document.js' {
+  declare module.exports: $Exports<'next/dist/pages/_document'>;
+}
+declare module 'next/dist/pages/_error.js' {
+  declare module.exports: $Exports<'next/dist/pages/_error'>;
+}
+declare module 'next/dist/server/accept-header.js' {
+  declare module.exports: $Exports<'next/dist/server/accept-header'>;
+}
+declare module 'next/dist/server/after/after-context.js' {
+  declare module.exports: $Exports<'next/dist/server/after/after-context'>;
+}
+declare module 'next/dist/server/after/after.js' {
+  declare module.exports: $Exports<'next/dist/server/after/after'>;
+}
+declare module 'next/dist/server/after/awaiter.js' {
+  declare module.exports: $Exports<'next/dist/server/after/awaiter'>;
+}
+declare module 'next/dist/server/after/builtin-request-context.js' {
+  declare module.exports: $Exports<'next/dist/server/after/builtin-request-context'>;
+}
+declare module 'next/dist/server/after/index' {
+  declare module.exports: $Exports<'next/dist/server/after'>;
+}
+declare module 'next/dist/server/after/index.js' {
+  declare module.exports: $Exports<'next/dist/server/after'>;
+}
+declare module 'next/dist/server/after/run-with-after.js' {
+  declare module.exports: $Exports<'next/dist/server/after/run-with-after'>;
+}
+declare module 'next/dist/server/api-utils/get-cookie-parser.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils/get-cookie-parser'>;
+}
+declare module 'next/dist/server/api-utils/index' {
+  declare module.exports: $Exports<'next/dist/server/api-utils'>;
+}
+declare module 'next/dist/server/api-utils/index.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils'>;
+}
+declare module 'next/dist/server/api-utils/node/api-resolver.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils/node/api-resolver'>;
+}
+declare module 'next/dist/server/api-utils/node/parse-body.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils/node/parse-body'>;
+}
+declare module 'next/dist/server/api-utils/node/try-get-preview-data.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils/node/try-get-preview-data'>;
+}
+declare module 'next/dist/server/api-utils/web.js' {
+  declare module.exports: $Exports<'next/dist/server/api-utils/web'>;
+}
+declare module 'next/dist/server/app-render/action-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/action-async-storage-instance'>;
+}
+declare module 'next/dist/server/app-render/action-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/action-async-storage.external'>;
+}
+declare module 'next/dist/server/app-render/action-handler.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/action-handler'>;
+}
+declare module 'next/dist/server/app-render/action-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/action-utils'>;
+}
+declare module 'next/dist/server/app-render/after-task-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/after-task-async-storage-instance'>;
+}
+declare module 'next/dist/server/app-render/after-task-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/after-task-async-storage.external'>;
+}
+declare module 'next/dist/server/app-render/app-render-prerender-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/app-render-prerender-utils'>;
+}
+declare module 'next/dist/server/app-render/app-render-render-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/app-render-render-utils'>;
+}
+declare module 'next/dist/server/app-render/app-render.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/app-render'>;
+}
+declare module 'next/dist/server/app-render/async-local-storage.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/async-local-storage'>;
+}
+declare module 'next/dist/server/app-render/cache-signal.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/cache-signal'>;
+}
+declare module 'next/dist/server/app-render/collect-segment-data.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/collect-segment-data'>;
+}
+declare module 'next/dist/server/app-render/create-component-styles-and-scripts.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/create-component-styles-and-scripts'>;
+}
+declare module 'next/dist/server/app-render/create-component-tree.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/create-component-tree'>;
+}
+declare module 'next/dist/server/app-render/create-error-handler.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/create-error-handler'>;
+}
+declare module 'next/dist/server/app-render/create-flight-router-state-from-loader-tree.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/create-flight-router-state-from-loader-tree'>;
+}
+declare module 'next/dist/server/app-render/csrf-protection.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/csrf-protection'>;
+}
+declare module 'next/dist/server/app-render/dynamic-access-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/dynamic-access-async-storage-instance'>;
+}
+declare module 'next/dist/server/app-render/dynamic-access-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/dynamic-access-async-storage.external'>;
+}
+declare module 'next/dist/server/app-render/dynamic-rendering.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/dynamic-rendering'>;
+}
+declare module 'next/dist/server/app-render/encryption-utils-server.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/encryption-utils-server'>;
+}
+declare module 'next/dist/server/app-render/encryption-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/encryption-utils'>;
+}
+declare module 'next/dist/server/app-render/encryption.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/encryption'>;
+}
+declare module 'next/dist/server/app-render/entry-base.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/entry-base'>;
+}
+declare module 'next/dist/server/app-render/flight-render-result.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/flight-render-result'>;
+}
+declare module 'next/dist/server/app-render/get-asset-query-string.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-asset-query-string'>;
+}
+declare module 'next/dist/server/app-render/get-css-inlined-link-tags.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-css-inlined-link-tags'>;
+}
+declare module 'next/dist/server/app-render/get-layer-assets.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-layer-assets'>;
+}
+declare module 'next/dist/server/app-render/get-preloadable-fonts.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-preloadable-fonts'>;
+}
+declare module 'next/dist/server/app-render/get-script-nonce-from-header.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-script-nonce-from-header'>;
+}
+declare module 'next/dist/server/app-render/get-segment-param.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-segment-param'>;
+}
+declare module 'next/dist/server/app-render/get-short-dynamic-param-type.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/get-short-dynamic-param-type'>;
+}
+declare module 'next/dist/server/app-render/has-loading-component-in-tree.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/has-loading-component-in-tree'>;
+}
+declare module 'next/dist/server/app-render/interop-default.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/interop-default'>;
+}
+declare module 'next/dist/server/app-render/make-get-server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/make-get-server-inserted-html'>;
+}
+declare module 'next/dist/server/app-render/metadata-insertion/create-server-inserted-metadata.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/metadata-insertion/create-server-inserted-metadata'>;
+}
+declare module 'next/dist/server/app-render/module-loading/track-dynamic-import.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/module-loading/track-dynamic-import'>;
+}
+declare module 'next/dist/server/app-render/module-loading/track-module-loading.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/module-loading/track-module-loading.external'>;
+}
+declare module 'next/dist/server/app-render/module-loading/track-module-loading.instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/module-loading/track-module-loading.instance'>;
+}
+declare module 'next/dist/server/app-render/parse-and-validate-flight-router-state.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/parse-and-validate-flight-router-state'>;
+}
+declare module 'next/dist/server/app-render/parse-loader-tree.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/parse-loader-tree'>;
+}
+declare module 'next/dist/server/app-render/postponed-state.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/postponed-state'>;
+}
+declare module 'next/dist/server/app-render/prospective-render-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/prospective-render-utils'>;
+}
+declare module 'next/dist/server/app-render/react-large-shell-error.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/react-large-shell-error'>;
+}
+declare module 'next/dist/server/app-render/react-server.node.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/react-server.node'>;
+}
+declare module 'next/dist/server/app-render/render-css-resource.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/render-css-resource'>;
+}
+declare module 'next/dist/server/app-render/render-to-string.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/render-to-string'>;
+}
+declare module 'next/dist/server/app-render/required-scripts.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/required-scripts'>;
+}
+declare module 'next/dist/server/app-render/rsc/postpone.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/rsc/postpone'>;
+}
+declare module 'next/dist/server/app-render/rsc/preloads.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/rsc/preloads'>;
+}
+declare module 'next/dist/server/app-render/rsc/taint.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/rsc/taint'>;
+}
+declare module 'next/dist/server/app-render/segment-explorer-path.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/segment-explorer-path'>;
+}
+declare module 'next/dist/server/app-render/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/server-inserted-html'>;
+}
+declare module 'next/dist/server/app-render/strip-flight-headers.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/strip-flight-headers'>;
+}
+declare module 'next/dist/server/app-render/types.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/types'>;
+}
+declare module 'next/dist/server/app-render/use-flight-response.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/use-flight-response'>;
+}
+declare module 'next/dist/server/app-render/walk-tree-with-flight-router-state.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/walk-tree-with-flight-router-state'>;
+}
+declare module 'next/dist/server/app-render/work-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/work-async-storage-instance'>;
+}
+declare module 'next/dist/server/app-render/work-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/work-async-storage.external'>;
+}
+declare module 'next/dist/server/app-render/work-unit-async-storage-instance.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/work-unit-async-storage-instance'>;
+}
+declare module 'next/dist/server/app-render/work-unit-async-storage.external.js' {
+  declare module.exports: $Exports<'next/dist/server/app-render/work-unit-async-storage.external'>;
+}
+declare module 'next/dist/server/async-storage/draft-mode-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/async-storage/draft-mode-provider'>;
+}
+declare module 'next/dist/server/async-storage/request-store.js' {
+  declare module.exports: $Exports<'next/dist/server/async-storage/request-store'>;
+}
+declare module 'next/dist/server/async-storage/with-store.js' {
+  declare module.exports: $Exports<'next/dist/server/async-storage/with-store'>;
+}
+declare module 'next/dist/server/async-storage/work-store.js' {
+  declare module.exports: $Exports<'next/dist/server/async-storage/work-store'>;
+}
+declare module 'next/dist/server/base-http/helpers.js' {
+  declare module.exports: $Exports<'next/dist/server/base-http/helpers'>;
+}
+declare module 'next/dist/server/base-http/index' {
+  declare module.exports: $Exports<'next/dist/server/base-http'>;
+}
+declare module 'next/dist/server/base-http/index.js' {
+  declare module.exports: $Exports<'next/dist/server/base-http'>;
+}
+declare module 'next/dist/server/base-http/node.js' {
+  declare module.exports: $Exports<'next/dist/server/base-http/node'>;
+}
+declare module 'next/dist/server/base-http/web.js' {
+  declare module.exports: $Exports<'next/dist/server/base-http/web'>;
+}
+declare module 'next/dist/server/base-server.js' {
+  declare module.exports: $Exports<'next/dist/server/base-server'>;
+}
+declare module 'next/dist/server/body-streams.js' {
+  declare module.exports: $Exports<'next/dist/server/body-streams'>;
+}
+declare module 'next/dist/server/cache-dir.js' {
+  declare module.exports: $Exports<'next/dist/server/cache-dir'>;
+}
+declare module 'next/dist/server/ci-info.js' {
+  declare module.exports: $Exports<'next/dist/server/ci-info'>;
+}
+declare module 'next/dist/server/client-component-renderer-logger.js' {
+  declare module.exports: $Exports<'next/dist/server/client-component-renderer-logger'>;
+}
+declare module 'next/dist/server/config-schema.js' {
+  declare module.exports: $Exports<'next/dist/server/config-schema'>;
+}
+declare module 'next/dist/server/config-shared.js' {
+  declare module.exports: $Exports<'next/dist/server/config-shared'>;
+}
+declare module 'next/dist/server/config-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/config-utils'>;
+}
+declare module 'next/dist/server/config.js' {
+  declare module.exports: $Exports<'next/dist/server/config'>;
+}
+declare module 'next/dist/server/create-deduped-by-callsite-server-error-logger.js' {
+  declare module.exports: $Exports<'next/dist/server/create-deduped-by-callsite-server-error-logger'>;
+}
+declare module 'next/dist/server/crypto-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/crypto-utils'>;
+}
+declare module 'next/dist/server/dev/browser-logs/receive-logs.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/browser-logs/receive-logs'>;
+}
+declare module 'next/dist/server/dev/browser-logs/source-map.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/browser-logs/source-map'>;
+}
+declare module 'next/dist/server/dev/dev-indicator-server-state.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/dev-indicator-server-state'>;
+}
+declare module 'next/dist/server/dev/get-source-map-from-file.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/get-source-map-from-file'>;
+}
+declare module 'next/dist/server/dev/hot-middleware.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/hot-middleware'>;
+}
+declare module 'next/dist/server/dev/hot-reloader-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/hot-reloader-turbopack'>;
+}
+declare module 'next/dist/server/dev/hot-reloader-types.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/hot-reloader-types'>;
+}
+declare module 'next/dist/server/dev/hot-reloader-webpack.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/hot-reloader-webpack'>;
+}
+declare module 'next/dist/server/dev/log-requests.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/log-requests'>;
+}
+declare module 'next/dist/server/dev/messages.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/messages'>;
+}
+declare module 'next/dist/server/dev/middleware-turbopack.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/middleware-turbopack'>;
+}
+declare module 'next/dist/server/dev/middleware-webpack.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/middleware-webpack'>;
+}
+declare module 'next/dist/server/dev/next-dev-server.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/next-dev-server'>;
+}
+declare module 'next/dist/server/dev/node-stack-frames.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/node-stack-frames'>;
+}
+declare module 'next/dist/server/dev/on-demand-entry-handler.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/on-demand-entry-handler'>;
+}
+declare module 'next/dist/server/dev/parse-version-info.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/parse-version-info'>;
+}
+declare module 'next/dist/server/dev/require-cache.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/require-cache'>;
+}
+declare module 'next/dist/server/dev/static-paths-worker.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/static-paths-worker'>;
+}
+declare module 'next/dist/server/dev/turbopack-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/dev/turbopack-utils'>;
+}
+declare module 'next/dist/server/dynamic-rendering-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/dynamic-rendering-utils'>;
+}
+declare module 'next/dist/server/font-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/font-utils'>;
+}
+declare module 'next/dist/server/get-app-route-from-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/server/get-app-route-from-entrypoint'>;
+}
+declare module 'next/dist/server/get-page-files.js' {
+  declare module.exports: $Exports<'next/dist/server/get-page-files'>;
+}
+declare module 'next/dist/server/get-route-from-entrypoint.js' {
+  declare module.exports: $Exports<'next/dist/server/get-route-from-entrypoint'>;
+}
+declare module 'next/dist/server/htmlescape.js' {
+  declare module.exports: $Exports<'next/dist/server/htmlescape'>;
+}
+declare module 'next/dist/server/image-optimizer.js' {
+  declare module.exports: $Exports<'next/dist/server/image-optimizer'>;
+}
+declare module 'next/dist/server/instrumentation/types.js' {
+  declare module.exports: $Exports<'next/dist/server/instrumentation/types'>;
+}
+declare module 'next/dist/server/instrumentation/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/instrumentation/utils'>;
+}
+declare module 'next/dist/server/internal-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/internal-utils'>;
+}
+declare module 'next/dist/server/lib/app-dir-module.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/app-dir-module'>;
+}
+declare module 'next/dist/server/lib/app-info-log.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/app-info-log'>;
+}
+declare module 'next/dist/server/lib/async-callback-set.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/async-callback-set'>;
+}
+declare module 'next/dist/server/lib/cache-control.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/cache-control'>;
+}
+declare module 'next/dist/server/lib/cache-handlers/default.external.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/cache-handlers/default.external'>;
+}
+declare module 'next/dist/server/lib/cache-handlers/types.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/cache-handlers/types'>;
+}
+declare module 'next/dist/server/lib/chrome-devtools-workspace.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/chrome-devtools-workspace'>;
+}
+declare module 'next/dist/server/lib/clone-response.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/clone-response'>;
+}
+declare module 'next/dist/server/lib/cpu-profile.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/cpu-profile'>;
+}
+declare module 'next/dist/server/lib/decode-query-path-parameter.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/decode-query-path-parameter'>;
+}
+declare module 'next/dist/server/lib/dedupe-fetch.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/dedupe-fetch'>;
+}
+declare module 'next/dist/server/lib/dev-bundler-service.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/dev-bundler-service'>;
+}
+declare module 'next/dist/server/lib/etag.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/etag'>;
+}
+declare module 'next/dist/server/lib/experimental/create-env-definitions.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/experimental/create-env-definitions'>;
+}
+declare module 'next/dist/server/lib/experimental/ppr.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/experimental/ppr'>;
+}
+declare module 'next/dist/server/lib/find-page-file.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/find-page-file'>;
+}
+declare module 'next/dist/server/lib/fix-mojibake.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/fix-mojibake'>;
+}
+declare module 'next/dist/server/lib/format-hostname.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/format-hostname'>;
+}
+declare module 'next/dist/server/lib/i18n-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/i18n-provider'>;
+}
+declare module 'next/dist/server/lib/implicit-tags.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/implicit-tags'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/file-system-cache.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache/file-system-cache'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/index' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/index.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/memory-cache.external.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache/memory-cache.external'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/shared-cache-controls.external.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache/shared-cache-controls.external'>;
+}
+declare module 'next/dist/server/lib/incremental-cache/tags-manifest.external.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/incremental-cache/tags-manifest.external'>;
+}
+declare module 'next/dist/server/lib/is-ipv6.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/is-ipv6'>;
+}
+declare module 'next/dist/server/lib/lazy-result.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/lazy-result'>;
+}
+declare module 'next/dist/server/lib/lru-cache.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/lru-cache'>;
+}
+declare module 'next/dist/server/lib/match-next-data-pathname.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/match-next-data-pathname'>;
+}
+declare module 'next/dist/server/lib/mock-request.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/mock-request'>;
+}
+declare module 'next/dist/server/lib/module-loader/module-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/module-loader/module-loader'>;
+}
+declare module 'next/dist/server/lib/module-loader/node-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/module-loader/node-module-loader'>;
+}
+declare module 'next/dist/server/lib/module-loader/route-module-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/module-loader/route-module-loader'>;
+}
+declare module 'next/dist/server/lib/node-fs-methods.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/node-fs-methods'>;
+}
+declare module 'next/dist/server/lib/parse-stack.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/parse-stack'>;
+}
+declare module 'next/dist/server/lib/patch-fetch.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/patch-fetch'>;
+}
+declare module 'next/dist/server/lib/patch-set-header.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/patch-set-header'>;
+}
+declare module 'next/dist/server/lib/render-server.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/render-server'>;
+}
+declare module 'next/dist/server/lib/router-server.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-server'>;
+}
+declare module 'next/dist/server/lib/router-utils/block-cross-site.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/block-cross-site'>;
+}
+declare module 'next/dist/server/lib/router-utils/build-data-route.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/build-data-route'>;
+}
+declare module 'next/dist/server/lib/router-utils/build-prefetch-segment-data-route.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/build-prefetch-segment-data-route'>;
+}
+declare module 'next/dist/server/lib/router-utils/decode-path-params.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/decode-path-params'>;
+}
+declare module 'next/dist/server/lib/router-utils/filesystem.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/filesystem'>;
+}
+declare module 'next/dist/server/lib/router-utils/instrumentation-globals.external.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/instrumentation-globals.external'>;
+}
+declare module 'next/dist/server/lib/router-utils/is-postpone.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/is-postpone'>;
+}
+declare module 'next/dist/server/lib/router-utils/proxy-request.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/proxy-request'>;
+}
+declare module 'next/dist/server/lib/router-utils/resolve-routes.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/resolve-routes'>;
+}
+declare module 'next/dist/server/lib/router-utils/router-server-context.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/router-server-context'>;
+}
+declare module 'next/dist/server/lib/router-utils/setup-dev-bundler.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/setup-dev-bundler'>;
+}
+declare module 'next/dist/server/lib/router-utils/types.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/router-utils/types'>;
+}
+declare module 'next/dist/server/lib/server-action-request-meta.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/server-action-request-meta'>;
+}
+declare module 'next/dist/server/lib/server-ipc/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/server-ipc/utils'>;
+}
+declare module 'next/dist/server/lib/source-maps.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/source-maps'>;
+}
+declare module 'next/dist/server/lib/start-server.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/start-server'>;
+}
+declare module 'next/dist/server/lib/streaming-metadata.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/streaming-metadata'>;
+}
+declare module 'next/dist/server/lib/to-route.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/to-route'>;
+}
+declare module 'next/dist/server/lib/trace/constants.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/trace/constants'>;
+}
+declare module 'next/dist/server/lib/trace/tracer.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/trace/tracer'>;
+}
+declare module 'next/dist/server/lib/trace/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/trace/utils'>;
+}
+declare module 'next/dist/server/lib/types.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/types'>;
+}
+declare module 'next/dist/server/lib/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/utils'>;
+}
+declare module 'next/dist/server/lib/worker-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/lib/worker-utils'>;
+}
+declare module 'next/dist/server/load-components.js' {
+  declare module.exports: $Exports<'next/dist/server/load-components'>;
+}
+declare module 'next/dist/server/load-default-error-components.js' {
+  declare module.exports: $Exports<'next/dist/server/load-default-error-components'>;
+}
+declare module 'next/dist/server/load-manifest.external.js' {
+  declare module.exports: $Exports<'next/dist/server/load-manifest.external'>;
+}
+declare module 'next/dist/server/match-bundle.js' {
+  declare module.exports: $Exports<'next/dist/server/match-bundle'>;
+}
+declare module 'next/dist/server/next-server.js' {
+  declare module.exports: $Exports<'next/dist/server/next-server'>;
+}
+declare module 'next/dist/server/next-typescript.js' {
+  declare module.exports: $Exports<'next/dist/server/next-typescript'>;
+}
+declare module 'next/dist/server/next.js' {
+  declare module.exports: $Exports<'next/dist/server/next'>;
+}
+declare module 'next/dist/server/node-environment-baseline.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-baseline'>;
+}
+declare module 'next/dist/server/node-environment-extensions/console-dev.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/console-dev'>;
+}
+declare module 'next/dist/server/node-environment-extensions/date.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/date'>;
+}
+declare module 'next/dist/server/node-environment-extensions/error-inspect.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/error-inspect'>;
+}
+declare module 'next/dist/server/node-environment-extensions/node-crypto.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/node-crypto'>;
+}
+declare module 'next/dist/server/node-environment-extensions/random.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/random'>;
+}
+declare module 'next/dist/server/node-environment-extensions/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/utils'>;
+}
+declare module 'next/dist/server/node-environment-extensions/web-crypto.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment-extensions/web-crypto'>;
+}
+declare module 'next/dist/server/node-environment.js' {
+  declare module.exports: $Exports<'next/dist/server/node-environment'>;
+}
+declare module 'next/dist/server/node-polyfill-crypto.js' {
+  declare module.exports: $Exports<'next/dist/server/node-polyfill-crypto'>;
+}
+declare module 'next/dist/server/normalizers/absolute-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/absolute-filename-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/app/app-bundle-path-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app/app-bundle-path-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/app/app-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app/app-filename-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/app/app-page-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app/app-page-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/app/app-pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app/app-pathname-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/app/index' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app'>;
+}
+declare module 'next/dist/server/normalizers/built/app/index.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/app'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/index' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/index.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/pages-bundle-path-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages/pages-bundle-path-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/pages-filename-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages/pages-filename-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/pages-page-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages/pages-page-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/built/pages/pages-pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/built/pages/pages-pathname-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/locale-route-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/locale-route-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/normalizer'>;
+}
+declare module 'next/dist/server/normalizers/normalizers.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/normalizers'>;
+}
+declare module 'next/dist/server/normalizers/prefixing-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/prefixing-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/request/base-path.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/base-path'>;
+}
+declare module 'next/dist/server/normalizers/request/next-data.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/next-data'>;
+}
+declare module 'next/dist/server/normalizers/request/pathname-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/pathname-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/request/prefetch-rsc.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/prefetch-rsc'>;
+}
+declare module 'next/dist/server/normalizers/request/prefix.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/prefix'>;
+}
+declare module 'next/dist/server/normalizers/request/rsc.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/rsc'>;
+}
+declare module 'next/dist/server/normalizers/request/segment-prefix-rsc.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/segment-prefix-rsc'>;
+}
+declare module 'next/dist/server/normalizers/request/suffix.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/request/suffix'>;
+}
+declare module 'next/dist/server/normalizers/underscore-normalizer.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/underscore-normalizer'>;
+}
+declare module 'next/dist/server/normalizers/wrap-normalizer-fn.js' {
+  declare module.exports: $Exports<'next/dist/server/normalizers/wrap-normalizer-fn'>;
+}
+declare module 'next/dist/server/og/image-response.js' {
+  declare module.exports: $Exports<'next/dist/server/og/image-response'>;
+}
+declare module 'next/dist/server/optimize-amp.js' {
+  declare module.exports: $Exports<'next/dist/server/optimize-amp'>;
+}
+declare module 'next/dist/server/patch-error-inspect.js' {
+  declare module.exports: $Exports<'next/dist/server/patch-error-inspect'>;
+}
+declare module 'next/dist/server/pipe-readable.js' {
+  declare module.exports: $Exports<'next/dist/server/pipe-readable'>;
+}
+declare module 'next/dist/server/post-process.js' {
+  declare module.exports: $Exports<'next/dist/server/post-process'>;
+}
+declare module 'next/dist/server/ReactDOMServerPages.js' {
+  declare module.exports: $Exports<'next/dist/server/ReactDOMServerPages'>;
+}
+declare module 'next/dist/server/render-result.js' {
+  declare module.exports: $Exports<'next/dist/server/render-result'>;
+}
+declare module 'next/dist/server/render.js' {
+  declare module.exports: $Exports<'next/dist/server/render'>;
+}
+declare module 'next/dist/server/request-meta.js' {
+  declare module.exports: $Exports<'next/dist/server/request-meta'>;
+}
+declare module 'next/dist/server/request/connection.js' {
+  declare module.exports: $Exports<'next/dist/server/request/connection'>;
+}
+declare module 'next/dist/server/request/cookies.js' {
+  declare module.exports: $Exports<'next/dist/server/request/cookies'>;
+}
+declare module 'next/dist/server/request/draft-mode.js' {
+  declare module.exports: $Exports<'next/dist/server/request/draft-mode'>;
+}
+declare module 'next/dist/server/request/fallback-params.js' {
+  declare module.exports: $Exports<'next/dist/server/request/fallback-params'>;
+}
+declare module 'next/dist/server/request/headers.js' {
+  declare module.exports: $Exports<'next/dist/server/request/headers'>;
+}
+declare module 'next/dist/server/request/params.js' {
+  declare module.exports: $Exports<'next/dist/server/request/params'>;
+}
+declare module 'next/dist/server/request/pathname.js' {
+  declare module.exports: $Exports<'next/dist/server/request/pathname'>;
+}
+declare module 'next/dist/server/request/root-params.js' {
+  declare module.exports: $Exports<'next/dist/server/request/root-params'>;
+}
+declare module 'next/dist/server/request/search-params.js' {
+  declare module.exports: $Exports<'next/dist/server/request/search-params'>;
+}
+declare module 'next/dist/server/request/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/request/utils'>;
+}
+declare module 'next/dist/server/require-hook.js' {
+  declare module.exports: $Exports<'next/dist/server/require-hook'>;
+}
+declare module 'next/dist/server/require.js' {
+  declare module.exports: $Exports<'next/dist/server/require'>;
+}
+declare module 'next/dist/server/response-cache/index' {
+  declare module.exports: $Exports<'next/dist/server/response-cache'>;
+}
+declare module 'next/dist/server/response-cache/index.js' {
+  declare module.exports: $Exports<'next/dist/server/response-cache'>;
+}
+declare module 'next/dist/server/response-cache/types.js' {
+  declare module.exports: $Exports<'next/dist/server/response-cache/types'>;
+}
+declare module 'next/dist/server/response-cache/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/response-cache/utils'>;
+}
+declare module 'next/dist/server/response-cache/web.js' {
+  declare module.exports: $Exports<'next/dist/server/response-cache/web'>;
+}
+declare module 'next/dist/server/resume-data-cache/cache-store.js' {
+  declare module.exports: $Exports<'next/dist/server/resume-data-cache/cache-store'>;
+}
+declare module 'next/dist/server/resume-data-cache/resume-data-cache.js' {
+  declare module.exports: $Exports<'next/dist/server/resume-data-cache/resume-data-cache'>;
+}
+declare module 'next/dist/server/revalidation-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/revalidation-utils'>;
+}
+declare module 'next/dist/server/route-definitions/app-page-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/app-page-route-definition'>;
+}
+declare module 'next/dist/server/route-definitions/app-route-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/app-route-route-definition'>;
+}
+declare module 'next/dist/server/route-definitions/locale-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/locale-route-definition'>;
+}
+declare module 'next/dist/server/route-definitions/pages-api-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/pages-api-route-definition'>;
+}
+declare module 'next/dist/server/route-definitions/pages-route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/pages-route-definition'>;
+}
+declare module 'next/dist/server/route-definitions/route-definition.js' {
+  declare module.exports: $Exports<'next/dist/server/route-definitions/route-definition'>;
+}
+declare module 'next/dist/server/route-kind.js' {
+  declare module.exports: $Exports<'next/dist/server/route-kind'>;
+}
+declare module 'next/dist/server/route-matcher-managers/default-route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-managers/default-route-matcher-manager'>;
+}
+declare module 'next/dist/server/route-matcher-managers/dev-route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-managers/dev-route-matcher-manager'>;
+}
+declare module 'next/dist/server/route-matcher-managers/route-matcher-manager.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-managers/route-matcher-manager'>;
+}
+declare module 'next/dist/server/route-matcher-providers/app-page-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/app-page-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/app-route-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/app-route-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/dev-app-page-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/dev-app-route-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/dev-pages-api-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/dev-pages-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/dev-pages-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/file-cache-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/file-cache-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/helpers/file-reader/batched-file-reader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/helpers/file-reader/default-file-reader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/dev/helpers/file-reader/file-reader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/dev/helpers/file-reader/file-reader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/helpers/cached-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/helpers/cached-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/helpers/manifest-loaders/manifest-loader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/helpers/manifest-loaders/node-manifest-loader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/helpers/manifest-loaders/server-manifest-loader'>;
+}
+declare module 'next/dist/server/route-matcher-providers/manifest-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/manifest-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/pages-api-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/pages-api-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/pages-route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/pages-route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matcher-providers/route-matcher-provider.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matcher-providers/route-matcher-provider'>;
+}
+declare module 'next/dist/server/route-matchers/app-page-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/app-page-route-matcher'>;
+}
+declare module 'next/dist/server/route-matchers/app-route-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/app-route-route-matcher'>;
+}
+declare module 'next/dist/server/route-matchers/locale-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/locale-route-matcher'>;
+}
+declare module 'next/dist/server/route-matchers/pages-api-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/pages-api-route-matcher'>;
+}
+declare module 'next/dist/server/route-matchers/pages-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/pages-route-matcher'>;
+}
+declare module 'next/dist/server/route-matchers/route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matchers/route-matcher'>;
+}
+declare module 'next/dist/server/route-matches/app-page-route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/app-page-route-match'>;
+}
+declare module 'next/dist/server/route-matches/app-route-route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/app-route-route-match'>;
+}
+declare module 'next/dist/server/route-matches/locale-route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/locale-route-match'>;
+}
+declare module 'next/dist/server/route-matches/pages-api-route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/pages-api-route-match'>;
+}
+declare module 'next/dist/server/route-matches/pages-route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/pages-route-match'>;
+}
+declare module 'next/dist/server/route-matches/route-match.js' {
+  declare module.exports: $Exports<'next/dist/server/route-matches/route-match'>;
+}
+declare module 'next/dist/server/route-modules/app-page/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/module.compiled'>;
+}
+declare module 'next/dist/server/route-modules/app-page/module.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/module'>;
+}
+declare module 'next/dist/server/route-modules/app-page/module.render.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/module.render'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/amp-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/amp-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/app-router-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/app-router-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/entrypoints'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/head-manager-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/head-manager-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/hooks-client-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/hooks-client-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/image-config-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/image-config-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/router-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/router-context'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/contexts/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/contexts/server-inserted-html'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/entrypoints'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-compiler-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-dom.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-dom'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-static'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-static'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/rsc/react.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/rsc/react'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/entrypoints'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-compiler-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-compiler-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-dom-server.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-dom-server'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-dom.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-dom'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-runtime.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-runtime'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-turbopack-client'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react-server-dom-webpack-client'>;
+}
+declare module 'next/dist/server/route-modules/app-page/vendored/ssr/react.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-page/vendored/ssr/react'>;
+}
+declare module 'next/dist/server/route-modules/app-route/helpers/auto-implement-methods.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/helpers/auto-implement-methods'>;
+}
+declare module 'next/dist/server/route-modules/app-route/helpers/clean-url.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/helpers/clean-url'>;
+}
+declare module 'next/dist/server/route-modules/app-route/helpers/get-pathname-from-absolute-path.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/helpers/get-pathname-from-absolute-path'>;
+}
+declare module 'next/dist/server/route-modules/app-route/helpers/is-static-gen-enabled.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/helpers/is-static-gen-enabled'>;
+}
+declare module 'next/dist/server/route-modules/app-route/helpers/parsed-url-query-to-params.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/helpers/parsed-url-query-to-params'>;
+}
+declare module 'next/dist/server/route-modules/app-route/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/module.compiled'>;
+}
+declare module 'next/dist/server/route-modules/app-route/module.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/module'>;
+}
+declare module 'next/dist/server/route-modules/app-route/shared-modules.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/app-route/shared-modules'>;
+}
+declare module 'next/dist/server/route-modules/checks.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/checks'>;
+}
+declare module 'next/dist/server/route-modules/pages-api/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages-api/module.compiled'>;
+}
+declare module 'next/dist/server/route-modules/pages-api/module.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages-api/module'>;
+}
+declare module 'next/dist/server/route-modules/pages/builtin/_error.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/builtin/_error'>;
+}
+declare module 'next/dist/server/route-modules/pages/module.compiled.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/module.compiled'>;
+}
+declare module 'next/dist/server/route-modules/pages/module.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/module'>;
+}
+declare module 'next/dist/server/route-modules/pages/module.render.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/module.render'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/amp-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/amp-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/app-router-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/app-router-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/entrypoints.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/entrypoints'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/head-manager-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/head-manager-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/hooks-client-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/hooks-client-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/html-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/html-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/image-config-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/image-config-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/loadable-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/loadable-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/loadable.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/loadable'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/router-context.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/router-context'>;
+}
+declare module 'next/dist/server/route-modules/pages/vendored/contexts/server-inserted-html.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/pages/vendored/contexts/server-inserted-html'>;
+}
+declare module 'next/dist/server/route-modules/route-module.js' {
+  declare module.exports: $Exports<'next/dist/server/route-modules/route-module'>;
+}
+declare module 'next/dist/server/send-payload.js' {
+  declare module.exports: $Exports<'next/dist/server/send-payload'>;
+}
+declare module 'next/dist/server/send-response.js' {
+  declare module.exports: $Exports<'next/dist/server/send-response'>;
+}
+declare module 'next/dist/server/serve-static.js' {
+  declare module.exports: $Exports<'next/dist/server/serve-static'>;
+}
+declare module 'next/dist/server/server-route-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/server-route-utils'>;
+}
+declare module 'next/dist/server/server-utils.js' {
+  declare module.exports: $Exports<'next/dist/server/server-utils'>;
+}
+declare module 'next/dist/server/setup-http-agent-env.js' {
+  declare module.exports: $Exports<'next/dist/server/setup-http-agent-env'>;
+}
+declare module 'next/dist/server/stream-utils/encoded-tags.js' {
+  declare module.exports: $Exports<'next/dist/server/stream-utils/encoded-tags'>;
+}
+declare module 'next/dist/server/stream-utils/node-web-streams-helper.js' {
+  declare module.exports: $Exports<'next/dist/server/stream-utils/node-web-streams-helper'>;
+}
+declare module 'next/dist/server/stream-utils/uint8array-helpers.js' {
+  declare module.exports: $Exports<'next/dist/server/stream-utils/uint8array-helpers'>;
+}
+declare module 'next/dist/server/typescript/constant.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/constant'>;
+}
+declare module 'next/dist/server/typescript/index' {
+  declare module.exports: $Exports<'next/dist/server/typescript'>;
+}
+declare module 'next/dist/server/typescript/index.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript'>;
+}
+declare module 'next/dist/server/typescript/rules/client-boundary.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/client-boundary'>;
+}
+declare module 'next/dist/server/typescript/rules/config.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/config'>;
+}
+declare module 'next/dist/server/typescript/rules/entry.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/entry'>;
+}
+declare module 'next/dist/server/typescript/rules/error.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/error'>;
+}
+declare module 'next/dist/server/typescript/rules/metadata.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/metadata'>;
+}
+declare module 'next/dist/server/typescript/rules/server-boundary.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/server-boundary'>;
+}
+declare module 'next/dist/server/typescript/rules/server.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/rules/server'>;
+}
+declare module 'next/dist/server/typescript/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/typescript/utils'>;
+}
+declare module 'next/dist/server/use-cache/cache-life.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/cache-life'>;
+}
+declare module 'next/dist/server/use-cache/cache-tag.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/cache-tag'>;
+}
+declare module 'next/dist/server/use-cache/constants.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/constants'>;
+}
+declare module 'next/dist/server/use-cache/handlers.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/handlers'>;
+}
+declare module 'next/dist/server/use-cache/use-cache-errors.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/use-cache-errors'>;
+}
+declare module 'next/dist/server/use-cache/use-cache-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/server/use-cache/use-cache-wrapper'>;
+}
+declare module 'next/dist/server/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/utils'>;
+}
+declare module 'next/dist/server/web-server.js' {
+  declare module.exports: $Exports<'next/dist/server/web-server'>;
+}
+declare module 'next/dist/server/web/adapter.js' {
+  declare module.exports: $Exports<'next/dist/server/web/adapter'>;
+}
+declare module 'next/dist/server/web/edge-route-module-wrapper.js' {
+  declare module.exports: $Exports<'next/dist/server/web/edge-route-module-wrapper'>;
+}
+declare module 'next/dist/server/web/error.js' {
+  declare module.exports: $Exports<'next/dist/server/web/error'>;
+}
+declare module 'next/dist/server/web/exports/index' {
+  declare module.exports: $Exports<'next/dist/server/web/exports'>;
+}
+declare module 'next/dist/server/web/exports/index.js' {
+  declare module.exports: $Exports<'next/dist/server/web/exports'>;
+}
+declare module 'next/dist/server/web/get-edge-preview-props.js' {
+  declare module.exports: $Exports<'next/dist/server/web/get-edge-preview-props'>;
+}
+declare module 'next/dist/server/web/globals.js' {
+  declare module.exports: $Exports<'next/dist/server/web/globals'>;
+}
+declare module 'next/dist/server/web/http.js' {
+  declare module.exports: $Exports<'next/dist/server/web/http'>;
+}
+declare module 'next/dist/server/web/internal-edge-wait-until.js' {
+  declare module.exports: $Exports<'next/dist/server/web/internal-edge-wait-until'>;
+}
+declare module 'next/dist/server/web/next-url.js' {
+  declare module.exports: $Exports<'next/dist/server/web/next-url'>;
+}
+declare module 'next/dist/server/web/sandbox/context.js' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox/context'>;
+}
+declare module 'next/dist/server/web/sandbox/fetch-inline-assets.js' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox/fetch-inline-assets'>;
+}
+declare module 'next/dist/server/web/sandbox/index' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox'>;
+}
+declare module 'next/dist/server/web/sandbox/index.js' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox'>;
+}
+declare module 'next/dist/server/web/sandbox/resource-managers.js' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox/resource-managers'>;
+}
+declare module 'next/dist/server/web/sandbox/sandbox.js' {
+  declare module.exports: $Exports<'next/dist/server/web/sandbox/sandbox'>;
+}
+declare module 'next/dist/server/web/spec-extension/adapters/headers.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/adapters/headers'>;
+}
+declare module 'next/dist/server/web/spec-extension/adapters/next-request.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/adapters/next-request'>;
+}
+declare module 'next/dist/server/web/spec-extension/adapters/reflect.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/adapters/reflect'>;
+}
+declare module 'next/dist/server/web/spec-extension/adapters/request-cookies.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/adapters/request-cookies'>;
+}
+declare module 'next/dist/server/web/spec-extension/cookies.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/cookies'>;
+}
+declare module 'next/dist/server/web/spec-extension/fetch-event.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/fetch-event'>;
+}
+declare module 'next/dist/server/web/spec-extension/image-response.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/image-response'>;
+}
+declare module 'next/dist/server/web/spec-extension/request.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/request'>;
+}
+declare module 'next/dist/server/web/spec-extension/response.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/response'>;
+}
+declare module 'next/dist/server/web/spec-extension/revalidate.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/revalidate'>;
+}
+declare module 'next/dist/server/web/spec-extension/unstable-cache.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/unstable-cache'>;
+}
+declare module 'next/dist/server/web/spec-extension/unstable-no-store.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/unstable-no-store'>;
+}
+declare module 'next/dist/server/web/spec-extension/url-pattern.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/url-pattern'>;
+}
+declare module 'next/dist/server/web/spec-extension/user-agent.js' {
+  declare module.exports: $Exports<'next/dist/server/web/spec-extension/user-agent'>;
+}
+declare module 'next/dist/server/web/types.js' {
+  declare module.exports: $Exports<'next/dist/server/web/types'>;
+}
+declare module 'next/dist/server/web/utils.js' {
+  declare module.exports: $Exports<'next/dist/server/web/utils'>;
+}
+declare module 'next/dist/server/web/web-on-close.js' {
+  declare module.exports: $Exports<'next/dist/server/web/web-on-close'>;
+}
+declare module 'next/dist/shared/lib/amp-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/amp-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/amp-mode.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/amp-mode'>;
+}
+declare module 'next/dist/shared/lib/amp.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/amp'>;
+}
+declare module 'next/dist/shared/lib/app-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/app-dynamic'>;
+}
+declare module 'next/dist/shared/lib/app-router-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/app-router-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/bloom-filter.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/bloom-filter'>;
+}
+declare module 'next/dist/shared/lib/canary-only.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/canary-only'>;
+}
+declare module 'next/dist/shared/lib/constants.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/constants'>;
+}
+declare module 'next/dist/shared/lib/deep-freeze.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/deep-freeze'>;
+}
+declare module 'next/dist/shared/lib/deep-readonly.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/deep-readonly'>;
+}
+declare module 'next/dist/shared/lib/dset.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/dset'>;
+}
+declare module 'next/dist/shared/lib/dynamic.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/dynamic'>;
+}
+declare module 'next/dist/shared/lib/encode-uri-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/encode-uri-path'>;
+}
+declare module 'next/dist/shared/lib/error-source.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/error-source'>;
+}
+declare module 'next/dist/shared/lib/errors/constants.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/errors/constants'>;
+}
+declare module 'next/dist/shared/lib/escape-regexp.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/escape-regexp'>;
+}
+declare module 'next/dist/shared/lib/fnv1a.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/fnv1a'>;
+}
+declare module 'next/dist/shared/lib/format-webpack-messages.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/format-webpack-messages'>;
+}
+declare module 'next/dist/shared/lib/get-hostname.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/get-hostname'>;
+}
+declare module 'next/dist/shared/lib/get-img-props.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/get-img-props'>;
+}
+declare module 'next/dist/shared/lib/get-rspack.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/get-rspack'>;
+}
+declare module 'next/dist/shared/lib/get-webpack-bundler.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/get-webpack-bundler'>;
+}
+declare module 'next/dist/shared/lib/hash.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/hash'>;
+}
+declare module 'next/dist/shared/lib/head-manager-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/head-manager-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/head.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/head'>;
+}
+declare module 'next/dist/shared/lib/hooks-client-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/hooks-client-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/html-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/html-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/i18n/detect-domain-locale.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/i18n/detect-domain-locale'>;
+}
+declare module 'next/dist/shared/lib/i18n/get-locale-redirect.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/i18n/get-locale-redirect'>;
+}
+declare module 'next/dist/shared/lib/i18n/normalize-locale-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/i18n/normalize-locale-path'>;
+}
+declare module 'next/dist/shared/lib/image-blur-svg.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/image-blur-svg'>;
+}
+declare module 'next/dist/shared/lib/image-config-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/image-config-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/image-config.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/image-config'>;
+}
+declare module 'next/dist/shared/lib/image-external.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/image-external'>;
+}
+declare module 'next/dist/shared/lib/image-loader.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/image-loader'>;
+}
+declare module 'next/dist/shared/lib/invariant-error.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/invariant-error'>;
+}
+declare module 'next/dist/shared/lib/is-internal.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/is-internal'>;
+}
+declare module 'next/dist/shared/lib/is-plain-object.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/is-plain-object'>;
+}
+declare module 'next/dist/shared/lib/is-thenable.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/is-thenable'>;
+}
+declare module 'next/dist/shared/lib/isomorphic/path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/isomorphic/path'>;
+}
+declare module 'next/dist/shared/lib/lazy-dynamic/bailout-to-csr.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/lazy-dynamic/bailout-to-csr'>;
+}
+declare module 'next/dist/shared/lib/lazy-dynamic/dynamic-bailout-to-csr.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/lazy-dynamic/dynamic-bailout-to-csr'>;
+}
+declare module 'next/dist/shared/lib/lazy-dynamic/loadable.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/lazy-dynamic/loadable'>;
+}
+declare module 'next/dist/shared/lib/lazy-dynamic/preload-chunks.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/lazy-dynamic/preload-chunks'>;
+}
+declare module 'next/dist/shared/lib/lazy-dynamic/types.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/lazy-dynamic/types'>;
+}
+declare module 'next/dist/shared/lib/loadable-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/loadable-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/loadable.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/loadable.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/magic-identifier.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/magic-identifier'>;
+}
+declare module 'next/dist/shared/lib/match-local-pattern.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/match-local-pattern'>;
+}
+declare module 'next/dist/shared/lib/match-remote-pattern.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/match-remote-pattern'>;
+}
+declare module 'next/dist/shared/lib/mitt.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/mitt'>;
+}
+declare module 'next/dist/shared/lib/modern-browserslist-target.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/modern-browserslist-target'>;
+}
+declare module 'next/dist/shared/lib/no-fallback-error.external.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/no-fallback-error.external'>;
+}
+declare module 'next/dist/shared/lib/normalized-asset-prefix.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/normalized-asset-prefix'>;
+}
+declare module 'next/dist/shared/lib/page-path/absolute-path-to-page.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/absolute-path-to-page'>;
+}
+declare module 'next/dist/shared/lib/page-path/denormalize-app-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/denormalize-app-path'>;
+}
+declare module 'next/dist/shared/lib/page-path/denormalize-page-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/denormalize-page-path'>;
+}
+declare module 'next/dist/shared/lib/page-path/ensure-leading-slash.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/ensure-leading-slash'>;
+}
+declare module 'next/dist/shared/lib/page-path/get-page-paths.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/get-page-paths'>;
+}
+declare module 'next/dist/shared/lib/page-path/normalize-data-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/normalize-data-path'>;
+}
+declare module 'next/dist/shared/lib/page-path/normalize-page-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/normalize-page-path'>;
+}
+declare module 'next/dist/shared/lib/page-path/normalize-path-sep.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/normalize-path-sep'>;
+}
+declare module 'next/dist/shared/lib/page-path/remove-page-path-tail.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/page-path/remove-page-path-tail'>;
+}
+declare module 'next/dist/shared/lib/router-context.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router-context.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/router/adapters.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/adapters'>;
+}
+declare module 'next/dist/shared/lib/router/router.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/router'>;
+}
+declare module 'next/dist/shared/lib/router/utils/add-locale.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/add-locale'>;
+}
+declare module 'next/dist/shared/lib/router/utils/add-path-prefix.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/add-path-prefix'>;
+}
+declare module 'next/dist/shared/lib/router/utils/add-path-suffix.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/add-path-suffix'>;
+}
+declare module 'next/dist/shared/lib/router/utils/app-paths.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/app-paths'>;
+}
+declare module 'next/dist/shared/lib/router/utils/as-path-to-search-params.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/as-path-to-search-params'>;
+}
+declare module 'next/dist/shared/lib/router/utils/cache-busting-search-param.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/cache-busting-search-param'>;
+}
+declare module 'next/dist/shared/lib/router/utils/compare-states.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/compare-states'>;
+}
+declare module 'next/dist/shared/lib/router/utils/disable-smooth-scroll.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/disable-smooth-scroll'>;
+}
+declare module 'next/dist/shared/lib/router/utils/escape-path-delimiters.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/escape-path-delimiters'>;
+}
+declare module 'next/dist/shared/lib/router/utils/format-next-pathname-info.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/format-next-pathname-info'>;
+}
+declare module 'next/dist/shared/lib/router/utils/format-url.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/format-url'>;
+}
+declare module 'next/dist/shared/lib/router/utils/get-asset-path-from-route.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/get-asset-path-from-route'>;
+}
+declare module 'next/dist/shared/lib/router/utils/get-next-pathname-info.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/get-next-pathname-info'>;
+}
+declare module 'next/dist/shared/lib/router/utils/get-route-from-asset-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/get-route-from-asset-path'>;
+}
+declare module 'next/dist/shared/lib/router/utils/html-bots.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/html-bots'>;
+}
+declare module 'next/dist/shared/lib/router/utils/index' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils'>;
+}
+declare module 'next/dist/shared/lib/router/utils/index.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils'>;
+}
+declare module 'next/dist/shared/lib/router/utils/interception-routes.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/interception-routes'>;
+}
+declare module 'next/dist/shared/lib/router/utils/interpolate-as.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/interpolate-as'>;
+}
+declare module 'next/dist/shared/lib/router/utils/is-bot.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/is-bot'>;
+}
+declare module 'next/dist/shared/lib/router/utils/is-dynamic.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/is-dynamic'>;
+}
+declare module 'next/dist/shared/lib/router/utils/is-local-url.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/is-local-url'>;
+}
+declare module 'next/dist/shared/lib/router/utils/middleware-route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/middleware-route-matcher'>;
+}
+declare module 'next/dist/shared/lib/router/utils/omit.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/omit'>;
+}
+declare module 'next/dist/shared/lib/router/utils/parse-path.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/parse-path'>;
+}
+declare module 'next/dist/shared/lib/router/utils/parse-relative-url.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/parse-relative-url'>;
+}
+declare module 'next/dist/shared/lib/router/utils/parse-url.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/parse-url'>;
+}
+declare module 'next/dist/shared/lib/router/utils/path-has-prefix.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/path-has-prefix'>;
+}
+declare module 'next/dist/shared/lib/router/utils/path-match.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/path-match'>;
+}
+declare module 'next/dist/shared/lib/router/utils/prepare-destination.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/prepare-destination'>;
+}
+declare module 'next/dist/shared/lib/router/utils/querystring.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/querystring'>;
+}
+declare module 'next/dist/shared/lib/router/utils/relativize-url.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/relativize-url'>;
+}
+declare module 'next/dist/shared/lib/router/utils/remove-path-prefix.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/remove-path-prefix'>;
+}
+declare module 'next/dist/shared/lib/router/utils/remove-trailing-slash.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/remove-trailing-slash'>;
+}
+declare module 'next/dist/shared/lib/router/utils/resolve-rewrites.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/resolve-rewrites'>;
+}
+declare module 'next/dist/shared/lib/router/utils/route-matcher.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/route-matcher'>;
+}
+declare module 'next/dist/shared/lib/router/utils/route-regex.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/route-regex'>;
+}
+declare module 'next/dist/shared/lib/router/utils/sorted-routes.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/router/utils/sorted-routes'>;
+}
+declare module 'next/dist/shared/lib/runtime-config.external.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/runtime-config.external'>;
+}
+declare module 'next/dist/shared/lib/segment-cache/output-export-prefetch-encoding.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/segment-cache/output-export-prefetch-encoding'>;
+}
+declare module 'next/dist/shared/lib/segment-cache/segment-value-encoding.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/segment-cache/segment-value-encoding'>;
+}
+declare module 'next/dist/shared/lib/segment.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/segment'>;
+}
+declare module 'next/dist/shared/lib/server-inserted-html.shared-runtime.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/server-inserted-html.shared-runtime'>;
+}
+declare module 'next/dist/shared/lib/server-reference-info.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/server-reference-info'>;
+}
+declare module 'next/dist/shared/lib/side-effect.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/side-effect'>;
+}
+declare module 'next/dist/shared/lib/styled-jsx.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/styled-jsx'>;
+}
+declare module 'next/dist/shared/lib/turbopack/compilation-events.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/turbopack/compilation-events'>;
+}
+declare module 'next/dist/shared/lib/turbopack/entry-key.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/turbopack/entry-key'>;
+}
+declare module 'next/dist/shared/lib/turbopack/manifest-loader.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/turbopack/manifest-loader'>;
+}
+declare module 'next/dist/shared/lib/turbopack/utils.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/turbopack/utils'>;
+}
+declare module 'next/dist/shared/lib/utils.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/utils'>;
+}
+declare module 'next/dist/shared/lib/utils/error-once.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/utils/error-once'>;
+}
+declare module 'next/dist/shared/lib/utils/reflect-utils.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/utils/reflect-utils'>;
+}
+declare module 'next/dist/shared/lib/utils/warn-once.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/utils/warn-once'>;
+}
+declare module 'next/dist/shared/lib/zod.js' {
+  declare module.exports: $Exports<'next/dist/shared/lib/zod'>;
+}
+declare module 'next/dist/telemetry/anonymous-meta.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/anonymous-meta'>;
+}
+declare module 'next/dist/telemetry/detached-flush.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/detached-flush'>;
+}
+declare module 'next/dist/telemetry/events/build.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/build'>;
+}
+declare module 'next/dist/telemetry/events/error-feedback.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/error-feedback'>;
+}
+declare module 'next/dist/telemetry/events/index' {
+  declare module.exports: $Exports<'next/dist/telemetry/events'>;
+}
+declare module 'next/dist/telemetry/events/index.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events'>;
+}
+declare module 'next/dist/telemetry/events/plugins.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/plugins'>;
+}
+declare module 'next/dist/telemetry/events/session-stopped.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/session-stopped'>;
+}
+declare module 'next/dist/telemetry/events/swc-load-failure.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/swc-load-failure'>;
+}
+declare module 'next/dist/telemetry/events/swc-plugins.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/swc-plugins'>;
+}
+declare module 'next/dist/telemetry/events/version.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/events/version'>;
+}
+declare module 'next/dist/telemetry/flush-and-exit.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/flush-and-exit'>;
+}
+declare module 'next/dist/telemetry/post-telemetry-payload.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/post-telemetry-payload'>;
+}
+declare module 'next/dist/telemetry/post-telemetry-payload.test.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/post-telemetry-payload.test'>;
+}
+declare module 'next/dist/telemetry/project-id.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/project-id'>;
+}
+declare module 'next/dist/telemetry/storage.js' {
+  declare module.exports: $Exports<'next/dist/telemetry/storage'>;
+}
+declare module 'next/dist/trace/index' {
+  declare module.exports: $Exports<'next/dist/trace'>;
+}
+declare module 'next/dist/trace/index.js' {
+  declare module.exports: $Exports<'next/dist/trace'>;
+}
+declare module 'next/dist/trace/report/index' {
+  declare module.exports: $Exports<'next/dist/trace/report'>;
+}
+declare module 'next/dist/trace/report/index.js' {
+  declare module.exports: $Exports<'next/dist/trace/report'>;
+}
+declare module 'next/dist/trace/report/index.test.js' {
+  declare module.exports: $Exports<'next/dist/trace/report/index.test'>;
+}
+declare module 'next/dist/trace/report/to-json.js' {
+  declare module.exports: $Exports<'next/dist/trace/report/to-json'>;
+}
+declare module 'next/dist/trace/report/to-telemetry.js' {
+  declare module.exports: $Exports<'next/dist/trace/report/to-telemetry'>;
+}
+declare module 'next/dist/trace/report/types.js' {
+  declare module.exports: $Exports<'next/dist/trace/report/types'>;
+}
+declare module 'next/dist/trace/shared.js' {
+  declare module.exports: $Exports<'next/dist/trace/shared'>;
+}
+declare module 'next/dist/trace/trace-uploader.js' {
+  declare module.exports: $Exports<'next/dist/trace/trace-uploader'>;
+}
+declare module 'next/dist/trace/trace.js' {
+  declare module.exports: $Exports<'next/dist/trace/trace'>;
+}
+declare module 'next/dist/trace/trace.test.js' {
+  declare module.exports: $Exports<'next/dist/trace/trace.test'>;
+}
+declare module 'next/dist/trace/types.js' {
+  declare module.exports: $Exports<'next/dist/trace/types'>;
+}
+declare module 'next/dist/trace/upload-trace.js' {
+  declare module.exports: $Exports<'next/dist/trace/upload-trace'>;
+}
+declare module 'next/document.js' {
+  declare module.exports: $Exports<'next/document'>;
+}
+declare module 'next/dynamic.js' {
+  declare module.exports: $Exports<'next/dynamic'>;
+}
+declare module 'next/error.js' {
+  declare module.exports: $Exports<'next/error'>;
+}
+declare module 'next/experimental/testing/server.js' {
+  declare module.exports: $Exports<'next/experimental/testing/server'>;
+}
+declare module 'next/experimental/testmode/playwright.js' {
+  declare module.exports: $Exports<'next/experimental/testmode/playwright'>;
+}
+declare module 'next/experimental/testmode/playwright/msw.js' {
+  declare module.exports: $Exports<'next/experimental/testmode/playwright/msw'>;
+}
+declare module 'next/experimental/testmode/proxy.js' {
+  declare module.exports: $Exports<'next/experimental/testmode/proxy'>;
+}
+declare module 'next/font/google/index' {
+  declare module.exports: $Exports<'next/font/google'>;
+}
+declare module 'next/font/google/index.js' {
+  declare module.exports: $Exports<'next/font/google'>;
+}
+declare module 'next/font/local/index' {
+  declare module.exports: $Exports<'next/font/local'>;
+}
+declare module 'next/font/local/index.js' {
+  declare module.exports: $Exports<'next/font/local'>;
+}
+declare module 'next/form.js' {
+  declare module.exports: $Exports<'next/form'>;
+}
+declare module 'next/head.js' {
+  declare module.exports: $Exports<'next/head'>;
+}
+declare module 'next/headers.js' {
+  declare module.exports: $Exports<'next/headers'>;
+}
+declare module 'next/image.js' {
+  declare module.exports: $Exports<'next/image'>;
+}
+declare module 'next/jest.js' {
+  declare module.exports: $Exports<'next/jest'>;
+}
+declare module 'next/legacy/image.js' {
+  declare module.exports: $Exports<'next/legacy/image'>;
+}
+declare module 'next/link.js' {
+  declare module.exports: $Exports<'next/link'>;
+}
+declare module 'next/navigation.js' {
+  declare module.exports: $Exports<'next/navigation'>;
+}
+declare module 'next/og.js' {
+  declare module.exports: $Exports<'next/og'>;
+}
+declare module 'next/router.js' {
+  declare module.exports: $Exports<'next/router'>;
+}
+declare module 'next/script.js' {
+  declare module.exports: $Exports<'next/script'>;
+}
+declare module 'next/server.js' {
+  declare module.exports: $Exports<'next/server'>;
+}
+declare module 'next/types.js' {
+  declare module.exports: $Exports<'next/types'>;
+}
+declare module 'next/web-vitals.js' {
+  declare module.exports: $Exports<'next/web-vitals'>;
 }

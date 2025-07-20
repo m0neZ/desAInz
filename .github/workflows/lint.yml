@@ -37,7 +37,9 @@ jobs:
       - name: Run ESLint/Prettier/Stylelint
         run: npm run lint
       - name: Run Flow
-        run: npm run flow
+        run: |
+          npm run flow
+          npm run flow --prefix frontend/admin-dashboard
       - name: Set up Helm
         uses: azure/setup-helm@v3
         with:

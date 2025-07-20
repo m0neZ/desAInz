@@ -16,4 +16,3 @@ automatically generated using ``scripts/generate_openapi.py``.
    openapi/signal-ingestion
    openapi/mockup-generation
    openapi/feedback-loop
-   openapi/workspace

@@ -22,10 +22,10 @@ jobs:
           pip install sphinx docformatter flake8 flake8-docstrings myst-parser sphinxcontrib-mermaid
       - name: Build documentation
         run: |
-          sphinx-build -b html -W -n docs/sphinx docs/sphinx/_build/html
+          sphinx-build -b html -W -n docs docs/_build/html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/sphinx/_build/html
+          publish_dir: docs/_build/html
 

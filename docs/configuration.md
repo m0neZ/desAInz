@@ -34,3 +34,5 @@ application settings classes.
 | `DEDUP_ERROR_RATE` | Probability of false positives in the Bloom filter |
 | `DEDUP_CAPACITY` | Estimated maximum number of entries in the Bloom filter |
 | `DEDUP_TTL` | Time-to-live in seconds for deduplication keys |
+| `PUBLISHER_METRICS_INTERVAL_MINUTES` | Interval for fetching publisher metrics |
+| `WEIGHT_UPDATE_INTERVAL_MINUTES` | Interval for updating scoring weights |

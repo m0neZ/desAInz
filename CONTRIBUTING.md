@@ -29,6 +29,17 @@ npm run lint
 npm run flow
 ```
 
+### Skipping Heavy Dependencies
+
+Some integration tests rely on packages like `torch` and `diffusers` which are
+time consuming to install. During local runs these packages are replaced with
+lightweight stubs when the environment variable `SKIP_HEAVY_DEPS=1` is set.
+
+The test configuration automatically loads modules from `tests/stubs/` whenever
+this variable is present. CI sets the flag to speed up test execution. When
+adding new optional heavy dependencies, provide a matching stub in that
+directory so tests remain isolated from the real packages.
+
 ## Commit Messages
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification. Examples:

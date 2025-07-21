@@ -3,6 +3,16 @@
 
 set -euo pipefail
 
+command -v locust >/dev/null 2>&1 || {
+  echo "locust is required" >&2
+  exit 1
+}
+
+command -v k6 >/dev/null 2>&1 || {
+  echo "k6 is required" >&2
+  exit 1
+}
+
 locust -f load_tests/locustfile.py \
   --headless \
   -u "${USERS:-10}" \

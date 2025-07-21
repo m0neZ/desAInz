@@ -5,6 +5,16 @@
 
 set -euo pipefail
 
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $0 <bucket-name> <origin-domain>" >&2
+  exit 1
+fi
+
+command -v aws >/dev/null 2>&1 || {
+  echo "AWS CLI is required" >&2
+  exit 1
+}
+
 BUCKET="$1"
 ORIGIN_DOMAIN="$2"
 

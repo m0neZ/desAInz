@@ -38,6 +38,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
+from .celery_app import app as celery_app
 from backend.shared.db import session_scope
 from backend.shared.db import run_migrations_if_needed
 from backend.shared.db.models import Embedding
@@ -117,6 +118,7 @@ REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
 metrics_store = TimescaleMetricsStore()
+EMBED_BATCH_SIZE = int(os.getenv("EMBED_BATCH_SIZE", "50"))
 
 
 # Background Kafka consumer setup
@@ -142,17 +144,23 @@ def _create_consumer() -> KafkaConsumerWrapper:
 
 
 def consume_signals(stop_event: Event, consumer: KafkaConsumerWrapper) -> None:
-    """Persist embeddings from Kafka messages until ``stop_event`` is set."""
+    """Group Kafka messages and dispatch them for embedding."""
+    batch: list[dict[str, object]] = []
     for _, message in consumer:
         if stop_event.is_set():
             break
-        embedding = message.get("embedding")
-        if embedding is None:
-            continue
-        source = cast(str, message.get("source", "global"))
-        with session_scope() as session:
-            session.add(Embedding(source=source, embedding=embedding))
-            session.flush()
+        batch.append(message)
+        if len(batch) >= EMBED_BATCH_SIZE:
+            celery_app.send_task(
+                "scoring_engine.tasks.batch_embed",
+                args=[batch.copy()],
+            )
+            batch.clear()
+    if batch:
+        celery_app.send_task(
+            "scoring_engine.tasks.batch_embed",
+            args=[batch.copy()],
+        )
 
 
 @app.on_event("startup")

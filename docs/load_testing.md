@@ -31,7 +31,7 @@ performance characteristics.
 
 ## Continuous Integration
 
-The `loadtest` GitHub Actions workflow runs automatically on every pull request
-and on pushes to `main`. It starts a subset of the services and executes the
-same script used locally. The workflow fails if the aggregate failure ratio
-exceeds `1%` or if the average response time is above `1000ms`.
+The `loadtest` workflow provisions a temporary staging namespace on each pull
+request and push to `main`. Services are deployed to that namespace and an
+ephemeral S3 bucket is created. The integration suite runs against these AWS
+resources and all assets are removed once the run completes.

@@ -14,6 +14,7 @@ from .settings import settings
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from backend.shared.currency import start_rate_updater
 
@@ -37,6 +38,7 @@ configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
+add_security_headers(app)
 
 
 @app.on_event("startup")

@@ -10,6 +10,7 @@ from typing import Any, Callable, Coroutine
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from pydantic import BaseModel
 
@@ -26,6 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 register_metrics(app)
+add_security_headers(app)
 logger = logging.getLogger(__name__)
 
 

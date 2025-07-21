@@ -11,6 +11,7 @@ from .currency import convert_price, start_rate_updater
 from .metrics import register_metrics
 from .responses import cache_header, json_cached
 from .config import settings
+from .security import add_security_headers
 
 __all__ = [
     "add_profiling",
@@ -27,4 +28,5 @@ __all__ = [
     "cache_header",
     "json_cached",
     "settings",
+    "add_security_headers",
 ]

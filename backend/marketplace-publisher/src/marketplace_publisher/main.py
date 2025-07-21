@@ -21,6 +21,7 @@ from backend.shared.config import settings as shared_settings
 from backend.shared.db import models as shared_models
 from backend.shared.db import session_scope
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from backend.shared.profiling import add_profiling
 from backend.shared.tracing import configure_tracing
@@ -134,6 +135,7 @@ async def add_correlation_id(
 
 
 register_metrics(app)
+add_security_headers(app)
 
 
 class PublishRequest(BaseModel):

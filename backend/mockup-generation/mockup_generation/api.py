@@ -17,6 +17,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 
 from .model_repository import (
@@ -89,6 +90,7 @@ async def add_correlation_id(
 
 
 register_metrics(app)
+add_security_headers(app)
 
 
 @app.get("/health")

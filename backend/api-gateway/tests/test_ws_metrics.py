@@ -5,6 +5,7 @@ import importlib
 import sys
 from pathlib import Path
 from typing import Any, Optional, Type
+import warnings
 
 import fakeredis.aioredis
 import httpx
@@ -18,7 +19,9 @@ sys.path.append(
 
 def test_metrics_ws(monkeypatch: Any) -> None:
     """Endpoint streams combined metrics."""
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    monkeypatch.setenv("API_GATEWAY_WS_INTERVAL_MS", "1000")
     import backend.shared.config as shared_config
 
     shared_config.settings.redis_url = "redis://localhost:6379/0"
@@ -27,6 +30,13 @@ def test_metrics_ws(monkeypatch: Any) -> None:
     )
     import api_gateway.main as main_module
     import api_gateway.routes as routes
+
+    if hasattr(main_module, "REQUEST_LATENCY"):
+        import prometheus_client
+
+        prometheus_client.REGISTRY.unregister(main_module.REQUEST_LATENCY)
+        prometheus_client.REGISTRY.unregister(main_module.ERROR_COUNTER)
+
     monkeypatch.setattr(
         "api_gateway.routes.get_async_client", lambda: fakeredis.aioredis.FakeRedis()
     )
@@ -64,5 +74,7 @@ def test_metrics_ws(monkeypatch: Any) -> None:
 
     client = TestClient(main_module.app)
     with client.websocket_connect("/ws/metrics") as ws:
+        interval = ws.receive_json()
+        assert interval == {"interval_ms": 1000}
         data = ws.receive_json()
         assert data == {"cpu_percent": 1, "active_users": 2}

@@ -21,5 +21,5 @@ test('shows trending keywords', async () => {
   renderWithClient(<TrendingKeywords />);
   expect(screen.getByTestId('trending-loading')).toBeInTheDocument();
   await waitFor(() => screen.getByTestId('trending-keywords'));
-  expect(screen.getByText('foo')).toBeInTheDocument();
+  expect(screen.getByText('1. foo')).toBeInTheDocument();
 });

@@ -48,6 +48,11 @@ npm run flow
 The admin dashboard shows trending keywords and basic A/B test statistics.
 These widgets use React Query and lightweight tRPC calls via hooks located in
 `frontend/admin-dashboard/src/lib/trpc/`.
+The QueryClient defined in `src/lib/trpc.ts` sets sensible defaults so cached
+data remains fresh without excessive requests. The recommended values are:
+
+- **cacheTime**: 30 minutes
+- **staleTime**: 5 minutes
 
 ## Debugging with VSCode
 

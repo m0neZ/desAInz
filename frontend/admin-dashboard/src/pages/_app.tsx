@@ -4,9 +4,8 @@ import { SessionProvider } from 'next-auth/react';
 import '../styles/globals.css';
 import AdminLayout from '../layouts/AdminLayout';
 import { I18nProvider } from '../i18n';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '../lib/trpc';
 
 export default function MyApp({
   Component,

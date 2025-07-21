@@ -1,3 +1,5 @@
+"""Tests for publisher rejection scenarios."""
+
 from __future__ import annotations
 
 import asyncio
@@ -15,6 +17,7 @@ from marketplace_publisher.settings import settings
 async def test_publish_trademark_failure(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
+    """Return ``nsfw`` when the design is trademarked."""
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
     monkeypatch.setattr(db, "engine", engine)
@@ -51,6 +54,7 @@ async def test_publish_trademark_failure(
 async def test_publish_nsfw_failure(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
+    """Return ``nsfw`` when the image violates policy."""
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
     monkeypatch.setattr(db, "engine", engine)

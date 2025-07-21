@@ -1,4 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { server } from './msw-server';
+
+test.beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
+test.afterAll(() => server.close());
+test.afterEach(() => server.resetHandlers());
 
 // Ensure the dashboard can be loaded from cache when offline.
 test('dashboard accessible offline', async ({ page, context }) => {

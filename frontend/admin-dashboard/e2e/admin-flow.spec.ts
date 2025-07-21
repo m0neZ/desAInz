@@ -1,4 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { server } from './msw-server';
+
+test.beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
+test.afterAll(() => server.close());
+test.afterEach(() => server.resetHandlers());
 
 test('login and publish design', async ({ page }) => {
   await page.goto('/');

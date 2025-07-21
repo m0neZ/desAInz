@@ -34,6 +34,13 @@ class Settings(BaseSettings):
             raise ValueError("must be positive")
         return value
 
+    @field_validator("log_file")
+    @classmethod
+    def _log_ext(cls, value: str) -> str:
+        if not value.endswith(".log"):
+            raise ValueError("log_file must end with .log")
+        return value
+
 
 Settings.model_rebuild()
 settings: Settings = Settings()

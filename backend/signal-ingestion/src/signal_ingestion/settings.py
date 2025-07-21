@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import HttpUrl, field_validator
+from pydantic import HttpUrl, ValidationError, field_validator, TypeAdapter
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -102,6 +102,33 @@ class Settings(BaseSettings):  # type: ignore[misc]
         if value is not None and not value.strip():
             return None
         return value
+
+    @field_validator(
+        "instagram_token",
+        "instagram_user_id",
+        "youtube_api_key",
+        mode="before",
+    )
+    @classmethod
+    def _non_empty(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        value = value.strip()
+        if not value:
+            raise ValueError("must not be empty")
+        return value
+
+    @field_validator("tiktok_video_urls")
+    @classmethod
+    def _valid_urls(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        urls = [v.strip() for v in value.split(",") if v.strip()]
+        try:
+            TypeAdapter(list[HttpUrl]).validate_python(urls)
+        except ValidationError as exc:  # pragma: no cover - unreachable
+            raise ValueError("invalid URL") from exc
+        return ",".join(urls)
 
     def adapter_limit(self, name: str) -> int:
         """Return request limit for ``name`` or the default."""

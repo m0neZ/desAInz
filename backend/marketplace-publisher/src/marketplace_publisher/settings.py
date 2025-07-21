@@ -84,6 +84,34 @@ class Settings(BaseSettings):
             raise ValueError("must be positive")
         return value
 
+    @field_validator(
+        "unleash_api_token",
+        "redbubble_client_id",
+        "redbubble_client_secret",
+        "redbubble_api_key",
+        "amazon_merch_client_id",
+        "amazon_merch_client_secret",
+        "amazon_merch_api_key",
+        "etsy_client_id",
+        "etsy_client_secret",
+        "etsy_api_key",
+        "society6_client_id",
+        "society6_client_secret",
+        "society6_api_key",
+        "zazzle_client_id",
+        "zazzle_client_secret",
+        "zazzle_api_key",
+        mode="before",
+    )
+    @classmethod
+    def _strip_token(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        value = value.strip()
+        if not value:
+            raise ValueError("must not be empty")
+        return value
+
 
 Settings.model_rebuild()
 settings: Settings = Settings()

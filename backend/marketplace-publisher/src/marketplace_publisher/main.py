@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
+import hmac
 import json
 import logging
 import os
@@ -17,25 +19,23 @@ from backend.shared import (
     init_feature_flags,
     is_enabled,
 )
+from backend.shared.cache import get_async_client
 from backend.shared.config import settings as shared_settings
 from backend.shared.db import models as shared_models
-from backend.shared.db import session_scope
+from backend.shared.db import run_migrations_if_needed, session_scope
 from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
 from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers
 from backend.shared.tracing import configure_tracing
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-
-from pydantic import BaseModel, ConfigDict
-
-from backend.shared.cache import get_async_client
+from pydantic import BaseModel, ConfigDict  # noqa: I201
 
 from sqlalchemy import func, update
 
-from . import notifications
+from . import notifications, publisher
 from .db import (
     Marketplace,
     PublishStatus,
@@ -47,11 +47,9 @@ from .db import (
     init_db,
     update_listing,
 )
-from backend.shared.db import run_migrations_if_needed
 from .logging_config import configure_logging
 from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
-from . import publisher
 from .rate_limiter import MarketplaceRateLimiter
 from .rules import load_rules, validate_mockup
 from .settings import settings
@@ -75,6 +73,20 @@ add_error_handlers(app)
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
     return cast(str, request.headers.get("X-User", request.client.host))
+
+
+async def _verify_signature(request: Request, marketplace: Marketplace) -> None:
+    """Validate the ``X-Signature`` header for ``marketplace``."""
+    secret = settings.webhook_secrets.get(marketplace)
+    if secret is None:
+        raise HTTPException(status_code=500, detail="Webhook secret missing")
+    signature = request.headers.get("X-Signature")
+    if signature is None:
+        raise HTTPException(status_code=403, detail="Missing signature")
+    body = await request.body()
+    expected = hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(signature, expected):
+        raise HTTPException(status_code=403, detail="Invalid signature")
 
 
 rate_limiter = MarketplaceRateLimiter(
@@ -261,9 +273,10 @@ async def get_task_status(task_id: int) -> dict[str, Any]:
 
 @app.post("/webhooks/{marketplace}")
 async def handle_webhook(
-    marketplace: Marketplace, payload: WebhookPayload
+    marketplace: Marketplace, request: Request, payload: WebhookPayload
 ) -> dict[str, str]:
     """Process listing status callbacks."""
+    await _verify_signature(request, marketplace)
     async with SessionLocal() as session:
         task = await get_task(session, payload.task_id)
         if task is None or task.marketplace != marketplace:

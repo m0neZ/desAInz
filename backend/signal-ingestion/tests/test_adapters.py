@@ -365,3 +365,41 @@ async def test_dedup_persists_on_error(
     assert dedup.is_duplicate("existing")
     dedup.add_key("new")
     assert dedup.is_duplicate("new")
+
+
+@pytest.mark.asyncio()  # type: ignore[misc]
+async def test_request_retry(monkeypatch: pytest.MonkeyPatch) -> None:
+    """``_request`` retries failed requests."""
+    BaseAdapter._limiters.clear()
+    calls: list[int] = []
+
+    class DummyClient:
+        def __init__(self, *a: object, **k: object) -> None:  # noqa: D401
+            pass
+
+        async def __aenter__(self) -> "DummyClient":
+            return self
+
+        async def __aexit__(
+            self,
+            exc_type: type[BaseException] | None,
+            exc: BaseException | None,
+            tb: TracebackType | None,
+        ) -> None:
+            pass
+
+        async def get(
+            self, url: str, headers: dict[str, str] | None = None
+        ) -> httpx.Response:
+            calls.append(1)
+            if len(calls) == 1:
+                raise httpx.ConnectError("fail", request=httpx.Request("GET", url))
+            return httpx.Response(200, json={}, request=httpx.Request("GET", url))
+
+    monkeypatch.setattr(httpx, "AsyncClient", DummyClient)
+
+    adapter = _ErrorAdapter(base_url="https://example.com", retries=2)
+    resp = await adapter._request("/ok")
+
+    assert resp.status_code == 200
+    assert len(calls) == 2

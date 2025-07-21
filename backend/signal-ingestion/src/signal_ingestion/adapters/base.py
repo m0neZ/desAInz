@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import itertools
 import os
+import asyncio
 from typing import Any, Iterable, Optional, cast
 
 from ..rate_limit import AdapterRateLimiter
@@ -23,6 +24,7 @@ class BaseAdapter:
         base_url: str,
         proxies: Optional[Iterable[str | None]] = None,
         rate_limit: int = 5,
+        retries: int = 3,
     ) -> None:
         """
         Instantiate the adapter.
@@ -35,8 +37,11 @@ class BaseAdapter:
             Optional list of proxies rotated on each request.
         rate_limit:
             Maximum number of concurrent requests for this adapter.
+        retries:
+            Number of attempts for each request before raising an error.
         """
         self.base_url = base_url
+        self.retries = retries
         if self.__class__ not in BaseAdapter._limiters:
             BaseAdapter._limiters[self.__class__] = AdapterRateLimiter(
                 {self.__class__.__name__: rate_limit}
@@ -63,23 +68,32 @@ class BaseAdapter:
         with ``304 Not Modified`` to signal that processing should be skipped.
         """
         await self._rate_limiter.acquire(self.__class__.__name__)
-        proxy = next(self._proxies_cycle)
-        async with httpx.AsyncClient(
-            proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT
-        ) as client:
-            url = path if path.startswith("http") else f"{self.base_url}{path}"
-            etag_key = f"etag:{url}"
-            req_headers = dict(headers or {})
-            cached_etag = await async_get(etag_key)
-            if cached_etag:
-                req_headers["If-None-Match"] = cached_etag
-            resp = await client.get(url, headers=req_headers or None)
-            if resp.status_code == 304:
-                return None
-            if etag := resp.headers.get("ETag"):
-                await async_set(etag_key, etag)
-            resp.raise_for_status()
-            return resp
+        url = path if path.startswith("http") else f"{self.base_url}{path}"
+        etag_key = f"etag:{url}"
+        req_headers = dict(headers or {})
+        cached_etag = await async_get(etag_key)
+        if cached_etag:
+            req_headers["If-None-Match"] = cached_etag
+
+        for attempt in range(self.retries):
+            proxy = next(self._proxies_cycle)
+            async with httpx.AsyncClient(
+                proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT
+            ) as client:
+                try:
+                    resp = await client.get(url, headers=req_headers or None)
+                    if resp.status_code == 304:
+                        return None
+                    if etag := resp.headers.get("ETag"):
+                        await async_set(etag_key, etag)
+                    resp.raise_for_status()
+                    return resp
+                except httpx.HTTPError:
+                    if attempt >= self.retries - 1:
+                        raise
+                    await asyncio.sleep(2**attempt)
+
+        raise RuntimeError("Unreachable")
 
     async def fetch(self) -> list[dict[str, object]]:
         """Fetch raw data from the remote source."""

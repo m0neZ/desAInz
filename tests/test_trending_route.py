@@ -1,3 +1,5 @@
+"""Tests for the trending route proxy."""
+
 from __future__ import annotations
 
 import importlib
@@ -15,6 +17,7 @@ sys.path.append(
 
 
 def test_trending_proxy(monkeypatch: Any) -> None:
+    """Proxy trending requests to the ingestion service."""
     monkeypatch.setenv("SIGNAL_INGESTION_URL", "http://ingest:1234")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     import backend.shared.config as shared_config

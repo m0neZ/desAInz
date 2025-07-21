@@ -1,3 +1,5 @@
+"""Integration tests for Kafka schema helpers."""
+
 import importlib
 import sys
 from pathlib import Path
@@ -38,6 +40,8 @@ class DummyKafkaProducer:
 
 
 def dummy_consumer_factory(messages: list[tuple[str, Dict[str, Any]]]) -> type[object]:
+    """Create a dummy Kafka consumer that yields provided messages."""
+
     class DummyMessage:
         def __init__(self, topic: str, value: Dict[str, Any]) -> None:
             self.topic = topic

@@ -12,12 +12,14 @@ def run(command: list[str]) -> None:
 
 
 def dump_postgres(backup_dir: Path, bucket: str) -> None:
-    """
-    Dump Postgres database and upload to S3.
+    """Dump the Postgres database and upload it to S3.
 
-    Args:
-        backup_dir: Directory to store the dump.
-        bucket: Name of the S3 bucket.
+    Parameters
+    ----------
+    backup_dir : Path
+        Directory to store the dump.
+    bucket : str
+        Name of the S3 bucket.
     """
     timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
     dump_file = backup_dir / f"postgres_{timestamp}.sql"

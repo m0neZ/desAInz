@@ -1,3 +1,5 @@
+"""Tests for Celery broker integration."""
+
 from __future__ import annotations
 
 import importlib
@@ -28,7 +30,11 @@ def _port_open(host: str, port: int) -> bool:
         ("rabbitmq", "amqp://guest:guest@localhost:5672//", 5672),
     ],
 )  # type: ignore[misc]
-def test_worker_with_broker(monkeypatch: pytest.MonkeyPatch, broker: str, url: str, port: int) -> None:
+def test_worker_with_broker(
+    monkeypatch: pytest.MonkeyPatch, broker: str, url: str, port: int
+) -> None:
+    """Start a worker with the given broker and ensure tasks run."""
+
     if not _port_open("localhost", port):
         pytest.skip(f"{broker} not available")
 
@@ -37,6 +43,7 @@ def test_worker_with_broker(monkeypatch: pytest.MonkeyPatch, broker: str, url: s
     os.environ["CELERY_RESULT_BACKEND"] = url
 
     import mockup_generation.celery_app as celery_app
+
     importlib.reload(celery_app)
 
     app = celery_app.app

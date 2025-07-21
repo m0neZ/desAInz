@@ -21,28 +21,34 @@ class MarketplaceRateLimiter:
         window: int,
         redis: AsyncRedis | None = None,
     ) -> None:
-        """
-        Instantiate the rate limiter.
+        """Instantiate the rate limiter.
 
-        Args:
-            redis: Redis client instance. If ``None``, a default client is used.
-            limits: Allowed requests per window for each marketplace.
-            window: Window size in seconds.
+        Parameters
+        ----------
+        limits : Mapping[Marketplace, int]
+            Allowed requests per window for each marketplace.
+        window : int
+            Window size in seconds.
+        redis : AsyncRedis | None, optional
+            Redis client instance. If ``None``, a default client is used.
         """
         self._redis = redis or get_async_client()
         self._limits = limits
         self._window = window
 
     async def acquire(self, marketplace: Marketplace) -> bool:
-        """
-        Attempt to consume a request slot.
+        """Attempt to consume a request slot.
 
-        Args:
-            marketplace: Marketplace for which to consume a slot.
+        Parameters
+        ----------
+        marketplace : Marketplace
+            Marketplace for which to consume a slot.
 
-        Returns:
-            ``True`` if a slot was consumed, ``False`` if the limit
-            has been exceeded.
+        Returns
+        -------
+        bool
+            ``True`` if a slot was consumed, ``False`` if the limit has been
+            exceeded.
         """
         limit = self._limits.get(marketplace)
         if limit is None:

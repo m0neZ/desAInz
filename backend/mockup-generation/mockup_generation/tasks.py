@@ -141,19 +141,26 @@ def generate_mockup(
     model: str | None = None,
     gpu_index: int | None = None,
 ) -> list[dict[str, object]]:
-    """
-    Generate mockups sequentially on the GPU.
+    """Generate mockups sequentially on the GPU.
 
-    Args:
-        keywords_batch: A list of keyword groups used to build prompts.
-        output_dir: Directory where generated mockups will be written.
-        model: Optional model identifier to use for generation.
-        gpu_index: Preferred GPU slot index.
+    Parameters
+    ----------
+    self : Task
+        Celery task instance.
+    keywords_batch : list[list[str]]
+        List of keyword groups used to build prompts.
+    output_dir : str
+        Directory where generated mockups will be written.
+    model : str | None, optional
+        Model identifier to use for generation.
+    gpu_index : int | None, optional
+        Preferred GPU slot index.
 
-    Returns:
-        A list of dictionaries containing image paths and listing metadata. If
-        a prompt fails, the item will contain an ``error`` key with the
-        message.
+    Returns
+    -------
+    list[dict[str, object]]
+        Each item contains the image path and listing metadata. If a prompt
+        fails, the item will include an ``error`` key with the message.
     """
     start = perf_counter()
     try:

@@ -1,5 +1,17 @@
 import '@testing-library/jest-dom';
 
+// Mock i18n translation hook used in dashboard pages
+jest.mock(
+  'react-i18next',
+  () => ({
+    useTranslation: () => ({
+      t: (key: string) =>
+        key.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase()),
+    }),
+  }),
+  { virtual: true }
+);
+
 // Provide a stub canvas implementation for Chart.js
 HTMLCanvasElement.prototype.getContext =
   HTMLCanvasElement.prototype.getContext ||
@@ -53,6 +65,10 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-  (console.error as jest.Mock).mockRestore();
-  (console.warn as jest.Mock).mockRestore();
+  if (typeof (console.error as any).mockRestore === 'function') {
+    (console.error as jest.Mock).mockRestore();
+  }
+  if (typeof (console.warn as any).mockRestore === 'function') {
+    (console.warn as jest.Mock).mockRestore();
+  }
 });

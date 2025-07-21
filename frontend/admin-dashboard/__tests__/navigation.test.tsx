@@ -40,7 +40,7 @@ test('navigates to Audit Logs page when link clicked', async () => {
       <div>Home</div>
     </AdminLayout>
   );
-  await userEvent.click(screen.getByText('AuditLogs'));
+  await userEvent.click(screen.getByText('Audit Logs'));
   expect(Router).toMatchObject({ pathname: '/dashboard/audit-logs' });
 });
 

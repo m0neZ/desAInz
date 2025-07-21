@@ -32,6 +32,10 @@ docker compose -f docker-compose.yml -f docker-compose.tracing.yml up -d otel-co
 
 ## Grafana Dashboards
 
-Prebuilt dashboard JSON files reside in `infrastructure/grafana`.
+Prebuilt dashboard JSON files reside in `infrastructure/grafana` and
+`infrastructure/grafana/dashboards`.
 Import them into Grafana via **Dashboards → Import** and select the
 TimescaleDB data source when prompted.
+
+The optimization metrics board is available at
+`infrastructure/grafana/dashboards/optimization.json`.

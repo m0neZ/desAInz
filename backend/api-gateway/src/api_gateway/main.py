@@ -18,6 +18,7 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.logging import configure_logging
+from backend.shared.db import run_migrations_if_needed
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from .rate_limiter import UserRateLimiter
@@ -68,6 +69,13 @@ configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
+
+
+@app.on_event("startup")
+async def apply_migrations() -> None:
+    """Ensure database schema is current."""
+    await run_migrations_if_needed("backend/shared/db/alembic_api_gateway.ini")
+
 
 rate_limiter = UserRateLimiter(
     settings.rate_limit_per_user,

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager, contextmanager
 from typing import Any, Iterator, AsyncIterator
+import asyncio
+import os
+from alembic import command
+from alembic.config import Config
 
 from sqlalchemy import create_engine, event, text
 from sqlalchemy.orm import Session, sessionmaker
@@ -15,6 +19,8 @@ from sqlalchemy.ext.asyncio import (
 
 from .base import Base
 from backend.shared.config import settings
+
+SKIP_MIGRATIONS_ENV = "SKIP_MIGRATIONS"
 
 __all__ = [
     "Base",
@@ -108,3 +114,16 @@ async def async_session_scope(
         raise
     finally:
         await session.close()
+
+
+async def run_migrations_if_needed(config_path: str) -> None:
+    """Upgrade the database to the latest revision when required."""
+    if os.getenv(SKIP_MIGRATIONS_ENV) in {"1", "true", "True"}:
+        return
+
+    cfg = Config(config_path)
+    cfg.set_main_option("sqlalchemy.url", str(settings.effective_database_url))
+    await asyncio.to_thread(command.upgrade, cfg, "head")
+
+
+__all__.append("run_migrations_if_needed")

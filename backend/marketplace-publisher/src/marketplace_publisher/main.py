@@ -45,6 +45,7 @@ from .db import (
     init_db,
     update_listing,
 )
+from backend.shared.db import run_migrations_if_needed
 from .logging_config import configure_logging
 from .pricing import create_listing_metadata
 from .publisher import publish_with_retry
@@ -89,6 +90,9 @@ rate_limiter = MarketplaceRateLimiter(
 @app.on_event("startup")
 async def startup() -> None:
     """Initialize database tables and load rules."""
+    await run_migrations_if_needed(
+        "backend/shared/db/alembic_marketplace_publisher.ini"
+    )
     await init_db()
     rules_path = (
         Path(__file__).resolve().parent.parent.parent

@@ -17,7 +17,7 @@ from .routes import router
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
+from backend.shared.security import add_security_headers, require_status_api_key
 from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
 from backend.shared.db import run_migrations_if_needed
@@ -167,8 +167,9 @@ async def health() -> Response:
 
 
 @app.get("/ready", tags=["Status"], summary="Service readiness")
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})
 
 

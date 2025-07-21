@@ -33,6 +33,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     allowed_origins: list[str] = Field(default_factory=list)
     content_security_policy: str | None = None
     hsts: str | None = None
+    allow_status_unauthenticated: bool = True
 
     @field_validator("allowed_origins", mode="before")  # type: ignore[misc]
     @classmethod

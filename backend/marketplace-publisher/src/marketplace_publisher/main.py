@@ -30,6 +30,7 @@ from backend.shared.security import add_security_headers
 from backend.shared.tracing import configure_tracing
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
+from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict  # noqa: I201
 
@@ -381,8 +382,9 @@ async def health() -> Response:
 
 
 @app.get("/ready")
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})
 
 

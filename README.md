@@ -81,6 +81,8 @@ In production, secrets are stored in HashiCorp Vault or AWS Secrets Manager and 
 
 See [docs/security.md](docs/security.md) for the rotation procedure.
 See [docs/backup.md](docs/backup.md) for disaster recovery instructions.
+Error tracking is provided via Sentry. Populate the `SENTRY_DSN` variable in each service's `.env` file to enable detailed exception reports. See [docs/monitoring.md](docs/monitoring.md) for details.
+
 
 ## Release process
 

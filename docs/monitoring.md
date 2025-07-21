@@ -10,6 +10,10 @@ This project provides optional OpenTelemetry tracing for all backend services. T
 
 With these variables configured, calling `configure_tracing` will send spans to the collector.
 
+## Error Tracking
+
+All backend services support error reporting via Sentry. Set the `SENTRY_DSN` environment variable in the service's `.env` file to enable capturing exceptions. The example dotenv files under `backend/*` include this variable so you can populate it with your project DSN.
+
 ## Docker Compose Example
 
 The following override file starts an `otel-collector` container. Launch it alongside the default compose file to enable tracing locally.

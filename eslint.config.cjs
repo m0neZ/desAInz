@@ -7,4 +7,7 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
-module.exports = [...compat.config(eslintrc), { ignores: ['flow-typed/**'] }];
+module.exports = [
+  ...compat.config(eslintrc),
+  { ignores: ['flow-typed/**', 'load_tests/**'] },
+];

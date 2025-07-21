@@ -8,7 +8,6 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const t = (s: string) => s;
   return (
     <div className="flex h-screen">
       <aside className="w-64 bg-gray-800 text-white p-4">

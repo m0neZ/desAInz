@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { FeatureFlagsList } from '../src/components/FeatureFlags/FeatureFlagsList';
 
 beforeEach(() => {
+  // eslint-disable-next-line no-undef
   global.fetch = jest.fn((url: RequestInfo, init?: RequestInit) => {
     if (typeof url === 'string' && url.endsWith('/feature-flags')) {
       if (!init || !init.method || init.method === 'GET') {

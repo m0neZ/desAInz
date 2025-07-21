@@ -32,3 +32,6 @@ dependencies:
   - name: logrotate-jobs
     version: 0.1.0
     repository: "file://../logrotate-jobs"
+  - name: monitoring
+    version: 0.1.0
+    repository: "file://../monitoring"

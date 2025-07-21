@@ -1,0 +1,6 @@
+apiVersion: v2
+name: monitoring
+version: 0.1.0
+description: Helm chart for monitoring microservice
+type: application
+appVersion: "1.0"

@@ -140,3 +140,22 @@ logrotate-jobs:
     pullPolicy: IfNotPresent
   schedule: "0 1 * * *"
   logDir: /var/log
+
+monitoring:
+  replicaCount: 1
+  image:
+    repository: example/monitoring
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources: {}
+  env:
+    LOKI_URL: http://loki:3100
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70

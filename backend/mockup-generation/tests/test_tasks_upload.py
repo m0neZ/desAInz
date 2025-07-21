@@ -1,5 +1,7 @@
 """Tests for upload step in generate_mockup."""
 
+# mypy: ignore-errors
+
 from __future__ import annotations
 
 import types
@@ -91,7 +93,8 @@ def test_generate_mockup_upload(
     )
     tasks.settings.s3_bucket = "b"
     tasks.settings.s3_endpoint = "http://test"  # type: ignore
+    tasks.settings.s3_base_url = "http://cdn.test"  # type: ignore
 
     res = tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
-    assert res[0]["uri"].startswith("http://test/b/generated-mockups/mockup_0.png")
+    assert res[0]["uri"].startswith("http://cdn.test/b/generated-mockups/mockup_0.png")
     assert gen.cleaned

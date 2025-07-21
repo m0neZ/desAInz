@@ -6,7 +6,7 @@ from pydantic import AnyUrl, Field, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     """Centralized configuration for backend services."""
 
     model_config = SettingsConfigDict(
@@ -25,11 +25,12 @@ class Settings(BaseSettings):
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
+    s3_base_url: str | None = None
     secret_key: str | None = None
     weights_token: str | None = None
     allowed_origins: list[str] = Field(default_factory=list)
 
-    @field_validator("allowed_origins", mode="before")
+    @field_validator("allowed_origins", mode="before")  # type: ignore[misc]
     @classmethod
     def _split_origins(cls, value: str | list[str]) -> list[str]:
         """Parse comma separated origins from environment variables."""
@@ -37,7 +38,7 @@ class Settings(BaseSettings):
             return [v.strip() for v in value.split(",") if v.strip()]
         return value
 
-    @field_validator("score_cache_ttl", "trending_ttl", "trending_max_keywords")
+    @field_validator("score_cache_ttl", "trending_ttl", "trending_max_keywords")  # type: ignore[misc]
     @classmethod
     def _positive(cls, value: int) -> int:
         if value <= 0:

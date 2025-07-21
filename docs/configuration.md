@@ -21,6 +21,7 @@ application settings classes.
 | `S3_ACCESS_KEY` | Object storage access key |
 | `S3_SECRET_KEY` | Object storage secret key |
 | `S3_BUCKET` | Bucket name for storing assets |
+| `S3_BASE_URL` | Public base URL for accessing stored objects |
 | `KAFKA_BOOTSTRAP_SERVERS` | Kafka broker list |
 | `SCHEMA_REGISTRY_URL` | Schema Registry endpoint |
 | `SCHEMA_REGISTRY_TOKEN` | Authentication token for the schema registry |

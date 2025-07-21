@@ -35,3 +35,12 @@ PostgreSQL. Then run the following once per database:
 .. code-block:: sql
 
    CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+HTTP Timeouts
+-------------
+
+All services make outbound requests using ``httpx``. The recommended timeout
+for these calls is 10 seconds and is exposed as
+``backend.shared.http.DEFAULT_TIMEOUT``. Instantiate
+``httpx.AsyncClient`` with this timeout to ensure consistent behavior across
+services.

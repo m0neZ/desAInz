@@ -11,6 +11,7 @@ pytest-cov
 fakeredis
 tenacity
 responses
+respx
 Pillow
 redis
 asyncpg

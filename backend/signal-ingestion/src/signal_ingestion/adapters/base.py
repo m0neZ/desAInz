@@ -10,6 +10,7 @@ from ..rate_limit import AdapterRateLimiter
 from backend.shared.cache import async_get, async_set
 
 import httpx
+from backend.shared.http import DEFAULT_TIMEOUT
 
 
 class BaseAdapter:
@@ -63,7 +64,9 @@ class BaseAdapter:
         """
         await self._rate_limiter.acquire(self.__class__.__name__)
         proxy = next(self._proxies_cycle)
-        async with httpx.AsyncClient(proxy=cast(Any, proxy)) as client:
+        async with httpx.AsyncClient(
+            proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT
+        ) as client:
             url = path if path.startswith("http") else f"{self.base_url}{path}"
             etag_key = f"etag:{url}"
             req_headers = dict(headers or {})

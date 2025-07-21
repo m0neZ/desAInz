@@ -4,6 +4,7 @@ from typing import Any, Dict, cast
 import os
 
 import httpx
+from backend.shared.http import DEFAULT_TIMEOUT
 import asyncio
 
 from fastapi import (
@@ -32,7 +33,11 @@ from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
 from backend.shared.cache import async_get, async_set, get_async_client
-from backend.shared.feature_flags import list_flags as ff_list, set_flag as ff_set, is_enabled
+from backend.shared.feature_flags import (
+    list_flags as ff_list,
+    set_flag as ff_set,
+    is_enabled,
+)
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole, RefreshToken
 from uuid import uuid4
@@ -171,7 +176,7 @@ async def status_endpoint() -> Dict[str, str]:
 async def system_health() -> Dict[str, str]:
     """Return aggregated health information for all services."""
     results: dict[str, str] = {}
-    async with httpx.AsyncClient(timeout=2) as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         for name, url in HEALTH_ENDPOINTS.items():
             try:
                 resp = await client.get(url)
@@ -363,7 +368,7 @@ async def trpc_endpoint(
     """Proxy tRPC call to the configured backend service."""
     verify_token(credentials)
     url = f"{TRPC_SERVICE_URL}/trpc/{procedure}"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         response = await client.post(
             url,
             json=await request.json(),
@@ -381,7 +386,7 @@ async def trpc_endpoint(
 async def optimizations() -> list[str]:
     """Return cost optimization suggestions from the optimization service."""
     url = f"{OPTIMIZATION_URL}/optimizations"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -392,7 +397,7 @@ async def optimizations() -> list[str]:
 async def trending(limit: int = 10) -> list[str]:
     """Return up to ``limit`` trending keywords from the ingestion service."""
     url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -403,7 +408,7 @@ async def trending(limit: int = 10) -> list[str]:
 async def monitoring_overview() -> Dict[str, Any]:
     """Proxy overview metrics from the monitoring service."""
     url = f"{MONITORING_URL}/overview"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -414,7 +419,7 @@ async def monitoring_overview() -> Dict[str, Any]:
 async def monitoring_status() -> Dict[str, Any]:
     """Proxy service status from the monitoring service."""
     url = f"{MONITORING_URL}/status"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -425,7 +430,7 @@ async def monitoring_status() -> Dict[str, Any]:
 async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
     """Proxy aggregated A/B test results."""
     url = f"{ANALYTICS_URL}/ab_test_results/{ab_test_id}"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -436,7 +441,7 @@ async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
 async def low_performers(limit: int = 10) -> list[Dict[str, Any]]:
     """Proxy low performer data from the analytics service."""
     url = f"{ANALYTICS_URL}/low_performers?limit={limit}"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -450,7 +455,7 @@ async def low_performers(limit: int = 10) -> list[Dict[str, Any]]:
 async def recommendations() -> list[str]:
     """Return top optimization actions from the optimization service."""
     url = f"{OPTIMIZATION_URL}/recommendations"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -527,7 +532,7 @@ async def edit_publish_task(
 ) -> Dict[str, str]:
     """Edit metadata for a pending publish task."""
     url = f"{PUBLISHER_URL}/tasks/{task_id}"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.patch(url, json=body.model_dump())
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -548,7 +553,7 @@ async def retry_publish_task(
 ) -> Dict[str, str]:
     """Re-trigger publishing for a task."""
     url = f"{PUBLISHER_URL}/tasks/{task_id}/retry"
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.post(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
@@ -565,7 +570,7 @@ async def metrics_ws(websocket: WebSocket) -> None:
     """Stream monitoring metrics to the connected client."""
     await websocket.accept()
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
             while True:
                 overview = await client.get(f"{MONITORING_URL}/overview")
                 analytics = await client.get(f"{MONITORING_URL}/analytics")

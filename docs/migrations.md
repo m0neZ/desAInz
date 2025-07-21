@@ -53,9 +53,9 @@ alembic -c backend/shared/db/alembic_scoring_engine.ini merge \
   -m "merge heads" HEADS
 ```
 
-The new revision resembles
-`backend/shared/db/migrations/example_merge_revision.py` and keeps the history
-linear.
+The new revision should live in ``backend/shared/db/migrations`` and replace
+``example_merge_revision.py``. After committing the merge file, run
+``scripts/validate_migrations.sh`` to confirm that only a single head exists.
 
 ## Verifying Migrations
 

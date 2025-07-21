@@ -1,9 +1,12 @@
 """Test the Timescale metrics storage utilities."""
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import shutil
 
 import pytest
+import psycopg2
+from pytest_postgresql import factories
 
 import backend.monitoring.src.monitoring.metrics_store as metrics_store
 from backend.monitoring.src.monitoring.metrics_store import (
@@ -29,6 +32,12 @@ def test_metrics_insertion(tmp_path: Path) -> None:
     store.add_latency(latency_metric)
     # create aggregate should not fail on SQLite
     store.create_hourly_continuous_aggregate()
+    assert store.get_active_users(datetime.now(timezone.utc) - timedelta(hours=1)) == 1
+
+
+# PostgreSQL fixtures using pytest-postgresql
+postgresql_proc = factories.postgresql_proc()
+postgresql = factories.postgresql("postgresql_proc")
 
 
 def test_pool_used_for_postgres(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -63,3 +72,21 @@ def test_pool_used_for_postgres(monkeypatch: pytest.MonkeyPatch) -> None:
     store = TimescaleMetricsStore("postgresql://example/db")
     assert created["dsn"] == "postgresql://example/db"
     assert isinstance(store, TimescaleMetricsStore)
+
+
+@pytest.mark.skipif(shutil.which("initdb") is None, reason="initdb not available")
+def test_postgresql_metrics(
+    postgresql: psycopg2.extensions.connection,
+) -> None:
+    """Verify metrics operations work with PostgreSQL."""
+    store = TimescaleMetricsStore(postgresql.info.dsn)
+    metric = ScoreMetric(idea_id=2, timestamp=datetime.now(timezone.utc), score=0.9)
+    store.add_score(metric)
+    latency_metric = PublishLatencyMetric(
+        idea_id=2,
+        timestamp=datetime.now(timezone.utc),
+        latency_seconds=1.2,
+    )
+    store.add_latency(latency_metric)
+    since = datetime.now(timezone.utc) - timedelta(minutes=5)
+    assert store.get_active_users(since) == 1

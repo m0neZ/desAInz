@@ -6,6 +6,9 @@
 - **mockup_success_rate** – ratio of generated mockups to ideas
 - **marketplace_stats** – count of successful listings per marketplace
 
+``generate_daily_summary`` accepts an optional ``session_provider`` parameter for
+tests. By default it uses ``backend.shared.db.session_scope``.
+
 Run the script manually or schedule it via cron:
 
 ```bash

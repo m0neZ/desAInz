@@ -59,6 +59,19 @@ ANALYTICS_URL = os.environ.get(
     "ANALYTICS_URL",
     "http://analytics:8000",
 )
+
+# Mapping of services to their health check endpoints
+HEALTH_ENDPOINTS: dict[str, str] = {
+    "api_gateway": "http://api-gateway:8000/health",
+    "signal_ingestion": "http://signal-ingestion:8004/health",
+    "scoring_engine": "http://scoring-engine:5002/health",
+    "mockup_generation": "http://mockup-generation:8000/health",
+    "marketplace_publisher": f"{PUBLISHER_URL}/health",
+    "optimization": f"{OPTIMIZATION_URL}/health",
+    "monitoring": f"{MONITORING_URL}/health",
+    "analytics": f"{ANALYTICS_URL}/health",
+    "feedback_loop": "http://feedback-loop:8000/health",
+}
 auth_scheme = HTTPBearer()
 
 router = APIRouter()
@@ -137,6 +150,22 @@ approvals_router = APIRouter(prefix="/approvals", tags=["Approvals"])
 async def status_endpoint() -> Dict[str, str]:
     """Public status endpoint."""
     return {"status": "ok"}
+
+
+@router.get("/api/health", tags=["Status"], summary="System health")
+async def system_health() -> Dict[str, str]:
+    """Return aggregated health information for all services."""
+    results: dict[str, str] = {}
+    async with httpx.AsyncClient(timeout=2) as client:
+        for name, url in HEALTH_ENDPOINTS.items():
+            try:
+                resp = await client.get(url)
+                results[name] = (
+                    resp.json().get("status") if resp.status_code == 200 else "down"
+                )
+            except Exception:  # pragma: no cover - network failures
+                results[name] = "down"
+    return results
 
 
 @router.post("/auth/token", tags=["Authentication"], summary="Issue JWT token")

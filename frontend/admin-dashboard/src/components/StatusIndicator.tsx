@@ -6,8 +6,7 @@ interface StatusMap {
 
 export default function StatusIndicator() {
   const [status, setStatus] = useState<StatusMap>({});
-  const url =
-    process.env.NEXT_PUBLIC_MONITORING_URL ?? 'http://localhost:8000/status';
+  const url = process.env.NEXT_PUBLIC_API_HEALTH_URL ?? '/api/health';
 
   useEffect(() => {
     async function fetchStatus() {

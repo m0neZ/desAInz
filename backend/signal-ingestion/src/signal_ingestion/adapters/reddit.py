@@ -21,19 +21,21 @@ class RedditAdapter(BaseAdapter):
         user_agent: str | None = None,
     ) -> None:
         """Initialize adapter with endpoint configuration."""
-        self.fetch_limit = fetch_limit or int(
-            os.environ.get("REDDIT_FETCH_LIMIT", "1")
+        self.fetch_limit = fetch_limit or int(os.environ.get("REDDIT_FETCH_LIMIT", "1"))
+        self.user_agent = user_agent or os.environ.get(
+            "REDDIT_USER_AGENT", "signal-bot"
         )
-        self.user_agent = user_agent or os.environ.get("REDDIT_USER_AGENT", "signal-bot")
-        super().__init__(
-            base_url or "https://www.reddit.com", proxies, rate_limit
-        )
+        super().__init__(base_url or "https://www.reddit.com", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:
         """Return the top posts from ``r/python``."""
         headers = {"User-Agent": self.user_agent}
         remaining = self.fetch_limit
-        resp = await self._request(f"/r/python/top.json?limit={remaining}", headers=headers)
+        resp = await self._request(
+            f"/r/python/top.json?limit={remaining}", headers=headers
+        )
+        if resp is None:
+            return []
         data = resp.json()
         posts = data["data"]["children"]
         after = data["data"].get("after")
@@ -43,6 +45,8 @@ class RedditAdapter(BaseAdapter):
                 f"/r/python/top.json?limit={remaining}&after={after}",
                 headers=headers,
             )
+            if resp is None:
+                break
             page = resp.json()
             posts.extend(page["data"]["children"])
             after = page["data"].get("after")

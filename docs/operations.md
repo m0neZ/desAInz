@@ -40,3 +40,11 @@ python scripts/manage_spot_instances.py release i-0abcd1234ef567890
 
 Workers will checkpoint tasks using Celery's statedb so another node can resume
 processing when a spot instance is reclaimed.
+
+## Quota Handling
+
+The signal ingestion service caches HTTP ``ETag`` headers in Redis. When a
+resource has not changed, the adapter sends the cached value using the
+``If-None-Match`` header and skips further processing when receiving a
+``304 Not Modified`` response. This reduces bandwidth usage and helps stay
+within third-party API quotas.

@@ -38,11 +38,15 @@ class InstagramAdapter(BaseAdapter):
             f"&limit={self.fetch_limit}&access_token={self.token}"
         )
         resp = await self._request(path)
+        if resp is None:
+            return []
         data = resp.json()
         posts = data.get("data", [])
         next_url = data.get("paging", {}).get("next")
         while next_url and len(posts) < self.fetch_limit:
             resp = await self._request(next_url)
+            if resp is None:
+                break
             page = resp.json()
             posts.extend(page.get("data", []))
             next_url = page.get("paging", {}).get("next")

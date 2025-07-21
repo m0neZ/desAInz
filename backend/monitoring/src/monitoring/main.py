@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
 import httpx
+from backend.shared.http import DEFAULT_TIMEOUT
 
 import psutil
 from fastapi import FastAPI, Request, Response
@@ -110,7 +111,7 @@ async def status() -> dict[str, str]:
         "orchestrator": "http://orchestrator:8000/health",
     }
     results: dict[str, str] = {}
-    async with httpx.AsyncClient(timeout=2) as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         for name, url in services.items():
             try:
                 resp = await client.get(url)

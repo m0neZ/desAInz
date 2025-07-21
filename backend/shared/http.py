@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 from typing import Any
 
+import httpx
+
 import requests
 from tenacity import (
     retry,
@@ -14,8 +16,9 @@ from tenacity import (
 )
 
 DEFAULT_RETRIES = int(os.getenv("HTTP_RETRIES", "3"))
+DEFAULT_TIMEOUT = httpx.Timeout(10.0)
 
-__all__ = ["request_with_retry"]
+__all__ = ["request_with_retry", "DEFAULT_TIMEOUT"]
 
 
 def request_with_retry(

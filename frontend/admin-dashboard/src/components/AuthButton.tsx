@@ -19,14 +19,24 @@ export default function AuthButton() {
 
   if (session) {
     return (
-      <button onClick={() => signOut()} className="ml-auto">
+      <button
+        type="button"
+        aria-label={t('logout')}
+        onClick={() => signOut()}
+        className="ml-auto"
+      >
         {t('logout')}
       </button>
     );
   }
 
   return (
-    <button onClick={() => signIn()} className="ml-auto">
+    <button
+      type="button"
+      aria-label={t('login')}
+      onClick={() => signIn()}
+      className="ml-auto"
+    >
       {t('login')}
     </button>
   );

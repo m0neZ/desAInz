@@ -12,6 +12,7 @@ export function LanguageSwitcher() {
         <button
           key={lng}
           type="button"
+          aria-label={`Switch to ${lng === 'en' ? 'English' : 'Spanish'}`}
           onClick={() => {
             void changeLanguage(lng);
             void router.push(router.asPath, undefined, { locale: lng });

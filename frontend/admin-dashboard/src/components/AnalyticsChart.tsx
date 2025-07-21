@@ -42,6 +42,7 @@ export function AnalyticsChart() {
       </label>
       <select
         id="analytics-range"
+        aria-label="Analytics range"
         onChange={(e) => setRange(e.target.value)}
         value={range}
       >

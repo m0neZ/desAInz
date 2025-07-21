@@ -42,6 +42,7 @@ export function LatencyChart() {
       </label>
       <select
         id="latency-range"
+        aria-label="Latency range"
         onChange={(e) => setRange(e.target.value)}
         value={range}
       >

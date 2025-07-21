@@ -15,7 +15,7 @@ from sqlalchemy import ForeignKey, Integer, String, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-from backend.shared.db import async_engine, AsyncSessionLocal
+from backend.shared.db import async_engine, AsyncSessionLocal, session_scope
 from .settings import settings
 
 
@@ -79,6 +79,20 @@ class WebhookEvent(Base):
         DateTime, default=datetime.utcnow, nullable=False
     )
     task: Mapped["PublishTask"] = relationship("PublishTask", backref="events")
+
+
+class OAuthToken(Base):
+    """OAuth credentials for a marketplace."""
+
+    __tablename__ = "oauth_token"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)  # noqa: A003
+    marketplace: Mapped[Marketplace] = mapped_column(
+        SqlEnum(Marketplace), nullable=False, unique=True
+    )
+    access_token: Mapped[str | None] = mapped_column(String, nullable=True)
+    refresh_token: Mapped[str | None] = mapped_column(String, nullable=True)
+    expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
 
 engine = async_engine
@@ -164,3 +178,75 @@ async def update_listing(session: AsyncSession, listing_id: int, **values: Any) 
         .values(**values)
     )
     await session.commit()
+
+
+async def get_oauth_token(
+    session: AsyncSession, marketplace: Marketplace
+) -> OAuthToken | None:
+    """Return stored token for ``marketplace`` if available."""
+    result = await session.execute(
+        select(OAuthToken).where(OAuthToken.marketplace == marketplace)
+    )
+    return result.scalars().first()
+
+
+async def upsert_oauth_token(
+    session: AsyncSession,
+    marketplace: Marketplace,
+    access_token: str | None,
+    refresh_token: str | None,
+    expires_at: datetime | None,
+) -> None:
+    """Insert or update token information."""
+    token = await get_oauth_token(session, marketplace)
+    if token is None:
+        token = OAuthToken(
+            marketplace=marketplace,
+            access_token=access_token,
+            refresh_token=refresh_token,
+            expires_at=expires_at,
+        )
+        session.add(token)
+    else:
+        token.access_token = access_token
+        token.refresh_token = refresh_token
+        token.expires_at = expires_at
+    await session.commit()
+
+
+def get_oauth_token_sync(marketplace: Marketplace) -> OAuthToken | None:
+    """Return stored token row for ``marketplace``."""
+    with session_scope() as session:
+        return (
+            session.query(OAuthToken)
+            .filter(OAuthToken.marketplace == marketplace)
+            .first()
+        )
+
+
+def upsert_oauth_token_sync(
+    marketplace: Marketplace,
+    access_token: str | None,
+    refresh_token: str | None,
+    expires_at: datetime | None,
+) -> None:
+    """Store token details synchronously."""
+    with session_scope() as session:
+        token = (
+            session.query(OAuthToken)
+            .filter(OAuthToken.marketplace == marketplace)
+            .first()
+        )
+        if token is None:
+            token = OAuthToken(
+                marketplace=marketplace,
+                access_token=access_token,
+                refresh_token=refresh_token,
+                expires_at=expires_at,
+            )
+            session.add(token)
+        else:
+            token.access_token = access_token
+            token.refresh_token = refresh_token
+            token.expires_at = expires_at
+        session.commit()

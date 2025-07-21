@@ -12,9 +12,15 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import time
 
+from datetime import datetime
+
 from .settings import settings
 
-from .db import Marketplace
+from .db import (
+    Marketplace,
+    get_oauth_token_sync,
+    upsert_oauth_token_sync,
+)
 from . import rules
 
 
@@ -23,6 +29,7 @@ class BaseClient:
 
     def __init__(
         self,
+        marketplace: Marketplace,
         base_url: str,
         token_url: str | None = None,
         client_id: str | None = None,
@@ -33,6 +40,7 @@ class BaseClient:
         scope: str | None = None,
     ) -> None:
         """Initialize API configuration and credentials."""
+        self.marketplace = marketplace
         self.base_url = base_url.rstrip("/")
         self.token_url = token_url
         self.publish_url = f"{self.base_url}/publish"
@@ -46,6 +54,11 @@ class BaseClient:
         self._refresh_token: str | None = None
         self._expiry: float | None = None
         self._state: str | None = None
+        stored = get_oauth_token_sync(self.marketplace)
+        if stored is not None:
+            self._token = stored.access_token
+            self._refresh_token = stored.refresh_token
+            self._expiry = stored.expires_at.timestamp() if stored.expires_at else None
 
     def _fetch_new_token(self, grant_data: dict[str, str]) -> None:
         """Retrieve a token from ``token_url`` using ``grant_data``."""
@@ -63,6 +76,12 @@ class BaseClient:
         self._refresh_token = payload.get("refresh_token", self._refresh_token)
         expires_in = int(payload.get("expires_in", 0))
         self._expiry = time.time() + expires_in if expires_in else None
+        upsert_oauth_token_sync(
+            self.marketplace,
+            self._token,
+            self._refresh_token,
+            datetime.fromtimestamp(self._expiry) if self._expiry else None,
+        )
 
     def _get_token(self) -> str | None:
         """Return a cached token refreshing if expired."""
@@ -107,6 +126,15 @@ class BaseClient:
             client_secret=self._client_secret,
         )
         self._token = token.get("access_token")
+        self._refresh_token = token.get("refresh_token", self._refresh_token)
+        expires_in = int(token.get("expires_in", 0))
+        self._expiry = time.time() + expires_in if expires_in else None
+        upsert_oauth_token_sync(
+            self.marketplace,
+            self._token,
+            self._refresh_token,
+            datetime.fromtimestamp(self._expiry) if self._expiry else None,
+        )
 
     def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
         """Upload a design and return the created listing ID."""
@@ -174,6 +202,7 @@ class RedbubbleClient(BaseClient):
     def __init__(self) -> None:
         """Configure endpoints and credentials from settings."""
         super().__init__(
+            Marketplace.redbubble,
             "https://api.redbubble.com/v1",
             settings.redbubble_token_url,
             settings.redbubble_client_id,
@@ -191,6 +220,7 @@ class AmazonMerchClient(BaseClient):
     def __init__(self) -> None:
         """Configure endpoints and credentials from settings."""
         super().__init__(
+            Marketplace.amazon_merch,
             "https://merch.amazon.com/api",
             settings.amazon_merch_token_url,
             settings.amazon_merch_client_id,
@@ -208,6 +238,7 @@ class EtsyClient(BaseClient):
     def __init__(self) -> None:
         """Configure endpoints and credentials from settings."""
         super().__init__(
+            Marketplace.etsy,
             "https://openapi.etsy.com/v3/application",
             settings.etsy_token_url,
             settings.etsy_client_id,
@@ -225,6 +256,7 @@ class Society6Client(BaseClient):
     def __init__(self) -> None:
         """Configure endpoints and credentials from settings."""
         super().__init__(
+            Marketplace.society6,
             "https://api.society6.com/v1",
             settings.society6_token_url,
             settings.society6_client_id,
@@ -242,6 +274,7 @@ class ZazzleClient(BaseClient):
     def __init__(self) -> None:
         """Configure endpoints and credentials from settings."""
         super().__init__(
+            Marketplace.zazzle,
             "https://api.zazzle.com/v1",
             settings.zazzle_token_url,
             settings.zazzle_client_id,

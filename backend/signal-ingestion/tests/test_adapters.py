@@ -18,10 +18,76 @@ import vcr
 
 warnings.filterwarnings("ignore", category=ResourceWarning)
 import httpx
+import respx
 
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
 )
+
+
+class AsyncFakeRedis:
+    """Simplistic async Redis replacement."""
+
+    def __init__(self) -> None:
+        self.store: dict[str, int | str] = {}
+
+    async def get(self, key: str) -> str | None:
+        return cast(str | None, self.store.get(key))
+
+    async def set(self, key: str, value: str) -> None:
+        self.store[key] = value
+
+    async def setex(self, key: str, ttl: int, value: str) -> None:
+        self.store[key] = value
+
+    async def decr(self, key: str) -> None:
+        self.store[key] = int(self.store.get(key, 0)) - 1
+
+    async def delete(self, key: str) -> None:
+        self.store.pop(key, None)
+
+    class _Pipe:
+        def __init__(self, parent: "AsyncFakeRedis") -> None:
+            self.parent = parent
+            self.cmds: list[tuple[str, str, str | int]] = []
+
+        async def __aenter__(self) -> "AsyncFakeRedis._Pipe":
+            return self
+
+        async def __aexit__(self, exc_type: object, exc: object, tb: object) -> None:
+            return None
+
+        async def watch(self, key: str) -> None:  # noqa: D401
+            return None
+
+        async def get(self, key: str) -> str | None:
+            return await self.parent.get(key)
+
+        def multi(self) -> None:  # noqa: D401
+            self.cmds.clear()
+
+        def set(self, key: str, value: str, ex: int | None = None) -> None:
+            self.cmds.append(("set", key, value))
+
+        def decr(self, key: str) -> None:
+            self.cmds.append(("decr", key, 0))
+
+        async def execute(self) -> None:
+            for op, key, val in self.cmds:
+                if op == "set":
+                    await self.parent.set(key, cast(str, val))
+                elif op == "decr":
+                    await self.parent.decr(key)
+
+        async def unwatch(self) -> None:
+            return None
+
+    def pipeline(self) -> "AsyncFakeRedis._Pipe":
+        return AsyncFakeRedis._Pipe(self)
+
+    async def aclose(self) -> None:
+        return None
+
 
 from signal_ingestion.adapters.events import EventsAdapter  # noqa: E402
 from signal_ingestion.adapters.instagram import InstagramAdapter  # noqa: E402
@@ -45,7 +111,7 @@ ADAPTERS = [
 def _fake_redis(monkeypatch: pytest.MonkeyPatch) -> Generator[None, None, None]:
     """Provide fakeredis clients to the adapters."""
     fake_sync = fakeredis.FakeRedis()
-    fake_async = fakeredis.aioredis.FakeRedis()
+    fake_async = AsyncFakeRedis()
     monkeypatch.setattr(cache, "get_sync_client", lambda: fake_sync)
     monkeypatch.setattr(cache, "get_async_client", lambda: fake_async)
     import signal_ingestion.rate_limit as rl
@@ -59,7 +125,7 @@ def _fake_redis(monkeypatch: pytest.MonkeyPatch) -> Generator[None, None, None]:
     )
     yield
     fake_sync.close()
-    fake_async.close()
+    asyncio.run(fake_async.aclose())
 
 
 @pytest.mark.parametrize("adapter_cls, name", ADAPTERS)  # type: ignore[misc]
@@ -210,3 +276,92 @@ async def test_proxy_rotation(monkeypatch: pytest.MonkeyPatch) -> None:
     await adapter._request("/b")
 
     assert used == ["http://proxy1", "http://proxy2"]
+
+
+@pytest.fixture()  # type: ignore[misc]
+def _redis_with_dedup(monkeypatch: pytest.MonkeyPatch) -> Generator[object, None, None]:
+    """Provide fakeredis with bloom filter and real dedup module."""
+
+    class FakeBloom:
+        """Minimal bloom filter simulation."""
+
+        def __init__(self, redis: fakeredis.FakeRedis) -> None:
+            self.redis = redis
+            self.items: set[str] = set()
+
+        def create(self, key: str, error_rate: float, capacity: int) -> None:
+            self.redis.set(key, "1")
+
+        def add(self, key: str, item: str) -> None:
+            self.items.add(item)
+
+        def exists(self, key: str, item: str) -> int:
+            return int(item in self.items)
+
+    class RedisWithBloom(fakeredis.FakeRedis):  # type: ignore[misc]
+        """FakeRedis with bloom filter support."""
+
+        def __init__(self, *args: object, **kwargs: object) -> None:
+            super().__init__(*args, **kwargs)
+            self._bloom = FakeBloom(self)
+
+        def bf(self) -> FakeBloom:
+            return self._bloom
+
+    fake_sync = RedisWithBloom()
+    fake_async = fakeredis.aioredis.FakeRedis()
+    monkeypatch.setattr(cache, "get_sync_client", lambda: fake_sync)
+    monkeypatch.setattr(cache, "get_async_client", lambda: fake_async)
+    import signal_ingestion.rate_limit as rl
+
+    monkeypatch.setattr(rl, "get_async_client", lambda: fake_async)
+    sys.modules.pop("signal_ingestion.dedup", None)
+    import importlib
+
+    dedup = importlib.import_module("signal_ingestion.dedup")
+    dedup.redis_client = fake_sync  # type: ignore[attr-defined]
+    dedup.initialize(0.1, 10, 5)
+    yield dedup
+    fake_sync.close()
+    asyncio.run(fake_async.aclose())
+
+
+class _ErrorAdapter(BaseAdapter):  # type: ignore[misc]
+    """Adapter used solely for error handling tests."""
+
+    async def fetch(self) -> list[dict[str, object]]:
+        return []
+
+
+@respx.mock  # type: ignore[misc]
+@pytest.mark.asyncio()  # type: ignore[misc]
+async def test_request_non_200(monkeypatch: pytest.MonkeyPatch) -> None:
+    """``_request`` should raise for non-successful responses."""
+    BaseAdapter._limiters.clear()
+    respx.get("https://example.com/fail").respond(status_code=500)
+    adapter = _ErrorAdapter(base_url="https://example.com", rate_limit=1)
+    with pytest.raises(httpx.HTTPStatusError):
+        await adapter._request("/fail")
+
+
+@respx.mock  # type: ignore[misc]
+@pytest.mark.asyncio()  # type: ignore[misc]
+async def test_dedup_persists_on_error(
+    _redis_with_dedup: object, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Deduplication cache continues to work when requests fail."""
+    BaseAdapter._limiters.clear()
+    import signal_ingestion.dedup as dedup
+
+    dedup.add_key("existing")
+    assert dedup.is_duplicate("existing")
+
+    respx.get("https://example.com/fail").respond(status_code=500)
+    adapter = _ErrorAdapter(base_url="https://example.com", rate_limit=1)
+
+    with pytest.raises(httpx.HTTPStatusError):
+        await adapter._request("/fail")
+
+    assert dedup.is_duplicate("existing")
+    dedup.add_key("new")
+    assert dedup.is_duplicate("new")

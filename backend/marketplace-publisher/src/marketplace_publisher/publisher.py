@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 import logging
 
 from requests import RequestException
@@ -22,6 +22,8 @@ from .clients import (
 )
 from .trademark import is_trademarked
 from .notifications import notify_failure
+from mockup_generation.post_processor import ensure_not_nsfw
+from PIL import Image
 from .db import (
     Marketplace,
     PublishStatus,
@@ -51,11 +53,12 @@ async def publish_with_retry(
     design_path: Path,
     metadata: dict[str, Any],
     max_attempts: int = 3,
-) -> str | None:
+) -> str | Literal["nsfw", "trademarked"] | None:
     """
     Publish a design with retry support.
 
-    Return the created listing ID when publishing succeeds, otherwise ``None``.
+    Return the created listing ID when publishing succeeds. If the design violates
+    policy checks, return the failure reason instead.
     """
     try:
         await update_task_status(session, task_id, PublishStatus.in_progress)
@@ -63,7 +66,15 @@ async def publish_with_retry(
         if title and is_trademarked(title):
             await update_task_status(session, task_id, PublishStatus.failed)
             notify_failure(task_id, marketplace.value)
-            return
+            return "trademarked"
+
+        try:
+            with Image.open(design_path) as img:
+                ensure_not_nsfw(img)
+        except ValueError:
+            await update_task_status(session, task_id, PublishStatus.failed)
+            notify_failure(task_id, marketplace.value)
+            return "nsfw"
 
         client = CLIENTS[marketplace]
         listing_id = client.publish_design(design_path, metadata)

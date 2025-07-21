@@ -20,6 +20,7 @@ from .ops import (
     score_signals,
     sync_listing_states_op,
     purge_pii_rows_op,
+    benchmark_score_op,
 )
 from .hooks import record_failure, record_success
 
@@ -82,3 +83,9 @@ def sync_listings_job() -> None:
 def privacy_purge_job() -> None:
     """Job removing PII from stored signals."""
     purge_pii_rows_op()
+
+
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def benchmark_score_job() -> None:
+    """Job benchmarking scoring service and recording results."""
+    benchmark_score_op()

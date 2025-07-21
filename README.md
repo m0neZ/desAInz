@@ -95,3 +95,19 @@ The `docker-compose.prod.yml` file uses prebuilt images and is intended for use 
 ## Implementation Plan
 
 See [docs/implementation_plan.md](docs/implementation_plan.md) for the milestone roadmap derived from the [Design Idea Engine Complete Blueprint](docs/blueprints/DesignIdeaEngineCompleteBlueprint.md).
+
+## Running on Windows
+
+Most helper scripts in `scripts/` are written for a POSIX shell. Python equivalents
+are provided for common tasks so Windows users can run them without WSL:
+
+```bash
+python scripts/setup_codex.py           # install dependencies and build docs
+python scripts/run_integration_tests.py # run integration tests
+python scripts/run_dagster_webserver.py # start the Dagster web UI
+python scripts/rotate_logs.py           # archive and prune logs
+python scripts/wait_for_services.py     # block until local services respond
+```
+
+Other scripts depend on tools like Docker, kubectl or AWS CLI and therefore
+still require a POSIX environment (WSL or Git Bash).

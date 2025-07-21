@@ -47,7 +47,7 @@
     "babel-jest": "^30.0.4",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
-    "flow-bin": "^0.275.0",
+    "flow-bin": "^0.276.0",
     "jest": "^30.0.4",
     "jest-canvas-mock": "^2.5.2",
     "jest-environment-jsdom": "^30.0.4",

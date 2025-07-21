@@ -1,4 +1,5 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import dynamic from 'next/dynamic';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +19,7 @@ const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
   ssr: false,
 });
 
-export default function DashboardPage() {
+function DashboardPage() {
   const { t } = useTranslation();
   const { data: signals, isLoading } = useSignals();
 
@@ -51,3 +52,4 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(DashboardPage);

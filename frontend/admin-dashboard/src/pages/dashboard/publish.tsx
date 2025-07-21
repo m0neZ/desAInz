@@ -1,8 +1,9 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
 import { usePublishTasks } from '../../lib/trpc/hooks';
 
-export default function PublishPage() {
+function PublishPage() {
   const { t } = useTranslation();
   const { data: tasks, isLoading } = usePublishTasks();
 
@@ -30,3 +31,4 @@ export const getStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(PublishPage);

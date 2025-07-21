@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
 
-export default function PreferencesPage() {
+function PreferencesPage() {
   const { t } = useTranslation();
   const [notify, setNotify] = useState(false);
 
@@ -27,3 +28,4 @@ export default function PreferencesPage() {
     </div>
   );
 }
+export default withPageAuthRequired(PreferencesPage);

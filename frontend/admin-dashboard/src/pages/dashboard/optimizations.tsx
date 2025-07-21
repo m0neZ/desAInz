@@ -1,9 +1,10 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useOptimizations } from '../../lib/trpc/hooks';
 
-export default function OptimizationsPage() {
+function OptimizationsPage() {
   const { t } = useTranslation();
   const { data: items, isLoading } = useOptimizations();
 
@@ -27,3 +28,4 @@ export const getStaticProps: GetStaticProps = async () => ({
   props: {},
   revalidate: 60,
 });
+export default withPageAuthRequired(OptimizationsPage);

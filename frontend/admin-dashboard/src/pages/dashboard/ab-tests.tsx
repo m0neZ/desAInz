@@ -1,4 +1,5 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import dynamic from 'next/dynamic';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +8,7 @@ const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
   ssr: false,
 });
 
-export default function AbTestsPage() {
+function AbTestsPage() {
   const { t } = useTranslation();
   return (
     <div>
@@ -23,3 +24,4 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(AbTestsPage);

@@ -76,7 +76,7 @@ INGEST_FAILURE = Counter(
 
 async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> None:
     await purge_old_signals(session, settings.signal_retention_days)
-    rows = await adapter.fetch()
+    rows: list[dict[str, object]] = await adapter.fetch()
     for row in rows:
         signal_data: NormalizedSignal = normalize(
             adapter.__class__.__name__.replace("Adapter", "").lower(), row

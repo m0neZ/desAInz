@@ -5,6 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Any
+
+from botocore.client import BaseClient
+from minio import Minio
 import os
 import time
 
@@ -32,11 +35,9 @@ from backend.shared.config import settings
 from . import model_repository
 
 
-def _get_storage_client() -> Any:
+def _get_storage_client() -> Minio | BaseClient:
     """Return a MinIO or boto3 client based on environment configuration."""
     if settings.s3_endpoint and "amazonaws" not in settings.s3_endpoint:
-        from minio import Minio
-
         secure = settings.s3_endpoint.startswith("https")
         host = settings.s3_endpoint.replace("https://", "").replace("http://", "")
         return Minio(
@@ -134,14 +135,15 @@ def gpu_slot(slot: int | None = None) -> Iterator[None]:
 
 @app.task(bind=True)  # type: ignore[misc]
 def generate_mockup(
-    self: Task,
+    self: Task[Any, Any],
     keywords_batch: list[list[str]],
     output_dir: str,
     *,
     model: str | None = None,
     gpu_index: int | None = None,
 ) -> list[dict[str, object]]:
-    """Generate mockups sequentially on the GPU.
+    """
+    Generate mockups sequentially on the GPU.
 
     Parameters
     ----------
@@ -164,7 +166,8 @@ def generate_mockup(
     """
     start = perf_counter()
     try:
-        queue = self.request.delivery_info.get("routing_key", "")
+        delivery_info: dict[str, Any] = dict(self.request.delivery_info or {})
+        queue = str(delivery_info.get("routing_key", ""))
         try:
             slot: int | None = int(queue.split("-")[-1])
         except (ValueError, AttributeError):
@@ -202,14 +205,11 @@ def generate_mockup(
                     if not validate_file_size(output_path):
                         raise ValueError("File size too large")
                     obj_name = f"generated-mockups/{output_path.name}"
+                    bucket = settings.s3_bucket or ""
                     if hasattr(client, "fput_object"):
-                        client.fput_object(
-                            settings.s3_bucket, obj_name, str(output_path)
-                        )
+                        client.fput_object(bucket, obj_name, str(output_path))
                     else:
-                        client.upload_file(
-                            str(output_path), settings.s3_bucket, obj_name
-                        )
+                        client.upload_file(str(output_path), bucket, obj_name)
                     base = settings.s3_base_url or settings.s3_endpoint
                     if base:
                         base = base.rstrip("/")

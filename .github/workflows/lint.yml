@@ -35,7 +35,7 @@ jobs:
       - name: Check docstrings
         run: pydocstyle backend
       - name: Run MyPy
-        run: mypy backend --explicit-package-bases --exclude "tests"
+        run: mypy backend --explicit-package-bases --exclude "tests" --strict --config-file backend/mypy.ini
       - name: Run ESLint/Prettier/Stylelint
         run: npm run lint
       - name: Run CSS lint

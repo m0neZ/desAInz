@@ -38,6 +38,10 @@ from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
+from backend.monitoring.src.monitoring.metrics_store import (
+    ScoreMetric,
+    TimescaleMetricsStore,
+)
 from .scoring import Signal, calculate_score
 from .weight_repository import (
     FEEDBACK_SMOOTHING,
@@ -108,6 +112,7 @@ register_metrics(app)
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
+metrics_store = TimescaleMetricsStore()
 
 
 # Background Kafka consumer setup
@@ -339,6 +344,13 @@ async def score_signal(payload: ScoreRequest) -> JSONResponse:
     factor = await trending_factor(topics)
     with SCORE_TIME_HISTOGRAM.time():
         score = calculate_score(signal, median_engagement, topics, factor)
+    metrics_store.add_score(
+        ScoreMetric(
+            idea_id=int(payload.metadata.get("idea_id", 0)) if payload.metadata else 0,
+            timestamp=datetime.utcnow(),
+            score=score,
+        )
+    )
     await redis_client.setex(key, CACHE_TTL_SECONDS, score)
     return JSONResponse({"score": score, "cached": False})
 

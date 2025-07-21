@@ -8,3 +8,6 @@ Scores are cached in Redis for performance.
 ## Environment Variables
 
 Copy `.env.example` to `.env` and adjust the values.
+
+`METRICS_DB_URL` points the service at a TimescaleDB instance for storing score
+metrics.

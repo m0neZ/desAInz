@@ -27,8 +27,8 @@ pg\_stat\_statements
 --------------------
 
 The :code:`pg_stat_statements` extension tracks execution statistics for all
-SQL queries. It must be enabled so that
-:mod:`scripts.analyze_query_plans` can inspect slow statements. Ensure
+SQL queries. It must be enabled so that ``scripts.analyze_query_plans`` can
+inspect slow statements. Ensure
 ``shared_preload_libraries`` includes ``pg_stat_statements`` and restart
 PostgreSQL. Then run the following once per database:
 

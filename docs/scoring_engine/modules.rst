@@ -6,6 +6,7 @@ API Reference
 
 .. automodule:: scoring_engine.affinity
    :members:
+   :noindex:
 
 .. automodule:: scoring_engine.app
    :members:

@@ -15,9 +15,24 @@ Run the script manually or schedule it via cron:
 ./scripts/daily_summary.py
 ```
 
+The script writes the summary to the path defined by the
+``DAILY_SUMMARY_FILE`` environment variable which defaults to
+``daily_summary.json``:
+
+```bash
+DAILY_SUMMARY_FILE=/var/reports/summary.json ./scripts/daily_summary.py
+```
+
 The monitoring service exposes the same information via the
 `/daily_summary` HTTP endpoint:
 
 ```bash
 curl http://monitoring:8000/daily_summary
+```
+
+You can retrieve the last generated summary file directly from
+`/daily_summary/report`:
+
+```bash
+curl http://monitoring:8000/daily_summary/report
 ```

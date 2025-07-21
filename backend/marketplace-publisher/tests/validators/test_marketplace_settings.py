@@ -12,5 +12,6 @@ from marketplace_publisher.settings import Settings  # noqa: E402
 
 
 def test_blank_unleash_token() -> None:
+    """Validation fails when Unleash token is blank."""
     with pytest.raises(ValidationError):
         Settings(unleash_api_token=" ")

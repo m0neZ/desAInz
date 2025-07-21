@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import os
+import json
 import sys
 from pathlib import Path
 
@@ -63,8 +65,13 @@ async def _marketplace_stats(since: datetime) -> Mapping[str, int]:
 
 async def generate_daily_summary(
     session_provider: Callable[[], ContextManager[Session]] = session_scope,
+    output_file: str | Path | None = None,
 ) -> Mapping[str, object]:
-    """Return metrics on ideas and mockups from the last 24 hours."""
+    """Return metrics on ideas and mockups from the last 24 hours.
+
+    The summary is persisted as JSON to ``output_file`` or to the path
+    specified by the ``DAILY_SUMMARY_FILE`` environment variable.
+    """
     now = datetime.now(timezone.utc)
     since = now - timedelta(days=1)
 
@@ -73,16 +80,21 @@ async def generate_daily_summary(
         mockups = _mockups_count(session, since)
     mockup_rate = float(mockups / ideas) if ideas else 0.0
     stats = await _marketplace_stats(since)
-    return {
+    summary = {
         "ideas_generated": ideas,
         "mockup_success_rate": mockup_rate,
         "marketplace_stats": stats,
     }
 
+    file_path = Path(
+        output_file or os.getenv("DAILY_SUMMARY_FILE", "daily_summary.json")
+    )
+    file_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    return summary
+
 
 if __name__ == "__main__":  # pragma: no cover
     import asyncio
-    import json
 
     summary = asyncio.run(generate_daily_summary())
     print(json.dumps(summary, indent=2))

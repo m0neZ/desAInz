@@ -2,35 +2,35 @@ flake8
 black
 mypy
 pydocstyle
-flake8 - docstrings
+flake8-docstrings
 docformatter
 watchdog
 vcrpy
 pytest
-pytest - cov
+pytest-cov
 fakeredis
 tenacity
 responses
 Pillow
 redis
 asyncpg
-scikit - learn
-pytest - asyncio
+scikit-learn
+pytest-asyncio
 aiosqlite
 locust
 pynvml
 
 UnleashClient
-launchdarkly - server - sdk
+launchdarkly-server-sdk
 
-pip - audit
-sphinxcontrib - openapi
-myst - parser
-sentry - sdk
+pip-audit
+sphinxcontrib-openapi
+myst-parser
+sentry-sdk
 Deprecated
 testing.postgresql
-sphinxcontrib - mermaid
-openapi - schema - validator
-opentelemetry - exporter - otlp
-python - jose[cryptography]
+sphinxcontrib-mermaid
+openapi-schema-validator
+opentelemetry-exporter-otlp
+python-jose[cryptography]
 pytest-recording

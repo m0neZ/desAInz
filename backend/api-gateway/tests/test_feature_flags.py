@@ -38,4 +38,3 @@ def test_toggle_flag() -> None:
     resp = client.get("/feature-flags", headers={"Authorization": f"Bearer {token}"})
     assert resp.status_code == 200
     assert resp.json().get("demo") is True
-

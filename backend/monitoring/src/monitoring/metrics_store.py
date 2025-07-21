@@ -90,7 +90,8 @@ class TimescaleMetricsStore:
         self, message: str, labels: MutableMapping[str, str] | None = None
     ) -> None:
         """Send a log line to Loki if configured."""
-        if not self.loki_url:
+        loki_url = self.loki_url or os.environ.get("LOKI_URL")
+        if not loki_url:
             return
         payload = {
             "streams": [
@@ -104,7 +105,10 @@ class TimescaleMetricsStore:
         }
         try:
             request_with_retry(
-                "POST", f"{self.loki_url}/loki/api/v1/push", json=payload, timeout=2
+                "POST",
+                f"{loki_url}/loki/api/v1/push",
+                json=payload,
+                timeout=2,
             )
         except requests.RequestException:
             pass

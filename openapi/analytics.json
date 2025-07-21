@@ -181,7 +181,11 @@
             "name": "limit",
             "in": "query",
             "required": false,
-            "schema": {"type": "integer", "title": "Limit", "default": 10}
+            "schema": {
+              "type": "integer",
+              "title": "Limit",
+              "default": 10
+            }
           }
         ],
         "responses": {
@@ -190,7 +194,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {"$ref": "#/components/schemas/LowPerformer"},
+                  "items": {
+                    "$ref": "#/components/schemas/LowPerformer"
+                  },
                   "type": "array",
                   "title": "Response Low Performers Low Performers Get"
                 }
@@ -201,7 +207,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/HTTPValidationError"}
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -325,11 +333,20 @@
       },
       "LowPerformer": {
         "properties": {
-          "listing_id": {"type": "integer", "title": "Listing Id"},
-          "revenue": {"type": "number", "title": "Revenue"}
+          "listing_id": {
+            "type": "integer",
+            "title": "Listing Id"
+          },
+          "revenue": {
+            "type": "number",
+            "title": "Revenue"
+          }
         },
         "type": "object",
-        "required": ["listing_id", "revenue"],
+        "required": [
+          "listing_id",
+          "revenue"
+        ],
         "title": "LowPerformer",
         "description": "Listing with the lowest revenue."
       },
@@ -373,5 +390,6 @@
         "scheme": "bearer"
       }
     }
-  }
+  },
+  "x-spec-version": "f58f45c2f5a81524937d4df9b2c4931b88c96589159210eda06a7eddb46642cd"
 }

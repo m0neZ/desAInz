@@ -303,5 +303,6 @@
         "title": "ValidationError"
       }
     }
-  }
+  },
+  "x-spec-version": "e3dd89f2ca2db946efd7f9566e503212dde73d37edaa7a63ff4c1e66a897dab7"
 }

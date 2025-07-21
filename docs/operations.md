@@ -48,3 +48,39 @@ resource has not changed, the adapter sends the cached value using the
 ``If-None-Match`` header and skips further processing when receiving a
 ``304 Not Modified`` response. This reduces bandwidth usage and helps stay
 within third-party API quotas.
+
+## Command Line Interface
+
+``scripts/cli.py`` exposes operational helpers using subcommands.
+
+### Ingest
+
+Run a single ingestion cycle:
+
+```bash
+python scripts/cli.py ingest
+```
+
+### Score
+
+Compute a score for a signal:
+
+```bash
+python scripts/cli.py score 0.5 0.1 0.2 0.3
+```
+
+### Generate Mockups
+
+Generate an image for a prompt:
+
+```bash
+python scripts/cli.py generate-mockups "test prompt" --output-dir mockups
+```
+
+### Publish
+
+Publish a design through the marketplace publisher:
+
+```bash
+python scripts/cli.py publish design.png redbubble
+```

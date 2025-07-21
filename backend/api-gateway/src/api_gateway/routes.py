@@ -1,6 +1,7 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
 from typing import Any, Dict, cast
+from hashlib import md5
 import os
 
 import httpx
@@ -12,6 +13,7 @@ from fastapi import (
     Depends,
     HTTPException,
     Request,
+    Response,
     WebSocket,
     WebSocketDisconnect,
     status,
@@ -364,7 +366,7 @@ async def trpc_endpoint(
     procedure: str,
     request: Request,
     credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
-) -> Dict[str, Any]:
+) -> Response:
     """Proxy tRPC call to the configured backend service."""
     verify_token(credentials)
     url = f"{TRPC_SERVICE_URL}/trpc/{procedure}"
@@ -376,7 +378,15 @@ async def trpc_endpoint(
         )
     if response.status_code != 200:
         raise HTTPException(response.status_code, response.text)
-    return cast(Dict[str, Any], response.json())
+    body = response.text
+    etag = md5(body.encode("utf-8")).hexdigest()
+    if request.headers.get("If-None-Match") == etag:
+        return Response(status_code=304, headers={"ETag": etag})
+    return Response(
+        content=body,
+        media_type="application/json",
+        headers={"ETag": etag},
+    )
 
 
 @optimization_router.get(

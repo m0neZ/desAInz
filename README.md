@@ -75,6 +75,7 @@ for f in backend/*/.env.example; do cp "$f" "$(dirname "$f")/.env"; done
 In production, secrets are stored in HashiCorp Vault or AWS Secrets Manager and surfaced to the containers via Docker secrets or Kubernetes Secrets. The settings modules read from `/run/secrets` if present. Do not rely on `.env` files in production.
 
 See [docs/security.md](docs/security.md) for the rotation procedure.
+See [docs/backup.md](docs/backup.md) for disaster recovery instructions.
 
 ## Release process
 

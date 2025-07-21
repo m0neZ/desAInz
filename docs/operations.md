@@ -8,3 +8,11 @@ Application logs are written to the directory defined by the `LOG_DIR` environme
 
 A cron job executes `scripts/rotate_logs.py` daily at 01:00. The job moves log files into `LOG_DIR/archive` with a timestamp suffix and removes archives older than seven days. The cronjob definition can be found in `infrastructure/k8s/base/cronjobs/logrotate.yaml` and the Docker image used is built from `docker/logrotate`.
 
+
+## Moderator Workflow
+
+Moderators approve content generation runs from the Admin Dashboard.
+Open the **Approvals** page to see a list of pending Dagster run IDs.
+Click **Approve** next to a run to unblock publishing.
+The API Gateway exposes `/approvals` for fetching pending runs and
+`/approvals/{run_id}` for approving a run.

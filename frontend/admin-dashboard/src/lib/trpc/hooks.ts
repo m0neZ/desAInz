@@ -70,3 +70,10 @@ export function useOptimizations() {
     queryFn: () => trpc.optimizations.list(),
   });
 }
+
+export function usePendingRuns() {
+  return useQuery({
+    queryKey: ['pendingRuns'],
+    queryFn: () => trpc.approvals.list(),
+  });
+}

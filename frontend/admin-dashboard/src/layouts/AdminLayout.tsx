@@ -53,6 +53,9 @@ export default function AdminLayout({
           <Link href="/dashboard/metrics" className="block hover:underline">
             {t('metrics')}
           </Link>
+          <Link href="/approvals" className="block hover:underline">
+            {t('approvals')}
+          </Link>
           {process.env.NEXT_PUBLIC_ENABLE_ZAZZLE === 'true' && (
             <Link href="/dashboard/zazzle" className="block hover:underline">
               Zazzle

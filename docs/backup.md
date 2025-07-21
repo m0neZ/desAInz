@@ -12,6 +12,14 @@ with `pg_dump` and the AWS CLI installed.
 The script dumps the PostgreSQL database to a temporary file and uploads it to
 the S3 bucket specified by `BACKUP_BUCKET`.
 
+Use `scripts/apply_s3_lifecycle.py` to configure the bucket with a lifecycle
+policy that transitions objects to Glacier after 365 days. Run the script once
+after bucket creation:
+
+```bash
+python scripts/apply_s3_lifecycle.py <bucket>
+```
+
 ## Restoring from Backup
 
 1. Download the desired SQL dump from your backup bucket:

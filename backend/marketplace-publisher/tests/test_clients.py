@@ -152,6 +152,31 @@ def test_refresh_on_unauthorized(
         assert rsps.calls[2].request.url == "https://example.com/token"
 
 
+def test_publish_design_retries(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Ensure publish_design retries failed requests."""
+
+    _setup_settings(monkeypatch, "redbubble")
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.POST,
+            "https://example.com/token",
+            json={"access_token": "tok"},
+        )
+        rsps.add(
+            responses.POST,
+            "https://api.redbubble.com/v1/publish",
+            [{"status": 500}, {"json": {"id": 3}}],
+        )
+
+        design = tmp_path / "d.png"
+        design.write_text("x")
+        client = clients.RedbubbleClient()
+        assert client.publish_design(design, {}) == "3"
+        assert len(rsps.calls) == 3
+
+
 @pytest.mark.asyncio()
 async def test_tokens_persisted_and_reused(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path

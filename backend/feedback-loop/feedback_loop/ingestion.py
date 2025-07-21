@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from typing import Iterable, Mapping
 
 import requests
+from backend.shared.http import request_with_retry
 import asyncio
 from apscheduler.job import Job
 from apscheduler.schedulers.base import BaseScheduler
@@ -40,8 +41,9 @@ def fetch_marketplace_metrics(
     results: list[dict[str, float]] = []
     for listing_id in listing_ids:
         try:
-            resp = requests.get(f"{api_url}/listings/{listing_id}/metrics", timeout=5)
-            resp.raise_for_status()
+            resp = request_with_retry(
+                "GET", f"{api_url}/listings/{listing_id}/metrics", timeout=5
+            )
             data = resp.json()
             results.append(
                 {

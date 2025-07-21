@@ -7,6 +7,7 @@ from typing import Any, cast
 
 import os
 import requests
+from backend.shared.http import request_with_retry
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -69,8 +70,7 @@ class BaseClient:
             "client_secret": self._client_secret,
             **grant_data,
         }
-        response = requests.post(self.token_url, data=data, timeout=30)
-        response.raise_for_status()
+        response = request_with_retry("POST", self.token_url, data=data, timeout=30)
         payload = response.json()
         self._token = payload.get("access_token")
         self._refresh_token = payload.get("refresh_token", self._refresh_token)
@@ -146,7 +146,8 @@ class BaseClient:
             headers["X-API-Key"] = self._api_key
         with open(design_path, "rb") as file:
             files = {"file": file}
-            response = requests.post(
+            response = request_with_retry(
+                "POST",
                 self.publish_url,
                 files=files,
                 data=metadata,
@@ -159,7 +160,8 @@ class BaseClient:
                 headers["Authorization"] = f"Bearer {self._token}"
             with open(design_path, "rb") as file:
                 files = {"file": file}
-                response = requests.post(
+                response = request_with_retry(
+                    "POST",
                     self.publish_url,
                     files=files,
                     data=metadata,
@@ -178,7 +180,8 @@ class BaseClient:
             headers["Authorization"] = f"Bearer {token}"
         if self._api_key:
             headers["X-API-Key"] = self._api_key
-        response = requests.get(
+        response = request_with_retry(
+            "GET",
             f"{self.base_url}/listings/{listing_id}/metrics",
             headers=headers,
             timeout=30,
@@ -187,12 +190,12 @@ class BaseClient:
             self._refresh_token_if_needed()
             if self._token:
                 headers["Authorization"] = f"Bearer {self._token}"
-            response = requests.get(
+            response = request_with_retry(
+                "GET",
                 f"{self.base_url}/listings/{listing_id}/metrics",
                 headers=headers,
                 timeout=30,
             )
-        response.raise_for_status()
         return cast(dict[str, Any], response.json())
 
 

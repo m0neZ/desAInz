@@ -40,3 +40,4 @@ application settings classes.
 | `DEDUP_TTL` | Time-to-live in seconds for deduplication keys |
 | `PUBLISHER_METRICS_INTERVAL_MINUTES` | Interval for fetching publisher metrics |
 | `WEIGHT_UPDATE_INTERVAL_MINUTES` | Interval for updating scoring weights |
+| `HTTP_RETRIES` | Number of retry attempts for outgoing HTTP calls |

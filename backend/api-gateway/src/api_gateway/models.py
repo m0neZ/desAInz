@@ -23,3 +23,9 @@ class MetadataPatch(BaseModel):
     """Arbitrary metadata payload."""
 
     model_config = ConfigDict(extra="allow")
+
+
+class FlagState(BaseModel):
+    """Desired state for a feature flag."""
+
+    enabled: bool

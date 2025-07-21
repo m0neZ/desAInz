@@ -100,6 +100,31 @@ def is_enabled(name: str, context: dict[str, Any] | None = None) -> bool:
     return result
 
 
+def set_flag(name: str, enabled: bool) -> None:
+    """Set the override for ``name`` to ``enabled``."""
+    initialize()
+    if _redis is not None:
+        try:
+            _redis.set(name, "1" if enabled else "0")
+        except Exception:
+            _env_flags[name] = enabled
+    else:
+        _env_flags[name] = enabled
+    _cache[name] = (enabled, time.monotonic() + _cache_ttl)
+
+
+def list_flags() -> dict[str, bool]:
+    """Return current values for all known flags."""
+    initialize()
+    names = set(_defaults) | set(_env_flags)
+    if _redis is not None:
+        try:
+            names.update(_redis.keys("*"))
+        except Exception:
+            pass
+    return {name: is_enabled(name) for name in names}
+
+
 def shutdown() -> None:
     """Gracefully close any open clients."""
     if _unleash_client is not None:

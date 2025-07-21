@@ -21,5 +21,6 @@ class Signal(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     source: Mapped[str] = mapped_column(String(50))
     content: Mapped[str] = mapped_column(String)
+    content_hash: Mapped[str] = mapped_column(String(32), unique=True)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     embedding: Mapped[list[float] | None] = mapped_column(Vector(768), nullable=True)

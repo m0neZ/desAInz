@@ -89,6 +89,7 @@ async def test_pipeline_with_metrics(
                 signal = models.Signal(
                     source=adapter.__class__.__name__,
                     content=str(row),
+                    content_hash=f"{adapter.__class__.__name__}:{row['id']}",
                     timestamp=datetime.now(timezone.utc),
                     embedding=[0.0, 0.0],
                 )

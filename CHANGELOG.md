@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 - Add kafka utilities and schema registry
+- Enforce unique ``content_hash`` on ``signals`` table
 - *(i18n)* Add i18next integration
 - *(frontend)* Add aria labels and accessibility tests
 - *(analytics)* Add analytics service

@@ -36,6 +36,7 @@ class Signal(Base):
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     engagement_rate: Mapped[float] = mapped_column(Float)
     details: Mapped[str | None] = mapped_column(String, nullable=True)
+    content_hash: Mapped[str] = mapped_column(String(32), unique=True)
 
     idea: Mapped[Idea] = relationship(back_populates="signals")
 

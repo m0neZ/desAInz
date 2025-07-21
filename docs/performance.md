@@ -50,3 +50,11 @@ Static assets are distributed through a CloudFront CDN for low latency delivery.
 The helper script ``scripts/configure_cdn.sh`` provisions a distribution with a
 default TTL of one hour and HTTPS enforced. Refer to the script for exact
 settings.
+
+## tRPC ETag Caching
+
+The API gateway now caches ``ETag`` headers for tRPC proxy calls in Redis. When a
+cached ETag is present it is sent via ``If-None-Match`` and a ``304`` response
+avoids transferring a response body. The dashboard client stores its own
+ETag-aware cache and reuses results when the gateway returns ``304 Not
+Modified``.

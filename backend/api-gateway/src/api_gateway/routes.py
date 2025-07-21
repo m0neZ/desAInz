@@ -12,6 +12,7 @@ from fastapi import (
     Depends,
     HTTPException,
     Request,
+    Response,
     WebSocket,
     WebSocketDisconnect,
     status,
@@ -364,19 +365,33 @@ async def trpc_endpoint(
     procedure: str,
     request: Request,
     credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
-) -> Dict[str, Any]:
-    """Proxy tRPC call to the configured backend service."""
+) -> Response:
+    """Proxy tRPC call to the configured backend service with ETag caching."""
     verify_token(credentials)
     url = f"{TRPC_SERVICE_URL}/trpc/{procedure}"
+    cache_key = f"etag:trpc:{procedure}"
+    req_headers = {"Authorization": f"Bearer {credentials.credentials}"}
+    cached_etag = await async_get(cache_key)
+    if cached_etag:
+        req_headers["If-None-Match"] = cached_etag
     async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         response = await client.post(
             url,
             json=await request.json(),
-            headers={"Authorization": f"Bearer {credentials.credentials}"},
+            headers=req_headers,
         )
+    if response.status_code == 304:
+        return Response(status_code=304)
     if response.status_code != 200:
         raise HTTPException(response.status_code, response.text)
-    return cast(Dict[str, Any], response.json())
+    if etag := response.headers.get("ETag"):
+        await async_set(cache_key, etag)
+    return Response(
+        content=response.content,
+        status_code=200,
+        media_type="application/json",
+        headers={"ETag": etag} if etag else None,
+    )
 
 
 @optimization_router.get(

@@ -31,3 +31,5 @@ jobs:
           image-ref: mockup-generation:latest
           severity: CRITICAL,HIGH
           exit-code: 1
+      - name: Smoke test core services
+        run: ./scripts/smoke_compose.sh

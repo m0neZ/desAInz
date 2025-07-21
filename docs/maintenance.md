@@ -66,3 +66,12 @@ The `daily_query_plan_schedule` Dagster schedule runs the analysis once a day.
 In production Docker Compose deployments a `backup` service runs `scripts/backup.py`
 using cron. The container uploads a PostgreSQL dump to the bucket defined by
 `BACKUP_BUCKET` every night at midnight UTC.
+
+## Monthly Secret Rotation
+
+Secrets used by internal services are rotated automatically. The
+`monthly_secret_rotation_schedule` triggers `rotate_secrets_job` on the first day
+of every month. The job waits for manual approval via the `/approvals` API
+before executing `scripts/rotate_secrets.rotate()`.
+Once the rotation completes a Slack message is sent if `SLACK_WEBHOOK_URL` is
+configured.

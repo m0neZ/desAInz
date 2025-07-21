@@ -38,4 +38,6 @@ The ``scripts/rotate_secrets.py`` helper generates new random tokens and patches
 the corresponding Kubernetes secrets using ``kubectl``. A Dagster job executes
 this script once per month. The ``monthly_secret_rotation_schedule`` defined in
 ``backend.orchestrator.orchestrator.schedules`` triggers the job on the first
-day of every month at midnight UTC.
+day of every month at midnight UTC. The run waits for approval via the
+``/approvals`` API before applying rotations and sends a Slack notification when
+complete.

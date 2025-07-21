@@ -62,13 +62,18 @@ def test_generate_openai(monkeypatch: pytest.MonkeyPatch) -> None:
         ]
     }
 
-    def _post(url: str, **kwargs: object) -> DummyResponse:
+    calls: dict[str, object] = {}
+
+    def _post(_self: object, url: str, **kwargs: object) -> DummyResponse:
+        calls["json"] = kwargs.get("json")
         return DummyResponse(payload)
 
     monkeypatch.setenv("OPENAI_API_KEY", "x")
     monkeypatch.setattr("requests.Session.post", _post)
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-4")
     gen = ListingGenerator()
     result = gen.generate(["cat"])
+    assert calls["json"]["model"] == "gpt-4"
     assert result.title == "T"
     assert result.description == "D"
     assert result.tags == ["a"]
@@ -90,7 +95,7 @@ def test_generate_claude(monkeypatch: pytest.MonkeyPatch) -> None:
         ]
     }
 
-    def _post(url: str, **kwargs: object) -> DummyResponse:
+    def _post(_self: object, url: str, **kwargs: object) -> DummyResponse:
         return DummyResponse(payload)
 
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)

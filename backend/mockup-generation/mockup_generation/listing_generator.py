@@ -7,6 +7,8 @@ import os
 from dataclasses import dataclass
 from typing import List
 
+from .settings import settings
+
 import requests
 
 
@@ -24,7 +26,8 @@ class ListingGenerator:
 
     def __init__(self) -> None:
         """Initialize with API credentials from the environment."""
-        self._openai_key = os.getenv("OPENAI_API_KEY")
+        self._openai_key = settings.openai_api_key or os.getenv("OPENAI_API_KEY")
+        self._openai_model = settings.openai_model
         self._claude_key = os.getenv("CLAUDE_API_KEY")
         self._session = requests.Session()
 
@@ -40,7 +43,7 @@ class ListingGenerator:
                 "https://api.openai.com/v1/chat/completions",
                 headers={"Authorization": f"Bearer {self._openai_key}"},
                 json={
-                    "model": "gpt-3.5-turbo",
+                    "model": self._openai_model,
                     "messages": [{"role": "user", "content": prompt}],
                 },
                 timeout=30,

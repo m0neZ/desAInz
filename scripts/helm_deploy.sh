@@ -8,6 +8,11 @@ if [[ $# -lt 3 ]]; then
   exit 1
 fi
 
+command -v helm >/dev/null 2>&1 || {
+  echo "helm is required" >&2
+  exit 1
+}
+
 REGISTRY="$1"
 TAG="$2"
 ENV="$3"

@@ -740,6 +740,221 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Signal": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "content": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "content",
+          "source"
+        ],
+        "title": "Signal"
+      },
+      "HeatmapEntry": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "label",
+          "count"
+        ],
+        "title": "HeatmapEntry"
+      },
+      "GalleryItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "imageUrl",
+          "title"
+        ],
+        "title": "GalleryItem"
+      },
+      "Idea": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "title": "Idea"
+      },
+      "Mockup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "generatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "imageUrl",
+          "generatedAt"
+        ],
+        "title": "Mockup"
+      },
+      "Metric": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ],
+        "title": "Metric"
+      },
+      "PublishTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "title": "PublishTask"
+      },
+      "AnalyticsData": {
+        "type": "object",
+        "properties": {
+          "revenue": {
+            "type": "number"
+          },
+          "conversions": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "revenue",
+          "conversions"
+        ],
+        "title": "AnalyticsData"
+      },
+      "AuditLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "username": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "action",
+          "details",
+          "timestamp"
+        ],
+        "title": "AuditLog"
+      },
+      "AuditLogResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLog"
+            }
+          }
+        },
+        "required": [
+          "total",
+          "items"
+        ],
+        "title": "AuditLogResponse"
+      },
+      "ABTestSummary": {
+        "type": "object",
+        "properties": {
+          "ab_test_id": {
+            "type": "number"
+          },
+          "conversions": {
+            "type": "number"
+          },
+          "impressions": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "ab_test_id",
+          "conversions",
+          "impressions"
+        ],
+        "title": "ABTestSummary"
       }
     },
     "securitySchemes": {
@@ -749,5 +964,5 @@
       }
     }
   },
-  "x-spec-version": "911868d0c2ed2aea39ba5075d87135ced55c92685fc816643d3d34a4089ee883"
+  "x-spec-version": "f68190c0866999263de36b8332d3c71d71e202a1fecb6d89e11ed4b6c3b615fb"
 }

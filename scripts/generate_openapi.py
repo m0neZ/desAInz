@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import hashlib
+import re
 from pathlib import Path
 from typing import Iterable
 
@@ -207,3 +208,49 @@ spec = {
 _write_spec("scoring-engine", spec)
 OAS30Validator.check_schema(spec)
 ensure_doc("scoring-engine")
+
+
+def _parse_ts_type(type_str: str) -> dict:
+    """Return JSON schema for basic TypeScript ``type_str``."""
+    type_str = type_str.strip()
+    if type_str.endswith("[]"):
+        return {"type": "array", "items": _parse_ts_type(type_str[:-2])}
+    if type_str in {"string", "number", "boolean"}:
+        return {"type": type_str}
+    if type_str == "void":
+        return {"type": "null"}
+    if type_str.startswith("{") and type_str.endswith("}"):
+        props: dict[str, dict] = {}
+        required: list[str] = []
+        body = type_str[1:-1].strip()
+        for m in re.finditer(r"(\w+): ([^;]+);", body):
+            name, t = m.groups()
+            props[name] = _parse_ts_type(t)
+            required.append(name)
+        return {"type": "object", "properties": props, "required": required}
+    return {"$ref": f"#/components/schemas/{type_str}"}
+
+
+def parse_trpc(path: Path) -> dict[str, dict]:
+    """Parse interfaces from the tRPC TypeScript definitions."""
+    text = path.read_text(encoding="utf-8")
+    schemas: dict[str, dict] = {}
+    for name, body in re.findall(r"export interface (\w+) \{([^}]*)\}", text, re.DOTALL):
+        if name == "AppRouter":
+            continue
+        props: dict[str, dict] = {}
+        required: list[str] = []
+        for prop, typ in re.findall(r"(\w+): ([^;]+);", body):
+            props[prop] = _parse_ts_type(typ)
+            required.append(prop)
+        schemas[name] = {"type": "object", "properties": props, "required": required, "title": name}
+    return schemas
+
+
+trpc_file = PROJECT_ROOT / "frontend" / "admin-dashboard" / "src" / "trpc.ts"
+if trpc_file.exists():
+    trpc_schemas = parse_trpc(trpc_file)
+    api_spec_path = OPENAPI_DIR / "api-gateway.json"
+    api_spec = json.loads(api_spec_path.read_text(encoding="utf-8"))
+    api_spec.setdefault("components", {}).setdefault("schemas", {}).update(trpc_schemas)
+    _write_spec("api-gateway", api_spec)

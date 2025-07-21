@@ -1,3 +1,4 @@
+// @flow
 /**
  * React hook providing live metrics via WebSocket.
  */

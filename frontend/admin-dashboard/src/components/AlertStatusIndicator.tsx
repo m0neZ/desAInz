@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { useAlertStatus } from '../hooks/useMonitoringData';
 

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAbTestSummary } from '../lib/trpc/hooks';

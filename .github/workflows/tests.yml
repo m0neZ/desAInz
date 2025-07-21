@@ -36,6 +36,8 @@ jobs:
           npm ci --prefix frontend/admin-dashboard
           npx playwright install --with-deps
           python -m pip install -e .
+      - name: Run Flow
+        run: npm run flow
       - name: Run tests
         run: make test
       - name: Smoke test docker compose services

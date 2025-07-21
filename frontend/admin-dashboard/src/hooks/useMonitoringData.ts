@@ -1,3 +1,4 @@
+// @flow
 import { useQuery } from '@tanstack/react-query';
 
 export interface MetricPoint {

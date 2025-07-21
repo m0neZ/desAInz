@@ -1,3 +1,4 @@
+// @flow
 import React, { useEffect, useState } from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';

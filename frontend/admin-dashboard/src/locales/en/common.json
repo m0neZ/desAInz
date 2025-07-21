@@ -45,5 +45,6 @@
   "runId": "Run ID",
   "approve": "Approve",
   "approved": "Approved",
-  "approvalFailed": "Approval failed"
+  "approvalFailed": "Approval failed",
+  "noPendingRuns": "No pending runs"
 }

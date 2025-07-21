@@ -45,5 +45,6 @@
   "runId": "ID de Ejecución",
   "approve": "Aprobar",
   "approved": "Aprobado",
-  "approvalFailed": "Error al aprobar"
+  "approvalFailed": "Error al aprobar",
+  "noPendingRuns": "Sin ejecuciones pendientes"
 }

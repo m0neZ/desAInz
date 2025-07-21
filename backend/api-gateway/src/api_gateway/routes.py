@@ -63,6 +63,9 @@ ANALYTICS_URL = os.environ.get(
     "http://analytics:8000",
 )
 
+# Redis set storing runs awaiting manual approval
+PENDING_RUNS_KEY = "pending_runs"
+
 # Mapping of services to their health check endpoints
 HEALTH_ENDPOINTS: dict[str, str] = {
     "api_gateway": "http://api-gateway:8000/health",
@@ -147,6 +150,14 @@ analytics_router = APIRouter(
     dependencies=[Depends(limit_analytics)],
 )
 approvals_router = APIRouter(prefix="/approvals", tags=["Approvals"])
+
+
+@approvals_router.get("/", summary="List pending run IDs")
+async def list_pending_runs() -> Dict[str, list[str]]:
+    """Return IDs of runs awaiting manual approval."""
+    client = get_async_client()
+    run_ids = await client.smembers(PENDING_RUNS_KEY)
+    return {"runs": sorted(run_ids)}
 
 
 @router.get("/status", tags=["Status"], summary="Public status")
@@ -305,6 +316,7 @@ async def approve_run(
 ) -> Dict[str, str]:
     """Approve the Dagster run identified by ``run_id``."""
     await async_set(f"approval:{run_id}", "true", ttl=3600)
+    await get_async_client().srem(PENDING_RUNS_KEY, run_id)
     log_admin_action(payload.get("sub", "unknown"), "approve_run", {"run_id": run_id})
     return {"status": "approved"}
 

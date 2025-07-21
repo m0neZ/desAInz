@@ -143,6 +143,7 @@ export const trpc = {
   },
   approvals: {
     approve: (runId: string) => post(`/approvals/${encodeURIComponent(runId)}`),
+    list: () => getJson<string[]>('/approvals'),
   },
   analytics: {
     summary: () => call<AnalyticsData>('analytics.summary'),

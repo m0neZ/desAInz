@@ -1,3 +1,4 @@
+// @flow
 /**
  * Lightweight tRPC client for the dashboard.
  */

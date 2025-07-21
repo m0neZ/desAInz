@@ -1,3 +1,4 @@
+// @flow
 import React, { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../hooks/useAuthFetch';
 

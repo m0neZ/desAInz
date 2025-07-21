@@ -1,3 +1,4 @@
+// @flow
 /* global RequestInfo, RequestInit */
 
 export async function refreshTokens(): Promise<boolean> {

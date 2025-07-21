@@ -1,3 +1,4 @@
+// @flow
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { auth0 } from '../../../lib/auth0';
 

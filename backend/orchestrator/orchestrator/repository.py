@@ -12,6 +12,7 @@ from .jobs import (
     daily_summary_job,
     sync_listings_job,
     privacy_purge_job,
+    benchmark_score_job,
 )
 from .schedules import (
     daily_backup_schedule,
@@ -37,6 +38,7 @@ defs = Definitions(
         rotate_s3_keys_job,
         sync_listings_job,
         privacy_purge_job,
+        benchmark_score_job,
     ],
     schedules=[
         daily_backup_schedule,

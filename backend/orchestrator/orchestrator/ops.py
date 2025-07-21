@@ -296,3 +296,22 @@ def purge_pii_rows_op(context) -> None:  # type: ignore[no-untyped-def]
 
     count = asyncio.run(purge_pii_rows())
     context.log.info("purged %d rows", count)
+
+
+@op  # type: ignore[misc]
+def benchmark_score_op(context) -> None:  # type: ignore[no-untyped-def]
+    """Run benchmark_score script and persist results."""
+    context.log.info("benchmarking scoring endpoint")
+    import asyncio
+    from scripts import benchmark_score
+    from backend.shared.db import session_scope, models
+
+    uncached, cached, runs = asyncio.run(benchmark_score.main())
+    with session_scope() as session:
+        session.add(
+            models.ScoreBenchmark(
+                runs=runs,
+                uncached_seconds=uncached,
+                cached_seconds=cached,
+            )
+        )

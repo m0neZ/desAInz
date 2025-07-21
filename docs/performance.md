@@ -26,6 +26,13 @@ Cached:   0.25s for 100 runs
 
 Caching reduces request latency by roughly 3x in this small test.
 
+## Benchmark Automation
+
+The Dagster job `benchmark_score_job` executes
+`scripts.benchmark_score.main` on a schedule and persists the results in the
+`score_benchmarks` table. Grafana uses the PostgreSQL data source to visualize
+these benchmarks over time, allowing quick detection of regressions.
+
 ## tRPC Response Caching
 
 The API Gateway now attaches ``ETag`` headers to tRPC responses. When a client

@@ -214,6 +214,18 @@ class PublishLatencyMetric(Base):
     idea: Mapped[Idea] = relationship()
 
 
+class ScoreBenchmark(Base):
+    """Benchmark result for the scoring engine."""
+
+    __tablename__ = "score_benchmarks"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    runs: Mapped[int] = mapped_column(Integer)
+    uncached_seconds: Mapped[float] = mapped_column(Float)
+    cached_seconds: Mapped[float] = mapped_column(Float)
+
+
 class GeneratedMockup(Base):
     """Parameters used for generating a mockup."""
 

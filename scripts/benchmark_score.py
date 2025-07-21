@@ -21,8 +21,8 @@ async def _run(
     return end - start
 
 
-async def main() -> None:
-    """Execute benchmark and print durations."""
+async def main() -> tuple[float, float, int]:
+    """Return uncached and cached benchmark durations."""
     url = os.environ.get("SCORING_URL", "http://localhost:5002/score")
     runs = int(os.environ.get("RUNS", "100"))
     payload = {
@@ -37,6 +37,7 @@ async def main() -> None:
         cached = await _run(client, url, payload, runs)
     print(f"Uncached: {uncached:.2f}s for {runs} runs")
     print(f"Cached:   {cached:.2f}s for {runs} runs")
+    return uncached, cached, runs
 
 
 if __name__ == "__main__":

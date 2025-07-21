@@ -52,3 +52,11 @@ the following permissions:
 - ``iam:CreateAccessKey``
 - ``iam:ListAccessKeys``
 - ``iam:DeleteAccessKey``
+
+## Marketplace webhook signatures
+
+Incoming callbacks to the marketplace publisher include an ``X-Signature``
+header. The value is an HMAC SHA-256 digest of the raw request body using a
+secret unique to each marketplace. Secrets are stored under ``secrets/`` and are
+loaded by the settings module from ``/run/secrets`` in production. Requests
+without a valid signature are rejected with ``403 Forbidden``.

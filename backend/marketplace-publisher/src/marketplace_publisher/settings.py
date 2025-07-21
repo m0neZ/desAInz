@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-from pydantic import AnyUrl, HttpUrl, RedisDsn, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import TYPE_CHECKING
 
 from backend.shared.config import settings as shared_settings
+
+from pydantic import AnyUrl, HttpUrl, RedisDsn, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict  # noqa: I201
+
+if TYPE_CHECKING:  # pragma: no cover - for type checking only
+    from .db import Marketplace
 
 
 class Settings(BaseSettings):
@@ -62,6 +67,12 @@ class Settings(BaseSettings):
     society6_token_url: HttpUrl | None = "https://society6.com/oauth/token"
     society6_scope: str | None = "create read"
 
+    webhook_secret_redbubble: str | None = None
+    webhook_secret_amazon_merch: str | None = None
+    webhook_secret_etsy: str | None = None
+    webhook_secret_society6: str | None = None
+    webhook_secret_zazzle: str | None = None
+
     zazzle_client_id: str | None = None
     zazzle_client_secret: str | None = None
     zazzle_api_key: str | None = None
@@ -69,6 +80,17 @@ class Settings(BaseSettings):
     zazzle_authorize_url: HttpUrl | None = "https://api.zazzle.com/v1/oauth/authorize"
     zazzle_token_url: HttpUrl | None = "https://api.zazzle.com/v1/oauth/token"
     zazzle_scope: str | None = "manage_products"
+
+    @property
+    def webhook_secrets(self) -> dict[Marketplace, str]:
+        """Return mapping of marketplaces to webhook secrets."""
+
+        secrets: dict[Marketplace, str] = {}
+        for marketplace in Marketplace:
+            value = getattr(self, f"webhook_secret_{marketplace.value}")
+            if value:
+                secrets[marketplace] = value
+        return secrets
 
     @field_validator(
         "rate_limit_redbubble",

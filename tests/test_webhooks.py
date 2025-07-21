@@ -1,16 +1,27 @@
+# flake8: noqa
 """Tests for webhook handling in marketplace publisher."""
 
 from __future__ import annotations
 
-import sys
+import hashlib
+import hmac
+import json
 import os
+import sys
+import warnings
 from pathlib import Path
 
-import pytest
+# isort: off
 from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
+from marketplace_publisher import db  # noqa: E402
+from marketplace_publisher import main  # noqa: E402
+
+import pytest
+
 from sqlalchemy import select
-import warnings
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
+
+# isort: on
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 os.environ.setdefault("PYTHONWARNINGS", "ignore::DeprecationWarning")
@@ -21,9 +32,6 @@ sys.path.append(str(ROOT))  # noqa: E402
 
 os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"  # noqa: E402
 os.environ["SELENIUM_SKIP"] = "1"  # noqa: E402
-
-from marketplace_publisher import db  # noqa: E402
-from marketplace_publisher import main  # noqa: E402
 
 
 @pytest.mark.asyncio()
@@ -36,7 +44,7 @@ async def test_webhook_updates_task_state(
     """Posting to the webhook should update task status."""
     monkeypatch.setattr(db, "engine", sqlite_engine)
     monkeypatch.setattr(db, "SessionLocal", session_factory)
-    from datetime import datetime, UTC
+    from datetime import UTC, datetime
     from types import SimpleNamespace
 
     monkeypatch.setattr(
@@ -73,3 +81,61 @@ async def test_webhook_updates_task_state(
             )
         ).scalars()
         assert len(list(events)) == 1
+
+
+@pytest.mark.asyncio()
+async def test_webhook_requires_signature(
+    monkeypatch: pytest.MonkeyPatch,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
+    """Webhook calls without a signature should be rejected."""
+    monkeypatch.setattr(db, "engine", sqlite_engine)
+    monkeypatch.setattr(db, "SessionLocal", session_factory)
+    await db.init_db()
+
+    async with session_factory() as session:
+        task = await db.create_task(
+            session,
+            marketplace=db.Marketplace.redbubble,
+            design_path="img.png",
+        )
+
+    client = TestClient(main.app)
+    resp = client.post(
+        f"/webhooks/{db.Marketplace.redbubble.value}",
+        json={"task_id": task.id, "status": db.PublishStatus.success.value},
+    )
+    assert resp.status_code == 403
+
+
+@pytest.mark.asyncio()
+async def test_webhook_valid_signature(
+    monkeypatch: pytest.MonkeyPatch,
+    sqlite_engine: AsyncEngine,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
+    """Valid ``X-Signature`` header should authenticate the request."""
+    monkeypatch.setattr(db, "engine", sqlite_engine)
+    monkeypatch.setattr(db, "SessionLocal", session_factory)
+    monkeypatch.setenv("WEBHOOK_SECRET_REDBUBBLE", "secret")
+    await db.init_db()
+
+    async with session_factory() as session:
+        task = await db.create_task(
+            session,
+            marketplace=db.Marketplace.redbubble,
+            design_path="x.png",
+        )
+
+    payload = {"task_id": task.id, "status": db.PublishStatus.success.value}
+    body = json.dumps(payload).encode()
+    signature = hmac.new(b"secret", body, hashlib.sha256).hexdigest()
+
+    client = TestClient(main.app)
+    resp = client.post(
+        f"/webhooks/{db.Marketplace.redbubble.value}",
+        headers={"X-Signature": signature},
+        json=payload,
+    )
+    assert resp.status_code == 200

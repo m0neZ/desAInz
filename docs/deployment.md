@@ -47,6 +47,11 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
      -f infrastructure/helm/orchestrator/values-dev.yaml
    ```
 
+   The `ai-mockup-generation` chart uses the `gpu_queue_length` metric to scale
+   GPU workers. Set `hpa.enabled` to `true` and configure
+   `hpa.gpuQueueAverageValue` in `values.yaml` to enable automatic scaling based
+   on pending tasks.
+
 ## Cloud Providers
 
 ### AWS

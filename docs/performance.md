@@ -51,6 +51,15 @@ The context manager `tasks.gpu_slot` updates two metrics:
 
 These metrics appear alongside existing ones on the ``/metrics`` endpoint.
 
+## Database Connection Metrics
+
+Each service now reports connection pool usage via two gauges:
+
+- ``db_pool_size`` – total size of the SQLAlchemy connection pool.
+- ``db_pool_in_use`` – currently checked out connections.
+
+Monitoring these values helps detect connection leaks and tune pool sizes.
+
 ## CDN Configuration
 
 Static assets are distributed through a CloudFront CDN for low latency delivery.

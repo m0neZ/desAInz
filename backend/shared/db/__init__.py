@@ -10,6 +10,7 @@ from alembic import command
 from alembic.config import Config
 
 from sqlalchemy import create_engine, event, text
+from prometheus_client import Gauge
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
@@ -30,6 +31,9 @@ __all__ = [
     "async_engine",
     "AsyncSessionLocal",
     "async_session_scope",
+    "DB_POOL_SIZE",
+    "DB_POOL_IN_USE",
+    "register_pool_metrics",
 ]
 
 DATABASE_URL = str(settings.effective_database_url)
@@ -45,11 +49,41 @@ elif DATABASE_URL.startswith("postgresql") and "+" not in DATABASE_URL:
 else:
     ASYNC_DATABASE_URL = DATABASE_URL
 
+DB_POOL_SIZE = Gauge("db_pool_size", "Total number of connections in the pool")
+DB_POOL_IN_USE = Gauge(
+    "db_pool_in_use", "Number of database connections currently checked out"
+)
+
+
+def register_pool_metrics(engine_obj: Any) -> None:
+    """Attach metric gauges to ``engine_obj`` connection pool."""
+    if hasattr(engine_obj, "pool"):
+        pool = engine_obj.pool
+    else:
+        pool = engine_obj.sync_engine.pool
+
+    def _update(*_: Any) -> None:
+        size = pool.size() if callable(getattr(pool, "size", None)) else pool.size
+        if callable(getattr(pool, "checkedout", None)):
+            in_use = pool.checkedout()
+        else:
+            in_use = getattr(pool, "checkedout", 0)
+        DB_POOL_SIZE.set(size)
+        DB_POOL_IN_USE.set(in_use)
+
+    event.listen(pool, "checkin", _update)
+    event.listen(pool, "checkout", _update)
+    event.listen(pool, "connect", _update)
+    _update()
+
+
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
+register_pool_metrics(engine)
 
 async_engine = create_async_engine(ASYNC_DATABASE_URL, echo=False, future=True)
 AsyncSessionLocal = async_sessionmaker(async_engine, expire_on_commit=False)
+register_pool_metrics(async_engine)
 
 
 @contextmanager

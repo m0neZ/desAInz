@@ -24,3 +24,6 @@ redis-cli set gpu_slots 2
 
 An example HPA manifest lives in `infrastructure/k8s/examples/gpu-worker-hpa.yaml`
 and scales the `mockup-generation` deployment according to queue length.
+
+The metadata generation service uses OpenAI's GPT‑4 model by default. The
+model can be changed by setting the ``OPENAI_MODEL`` environment variable.

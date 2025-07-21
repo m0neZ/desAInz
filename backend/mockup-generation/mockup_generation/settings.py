@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import field_validator
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     """Expose API keys and provider selection."""
 
     model_config = SettingsConfigDict(
@@ -17,9 +17,10 @@ class Settings(BaseSettings):
 
     stability_ai_api_key: str | None = None
     openai_api_key: str | None = None
+    openai_model: str = "gpt-4"
     fallback_provider: Literal["stability", "openai"] = "stability"
 
-    @field_validator("fallback_provider")
+    @field_validator("fallback_provider")  # type: ignore[misc]
     @classmethod
     def _valid_provider(cls, value: str) -> str:
         if value not in {"stability", "openai"}:

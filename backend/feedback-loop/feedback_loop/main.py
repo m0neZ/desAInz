@@ -8,6 +8,7 @@ import uuid
 from typing import Any, Callable, Coroutine
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
@@ -84,8 +85,9 @@ async def health() -> Response:
 
 
 @app.get("/ready")
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})
 
 

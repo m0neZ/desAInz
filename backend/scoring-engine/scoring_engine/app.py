@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from backend.shared.security import require_status_api_key
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.cache import AsyncRedis, get_async_client
@@ -380,8 +381,9 @@ async def health() -> Response:
 
 
 @app.get("/ready")
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})
 
 

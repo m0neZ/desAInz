@@ -8,6 +8,7 @@ import uuid
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -100,8 +101,9 @@ async def health() -> Response:
 
 
 @app.get("/ready")
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})
 
 

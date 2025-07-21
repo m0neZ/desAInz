@@ -30,6 +30,7 @@ application settings classes.
 | `LOG_LEVEL` | Logging verbosity |
 | `APPROVAL_SERVICE_URL` | Base URL of the manual approval service |
 | `ALLOWED_ORIGINS` | Comma separated whitelist of origins for CORS |
+| `ALLOW_STATUS_UNAUTHENTICATED` | Set to `false` to require an API key for `/ready` |
 | `WEIGHTS_TOKEN` | Token required for updating scoring weights |
 | `ENABLED_ADAPTERS` | Comma separated list of ingestion adapters to run; if unset all adapters are used |
 | `PAGERDUTY_ROUTING_KEY` | Integration key for sending PagerDuty incidents |

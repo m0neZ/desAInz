@@ -60,3 +60,11 @@ header. The value is an HMAC SHA-256 digest of the raw request body using a
 secret unique to each marketplace. Secrets are stored under ``secrets/`` and are
 loaded by the settings module from ``/run/secrets`` in production. Requests
 without a valid signature are rejected with ``403 Forbidden``.
+
+## Health endpoints
+
+Each service exposes ``/health`` and ``/ready`` for liveness and readiness
+checks. ``/health`` is always public. Access to ``/ready`` can be restricted by
+setting the ``ALLOW_STATUS_UNAUTHENTICATED`` environment variable to ``false``.
+When disabled, clients must include an ``X-API-Key`` header. This allows public
+liveness checks while keeping readiness information private.

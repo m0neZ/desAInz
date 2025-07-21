@@ -8,6 +8,7 @@ import uuid
 from typing import Any, Callable, Coroutine, Dict, Iterable, cast
 
 from fastapi import Depends, FastAPI, Request, Response
+from backend.shared.security import require_status_api_key
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import func
@@ -227,6 +228,7 @@ async def health() -> Response:
 
 
 @app.get("/ready")  # type: ignore[misc]
-async def ready() -> Response:
+async def ready(request: Request) -> Response:
     """Return service readiness."""
+    require_status_api_key(request)
     return json_cached({"status": "ready"})

@@ -56,20 +56,41 @@ export interface AppRouter {
 const API_URL =
   process.env.NEXT_PUBLIC_API_GATEWAY_URL ?? 'http://localhost:8000';
 
+type CacheEntry = {
+  etag: string;
+  result: unknown;
+};
+
+const cache: Map<string, CacheEntry> = new Map();
+
 async function call<Out, In = Record<string, unknown>>(
   procedure: string,
   input?: In
 ): Promise<Out> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  const cached = cache.get(procedure);
+  if (cached) {
+    headers['If-None-Match'] = cached.etag;
+  }
   const res = await fetch(`${API_URL}/trpc/${procedure}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(input ?? {}),
     credentials: 'include',
   });
+  if (res.status === 304 && cached) {
+    return cached.result as Out;
+  }
   if (!res.ok) {
     throw new Error(`tRPC call failed: ${res.status}`);
   }
+  const etag = res.headers.get('ETag');
   const body = (await res.json()) as { result: Out };
+  if (etag) {
+    cache.set(procedure, { etag, result: body.result });
+  }
   return body.result;
 }
 

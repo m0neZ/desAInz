@@ -26,6 +26,13 @@ Cached:   0.25s for 100 runs
 
 Caching reduces request latency by roughly 3x in this small test.
 
+## tRPC Response Caching
+
+The API Gateway now attaches ``ETag`` headers to tRPC responses. When a client
+sends ``If-None-Match`` with a previously returned value, the gateway responds
+with ``304 Not Modified`` and an empty body. This avoids transferring identical
+payloads and improves perceived latency when data has not changed.
+
 ## Scaling Strategy
 
 Production workloads run under Kubernetes with [Horizontal Pod Autoscalers](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).

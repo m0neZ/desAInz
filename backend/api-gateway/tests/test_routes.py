@@ -27,7 +27,6 @@ def test_status(monkeypatch: pytest.MonkeyPatch) -> None:
     shared_config.settings.redis_url = "redis://localhost:6379/0"
     import api_gateway.main as main_module
 
-    importlib.reload(main_module)
     import api_gateway.routes as routes
 
     main_module.rate_limiter._redis = fakeredis.aioredis.FakeRedis()
@@ -55,8 +54,6 @@ def test_trpc_ping(monkeypatch: pytest.MonkeyPatch) -> None:
 
     shared_config.settings.redis_url = "redis://localhost:6379/0"
     import api_gateway.main as main_module
-
-    importlib.reload(main_module)
     import api_gateway.routes as routes
 
     main_module.rate_limiter._redis = fakeredis.aioredis.FakeRedis()
@@ -104,6 +101,72 @@ def test_trpc_ping(monkeypatch: pytest.MonkeyPatch) -> None:
     body = response.json()
     assert body["result"]["message"] == "pong"
     assert body["result"]["user"] == "tester"
+
+
+def test_trpc_etag(monkeypatch: pytest.MonkeyPatch) -> None:
+    """tRPC endpoint should respond with 304 when ETag matches."""
+    import importlib
+    import warnings
+    import fakeredis.aioredis
+    import prometheus_client
+
+    monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    prometheus_client.REGISTRY = prometheus_client.CollectorRegistry()
+    import backend.shared.config as shared_config
+
+    shared_config.settings.redis_url = "redis://localhost:6379/0"
+    import api_gateway.main as main_module
+    import api_gateway.routes as routes
+
+    main_module.rate_limiter._redis = fakeredis.aioredis.FakeRedis()
+    routes.optimization_limiter._redis = fakeredis.aioredis.FakeRedis()
+    routes.monitoring_limiter._redis = fakeredis.aioredis.FakeRedis()
+    routes.analytics_limiter._redis = fakeredis.aioredis.FakeRedis()
+    from api_gateway.auth import create_access_token
+
+    client = TestClient(main_module.app)
+
+    token = create_access_token({"sub": "tester"})
+
+    class MockClient:
+        async def __aenter__(self) -> "MockClient":
+            return self
+
+        async def __aexit__(
+            self,
+            exc_type: Optional[Type[BaseException]],
+            exc: Optional[BaseException],
+            tb: Optional[TracebackType],
+        ) -> None:
+            return None
+
+        async def post(
+            self,
+            url: str,
+            json: Any | None = None,
+            headers: dict[str, str] | None = None,
+        ) -> httpx.Response:
+            assert url.endswith("/trpc/ping")
+            assert headers is not None and "Authorization" in headers
+            return httpx.Response(
+                200,
+                json={"result": {"message": "pong", "user": "tester"}},
+            )
+
+    monkeypatch.setattr("api_gateway.routes.TRPC_SERVICE_URL", "http://backend:8000")
+    monkeypatch.setattr(httpx, "AsyncClient", MockClient)
+
+    first = client.post("/trpc/ping", headers={"Authorization": f"Bearer {token}"})
+    assert first.status_code == 200
+    etag = first.headers["ETag"]
+
+    second = client.post(
+        "/trpc/ping",
+        headers={"Authorization": f"Bearer {token}", "If-None-Match": etag},
+    )
+    assert second.status_code == 304
+    assert second.headers["ETag"] == etag
 
 
 def test_optimization_proxy(monkeypatch: pytest.MonkeyPatch) -> None:

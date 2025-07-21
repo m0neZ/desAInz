@@ -15,6 +15,7 @@ from orchestrator.jobs import (  # noqa: E402
     backup_job,
     cleanup_job,
     idea_job,
+    rotate_secrets_job,
     daily_summary_job,
 )
 import pytest  # noqa: E402
@@ -25,6 +26,7 @@ from orchestrator.schedules import (  # noqa: E402
     daily_query_plan_schedule,
     hourly_cleanup_schedule,
     daily_summary_schedule,
+    monthly_secret_rotation_schedule,
 )
 from orchestrator.sensors import idea_sensor  # noqa: E402
 
@@ -65,6 +67,18 @@ def test_daily_summary_schedule_definition() -> None:
 
     assert daily_summary_schedule.job == daily_summary_job
     assert daily_summary_schedule.cron_schedule == "5 0 * * *"
+
+
+def test_rotate_secrets_job_structure() -> None:
+    """Rotate job should wait for approval before rotating secrets."""
+    ops = [op.name for op in rotate_secrets_job.graph.node_dict.values()]
+    assert ops == ["await_approval", "rotate_k8s_secrets_op"]
+
+
+def test_secret_rotation_schedule_definition() -> None:
+    """Monthly secret rotation schedule is correctly configured."""
+    assert monthly_secret_rotation_schedule.job == rotate_secrets_job
+    assert monthly_secret_rotation_schedule.cron_schedule == "0 0 1 * *"
 
 
 def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -109,10 +123,10 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
     result = idea_job.execute_in_process(instance=instance)
     assert result.success
     assert calls == [
+        f"http://approval/approvals/{result.dagster_run.run_id}",
         "http://signal-ingestion:8004/ingest",
         "http://scoring-engine:5002/score",
         "http://mockup-generation:8000/generate",
-        f"http://approval/approvals/{result.dagster_run.run_id}",
         "http://marketplace-publisher:8001/publish",
     ]
 
@@ -123,3 +137,43 @@ def test_idea_sensor_triggers(monkeypatch: pytest.MonkeyPatch) -> None:
     context = build_sensor_context()
     requests = list(idea_sensor(context))
     assert requests and isinstance(requests[0], RunRequest)
+
+
+def test_rotate_secrets_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Run ``rotate_secrets_job`` and verify approval and Slack calls."""
+    called: list[str] = []
+
+    def fake_post(url: str, *args: object, **kwargs: object) -> object:
+        called.append(url)
+
+        class Resp:
+            def raise_for_status(self) -> None:  # noqa: D401 - for test only
+                return None
+
+        return Resp()
+
+    def fake_get(url: str, *args: object, **kwargs: object) -> object:
+        called.append(url)
+
+        class Resp:
+            def raise_for_status(self) -> None:  # noqa: D401 - for test only
+                return None
+
+            def json(self) -> dict[str, object]:  # noqa: D401 - for test only
+                return {"approved": True}
+
+        return Resp()
+
+    monkeypatch.setattr("requests.post", fake_post)
+    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
+    monkeypatch.setenv("SLACK_WEBHOOK_URL", "http://slack")
+    monkeypatch.setattr(
+        "scripts.rotate_secrets.rotate", lambda: called.append("rotate")
+    )
+
+    instance = DagsterInstance.ephemeral()
+    result = rotate_secrets_job.execute_in_process(instance=instance)
+    assert result.success
+    assert f"http://approval/approvals/{result.dagster_run.run_id}" in called
+    assert "http://slack" in called

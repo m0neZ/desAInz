@@ -248,11 +248,23 @@ def run_daily_summary(  # type: ignore[no-untyped-def]
 def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
-    """Rotate Kubernetes secrets via :mod:`scripts.rotate_secrets`."""
+    """Rotate Kubernetes secrets via :mod:`scripts.rotate_secrets` and notify Slack."""
     context.log.info("rotating Kubernetes secrets")
     from scripts.rotate_secrets import rotate
 
     rotate()
+
+    webhook = os.environ.get("SLACK_WEBHOOK_URL")
+    if webhook:
+        try:
+            _post_with_retry(
+                context,
+                webhook,
+                json={"text": "Kubernetes secrets rotated"},
+                timeout=5,
+            )
+        except requests.RequestException as exc:  # noqa: BLE001
+            context.log.warning("slack notification failed: %s", exc)
 
 
 @op  # type: ignore[misc]

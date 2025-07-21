@@ -60,6 +60,7 @@ def daily_summary_job() -> None:
 @job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def rotate_secrets_job() -> None:
     """Job rotating API tokens and updating Kubernetes secrets."""
+    await_approval()
     rotate_k8s_secrets_op()
 
 

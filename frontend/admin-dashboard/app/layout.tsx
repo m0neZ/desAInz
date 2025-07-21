@@ -7,6 +7,7 @@ import { I18nProvider } from '../src/i18n';
 export const metadata: Metadata = {
   title: 'Admin Dashboard',
   description: 'Admin dashboard application',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

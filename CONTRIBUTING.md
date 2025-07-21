@@ -65,7 +65,6 @@ Run the migration tests to verify the chain is valid:
 pytest tests/test_migrations.py tests/integration/test_alembic_heads.py
 ```
 
-
 ## Third-Party Licenses
 
 Generate the bundled `LICENSES` file with:

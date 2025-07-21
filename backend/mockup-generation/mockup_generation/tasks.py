@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Any
+import signal
+import sys
 
 from botocore.client import BaseClient
 from minio import Minio
@@ -68,6 +70,28 @@ redis_client: SyncRedis = get_sync_client()
 
 generator = MockupGenerator()
 
+# Hold the currently acquired GPU lock for cleanup on termination.
+_ACTIVE_LOCK: RedisLock | None = None
+
+
+def _release_on_signal(_signum: int, _frame: object | None = None) -> None:
+    """Release any active GPU lock and clean up the generator."""
+    global _ACTIVE_LOCK
+    if _ACTIVE_LOCK is not None and _ACTIVE_LOCK.locked():
+        try:
+            _ACTIVE_LOCK.release()
+        finally:
+            _ACTIVE_LOCK = None
+    generator.cleanup()
+    sys.exit(0)
+
+
+def register_signal_handlers() -> None:
+    """Register handlers for SIGTERM and SIGINT."""
+    signal.signal(signal.SIGTERM, _release_on_signal)
+    signal.signal(signal.SIGINT, _release_on_signal)
+
+
 # Prometheus metrics for GPU slot usage
 GPU_SLOTS_IN_USE = Gauge("gpu_slots_in_use", "Number of GPU slots currently in use")
 GPU_SLOT_ACQUIRE_TOTAL = Counter(
@@ -116,6 +140,8 @@ def _acquire_gpu_lock(slot: int | None = None) -> RedisLock:
                 blocking_timeout=0,
             )
             if lock.acquire(blocking=False):
+                global _ACTIVE_LOCK
+                _ACTIVE_LOCK = lock
                 return lock
         time.sleep(0.1)
 
@@ -131,6 +157,8 @@ def gpu_slot(slot: int | None = None) -> Iterator[None]:
     finally:
         GPU_SLOTS_IN_USE.dec()
         lock.release()
+        global _ACTIVE_LOCK
+        _ACTIVE_LOCK = None
 
 
 @app.task(bind=True)  # type: ignore[misc]
@@ -251,3 +279,7 @@ def generate_mockup(
         raise
     finally:
         GENERATE_DURATION.observe(perf_counter() - start)
+
+
+# Register handlers on import so Celery workers clean up GPU locks on shutdown.
+register_signal_handlers()

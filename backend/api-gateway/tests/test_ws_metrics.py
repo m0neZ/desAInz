@@ -16,7 +16,6 @@ sys.path.append(
 )  # noqa: E402
 
 
-
 def test_metrics_ws(monkeypatch: Any) -> None:
     """Endpoint streams combined metrics."""
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")

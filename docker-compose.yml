@@ -164,6 +164,8 @@ services:
       - monitoring
     ports:
       - "3000:3000"
+    volumes:
+      - ./infrastructure/grafana/dashboards:/var/lib/grafana/dashboards:ro
 
   api-gateway:
     build: ./backend/api-gateway

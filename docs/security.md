@@ -36,3 +36,11 @@ production. To rotate it safely:
    credentials are rejected.
 3. Redeploy the services to pick up the new secret and remove the old one when
    all clients have refreshed their tokens.
+
+### Automated rotation
+
+The ``scripts/rotate_secrets.py`` helper generates new random tokens and patches
+the corresponding Kubernetes secrets using ``kubectl``. A Dagster job executes
+this script once per month. The ``monthly_secret_rotation_schedule`` defined in
+``backend.orchestrator.orchestrator.schedules`` triggers the job on the first
+day of every month at midnight UTC.

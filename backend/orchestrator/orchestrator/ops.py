@@ -229,3 +229,15 @@ def run_daily_summary(  # type: ignore[no-untyped-def]
 
     summary = asyncio.run(generate_daily_summary())
     context.log.debug("summary: %s", summary)
+
+
+@op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]
+def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
+    context,
+) -> None:
+    """Rotate Kubernetes secrets via :mod:`scripts.rotate_secrets`."""
+
+    context.log.info("rotating Kubernetes secrets")
+    from scripts.rotate_secrets import rotate
+
+    rotate()

@@ -7,6 +7,7 @@ from .jobs import (
     backup_job,
     cleanup_job,
     idea_job,
+    rotate_secrets_job,
     daily_summary_job,
 )
 from .schedules import (
@@ -14,6 +15,7 @@ from .schedules import (
     hourly_cleanup_schedule,
     daily_query_plan_schedule,
     daily_summary_schedule,
+    monthly_secret_rotation_schedule,
 )
 from .sensors import idea_sensor, run_failure_notifier
 
@@ -25,12 +27,14 @@ defs = Definitions(
         cleanup_job,
         analyze_query_plans_job,
         daily_summary_job,
+        rotate_secrets_job,
     ],
     schedules=[
         daily_backup_schedule,
         hourly_cleanup_schedule,
         daily_query_plan_schedule,
         daily_summary_schedule,
+        monthly_secret_rotation_schedule,
     ],
     sensors=[idea_sensor, run_failure_notifier],
 )

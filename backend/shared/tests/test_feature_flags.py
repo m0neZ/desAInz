@@ -69,3 +69,15 @@ def test_redis_flags(monkeypatch: pytest.MonkeyPatch) -> None:
     fake.set("demo", "1")
     feature_flags.initialize()
     assert feature_flags.is_enabled("demo") is True
+
+
+def test_redis_persistence(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Flags stored in Redis persist across module reloads."""
+    fake = fakeredis.FakeRedis(decode_responses=True)
+    monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)
+    feature_flags.initialize()
+    feature_flags.set_flag("demo", True)
+    importlib.reload(feature_flags)
+    feature_flags.initialize()
+    assert feature_flags.is_enabled("demo") is True

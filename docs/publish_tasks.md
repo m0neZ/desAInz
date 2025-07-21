@@ -8,6 +8,6 @@ Administrators can adjust listing metadata prior to publishing using the API Gat
 
 All edits and retries are recorded in the audit log.
 
-If `SLACK_WEBHOOK_URL` is configured, failed publish attempts send a Slack notification.
+If `SLACK_WEBHOOK_URL` is configured, failed publish attempts send a Discord notification.
 When `PAGERDUTY_ROUTING_KEY` is set and `ENABLE_PAGERDUTY` is `true`, the failure also triggers a PagerDuty alert.
 Both notifications run as background tasks with a short timeout so publishing is never blocked.

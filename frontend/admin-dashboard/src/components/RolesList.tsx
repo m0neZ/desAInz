@@ -18,7 +18,7 @@ export function RolesList() {
     void load();
   }, []);
   return (
-    <ul>
+    <ul aria-label="User roles">
       {roles.map((r) => (
         <li key={r.username}>
           {r.username}: {r.role}

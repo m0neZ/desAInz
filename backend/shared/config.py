@@ -27,6 +27,8 @@ class Settings(BaseSettings):  # type: ignore[misc]
     s3_bucket: str | None = None
     s3_base_url: str | None = None
     secret_key: str | None = None
+    auth0_domain: str | None = None
+    auth0_client_id: str | None = None
     weights_token: str | None = None
     allowed_origins: list[str] = Field(default_factory=list)
 

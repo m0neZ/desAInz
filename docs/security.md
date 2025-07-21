@@ -27,15 +27,10 @@ This project relies on environment variables for configuration.
 
 ### JWT secret rotation
 
-The `SECRET_KEY` used to sign JWT tokens is loaded from `/run/secrets` in
-production. To rotate it safely:
-
-1. Deploy the new secret alongside the old one and update the `secret_key`
-   environment variable.
-2. Insert all active token identifiers into the `revoked_tokens` table so old
-   credentials are rejected.
-3. Redeploy the services to pick up the new secret and remove the old one when
-   all clients have refreshed their tokens.
+Auth0 manages the signing keys for issued tokens. Rotation of these keys is
+handled automatically by Auth0 and requires no action from the services. During
+tests or local development, a static ``SECRET_KEY`` is still used and should be
+rotated periodically following the usual secret rotation procedure.
 
 ### Automated rotation
 

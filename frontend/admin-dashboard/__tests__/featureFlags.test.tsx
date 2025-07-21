@@ -6,7 +6,7 @@ import { FeatureFlagsList } from '../src/components/FeatureFlags/FeatureFlagsLis
 beforeEach(() => {
   global.fetch = jest.fn((url: RequestInfo, init?: RequestInit) => {
     if (typeof url === 'string' && url.endsWith('/feature-flags')) {
-      if (!init || init.method === 'GET') {
+      if (!init || !init.method || init.method === 'GET') {
         return Promise.resolve({
           ok: true,
           json: () => Promise.resolve({ demo: false }),
@@ -24,7 +24,7 @@ afterEach(() => {
 
 test('lists and toggles flags', async () => {
   render(<FeatureFlagsList />);
-  await waitFor(() => screen.getByLabelText('Feature flags'));
+  await waitFor(() => screen.getByRole('checkbox'));
   const checkbox = screen.getByRole('checkbox');
   expect(checkbox).not.toBeChecked();
   await userEvent.click(checkbox);

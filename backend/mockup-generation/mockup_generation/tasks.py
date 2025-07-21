@@ -141,6 +141,7 @@ def generate_mockup(
     *,
     model: str | None = None,
     gpu_index: int | None = None,
+    num_inference_steps: int = 30,
 ) -> list[dict[str, object]]:
     """
     Generate mockups sequentially on the GPU.
@@ -189,6 +190,7 @@ def generate_mockup(
                     gen_result = generator.generate(
                         prompt,
                         str(output_path),
+                        num_inference_steps=num_inference_steps,
                         model_identifier=model,
                     )
 
@@ -219,7 +221,7 @@ def generate_mockup(
                     metadata = listing_gen.generate(keywords)
                     model_repository.save_generated_mockup(
                         prompt,
-                        30,
+                        num_inference_steps,
                         0,
                         uri,
                         metadata.title,

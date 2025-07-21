@@ -34,6 +34,7 @@ def _run_migration(config_path: str, tmp_path: Path) -> None:
         "backend/shared/db/alembic_api_gateway.ini",
         "backend/shared/db/alembic_marketplace_publisher.ini",
         "backend/shared/db/alembic_signal_ingestion.ini",
+        "backend/shared/db/alembic_mockup_generation.ini",
     ],
 )
 def test_migrations(config_path: str, tmp_path: Path) -> None:
@@ -48,6 +49,7 @@ def test_migrations(config_path: str, tmp_path: Path) -> None:
         "backend/shared/db/alembic_api_gateway.ini",
         "backend/shared/db/alembic_marketplace_publisher.ini",
         "backend/shared/db/alembic_signal_ingestion.ini",
+        "backend/shared/db/alembic_mockup_generation.ini",
     ],
 )
 def test_single_head(config_path: str) -> None:

@@ -19,7 +19,12 @@ from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
 from backend.shared.responses import json_cached
 
-from .model_repository import list_models, register_model, set_default
+from .model_repository import (
+    list_generated_mockups,
+    list_models,
+    register_model,
+    set_default,
+)
 from .celery_app import app as celery_app
 
 configure_logging()
@@ -148,3 +153,9 @@ async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
         for batch in payload.batches
     ]
     return {"tasks": task_ids}
+
+
+@app.get("/mockups")
+async def get_mockups() -> list[dict[str, object]]:
+    """Return recently generated mockups."""
+    return [m.__dict__ for m in list_generated_mockups()]

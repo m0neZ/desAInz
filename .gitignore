@@ -10,3 +10,7 @@ flow-typed/
 !.env.*.example
 !.env.example
 docs/sphinx/api/
+
+# Local Kubernetes secrets
+infrastructure/k8s/secrets.yaml
+

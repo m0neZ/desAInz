@@ -36,7 +36,14 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
    ```bash
    kubectl apply -k infrastructure/k8s/base
    ```
-2. Provide environment variables via ConfigMaps and mount sensitive values using Kubernetes Secrets. The applications automatically load secrets from `/run/secrets`.
+2. Provide environment variables via ConfigMaps and mount sensitive values using Kubernetes Secrets. The applications automatically load secrets from `/run/secrets`. A starting template is available at `infrastructure/k8s/examples/secrets.yaml`.
+
+   Create the secret using Helm:
+
+   ```bash
+   helm upgrade --install shared-secret infrastructure/k8s/examples \
+     -f infrastructure/k8s/examples/secrets.yaml
+   ```
 3. Configure ingress and TLS termination for external access. An ingress controller such as NGINX is recommended.
 4. Deploy individual services using the Helm charts in `infrastructure/helm`. Each chart exposes
    values for the container image tag, environment variables and optional horizontal pod

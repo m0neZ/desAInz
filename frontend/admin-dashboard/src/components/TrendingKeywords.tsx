@@ -13,8 +13,10 @@ export function TrendingKeywords({ limit }: { limit?: number }) {
     <div data-testid="trending-keywords">
       <h2>{t('trendingKeywords')}</h2>
       <ul>
-        {data.map((kw) => (
-          <li key={kw}>{kw}</li>
+        {data.map((kw, idx) => (
+          <li key={kw}>
+            {idx + 1}. {kw}
+          </li>
         ))}
       </ul>
     </div>

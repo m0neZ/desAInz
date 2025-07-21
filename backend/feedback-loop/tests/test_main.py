@@ -12,8 +12,13 @@ from feedback_loop.auth import create_access_token  # noqa: E402
 from backend.shared.db import Base, SessionLocal, engine, models  # noqa: E402
 
 
-def test_impression_conversion_allocation(tmp_path) -> None:
+def test_impression_conversion_allocation(tmp_path, monkeypatch) -> None:
     """Recorded events should influence allocation."""
+    import backend.shared.db as shared_db
+    import feedback_loop.ab_testing as abt
+
+    monkeypatch.setattr(shared_db, "register_pool_metrics", lambda *_: None)
+    monkeypatch.setattr(abt, "register_pool_metrics", lambda *_: None)
     main.manager = ABTestManager(database_url="sqlite:///:memory:")
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
@@ -31,7 +36,7 @@ def test_impression_conversion_allocation(tmp_path) -> None:
     resp = client.get("/allocation", params={"total_budget": 100})
     assert resp.status_code == 403
 
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     headers = {"Authorization": f"Bearer {token}"}
     resp = client.get("/allocation", params={"total_budget": 100}, headers=headers)
     assert resp.status_code == 200
@@ -39,8 +44,13 @@ def test_impression_conversion_allocation(tmp_path) -> None:
     assert set(data) == {"variant_a", "variant_b"}
 
 
-def test_stats_endpoint(tmp_path) -> None:
+def test_stats_endpoint(tmp_path, monkeypatch) -> None:
     """/stats should return conversion totals."""
+    import backend.shared.db as shared_db
+    import feedback_loop.ab_testing as abt
+
+    monkeypatch.setattr(shared_db, "register_pool_metrics", lambda *_: None)
+    monkeypatch.setattr(abt, "register_pool_metrics", lambda *_: None)
     main.manager = ABTestManager(database_url="sqlite:///:memory:")
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
@@ -56,7 +66,7 @@ def test_stats_endpoint(tmp_path) -> None:
 
     resp = client.get("/stats")
     assert resp.status_code == 403
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     headers = {"Authorization": f"Bearer {token}"}
     resp = client.get("/stats", headers=headers)
     assert resp.status_code == 200

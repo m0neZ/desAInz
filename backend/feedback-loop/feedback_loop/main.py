@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import logging
 import os
+import sys
 import uuid
-from typing import Any, Callable, Coroutine
+from typing import Any, Callable, Coroutine, Optional
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
+from apscheduler.schedulers.background import BackgroundScheduler
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
@@ -30,6 +32,9 @@ app.add_middleware(
 register_metrics(app)
 add_security_headers(app)
 logger = logging.getLogger(__name__)
+
+# BackgroundScheduler instance running application tasks
+scheduler: Optional[BackgroundScheduler] = None
 
 
 class AllocationResponse(BaseModel):
@@ -52,16 +57,31 @@ manager = ABTestManager(
 
 
 async def startup() -> None:
-    """Start background scheduler."""
+    """Start background scheduler and setup exception logging."""
+    global scheduler
     # Import here to avoid heavy dependencies at module import time
     from .scheduler import setup_scheduler
 
-    # Setup scheduler with no-op defaults for health endpoints
     scheduler = setup_scheduler([], "")
     scheduler.start()
 
+    def log_unhandled(
+        exc_type: type[BaseException], exc: BaseException, tb: object
+    ) -> None:
+        """Log any unhandled exception before exiting."""
+        logger.exception("Unhandled exception", exc_info=(exc_type, exc, tb))
+
+    sys.excepthook = log_unhandled
+
+
+async def shutdown() -> None:
+    """Stop the background scheduler."""
+    if scheduler:
+        scheduler.shutdown()
+
 
 app.add_event_handler("startup", startup)
+app.add_event_handler("shutdown", shutdown)
 
 
 @app.middleware("http")

@@ -5,7 +5,10 @@ import type { RuntimeCaching } from 'next-pwa';
 /**
  * Next.js configuration enabling tree shaking and granular code splitting.
  */
+const assetPrefix = process.env.NEXT_PUBLIC_CDN_BASE_URL ?? '';
+
 const nextConfig: NextConfig = {
+  assetPrefix,
   async headers() {
     return [
       {

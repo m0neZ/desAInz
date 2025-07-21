@@ -312,6 +312,14 @@ services:
     - openai_api_key
     - stability_ai_api_key
     - huggingface_token
+  cdn-proxy:
+    image: nginx:1.25-alpine
+    ports:
+    - 8080:80
+    depends_on:
+    - admin-dashboard
+    volumes:
+    - ./docker/cdn_proxy/nginx.conf:/etc/nginx/nginx.conf:ro
   orchestrator:
     build:
       context: .

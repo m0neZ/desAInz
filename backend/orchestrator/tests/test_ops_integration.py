@@ -44,6 +44,13 @@ def run_mock_server() -> Iterator[tuple[str, list[str]]]:
                 payload = {}
             self.wfile.write(json.dumps(payload).encode())
 
+        def do_GET(self) -> None:  # noqa: D401 - test helper
+            calls.append(self.path)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(b'{"approved": true}')
+
         def log_message(self, *args: object) -> None:  # noqa: D401 - silence logs
             return
 
@@ -66,8 +73,14 @@ def test_idea_job_integration(monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("SCORING_ENGINE_URL", url)
         monkeypatch.setenv("MOCKUP_GENERATION_URL", url)
         monkeypatch.setenv("PUBLISHER_URL", url)
-        monkeypatch.setenv("APPROVE_PUBLISHING", "true")
+        monkeypatch.setenv("APPROVAL_SERVICE_URL", url)
         instance = DagsterInstance.ephemeral()
         result = idea_job.execute_in_process(instance=instance)
         assert result.success
-        assert calls == ["/ingest", "/score", "/generate", "/publish"]
+        assert calls == [
+            "/ingest",
+            "/score",
+            "/generate",
+            f"/approvals/{result.dagster_run.run_id}",
+            "/publish",
+        ]

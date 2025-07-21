@@ -26,7 +26,16 @@ async def test_run_failure_notifier(monkeypatch: pytest.MonkeyPatch) -> None:
         calls.append((listing_id, state))
 
     monkeypatch.setattr("orchestrator.sensors.notify_listing_issue", fake_notify)
-    monkeypatch.delenv("APPROVE_PUBLISHING", raising=False)
+
+    class Resp:
+        def raise_for_status(self) -> None:  # noqa: D401
+            return None
+
+        def json(self) -> dict[str, object]:  # noqa: D401
+            return {"approved": False}
+
+    monkeypatch.setattr("requests.get", lambda *a, **k: Resp())
+    monkeypatch.delenv("APPROVAL_SERVICE_URL", raising=False)
 
     instance = DagsterInstance.ephemeral()
     result = idea_job.execute_in_process(instance=instance, raise_on_error=False)

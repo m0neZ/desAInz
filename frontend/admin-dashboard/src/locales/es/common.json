@@ -40,5 +40,10 @@
   "trendingKeywords": "Palabras Clave en Tendencia",
   "abTestStats": "Estadísticas de Pruebas A/B",
   "english": "Inglés",
-  "spanish": "Español"
+  "spanish": "Español",
+  "approvals": "Aprobaciones",
+  "runId": "ID de Ejecución",
+  "approve": "Aprobar",
+  "approved": "Aprobado",
+  "approvalFailed": "Error al aprobar"
 }

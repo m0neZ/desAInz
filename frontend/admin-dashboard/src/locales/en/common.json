@@ -40,5 +40,10 @@
   "trendingKeywords": "Trending Keywords",
   "abTestStats": "A/B Test Stats",
   "english": "English",
-  "spanish": "Spanish"
+  "spanish": "Spanish",
+  "approvals": "Approvals",
+  "runId": "Run ID",
+  "approve": "Approve",
+  "approved": "Approved",
+  "approvalFailed": "Approval failed"
 }

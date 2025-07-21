@@ -22,7 +22,7 @@ from .models import MetadataPatch, RoleAssignment, UsernameRequest
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
-from backend.shared.cache import get_async_client
+from backend.shared.cache import async_get, async_set, get_async_client
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole, RefreshToken
 from uuid import uuid4
@@ -121,6 +121,7 @@ analytics_router = APIRouter(
     tags=["Analytics"],
     dependencies=[Depends(limit_analytics)],
 )
+approvals_router = APIRouter(prefix="/approvals", tags=["Approvals"])
 
 
 @router.get("/status", tags=["Status"], summary="Public status")
@@ -254,6 +255,24 @@ async def trigger_cleanup(
     maintenance.purge_stale_records()
     log_admin_action(payload.get("sub", "unknown"), "trigger_cleanup")
     return {"status": "ok"}
+
+
+@approvals_router.post("/{run_id}", summary="Approve job run")
+async def approve_run(
+    run_id: str,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, str]:
+    """Approve the Dagster run identified by ``run_id``."""
+    await async_set(f"approval:{run_id}", "true", ttl=3600)
+    log_admin_action(payload.get("sub", "unknown"), "approve_run", {"run_id": run_id})
+    return {"status": "approved"}
+
+
+@approvals_router.get("/{run_id}", summary="Check approval status")
+async def check_approval(run_id: str) -> Dict[str, bool]:
+    """Return ``True`` if ``run_id`` has been approved."""
+    approved = await async_get(f"approval:{run_id}") is not None
+    return {"approved": approved}
 
 
 @router.post("/trpc/{procedure}", tags=["tRPC"], summary="Proxy tRPC call")
@@ -460,3 +479,4 @@ async def retry_publish_task(
 router.include_router(optimization_router)
 router.include_router(monitoring_router)
 router.include_router(analytics_router)
+router.include_router(approvals_router)

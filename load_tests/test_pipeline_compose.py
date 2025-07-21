@@ -65,7 +65,7 @@ def _wait(url: str, timeout: int = 60) -> None:
 
 def test_full_pipeline(compose_services: None, tmp_path: Path) -> None:
     """Verify ingest → score → generate → publish flow."""
-    os.environ["APPROVE_PUBLISHING"] = "true"
+    os.environ["APPROVAL_SERVICE_URL"] = "http://localhost:8000"
     _wait("http://localhost:8004/ready")
     _wait("http://localhost:5002/ready")
     _wait("http://localhost:8001/ready")

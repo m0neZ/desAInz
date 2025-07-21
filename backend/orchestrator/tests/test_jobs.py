@@ -87,8 +87,21 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
+    def fake_get(url: str, *args: object, **kwargs: object) -> object:
+        calls.append(url)
+
+        class Resp:
+            def raise_for_status(self) -> None:  # noqa: D401 - for test only
+                return None
+
+            def json(self) -> dict[str, object]:  # noqa: D401 - for test only
+                return {"approved": True}
+
+        return Resp()
+
     monkeypatch.setattr("requests.post", fake_post)
-    monkeypatch.setenv("APPROVE_PUBLISHING", "true")
+    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
     instance = DagsterInstance.ephemeral()
     result = idea_job.execute_in_process(instance=instance)
     assert result.success
@@ -96,6 +109,7 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
         "http://signal-ingestion:8004/ingest",
         "http://scoring-engine:5002/score",
         "http://mockup-generation:8000/generate",
+        f"http://approval/approvals/{result.dagster_run.run_id}",
         "http://marketplace-publisher:8001/publish",
     ]
 

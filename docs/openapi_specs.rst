@@ -8,6 +8,7 @@ automatically generated using ``scripts/generate_openapi.py``.
    :maxdepth: 1
 
    openapi/api-gateway
+   openapi/trpc
    openapi/analytics
    openapi/marketplace-publisher
    openapi/monitoring

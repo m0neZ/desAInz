@@ -3,4 +3,4 @@
 
 set -euo pipefail
 
-pytest -W error tests/integration "$@"
+pytest -W error tests/integration tests/e2e "$@"

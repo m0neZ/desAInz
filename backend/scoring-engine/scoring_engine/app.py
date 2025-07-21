@@ -37,6 +37,7 @@ from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
 from backend.shared.db import session_scope
+from backend.shared.db import run_migrations_if_needed
 from backend.shared.db.models import Embedding
 from backend.monitoring.src.monitoring.metrics_store import (
     ScoreMetric,
@@ -149,6 +150,12 @@ def consume_signals(stop_event: Event, consumer: KafkaConsumerWrapper) -> None:
         with session_scope() as session:
             session.add(Embedding(source=source, embedding=embedding))
             session.flush()
+
+
+@app.on_event("startup")
+async def apply_migrations() -> None:
+    """Ensure database schema is up to date."""
+    await run_migrations_if_needed("backend/shared/db/alembic_scoring_engine.ini")
 
 
 @app.on_event("startup")

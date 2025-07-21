@@ -16,6 +16,8 @@ from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.currency import start_rate_updater
 
+from backend.shared.db import run_migrations_if_needed
+
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 
@@ -39,6 +41,7 @@ register_metrics(app)
 @app.on_event("startup")
 async def start_rates() -> None:
     """Start background exchange rate updates."""
+    await run_migrations_if_needed("backend/shared/db/alembic_api_gateway.ini")
     start_rate_updater()
 
 

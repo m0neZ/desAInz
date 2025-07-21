@@ -66,3 +66,9 @@ empty database:
 pytest tests/test_migrations.py
 ```
 
+## Automatic Migrations
+
+Every FastAPI service runs ``alembic upgrade head`` on startup to apply any
+pending migrations before initializing resources. Set the environment variable
+``SKIP_MIGRATIONS=1`` to bypass this step during tests.
+

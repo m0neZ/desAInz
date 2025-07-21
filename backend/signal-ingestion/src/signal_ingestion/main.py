@@ -12,6 +12,7 @@ from fastapi import Depends, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import get_session, init_db
+from backend.shared.db import run_migrations_if_needed
 from .scheduler import create_scheduler
 from .ingestion import ingest
 from .trending import get_top_keywords
@@ -50,6 +51,7 @@ def _identify_user(request: Request) -> str:
 @app.on_event("startup")
 async def startup() -> None:
     """Initialize resources."""
+    await run_migrations_if_needed("backend/shared/db/alembic_signal_ingestion.ini")
     await init_db()
     scheduler.start()
 

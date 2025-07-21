@@ -6,7 +6,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.append(str(ROOT))  # noqa: E402
+ORCHESTRATOR_PATH = ROOT / "backend" / "orchestrator"
+sys.path.append(str(ORCHESTRATOR_PATH))  # noqa: E402
+MONITORING_SRC = ROOT / "backend" / "monitoring" / "src"
+sys.path.append(str(MONITORING_SRC))  # noqa: E402
 
 from orchestrator.jobs import (  # noqa: E402
     backup_job,

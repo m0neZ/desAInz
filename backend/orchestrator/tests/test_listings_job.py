@@ -1,3 +1,5 @@
+"""Tests for the listings synchronization job."""
+
 from __future__ import annotations
 
 import sys
@@ -7,7 +9,10 @@ import pytest
 from dagster import DagsterInstance
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.append(str(ROOT))  # noqa: E402
+ORCHESTRATOR_PATH = ROOT / "backend" / "orchestrator"
+sys.path.append(str(ORCHESTRATOR_PATH))  # noqa: E402
+MONITORING_SRC = ROOT / "backend" / "monitoring" / "src"
+sys.path.append(str(MONITORING_SRC))  # noqa: E402
 
 from orchestrator.jobs import sync_listings_job  # noqa: E402
 from orchestrator.schedules import daily_listing_sync_schedule  # noqa: E402

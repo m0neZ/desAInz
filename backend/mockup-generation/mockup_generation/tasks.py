@@ -10,7 +10,8 @@ import time
 
 from redis.lock import Lock as RedisLock
 from celery import Task
-from prometheus_client import Counter, Gauge
+from prometheus_client import Counter, Gauge, Histogram
+from time import perf_counter
 
 from PIL import Image
 from .celery_app import app
@@ -70,6 +71,20 @@ generator = MockupGenerator()
 GPU_SLOTS_IN_USE = Gauge("gpu_slots_in_use", "Number of GPU slots currently in use")
 GPU_SLOT_ACQUIRE_TOTAL = Counter(
     "gpu_slot_acquire_total", "Total GPU slot acquisitions"
+)
+
+# Task metrics
+GENERATE_DURATION = Histogram(
+    "generate_mockup_duration_seconds",
+    "Time spent running generate_mockup",
+)
+GENERATE_SUCCESS = Counter(
+    "generate_mockup_success_total",
+    "Number of successful generate_mockup runs",
+)
+GENERATE_FAILURE = Counter(
+    "generate_mockup_failure_total",
+    "Number of failed generate_mockup runs",
 )
 
 
@@ -140,75 +155,92 @@ def generate_mockup(
         a prompt fails, the item will contain an ``error`` key with the
         message.
     """
-    queue = self.request.delivery_info.get("routing_key", "")
+    start = perf_counter()
     try:
-        slot: int | None = int(queue.split("-")[-1])
-    except (ValueError, AttributeError):
-        slot = (
-            gpu_index
-            if gpu_index is not None
-            else (GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None)
-        )
+        queue = self.request.delivery_info.get("routing_key", "")
+        try:
+            slot: int | None = int(queue.split("-")[-1])
+        except (ValueError, AttributeError):
+            slot = (
+                gpu_index
+                if gpu_index is not None
+                else (GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None)
+            )
 
-    listing_gen = ListingGenerator()
-    client = _get_storage_client()
-    results: list[dict[str, object]] = []
-    with gpu_slot(slot):
-        for idx, keywords in enumerate(keywords_batch):
-            context = PromptContext(keywords=keywords)
-            prompt = build_prompt(context)
-            output_path = Path(output_dir) / f"mockup_{idx}.png"
-            try:
-                gen_result = generator.generate(
-                    prompt,
-                    str(output_path),
-                    model_identifier=model,
-                )
+        listing_gen = ListingGenerator()
+        client = _get_storage_client()
+        results: list[dict[str, object]] = []
+        with gpu_slot(slot):
+            for idx, keywords in enumerate(keywords_batch):
+                context = PromptContext(keywords=keywords)
+                prompt = build_prompt(context)
+                output_path = Path(output_dir) / f"mockup_{idx}.png"
+                try:
+                    gen_result = generator.generate(
+                        prompt,
+                        str(output_path),
+                        model_identifier=model,
+                    )
 
-                processed = remove_background(Image.open(gen_result.image_path))
-                processed = convert_to_cmyk(processed)
-                ensure_not_nsfw(processed)
-                if not validate_dpi_image(processed):
-                    raise ValueError("Invalid DPI")
-                if not validate_color_space(processed):
-                    raise ValueError("Invalid color space")
-                if not validate_dimensions(processed):
-                    raise ValueError("Invalid dimensions")
-                compress_lossless(processed, output_path)
-                if not validate_file_size(output_path):
-                    raise ValueError("File size too large")
-                obj_name = f"generated-mockups/{output_path.name}"
-                if hasattr(client, "fput_object"):
-                    client.fput_object(settings.s3_bucket, obj_name, str(output_path))
-                else:
-                    client.upload_file(str(output_path), settings.s3_bucket, obj_name)
-                base = settings.s3_endpoint.rstrip("/") if settings.s3_endpoint else "s3://"
-                uri = (
-                    f"{base}/{settings.s3_bucket}/{obj_name}"
-                    if settings.s3_endpoint
-                    else f"s3://{settings.s3_bucket}/{obj_name}"
-                )
-                metadata = listing_gen.generate(keywords)
-                model_repository.save_generated_mockup(
-                    prompt,
-                    30,
-                    0,
-                    uri,
-                    metadata.title,
-                    metadata.description,
-                    metadata.tags,
-                )
-                results.append(
-                    {
-                        "image_path": str(output_path),
-                        "uri": uri,
-                        "title": metadata.title,
-                        "description": metadata.description,
-                        "tags": metadata.tags,
-                    }
-                )
-            except Exception as exc:  # pragma: no cover - error path tested separately
-                results.append({"error": str(exc), "keywords": keywords})
+                    processed = remove_background(Image.open(gen_result.image_path))
+                    processed = convert_to_cmyk(processed)
+                    ensure_not_nsfw(processed)
+                    if not validate_dpi_image(processed):
+                        raise ValueError("Invalid DPI")
+                    if not validate_color_space(processed):
+                        raise ValueError("Invalid color space")
+                    if not validate_dimensions(processed):
+                        raise ValueError("Invalid dimensions")
+                    compress_lossless(processed, output_path)
+                    if not validate_file_size(output_path):
+                        raise ValueError("File size too large")
+                    obj_name = f"generated-mockups/{output_path.name}"
+                    if hasattr(client, "fput_object"):
+                        client.fput_object(
+                            settings.s3_bucket, obj_name, str(output_path)
+                        )
+                    else:
+                        client.upload_file(
+                            str(output_path), settings.s3_bucket, obj_name
+                        )
+                    base = (
+                        settings.s3_endpoint.rstrip("/")
+                        if settings.s3_endpoint
+                        else "s3://"
+                    )
+                    uri = (
+                        f"{base}/{settings.s3_bucket}/{obj_name}"
+                        if settings.s3_endpoint
+                        else f"s3://{settings.s3_bucket}/{obj_name}"
+                    )
+                    metadata = listing_gen.generate(keywords)
+                    model_repository.save_generated_mockup(
+                        prompt,
+                        30,
+                        0,
+                        uri,
+                        metadata.title,
+                        metadata.description,
+                        metadata.tags,
+                    )
+                    results.append(
+                        {
+                            "image_path": str(output_path),
+                            "uri": uri,
+                            "title": metadata.title,
+                            "description": metadata.description,
+                            "tags": metadata.tags,
+                        }
+                    )
+                except (
+                    Exception
+                ) as exc:  # pragma: no cover - error path tested separately
+                    results.append({"error": str(exc), "keywords": keywords})
         generator.cleanup()
-
-    return results
+        GENERATE_SUCCESS.inc()
+        return results
+    except Exception:
+        GENERATE_FAILURE.inc()
+        raise
+    finally:
+        GENERATE_DURATION.observe(perf_counter() - start)

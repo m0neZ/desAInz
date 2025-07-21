@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import asyncio
 import json
+from time import perf_counter
 from typing import Iterable
 
 from sqlalchemy.ext.asyncio import AsyncSession
+from prometheus_client import Counter, Histogram
 
 from .adapters.base import BaseAdapter
 from .adapters.events import EventsAdapter
@@ -44,6 +46,23 @@ ADAPTERS: dict[str, BaseAdapter] = {
     "nostalgia": NostalgiaAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
 }
 
+# Task metrics
+INGEST_DURATION = Histogram(
+    "ingest_adapter_duration_seconds",
+    "Time spent ingesting from adapter",
+    ["adapter"],
+)
+INGEST_SUCCESS = Counter(
+    "ingest_adapter_success_total",
+    "Number of successful ingestions",
+    ["adapter"],
+)
+INGEST_FAILURE = Counter(
+    "ingest_adapter_failure_total",
+    "Number of failed ingestions",
+    ["adapter"],
+)
+
 
 async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> None:
     await purge_old_signals(session, settings.signal_retention_days)
@@ -73,13 +92,21 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
 @app.task(name="signal_ingestion.ingest_adapter")  # type: ignore[misc]
 def ingest_adapter_task(adapter_name: str) -> None:
     """Run ingestion for the adapter named ``adapter_name``."""
+    start = perf_counter()
+    try:
 
-    async def runner() -> None:
-        adapter = ADAPTERS[adapter_name]
-        async with SessionLocal() as session:
-            await _ingest_from_adapter(session, adapter)
+        async def runner() -> None:
+            adapter = ADAPTERS[adapter_name]
+            async with SessionLocal() as session:
+                await _ingest_from_adapter(session, adapter)
 
-    asyncio.run(runner())
+        asyncio.run(runner())
+        INGEST_SUCCESS.labels(adapter_name).inc()
+    except Exception:
+        INGEST_FAILURE.labels(adapter_name).inc()
+        raise
+    finally:
+        INGEST_DURATION.labels(adapter_name).observe(perf_counter() - start)
 
 
 def queue_for(adapter_name: str) -> str:

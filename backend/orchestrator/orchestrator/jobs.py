@@ -18,6 +18,7 @@ from .ops import (
     publish_content,
     score_signals,
     sync_listing_states_op,
+    purge_pii_rows_op,
 )
 from .hooks import record_failure, record_success
 
@@ -66,3 +67,9 @@ def rotate_secrets_job() -> None:
 def sync_listings_job() -> None:
     """Job synchronizing marketplace listing states."""
     sync_listing_states_op()
+
+
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def privacy_purge_job() -> None:
+    """Job removing PII from stored signals."""
+    purge_pii_rows_op()

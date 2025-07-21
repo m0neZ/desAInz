@@ -5,6 +5,8 @@ This project stores user generated signals and analytics metrics. To comply with
 ## PII Purging
 
 Incoming signal data is sanitized by `signal_ingestion.privacy.purge_row`, which strips email addresses and phone numbers before a signal is persisted.
+Stored records can be cleaned retroactively via `signal_ingestion.privacy.purge_pii_rows`.
+The Dagster `privacy_purge_job` runs this routine once per week.
 
 ## Data Retention
 

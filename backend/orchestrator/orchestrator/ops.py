@@ -54,6 +54,7 @@ def _post_with_retry(
                 retries,
             )
             time.sleep(2 ** (attempt - 1))
+    raise RuntimeError("unreachable")
 
 
 @op  # type: ignore[misc]
@@ -261,3 +262,14 @@ def sync_listing_states_op(context) -> None:  # type: ignore[no-untyped-def]
     from scripts import listing_sync
 
     listing_sync.main()
+
+
+@op  # type: ignore[misc]
+def purge_pii_rows_op(context) -> None:  # type: ignore[no-untyped-def]
+    """Run :func:`signal_ingestion.privacy.purge_pii_rows`."""
+    context.log.info("purging stored PII")
+    import asyncio
+    from signal_ingestion.privacy import purge_pii_rows
+
+    count = asyncio.run(purge_pii_rows())
+    context.log.info("purged %d rows", count)

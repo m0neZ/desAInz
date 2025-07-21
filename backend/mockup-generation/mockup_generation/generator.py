@@ -79,6 +79,14 @@ class MockupGenerator:
         """
         from time import perf_counter
 
+        if settings.use_comfyui:
+            from .comfy_workflow import ComfyUIWorkflow
+
+            workflow = {"prompt": prompt, "output": output_path}
+            runner = ComfyUIWorkflow(settings.comfyui_url)
+            res = runner.execute(workflow, output_path)
+            return GenerationResult(image_path=res.image_path, duration=res.duration)
+
         self.load(model_identifier)
         assert self.pipeline is not None
         start = perf_counter()

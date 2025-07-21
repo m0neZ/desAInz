@@ -19,6 +19,8 @@ class Settings(BaseSettings):  # type: ignore[misc]
     openai_api_key: str | None = None
     openai_model: str = "gpt-4"
     fallback_provider: Literal["stability", "openai"] = "stability"
+    use_comfyui: bool = False
+    comfyui_url: str = "http://localhost:8188"
 
     @field_validator("fallback_provider")  # type: ignore[misc]
     @classmethod

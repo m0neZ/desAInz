@@ -267,6 +267,17 @@ def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
             context.log.warning("slack notification failed: %s", exc)
 
 
+@op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]
+def rotate_s3_keys_op(context) -> None:  # type: ignore[no-untyped-def]
+    """Rotate S3 access keys and update Kubernetes secret."""
+    context.log.info("rotating S3 keys")
+    from scripts.rotate_s3_keys import rotate
+
+    user = os.environ.get("S3_IAM_USER", "deploy")
+    secret = os.environ.get("S3_SECRET_NAME", "s3-creds")
+    rotate(user, secret)
+
+
 @op  # type: ignore[misc]
 def sync_listing_states_op(context) -> None:  # type: ignore[no-untyped-def]
     """Synchronize marketplace listing states with the local database."""

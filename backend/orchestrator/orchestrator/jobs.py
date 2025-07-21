@@ -12,6 +12,7 @@ from .ops import (
     cleanup_data,
     analyze_query_plans_op,
     rotate_k8s_secrets_op,
+    rotate_s3_keys_op,
     run_daily_summary,
     generate_content,
     ingest_signals,
@@ -62,6 +63,13 @@ def rotate_secrets_job() -> None:
     """Job rotating API tokens and updating Kubernetes secrets."""
     await_approval()
     rotate_k8s_secrets_op()
+
+
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def rotate_s3_keys_job() -> None:
+    """Job rotating S3 keys and updating Kubernetes secrets."""
+    await_approval()
+    rotate_s3_keys_op()
 
 
 @job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]

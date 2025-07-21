@@ -8,6 +8,7 @@ from .jobs import (
     analyze_query_plans_job,
     daily_summary_job,
     rotate_secrets_job,
+    rotate_s3_keys_job,
     sync_listings_job,
     privacy_purge_job,
 )
@@ -44,6 +45,14 @@ def monthly_secret_rotation_schedule(
     _context: ScheduleEvaluationContext,
 ) -> dict[str, object]:
     """Rotate secrets on the first day of each month."""
+    return {}
+
+
+@schedule(cron_schedule="0 1 1 * *", job=rotate_s3_keys_job, execution_timezone="UTC")
+def rotate_s3_keys_schedule(
+    _context: ScheduleEvaluationContext,
+) -> dict[str, object]:
+    """Rotate S3 access keys monthly."""
     return {}
 
 

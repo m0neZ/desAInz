@@ -12,6 +12,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 from .weight_repository import get_centroid, get_weights
+from .affinity import metadata_embedding, DIMENSION
 
 
 class Signal:
@@ -62,10 +63,12 @@ def compute_novelty(
 
 
 def compute_community_fit(metadata: dict[str, float]) -> float:
-    """Simplistic community affinity from metadata weights."""
+    """Return community affinity score based on metadata embeddings."""
     if not metadata:
         return 0.0
-    return float(sum(metadata.values()) / len(metadata))
+    vec = metadata_embedding(metadata)
+    norm = float(np.linalg.norm(vec))
+    return norm / math.sqrt(DIMENSION)
 
 
 def compute_seasonality(timestamp: datetime, topics: Iterable[str]) -> float:

@@ -8,6 +8,7 @@ from .jobs import (
     analyze_query_plans_job,
     daily_summary_job,
     rotate_secrets_job,
+    sync_listings_job,
 )
 
 
@@ -38,6 +39,16 @@ def daily_summary_schedule(_context: ScheduleEvaluationContext) -> dict[str, obj
 
 
 @schedule(cron_schedule="0 0 1 * *", job=rotate_secrets_job, execution_timezone="UTC")
-def monthly_secret_rotation_schedule(_context: ScheduleEvaluationContext) -> dict[str, object]:
+def monthly_secret_rotation_schedule(
+    _context: ScheduleEvaluationContext,
+) -> dict[str, object]:
     """Rotate secrets on the first day of each month."""
+    return {}
+
+
+@schedule(cron_schedule="0 2 * * *", job=sync_listings_job, execution_timezone="UTC")
+def daily_listing_sync_schedule(
+    _context: ScheduleEvaluationContext,
+) -> dict[str, object]:
+    """Trigger ``sync_listings_job`` every day."""
     return {}

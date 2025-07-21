@@ -1,5 +1,4 @@
 """Dagster definitions for the orchestrator."""
-
 from dagster import Definitions
 
 from .jobs import (
@@ -9,6 +8,7 @@ from .jobs import (
     idea_job,
     rotate_secrets_job,
     daily_summary_job,
+    sync_listings_job,
 )
 from .schedules import (
     daily_backup_schedule,
@@ -16,6 +16,7 @@ from .schedules import (
     daily_query_plan_schedule,
     daily_summary_schedule,
     monthly_secret_rotation_schedule,
+    daily_listing_sync_schedule,
 )
 from .sensors import idea_sensor, run_failure_notifier
 
@@ -28,6 +29,7 @@ defs = Definitions(
         analyze_query_plans_job,
         daily_summary_job,
         rotate_secrets_job,
+        sync_listings_job,
     ],
     schedules=[
         daily_backup_schedule,
@@ -35,6 +37,7 @@ defs = Definitions(
         daily_query_plan_schedule,
         daily_summary_schedule,
         monthly_secret_rotation_schedule,
+        daily_listing_sync_schedule,
     ],
     sensors=[idea_sensor, run_failure_notifier],
 )

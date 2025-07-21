@@ -17,6 +17,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Histogram
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 
 from backend.shared.tracing import configure_tracing
@@ -58,6 +59,7 @@ configure_sentry(app, settings.app_name)
 add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
+add_security_headers(app)
 SIGNAL_TO_PUBLISH_SECONDS = Histogram(
     "signal_to_publish_seconds",
     "Latency from first signal ingestion to listing publish per idea",

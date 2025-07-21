@@ -27,6 +27,7 @@ from prometheus_client import (
     generate_latest,
 )
 from backend.shared.metrics import register_metrics
+from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
@@ -111,6 +112,7 @@ configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
+add_security_headers(app)
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()

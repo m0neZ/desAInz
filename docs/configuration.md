@@ -7,6 +7,8 @@ appropriate file to `.env` and adjust the values before running services
 locally or in CI. In production, sensitive variables are mounted from Docker or
 Kubernetes secrets under `/run/secrets` and loaded automatically by the
 application settings classes.
+See the [blueprint environment variables section](blueprints/DesignIdeaEngineCompleteBlueprint.md#environment-variables) for a complete example of the `.env` layout for each service.
+
 
 | Variable | Description |
 | --- | --- |
@@ -42,3 +44,27 @@ application settings classes.
 | `PUBLISHER_METRICS_INTERVAL_MINUTES` | Interval for fetching publisher metrics |
 | `WEIGHT_UPDATE_INTERVAL_MINUTES` | Interval for updating scoring weights |
 | `HTTP_RETRIES` | Number of retry attempts for outgoing HTTP calls |
+| `SENTRY_DSN` | Sentry Data Source Name for error reporting |
+| `METRICS_DB_URL` | TimescaleDB connection string for storing metrics |
+| `API_GATEWAY_WS_INTERVAL_MS` | WebSocket polling interval for API Gateway |
+| `CELERY_BROKER` | Celery broker backend (e.g., `redis`) |
+| `REDIS_HOST` | Redis host for Celery |
+| `REDIS_PORT` | Redis port for Celery |
+| `REDIS_DB` | Redis database index for Celery |
+| `RABBITMQ_HOST` | RabbitMQ host for Celery |
+| `RABBITMQ_PORT` | RabbitMQ port |
+| `RABBITMQ_USER` | RabbitMQ username |
+| `RABBITMQ_PASSWORD` | RabbitMQ password |
+| `INSTAGRAM_TOKEN` | Instagram Graph API token |
+| `INSTAGRAM_USER_ID` | Instagram user id to fetch posts from |
+| `INSTAGRAM_FETCH_LIMIT` | Number of Instagram posts to retrieve |
+| `REDDIT_USER_AGENT` | User agent string for Reddit API |
+| `REDDIT_FETCH_LIMIT` | Number of Reddit posts to retrieve |
+| `YOUTUBE_API_KEY` | YouTube Data API key |
+| `YOUTUBE_FETCH_LIMIT` | Number of YouTube videos to retrieve |
+| `TIKTOK_VIDEO_URLS` | Comma separated list of TikTok video URLs |
+| `TIKTOK_FETCH_LIMIT` | Number of TikTok videos to retrieve |
+| `NOSTALGIA_QUERY` | Search query for Nostalgia data |
+| `NOSTALGIA_FETCH_LIMIT` | Number of Nostalgia items to retrieve |
+| `EVENTS_COUNTRY_CODE` | Event API country code |
+| `EVENTS_FETCH_LIMIT` | Number of events to retrieve |

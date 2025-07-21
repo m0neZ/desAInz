@@ -16,6 +16,8 @@ from .tasks import queue_for_gpu
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
 app = Celery("mockup_generation", broker=CELERY_BROKER_URL)
 app.conf.result_backend = CELERY_BROKER_URL
+app.conf.task_acks_late = True
+app.conf.task_reject_on_worker_lost = True
 
 
 class GPUQueueCollector:

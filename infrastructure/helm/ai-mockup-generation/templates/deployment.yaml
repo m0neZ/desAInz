@@ -11,6 +11,10 @@ spec:
     metadata:
       labels: {{- include "ai-mockup-generation.selectorLabels" . | nindent 8 }}
     spec:
+      tolerations:
+        - key: "node-role.kubernetes.io/spot"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

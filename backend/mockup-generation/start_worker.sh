@@ -8,5 +8,6 @@ exec celery -A mockup_generation.celery_app worker \
   -Q gpu-${GPU_WORKER_INDEX} \
   --concurrency=1 \
   --statedb="$STATE_DIR/worker.state" \
-  --task-events
+  --task-events \
+  --without-gossip --without-mingle
 

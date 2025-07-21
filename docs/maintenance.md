@@ -27,10 +27,10 @@ python scripts/maintenance.py
 
 Environment variables can override the storage paths:
 
-- `COLD_STORAGE_PATH` – directory for archived mockups (defaults to `cold_storage`)
-- `LOG_DIR` – directory containing log files (defaults to `logs`)
-- `S3_BUCKET` – target bucket for object cleanup
-- `S3_RETENTION_DAYS` – optional retention period in days (defaults to 90)
+- `COLD_STORAGE_PATH` - directory for archived mockups (defaults to `cold_storage`)
+- `LOG_DIR` - directory containing log files (defaults to `logs`)
+- `S3_BUCKET` - target bucket for object cleanup
+- `S3_RETENTION_DAYS` - optional retention period in days (defaults to 90)
 
 ## Log Rotation
 
@@ -48,6 +48,18 @@ Run the script via cron:
 
 Dependencies for Python, JavaScript, and GitHub Actions are kept current via Dependabot.
 Weekly update PRs run on all `requirements*.txt`, `package.json` files, and workflow definitions. These PRs must pass the full test suite before merge.
+
+## Worker Shutdown
+
+GPU workers in the mockup-generation service register signal handlers for
+`SIGTERM` and `SIGINT`. The handlers release any acquired GPU locks and call
+`MockupGenerator.cleanup()` so processes can exit quickly without leaving
+stale locks. The `start_worker.sh` script also disables gossip and mingle for
+faster shutdowns:
+
+```bash
+./start_worker.sh  # invoked inside the container
+```
 
 ## Query Plan Analysis
 

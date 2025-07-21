@@ -38,6 +38,8 @@ jobs:
           python -m pip install -e .
       - name: Run Flow
         run: npm run flow
+      - name: Check formatting
+        run: npm run format:check --prefix frontend/admin-dashboard
       - name: Run tests
         run: make test
       - name: Smoke test docker compose services

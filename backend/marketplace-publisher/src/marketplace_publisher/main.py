@@ -189,7 +189,7 @@ async def _background_publish(task_id: int) -> None:
             and refreshed.attempts < settings.max_attempts
         ):
             asyncio.create_task(_background_publish(task_id))
-        if listing_id is not None:
+        if listing_id is not None and listing_id not in {"nsfw", "trademarked"}:
             client = publisher.CLIENTS[task.marketplace]
             data = await asyncio.to_thread(client.get_listing_metrics, int(listing_id))
             with session_scope() as sync:
@@ -202,6 +202,13 @@ async def _background_publish(task_id: int) -> None:
                         revenue=float(data.get("revenue", 0.0)),
                     )
                 )
+        elif listing_id in {"nsfw", "trademarked"}:
+            try:
+                from monitoring.pagerduty import notify_listing_issue
+
+                await asyncio.to_thread(notify_listing_issue, task_id, "flagged")
+            except Exception as exc:  # pragma: no cover - best effort
+                logger.warning("listing flag notification failed: %s", exc)
 
 
 @app.post("/publish")

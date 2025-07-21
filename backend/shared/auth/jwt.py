@@ -1,4 +1,5 @@
-"""Shared JWT authentication utilities.
+"""
+Shared JWT authentication utilities.
 
 The :func:`verify_token` helper validates credentials using Auth0 when the
 ``AUTH0_DOMAIN`` and ``AUTH0_CLIENT_ID`` settings are configured. If they are

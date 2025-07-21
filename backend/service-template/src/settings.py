@@ -20,7 +20,6 @@ class Settings(BaseSettings):
     @classmethod
     def _valid_level(cls, value: str) -> str:
         """Validate the provided logging level."""
-
         return value
 
 

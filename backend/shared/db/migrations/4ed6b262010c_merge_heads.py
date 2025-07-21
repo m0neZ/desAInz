@@ -1,4 +1,5 @@
-"""Merge heads from all services.
+"""
+Merge heads from all services.
 
 Revision ID: 4ed6b262010c
 Revises: 0014, 0008, e07f77a52d6e, 08af30763bce
@@ -19,8 +20,10 @@ depends_on = None
 
 
 def upgrade() -> None:
+    """Apply the no-op merge migration."""
     pass
 
 
 def downgrade() -> None:
+    """Revert the no-op merge migration."""
     pass

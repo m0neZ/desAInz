@@ -32,6 +32,8 @@ jobs:
         run: black --check .
       - name: Run Flake8
         run: flake8 .
+      - name: Check docstrings
+        run: pydocstyle backend
       - name: Run MyPy
         run: mypy backend --explicit-package-bases --exclude "tests"
       - name: Run ESLint/Prettier/Stylelint

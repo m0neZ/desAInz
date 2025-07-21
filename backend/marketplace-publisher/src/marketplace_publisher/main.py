@@ -366,6 +366,22 @@ async def ready() -> dict[str, str]:
     return {"status": "ready"}
 
 
+@app.get("/oauth/{marketplace}")
+async def oauth_login(marketplace: Marketplace) -> dict[str, str]:
+    """Return the authorization URL for ``marketplace``."""
+    client = publisher.CLIENTS[marketplace]
+    url = await asyncio.to_thread(client.get_authorization_url)
+    return {"authorization_url": url}
+
+
+@app.get("/oauth/{marketplace}/callback")
+async def oauth_callback(marketplace: Marketplace, request: Request) -> dict[str, str]:
+    """Handle OAuth redirect and persist tokens."""
+    client = publisher.CLIENTS[marketplace]
+    await asyncio.to_thread(client.fetch_token, str(request.url))
+    return {"status": "authorized"}
+
+
 if __name__ == "__main__":  # pragma: no cover
     parser = argparse.ArgumentParser(
         description="Run the marketplace publisher service."

@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 import os
+from datetime import datetime
 
 import pytest
 import responses
@@ -149,3 +150,97 @@ def test_refresh_on_unauthorized(
         assert rsps.calls[0].request.url == "https://example.com/token"
         assert rsps.calls[1].request.status_code == 401
         assert rsps.calls[2].request.url == "https://example.com/token"
+
+
+@pytest.mark.asyncio()
+async def test_tokens_persisted_and_reused(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Load tokens from database and refresh when expired."""
+
+    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+    from marketplace_publisher import db
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    session_factory = async_sessionmaker(engine, expire_on_commit=False)
+    monkeypatch.setattr(db, "engine", engine)
+    monkeypatch.setattr(db, "SessionLocal", session_factory)
+    await db.init_db()
+
+    _setup_settings(monkeypatch, "redbubble")
+
+    async with session_factory() as session:
+        await db.upsert_oauth_token(
+            session,
+            db.Marketplace.redbubble,
+            "old",
+            "refresh",
+            datetime.utcnow(),
+        )
+
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.POST,
+            "https://example.com/token",
+            json={"access_token": "new"},
+        )
+        rsps.add(
+            responses.POST,
+            "https://api.redbubble.com/v1/publish",
+            json={"id": 3},
+        )
+
+        design = tmp_path / "d.png"
+        design.write_text("x")
+        client = clients.RedbubbleClient()
+        assert client.publish_design(design, {}) == "3"
+
+    async with session_factory() as session:
+        token = await db.get_oauth_token(session, db.Marketplace.redbubble)
+        assert token is not None
+        assert token.access_token == "new"
+
+
+@pytest.mark.asyncio()
+async def test_oauth_endpoints(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test OAuth login and callback storing tokens."""
+
+    from fastapi.testclient import TestClient
+    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+    from marketplace_publisher import db, main
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    session_factory = async_sessionmaker(engine, expire_on_commit=False)
+    monkeypatch.setattr(db, "engine", engine)
+    monkeypatch.setattr(db, "SessionLocal", session_factory)
+    monkeypatch.setenv("DATABASE_URL", "sqlite:///:memory:")
+
+    import importlib
+    import backend.shared.db as shared_db
+
+    importlib.reload(shared_db)
+    shared_db.Base.metadata.create_all(shared_db.engine)
+    pytest.run = lambda *a, **k: None  # placeholder
+
+    monkeypatch.setattr(main, "app", main.app)
+    monkeypatch.setattr(main.publisher, "CLIENTS", main.publisher.CLIENTS)
+
+    _setup_settings(monkeypatch, "redbubble")
+
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.POST,
+            "https://example.com/token",
+            json={"access_token": "tok", "refresh_token": "r"},
+        )
+        with TestClient(main.app) as client:
+            resp = client.get("/oauth/redbubble")
+            assert resp.status_code == 200
+            state = resp.json()["authorization_url"].split("state=")[1]
+            resp = client.get(f"/oauth/redbubble/callback?code=1&state={state}")
+            assert resp.status_code == 200
+
+    async with session_factory() as session:
+        token = await db.get_oauth_token(session, db.Marketplace.redbubble)
+        assert token is not None
+        assert token.refresh_token == "r"

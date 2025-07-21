@@ -37,3 +37,10 @@ services:
     extends:
       file: docker-compose.dev.yml
       service: otel-collector
+  monitoring:
+    build: ./backend/monitoring
+    command: python -m monitoring.main
+    ports:
+      - 8000:8000
+    environment:
+      METRICS_DB_URL: sqlite:///tmp/metrics.db

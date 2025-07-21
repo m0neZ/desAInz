@@ -22,7 +22,7 @@ from .ops import (
 from .hooks import record_failure, record_success
 
 
-@job(retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def idea_job() -> None:
     """Pipeline from ingestion to publishing."""
     signals = ingest_signals()
@@ -32,37 +32,37 @@ def idea_job() -> None:
     publish_content(items)
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def backup_job() -> None:
     """Job running the backup operation."""
     backup_data()
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def cleanup_job() -> None:
     """Job running periodic cleanup."""
     cleanup_data()
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def analyze_query_plans_job() -> None:
     """Job collecting EXPLAIN plans for slow queries."""
     analyze_query_plans_op()
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def daily_summary_job() -> None:
     """Job generating the daily activity summary."""
     run_daily_summary()
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def rotate_secrets_job() -> None:
     """Job rotating API tokens and updating Kubernetes secrets."""
     rotate_k8s_secrets_op()
 
 
-@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def sync_listings_job() -> None:
     """Job synchronizing marketplace listing states."""
     sync_listing_states_op()

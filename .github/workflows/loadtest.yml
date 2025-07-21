@@ -48,6 +48,7 @@ jobs:
           echo "BUCKET=$BUCKET" >> "$GITHUB_ENV"
           aws s3api create-bucket --bucket "$BUCKET"
           ./scripts/setup_storage.sh "$BUCKET"
+          python scripts/apply_s3_lifecycle.py "$BUCKET"
       - name: Run integration tests
         env:
           S3_BUCKET: ${{ env.BUCKET }}

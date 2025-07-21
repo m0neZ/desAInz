@@ -2,6 +2,7 @@
 
 # Setup S3 or MinIO buckets and lifecycle policies based on the blueprint.
 # Usage: ./setup_storage.sh <bucket-name> [--minio]
+# Calls ``apply_s3_lifecycle.py`` to configure Glacier transitions on AWS.
 
 set -euo pipefail
 
@@ -50,7 +51,7 @@ create_bucket() {
     if ! aws s3api head-bucket --bucket "$BUCKET" >/dev/null 2>&1; then
       aws s3api create-bucket --bucket "$BUCKET"
     fi
-    aws s3api put-bucket-lifecycle-configuration --bucket "$BUCKET" --lifecycle-configuration '{"Rules":[{"ID":"ArchiveAfter12Months","Prefix":"","Status":"Enabled","Transitions":[{"Days":365,"StorageClass":"GLACIER"}]}]}'
+    python "$(dirname "$0")/apply_s3_lifecycle.py" "$BUCKET"
   fi
 }
 

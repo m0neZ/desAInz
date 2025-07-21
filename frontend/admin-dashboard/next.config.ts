@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: '/:path(health|metrics)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=60',
+          },
+        ],
+      },
     ];
   },
   webpack: (config) => {

@@ -6,6 +6,8 @@ from time import perf_counter
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
+
+from .responses import cache_header
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
     Counter,
@@ -42,4 +44,5 @@ def register_metrics(app: FastAPI) -> None:
     @app.get("/metrics")
     async def metrics() -> Response:
         data = generate_latest()
-        return Response(content=data, media_type=CONTENT_TYPE_LATEST)
+        headers = cache_header()
+        return Response(content=data, media_type=CONTENT_TYPE_LATEST, headers=headers)

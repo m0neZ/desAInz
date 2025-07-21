@@ -38,7 +38,9 @@ def test_health_ready_endpoints() -> None:
     """Health and readiness endpoints return status."""
     response = client.get("/health")
     assert response.status_code == 200
+    assert response.headers["Cache-Control"].startswith("public")
     assert response.json() == {"status": "ok"}
     response = client.get("/ready")
     assert response.status_code == 200
+    assert response.headers["Cache-Control"].startswith("public")
     assert response.json() == {"status": "ready"}

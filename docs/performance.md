@@ -43,3 +43,10 @@ The context manager `tasks.gpu_slot` updates two metrics:
 - ``gpu_slot_acquire_total`` – a counter incremented whenever a slot is obtained.
 
 These metrics appear alongside existing ones on the ``/metrics`` endpoint.
+
+## CDN Configuration
+
+Static assets are distributed through a CloudFront CDN for low latency delivery.
+The helper script ``scripts/configure_cdn.sh`` provisions a distribution with a
+default TTL of one hour and HTTPS enforced. Refer to the script for exact
+settings.

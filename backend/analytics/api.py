@@ -18,6 +18,7 @@ from .auth import require_role
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
@@ -218,12 +219,12 @@ def export_marketplace_metrics(
 
 
 @app.get("/health")  # type: ignore[misc]
-async def health() -> Dict[str, str]:
+async def health() -> Response:
     """Return service liveness."""
-    return {"status": "ok"}
+    return json_cached({"status": "ok"})
 
 
 @app.get("/ready")  # type: ignore[misc]
-async def ready() -> Dict[str, str]:
+async def ready() -> Response:
     """Return service readiness."""
-    return {"status": "ready"}
+    return json_cached({"status": "ready"})

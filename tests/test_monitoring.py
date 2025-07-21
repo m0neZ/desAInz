@@ -20,6 +20,7 @@ def test_metrics_endpoint() -> None:
     response = client.get("/metrics")
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/plain")
+    assert response.headers["Cache-Control"].startswith("public")
 
 
 def test_overview_endpoint() -> None:
@@ -35,9 +36,11 @@ def test_health_ready_endpoints() -> None:
     """Health and readiness should return status."""
     response = client.get("/health")
     assert response.status_code == 200
+    assert response.headers["Cache-Control"].startswith("public")
     assert response.json() == {"status": "ok"}
     response = client.get("/ready")
     assert response.status_code == 200
+    assert response.headers["Cache-Control"].startswith("public")
     assert response.json() == {"status": "ready"}
 
 

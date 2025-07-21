@@ -70,6 +70,7 @@ def test_tracing_and_profiling(
         client = TestClient(app)
         resp = client.get("/health")
         assert resp.status_code == 200
+        assert resp.headers["Cache-Control"].startswith("public")
     else:
         app.config.update(TESTING=True)
         client = app.test_client()

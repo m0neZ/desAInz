@@ -17,6 +17,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
 
 from .model_repository import list_models, register_model, set_default
 from .celery_app import app as celery_app
@@ -86,15 +87,15 @@ register_metrics(app)
 
 
 @app.get("/health")
-async def health() -> dict[str, str]:
+async def health() -> Response:
     """Return service liveness."""
-    return {"status": "ok"}
+    return json_cached({"status": "ok"})
 
 
 @app.get("/ready")
-async def ready() -> dict[str, str]:
+async def ready() -> Response:
     """Return service readiness."""
-    return {"status": "ready"}
+    return json_cached({"status": "ready"})
 
 
 @app.get("/models")

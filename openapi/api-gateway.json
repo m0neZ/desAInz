@@ -174,7 +174,9 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": { "type": "string" },
+                "additionalProperties": {
+                  "type": "string"
+                },
                 "type": "object",
                 "title": "Body"
               }
@@ -188,14 +190,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": { "type": "string" },
+                  "additionalProperties": {
+                    "type": "string"
+                  },
                   "type": "object",
                   "title": "Response Refresh Auth Token Auth Refresh Post"
                 }
               }
             }
           },
-          "401": { "description": "Unauthorized" }
+          "401": {
+            "description": "Unauthorized"
+          }
         }
       }
     },
@@ -742,5 +748,6 @@
         "scheme": "bearer"
       }
     }
-  }
+  },
+  "x-spec-version": "911868d0c2ed2aea39ba5075d87135ced55c92685fc816643d3d34a4089ee883"
 }

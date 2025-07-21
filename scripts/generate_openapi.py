@@ -6,6 +6,7 @@ import importlib.util
 import json
 import os
 import sys
+import hashlib
 from pathlib import Path
 from typing import Iterable
 
@@ -20,6 +21,8 @@ os.environ.setdefault("KAFKA_SKIP", "1")
 os.environ.setdefault("SELENIUM_SKIP", "1")
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///openapi.db")
 os.environ.setdefault("ABTEST_DB_URL", "sqlite:///abtest.db")
+os.environ.setdefault("METRICS_DB_URL", "sqlite:///metrics.db")
+os.environ.setdefault("OTEL_SDK_DISABLED", "1")
 
 DOCS_OPENAPI_DIR = PROJECT_ROOT / "docs" / "openapi"
 DOCS_INDEX = PROJECT_ROOT / "docs" / "openapi_specs.rst"
@@ -61,6 +64,17 @@ def ensure_doc(service: str) -> None:
 
 OPENAPI_DIR = PROJECT_ROOT / "openapi"
 OPENAPI_DIR.mkdir(exist_ok=True)
+
+
+def _write_spec(service: str, data: dict) -> None:
+    """Write ``data`` to ``service`` JSON file with version hash."""
+    stripped = dict(data)
+    stripped.pop("x-spec-version", None)
+    serialized = json.dumps(stripped, sort_keys=True).encode("utf-8")
+    spec_hash = hashlib.sha256(serialized).hexdigest()
+    data["x-spec-version"] = spec_hash
+    path = OPENAPI_DIR / f"{service}.json"
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
 
 def _patch_shared_dependencies() -> None:
@@ -108,8 +122,7 @@ def generate_from_file(main_file: Path) -> None:
         return
     data = app.openapi()
     OAS30Validator.check_schema(data)
-    path = OPENAPI_DIR / f"{service}.json"
-    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    _write_spec(service, data)
     ensure_doc(service)
 
 
@@ -191,8 +204,6 @@ spec = {
         }
     },
 }
-(OPENAPI_DIR / "scoring-engine.json").write_text(
-    json.dumps(spec, indent=2), encoding="utf-8"
-)
+_write_spec("scoring-engine", spec)
 OAS30Validator.check_schema(spec)
 ensure_doc("scoring-engine")

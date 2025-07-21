@@ -1,6 +1,10 @@
+/* eslint-disable */
 // @flow
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+/* global __ENV */
+declare var __ENV: any;
+/* eslint-disable import/no-anonymous-default-export */
 
 export const options = {
   vus: __ENV.USERS ? parseInt(__ENV.USERS, 10) : 10,

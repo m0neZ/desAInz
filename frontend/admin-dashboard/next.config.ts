@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 import withPWA from 'next-pwa';
 import type { RuntimeCaching } from 'next-pwa';
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 /**
  * Next.js configuration enabling tree shaking and granular code splitting.
@@ -57,10 +58,16 @@ const runtimeCaching: RuntimeCaching[] = [
   },
 ];
 
-export default withPWA({
-  dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
-  runtimeCaching,
-  register: true,
-  skipWaiting: true,
-})(nextConfig);
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+export default withBundleAnalyzer(
+  withPWA({
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
+    runtimeCaching,
+    register: true,
+    skipWaiting: true,
+  })(nextConfig)
+);

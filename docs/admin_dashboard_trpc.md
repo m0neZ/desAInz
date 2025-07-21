@@ -15,10 +15,3 @@ extends the default palette with a `brand` color and sets the sans and mono font
 families from CSS variables. This ensures consistent colors and fonts across all
 components.
 
-## Translation Workflow
-
-The dashboard supports multiple languages through the `i18next` library. Locale
-files live under `frontend/admin-dashboard/src/locales`, organized by language.
-Add or update strings in these JSON files and commit them with the code change.
-Run `npm run lint` to ensure the translation files are formatted correctly.
-For a detailed guide, see [docs/i18n.md](i18n.md).

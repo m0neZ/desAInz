@@ -39,7 +39,7 @@ def idea_sensor(
 
 @run_failure_sensor(monitor_all_code_locations=True)  # type: ignore[misc]
 def run_failure_notifier(context: RunFailureSensorContext) -> None:
-    """Notify Slack when a run fails."""
+    """Notify Discord when a run fails."""
     try:
         cleaned = context.dagster_run.run_id.replace("-", "")
         notify_listing_issue(int(cleaned, 16), "failed")

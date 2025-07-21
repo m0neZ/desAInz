@@ -31,8 +31,8 @@ from monitoring import pagerduty  # noqa: E402
 
 
 @pytest.mark.asyncio()
-async def test_notify_failure_sends_slack_and_pagerduty(monkeypatch: Any) -> None:
-    """notify_failure should POST to Slack and trigger PagerDuty."""
+async def test_notify_failure_sends_discord_and_pagerduty(monkeypatch: Any) -> None:
+    """notify_failure should POST to Discord and trigger PagerDuty."""
     sent: dict[str, Any] = {}
 
     def fake_post(url: str, json: Any, timeout: int) -> None:  # noqa: D401

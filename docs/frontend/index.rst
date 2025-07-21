@@ -6,3 +6,4 @@ Next.js Frontend
 
    nextjs_setup
    api_calls
+   trpc_usage

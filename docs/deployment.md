@@ -101,7 +101,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 
 ## Cloud Providers
 
-See the [Cloud Provider Strategy](blueprints/DesignIdeaEngineCompleteBlueprint.md#cloud-provider-strategy)
+See the [Cloud Provider Strategy](blueprints/DesignIdeaEngineCompleteBlueprint.md)
 section of the project blueprint for recommendations on multi-cloud deployments.
 
 ### AWS

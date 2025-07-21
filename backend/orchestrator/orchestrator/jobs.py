@@ -11,6 +11,7 @@ from .ops import (
     backup_data,
     cleanup_data,
     analyze_query_plans_op,
+    rotate_k8s_secrets_op,
     run_daily_summary,
     generate_content,
     ingest_signals,
@@ -52,3 +53,10 @@ def analyze_query_plans_job() -> None:
 def daily_summary_job() -> None:
     """Job generating the daily activity summary."""
     run_daily_summary()
+
+
+@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def rotate_secrets_job() -> None:
+    """Job rotating API tokens and updating Kubernetes secrets."""
+
+    rotate_k8s_secrets_op()

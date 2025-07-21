@@ -1,4 +1,5 @@
-"""Create indexes for common queries.
+"""
+Create indexes for common queries.
 
 Revision ID: 830537fd941a
 Revises: 5130a8662f39

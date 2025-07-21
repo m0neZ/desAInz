@@ -70,7 +70,6 @@ class _RulesFileHandler(FileSystemEventHandler):  # type: ignore[misc]
 
 def stop_watching_rules() -> None:
     """Stop watching the rules file for changes."""
-
     global _observer
     if _observer is not None:
         _observer.stop()
@@ -80,7 +79,6 @@ def stop_watching_rules() -> None:
 
 def load_rules(path: Path, watch: bool = False) -> None:
     """Load marketplace rules from ``path`` and optionally watch for changes."""
-
     global _rules_path, _observer
     _rules_path = path
     _reload_rules()

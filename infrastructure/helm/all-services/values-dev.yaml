@@ -33,3 +33,11 @@ backup-jobs:
 logrotate-jobs:
   image:
     tag: latest
+
+# Grafana configuration
+grafana:
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      searchNamespace: ALL

@@ -1,0 +1,25 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "TimescaleDB",
+      "type": "timeseries",
+      "title": "Average Publish Latency",
+      "targets": [
+        {
+          "rawSql": "SELECT bucket AS time, avg_latency FROM latency_hourly ORDER BY bucket",
+          "refId": "A",
+          "format": "time_series"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 30,
+  "title": "Latency Overview",
+  "version": 1
+}

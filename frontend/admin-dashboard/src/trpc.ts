@@ -108,6 +108,17 @@ async function getText(path: string): Promise<string> {
   return res.text();
 }
 
+async function post(path: string, body?: unknown): Promise<void> {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    throw new Error(`request failed: ${res.status}`);
+  }
+}
+
 export const trpc = {
   ping: {
     mutate: () => call<{ message: string; user: string }>('ping'),
@@ -129,6 +140,9 @@ export const trpc = {
   },
   publishTasks: {
     list: () => call<PublishTask[]>('publishTasks.list'),
+  },
+  approvals: {
+    approve: (runId: string) => post(`/approvals/${encodeURIComponent(runId)}`),
   },
   analytics: {
     summary: () => call<AnalyticsData>('analytics.summary'),

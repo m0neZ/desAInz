@@ -154,10 +154,22 @@ def generate_content(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def await_approval() -> None:
-    """Fail if publishing has not been approved."""
-    if os.environ.get("APPROVE_PUBLISHING") != "true":
-        raise Failure("publishing not approved")
+def await_approval(context) -> None:  # type: ignore[no-untyped-def]
+    """Poll the approval service until the run is approved."""
+    base_url = os.environ.get("APPROVAL_SERVICE_URL", "http://api-gateway:8000")
+    url = f"{base_url}/approvals/{context.run_id}"
+    headers = _auth_headers(context)
+    for _ in range(30):
+        try:
+            resp = requests.get(url, headers=headers, timeout=5)
+            resp.raise_for_status()
+            if resp.json().get("approved"):
+                context.log.info("publishing approved")
+                return
+        except requests.RequestException as exc:  # noqa: BLE001
+            context.log.warning("approval check failed: %s", exc)
+        time.sleep(10)
+    raise Failure("publishing not approved")
 
 
 @op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]

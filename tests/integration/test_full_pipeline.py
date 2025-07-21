@@ -58,7 +58,11 @@ def _mock_post(url: str, *args: object, **kwargs: object) -> DummyResponse:
 @pytest.mark.usefixtures("monkeypatch")
 def test_full_pipeline(monkeypatch: pytest.MonkeyPatch) -> None:
     """Execute the orchestrator job through all stages."""
-    monkeypatch.setattr(ops, "requests", SimpleNamespace(post=_mock_post))
-    os.environ["APPROVE_PUBLISHING"] = "true"
+    monkeypatch.setattr(
+        ops,
+        "requests",
+        SimpleNamespace(post=_mock_post, get=lambda *a, **k: DummyResponse({"approved": True})),
+    )
+    os.environ["APPROVAL_SERVICE_URL"] = "http://approval"
     result = idea_job.execute_in_process()
     assert result.success

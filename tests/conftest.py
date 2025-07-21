@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import os
 import sys
+from importlib import util as importlib_util
+from pathlib import Path
 from types import ModuleType, SimpleNamespace
 import warnings
 
@@ -20,6 +22,19 @@ os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 warnings.filterwarnings(
     "ignore", category=UserWarning, message='directory "/run/secrets" does not exist'
 )
+
+# Inject lightweight stubs for heavy optional dependencies.
+if os.environ.get("SKIP_HEAVY_DEPS") == "1":
+    stubs_dir = Path(__file__).parent / "stubs"
+    for stub_path in stubs_dir.glob("*.py"):
+        module_name = stub_path.stem
+        if module_name in sys.modules:
+            continue
+        spec = importlib_util.spec_from_file_location(module_name, stub_path)
+        module = importlib_util.module_from_spec(spec)
+        assert spec and spec.loader
+        spec.loader.exec_module(module)
+        sys.modules[module_name] = module
 
 # Stub OpenTelemetry exporter to avoid heavy dependencies during tests.
 _trace_exporter = ModuleType("opentelemetry.exporter.otlp.proto.http.trace_exporter")

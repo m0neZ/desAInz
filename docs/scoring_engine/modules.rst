@@ -13,3 +13,6 @@ API Reference
 
 .. automodule:: scoring_engine.centroid_job
    :members:
+
+.. automodule:: scoring_engine.tasks
+   :members:

@@ -37,7 +37,10 @@ from backend.shared.db.models import AuditLog, UserRole, RefreshToken
 from uuid import uuid4
 from datetime import timedelta
 from scripts import maintenance
-from signal_ingestion.trending import get_trending
+
+SIGNAL_INGESTION_URL = os.environ.get(
+    "SIGNAL_INGESTION_URL", "http://signal-ingestion:8004"
+)
 from .rate_limiter import UserRateLimiter
 from .settings import settings
 
@@ -349,8 +352,13 @@ async def optimizations() -> list[str]:
 
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
 async def trending(limit: int = 10) -> list[str]:
-    """Return up to ``limit`` trending keywords."""
-    return get_trending(limit)
+    """Return up to ``limit`` trending keywords from the ingestion service."""
+    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[str], resp.json())
 
 
 @monitoring_router.get("/overview", summary="System overview")

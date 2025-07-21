@@ -45,7 +45,7 @@ jobs:
           npm run flow
           npm run flow --prefix frontend/admin-dashboard
       - name: Set up Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@v4
         with:
           version: 'v3.12.3'
       - name: Lint Helm charts

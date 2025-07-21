@@ -16,3 +16,27 @@ Open the **Approvals** page to see a list of pending Dagster run IDs.
 Click **Approve** next to a run to unblock publishing.
 The API Gateway exposes `/approvals` for fetching pending runs and
 `/approvals/{run_id}` for approving a run.
+
+## Spot Instances
+
+Use `scripts/manage_spot_instances.py` to request and release AWS spot nodes. A
+typical workflow to add a worker is:
+
+```bash
+python scripts/manage_spot_instances.py request \
+  --ami-id ami-12345678 \
+  --instance-type g4dn.xlarge \
+  --key-name kube-key \
+  --security-group sg-12345678 \
+  --subnet-id subnet-12345678
+```
+
+The script waits for the instance to become ready and labels the node so
+Kubernetes can schedule pods on it. To remove a node run:
+
+```bash
+python scripts/manage_spot_instances.py release i-0abcd1234ef567890
+```
+
+Workers will checkpoint tasks using Celery's statedb so another node can resume
+processing when a spot instance is reclaimed.

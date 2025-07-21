@@ -14,4 +14,5 @@ ARG GPU_INDEX=0
 ENV GPU_WORKER_INDEX=${GPU_INDEX}
 ENV CUDA_VISIBLE_DEVICES=${GPU_INDEX}
 
-CMD ["celery", "-A", "mockup_generation.celery_app", "worker", "--loglevel=info", "-Q", "gpu-${GPU_WORKER_INDEX}", "--concurrency=1"]
+COPY start_worker.sh /usr/local/bin/start_worker.sh
+CMD ["/usr/local/bin/start_worker.sh"]

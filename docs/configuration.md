@@ -13,6 +13,8 @@ application settings classes.
 | `DATABASE_URL` | Database connection string |
 | `REDIS_URL` | Redis connection string |
 | `SECRET_KEY` | Secret key for cryptographic signing |
+| `AUTH0_DOMAIN` | Domain of the Auth0 tenant used for authentication |
+| `AUTH0_CLIENT_ID` | Client identifier issued by Auth0 |
 | `OPENAI_API_KEY` | OpenAI API authentication token used for image and listing generation |
 | `STABILITY_AI_API_KEY` | Stability AI API token |
 | `FALLBACK_PROVIDER` | `stability` or `dall-e` |

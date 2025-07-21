@@ -15,7 +15,7 @@ To get started:
 Black and Prettier run in formatting mode, so staged files will be automatically
 updated.
 
-The hooks enforce Black, flake8, mypy, docformatter, pydocstyle, eslint, prettier, flow and stylelint. Warnings are treated as errors, so commits will fail until issues are fixed.
+The hooks enforce Black, flake8, mypy, docformatter, pydocstyle, eslint, prettier, flow and stylelint. Docstrings should follow the Numpy style and are checked with flake8-docstrings. Warnings are treated as errors, so commits will fail until issues are fixed.
 
 ## CI Lint Commands
 
@@ -23,7 +23,7 @@ The continuous integration workflow runs the following commands and fails on any
 
 ```bash
 black --check .
-flake8 .
+flake8 . --docstring-convention=numpy
 mypy backend --explicit-package-bases --exclude "tests"
 npm run lint
 npm run flow

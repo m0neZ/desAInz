@@ -1,3 +1,5 @@
+"""Tests for feature flag routes."""
+
 import sys
 import os
 from pathlib import Path
@@ -13,13 +15,17 @@ from backend.shared import feature_flags  # noqa: E402
 
 
 def setup_module(module: object) -> None:
+    """Initialize the application client for tests."""
+
     os.environ["REDIS_URL"] = "redis://localhost:6379/0"
     feature_flags.redis.Redis = lambda *a, **k: fakeredis.aioredis.FakeRedis(
         decode_responses=True
     )
     import api_gateway.routes as routes
+
     routes.get_async_client = lambda: fakeredis.aioredis.FakeRedis()
     import api_gateway.main as main_module
+
     importlib.reload(main_module)
     importlib.reload(feature_flags)
     feature_flags.initialize()
@@ -28,6 +34,8 @@ def setup_module(module: object) -> None:
 
 
 def test_toggle_flag() -> None:
+    """Toggle a feature flag and verify its value."""
+
     token = create_access_token({"sub": "admin"})
     resp = client.post(
         "/feature-flags/demo",

@@ -9,6 +9,7 @@ from backend.shared.http import request_with_retry
 
 
 def test_request_with_retry_success(requests_mock):
+    """Request succeeds after a retry."""
     requests_mock.get(
         "http://example.com",
         [
@@ -22,6 +23,8 @@ def test_request_with_retry_success(requests_mock):
 
 
 def test_request_with_retry_failure(requests_mock):
+    """Retrying request fails and raises an exception."""
+
     requests_mock.get("http://example.com", exc=requests.ConnectionError)
     with pytest.raises(requests.ConnectionError):
         request_with_retry("GET", "http://example.com", retries=2)

@@ -62,20 +62,25 @@ class MockupGenerator:
         num_inference_steps: int = 30,
         model_identifier: str | None = None,
     ) -> GenerationResult:
-        """
-        Generate an image.
+        """Generate an image.
 
-        If local generation fails, an external provider is used as a
-        fallback.
+        If local generation fails, an external provider is used as a fallback.
 
-        Args:
-            prompt: Text prompt describing the desired image.
-            output_path: Filesystem path to save the resulting image.
-            num_inference_steps: Number of inference steps for the model.
-            model_identifier: Optional model ID to load instead of the default.
+        Parameters
+        ----------
+        prompt : str
+            Text prompt describing the desired image.
+        output_path : str
+            Filesystem path to save the resulting image.
+        num_inference_steps : int, optional
+            Number of inference steps for the model.
+        model_identifier : str | None, optional
+            Model identifier to load instead of the default.
 
-        Returns:
-            GenerationResult containing the image path and duration.
+        Returns
+        -------
+        GenerationResult
+            Result containing the image path and duration.
         """
         from time import perf_counter
 
@@ -102,17 +107,22 @@ class MockupGenerator:
         return GenerationResult(image_path=output_path, duration=duration)
 
     def _fallback_api(self, prompt: str) -> Image.Image:
-        """
-        Fetch an image from a third-party provider.
+        """Fetch an image from a third-party provider.
 
-        Args:
-            prompt: Text prompt to send to the provider.
+        Parameters
+        ----------
+        prompt : str
+            Text prompt to send to the provider.
 
-        Returns:
-            PIL image from the external API.
+        Returns
+        -------
+        Image.Image
+            Image from the external API.
 
-        Raises:
-            GenerationError: If all retry attempts fail.
+        Raises
+        ------
+        GenerationError
+            If all retry attempts fail.
         """
         from io import BytesIO
         import base64

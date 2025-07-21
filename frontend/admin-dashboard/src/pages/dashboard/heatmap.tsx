@@ -1,9 +1,10 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useHeatmap } from '../../lib/trpc/hooks';
 
-export default function HeatmapPage() {
+function HeatmapPage() {
   const { t } = useTranslation();
   const { data, isLoading } = useHeatmap();
 
@@ -31,3 +32,4 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(HeatmapPage);

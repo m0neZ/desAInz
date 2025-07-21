@@ -1,11 +1,12 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 
 const RolesList = dynamic(() => import('../../components/RolesList'));
 
-export default function RolesPage() {
+function RolesPage() {
   const { t } = useTranslation();
   return (
     <div>
@@ -21,3 +22,4 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(RolesPage);

@@ -1,9 +1,10 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useMetrics } from '../../lib/trpc/hooks';
 
-export default function MetricsPage() {
+function MetricsPage() {
   const { t } = useTranslation();
   const { data: metrics, isLoading } = useMetrics();
 
@@ -19,3 +20,4 @@ export const getStaticProps: GetStaticProps = async () => ({
   props: {},
   revalidate: 60,
 });
+export default withPageAuthRequired(MetricsPage);

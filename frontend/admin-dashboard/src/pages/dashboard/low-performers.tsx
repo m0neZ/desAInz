@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
 
 interface Performer {
@@ -6,7 +7,7 @@ interface Performer {
   revenue: number;
 }
 
-export default function LowPerformersPage() {
+function LowPerformersPage() {
   const { t } = useTranslation();
   const [items, setItems] = useState<Performer[]>([]);
   const base = process.env.NEXT_PUBLIC_ANALYTICS_URL ?? 'http://localhost:8000';
@@ -37,3 +38,4 @@ export default function LowPerformersPage() {
     </div>
   );
 }
+export default withPageAuthRequired(LowPerformersPage);

@@ -1,10 +1,11 @@
 import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useGalleryItems } from '../../lib/trpc/hooks';
 
-export default function GalleryPage() {
+function GalleryPage() {
   const { t } = useTranslation();
   const { data: items, isLoading } = useGalleryItems();
 
@@ -37,3 +38,4 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+export default withPageAuthRequired(GalleryPage);

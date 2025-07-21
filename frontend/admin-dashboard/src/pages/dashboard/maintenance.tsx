@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import { fetchWithAuth } from '../../hooks/useAuthFetch';
 
 const Button = dynamic(() => import('../../components/Button'));
 
-export default function MaintenancePage() {
+function MaintenancePage() {
   const { t } = useTranslation();
   const [status, setStatus] = useState('');
 
@@ -27,3 +28,4 @@ export default function MaintenancePage() {
     </div>
   );
 }
+export default withPageAuthRequired(MaintenancePage);

@@ -19,6 +19,7 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '\\.css$': '<rootDir>/__mocks__/styleMock.js',
+    '^@auth0/nextjs-auth0/client$': '<rootDir>/__mocks__/@auth0/nextjs-auth0/client.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   testPathIgnorePatterns: ['<rootDir>/e2e/'],

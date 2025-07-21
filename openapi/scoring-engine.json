@@ -1,217 +1,151 @@
 {
-  "openapi": "3.0.2",
-  "info": {
-    "title": "Scoring Engine",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "/weights": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WeightsUpdate"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/score": {
-      "post": {
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScoreRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/centroid/{source}": {
-      "get": {
-        "parameters": [
-          {
-            "name": "source",
-            "in": "path",
-            "required": true,
-            "schema": {"type": "string"}
-          }
-        ],
-        "responses": {"200": {"description": "OK"}}
-      }
-    },
-    "/health": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/ready": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Ready"
-          }
-        }
-      }
-    },
-    "/metrics": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "WeightsUpdate": {
-        "description": "Request payload for updating weight parameters.",
-        "properties": {
-          "freshness": {
-            "title": "Freshness",
-            "type": "number"
-          },
-          "engagement": {
-            "title": "Engagement",
-            "type": "number"
-          },
-          "novelty": {
-            "title": "Novelty",
-            "type": "number"
-          },
-          "community_fit": {
-            "title": "Community Fit",
-            "type": "number"
-          },
-          "seasonality": {
-            "title": "Seasonality",
-            "type": "number"
-          }
-        },
-        "required": [
-          "freshness",
-          "engagement",
-          "novelty",
-          "community_fit",
-          "seasonality"
-        ],
-        "title": "WeightsUpdate",
-        "type": "object"
-      },
-      "ScoreRequest": {
-        "description": "Request payload for scoring a signal.",
-        "properties": {
-          "timestamp": {
-            "format": "date-time",
-            "title": "Timestamp",
-            "type": "string"
-          },
-          "engagement_rate": {
-            "title": "Engagement Rate",
-            "type": "number"
-          },
-          "embedding": {
-            "items": {
-              "type": "number"
+    "openapi": "3.0.2",
+    "info": {"title": "Scoring Engine", "version": "1.0.0"},
+    "paths": {
+        "/weights": {
+            "get": {"responses": {"200": {"description": "OK"}}},
+            "put": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
+                        }
+                    },
+                    "required": true,
+                },
+                "responses": {"200": {"description": "OK"}},
             },
-            "title": "Embedding",
-            "type": "array"
-          },
-          "metadata": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "number"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Metadata"
-          },
-          "centroid": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "number"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Centroid"
-          },
-          "median_engagement": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Median Engagement"
-          },
-          "topics": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Topics"
-          }
         },
-        "required": [
-          "timestamp",
-          "engagement_rate",
-          "embedding"
-        ],
-        "title": "ScoreRequest",
-        "type": "object"
-      }
-    }
-  }
+        "/score": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"$ref": "#/components/schemas/ScoreRequest"}
+                        }
+                    },
+                    "required": true,
+                },
+                "responses": {"200": {"description": "OK"}},
+            }
+        },
+        "/search": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"$ref": "#/components/schemas/SearchRequest"}
+                        }
+                    },
+                    "required": true,
+                },
+                "responses": {"200": {"description": "OK"}},
+            }
+        },
+        "/centroid/{source}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "string"},
+                    }
+                ],
+                "responses": {"200": {"description": "OK"}},
+            }
+        },
+        "/health": {"get": {"responses": {"200": {"description": "OK"}}}},
+        "/ready": {"get": {"responses": {"200": {"description": "Ready"}}}},
+        "/metrics": {"get": {"responses": {"200": {"description": "OK"}}}},
+    },
+    "components": {
+        "schemas": {
+            "WeightsUpdate": {
+                "description": "Request payload for updating weight parameters.",
+                "properties": {
+                    "freshness": {"title": "Freshness", "type": "number"},
+                    "engagement": {"title": "Engagement", "type": "number"},
+                    "novelty": {"title": "Novelty", "type": "number"},
+                    "community_fit": {"title": "Community Fit", "type": "number"},
+                    "seasonality": {"title": "Seasonality", "type": "number"},
+                },
+                "required": [
+                    "freshness",
+                    "engagement",
+                    "novelty",
+                    "community_fit",
+                    "seasonality",
+                ],
+                "title": "WeightsUpdate",
+                "type": "object",
+            },
+            "ScoreRequest": {
+                "description": "Request payload for scoring a signal.",
+                "properties": {
+                    "timestamp": {
+                        "format": "date-time",
+                        "title": "Timestamp",
+                        "type": "string",
+                    },
+                    "engagement_rate": {"title": "Engagement Rate", "type": "number"},
+                    "embedding": {
+                        "items": {"type": "number"},
+                        "title": "Embedding",
+                        "type": "array",
+                    },
+                    "metadata": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {"type": "number"},
+                                "type": "object",
+                            },
+                            {"type": "null"},
+                        ],
+                        "default": null,
+                        "title": "Metadata",
+                    },
+                    "centroid": {
+                        "anyOf": [
+                            {"items": {"type": "number"}, "type": "array"},
+                            {"type": "null"},
+                        ],
+                        "default": null,
+                        "title": "Centroid",
+                    },
+                    "median_engagement": {
+                        "anyOf": [{"type": "number"}, {"type": "null"}],
+                        "default": null,
+                        "title": "Median Engagement",
+                    },
+                    "topics": {
+                        "anyOf": [
+                            {"items": {"type": "string"}, "type": "array"},
+                            {"type": "null"},
+                        ],
+                        "default": null,
+                        "title": "Topics",
+                    },
+                },
+                "required": ["timestamp", "engagement_rate", "embedding"],
+                "title": "ScoreRequest",
+                "type": "object",
+            },
+            "SearchRequest": {
+                "description": "Embedding search request.",
+                "properties": {
+                    "embedding": {
+                        "items": {"type": "number"},
+                        "title": "Embedding",
+                        "type": "array",
+                    },
+                    "limit": {"title": "Limit", "type": "integer", "default": 5},
+                    "source": {"title": "Source", "type": "string"},
+                },
+                "required": ["embedding"],
+                "title": "SearchRequest",
+                "type": "object",
+            },
+        }
+    },
 }

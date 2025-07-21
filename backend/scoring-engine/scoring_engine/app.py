@@ -18,6 +18,8 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.cache import AsyncRedis, get_async_client
+from sqlalchemy import select
+import numpy as np
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
     Counter,
@@ -76,6 +78,14 @@ class ScoreRequest(BaseModel):
     centroid: list[float] | None = None
     median_engagement: float | None = None
     topics: list[str] | None = None
+
+
+class SearchRequest(BaseModel):
+    """Request payload for embedding similarity search."""
+
+    embedding: list[float]
+    limit: int = 5
+    source: str | None = None
 
 
 configure_logging()
@@ -273,6 +283,37 @@ async def centroid_endpoint(source: str) -> JSONResponse:
     if centroid is None:
         return JSONResponse(status_code=404, content={"detail": "not found"})
     return JSONResponse({"centroid": [float(x) for x in centroid]})
+
+
+@app.post("/search")
+async def search_embeddings(body: SearchRequest) -> JSONResponse:
+    """Return embeddings most similar to ``body.embedding``."""
+
+    def _search() -> list[Embedding]:
+        with session_scope() as session:
+            if session.bind.dialect.name == "sqlite":
+                rows = session.query(Embedding).all()
+                if body.source is not None:
+                    rows = [r for r in rows if r.source == body.source]
+                query = np.array(body.embedding, dtype=float)
+                rows.sort(
+                    key=lambda r: float(
+                        np.linalg.norm(query - np.array(r.embedding, dtype=float))
+                    )
+                )
+                return rows[: body.limit]
+            stmt = (
+                select(Embedding)
+                .order_by(Embedding.embedding.op("<->")(body.embedding))
+                .limit(body.limit)
+            )
+            if body.source is not None:
+                stmt = stmt.where(Embedding.source == body.source)
+            return session.scalars(stmt).all()
+
+    results = await run_in_threadpool(_search)
+    payload = [{"id": row.id, "source": row.source} for row in results]
+    return JSONResponse({"results": payload})
 
 
 @app.post("/score")

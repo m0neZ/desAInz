@@ -76,6 +76,19 @@ Run the migration tests to verify the chain is valid:
 pytest tests/test_migrations.py tests/integration/test_alembic_heads.py
 ```
 
+## Smoke Test
+
+After building Docker images locally or in CI, run a smoke test to ensure the
+core services start and pass their health checks:
+
+```bash
+./scripts/smoke_compose.sh
+```
+
+The script brings up the essential containers defined in
+`docker-compose.test.yml`, waits for each `/ready` endpoint to respond and fails
+if any service becomes unhealthy or stops.
+
 ## Third-Party Licenses
 
 Generate the bundled `LICENSES` file with:

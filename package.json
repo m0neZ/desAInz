@@ -37,7 +37,7 @@
     "flow-bin": "^0.275.0",
     "next": "15.4.1",
     "prettier": "^3.6.2",
-    "stylelint": "^16.21.1",
+    "stylelint": "^16.22.0",
     "stylelint-config-css-modules": "^4.5.1",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-config-tailwindcss": "^1.0.0",

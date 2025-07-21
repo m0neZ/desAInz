@@ -39,7 +39,9 @@ jobs:
       - name: Run ESLint/Prettier/Stylelint
         run: npm run lint
       - name: Run CSS lint
-        run: npm run lint:css
+        run: |
+          npm run lint:css
+          npm run lint:css --prefix frontend/admin-dashboard
       - name: Run Flow
         run: |
           npm run flow

@@ -17,6 +17,7 @@ from .routes import router
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
 from backend.shared.db import run_migrations_if_needed
 from backend.shared import add_error_handlers, configure_sentry
@@ -158,15 +159,15 @@ async def enforce_rate_limit(
 
 
 @app.get("/health", tags=["Status"], summary="Service liveness")
-async def health() -> dict[str, str]:
+async def health() -> Response:
     """Return service liveness."""
-    return {"status": "ok"}
+    return json_cached({"status": "ok"})
 
 
 @app.get("/ready", tags=["Status"], summary="Service readiness")
-async def ready() -> dict[str, str]:
+async def ready() -> Response:
     """Return service readiness."""
-    return {"status": "ready"}
+    return json_cached({"status": "ready"})
 
 
 app.include_router(router)

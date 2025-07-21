@@ -9,6 +9,7 @@ from .feature_flags import initialize as init_feature_flags, is_enabled
 from .errors import add_error_handlers, add_flask_error_handlers
 from .currency import convert_price, start_rate_updater
 from .metrics import register_metrics
+from .responses import cache_header, json_cached
 from .config import settings
 
 __all__ = [
@@ -23,5 +24,7 @@ __all__ = [
     "convert_price",
     "start_rate_updater",
     "register_metrics",
+    "cache_header",
+    "json_cached",
     "settings",
 ]

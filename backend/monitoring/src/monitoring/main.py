@@ -17,6 +17,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Histogram
 from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
 
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
@@ -229,15 +230,15 @@ async def logs() -> dict[str, str]:
 
 
 @app.get("/health")
-async def health() -> dict[str, str]:
+async def health() -> Response:
     """Return service liveness."""
-    return {"status": "ok"}
+    return json_cached({"status": "ok"})
 
 
 @app.get("/ready")
-async def ready() -> dict[str, str]:
+async def ready() -> Response:
     """Return service readiness."""
-    return {"status": "ready"}
+    return json_cached({"status": "ready"})
 
 
 if __name__ == "__main__":  # pragma: no cover

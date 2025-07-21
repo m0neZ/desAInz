@@ -10,6 +10,7 @@ from typing import Any, Callable, Coroutine
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
 from pydantic import BaseModel
 
 from .ab_testing import ABTestManager
@@ -75,15 +76,15 @@ async def add_correlation_id(
 
 
 @app.get("/health")
-async def health() -> dict[str, str]:
+async def health() -> Response:
     """Return service liveness."""
-    return {"status": "ok"}
+    return json_cached({"status": "ok"})
 
 
 @app.get("/ready")
-async def ready() -> dict[str, str]:
+async def ready() -> Response:
     """Return service readiness."""
-    return {"status": "ready"}
+    return json_cached({"status": "ready"})
 
 
 def _validate_variant(variant: str) -> None:

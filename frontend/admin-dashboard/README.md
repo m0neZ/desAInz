@@ -18,6 +18,8 @@ The dashboard reads the following variables at build time:
   `http://localhost:8000` when not specified.
 - `NEXT_PUBLIC_CDN_BASE_URL` - If set, static asset URLs are prefixed with this
   value so that content can be served through the CDN proxy.
+- `NEXT_PUBLIC_WS_MAX_RETRIES` - Maximum number of times the dashboard will
+  attempt to reconnect to the WebSocket metrics stream. Defaults to `5`.
 
 ### Auth0 Configuration
 

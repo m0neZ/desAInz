@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from contextlib import contextmanager
-from typing import Iterator
+from typing import Iterator, Any
 import os
 import time
 
@@ -32,10 +32,10 @@ from backend.shared.config import settings
 from . import model_repository
 
 
-def _get_storage_client():
+def _get_storage_client() -> Any:
     """Return a MinIO or boto3 client based on environment configuration."""
     if settings.s3_endpoint and "amazonaws" not in settings.s3_endpoint:
-        from minio import Minio  # type: ignore
+        from minio import Minio
 
         secure = settings.s3_endpoint.startswith("https")
         host = settings.s3_endpoint.replace("https://", "").replace("http://", "")
@@ -203,16 +203,12 @@ def generate_mockup(
                         client.upload_file(
                             str(output_path), settings.s3_bucket, obj_name
                         )
-                    base = (
-                        settings.s3_endpoint.rstrip("/")
-                        if settings.s3_endpoint
-                        else "s3://"
-                    )
-                    uri = (
-                        f"{base}/{settings.s3_bucket}/{obj_name}"
-                        if settings.s3_endpoint
-                        else f"s3://{settings.s3_bucket}/{obj_name}"
-                    )
+                    base = settings.s3_base_url or settings.s3_endpoint
+                    if base:
+                        base = base.rstrip("/")
+                        uri = f"{base}/{settings.s3_bucket}/{obj_name}"
+                    else:
+                        uri = f"s3://{settings.s3_bucket}/{obj_name}"
                     metadata = listing_gen.generate(keywords)
                     model_repository.save_generated_mockup(
                         prompt,

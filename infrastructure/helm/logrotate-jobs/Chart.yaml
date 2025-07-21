@@ -1,0 +1,6 @@
+apiVersion: v2
+name: logrotate-jobs
+version: 0.1.0
+description: Helm chart for log rotation jobs
+type: application
+appVersion: "1.0"

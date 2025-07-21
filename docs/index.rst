@@ -26,6 +26,7 @@ Welcome to desAInz's documentation!
    load_testing
    mocking
    maintenance
+   operations
    listing_sync
    publish_tasks
    i18n

@@ -29,3 +29,7 @@ orchestrator:
 backup-jobs:
   image:
     tag: latest
+
+logrotate-jobs:
+  image:
+    tag: latest

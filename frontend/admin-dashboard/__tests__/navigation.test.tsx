@@ -5,12 +5,6 @@ import Router from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import AdminLayout from '../src/layouts/AdminLayout';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key.charAt(0).toUpperCase() + key.slice(1),
-  }),
-}));
-
 function renderWithRouter(ui: React.ReactElement) {
   return render(
     <RouterContext.Provider value={Router}>{ui}</RouterContext.Provider>

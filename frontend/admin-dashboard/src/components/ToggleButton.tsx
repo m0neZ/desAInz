@@ -1,13 +1,11 @@
 // @flow
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 /**
  * Button that toggles between "On" and "Off" when clicked.
  */
 export function ToggleButton() {
   const [on, setOn] = useState(false);
-  const { t } = useTranslation();
 
   const toggle = () => setOn(!on);
 
@@ -20,13 +18,13 @@ export function ToggleButton() {
 
   return (
     <button
-      aria-label={t('toggle')}
+      aria-label="Toggle"
       aria-pressed={on}
       onClick={toggle}
       onKeyDown={onKeyDown}
       data-testid="toggle-button"
     >
-      {on ? t('on') : t('off')}
+      {on ? 'On' : 'Off'}
     </button>
   );
 }

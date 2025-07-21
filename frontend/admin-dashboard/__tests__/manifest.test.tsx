@@ -12,4 +12,3 @@ describe('PWA manifest', () => {
     expect(fs.existsSync(manifestPath)).toBe(true);
   });
 });
-

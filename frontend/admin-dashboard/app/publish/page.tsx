@@ -1,10 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { trpc, type PublishTask } from '../../src/trpc';
 
 export default function PublishPage() {
-  const { t } = useTranslation();
   const [tasks, setTasks] = useState<PublishTask[]>([]);
 
   useEffect(() => {
@@ -16,7 +14,7 @@ export default function PublishPage() {
 
   return (
     <div className="space-y-2">
-      <h1>{t('publishTasks')}</h1>
+      <h1>Publish Tasks</h1>
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>

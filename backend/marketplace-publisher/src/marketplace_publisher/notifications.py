@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
-    """Send Slack and PagerDuty alerts in the background."""
+    """Send Discord and PagerDuty alerts in the background."""
     payload: dict[str, Any] = {
         "text": f"Publish task {task_id} failed for {marketplace}",
     }
@@ -28,9 +28,7 @@ async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
         if not webhook:
             return
         try:
-            await asyncio.to_thread(
-                requests.post, webhook, json=payload, timeout=2
-            )
+            await asyncio.to_thread(requests.post, webhook, json=payload, timeout=2)
         except requests.RequestException as exc:  # pragma: no cover - best effort
             logger.warning("notification failed: %s", exc)
 

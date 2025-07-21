@@ -30,7 +30,6 @@ Welcome to desAInz's documentation!
    operations
    listing_sync
    publish_tasks
-   i18n
    security
    roles
    daily_summary

@@ -142,7 +142,7 @@ This document outlines the detailed system architecture and technology stack for
 **UI/UX and Styling**
 
 - **Tailwind CSS**: Utility-first CSS framework for rapid, consistent styling
-- **Shadcn/UI**: High-quality, accessible React components built on Radix UI
+ - **Shadcn/UI**: High-quality React components built on Radix UI
 - **Framer Motion**: Animation library for smooth, Apple-like transitions and interactions
 - **Lucide React**: Beautiful, customizable icon library
 

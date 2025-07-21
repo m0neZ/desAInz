@@ -4,8 +4,17 @@ from typing import Any, Dict, cast
 import os
 
 import httpx
+import asyncio
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Request,
+    WebSocket,
+    WebSocketDisconnect,
+    status,
+)
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 import sqlalchemy as sa
@@ -474,6 +483,26 @@ async def retry_publish_task(
         {"task_id": task_id},
     )
     return {"status": "scheduled"}
+
+
+@router.websocket("/ws/metrics")
+async def metrics_ws(websocket: WebSocket) -> None:
+    """Stream monitoring metrics to the connected client."""
+    await websocket.accept()
+    try:
+        async with httpx.AsyncClient() as client:
+            while True:
+                overview = await client.get(f"{MONITORING_URL}/overview")
+                analytics = await client.get(f"{MONITORING_URL}/analytics")
+                data: Dict[str, Any] = {}
+                if overview.status_code == 200:
+                    data.update(cast(Dict[str, Any], overview.json()))
+                if analytics.status_code == 200:
+                    data.update(cast(Dict[str, Any], analytics.json()))
+                await websocket.send_json(data)
+                await asyncio.sleep(5)
+    except WebSocketDisconnect:
+        return
 
 
 router.include_router(optimization_router)

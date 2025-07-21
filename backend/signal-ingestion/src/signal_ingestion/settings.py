@@ -20,7 +20,8 @@ class Settings(BaseSettings):  # type: ignore[misc]
     ingest_interval_minutes: int = 60
     ingest_cron: str | None = None
     http_proxies: HttpUrl | None = None
-    adapter_rate_limit: int = 5
+    adapter_rate_limit: dict[str, int] = {}
+    default_adapter_rate_limit: int = 5
     enabled_adapters: list[str] | None = None
     instagram_token: str | None = None
     instagram_user_id: str | None = None
@@ -36,12 +37,31 @@ class Settings(BaseSettings):  # type: ignore[misc]
     events_country_code: str = "US"
     events_fetch_limit: int = 1
 
+    @field_validator("adapter_rate_limit", mode="before")  # type: ignore[misc]
+    @classmethod
+    def _parse_limits(cls, value: str | dict[str, int] | None) -> dict[str, int]:
+        if value is None:
+            return {}
+        if isinstance(value, dict):
+            return value
+        value = str(value).strip()
+        if not value:
+            return {}
+        if value.isdigit():
+            return {"default": int(value)}
+        limits: dict[str, int] = {}
+        for part in value.split(","):
+            if ":" not in part:
+                continue
+            name, num = part.split(":", 1)
+            limits[name.strip()] = int(num)
+        return limits
+
     @field_validator(  # type: ignore[misc]
         "dedup_error_rate",
         "dedup_capacity",
         "dedup_ttl",
         "ingest_interval_minutes",
-        "adapter_rate_limit",
         "instagram_fetch_limit",
         "reddit_fetch_limit",
         "youtube_fetch_limit",
@@ -82,6 +102,13 @@ class Settings(BaseSettings):  # type: ignore[misc]
         if value is not None and not value.strip():
             return None
         return value
+
+    def adapter_limit(self, name: str) -> int:
+        """Return request limit for ``name`` or the default."""
+        return self.adapter_rate_limit.get(
+            name,
+            self.adapter_rate_limit.get("default", self.default_adapter_rate_limit),
+        )
 
 
 Settings.model_rebuild()

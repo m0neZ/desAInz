@@ -2,6 +2,7 @@
 import React from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useGalleryItems } from '../../lib/trpc/hooks';
@@ -18,14 +19,15 @@ function GalleryPage() {
       ) : (
         <div className="grid grid-cols-3 gap-2">
           {items.map((item) => (
-            <Image
-              key={item.id}
-              src={item.imageUrl}
-              alt={item.title}
-              width={200}
-              height={200}
-              className="border"
-            />
+            <Link key={item.id} href={`/dashboard/publish?mockupId=${item.id}`}>
+              <Image
+                src={item.imageUrl}
+                alt={item.title}
+                width={200}
+                height={200}
+                className="border"
+              />
+            </Link>
           ))}
         </div>
       )}

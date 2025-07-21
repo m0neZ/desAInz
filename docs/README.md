@@ -40,8 +40,9 @@ development or via Docker/Kubernetes secrets mounted under `/run/secrets`. The
 
 Load tests use [Locust](https://locust.io/) and live in the `load_tests`
 directory. To exercise the endpoints locally, start the services you want to
-benchmark and run `scripts/run_load_tests.sh`. Continuous integration executes
-the same script via the `loadtest` workflow.
+benchmark and run `scripts/run_load_tests.sh`. Continuous integration deploys a
+temporary staging environment via the `loadtest` workflow and runs the
+integration suite against AWS resources using an ephemeral bucket.
 
 ### Expected Throughput
 

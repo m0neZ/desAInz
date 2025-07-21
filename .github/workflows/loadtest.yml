@@ -9,28 +9,51 @@ on:
 jobs:
   loadtest:
     runs-on: ubuntu-latest
+    env:
+      PYTHONWARNINGS: error
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
             requirements-dev.txt
-      - name: Install dependencies
+      - name: Set up Kubernetes
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+      - name: Set up AWS CLI
+        uses: aws-actions/setup-cli@v2
+      - name: Create staging namespace
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt -r requirements-dev.txt
-          pip install locust
-          python -m pip install -e .
-      - name: Start services
+          NS="staging-${{ github.run_id }}"
+          echo "NS=$NS" >> "$GITHUB_ENV"
+          kubectl create namespace "$NS"
+          ./scripts/sync_staging_secrets.sh prod "$NS"
+      - name: Deploy services
+        uses: ./.github/actions/blue-green-rollout
+        with:
+          namespace: ${{ env.NS }}
+          services: >-
+            orchestrator ai-mockup-generation data-storage signal-ingestion
+            scoring-engine marketplace-publisher feedback-loop
+          registry: example
+          tag: main
+      - name: Create ephemeral S3 bucket
         run: |
-          python backend/service-template/src/main.py &
-          python backend/monitoring/src/monitoring/main.py &
-          python -m uvicorn backend.optimization.api:app --port 8003 &
-          sleep 5
-      - name: Run load tests
+          BUCKET="desainz-${{ github.run_id }}"
+          echo "BUCKET=$BUCKET" >> "$GITHUB_ENV"
+          aws s3api create-bucket --bucket "$BUCKET"
+          ./scripts/setup_storage.sh "$BUCKET"
+      - name: Run integration tests
+        env:
+          S3_BUCKET: ${{ env.BUCKET }}
+        run: ./scripts/run-integration-tests.sh
+      - name: Teardown resources
+        if: always()
         run: |
-          ./scripts/run_load_tests.sh
+          aws s3 rb "s3://${{ env.BUCKET }}" --force || true
+          kubectl delete namespace "$NS" --wait || true

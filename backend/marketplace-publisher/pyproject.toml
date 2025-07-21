@@ -29,6 +29,7 @@ docformatter = "*"
 pydocstyle = "*"
 mypy = "*"
 pytest = "*"
+pytest-recording = "*"
 pytest-asyncio = "*"
 httpx = "*"
 

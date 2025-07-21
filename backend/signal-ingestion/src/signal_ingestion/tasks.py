@@ -35,15 +35,25 @@ _PROXIES = (
     if settings.http_proxies
     else None
 )
-_RATE_LIMIT = settings.adapter_rate_limit
-
 ADAPTERS: dict[str, BaseAdapter] = {
-    "tiktok": TikTokAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
-    "instagram": InstagramAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
-    "reddit": RedditAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
-    "youtube": YouTubeAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
-    "events": EventsAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
-    "nostalgia": NostalgiaAdapter(proxies=_PROXIES, rate_limit=_RATE_LIMIT),
+    "tiktok": TikTokAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("tiktok")
+    ),
+    "instagram": InstagramAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("instagram")
+    ),
+    "reddit": RedditAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("reddit")
+    ),
+    "youtube": YouTubeAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("youtube")
+    ),
+    "events": EventsAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("events")
+    ),
+    "nostalgia": NostalgiaAdapter(
+        proxies=_PROXIES, rate_limit=settings.adapter_limit("nostalgia")
+    ),
 }
 
 # Task metrics

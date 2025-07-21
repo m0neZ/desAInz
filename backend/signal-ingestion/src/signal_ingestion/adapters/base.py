@@ -1,8 +1,4 @@
-"""
-Base adapter with rate limiting and proxy rotation.
-
-Each adapter type has its own asyncio semaphore to throttle concurrent requests.
-"""
+"""Base adapter with rate limiting and proxy rotation."""
 
 from __future__ import annotations
 
@@ -11,13 +7,15 @@ import itertools
 import os
 from typing import Any, Iterable, Optional, cast
 
+from ..rate_limit import AdapterRateLimiter
+
 import httpx
 
 
 class BaseAdapter:
     """Provide HTTP fetching with rate limiting and rotating proxies."""
 
-    _semaphores: dict[type, asyncio.Semaphore] = {}
+    _limiters: dict[type, AdapterRateLimiter] = {}
 
     def __init__(
         self,
@@ -38,9 +36,11 @@ class BaseAdapter:
             Maximum number of concurrent requests for this adapter.
         """
         self.base_url = base_url
-        if self.__class__ not in BaseAdapter._semaphores:
-            BaseAdapter._semaphores[self.__class__] = asyncio.Semaphore(rate_limit)
-        self._rate_limiter = BaseAdapter._semaphores[self.__class__]
+        if self.__class__ not in BaseAdapter._limiters:
+            BaseAdapter._limiters[self.__class__] = AdapterRateLimiter(
+                {self.__class__.__name__: rate_limit}
+            )
+        self._rate_limiter = BaseAdapter._limiters[self.__class__]
         if proxies is None:
             raw = os.environ.get("HTTP_PROXIES")
             parsed = raw.split(",") if raw else []
@@ -55,13 +55,13 @@ class BaseAdapter:
         self, path: str, *, headers: dict[str, str] | None = None
     ) -> httpx.Response:
         """Perform a GET request respecting rate limits and proxies."""
-        async with self._rate_limiter:
-            proxy = next(self._proxies_cycle)
-            async with httpx.AsyncClient(proxy=cast(Any, proxy)) as client:
-                url = path if path.startswith("http") else f"{self.base_url}{path}"
-                resp = await client.get(url, headers=headers)
-                resp.raise_for_status()
-                return resp
+        await self._rate_limiter.acquire(self.__class__.__name__)
+        proxy = next(self._proxies_cycle)
+        async with httpx.AsyncClient(proxy=cast(Any, proxy)) as client:
+            url = path if path.startswith("http") else f"{self.base_url}{path}"
+            resp = await client.get(url, headers=headers)
+            resp.raise_for_status()
+            return resp
 
     async def fetch(self) -> list[dict[str, object]]:
         """Fetch raw data from the remote source."""

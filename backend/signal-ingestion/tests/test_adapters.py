@@ -4,11 +4,19 @@ from __future__ import annotations
 
 import os
 import sys
+import warnings
 import asyncio
 from types import TracebackType
-from typing import cast
+import types
+from typing import cast, Generator
 import pytest
+import fakeredis.aioredis
+import fakeredis
+
+from backend.shared import cache
 import vcr
+
+warnings.filterwarnings("ignore", category=ResourceWarning)
 import httpx
 
 sys.path.insert(
@@ -33,15 +41,38 @@ ADAPTERS = [
 ]
 
 
+@pytest.fixture(autouse=True)  # type: ignore[misc]
+def _fake_redis(monkeypatch: pytest.MonkeyPatch) -> Generator[None, None, None]:
+    """Provide fakeredis clients to the adapters."""
+    fake_sync = fakeredis.FakeRedis()
+    fake_async = fakeredis.aioredis.FakeRedis()
+    monkeypatch.setattr(cache, "get_sync_client", lambda: fake_sync)
+    monkeypatch.setattr(cache, "get_async_client", lambda: fake_async)
+    import signal_ingestion.rate_limit as rl
+
+    monkeypatch.setattr(rl, "get_async_client", lambda: fake_async)
+    sys.modules["signal_ingestion.dedup"] = types.SimpleNamespace(  # type: ignore[assignment]
+        redis_client=fake_sync,
+        initialize=lambda *a, **k: None,
+        is_duplicate=lambda k: False,
+        add_key=lambda k: None,
+    )
+    yield
+    fake_sync.close()
+    fake_async.close()
+
+
 @pytest.mark.parametrize("adapter_cls, name", ADAPTERS)  # type: ignore[misc]
 @pytest.mark.asyncio()  # type: ignore[misc]
 async def test_fetch(
     adapter_cls: type[BaseAdapter], name: str, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Each adapter should invoke its HTTP layer and return data."""
-    adapter = adapter_cls()  # type: ignore[call-arg]
+    adapter = adapter_cls()
 
-    async def fake_request(path: str, *args: object, **kwargs: object) -> httpx.Response:
+    async def fake_request(
+        path: str, *args: object, **kwargs: object
+    ) -> httpx.Response:
         request = httpx.Request("GET", path)
         if name == "instagram":
             response = httpx.Response(400, request=request)
@@ -50,15 +81,33 @@ async def test_fetch(
         if name == "reddit":
             return httpx.Response(
                 200,
-                json={"data": {"children": [{"data": {"id": "1", "title": "foo", "permalink": "/r/python"}}]}},
+                json={
+                    "data": {
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "1",
+                                    "title": "foo",
+                                    "permalink": "/r/python",
+                                }
+                            }
+                        ]
+                    }
+                },
                 request=request,
             )
         if name == "youtube":
             if path.startswith("/youtube"):
-                return httpx.Response(200, json={"items": [{"id": "a"}]}, request=request)
-            return httpx.Response(200, json={"title": "v", "html": "", "author_url": ""}, request=request)
+                return httpx.Response(
+                    200, json={"items": [{"id": "a"}]}, request=request
+                )
+            return httpx.Response(
+                200, json={"title": "v", "html": "", "author_url": ""}, request=request
+            )
         if name == "events":
-            return httpx.Response(200, json=[{"date": "2025-01-01", "name": "Holiday"}], request=request)
+            return httpx.Response(
+                200, json=[{"date": "2025-01-01", "name": "Holiday"}], request=request
+            )
         if name == "nostalgia":
             return httpx.Response(
                 200,
@@ -86,7 +135,7 @@ class _DummyAdapter(TikTokAdapter):  # type: ignore[misc]
 @pytest.mark.asyncio()  # type: ignore[misc]
 async def test_custom_rate_limit(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ensure the adapter enforces the configured rate limit."""
-    BaseAdapter._semaphores.clear()
+    BaseAdapter._limiters.clear()
 
     order: list[str] = []
 
@@ -125,7 +174,7 @@ async def test_custom_rate_limit(monkeypatch: pytest.MonkeyPatch) -> None:
 @pytest.mark.asyncio()  # type: ignore[misc]
 async def test_proxy_rotation(monkeypatch: pytest.MonkeyPatch) -> None:
     """Adapters rotate through configured proxies."""
-    BaseAdapter._semaphores.clear()
+    BaseAdapter._limiters.clear()
 
     used: list[str | None] = []
 

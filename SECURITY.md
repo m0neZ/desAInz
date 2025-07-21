@@ -12,7 +12,8 @@ Third-party Python packages are scanned with `pip-audit` and Docker images are s
 
 ## Dynamic Scanning
 
-OWASP ZAP runs against the development server to find common web vulnerabilities. Failing checks will stop the CI run.
+Each push to `main` triggers an OWASP ZAP baseline scan against the staging environment (`https://staging.example.com`).
+The resulting report is parsed and the workflow fails if any medium or high vulnerabilities are found.
 
 ## Mitigation Tracking
 

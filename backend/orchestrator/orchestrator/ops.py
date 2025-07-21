@@ -248,8 +248,16 @@ def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
     """Rotate Kubernetes secrets via :mod:`scripts.rotate_secrets`."""
-
     context.log.info("rotating Kubernetes secrets")
     from scripts.rotate_secrets import rotate
 
     rotate()
+
+
+@op  # type: ignore[misc]
+def sync_listing_states_op(context) -> None:  # type: ignore[no-untyped-def]
+    """Synchronize marketplace listing states with the local database."""
+    context.log.info("synchronizing listing states")
+    from scripts import listing_sync
+
+    listing_sync.main()

@@ -17,6 +17,7 @@ from .ops import (
     ingest_signals,
     publish_content,
     score_signals,
+    sync_listing_states_op,
 )
 from .hooks import record_failure, record_success
 
@@ -58,5 +59,10 @@ def daily_summary_job() -> None:
 @job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
 def rotate_secrets_job() -> None:
     """Job rotating API tokens and updating Kubernetes secrets."""
-
     rotate_k8s_secrets_op()
+
+
+@job(hooks={record_success, record_failure}, retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def sync_listings_job() -> None:
+    """Job synchronizing marketplace listing states."""
+    sync_listing_states_op()

@@ -66,6 +66,11 @@ def setup_scheduler() -> BlockingScheduler:
     return scheduler
 
 
+def main() -> None:
+    """Run a single synchronization iteration."""
+    sync_listing_states()
+
+
 if __name__ == "__main__":  # pragma: no cover
     logging.basicConfig(level=logging.INFO)
     scheduler = setup_scheduler()

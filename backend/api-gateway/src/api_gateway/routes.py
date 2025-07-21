@@ -579,6 +579,7 @@ async def retry_publish_task(
 async def metrics_ws(websocket: WebSocket) -> None:
     """Stream monitoring metrics to the connected client."""
     await websocket.accept()
+    await websocket.send_json({"interval_ms": settings.ws_interval_ms})
     try:
         async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
             while True:
@@ -590,7 +591,7 @@ async def metrics_ws(websocket: WebSocket) -> None:
                 if analytics.status_code == 200:
                     data.update(cast(Dict[str, Any], analytics.json()))
                 await websocket.send_json(data)
-                await asyncio.sleep(5)
+                await asyncio.sleep(settings.ws_interval_ms / 1000)
     except WebSocketDisconnect:
         return
 

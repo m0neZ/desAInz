@@ -23,6 +23,9 @@ export function useLiveMetrics() {
     10
   );
 
+  const intervalRef = useRef(5000);
+  const lastUpdate = useRef(0);
+
   const wsRef = useRef<WebSocket | null>(null);
   const closedByUser = useRef(false);
 
@@ -40,7 +43,17 @@ export function useLiveMetrics() {
       wsRef.current = ws;
       ws.onmessage = (event) => {
         try {
-          setMetrics(JSON.parse(event.data) as LiveMetrics);
+          const parsed = JSON.parse(event.data);
+          if (typeof parsed.interval_ms === 'number') {
+            intervalRef.current = parsed.interval_ms;
+            return;
+          }
+          const now = Date.now();
+          if (now - lastUpdate.current < intervalRef.current) {
+            return;
+          }
+          lastUpdate.current = now;
+          setMetrics(parsed as LiveMetrics);
         } catch {
           // ignore invalid messages
         }

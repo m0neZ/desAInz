@@ -47,6 +47,7 @@ async def test_metrics_ws(monkeypatch: Any) -> None:
     """Verify metrics are streamed over websockets."""
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    monkeypatch.setenv("API_GATEWAY_WS_INTERVAL_MS", "1000")
     import backend.shared.config as shared_config
 
     shared_config.settings.redis_url = "redis://localhost:6379/0"
@@ -85,14 +86,20 @@ async def test_metrics_ws(monkeypatch: Any) -> None:
     mon_server, mon_thread = _start_server(monitoring_app, 9002)
     gw_server, gw_thread = _start_server(main_module.app, 9001)
 
-    async def fake_sleep(_: float) -> None:
+    sleep_calls: list[float] = []
+
+    async def fake_sleep(d: float) -> None:
+        sleep_calls.append(d)
         return None
 
     monkeypatch.setattr(asyncio, "sleep", fake_sleep)
     try:
         async with websockets.connect("ws://127.0.0.1:9001/ws/metrics") as ws:
+            interval = json.loads(await ws.recv())
+            assert interval == {"interval_ms": 1000}
             data = json.loads(await ws.recv())
             assert data == {"cpu_percent": 1, "active_users": 2}
+            assert sleep_calls and sleep_calls[0] == 1.0
     finally:
         gw_server.should_exit = True
         mon_server.should_exit = True

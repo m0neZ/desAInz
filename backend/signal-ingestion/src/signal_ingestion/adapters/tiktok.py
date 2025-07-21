@@ -37,5 +37,7 @@ class TikTokAdapter(BaseAdapter):
         results: list[dict[str, Any]] = []
         for url in self.video_urls[: self.fetch_limit]:
             resp = await self._request(f"/oembed?url={url}")
+            if resp is None:
+                continue
             results.append(resp.json())
         return results

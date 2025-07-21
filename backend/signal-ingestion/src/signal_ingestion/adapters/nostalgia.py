@@ -33,6 +33,8 @@ class NostalgiaAdapter(BaseAdapter):
         resp = await self._request(
             f"/advancedsearch.php?q={self.query}&output=json&rows={remaining}"
         )
+        if resp is None:
+            return []
         data = resp.json()
         docs = data.get("response", {}).get("docs", [])
         start = len(docs)
@@ -41,6 +43,8 @@ class NostalgiaAdapter(BaseAdapter):
             resp = await self._request(
                 f"/advancedsearch.php?q={self.query}&output=json&rows={remaining}&start={start}"
             )
+            if resp is None:
+                break
             page = resp.json()
             page_docs = page.get("response", {}).get("docs", [])
             if not page_docs:

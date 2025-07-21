@@ -31,6 +31,8 @@ class YouTubeAdapter(BaseAdapter):
         """Fetch oEmbed data for ``video_id``."""
         url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}"
         resp = await self._request(url)
+        if resp is None:
+            return {}
         return resp.json()
 
     async def fetch(self) -> list[dict[str, Any]]:
@@ -39,6 +41,8 @@ class YouTubeAdapter(BaseAdapter):
         resp = await self._request(
             f"/youtube/v3/videos?part=id&chart=mostPopular&maxResults={remaining}&key={self.api_key}"
         )
+        if resp is None:
+            return []
         data = resp.json()
         ids = [item["id"] for item in data.get("items", [])]
         next_token = data.get("nextPageToken")
@@ -47,6 +51,8 @@ class YouTubeAdapter(BaseAdapter):
             resp = await self._request(
                 f"/youtube/v3/videos?part=id&chart=mostPopular&maxResults={remaining}&pageToken={next_token}&key={self.api_key}"
             )
+            if resp is None:
+                break
             page = resp.json()
             ids.extend([item["id"] for item in page.get("items", [])])
             next_token = page.get("nextPageToken")

@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-import asyncio
 import itertools
 import os
 from typing import Any, Iterable, Optional, cast
 
 from ..rate_limit import AdapterRateLimiter
+from backend.shared.cache import async_get, async_set
 
 import httpx
 
@@ -53,13 +53,28 @@ class BaseAdapter:
 
     async def _request(
         self, path: str, *, headers: dict[str, str] | None = None
-    ) -> httpx.Response:
-        """Perform a GET request respecting rate limits and proxies."""
+    ) -> httpx.Response | None:
+        """
+        Return the response for ``path`` using ETag caching.
+
+        The cached ETag for ``path`` is sent via ``If-None-Match`` and any new
+        ETag value is persisted. ``None`` is returned when the server responds
+        with ``304 Not Modified`` to signal that processing should be skipped.
+        """
         await self._rate_limiter.acquire(self.__class__.__name__)
         proxy = next(self._proxies_cycle)
         async with httpx.AsyncClient(proxy=cast(Any, proxy)) as client:
             url = path if path.startswith("http") else f"{self.base_url}{path}"
-            resp = await client.get(url, headers=headers)
+            etag_key = f"etag:{url}"
+            req_headers = dict(headers or {})
+            cached_etag = await async_get(etag_key)
+            if cached_etag:
+                req_headers["If-None-Match"] = cached_etag
+            resp = await client.get(url, headers=req_headers or None)
+            if resp.status_code == 304:
+                return None
+            if etag := resp.headers.get("ETag"):
+                await async_set(etag_key, etag)
             resp.raise_for_status()
             return resp
 

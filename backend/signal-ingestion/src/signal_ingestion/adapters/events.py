@@ -22,13 +22,13 @@ class EventsAdapter(BaseAdapter):
     ) -> None:
         """Initialize adapter with optional ``base_url``."""
         self.country_code = country_code or os.environ.get("EVENTS_COUNTRY_CODE", "US")
-        self.fetch_limit = fetch_limit or int(
-            os.environ.get("EVENTS_FETCH_LIMIT", "1")
-        )
+        self.fetch_limit = fetch_limit or int(os.environ.get("EVENTS_FETCH_LIMIT", "1"))
         super().__init__(base_url or "https://date.nager.at", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:
         """Return upcoming public holidays."""
         resp = await self._request(f"/api/v3/NextPublicHolidays/{self.country_code}")
+        if resp is None:
+            return []
         data = resp.json()[: self.fetch_limit]
         return data

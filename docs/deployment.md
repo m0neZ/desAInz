@@ -40,19 +40,69 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 3. Configure ingress and TLS termination for external access. An ingress controller such as NGINX is recommended.
 4. Deploy individual services using the Helm charts in `infrastructure/helm`. Each chart exposes
    values for the container image tag, environment variables and optional horizontal pod
-   autoscaler settings:
+   autoscaler settings. The following commands show how to install every service with
+   the provided values files:
 
    ```bash
+   helm install signal-ingestion infrastructure/helm/signal-ingestion \
+     -f infrastructure/helm/signal-ingestion/values-dev.yaml
+   helm install data-storage infrastructure/helm/data-storage \
+     -f infrastructure/helm/data-storage/values-dev.yaml
+   helm install scoring-engine infrastructure/helm/scoring-engine \
+     -f infrastructure/helm/scoring-engine/values-dev.yaml
+   helm install ai-mockup-generation infrastructure/helm/ai-mockup-generation \
+     -f infrastructure/helm/ai-mockup-generation/values-dev.yaml
+   helm install marketplace-publisher infrastructure/helm/marketplace-publisher \
+     -f infrastructure/helm/marketplace-publisher/values-dev.yaml
+   helm install feedback-loop infrastructure/helm/feedback-loop \
+     -f infrastructure/helm/feedback-loop/values-dev.yaml
    helm install orchestrator infrastructure/helm/orchestrator \
      -f infrastructure/helm/orchestrator/values-dev.yaml
+   helm install backup-jobs infrastructure/helm/backup-jobs \
+     -f infrastructure/helm/backup-jobs/values-dev.yaml
+   helm install logrotate-jobs infrastructure/helm/logrotate-jobs \
+     -f infrastructure/helm/logrotate-jobs/values-dev.yaml
+   helm install monitoring infrastructure/helm/monitoring \
+     -f infrastructure/helm/monitoring/values.yaml
    ```
 
-   The `ai-mockup-generation` chart uses the `gpu_queue_length` metric to scale
-   GPU workers. Set `hpa.enabled` to `true` and configure
-   `hpa.gpuQueueAverageValue` in `values.yaml` to enable automatic scaling based
-   on pending tasks.
+   Production deployments use the corresponding `values-production.yaml` files under
+   each chart directory.
+
+   The `ai-mockup-generation` chart uses the `gpu_queue_length` metric to scale GPU
+   workers. Set `hpa.enabled` to `true` and configure `hpa.gpuQueueAverageValue` in
+   `values.yaml` to enable automatic scaling based on pending tasks.
+
+5. Schedule GPU workloads by assigning the `gpu` node pool using a `nodeSelector` and
+   `tolerations`. Enable GPU limits in the chart values:
+
+   ```yaml
+   resources:
+     limits:
+       nvidia.com/gpu: 1
+   nodeSelector:
+     node-type: gpu
+   tolerations:
+     - key: nvidia.com/gpu
+       operator: Exists
+       effect: NoSchedule
+   ```
+
+6. Persistent volumes are required for the `data-storage` and `backup-jobs` charts.
+   Set `persistence.enabled` to `true` and specify a `storageClassName` in the values
+   file to provision a volume:
+
+   ```yaml
+   persistence:
+     enabled: true
+     storageClassName: standard
+     size: 20Gi
+   ```
 
 ## Cloud Providers
+
+See the [Cloud Provider Strategy](blueprints/DesignIdeaEngineCompleteBlueprint.md#cloud-provider-strategy)
+section of the project blueprint for recommendations on multi-cloud deployments.
 
 ### AWS
 

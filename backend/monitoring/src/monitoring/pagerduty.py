@@ -8,6 +8,7 @@ from typing import Any
 from .settings import settings
 
 import requests
+from backend.shared.http import request_with_retry
 
 PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"
 
@@ -29,7 +30,7 @@ def trigger_sla_violation(duration_hours: float) -> None:
         },
     }
     try:
-        requests.post(PAGERDUTY_URL, json=payload, timeout=5)
+        request_with_retry("POST", PAGERDUTY_URL, json=payload, timeout=5)
     except requests.RequestException:
         pass
 
@@ -51,6 +52,6 @@ def notify_listing_issue(listing_id: int, state: str) -> None:
         },
     }
     try:
-        requests.post(PAGERDUTY_URL, json=payload, timeout=5)
+        request_with_retry("POST", PAGERDUTY_URL, json=payload, timeout=5)
     except requests.RequestException:
         pass

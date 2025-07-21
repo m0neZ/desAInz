@@ -42,3 +42,15 @@ def test_update_weights_error(requests_mock: Any) -> None:
     requests_mock.post(f"{url}/weights/feedback", status_code=500)
     with pytest.raises(RequestException):
         update_weights(url, [{"ctr": 0.1, "conversion_rate": 0.2}])
+
+
+def test_update_weights_retries(requests_mock: Any) -> None:
+    """The function should retry on temporary errors."""
+    url = "http://example.com"
+    requests_mock.post(
+        f"{url}/weights/feedback",
+        [{"status_code": 500}, {"json": {}}],
+    )
+    metrics = [{"ctr": 0.1, "conversion_rate": 0.2}]
+    update_weights(url, metrics)
+    assert requests_mock.call_count == 2

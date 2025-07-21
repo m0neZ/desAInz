@@ -6,6 +6,7 @@ import logging
 from typing import Any, cast
 
 import requests
+from backend.shared.http import request_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +17,9 @@ EUIPO_ENDPOINT = "https://api.tmdn.org/tmview/v1/trademarks"
 def _query_api(url: str, term: str) -> bool:
     """Return ``True`` if ``term`` matches a trademark at ``url``."""
     try:
-        response = requests.get(url, params={"searchText": term}, timeout=10)
-        response.raise_for_status()
+        response = request_with_retry(
+            "GET", url, params={"searchText": term}, timeout=10
+        )
         data = cast(dict[str, Any], response.json())
     except requests.RequestException as exc:  # pragma: no cover - network errors
         logger.warning("trademark lookup failed: %s", exc)

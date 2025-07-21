@@ -11,6 +11,7 @@ from typing import Iterator, MutableMapping, cast
 from backend.shared.cache import sync_delete
 
 import requests
+from backend.shared.http import request_with_retry
 
 import sqlite3
 import psycopg2
@@ -102,7 +103,9 @@ class TimescaleMetricsStore:
             ]
         }
         try:
-            requests.post(f"{self.loki_url}/loki/api/v1/push", json=payload, timeout=2)
+            request_with_retry(
+                "POST", f"{self.loki_url}/loki/api/v1/push", json=payload, timeout=2
+            )
         except requests.RequestException:
             pass
 

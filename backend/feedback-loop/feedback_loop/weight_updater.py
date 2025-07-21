@@ -8,6 +8,7 @@ from typing import Iterable, Mapping
 import pandas as pd
 
 import requests
+from backend.shared.http import request_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +55,9 @@ def update_weights(
     }
 
     try:
-        response = requests.post(f"{api_url}/weights/feedback", json=weights, timeout=5)
-        response.raise_for_status()
+        request_with_retry(
+            "POST", f"{api_url}/weights/feedback", json=weights, timeout=5
+        )
     except requests.RequestException as exc:
         logger.exception("failed to update weights: %s", exc)
         raise

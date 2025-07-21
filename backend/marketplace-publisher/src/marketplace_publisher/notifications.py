@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .db import create_webhook_event
 
 import requests
+from backend.shared.http import request_with_retry
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +29,9 @@ async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
         if not webhook:
             return
         try:
-            await asyncio.to_thread(requests.post, webhook, json=payload, timeout=2)
+            await asyncio.to_thread(
+                request_with_retry, "POST", webhook, json=payload, timeout=2
+            )
         except requests.RequestException as exc:  # pragma: no cover - best effort
             logger.warning("notification failed: %s", exc)
 

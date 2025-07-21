@@ -1,10 +1,8 @@
 // @flow
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export default function LatencyIndicator() {
   const [hours, setHours] = useState<number | null>(null);
-  const { t } = useTranslation();
   const base =
     process.env.NEXT_PUBLIC_MONITORING_URL ?? 'http://localhost:8000';
   useEffect(() => {
@@ -25,11 +23,11 @@ export default function LatencyIndicator() {
   }, [base]);
 
   if (hours === null) {
-    return <div>{t('loading')}</div>;
+    return <div>Loading...</div>;
   }
   return (
     <div data-testid="latency-indicator">
-      {t('latency', { hours: hours.toFixed(2) })}
+      {`Avg time from signal to publish: ${hours.toFixed(2)}h`}
     </div>
   );
 }

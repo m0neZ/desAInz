@@ -15,11 +15,14 @@ export function FeatureFlagsList() {
   }, []);
 
   async function toggle(name: string, value: boolean) {
-    const res = await fetchWithAuth(`/feature-flags/${encodeURIComponent(name)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enabled: value }),
-    });
+    const res = await fetchWithAuth(
+      `/feature-flags/${encodeURIComponent(name)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: value }),
+      }
+    );
     if (res.ok) {
       setFlags((f) => ({ ...f, [name]: value }));
     }

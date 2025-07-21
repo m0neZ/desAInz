@@ -1,11 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useTranslation } from 'react-i18next';
 import { trpc, type Mockup } from '../../src/trpc';
 
 export default function MockupsPage() {
-  const { t } = useTranslation();
   const [mockups, setMockups] = useState<Mockup[]>([]);
 
   useEffect(() => {
@@ -17,7 +15,7 @@ export default function MockupsPage() {
 
   return (
     <div>
-      <h1>{t('mockups')}</h1>
+      <h1>Mockups</h1>
       <div className="grid grid-cols-3 gap-2">
         {mockups.map((m) => (
           <Image

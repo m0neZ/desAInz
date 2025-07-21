@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import './src/i18n';
 
 // Provide a stub canvas implementation for Chart.js
 HTMLCanvasElement.prototype.getContext =

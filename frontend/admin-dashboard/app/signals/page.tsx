@@ -1,10 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { trpc, type Signal } from '../../src/trpc';
 
 export default function SignalsPage() {
-  const { t } = useTranslation();
   const [signals, setSignals] = useState<Signal[]>([]);
 
   useEffect(() => {
@@ -16,7 +14,7 @@ export default function SignalsPage() {
 
   return (
     <div className="space-y-2">
-      <h1>{t('signals')}</h1>
+      <h1>Signals</h1>
       <ul>
         {signals.map((s) => (
           <li key={s.id}>

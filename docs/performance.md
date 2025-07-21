@@ -50,3 +50,16 @@ Static assets are distributed through a CloudFront CDN for low latency delivery.
 The helper script ``scripts/configure_cdn.sh`` provisions a distribution with a
 default TTL of one hour and HTTPS enforced. Refer to the script for exact
 settings.
+
+To create a distribution:
+
+```bash
+# configure your AWS credentials first
+aws configure
+
+# <bucket> and <origin> depend on your setup
+./scripts/configure_cdn.sh <bucket> <origin-domain>
+```
+
+The command prints a distribution ID which is later required when running
+``scripts/invalidate_cache.sh``.

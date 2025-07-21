@@ -35,3 +35,4 @@ resources:
   - cronjobs/orchestrator-cleanup.yaml
   - cronjobs/orchestrator-idea.yaml
   - cronjobs/orchestrator-query-plan.yaml
+  - cronjobs/logrotate.yaml

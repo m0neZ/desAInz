@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "logrotate-jobs.fullname" . }}
+  labels: {{- include "logrotate-jobs.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: logrotate
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: LOG_DIR
+                  value: {{ .Values.logDir | quote }}
+{{- range $key, $value := .Values.extraEnv }}
+                - name: {{ $key }}
+                  value: {{ $value | quote }}
+{{- end }}
+              command: ["python", "/app/rotate_logs.py"]

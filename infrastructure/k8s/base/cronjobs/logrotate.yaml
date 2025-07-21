@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: logrotate
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: logrotate
+              image: example/logrotate:latest
+              imagePullPolicy: IfNotPresent
+              command: ["python", "/app/rotate_logs.py"]

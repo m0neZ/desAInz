@@ -132,3 +132,11 @@ backup-jobs:
   schedule: "0 2 * * *"
   bucket: my-backup-bucket
   minioDataPath: /data
+
+logrotate-jobs:
+  image:
+    repository: example/logrotate
+    tag: latest
+    pullPolicy: IfNotPresent
+  schedule: "0 1 * * *"
+  logDir: /var/log

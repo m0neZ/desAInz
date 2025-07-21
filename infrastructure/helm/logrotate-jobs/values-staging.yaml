@@ -1,0 +1,9 @@
+image:
+  repository: example/logrotate
+  tag: latest
+  pullPolicy: IfNotPresent
+schedule: "0 1 * * *"
+logDir: /var/log
+
+# Additional environment variables
+extraEnv: {}

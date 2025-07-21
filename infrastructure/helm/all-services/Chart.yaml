@@ -29,3 +29,6 @@ dependencies:
   - name: backup-jobs
     version: 0.1.0
     repository: "file://../backup-jobs"
+  - name: logrotate-jobs
+    version: 0.1.0
+    repository: "file://../logrotate-jobs"

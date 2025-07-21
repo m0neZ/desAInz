@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import withPWA from 'next-pwa';
+import type { RuntimeCaching } from 'next-pwa';
 
 /**
  * Next.js configuration enabling tree shaking and granular code splitting.
@@ -36,7 +37,30 @@ const nextConfig: NextConfig = {
   },
 };
 
+const runtimeCaching: RuntimeCaching[] = [
+  {
+    urlPattern: /^https?.*\.(?:png|jpg|css|js|json)$/,
+    handler: 'CacheFirst',
+    options: {
+      cacheName: 'static-assets',
+      expiration: { maxEntries: 60, maxAgeSeconds: 7 * 24 * 60 * 60 },
+    },
+  },
+  {
+    urlPattern: /^https?.*\/api\/.*$/,
+    handler: 'NetworkFirst',
+    options: {
+      cacheName: 'api-calls',
+      networkTimeoutSeconds: 3,
+      expiration: { maxEntries: 30, maxAgeSeconds: 5 * 60 },
+    },
+  },
+];
+
 export default withPWA({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
+  runtimeCaching,
+  register: true,
+  skipWaiting: true,
 })(nextConfig);

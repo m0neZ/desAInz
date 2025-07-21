@@ -8,28 +8,25 @@ from pathlib import Path
 
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
-from typing import Mapping
+from typing import Callable, ContextManager, Mapping
 
 from sqlalchemy import func, select
 
 from backend.shared.db import session_scope
+from sqlalchemy.orm import Session
 from backend.shared.db.models import Idea, Mockup
 
 
-def _ideas_count(since: datetime) -> int:
-    """Return number of ideas created since ``since``."""
-    with session_scope() as session:
-        stmt = select(func.count()).select_from(Idea).where(Idea.created_at >= since)
-        return session.scalar(stmt) or 0
+def _ideas_count(session: Session, since: datetime) -> int:
+    """Return number of ideas created since ``since`` using ``session``."""
+    stmt = select(func.count()).select_from(Idea).where(Idea.created_at >= since)
+    return session.scalar(stmt) or 0
 
 
-def _mockups_count(since: datetime) -> int:
-    """Return number of mockups created since ``since``."""
-    with session_scope() as session:
-        stmt = (
-            select(func.count()).select_from(Mockup).where(Mockup.created_at >= since)
-        )
-        return session.scalar(stmt) or 0
+def _mockups_count(session: Session, since: datetime) -> int:
+    """Return number of mockups created since ``since`` using ``session``."""
+    stmt = select(func.count()).select_from(Mockup).where(Mockup.created_at >= since)
+    return session.scalar(stmt) or 0
 
 
 async def _marketplace_stats(since: datetime) -> Mapping[str, int]:
@@ -64,13 +61,16 @@ async def _marketplace_stats(since: datetime) -> Mapping[str, int]:
     return stats
 
 
-async def generate_daily_summary() -> Mapping[str, object]:
-    """Compute idea count, mockup success rate, and marketplace stats."""
+async def generate_daily_summary(
+    session_provider: Callable[[], ContextManager[Session]] = session_scope,
+) -> Mapping[str, object]:
+    """Return metrics on ideas and mockups from the last 24 hours."""
     now = datetime.now(timezone.utc)
     since = now - timedelta(days=1)
 
-    ideas = _ideas_count(since)
-    mockups = _mockups_count(since)
+    with session_provider() as session:
+        ideas = _ideas_count(session, since)
+        mockups = _mockups_count(session, since)
     mockup_rate = float(mockups / ideas) if ideas else 0.0
     stats = await _marketplace_stats(since)
     return {

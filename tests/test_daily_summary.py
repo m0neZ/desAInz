@@ -16,6 +16,11 @@ sys.path.append(
 )
 
 import pytest
+from contextlib import contextmanager
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
+
+from backend.shared.db import Base
 from scripts.daily_summary import generate_daily_summary
 
 
@@ -27,7 +32,19 @@ async def test_generate_daily_summary() -> None:
     with patch(
         "scripts.daily_summary._marketplace_stats", new=AsyncMock(return_value={})
     ):
-        result = await generate_daily_summary()
+        engine = create_engine("sqlite:///:memory:", future=True)
+        Base.metadata.create_all(engine)
+        SessionLocal = sessionmaker(bind=engine, future=True)
+
+        @contextmanager
+        def provider() -> Session:
+            session: Session = SessionLocal()
+            try:
+                yield session
+            finally:
+                session.close()
+
+        result = await generate_daily_summary(session_provider=provider)
     assert "ideas_generated" in result
     assert "mockup_success_rate" in result
     assert "marketplace_stats" in result

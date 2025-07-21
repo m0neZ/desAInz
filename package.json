@@ -13,7 +13,7 @@
     "lint:css": "npm run lint:stylelint",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:css && npm run flow",
     "flow": "flow check --max-warnings=0",
-    "test:frontend": "npm test --prefix frontend/admin-dashboard",
+    "test:frontend": "npm test --prefix frontend/admin-dashboard -- --coverage",
     "test": "npm run test:frontend",
     "test:e2e": "playwright test --config frontend/admin-dashboard/playwright.config.ts"
   },

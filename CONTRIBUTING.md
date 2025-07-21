@@ -104,3 +104,16 @@ COPY LICENSES /licenses/LICENSES
 ```
 
 The resulting images must contain `/licenses/LICENSES` in the final layer.
+
+## Viewing Coverage
+
+Running `make test` generates coverage reports for both the backend and frontend.
+The Python suite writes `coverage.xml` in the repository root. Frontend tests
+create a `coverage` directory under `frontend/admin-dashboard` containing an
+HTML report. GitHub Actions uploads these files as artifacts for each run. When
+the `CODECOV_TOKEN` secret is configured, the workflow also pushes coverage data
+to Codecov.
+
+To view results locally, open
+`frontend/admin-dashboard/coverage/lcov-report/index.html` in your browser and
+use any coverage tool that supports the XML format to inspect `coverage.xml`.

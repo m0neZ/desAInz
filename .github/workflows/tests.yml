@@ -44,6 +44,24 @@ jobs:
         run: make test
       - name: Smoke test docker compose services
         run: ./scripts/smoke_compose.sh
+      - name: Upload Python coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-coverage-${{ matrix.python-version }}
+          path: coverage.xml
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage-${{ matrix.node-version }}
+          path: frontend/admin-dashboard/coverage
+      - name: Upload coverage to Codecov
+        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: |
+            coverage.xml
+            frontend/admin-dashboard/coverage/lcov.info
 
   publish:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

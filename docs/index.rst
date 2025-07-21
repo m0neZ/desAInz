@@ -37,6 +37,7 @@ Welcome to desAInz's documentation!
    openapi_specs
    logs_with_loki
    monitoring
+   scripts
    source/index
 
 Kafka Utilities

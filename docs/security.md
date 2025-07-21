@@ -41,3 +41,14 @@ this script once per month. The ``monthly_secret_rotation_schedule`` defined in
 day of every month at midnight UTC. The run waits for approval via the
 ``/approvals`` API before applying rotations and sends a Slack notification when
 complete.
+
+### S3 access key rotation
+
+``scripts/rotate_s3_keys.py`` creates new access keys for the configured IAM
+user and updates the Kubernetes secret used by the services. The Dagster
+``rotate_s3_keys_job`` runs monthly. The IAM role executing the script must have
+the following permissions:
+
+- ``iam:CreateAccessKey``
+- ``iam:ListAccessKeys``
+- ``iam:DeleteAccessKey``

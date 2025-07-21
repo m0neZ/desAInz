@@ -3,6 +3,7 @@
 import logging
 import os
 import uuid
+from time import perf_counter
 from typing import Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response, status
@@ -10,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from jose import JWTError, jwt
 from backend.shared.cache import get_async_client
+from prometheus_client import Counter, Histogram
 
 from .routes import router
 from backend.shared.tracing import configure_tracing
@@ -25,6 +27,17 @@ from .auth import ALGORITHM, SECRET_KEY
 
 configure_logging()
 logger = logging.getLogger(__name__)
+
+REQUEST_LATENCY = Histogram(
+    "api_gateway_request_latency_seconds",
+    "Latency histogram for API Gateway requests",
+    ["method", "endpoint"],
+)
+ERROR_COUNTER = Counter(
+    "api_gateway_error_total",
+    "Total number of API Gateway error responses",
+    ["method", "endpoint", "status_code"],
+)
 
 tags_metadata = [
     {"name": "Status", "description": "Health and readiness endpoints."},
@@ -82,7 +95,8 @@ async def add_correlation_id(
     request: Request,
     call_next: Callable[[Request], Coroutine[None, None, Response]],
 ) -> Response:
-    """Ensure each request includes a correlation ID."""
+    """Ensure each request includes a correlation ID and record metrics."""
+    start = perf_counter()
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     request.state.correlation_id = correlation_id
     try:
@@ -100,7 +114,21 @@ async def add_correlation_id(
             "method": request.method,
         },
     )
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except Exception:
+        ERROR_COUNTER.labels(request.method, request.url.path, "500").inc()
+        REQUEST_LATENCY.labels(request.method, request.url.path).observe(
+            perf_counter() - start
+        )
+        raise
+    if response.status_code >= 500:
+        ERROR_COUNTER.labels(
+            request.method, request.url.path, str(response.status_code)
+        ).inc()
+    REQUEST_LATENCY.labels(request.method, request.url.path).observe(
+        perf_counter() - start
+    )
     response.headers["X-Correlation-ID"] = correlation_id
     return response
 

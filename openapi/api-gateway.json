@@ -1,968 +1,729 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "API Gateway",
-    "version": "0.1.0"
-  },
-  "paths": {
-    "/metrics": {
-      "get": {
-        "summary": "Metrics",
-        "operationId": "metrics_metrics_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        }
-      }
-    },
-    "/health": {
-      "get": {
-        "summary": "Health",
-        "description": "Return service liveness.",
-        "operationId": "health_health_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Health Health Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/ready": {
-      "get": {
-        "summary": "Ready",
-        "description": "Return service readiness.",
-        "operationId": "ready_ready_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Ready Ready Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/status": {
-      "get": {
-        "summary": "Status Endpoint",
-        "description": "Public status endpoint.",
-        "operationId": "status_endpoint_status_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Status Endpoint Status Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/token": {
-      "post": {
-        "summary": "Issue Token",
-        "description": "Return JWT tokens for ``username`` if it exists.",
-        "operationId": "issue_token_auth_token_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "additionalProperties": {
-                  "type": "string"
+    "openapi": "3.1.0",
+    "info": {"title": "API Gateway", "version": "0.1.0"},
+    "paths": {
+        "/metrics": {
+            "get": {
+                "summary": "Metrics",
+                "description": "Expose Prometheus metrics.",
+                "operationId": "metrics_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {"application/json": {"schema": {}}},
+                    }
                 },
-                "type": "object",
-                "title": "Body"
-              }
             }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Issue Token Auth Token Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/revoke": {
-      "post": {
-        "summary": "Revoke Auth Token",
-        "description": "Invalidate the provided JWT token.",
-        "operationId": "revoke_auth_token_auth_revoke_post",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Revoke Auth Token Auth Revoke Post"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/auth/refresh": {
-      "post": {
-        "summary": "Refresh Auth Token",
-        "description": "Issue new access and refresh tokens using a refresh token.",
-        "operationId": "refresh_auth_token_auth_refresh_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "additionalProperties": {
-                  "type": "string"
+        "/health": {
+            "get": {
+                "summary": "Health",
+                "description": "Return service liveness.",
+                "operationId": "health_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Health Health Get",
+                                }
+                            }
+                        },
+                    }
                 },
-                "type": "object",
-                "title": "Body"
-              }
             }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Refresh Auth Token Auth Refresh Post"
-                }
-              }
+        "/ready": {
+            "get": {
+                "summary": "Ready",
+                "description": "Return service readiness.",
+                "operationId": "ready_ready_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Ready Ready Get",
+                                }
+                            }
+                        },
+                    }
+                },
             }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/roles": {
-      "get": {
-        "summary": "List Roles",
-        "description": "Return all user role assignments.",
-        "operationId": "list_roles_roles_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "additionalProperties": {
-                      "type": "string"
+        },
+        "/status": {
+            "get": {
+                "summary": "Status Endpoint",
+                "description": "Public status endpoint.",
+                "operationId": "status_endpoint_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Status Endpoint Status Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/auth/token": {
+            "post": {
+                "summary": "Issue Token",
+                "description": "Return JWT tokens for ``username`` if it exists.",
+                "operationId": "issue_token_auth_token_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "additionalProperties": {"type": "string"},
+                                "type": "object",
+                                "title": "Body",
+                            }
+                        }
                     },
-                    "type": "object"
-                  },
-                  "type": "array",
-                  "title": "Response List Roles Roles Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/roles/{username}": {
-      "post": {
-        "summary": "Assign Role",
-        "description": "Assign ``role`` in ``body`` to ``username``.",
-        "operationId": "assign_role_roles__username__post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Username"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
+                    "required": true,
                 },
-                "title": "Body"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "title": "Response Assign Role Roles  Username  Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/protected": {
-      "get": {
-        "summary": "Protected",
-        "description": "Protected endpoint requiring ``admin`` role.",
-        "operationId": "protected_protected_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Protected Protected Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/maintenance/cleanup": {
-      "post": {
-        "summary": "Trigger Cleanup",
-        "description": "Run cleanup tasks immediately.",
-        "operationId": "trigger_cleanup_maintenance_cleanup_post",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Trigger Cleanup Maintenance Cleanup Post"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/trpc/{procedure}": {
-      "post": {
-        "summary": "Trpc Endpoint",
-        "description": "Proxy tRPC call to the configured backend service.",
-        "operationId": "trpc_endpoint_trpc__procedure__post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "procedure",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Procedure"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Trpc Endpoint Trpc  Procedure  Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/optimizations": {
-      "get": {
-        "summary": "Optimizations",
-        "description": "Return cost optimization suggestions from the optimization service.",
-        "operationId": "optimizations_optimizations_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array",
-                  "title": "Response Optimizations Optimizations Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/recommendations": {
-      "get": {
-        "summary": "Recommendations",
-        "description": "Return top optimization actions from the optimization service.",
-        "operationId": "recommendations_recommendations_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array",
-                  "title": "Response Recommendations Recommendations Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/audit-logs": {
-      "get": {
-        "summary": "Get Audit Logs",
-        "description": "Return paginated audit log entries.",
-        "operationId": "get_audit_logs_audit_logs_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 50,
-              "title": "Limit"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Offset"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Get Audit Logs Audit Logs Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/models": {
-      "get": {
-        "summary": "Get Models",
-        "description": "Return all available AI models.",
-        "operationId": "get_models_models_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "additionalProperties": true,
-                    "type": "object"
-                  },
-                  "type": "array",
-                  "title": "Response Get Models Models Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/models/{model_id}/default": {
-      "post": {
-        "summary": "Switch Default Model",
-        "description": "Switch the default model used for mockup generation.",
-        "operationId": "switch_default_model_models__model_id__default_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "model_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Model Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "title": "Response Switch Default Model Models  Model Id  Default Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/publish-tasks/{task_id}": {
-      "patch": {
-        "summary": "Edit Publish Task",
-        "description": "Edit metadata for a pending publish task.",
-        "operationId": "edit_publish_task_publish_tasks__task_id__patch",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Task Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "title": "Response Edit Publish Task Publish Tasks  Task Id  Patch"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/publish-tasks/{task_id}/retry": {
-      "post": {
-        "summary": "Retry Publish Task",
-        "description": "Re-trigger publishing for a task.",
-        "operationId": "retry_publish_task_publish_tasks__task_id__retry_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Task Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "title": "Response Retry Publish Task Publish Tasks  Task Id  Retry Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Issue Token Auth Token Post",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
                 },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
-      },
-      "Signal": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "content": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "content",
-          "source"
-        ],
-        "title": "Signal"
-      },
-      "HeatmapEntry": {
-        "type": "object",
-        "properties": {
-          "label": {
-            "type": "string"
-          },
-          "count": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "label",
-          "count"
-        ],
-        "title": "HeatmapEntry"
-      },
-      "GalleryItem": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "imageUrl": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "imageUrl",
-          "title"
-        ],
-        "title": "GalleryItem"
-      },
-      "Idea": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "title": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "title",
-          "status"
-        ],
-        "title": "Idea"
-      },
-      "Mockup": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "imageUrl": {
-            "type": "string"
-          },
-          "generatedAt": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "imageUrl",
-          "generatedAt"
-        ],
-        "title": "Mockup"
-      },
-      "Metric": {
-        "type": "object",
-        "properties": {
-          "label": {
-            "type": "string"
-          },
-          "value": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "label",
-          "value"
-        ],
-        "title": "Metric"
-      },
-      "PublishTask": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "title": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "title",
-          "status"
-        ],
-        "title": "PublishTask"
-      },
-      "AnalyticsData": {
-        "type": "object",
-        "properties": {
-          "revenue": {
-            "type": "number"
-          },
-          "conversions": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "revenue",
-          "conversions"
-        ],
-        "title": "AnalyticsData"
-      },
-      "AuditLog": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "username": {
-            "type": "string"
-          },
-          "action": {
-            "type": "string"
-          },
-          "details": {
-            "type": "string"
-          },
-          "timestamp": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "action",
-          "details",
-          "timestamp"
-        ],
-        "title": "AuditLog"
-      },
-      "AuditLogResponse": {
-        "type": "object",
-        "properties": {
-          "total": {
-            "type": "number"
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AuditLog"
             }
-          }
         },
-        "required": [
-          "total",
-          "items"
-        ],
-        "title": "AuditLogResponse"
-      },
-      "ABTestSummary": {
-        "type": "object",
-        "properties": {
-          "ab_test_id": {
-            "type": "number"
-          },
-          "conversions": {
-            "type": "number"
-          },
-          "impressions": {
-            "type": "number"
-          }
+        "/auth/revoke": {
+            "post": {
+                "summary": "Revoke Auth Token",
+                "description": "Invalidate the provided JWT token.",
+                "operationId": "revoke_auth_token_auth_revoke_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Revoke Auth Token Auth Revoke Post",
+                                }
+                            }
+                        },
+                    }
+                },
+                "security": [{"HTTPBearer": []}],
+            }
         },
-        "required": [
-          "ab_test_id",
-          "conversions",
-          "impressions"
-        ],
-        "title": "ABTestSummary"
-      }
+        "/auth/refresh": {
+            "post": {
+                "summary": "Refresh Auth Token",
+                "description": "Issue new access and refresh tokens using a refresh token.",
+                "operationId": "refresh_auth_token_auth_refresh_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "additionalProperties": {"type": "string"},
+                                "type": "object",
+                                "title": "Body",
+                            }
+                        }
+                    },
+                    "required": true,
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Refresh Auth Token Auth Refresh Post",
+                                }
+                            }
+                        },
+                    },
+                    "401": {"description": "Unauthorized"},
+                },
+            }
+        },
+        "/roles": {
+            "get": {
+                "summary": "List Roles",
+                "description": "Return all user role assignments.",
+                "operationId": "list_roles_roles_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "additionalProperties": {"type": "string"},
+                                        "type": "object",
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Roles Roles Get",
+                                }
+                            }
+                        },
+                    }
+                },
+                "security": [{"HTTPBearer": []}],
+            }
+        },
+        "/roles/{username}": {
+            "post": {
+                "summary": "Assign Role",
+                "description": "Assign ``role`` in ``body`` to ``username``.",
+                "operationId": "assign_role_roles__username__post",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "string", "title": "Username"},
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {"type": "string"},
+                                "title": "Body",
+                            }
+                        }
+                    },
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {"type": "string"},
+                                    "title": "Response Assign Role Roles  Username  Post",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
+        "/protected": {
+            "get": {
+                "summary": "Protected",
+                "description": "Protected endpoint requiring ``admin`` role.",
+                "operationId": "protected_protected_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "title": "Response Protected Protected Get",
+                                }
+                            }
+                        },
+                    }
+                },
+                "security": [{"HTTPBearer": []}],
+            }
+        },
+        "/maintenance/cleanup": {
+            "post": {
+                "summary": "Trigger Cleanup",
+                "description": "Run cleanup tasks immediately.",
+                "operationId": "trigger_cleanup_maintenance_cleanup_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {"type": "string"},
+                                    "type": "object",
+                                    "title": "Response Trigger Cleanup Maintenance Cleanup Post",
+                                }
+                            }
+                        },
+                    }
+                },
+                "security": [{"HTTPBearer": []}],
+            }
+        },
+        "/trpc/{procedure}": {
+            "post": {
+                "summary": "Trpc Endpoint",
+                "description": "Proxy tRPC call to the configured backend service.",
+                "operationId": "trpc_endpoint_trpc__procedure__post",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "procedure",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "string", "title": "Procedure"},
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Trpc Endpoint Trpc  Procedure  Post",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
+        "/optimizations": {
+            "get": {
+                "summary": "Optimizations",
+                "description": "Return cost optimization suggestions from the optimization service.",
+                "operationId": "optimizations_optimizations_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {"type": "string"},
+                                    "type": "array",
+                                    "title": "Response Optimizations Optimizations Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/recommendations": {
+            "get": {
+                "summary": "Recommendations",
+                "description": "Return top optimization actions from the optimization service.",
+                "operationId": "recommendations_recommendations_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {"type": "string"},
+                                    "type": "array",
+                                    "title": "Response Recommendations Recommendations Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/audit-logs": {
+            "get": {
+                "summary": "Get Audit Logs",
+                "description": "Return paginated audit log entries.",
+                "operationId": "get_audit_logs_audit_logs_get",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {"type": "integer", "default": 50, "title": "Limit"},
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {"type": "integer", "default": 0, "title": "Offset"},
+                    },
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Audit Logs Audit Logs Get",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
+        "/models": {
+            "get": {
+                "summary": "Get Models",
+                "description": "Return all available AI models.",
+                "operationId": "get_models_models_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "additionalProperties": true,
+                                        "type": "object",
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Models Models Get",
+                                }
+                            }
+                        },
+                    }
+                },
+                "security": [{"HTTPBearer": []}],
+            }
+        },
+        "/models/{model_id}/default": {
+            "post": {
+                "summary": "Switch Default Model",
+                "description": "Switch the default model used for mockup generation.",
+                "operationId": "switch_default_model_models__model_id__default_post",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "model_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "integer", "title": "Model Id"},
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {"type": "string"},
+                                    "title": "Response Switch Default Model Models  Model Id  Default Post",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
+        "/publish-tasks/{task_id}": {
+            "patch": {
+                "summary": "Edit Publish Task",
+                "description": "Edit metadata for a pending publish task.",
+                "operationId": "edit_publish_task_publish_tasks__task_id__patch",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "integer", "title": "Task Id"},
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "title": "Body",
+                            }
+                        }
+                    },
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {"type": "string"},
+                                    "title": "Response Edit Publish Task Publish Tasks  Task Id  Patch",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
+        "/publish-tasks/{task_id}/retry": {
+            "post": {
+                "summary": "Retry Publish Task",
+                "description": "Re-trigger publishing for a task.",
+                "operationId": "retry_publish_task_publish_tasks__task_id__retry_post",
+                "security": [{"HTTPBearer": []}],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "integer", "title": "Task Id"},
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {"type": "string"},
+                                    "title": "Response Retry Publish Task Publish Tasks  Task Id  Retry Post",
+                                }
+                            }
+                        },
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                    },
+                },
+            }
+        },
     },
-    "securitySchemes": {
-      "HTTPBearer": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  },
-  "x-spec-version": "f68190c0866999263de36b8332d3c71d71e202a1fecb6d89e11ed4b6c3b615fb"
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {"$ref": "#/components/schemas/ValidationError"},
+                        "type": "array",
+                        "title": "Detail",
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError",
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {"anyOf": [{"type": "string"}, {"type": "integer"}]},
+                        "type": "array",
+                        "title": "Location",
+                    },
+                    "msg": {"type": "string", "title": "Message"},
+                    "type": {"type": "string", "title": "Error Type"},
+                },
+                "type": "object",
+                "required": ["loc", "msg", "type"],
+                "title": "ValidationError",
+            },
+            "Signal": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "content": {"type": "string"},
+                    "source": {"type": "string"},
+                },
+                "required": ["id", "content", "source"],
+                "title": "Signal",
+            },
+            "HeatmapEntry": {
+                "type": "object",
+                "properties": {
+                    "label": {"type": "string"},
+                    "count": {"type": "number"},
+                },
+                "required": ["label", "count"],
+                "title": "HeatmapEntry",
+            },
+            "GalleryItem": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "imageUrl": {"type": "string"},
+                    "title": {"type": "string"},
+                },
+                "required": ["id", "imageUrl", "title"],
+                "title": "GalleryItem",
+            },
+            "Idea": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "title": {"type": "string"},
+                    "status": {"type": "string"},
+                },
+                "required": ["id", "title", "status"],
+                "title": "Idea",
+            },
+            "Mockup": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "imageUrl": {"type": "string"},
+                    "generatedAt": {"type": "string"},
+                },
+                "required": ["id", "imageUrl", "generatedAt"],
+                "title": "Mockup",
+            },
+            "Metric": {
+                "type": "object",
+                "properties": {
+                    "label": {"type": "string"},
+                    "value": {"type": "number"},
+                },
+                "required": ["label", "value"],
+                "title": "Metric",
+            },
+            "PublishTask": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "title": {"type": "string"},
+                    "status": {"type": "string"},
+                },
+                "required": ["id", "title", "status"],
+                "title": "PublishTask",
+            },
+            "AnalyticsData": {
+                "type": "object",
+                "properties": {
+                    "revenue": {"type": "number"},
+                    "conversions": {"type": "number"},
+                },
+                "required": ["revenue", "conversions"],
+                "title": "AnalyticsData",
+            },
+            "AuditLog": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "number"},
+                    "username": {"type": "string"},
+                    "action": {"type": "string"},
+                    "details": {"type": "string"},
+                    "timestamp": {"type": "string"},
+                },
+                "required": ["id", "username", "action", "details", "timestamp"],
+                "title": "AuditLog",
+            },
+            "AuditLogResponse": {
+                "type": "object",
+                "properties": {
+                    "total": {"type": "number"},
+                    "items": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/AuditLog"},
+                    },
+                },
+                "required": ["total", "items"],
+                "title": "AuditLogResponse",
+            },
+            "ABTestSummary": {
+                "type": "object",
+                "properties": {
+                    "ab_test_id": {"type": "number"},
+                    "conversions": {"type": "number"},
+                    "impressions": {"type": "number"},
+                },
+                "required": ["ab_test_id", "conversions", "impressions"],
+                "title": "ABTestSummary",
+            },
+        },
+        "securitySchemes": {"HTTPBearer": {"type": "http", "scheme": "bearer"}},
+    },
+    "x-spec-version": "f68190c0866999263de36b8332d3c71d71e202a1fecb6d89e11ed4b6c3b615fb",
 }

@@ -9,6 +9,7 @@ from .jobs import (
     daily_summary_job,
     rotate_secrets_job,
     sync_listings_job,
+    privacy_purge_job,
 )
 
 
@@ -51,4 +52,12 @@ def daily_listing_sync_schedule(
     _context: ScheduleEvaluationContext,
 ) -> dict[str, object]:
     """Trigger ``sync_listings_job`` every day."""
+    return {}
+
+
+@schedule(cron_schedule="0 0 * * 0", job=privacy_purge_job, execution_timezone="UTC")
+def weekly_privacy_purge_schedule(
+    _context: ScheduleEvaluationContext,
+) -> dict[str, object]:
+    """Run ``privacy_purge_job`` once a week."""
     return {}

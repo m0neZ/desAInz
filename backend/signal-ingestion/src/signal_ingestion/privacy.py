@@ -63,3 +63,27 @@ def purge_row(row: dict[str, Any]) -> dict[str, Any]:
         A new dictionary with all string values sanitized.
     """
     return {k: purge_text(v) if isinstance(v, str) else v for k, v in row.items()}
+
+
+async def purge_pii_rows(limit: int | None = None) -> int:
+    """
+    Remove PII from stored signals.
+
+    The function opens a database session using :mod:`signal_ingestion.database`
+    and applies :func:`purge_pii` from :mod:`signal_ingestion.purge_pii`.
+
+    Parameters
+    ----------
+    limit:
+        Optional maximum number of rows to process.
+
+    Returns
+    -------
+    int
+        The number of rows that were sanitized.
+    """
+    from . import database
+    from .purge_pii import purge_pii
+
+    async with database.SessionLocal() as session:
+        return await purge_pii(session, limit)  # type: ignore[no-any-return]

@@ -42,7 +42,7 @@ def initialize() -> None:
 
     redis_url = os.getenv("FEATURE_FLAGS_REDIS_URL")
     if redis_url:
-        _redis = redis.Redis.from_url(redis_url, decode_responses=True)
+        _redis = redis.Redis(redis_url, decode_responses=True)
 
     url = os.getenv("UNLEASH_URL")
     token = os.getenv("UNLEASH_API_TOKEN")

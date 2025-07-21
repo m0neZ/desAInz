@@ -5,6 +5,10 @@ from __future__ import annotations
 import os
 
 from celery import Celery
+from prometheus_client import REGISTRY
+from prometheus_client.core import GaugeMetricFamily
+import redis
+from typing import Iterable, cast
 
 from .tasks import queue_for_gpu
 
@@ -14,13 +18,45 @@ app = Celery("mockup_generation", broker=CELERY_BROKER_URL)
 app.conf.result_backend = CELERY_BROKER_URL
 
 
+class GPUQueueCollector:
+    """Collect queue lengths for all GPU task queues."""
+
+    def collect(self) -> Iterable[GaugeMetricFamily]:
+        """Return metrics for pending tasks per queue."""
+        client = redis.Redis.from_url(CELERY_BROKER_URL)
+        metric = GaugeMetricFamily(
+            "gpu_queue_length",
+            "Number of pending tasks per GPU queue",
+            labels=["queue"],
+        )
+        try:
+            import mockup_generation.tasks as tasks
+
+            for idx in range(tasks.get_gpu_slots()):
+                queue = tasks.queue_for_gpu(idx)
+                metric.add_metric([queue], client.llen(queue))
+        finally:
+            client.close()
+        return [metric]
+
+
+try:
+    REGISTRY.register(GPUQueueCollector())
+except ValueError:  # pragma: no cover - collector already registered
+    pass
+
+
 def _route_gpu_tasks(
-    name: str, args: tuple, kwargs: dict, options: dict, **kws
-) -> dict:
+    name: str,
+    args: tuple[object, ...],
+    kwargs: dict[str, object],
+    options: dict[str, object],
+    **kws: object,
+) -> dict[str, object]:
     """Route tasks with a ``gpu_index`` kwarg to the corresponding queue."""
     gpu = kwargs.get("gpu_index")
     if gpu is not None:
-        options = {"queue": queue_for_gpu(int(gpu))}
+        options = {"queue": queue_for_gpu(int(cast(int, gpu)))}
     return options
 
 

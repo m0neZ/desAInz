@@ -23,4 +23,13 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.hpa.targetMemoryUtilizationPercentage }}
+{{- if .Values.hpa.gpuQueueAverageValue }}
+    - type: External
+      external:
+        metric:
+          name: gpu_queue_length
+        target:
+          type: AverageValue
+          averageValue: "{{ .Values.hpa.gpuQueueAverageValue }}"
+{{- end }}
 {{- end }}

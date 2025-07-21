@@ -11,10 +11,12 @@ from collections.abc import AsyncGenerator
 
 from .models import Base
 from backend.shared.config import settings
+from backend.shared.db import register_pool_metrics
 
 
 DATABASE_URL = settings.effective_database_url
 engine = create_async_engine(DATABASE_URL, echo=False)
+register_pool_metrics(engine)
 SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
 

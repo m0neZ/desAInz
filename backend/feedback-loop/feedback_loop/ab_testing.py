@@ -18,11 +18,12 @@ from sqlalchemy import (
     select,
 )
 from sqlalchemy.pool import StaticPool
+from backend.shared.db import register_pool_metrics
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 import numpy as np
 
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase):  # type: ignore[misc]
     """Base class for ORM models."""
 
 
@@ -67,8 +68,10 @@ def create_engine_and_session(url: str) -> tuple[Session, sessionmaker]:
             connect_args={"check_same_thread": False},
             poolclass=StaticPool,
         )
+        register_pool_metrics(engine)
     else:
         engine = create_engine(url, future=True)
+        register_pool_metrics(engine)
     Base.metadata.create_all(engine)
     SessionLocal = sessionmaker(
         bind=engine,

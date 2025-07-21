@@ -3,19 +3,43 @@
 from __future__ import annotations
 
 import os
+from typing import Iterable, cast
 
 from celery import Celery
 from prometheus_client import REGISTRY
 from prometheus_client.core import GaugeMetricFamily
 import redis
-from typing import Iterable, cast
 
 from .tasks import queue_for_gpu
 
 
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_BROKER = os.getenv("CELERY_BROKER", "redis")
+if CELERY_BROKER == "redis":
+    host = os.getenv("REDIS_HOST", "localhost")
+    port = os.getenv("REDIS_PORT", "6379")
+    db = os.getenv("REDIS_DB", "0")
+    CELERY_BROKER_URL = os.getenv(
+        "CELERY_BROKER_URL", f"redis://{host}:{port}/{db}"
+    )
+    RESULT_BACKEND = CELERY_BROKER_URL
+elif CELERY_BROKER == "rabbitmq":
+    host = os.getenv("RABBITMQ_HOST", "localhost")
+    port = os.getenv("RABBITMQ_PORT", "5672")
+    user = os.getenv("RABBITMQ_USER", "guest")
+    password = os.getenv("RABBITMQ_PASSWORD", "guest")
+    CELERY_BROKER_URL = os.getenv(
+        "CELERY_BROKER_URL", f"amqp://{user}:{password}@{host}:{port}//"
+    )
+    RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", CELERY_BROKER_URL)
+elif CELERY_BROKER == "kafka":
+    servers = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", f"kafka://{servers}")
+    RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "rpc://")
+else:  # pragma: no cover - invalid broker selection
+    raise ValueError(f"Unsupported CELERY_BROKER: {CELERY_BROKER}")
+
 app = Celery("mockup_generation", broker=CELERY_BROKER_URL)
-app.conf.result_backend = CELERY_BROKER_URL
+app.conf.result_backend = RESULT_BACKEND
 app.conf.task_acks_late = True
 app.conf.task_reject_on_worker_lost = True
 
@@ -25,6 +49,9 @@ class GPUQueueCollector:
 
     def collect(self) -> Iterable[GaugeMetricFamily]:
         """Return metrics for pending tasks per queue."""
+        if CELERY_BROKER != "redis":
+            return []
+
         client = redis.Redis.from_url(CELERY_BROKER_URL)
         metric = GaugeMetricFamily(
             "gpu_queue_length",

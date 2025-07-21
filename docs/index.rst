@@ -19,6 +19,7 @@ Welcome to desAInz's documentation!
    backup
    quickstart
    recommendations
+   optimization
    deployment
    cloud_deployment
    troubleshooting

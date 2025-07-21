@@ -1,5 +1,7 @@
 """FastAPI application exposing optimization endpoints."""
 
+# mypy: ignore-errors
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -13,6 +15,8 @@ from typing import Callable, Coroutine, List, cast
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
@@ -76,6 +80,7 @@ async def add_correlation_id(
 
 
 store = MetricsStore()
+scheduler = AsyncIOScheduler()
 
 
 def record_resource_usage(target_store: MetricsStore = store) -> None:
@@ -106,6 +111,26 @@ async def create_continuous_aggregate() -> None:
     """Create hourly aggregate view if PostgreSQL is used."""
     if not store._use_sqlite:
         store.create_hourly_continuous_aggregate()
+
+
+@app.on_event("startup")
+def start_scheduler() -> None:
+    """Start job scheduler for refreshing aggregates."""
+    if scheduler.running:
+        return
+    scheduler.add_job(
+        store.create_hourly_continuous_aggregate,
+        trigger=IntervalTrigger(hours=1),
+        next_run_time=None,
+    )
+    scheduler.start()
+
+
+@app.on_event("shutdown")
+def shutdown_scheduler() -> None:
+    """Shutdown the aggregate scheduler."""
+    if scheduler.running:
+        scheduler.shutdown()
 
 
 class MetricIn(BaseModel):

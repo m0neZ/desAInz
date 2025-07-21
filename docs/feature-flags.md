@@ -19,3 +19,16 @@ accept requests targeting the `society6` marketplace. When disabled, such
 requests return HTTP 403.
 Similarly, the `zazzle_integration` flag controls access to the Zazzle publisher
 API and gated UI links.
+
+## API Management
+
+Feature flags can be managed through the API Gateway. The following endpoints
+require an authenticated user with the ``admin`` role:
+
+* ``GET /feature-flags`` – list all known flags and their current values.
+* ``POST /feature-flags/{name}`` – set the provided flag to the ``enabled``
+  state in the request body.
+
+The admin dashboard provides a simple interface built from the components in
+``frontend/admin-dashboard/src/components/FeatureFlags`` which consume these
+endpoints.

@@ -27,11 +27,12 @@ from .auth import (
     ALGORITHM,
 )
 from jose import JWTError, jwt
-from .models import MetadataPatch, RoleAssignment, UsernameRequest
+from .models import FlagState, MetadataPatch, RoleAssignment, UsernameRequest
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
 from backend.shared.cache import async_get, async_set, get_async_client
+from backend.shared.feature_flags import list_flags as ff_list, set_flag as ff_set, is_enabled
 from backend.shared.db import session_scope
 from backend.shared.db.models import AuditLog, UserRole, RefreshToken
 from uuid import uuid4
@@ -287,6 +288,31 @@ async def assign_role(
         {"username": username, "role": role},
     )
     return {"username": username, "role": role}
+
+
+@router.get("/feature-flags", tags=["Flags"], summary="List feature flags")
+async def list_feature_flags(
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, bool]:
+    """Return current feature flag values."""
+    log_admin_action(payload.get("sub", "unknown"), "list_flags")
+    return ff_list()
+
+
+@router.post("/feature-flags/{name}", tags=["Flags"], summary="Toggle feature flag")
+async def toggle_feature_flag(
+    name: str,
+    body: FlagState,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, bool]:
+    """Set ``name`` to ``body.enabled`` and return the new state."""
+    ff_set(name, body.enabled)
+    log_admin_action(
+        payload.get("sub", "unknown"),
+        "toggle_flag",
+        {"flag": name, "enabled": body.enabled},
+    )
+    return {name: is_enabled(name)}
 
 
 @router.get("/protected", tags=["Protected"], summary="Protected example")

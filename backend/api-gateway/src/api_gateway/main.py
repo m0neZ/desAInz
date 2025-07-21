@@ -50,6 +50,7 @@ tags_metadata = [
     {"name": "Models", "description": "Manage available AI models."},
     {"name": "Publish", "description": "Manage publishing tasks."},
     {"name": "Protected", "description": "Endpoints requiring authentication."},
+    {"name": "Flags", "description": "Query and modify feature flags."},
 ]
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "api-gateway")

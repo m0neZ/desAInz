@@ -18,6 +18,14 @@ services:
       service: redis
     environment:
       REDIS_DB: 1
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      retries: 5
   kafka:
     extends:
       file: docker-compose.dev.yml

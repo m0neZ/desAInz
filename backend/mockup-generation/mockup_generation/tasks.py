@@ -158,6 +158,8 @@ def generate_mockup(
         Model identifier to use for generation.
     gpu_index : int | None, optional
         Preferred GPU slot index.
+    num_inference_steps : int, optional
+        Number of inference steps for the diffusion model.
 
     Returns
     -------

@@ -62,3 +62,20 @@ def test_daily_summary_endpoint(monkeypatch: Any) -> None:
     assert response.status_code == 200
     body = response.json()
     assert body["ideas_generated"] == 1
+
+
+def test_daily_summary_report_endpoint(tmp_path: Path, monkeypatch: Any) -> None:
+    """Daily summary report endpoint returns persisted JSON."""
+    import json
+
+    report = {"ideas_generated": 1, "mockup_success_rate": 1.0, "marketplace_stats": {}}
+    file_path = tmp_path / "report.json"
+    file_path.write_text(json.dumps(report), encoding="utf-8")
+    from monitoring import settings as monitoring_settings
+
+    monkeypatch.setattr(
+        monitoring_settings.settings, "daily_summary_file", str(file_path)
+    )
+    response = client.get("/daily_summary/report")
+    assert response.status_code == 200
+    assert response.json() == report

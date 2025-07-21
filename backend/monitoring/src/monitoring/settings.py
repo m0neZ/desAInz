@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     ENABLE_PAGERDUTY: bool = True
     sla_alert_cooldown_minutes: int = 60
     SLA_ALERT_COOLDOWN_MINUTES: int = 60
+    daily_summary_file: str = "daily_summary.json"
+    DAILY_SUMMARY_FILE: str = "daily_summary.json"
 
     @field_validator("sla_threshold_hours")
     @classmethod
@@ -39,6 +41,13 @@ class Settings(BaseSettings):
     def _log_ext(cls, value: str) -> str:
         if not value.endswith(".log"):
             raise ValueError("log_file must end with .log")
+        return value
+
+    @field_validator("daily_summary_file")
+    @classmethod
+    def _summary_ext(cls, value: str) -> str:
+        if not value.endswith(".json"):
+            raise ValueError("daily_summary_file must end with .json")
         return value
 
 

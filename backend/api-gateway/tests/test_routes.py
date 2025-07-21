@@ -104,7 +104,7 @@ def test_trpc_ping(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def test_trpc_etag(monkeypatch: pytest.MonkeyPatch) -> None:
-    """tRPC endpoint should respond with 304 when ETag matches."""
+    """TRPC endpoint should respond with 304 when ETag matches."""
     import importlib
     import warnings
     import fakeredis.aioredis

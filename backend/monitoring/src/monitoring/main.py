@@ -221,6 +221,18 @@ async def daily_summary() -> dict[str, object]:
     return dict(summary)
 
 
+@app.get("/daily_summary/report")
+async def daily_summary_report() -> dict[str, object]:
+    """Return the latest persisted daily summary report."""
+    path = Path(settings.daily_summary_file)
+    if not path.exists():
+        return {}
+    import json
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return dict(data)
+
+
 @app.get("/logs")
 async def logs() -> dict[str, str]:
     """Return the latest application logs."""

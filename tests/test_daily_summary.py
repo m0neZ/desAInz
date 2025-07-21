@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+import json
 
 sys.path.append(
     str(
@@ -25,7 +26,7 @@ from scripts.daily_summary import generate_daily_summary
 
 
 @pytest.mark.asyncio
-async def test_generate_daily_summary() -> None:
+async def test_generate_daily_summary(tmp_path: Path) -> None:
     """Summary returns all expected keys."""
     from unittest.mock import AsyncMock, patch
 
@@ -44,7 +45,12 @@ async def test_generate_daily_summary() -> None:
             finally:
                 session.close()
 
-        result = await generate_daily_summary(session_provider=provider)
+        output = tmp_path / "report.json"
+        result = await generate_daily_summary(
+            session_provider=provider, output_file=output
+        )
     assert "ideas_generated" in result
     assert "mockup_success_rate" in result
     assert "marketplace_stats" in result
+    assert output.exists()
+    assert json.loads(output.read_text(encoding="utf-8")) == result

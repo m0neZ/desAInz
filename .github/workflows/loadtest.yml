@@ -53,6 +53,17 @@ jobs:
         env:
           S3_BUCKET: ${{ env.BUCKET }}
         run: ./scripts/run-integration-tests.sh
+      - name: Run load tests
+        env:
+          S3_BUCKET: ${{ env.BUCKET }}
+          K6_RESULTS: k6_results.json
+        run: ./scripts/run_load_tests.sh
+      - name: Upload k6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: k6_results.json
       - name: Teardown resources
         if: always()
         run: |

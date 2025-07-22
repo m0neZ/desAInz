@@ -30,7 +30,7 @@ sphinxcontrib-openapi
 myst-parser
 sentry-sdk
 Deprecated
-testing.postgresql
+docker
 sphinxcontrib-mermaid
 openapi-schema-validator
 opentelemetry-exporter-otlp

@@ -18,7 +18,8 @@ from sqlalchemy.ext.asyncio import (
 )
 import fakeredis.aioredis
 import psycopg2
-import testing.postgresql
+import time
+import docker
 
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 warnings.filterwarnings(
@@ -116,15 +117,34 @@ class _PostgresConnectionWrapper:
 
 @pytest.fixture()
 def postgresql() -> _PostgresConnectionWrapper:
-    """Yield a temporary PostgreSQL connection."""
+    """Spin up a temporary PostgreSQL instance using Docker."""
+    client = docker.from_env()
+    container = client.containers.run(
+        "postgres:15",
+        environment={
+            "POSTGRES_USER": "user",
+            "POSTGRES_PASSWORD": "password",
+            "POSTGRES_DB": "test",
+        },
+        ports={"5432/tcp": None},
+        detach=True,
+    )
     try:
-        pg = testing.postgresql.Postgresql()
-    except (FileNotFoundError, RuntimeError):
-        pytest.skip("PostgreSQL not available")
-    with pg:
-        conn = psycopg2.connect(**pg.dsn())
-        wrapper = _PostgresConnectionWrapper(conn, pg.url())
+        container.reload()
+        port = container.attrs["NetworkSettings"]["Ports"]["5432/tcp"][0]["HostPort"]
+        dsn = f"postgresql://user:password@localhost:{port}/test"
+        for _ in range(30):
+            try:
+                conn = psycopg2.connect(dsn)
+                break
+            except psycopg2.OperationalError:
+                time.sleep(1)
+        else:
+            raise RuntimeError("PostgreSQL container failed to start")
+        wrapper = _PostgresConnectionWrapper(conn, dsn)
         try:
             yield wrapper
         finally:
             conn.close()
+    finally:
+        container.remove(force=True)

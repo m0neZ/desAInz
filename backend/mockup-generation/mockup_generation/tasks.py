@@ -212,6 +212,10 @@ GPU_UTILIZATION = Gauge(
     "gpu_utilization_percent",
     "Current GPU utilization as reported by torch.cuda.utilization_rate",
 )
+GPU_TEMPERATURE = Gauge(
+    "gpu_temperature_celsius",
+    "Current GPU temperature in Celsius while generating mockups",
+)
 
 
 def _update_gpu_utilization() -> None:
@@ -230,6 +234,36 @@ def _update_gpu_utilization() -> None:
     except Exception:  # pragma: no cover - torch unavailable
         pass
     GPU_UTILIZATION.set(0.0)
+
+
+def _update_gpu_temperature() -> None:
+    """Update the GPU temperature gauge using ``nvidia-smi`` when available."""
+    try:
+        import subprocess
+
+        result = subprocess.run(
+            [
+                "nvidia-smi",
+                "--query-gpu=temperature.gpu",
+                "--format=csv,noheader,nounits",
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        temp = float(result.stdout.strip().splitlines()[0])
+        GPU_TEMPERATURE.set(temp)
+        return
+    except Exception:  # pragma: no cover - command may not exist
+        pass
+    GPU_TEMPERATURE.set(0.0)
+
+
+def _update_gpu_metrics() -> None:
+    """Update GPU utilization and temperature gauges."""
+    _update_gpu_utilization()
+    _update_gpu_temperature()
 
 
 # Task metrics
@@ -297,7 +331,7 @@ async def gpu_slot(slot: int | None = None) -> AsyncIterator[None]:
     finally:
         GPU_SLOTS_IN_USE.dec()
         await lock.release()
-        _update_gpu_utilization()
+        _update_gpu_metrics()
         global _ACTIVE_LOCK
         _ACTIVE_LOCK = None
 

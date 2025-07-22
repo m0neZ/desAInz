@@ -16,6 +16,7 @@ from backend.shared.security import require_status_api_key
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import func, select
+from sqlalchemy.orm import joinedload
 
 from backend.shared.db import AsyncSessionLocal
 from backend.shared.db import models
@@ -152,6 +153,7 @@ async def export_ab_test_results(
         async with AsyncSessionLocal() as session:
             stmt = (
                 select(models.ABTestResult)
+                .options(joinedload(models.ABTestResult.ab_test))
                 .filter(models.ABTestResult.ab_test_id == ab_test_id)
                 .order_by(models.ABTestResult.timestamp)
                 .execution_options(yield_per=1000)

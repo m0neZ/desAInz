@@ -17,7 +17,9 @@ The `scripts` directory provides helper scripts for setting up storage and CDN r
 - `setup_storage.sh` - create the S3/MinIO bucket structure.
   It can also configure lifecycle rules on AWS S3 buckets.
 - `configure_cdn.sh` - create a CloudFront distribution
-- `invalidate_cache.sh` - invalidate CDN caches when mockups change
+- `invalidate_cache.sh` - invalidate CDN caches when mockups change. The
+  publisher triggers this script after each upload if `CDN_DISTRIBUTION_ID` is
+  configured.
 - Base Kubernetes manifests can be found in `infrastructure/k8s` with instructions for
   customizing them for local Minikube testing.
   Each script performs basic sanity checks and is safe to run multiple times.

@@ -8,6 +8,9 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
+import asyncio
+
+import httpx
 import requests
 from dagster import Failure, RetryPolicy, op
 
@@ -97,33 +100,47 @@ def score_signals(  # type: ignore[no-untyped-def]
     context,
     signals: list[str],
 ) -> list[float]:
-    """Score the ingested signals."""
-    context.log.info("scoring %d signals", len(signals))
-    base_url = os.environ.get(
-        "SCORING_ENGINE_URL",
-        "http://scoring-engine:5002",
-    )
-    scores: list[float] = []
-    for _ in signals:
+    """Score the ingested signals concurrently."""
+
+    async def _score(client: httpx.AsyncClient) -> float:
         payload = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "engagement_rate": 0.0,
             "embedding": [0.0],
         }
-        try:
-            resp = _post_with_retry(
-                context,
-                f"{base_url}/score",
-                json=payload,
-                headers=_auth_headers(context),
-                timeout=30,
-            )
-            score = float(resp.json().get("score", 0))
-        except requests.RequestException as exc:  # noqa: BLE001
-            context.log.warning("scoring failed after retries: %s", exc)
-            score = 0.0
-        scores.append(score)
-    return scores
+        for attempt in range(1, 4):
+            try:
+                resp = await client.post(
+                    f"{base_url}/score",
+                    json=payload,
+                    headers=_auth_headers(context),
+                    timeout=30,
+                )
+                resp.raise_for_status()
+                return float(resp.json().get("score", 0))
+            except httpx.HTTPError as exc:  # noqa: BLE001
+                if attempt == 3:
+                    context.log.warning("scoring failed after retries: %s", exc)
+                    return 0.0
+                context.log.warning(
+                    "scoring request failed: %s (attempt %d/3)",
+                    exc,
+                    attempt,
+                )
+                await asyncio.sleep(2 ** (attempt - 1))
+        return 0.0
+
+    context.log.info("scoring %d signals", len(signals))
+    base_url = os.environ.get(
+        "SCORING_ENGINE_URL",
+        "http://scoring-engine:5002",
+    )
+
+    async def _run() -> list[float]:
+        async with httpx.AsyncClient() as client:
+            return await asyncio.gather(*[_score(client) for _ in signals])
+
+    return list(asyncio.run(_run()))
 
 
 @op  # type: ignore[misc]

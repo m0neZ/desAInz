@@ -107,6 +107,29 @@ GPU_SLOTS_IN_USE = Gauge("gpu_slots_in_use", "Number of GPU slots currently in u
 GPU_SLOT_ACQUIRE_TOTAL = Counter(
     "gpu_slot_acquire_total", "Total GPU slot acquisitions"
 )
+GPU_UTILIZATION = Gauge(
+    "gpu_utilization_percent",
+    "Current GPU utilization as reported by torch.cuda.utilization_rate",
+)
+
+
+def _update_gpu_utilization() -> None:
+    """Update the GPU utilization gauge using ``torch.cuda.utilization_rate``."""
+    try:
+        import torch  # type: ignore
+
+        available = getattr(torch.cuda, "is_available", lambda: False)()
+        util_fn = getattr(torch.cuda, "utilization_rate", None)
+        if available and callable(util_fn):
+            try:
+                GPU_UTILIZATION.set(float(util_fn()))
+                return
+            except Exception:  # pragma: no cover - optional runtime failure
+                pass
+    except Exception:  # pragma: no cover - torch unavailable
+        pass
+    GPU_UTILIZATION.set(0.0)
+
 
 # Task metrics
 GENERATE_DURATION = Histogram(
@@ -173,6 +196,7 @@ async def gpu_slot(slot: int | None = None) -> AsyncIterator[None]:
     finally:
         GPU_SLOTS_IN_USE.dec()
         await lock.release()
+        _update_gpu_utilization()
         global _ACTIVE_LOCK
         _ACTIVE_LOCK = None
 

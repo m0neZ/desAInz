@@ -7,9 +7,10 @@ class Celery:
     """Simplified Celery class used in tests."""
 
     def __init__(self, *args: object, **_kwargs: object) -> None:
+        """Initialize the stub with minimal configuration."""
         self.conf = SimpleNamespace(result_backend=None)
 
-    def task(self, *d_args: object, **d_kwargs: object):  # pragma: no cover
+    def task(self, *_: object, **__: object):  # pragma: no cover
         """Return a decorator that leaves the function unmodified."""
 
         def decorator(func):

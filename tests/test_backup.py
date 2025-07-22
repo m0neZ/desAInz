@@ -19,7 +19,7 @@ def test_dump_postgres_creates_and_uploads(
     """Database dump should be uploaded and local file removed."""
     commands: list[list[str]] = []
 
-    def fake_run(cmd: list[str], check: bool = True) -> None:
+    def fake_run(cmd: list[str], _check: bool = True) -> None:
         commands.append(cmd)
         if cmd[0] == "pg_dump":
             # create dump file to mimic pg_dump output

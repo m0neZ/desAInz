@@ -109,7 +109,7 @@ def schedule_marketplace_ingestion(
     listing_ids: Iterable[int],
     scoring_api: str,
     interval_minutes: int = 60,
-) -> "Job":
+) -> Job:
     """Register a job fetching metrics and update scoring weights."""
 
     async def _job() -> None:

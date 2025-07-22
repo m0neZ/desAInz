@@ -8,7 +8,7 @@ import os
 import uuid
 import asyncio
 import logging
-import json
+import orjson
 from datetime import datetime
 from threading import Event, Thread
 from pathlib import Path
@@ -133,8 +133,8 @@ def _create_consumer() -> KafkaConsumerWrapper:
     registry = SchemaRegistryClient(settings.schema_registry_url)
     schema_dir = Path(__file__).resolve().parents[3] / "schemas"
     for path in schema_dir.glob("*.json"):
-        with open(path) as fh:
-            schema = json.load(fh)
+        with open(path, "rb") as fh:
+            schema = orjson.loads(fh.read())
         try:
             registry.register(path.stem, schema)
         except Exception:  # pragma: no cover - ignore duplicates
@@ -352,7 +352,11 @@ async def search_embeddings(body: SearchRequest) -> JSONResponse:
 @app.post("/score")
 async def score_signal(payload: ScoreRequest) -> JSONResponse:
     """Score a signal and cache hot results."""
-    key = json.dumps(payload.model_dump(), sort_keys=True, default=str)
+    key = orjson.dumps(
+        payload.model_dump(),
+        option=orjson.OPT_SORT_KEYS,
+        default=str,
+    ).decode()
     cached = await redis_client.get(key)
     if cached is not None:
         await redis_client.incr(CACHE_HIT_KEY)

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import json
+import orjson
 from typing import Mapping, cast
 
 from celery import Task
@@ -38,7 +38,11 @@ def batch_embed(self: Task, signals: list[Mapping[str, object]]) -> int:
             for msg in signals:
                 embedding = msg.get("embedding")
                 if embedding is None:
-                    payload = json.dumps(msg, default=str, sort_keys=True)
+                    payload = orjson.dumps(
+                        msg,
+                        option=orjson.OPT_SORT_KEYS,
+                        default=str,
+                    ).decode()
                     embedding_value = generate_embedding(payload)
                 else:
                     embedding_value = list(cast(list[float], embedding))

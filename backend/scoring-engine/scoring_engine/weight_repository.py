@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-import json
+import orjson
 from pathlib import Path
 from sqlalchemy import select
 
@@ -95,7 +95,9 @@ def update_weights(*, smoothing: float = 1.0, **kwargs: float) -> WeightParams:
 
     # Persist updated weights to a JSON file for durability
     try:
-        WEIGHTS_FILE.write_text(json.dumps(asdict(params)))
+        WEIGHTS_FILE.write_text(
+            orjson.dumps(asdict(params), option=orjson.OPT_SORT_KEYS).decode()
+        )
     except Exception:  # pragma: no cover - persistence failures should not crash
         pass
 

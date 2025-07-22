@@ -53,6 +53,7 @@ describe('useLiveMetrics', () => {
       return wsInstance as unknown as WebSocket;
     });
     process.env.NEXT_PUBLIC_WS_MAX_RETRIES = '2';
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { useLiveMetrics } = require('../src/hooks/useLiveMetrics');
     TestComponent = function TestComponent() {
       const metrics = useLiveMetrics();

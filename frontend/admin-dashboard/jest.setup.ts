@@ -65,10 +65,10 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-  if (typeof (console.error as any).mockRestore === 'function') {
+  if (typeof (console.error as jest.Mock).mockRestore === 'function') {
     (console.error as jest.Mock).mockRestore();
   }
-  if (typeof (console.warn as any).mockRestore === 'function') {
+  if (typeof (console.warn as jest.Mock).mockRestore === 'function') {
     (console.warn as jest.Mock).mockRestore();
   }
 });

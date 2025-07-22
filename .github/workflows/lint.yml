@@ -34,6 +34,8 @@ jobs:
         run: flake8 . --docstring-convention=numpy
       - name: Check docstrings
         run: pydocstyle backend
+      - name: Check docstring coverage
+        run: interrogate --fail-under=100 backend
       - name: Run MyPy
         run: mypy backend --explicit-package-bases --exclude "tests" --strict --config-file backend/mypy.ini
       - name: Run ESLint/Prettier/Stylelint

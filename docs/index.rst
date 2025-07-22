@@ -7,6 +7,7 @@ Welcome to desAInz's documentation!
 
    README
    configuration
+   service_settings
    architecture
    marketplace_file_sizes
    blueprints/DesignIdeaEngineCompleteBlueprint

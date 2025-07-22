@@ -7,6 +7,10 @@ so Kubernetes can scale them independently. Tasks can target a specific
 GPU by passing `gpu_index` to the `/generate` endpoint, which will
 route them to the corresponding queue.
 
+The maximum number of concurrent tasks per worker is configured with
+`GPU_WORKER_CONCURRENCY` (default `1`). Set this value to match the
+number of GPUs available inside the container.
+
 ```bash
 # build image and target the first GPU
 docker build -f backend/mockup-generation/Dockerfile \

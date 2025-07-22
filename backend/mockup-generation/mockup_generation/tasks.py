@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from contextlib import asynccontextmanager
 import subprocess
-from typing import Any, AsyncIterator
+from typing import Any, AsyncIterator, cast
 import signal
 import sys
 
@@ -66,6 +66,73 @@ async def _get_storage_client() -> AsyncIterator[AioBaseClient]:
         yield client
 
 
+MULTIPART_THRESHOLD = 16 * 1024 * 1024
+"""Size in bytes above which multipart uploads are used."""
+
+MULTIPART_CHUNK_SIZE = 8 * 1024 * 1024
+"""Chunk size for multipart uploads."""
+
+
+async def _multipart_upload(
+    client: AioBaseClient,
+    bucket: str,
+    key: str,
+    data: bytes,
+    chunk_size: int = MULTIPART_CHUNK_SIZE,
+) -> None:
+    """Upload ``data`` to S3 using the multipart API."""
+    resp = await client.create_multipart_upload(Bucket=bucket, Key=key)
+    upload_id = resp["UploadId"]
+
+    async def _upload(part_number: int, chunk: bytes) -> dict[str, object]:
+        part = await client.upload_part(
+            Bucket=bucket,
+            Key=key,
+            UploadId=upload_id,
+            PartNumber=part_number,
+            Body=chunk,
+        )
+        return {"PartNumber": part_number, "ETag": part["ETag"]}
+
+    try:
+        tasks = [
+            asyncio.create_task(_upload(i, data[offset : offset + chunk_size]))
+            for i, offset in enumerate(range(0, len(data), chunk_size), 1)
+        ]
+        parts: list[dict[str, object]] = await asyncio.gather(*tasks)
+        await client.complete_multipart_upload(
+            Bucket=bucket,
+            Key=key,
+            UploadId=upload_id,
+            MultipartUpload={
+                "Parts": sorted(
+                    parts,
+                    key=lambda p: int(cast(int, p["PartNumber"])),
+                ),
+            },
+        )
+    except Exception:
+        await client.abort_multipart_upload(
+            Bucket=bucket,
+            Key=key,
+            UploadId=upload_id,
+        )
+        raise
+
+
+async def _upload_file(
+    client: AioBaseClient,
+    bucket: str,
+    key: str,
+    data: bytes,
+) -> None:
+    """Upload ``data`` using multipart if large enough."""
+    if len(data) > MULTIPART_THRESHOLD:
+        await _multipart_upload(client, bucket, key, data)
+    else:
+        await client.put_object(Bucket=bucket, Key=key, Body=data)
+
+
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 DEFAULT_GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
 GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
@@ -121,7 +188,7 @@ GPU_UTILIZATION = Gauge(
 def _update_gpu_utilization() -> None:
     """Update the GPU utilization gauge using ``torch.cuda.utilization_rate``."""
     try:
-        import torch  # type: ignore
+        import torch
 
         available = getattr(torch.cuda, "is_available", lambda: False)()
         util_fn = getattr(torch.cuda, "utilization_rate", None)
@@ -269,7 +336,7 @@ def generate_single_mockup(
                         "NotFound",
                         "NoSuchKey",
                     }:
-                        await client.put_object(Bucket=bucket, Key=obj_name, Body=data)
+                        await _upload_file(client, bucket, obj_name, data)
                         _invalidate_cdn_cache(obj_name)
                     else:
                         raise
@@ -302,7 +369,7 @@ def generate_single_mockup(
     return asyncio.run(runner())
 
 
-@app.task
+@app.task  # type: ignore[misc]
 def _aggregate_mockups(results: list[dict[str, object]]) -> list[dict[str, object]]:
     """Return aggregated mockup generation results."""
     return results

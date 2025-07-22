@@ -25,6 +25,7 @@ lint:
 	mypy backend --explicit-package-bases --exclude "tests"
 	pydocstyle .
 	docformatter --check --recursive .
+	interrogate backend
 	pip-audit -r requirements.txt -r requirements-dev.txt
 	npm run lint
 	npm run lint:css

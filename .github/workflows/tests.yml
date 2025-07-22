@@ -36,6 +36,8 @@ jobs:
           npm ci --prefix frontend/admin-dashboard
           npx playwright install --with-deps
           python -m pip install -e .
+      - name: Validate migrations
+        run: ./scripts/validate_migrations.sh
       - name: Run Flow
         run: npm run flow
       - name: Check formatting

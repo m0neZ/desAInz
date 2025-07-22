@@ -8,6 +8,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
+import asyncio
+import httpx
 import requests
 from dagster import Failure, RetryPolicy, op
 
@@ -155,21 +157,22 @@ def generate_content(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def await_approval(context) -> None:  # type: ignore[no-untyped-def]
+async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
     """Poll the approval service until the run is approved."""
     base_url = os.environ.get("APPROVAL_SERVICE_URL", "http://api-gateway:8000")
     url = f"{base_url}/approvals/{context.run_id}"
     headers = _auth_headers(context)
-    for _ in range(30):
-        try:
-            resp = requests.get(url, headers=headers, timeout=5)
-            resp.raise_for_status()
-            if resp.json().get("approved"):
-                context.log.info("publishing approved")
-                return
-        except requests.RequestException as exc:  # noqa: BLE001
-            context.log.warning("approval check failed: %s", exc)
-        time.sleep(10)
+    async with httpx.AsyncClient() as client:
+        for _ in range(30):
+            try:
+                resp = await client.get(url, headers=headers, timeout=5)
+                resp.raise_for_status()
+                if resp.json().get("approved"):
+                    context.log.info("publishing approved")
+                    return
+            except httpx.HTTPError as exc:  # noqa: BLE001
+                context.log.warning("approval check failed: %s", exc)
+            await asyncio.sleep(10)
     raise Failure("publishing not approved")
 
 

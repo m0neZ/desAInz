@@ -29,6 +29,7 @@ from orchestrator.schedules import (  # noqa: E402
     monthly_secret_rotation_schedule,
 )
 from orchestrator.sensors import idea_sensor  # noqa: E402
+from orchestrator import ops  # noqa: E402
 
 
 def test_job_structure() -> None:
@@ -104,20 +105,32 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
-    def fake_get(url: str, *args: object, **kwargs: object) -> object:
-        calls.append(url)
+    class MockClient:
+        async def __aenter__(self) -> "MockClient":
+            return self
 
-        class Resp:
-            def raise_for_status(self) -> None:  # noqa: D401 - for test only
-                return None
+        async def __aexit__(
+            self,
+            exc_type: type[BaseException] | None,
+            exc: BaseException | None,
+            tb: type[BaseException] | None,
+        ) -> None:
+            return None
 
-            def json(self) -> dict[str, object]:  # noqa: D401 - for test only
-                return {"approved": True}
+        async def get(self, url: str, *args: object, **kwargs: object) -> object:
+            calls.append(url)
 
-        return Resp()
+            class Resp:
+                def raise_for_status(self) -> None:  # noqa: D401 - for test only
+                    return None
+
+                def json(self) -> dict[str, object]:  # noqa: D401 - for test only
+                    return {"approved": True}
+
+            return Resp()
 
     monkeypatch.setattr("requests.post", fake_post)
-    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setattr(ops.httpx, "AsyncClient", MockClient)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
     instance = DagsterInstance.ephemeral()
     result = idea_job.execute_in_process(instance=instance)
@@ -152,20 +165,32 @@ def test_rotate_secrets_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
-    def fake_get(url: str, *args: object, **kwargs: object) -> object:
-        called.append(url)
+    class MockClient:
+        async def __aenter__(self) -> "MockClient":
+            return self
 
-        class Resp:
-            def raise_for_status(self) -> None:  # noqa: D401 - for test only
-                return None
+        async def __aexit__(
+            self,
+            exc_type: type[BaseException] | None,
+            exc: BaseException | None,
+            tb: type[BaseException] | None,
+        ) -> None:
+            return None
 
-            def json(self) -> dict[str, object]:  # noqa: D401 - for test only
-                return {"approved": True}
+        async def get(self, url: str, *args: object, **kwargs: object) -> object:
+            called.append(url)
 
-        return Resp()
+            class Resp:
+                def raise_for_status(self) -> None:  # noqa: D401 - for test only
+                    return None
+
+                def json(self) -> dict[str, object]:  # noqa: D401 - for test only
+                    return {"approved": True}
+
+            return Resp()
 
     monkeypatch.setattr("requests.post", fake_post)
-    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setattr(ops.httpx, "AsyncClient", MockClient)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
     monkeypatch.setenv("SLACK_WEBHOOK_URL", "http://slack")
     monkeypatch.setattr(

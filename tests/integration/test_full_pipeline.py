@@ -58,11 +58,28 @@ def _mock_post(url: str, *args: object, **kwargs: object) -> DummyResponse:
 @pytest.mark.usefixtures("monkeypatch")
 def test_full_pipeline(monkeypatch: pytest.MonkeyPatch) -> None:
     """Execute the orchestrator job through all stages."""
+
+    class MockClient:
+        async def __aenter__(self) -> "MockClient":
+            return self
+
+        async def __aexit__(
+            self,
+            exc_type: type[BaseException] | None,
+            exc: BaseException | None,
+            tb: type[BaseException] | None,
+        ) -> None:
+            return None
+
+        async def get(self, url: str, *args: object, **kwargs: object) -> DummyResponse:
+            return DummyResponse({"approved": True})
+
     monkeypatch.setattr(
         ops,
         "requests",
-        SimpleNamespace(post=_mock_post, get=lambda *a, **k: DummyResponse({"approved": True})),
+        SimpleNamespace(post=_mock_post),
     )
+    monkeypatch.setattr(ops.httpx, "AsyncClient", MockClient)
     os.environ["APPROVAL_SERVICE_URL"] = "http://approval"
     result = idea_job.execute_in_process()
     assert result.success

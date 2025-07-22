@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Mapping
 import logging
 
 from requests import RequestException
@@ -24,6 +24,7 @@ from .trademark import is_trademarked
 from .notifications import notify_failure
 from mockup_generation.post_processor import ensure_not_nsfw
 from PIL import Image
+from . import rules
 from .db import (
     Marketplace,
     PublishStatus,
@@ -46,6 +47,22 @@ _fallback = SeleniumFallback()
 logger = logging.getLogger(__name__)
 
 
+def validate_mockup(
+    marketplace: Marketplace, design_path: Path, metadata: Mapping[str, Any]
+) -> str | None:
+    """Return reason if ``design_path`` violates marketplace policies."""
+    rules.validate_mockup(marketplace, design_path)
+    title = str(metadata.get("title", ""))
+    if title and is_trademarked(title):
+        return "trademarked"
+    try:
+        with Image.open(design_path) as img:
+            ensure_not_nsfw(img)
+    except ValueError:
+        return "nsfw"
+    return None
+
+
 async def publish_with_retry(
     session: AsyncSession,
     task_id: int,
@@ -62,19 +79,11 @@ async def publish_with_retry(
     """
     try:
         await update_task_status(session, task_id, PublishStatus.in_progress)
-        title = str(metadata.get("title", ""))
-        if title and is_trademarked(title):
+        reason = validate_mockup(marketplace, design_path, metadata)
+        if reason is not None:
             await update_task_status(session, task_id, PublishStatus.failed)
             notify_failure(task_id, marketplace.value)
-            return "trademarked"
-
-        try:
-            with Image.open(design_path) as img:
-                ensure_not_nsfw(img)
-        except ValueError:
-            await update_task_status(session, task_id, PublishStatus.failed)
-            notify_failure(task_id, marketplace.value)
-            return "nsfw"
+            return reason
 
         client = CLIENTS[marketplace]
         listing_id = client.publish_design(design_path, metadata)

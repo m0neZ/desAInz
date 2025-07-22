@@ -27,6 +27,14 @@ python -m pip install -r requirements.txt -r requirements-dev.txt
 npm ci --legacy-peer-deps
 ```
 
+Using a dedicated virtual environment path outside the repository keeps
+dependencies cached between runs:
+
+```bash
+python -m venv ~/.cache/desainz_venv
+source ~/.cache/desainz_venv/bin/activate
+```
+
 Build the HTML documentation locally with:
 
 ```bash

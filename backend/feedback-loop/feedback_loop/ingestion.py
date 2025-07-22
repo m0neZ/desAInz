@@ -16,7 +16,6 @@ from marketplace_publisher.publisher import CLIENTS
 from marketplace_publisher.clients import BaseClient
 from sqlalchemy import func
 
-import pandas as pd
 from backend.shared.db import session_scope
 from backend.shared.db import models
 from scoring_engine import weight_repository
@@ -25,13 +24,14 @@ from .weight_updater import update_weights
 logger = logging.getLogger(__name__)
 
 
-def ingest_metrics(metrics: Iterable[dict[str, float]]) -> pd.DataFrame:
-    """Persist incoming metrics and return DataFrame."""
-    df = pd.DataFrame(metrics)
-    if "timestamp" not in df.columns:
-        df["timestamp"] = datetime.now(timezone.utc)
-    logger.info("ingested %s metrics", len(df))
-    return df
+def ingest_metrics(metrics: Iterable[Mapping[str, float]]) -> list[dict[str, float]]:
+    """Persist incoming metrics and return them as a list of dictionaries."""
+    metrics_list = [dict(m) for m in metrics]
+    now = datetime.now(timezone.utc)
+    for entry in metrics_list:
+        entry.setdefault("timestamp", now)
+    logger.info("ingested %s metrics", len(metrics_list))
+    return metrics_list
 
 
 def fetch_marketplace_metrics(

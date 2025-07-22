@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING
 
-import pandas as pd
+import numpy as np
 
 if TYPE_CHECKING:  # pragma: no cover - imports for type checking
     from .storage import MetricsStore
@@ -38,50 +38,49 @@ class MetricsAnalyzer:
 
     def __init__(self, metrics: Iterable[ResourceMetric]) -> None:
         """Initialize the analyzer with historical metrics."""
-        self._df = pd.DataFrame(
-            [
-                {
-                    "timestamp": m.timestamp,
-                    "cpu_percent": m.cpu_percent,
-                    "memory_mb": m.memory_mb,
-                    "disk_usage_mb": m.disk_usage_mb,
-                }
-                for m in metrics
-            ]
+        data = sorted(metrics, key=lambda m: m.timestamp)
+        self._timestamps = np.array(
+            [m.timestamp.timestamp() for m in data], dtype=float
         )
-        if self._df.empty:
-            self._df = pd.DataFrame(
-                columns=["timestamp", "cpu_percent", "memory_mb", "disk_usage_mb"]
-            )
-        self._df.sort_values("timestamp", inplace=True)
-        self._df.reset_index(drop=True, inplace=True)
+        self._cpu = np.array([m.cpu_percent for m in data], dtype=float)
+        self._memory = np.array([m.memory_mb for m in data], dtype=float)
+        self._disk = np.array(
+            [m.disk_usage_mb if m.disk_usage_mb is not None else np.nan for m in data],
+            dtype=float,
+        )
 
     def average_cpu(self, last_n: int | None = None) -> float:
         """Return the average CPU usage."""
-        data = self._df.tail(last_n) if last_n else self._df
-        return float(data["cpu_percent"].mean()) if not data.empty else 0.0
+        data = self._cpu[-last_n:] if last_n else self._cpu
+        return float(np.nanmean(data)) if data.size else 0.0
 
     def average_memory(self, last_n: int | None = None) -> float:
         """Return the average memory usage in MB."""
-        data = self._df.tail(last_n) if last_n else self._df
-        return float(data["memory_mb"].mean()) if not data.empty else 0.0
+        data = self._memory[-last_n:] if last_n else self._memory
+        return float(np.nanmean(data)) if data.size else 0.0
 
     def average_disk_usage(self, last_n: int | None = None) -> float:
         """Return the average disk usage in MB if available."""
-        if "disk_usage_mb" not in self._df.columns:
+        if np.isnan(self._disk).all():
             return 0.0
-        data = self._df.tail(last_n) if last_n else self._df
-        return float(data["disk_usage_mb"].mean()) if not data.empty else 0.0
+        data = self._disk[-last_n:] if last_n else self._disk
+        return float(np.nanmean(data)) if data.size else 0.0
 
     def _trend(self, column: str, last_n: int | None = None) -> float:
         """Return slope per minute for ``column`` over the selected window."""
-        data = self._df.tail(last_n) if last_n else self._df
-        if data.empty or len(data) < 2:
+        if column == "cpu_percent":
+            arr = self._cpu
+        elif column == "memory_mb":
+            arr = self._memory
+        else:
+            arr = self._disk
+        idx = slice(-last_n, None) if last_n else slice(None)
+        arr = arr[idx]
+        ts = self._timestamps[idx]
+        if arr.size < 2:
             return 0.0
-        delta_v = data[column].iloc[-1] - data[column].iloc[0]
-        delta_t = (
-            data["timestamp"].iloc[-1] - data["timestamp"].iloc[0]
-        ).total_seconds() / 60
+        delta_v = arr[-1] - arr[0]
+        delta_t = (ts[-1] - ts[0]) / 60
         return float(delta_v / delta_t) if delta_t else 0.0
 
     def cpu_trend(self, last_n: int | None = None) -> float:
@@ -94,7 +93,7 @@ class MetricsAnalyzer:
 
     def disk_usage_trend(self, last_n: int | None = None) -> float:
         """Return disk usage trend slope per minute."""
-        if "disk_usage_mb" not in self._df.columns:
+        if np.isnan(self._disk).all():
             return 0.0
         return self._trend("disk_usage_mb", last_n)
 

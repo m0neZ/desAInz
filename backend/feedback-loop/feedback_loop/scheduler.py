@@ -27,12 +27,12 @@ def setup_scheduler(
     ab_manager = ABTestManager(ab_db_url)
 
     def hourly_ingest() -> None:
-        df = ingest_metrics(metrics_source)
-        logger.info("processed metrics frame size %s", len(df))
+        metrics = ingest_metrics(metrics_source)
+        logger.info("processed metrics count %s", len(metrics))
 
     def nightly_update() -> None:
-        df = ingest_metrics(metrics_source)
-        weights = update_weights(scoring_api, df.to_dict("records"))
+        metrics = ingest_metrics(metrics_source)
+        weights = update_weights(scoring_api, metrics)
         allocation = ab_manager.allocate_budget(total_budget=100.0)
         logger.info("budget allocation %s", allocation)
         logger.info("updated weights payload %s", weights)

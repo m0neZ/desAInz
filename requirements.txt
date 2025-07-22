@@ -2,7 +2,6 @@ fastapi
 uvicorn
 uvloop
 pydantic
-pandas
 pytest
 pytest-cov
 pytest-xdist

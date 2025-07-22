@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Iterable, Mapping
 
-import pandas as pd
+import numpy as np
 
 import requests
 from backend.shared.http import request_with_retry
@@ -17,34 +17,51 @@ def update_weights(
     api_url: str, metrics: Iterable[Mapping[str, float]]
 ) -> Mapping[str, float]:
     """Compute weights from metrics and update the scoring engine."""
-    df = pd.DataFrame(metrics)
+    metrics_list = [dict(m) for m in metrics]
+    cols = set().union(*(m.keys() for m in metrics_list))
+
+    def arr(key: str) -> np.ndarray:
+        return np.array([m.get(key, np.nan) for m in metrics_list], dtype=float)
+
     ctr = 0.0
-    if {"clicks", "impressions"} <= set(df.columns):
-        impressions_sum = float(df["impressions"].sum())
-        ctr = float(df["clicks"].sum() / impressions_sum) if impressions_sum else 0.0
-    elif {"favorites", "views"} <= set(df.columns):
-        impressions_sum = float(df["views"].sum())
-        ctr = float(df["favorites"].sum() / impressions_sum) if impressions_sum else 0.0
-    elif "ctr" in df.columns:
-        ctr = float(df["ctr"].mean())
+    if {"clicks", "impressions"} <= cols:
+        impressions_sum = float(np.nansum(arr("impressions")))
+        ctr = (
+            float(np.nansum(arr("clicks")) / impressions_sum)
+            if impressions_sum
+            else 0.0
+        )
+    elif {"favorites", "views"} <= cols:
+        impressions_sum = float(np.nansum(arr("views")))
+        ctr = (
+            float(np.nansum(arr("favorites")) / impressions_sum)
+            if impressions_sum
+            else 0.0
+        )
+    elif "ctr" in cols:
+        ctr = float(np.nanmean(arr("ctr")))
 
     conv_rate = 0.0
-    if {"purchases", "clicks"} <= set(df.columns):
-        clicks_sum = float(df["clicks"].sum())
-        conv_rate = float(df["purchases"].sum() / clicks_sum) if clicks_sum else 0.0
-    elif {"orders", "favorites"} <= set(df.columns):
-        fav_sum = float(df["favorites"].sum())
-        conv_rate = float(df["orders"].sum() / fav_sum) if fav_sum else 0.0
-    elif {"orders", "views"} <= set(df.columns):
-        views_sum = float(df["views"].sum())
-        conv_rate = float(df["orders"].sum() / views_sum) if views_sum else 0.0
-    elif {"conversions", "impressions"} <= set(df.columns):
-        impressions_sum = float(df["impressions"].sum())
+    if {"purchases", "clicks"} <= cols:
+        clicks_sum = float(np.nansum(arr("clicks")))
         conv_rate = (
-            float(df["conversions"].sum() / impressions_sum) if impressions_sum else 0.0
+            float(np.nansum(arr("purchases")) / clicks_sum) if clicks_sum else 0.0
         )
-    elif "conversion_rate" in df.columns:
-        conv_rate = float(df["conversion_rate"].mean())
+    elif {"orders", "favorites"} <= cols:
+        fav_sum = float(np.nansum(arr("favorites")))
+        conv_rate = float(np.nansum(arr("orders")) / fav_sum) if fav_sum else 0.0
+    elif {"orders", "views"} <= cols:
+        views_sum = float(np.nansum(arr("views")))
+        conv_rate = float(np.nansum(arr("orders")) / views_sum) if views_sum else 0.0
+    elif {"conversions", "impressions"} <= cols:
+        impressions_sum = float(np.nansum(arr("impressions")))
+        conv_rate = (
+            float(np.nansum(arr("conversions")) / impressions_sum)
+            if impressions_sum
+            else 0.0
+        )
+    elif "conversion_rate" in cols:
+        conv_rate = float(np.nanmean(arr("conversion_rate")))
 
     weights = {
         "freshness": 1.0,

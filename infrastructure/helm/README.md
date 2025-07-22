@@ -56,3 +56,7 @@ resource requests and limits, horizontal pod autoscaling and secret mounting.
 Secrets referenced via `secretName` are mounted under `/run/secrets`.
 Adjust these settings in the values files or override them on the command line
 to tune deployments for your environment.
+
+Each service also mounts an ephemeral volume at `/tmpfs` for intermediate data.
+The volume is memory-backed using `emptyDir` with `medium: Memory`, providing
+low-latency storage at the cost of additional RAM usage.

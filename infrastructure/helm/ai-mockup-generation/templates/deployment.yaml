@@ -38,9 +38,14 @@ spec:
             - name: secret-volume
               mountPath: /run/secrets
               readOnly: true
+            - name: tmpfs-volume
+              mountPath: /tmpfs
           resources:
 {{ toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: secret-volume
           secret:
             secretName: {{ .Values.secretName }}
+        - name: tmpfs-volume
+          emptyDir:
+            medium: Memory

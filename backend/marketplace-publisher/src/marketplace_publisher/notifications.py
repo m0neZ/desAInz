@@ -7,6 +7,8 @@ import logging
 import os
 from typing import Any
 
+import atexit
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .db import create_webhook_event
@@ -16,6 +18,14 @@ from backend.shared.http import request_with_retry
 
 
 logger = logging.getLogger(__name__)
+
+
+SESSION = requests.Session()
+
+
+@atexit.register
+def _close_session() -> None:
+    SESSION.close()
 
 
 async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
@@ -30,7 +40,12 @@ async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
             return
         try:
             await asyncio.to_thread(
-                request_with_retry, "POST", webhook, json=payload, timeout=2
+                request_with_retry,
+                "POST",
+                webhook,
+                json=payload,
+                timeout=2,
+                session=SESSION,
             )
         except requests.RequestException as exc:  # pragma: no cover - best effort
             logger.warning("notification failed: %s", exc)

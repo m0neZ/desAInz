@@ -9,6 +9,7 @@ from typing import Any
 
 import asyncio
 import httpx
+import atexit
 from dagster import Failure, RetryPolicy, op
 
 from scripts import maintenance
@@ -23,6 +24,24 @@ def _auth_headers(context: Any) -> dict[str, str]:
     return headers
 
 
+_CLIENT: httpx.AsyncClient | None = None
+
+
+async def _get_client() -> httpx.AsyncClient:
+    global _CLIENT
+    if _CLIENT is None:
+        _CLIENT = httpx.AsyncClient()
+    return _CLIENT
+
+
+@atexit.register
+def _close_client() -> None:
+    if _CLIENT is not None:
+        import asyncio as _asyncio
+
+        _asyncio.run(_CLIENT.aclose())
+
+
 async def _post_with_retry(
     context: Any,
     url: str,
@@ -33,31 +52,31 @@ async def _post_with_retry(
     retries: int = 3,
 ) -> httpx.Response:
     """Send a POST request asynchronously with exponential backoff."""
+    client = await _get_client()
     for attempt in range(1, retries + 1):
-        async with httpx.AsyncClient() as client:
-            try:
-                response = await client.post(
-                    url, json=json, headers=headers, timeout=timeout
-                )
-                response.raise_for_status()
-                return response
-            except httpx.HTTPError as exc:  # noqa: BLE001
-                if attempt == retries:
-                    context.log.error(
-                        "request to %s failed after %d attempts: %s",
-                        url,
-                        attempt,
-                        exc,
-                    )
-                    raise
-                context.log.warning(
-                    "request to %s failed: %s (attempt %d/%d)",
+        try:
+            response = await client.post(
+                url, json=json, headers=headers, timeout=timeout
+            )
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:  # noqa: BLE001
+            if attempt == retries:
+                context.log.error(
+                    "request to %s failed after %d attempts: %s",
                     url,
-                    exc,
                     attempt,
-                    retries,
+                    exc,
                 )
-                await asyncio.sleep(2 ** (attempt - 1))
+                raise
+            context.log.warning(
+                "request to %s failed: %s (attempt %d/%d)",
+                url,
+                exc,
+                attempt,
+                retries,
+            )
+            await asyncio.sleep(2 ** (attempt - 1))
     raise RuntimeError("unreachable")
 
 

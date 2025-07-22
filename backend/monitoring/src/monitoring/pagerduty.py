@@ -5,12 +5,20 @@ from __future__ import annotations
 import os
 from typing import Any
 
+import atexit
 import requests
 
 from backend.shared.http import request_with_retry
 from .settings import settings
 
 PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"
+
+SESSION = requests.Session()
+
+
+@atexit.register
+def _close_session() -> None:
+    SESSION.close()
 
 
 def _send_event(summary: str, severity: str, source: str) -> None:
@@ -30,7 +38,13 @@ def _send_event(summary: str, severity: str, source: str) -> None:
         },
     }
     try:
-        request_with_retry("POST", PAGERDUTY_URL, json=payload, timeout=5)
+        request_with_retry(
+            "POST",
+            PAGERDUTY_URL,
+            json=payload,
+            timeout=5,
+            session=SESSION,
+        )
     except requests.RequestException:
         pass
 

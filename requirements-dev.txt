@@ -36,4 +36,3 @@ openapi-schema-validator
 opentelemetry-exporter-otlp
 python-jose[cryptography]
 pytest-recording
-pytest-postgresql

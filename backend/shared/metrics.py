@@ -15,6 +15,8 @@ from prometheus_client import (
     generate_latest,
 )
 
+METRICS_CACHE_TTL = 3600
+
 
 REQUEST_COUNTER = Counter(
     "http_requests_total", "Total HTTP requests", ["method", "endpoint"]
@@ -29,7 +31,7 @@ REQUEST_LATENCY = Histogram(
 def register_metrics(app: FastAPI) -> None:
     """Attach metrics middleware and /metrics endpoint to ``app``."""
 
-    @app.middleware("http")
+    @app.middleware("http")  # type: ignore[misc]
     async def _record_metrics(
         request: Request,
         call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -41,8 +43,9 @@ def register_metrics(app: FastAPI) -> None:
         REQUEST_LATENCY.labels(request.method, request.url.path).observe(duration)
         return response
 
-    @app.get("/metrics")
+    @app.get("/metrics")  # type: ignore[misc]
     async def metrics() -> Response:
+        """Return Prometheus metrics with aggressive caching."""
         data = generate_latest()
-        headers = cache_header()
+        headers = cache_header(ttl=METRICS_CACHE_TTL)
         return Response(content=data, media_type=CONTENT_TYPE_LATEST, headers=headers)

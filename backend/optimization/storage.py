@@ -159,7 +159,9 @@ class MetricsStore:
                     rows = cur.fetchall()
         return self._rows_to_metrics(rows)
 
-    def _rows_to_metrics(self, rows: list[tuple]) -> List[ResourceMetric]:
+    def _rows_to_metrics(
+        self, rows: list[tuple[str | datetime, float, float, float | None]]
+    ) -> List[ResourceMetric]:
         """Convert database rows to :class:`ResourceMetric` objects."""
         result: List[ResourceMetric] = []
         for ts, cpu, memory, disk in rows:

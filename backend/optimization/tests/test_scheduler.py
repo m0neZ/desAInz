@@ -5,13 +5,14 @@ from __future__ import annotations
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 import warnings
+from pytest import MonkeyPatch
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 from backend.optimization import api as opt_api
 
 
-def test_scheduler_job_registration(monkeypatch) -> None:
+def test_scheduler_job_registration(monkeypatch: MonkeyPatch) -> None:
     """Scheduler registers hourly aggregate job."""
     monkeypatch.setattr(opt_api, "scheduler", BackgroundScheduler())
     monkeypatch.setattr(
@@ -28,7 +29,7 @@ def test_scheduler_job_registration(monkeypatch) -> None:
     opt_api.scheduler.shutdown()
 
 
-def test_metrics_collection_scheduled(monkeypatch) -> None:
+def test_metrics_collection_scheduled(monkeypatch: MonkeyPatch) -> None:
     """Metrics collection job should be added on startup."""
     monkeypatch.setattr(opt_api, "scheduler", BackgroundScheduler())
     opt_api.start_metrics_collection()

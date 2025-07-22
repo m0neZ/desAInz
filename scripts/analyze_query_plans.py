@@ -12,8 +12,10 @@ The goal is to identify missing indexes or other optimisations. The
 from __future__ import annotations
 
 import logging
-import os
 from typing import Iterable
+
+from pydantic import AnyUrl, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 import psycopg2
 from psycopg2.extras import DictCursor
@@ -29,6 +31,21 @@ SLOW_QUERY_SQL = """
 CHECK_EXTENSION_SQL = "SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements'"
 
 DEFAULT_LIMIT = 5
+
+
+class Settings(BaseSettings):
+    """Configuration for database analysis."""
+
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
+
+    database_url: AnyUrl = Field(
+        default=AnyUrl("postgresql://user:password@localhost:5432/app"),
+        alias="DATABASE_URL",
+    )
+    slow_query_limit: int = Field(default=DEFAULT_LIMIT, alias="SLOW_QUERY_LIMIT")
+
+
+settings = Settings()
 
 
 def _extension_available(cur: DictCursor) -> bool:
@@ -52,8 +69,8 @@ def _explain_query(cur: DictCursor, query: str) -> str:
 
 def main() -> None:
     """Print ``EXPLAIN`` plans for the slowest statements."""
-    dsn = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/app")
-    limit = int(os.getenv("SLOW_QUERY_LIMIT", str(DEFAULT_LIMIT)))
+    dsn = str(settings.database_url)
+    limit = settings.slow_query_limit
     conn = psycopg2.connect(dsn)
     try:
         with conn.cursor(cursor_factory=DictCursor) as cur:

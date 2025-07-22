@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
-import os
 import pathlib
 from typing import Iterable
+
+from pydantic import HttpUrl, SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 import importlib.util
 import sys
@@ -27,11 +29,26 @@ SchemaRegistryClient = schema_registry.SchemaRegistryClient
 
 
 SCHEMAS_DIR = pathlib.Path(__file__).resolve().parent.parent / "schemas"
-REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8081")
-REGISTRY_TOKEN = os.getenv("SCHEMA_REGISTRY_TOKEN")
 
 
-_CLIENT = SchemaRegistryClient(REGISTRY_URL, token=REGISTRY_TOKEN)
+class Settings(BaseSettings):
+    """Schema registry configuration."""
+
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
+
+    registry_url: HttpUrl = HttpUrl("http://schema-registry:8081")
+    registry_token: SecretStr | None = None
+
+
+settings = Settings()
+
+
+_CLIENT = SchemaRegistryClient(
+    str(settings.registry_url),
+    token=(
+        settings.registry_token.get_secret_value() if settings.registry_token else None
+    ),
+)
 
 
 def _register(schema_path: pathlib.Path) -> None:

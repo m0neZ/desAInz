@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import os
 import json
 import sys
 from pathlib import Path
@@ -14,9 +13,24 @@ from typing import Callable, ContextManager, Mapping
 
 from sqlalchemy import func, select
 
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from backend.shared.db import session_scope
 from sqlalchemy.orm import Session
 from backend.shared.db.models import Idea, Mockup
+
+
+class Settings(BaseSettings):
+    """Daily summary configuration."""
+
+    model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
+
+    daily_summary_file: Path = Field(
+        default=Path("daily_summary.json"), alias="DAILY_SUMMARY_FILE"
+    )
+
+
+settings = Settings()
 
 
 def _ideas_count(session: Session, since: datetime) -> int:
@@ -67,7 +81,8 @@ async def generate_daily_summary(
     session_provider: Callable[[], ContextManager[Session]] = session_scope,
     output_file: str | Path | None = None,
 ) -> Mapping[str, object]:
-    """Return metrics on ideas and mockups from the last 24 hours.
+    """
+    Return metrics on ideas and mockups from the last 24 hours.
 
     The summary is persisted as JSON to ``output_file`` or to the path
     specified by the ``DAILY_SUMMARY_FILE`` environment variable.
@@ -86,9 +101,7 @@ async def generate_daily_summary(
         "marketplace_stats": stats,
     }
 
-    file_path = Path(
-        output_file or os.getenv("DAILY_SUMMARY_FILE", "daily_summary.json")
-    )
+    file_path = Path(output_file or settings.daily_summary_file)
     file_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary
 

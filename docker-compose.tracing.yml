@@ -2,6 +2,8 @@ version: '3.8'
 services:
   otel-collector:
     image: otel/opentelemetry-collector:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "4317:4317"
       - "4318:4318"

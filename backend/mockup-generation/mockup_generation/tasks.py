@@ -11,8 +11,10 @@ import sys
 
 from aiobotocore.client import AioBaseClient
 from aiobotocore.session import get_session
+import hashlib
 import os
 import time
+from botocore.exceptions import ClientError
 
 from redis.lock import Lock as RedisLock
 from redis.asyncio.lock import Lock as AsyncRedisLock
@@ -259,15 +261,25 @@ def generate_mockup(
                             compress_lossless(processed, output_path)
                             if not validate_file_size(output_path):
                                 raise ValueError("File size too large")
-                            obj_name = f"generated-mockups/{output_path.name}"
-                            bucket = settings.s3_bucket or ""
                             with open(output_path, "rb") as fh:
-                                await client.put_object(
-                                    Bucket=bucket,
-                                    Key=obj_name,
-                                    Body=fh.read(),
-                                )
-                            _invalidate_cdn_cache(obj_name)
+                                data = fh.read()
+                            sha256 = hashlib.sha256(data).hexdigest()
+                            obj_name = f"generated-mockups/{sha256}.png"
+                            bucket = settings.s3_bucket or ""
+                            try:
+                                await client.head_object(Bucket=bucket, Key=obj_name)
+                            except ClientError as exc:
+                                if exc.response.get("Error", {}).get("Code") in {
+                                    "404",
+                                    "NotFound",
+                                    "NoSuchKey",
+                                }:
+                                    await client.put_object(
+                                        Bucket=bucket, Key=obj_name, Body=data
+                                    )
+                                    _invalidate_cdn_cache(obj_name)
+                                else:
+                                    raise
                             base = settings.s3_base_url or settings.s3_endpoint
                             if base:
                                 base = base.rstrip("/")

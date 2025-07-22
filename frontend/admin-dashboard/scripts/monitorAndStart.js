@@ -7,6 +7,8 @@
  */
 import { spawn } from 'child_process';
 
+/* eslint-disable no-console */
+
 const next = spawn(
   'node',
   ['--max-old-space-size=2048', './node_modules/.bin/next', 'start'],

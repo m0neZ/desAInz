@@ -3,6 +3,8 @@ import Router from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import RootLayout from '../app/layout';
 
+/* eslint-disable no-console */
+
 test('renders children inside layout', () => {
   const originalError = console.error;
   console.error = jest.fn();

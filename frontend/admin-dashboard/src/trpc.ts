@@ -175,7 +175,6 @@ export const trpc = {
   },
 };
 
-export async function pingExample(): Promise<void> {
-  const result = await trpc.ping.mutate();
-  console.log(result.message, result.user);
+export async function pingExample(): Promise<{ message: string; user: string }> {
+  return trpc.ping.mutate();
 }

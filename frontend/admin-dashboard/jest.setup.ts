@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
 
+/* eslint-disable no-console */
+
 // Mock i18n translation hook used in dashboard pages
 jest.mock(
   'react-i18next',

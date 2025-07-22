@@ -9,5 +9,11 @@ const compat = new FlatCompat({
 
 module.exports = [
   ...compat.config(eslintrc),
+  {
+    rules: {
+      'no-console': 'error',
+      'no-var': 'error',
+    },
+  },
   { ignores: ['flow-typed/**', 'load_tests/**'] },
 ];

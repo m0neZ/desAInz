@@ -286,10 +286,10 @@ def test_analytics_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
             return None
 
         async def get(self, url: str) -> httpx.Response:
-            assert url.endswith("/low_performers?limit=5")
+            assert url.endswith("/low_performers?limit=5&page=0")
             return httpx.Response(200, json=[{"id": 1}])
 
     monkeypatch.setattr(httpx, "AsyncClient", MockClient)
-    resp = client.get("/analytics/low_performers?limit=5")
+    resp = client.get("/analytics/low_performers?limit=5&page=0")
     assert resp.status_code == 200
     assert resp.json() == [{"id": 1}]

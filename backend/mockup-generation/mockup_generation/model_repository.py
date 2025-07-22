@@ -146,10 +146,17 @@ def save_generated_mockup(
         return int(obj.id)
 
 
-def list_generated_mockups() -> List[GeneratedMockupInfo]:
-    """Return all stored generation parameter entries."""
+def list_generated_mockups(
+    limit: int = 100, offset: int = 0
+) -> List[GeneratedMockupInfo]:
+    """Return stored generation parameter entries using pagination."""
+
     with session_scope() as session:
-        rows: Iterable[GeneratedMockup] = session.scalars(select(GeneratedMockup)).all()
+        rows: Iterable[GeneratedMockup] = (
+            session.execute(select(GeneratedMockup).limit(limit).offset(offset))
+            .scalars()
+            .all()
+        )
         return [
             GeneratedMockupInfo(
                 id=row.id,

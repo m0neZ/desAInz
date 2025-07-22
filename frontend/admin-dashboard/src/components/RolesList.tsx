@@ -7,17 +7,17 @@ interface Assignment {
   role: string;
 }
 
-export function RolesList() {
+export function RolesList({ limit = 50, page = 0 }: { limit?: number; page?: number }) {
   const [roles, setRoles] = useState<Assignment[]>([]);
   useEffect(() => {
     async function load() {
-      const resp = await fetchWithAuth('/roles');
+      const resp = await fetchWithAuth(`/roles?limit=${limit}&page=${page}`);
       if (resp.ok) {
         setRoles(await resp.json());
       }
     }
     void load();
-  }, []);
+  }, [limit, page]);
   return (
     <ul aria-label="User roles">
       {roles.map((r) => (

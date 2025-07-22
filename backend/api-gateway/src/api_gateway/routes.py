@@ -267,11 +267,16 @@ async def refresh_auth_token(body: Dict[str, str]) -> Dict[str, str]:
 
 @router.get("/roles", tags=["Roles"], summary="List user roles")
 async def list_roles(
+    limit: int = 50,
+    page: int = 0,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[Dict[str, str]]:
-    """Return all user role assignments."""
+    """Return paginated user role assignments."""
+    offset = page * limit
     with session_scope() as session:
-        rows = session.execute(select(UserRole.username, UserRole.role)).all()
+        rows = session.execute(
+            select(UserRole.username, UserRole.role).limit(limit).offset(offset)
+        ).all()
     log_admin_action(payload.get("sub", "unknown"), "list_roles")
     return [{"username": row.username, "role": row.role} for row in rows]
 
@@ -422,9 +427,10 @@ async def optimizations() -> list[str]:
 
 
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
-async def trending(limit: int = 10) -> list[str]:
-    """Return up to ``limit`` trending keywords from the ingestion service."""
-    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
+async def trending(limit: int = 10, page: int = 0) -> list[str]:
+    """Return trending keywords from the ingestion service."""
+
+    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}&page={page}"
     async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
@@ -466,9 +472,10 @@ async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
 
 
 @analytics_router.get("/low_performers", summary="Lowest performing listings")
-async def low_performers(limit: int = 10) -> list[Dict[str, Any]]:
+async def low_performers(limit: int = 10, page: int = 0) -> list[Dict[str, Any]]:
     """Proxy low performer data from the analytics service."""
-    url = f"{ANALYTICS_URL}/low_performers?limit={limit}"
+
+    url = f"{ANALYTICS_URL}/low_performers?limit={limit}&page={page}"
     async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
         resp = await client.get(url)
     if resp.status_code != 200:
@@ -493,10 +500,11 @@ async def recommendations() -> list[str]:
 @router.get("/audit-logs", tags=["Audit"], summary="Retrieve audit logs")
 async def get_audit_logs(
     limit: int = 50,
-    offset: int = 0,
+    page: int = 0,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, Any]:
     """Return paginated audit log entries."""
+    offset = page * limit
     with session_scope() as session:
         rows = (
             session.execute(

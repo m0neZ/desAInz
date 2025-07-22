@@ -8,6 +8,12 @@ beforeEach(() => {
         json: async () => ({ total: 1, items: [] }),
       }) as unknown as Response;
     }
+    if (url.includes('/publish-tasks')) {
+      return Promise.resolve({
+        ok: true,
+        json: async () => [],
+      }) as unknown as Response;
+    }
     if (url.includes('/optimizations')) {
       return Promise.resolve({
         ok: true,
@@ -42,7 +48,7 @@ describe('tRPC ping', () => {
 test('auditLogs.list fetches data', async () => {
   await trpc.auditLogs.list();
   expect(global.fetch).toHaveBeenCalledWith(
-    'http://localhost:8000/audit-logs?limit=50&offset=0'
+    'http://localhost:8000/audit-logs?limit=50&page=0'
   );
 });
 
@@ -56,4 +62,11 @@ test('optimizations.list fetches data', async () => {
 test('metrics.list fetches data', async () => {
   await trpc.metrics.list();
   expect(global.fetch).toHaveBeenCalledWith('http://localhost:8000/metrics');
+});
+
+test('publishTasks.list fetches data', async () => {
+  await trpc.publishTasks.list();
+  expect(global.fetch).toHaveBeenCalledWith(
+    'http://localhost:8000/publish-tasks?limit=50&page=0'
+  );
 });

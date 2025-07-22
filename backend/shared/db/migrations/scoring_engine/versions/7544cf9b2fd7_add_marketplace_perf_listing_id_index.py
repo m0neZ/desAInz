@@ -1,4 +1,4 @@
-"""add marketplace perf listing id index
+"""Add marketplace perf listing id index.
 
 Revision ID: 7544cf9b2fd7
 Revises: 0019

@@ -160,6 +160,8 @@ async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
 
 
 @app.get("/mockups")
-async def get_mockups() -> list[dict[str, object]]:
+async def get_mockups(limit: int = 100, page: int = 0) -> list[dict[str, object]]:
     """Return recently generated mockups."""
-    return [m.__dict__ for m in list_generated_mockups()]
+
+    offset = page * limit
+    return [m.__dict__ for m in list_generated_mockups(limit, offset)]

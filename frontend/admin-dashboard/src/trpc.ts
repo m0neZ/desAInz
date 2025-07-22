@@ -131,7 +131,8 @@ export const trpc = {
     list: () => call<Idea[]>('ideas.list'),
   },
   mockups: {
-    list: () => call<Mockup[]>('mockups.list'),
+    list: (limit = 100, page = 0) =>
+      getJson<Mockup[]>(`/mockups?limit=${limit}&page=${page}`),
   },
   heatmap: {
     list: () => call<HeatmapEntry[]>('heatmap.list'),
@@ -140,7 +141,8 @@ export const trpc = {
     list: () => call<GalleryItem[]>('gallery.list'),
   },
   publishTasks: {
-    list: () => call<PublishTask[]>('publishTasks.list'),
+    list: (limit = 50, page = 0) =>
+      getJson<PublishTask[]>(`/publish-tasks?limit=${limit}&page=${page}`),
   },
   approvals: {
     approve: (runId: string) => post(`/approvals/${encodeURIComponent(runId)}`),
@@ -157,14 +159,15 @@ export const trpc = {
     list: () => getJson<string[]>('/recommendations'),
   },
   auditLogs: {
-    list: (limit = 50, offset = 0) =>
-      getJson<AuditLogResponse>(`/audit-logs?limit=${limit}&offset=${offset}`),
+    list: (limit = 50, page = 0) =>
+      getJson<AuditLogResponse>(`/audit-logs?limit=${limit}&page=${page}`),
   },
   optimizations: {
     list: () => getJson<string[]>('/optimizations'),
   },
   trending: {
-    list: (limit = 10) => getJson<string[]>(`/trending?limit=${limit}`),
+    list: (limit = 10, page = 0) =>
+      getJson<string[]>(`/trending?limit=${limit}&page=${page}`),
   },
   abTests: {
     summary: (id: number) => getJson<ABTestSummary>(`/ab_test_results/${id}`),

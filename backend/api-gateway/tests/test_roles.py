@@ -36,6 +36,6 @@ def test_assign_and_list_roles() -> None:
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
-    resp = client.get("/roles", headers={"Authorization": f"Bearer {token}"})
+    resp = client.get("/roles?limit=50&page=0", headers={"Authorization": f"Bearer {token}"})
     assert resp.status_code == 200
     assert {"username": "user1", "role": "editor"} in resp.json()

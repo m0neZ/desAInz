@@ -19,15 +19,15 @@ client = TestClient(main_module.app)
 
 def test_trending_keywords(monkeypatch: pytest.MonkeyPatch) -> None:
     """Return mocked popular keywords."""
-    monkeypatch.setattr(routes, "get_trending", lambda limit=10: ["foo", "bar"])
-    resp = client.get("/trending?limit=2")
+    monkeypatch.setattr(routes, "get_trending", lambda limit=10, page=0: ["foo", "bar"])
+    resp = client.get("/trending?limit=2&page=0")
     assert resp.status_code == 200
     assert resp.json() == ["foo", "bar"]
 
 
 def test_trending_empty(monkeypatch: pytest.MonkeyPatch) -> None:
     """Return empty list when no keywords available."""
-    monkeypatch.setattr(routes, "get_trending", lambda limit=10: [])
+    monkeypatch.setattr(routes, "get_trending", lambda limit=10, page=0: [])
     resp = client.get("/trending")
     assert resp.status_code == 200
     assert resp.json() == []

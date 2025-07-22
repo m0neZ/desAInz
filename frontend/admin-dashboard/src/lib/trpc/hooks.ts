@@ -2,10 +2,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { trpc } from '../../trpc';
 
-export function useTrendingKeywords(limit: number = 10) {
+export function useTrendingKeywords(limit: number = 10, page: number = 0) {
   return useQuery({
-    queryKey: ['trending', limit],
-    queryFn: () => trpc.trending.list(limit),
+    queryKey: ['trending', limit, page],
+    queryFn: () => trpc.trending.list(limit, page),
   });
 }
 
@@ -37,10 +37,10 @@ export function useHeatmap() {
   });
 }
 
-export function usePublishTasks() {
+export function usePublishTasks(limit = 50, page = 0) {
   return useQuery({
-    queryKey: ['publishTasks'],
-    queryFn: () => trpc.publishTasks.list(),
+    queryKey: ['publishTasks', limit, page],
+    queryFn: () => trpc.publishTasks.list(limit, page),
   });
 }
 
@@ -65,10 +65,10 @@ export function useMetricsSummary() {
   });
 }
 
-export function useAuditLogs(limit = 50, offset = 0) {
+export function useAuditLogs(limit = 50, page = 0) {
   return useQuery({
-    queryKey: ['auditLogs', limit, offset],
-    queryFn: () => trpc.auditLogs.list(limit, offset),
+    queryKey: ['auditLogs', limit, page],
+    queryFn: () => trpc.auditLogs.list(limit, page),
   });
 }
 
@@ -86,10 +86,10 @@ export function useOptimizationRecommendations() {
   });
 }
 
-export function useMockups() {
+export function useMockups(limit = 100, page = 0) {
   return useQuery({
-    queryKey: ['mockups'],
-    queryFn: () => trpc.mockups.list(),
+    queryKey: ['mockups', limit, page],
+    queryFn: () => trpc.mockups.list(limit, page),
   });
 }
 

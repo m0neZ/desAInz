@@ -16,8 +16,8 @@ export const handlers = [
       })
     )
   ),
-  rest.post('http://localhost:8000/trpc/publishTasks.list', (_req, res, ctx) =>
-    res(ctx.json({ result: [] }))
+  rest.get('http://localhost:8000/publish-tasks', (_req, res, ctx) =>
+    res(ctx.json([]))
   ),
 ];
 

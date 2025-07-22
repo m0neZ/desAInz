@@ -3,6 +3,8 @@ repos:
     rev: 24.4.2
     hooks:
       - id: black
+        files: "\\.(py|pyi)$"
+        args: ["--line-length=88"]
   - repo: https://github.com/pycqa/flake8
     rev: 7.0.0
     hooks:

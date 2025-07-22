@@ -5,8 +5,8 @@ import sys
 from pathlib import Path
 
 import fakeredis.aioredis
-from fastapi.testclient import TestClient
 from api_gateway.auth import create_access_token
+from fastapi.testclient import TestClient
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 

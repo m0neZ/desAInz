@@ -6,10 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, cast
 
+import yaml
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-
-import yaml
 
 from .db import Marketplace
 

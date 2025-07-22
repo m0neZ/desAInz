@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
+import os
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from threading import Thread
 from typing import Iterator
-import os
 
 import pytest
-import yaml
 import selenium.webdriver
-
+import yaml
 from marketplace_publisher import rules
 from marketplace_publisher.clients import SeleniumFallback
 from marketplace_publisher.db import Marketplace

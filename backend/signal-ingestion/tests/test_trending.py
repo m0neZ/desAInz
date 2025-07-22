@@ -3,20 +3,20 @@
 from __future__ import annotations
 
 import sys
-from types import SimpleNamespace
-from pathlib import Path
 import time
+import warnings
+from pathlib import Path
+from types import SimpleNamespace
 
 import fakeredis
-
 import pytest
 from fastapi.testclient import TestClient
-import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="fastapi.*")
 
 from signal_ingestion import trending
+
 from backend.shared.config import settings
 
 
@@ -141,7 +141,9 @@ def test_trending_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
     )
     from signal_ingestion import main as main_module
 
-    monkeypatch.setattr(trending, "get_top_keywords", lambda limit=10, offset=0: ["foo", "bar"])
+    monkeypatch.setattr(
+        trending, "get_top_keywords", lambda limit=10, offset=0: ["foo", "bar"]
+    )
     client = TestClient(main_module.app)
     resp = client.get("/trending?limit=2&offset=0")
     assert resp.status_code == 200

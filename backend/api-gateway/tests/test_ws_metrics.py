@@ -3,9 +3,9 @@
 import asyncio
 import importlib
 import sys
+import warnings
 from pathlib import Path
 from typing import Any, Optional, Type
-import warnings
 
 import fakeredis.aioredis
 import httpx

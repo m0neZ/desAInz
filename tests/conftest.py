@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import os
 import sys
+import time
+import warnings
 from importlib import util as importlib_util
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
-import warnings
 
+import fakeredis.aioredis
+import psycopg2
 import pytest
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -16,9 +19,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-import fakeredis.aioredis
-import psycopg2
-import time
+
 import docker
 
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")

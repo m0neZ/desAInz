@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from pathlib import Path
 
 from fastapi.testclient import TestClient
-
-from pathlib import Path
 
 from backend.optimization import api as opt_api
 from backend.optimization.storage import MetricsStore

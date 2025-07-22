@@ -8,22 +8,20 @@ from functools import lru_cache
 from typing import Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response
-from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
-
-from .logging_config import configure_logging
-from .settings import settings
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
-from backend.shared.currency import start_rate_updater
-
-from backend.shared.db import run_migrations_if_needed
 
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
+from backend.shared.currency import start_rate_updater
+from backend.shared.db import run_migrations_if_needed
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
+
+from .logging_config import configure_logging
+from .settings import settings
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -106,8 +104,9 @@ async def ready(request: Request) -> Response:
 
 if __name__ == "__main__":  # pragma: no cover
     import asyncio
-    import uvloop
+
     import uvicorn
+    import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

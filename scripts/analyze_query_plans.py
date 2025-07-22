@@ -14,11 +14,10 @@ from __future__ import annotations
 import logging
 from typing import Iterable
 
-from pydantic import AnyUrl, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
 import psycopg2
 from psycopg2.extras import DictCursor
+from pydantic import AnyUrl, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 SLOW_QUERY_SQL = """
     SELECT query

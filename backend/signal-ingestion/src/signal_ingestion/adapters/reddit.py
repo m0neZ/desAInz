@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from .base import BaseAdapter
 from ..settings import settings
+from .base import BaseAdapter
 
 
 class RedditAdapter(BaseAdapter):

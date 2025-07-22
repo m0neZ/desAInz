@@ -2,32 +2,32 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
 import asyncio
-import psutil
 import logging
 import os
 import uuid
+from datetime import UTC, datetime
 from functools import lru_cache
 from typing import Callable, Coroutine, List, cast
 
-from fastapi import FastAPI, Request, Response
-from backend.shared.security import require_status_api_key
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+import psutil
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
-from backend.shared.logging import configure_logging
+from fastapi import FastAPI, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
 from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
+from backend.shared.logging import configure_logging
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
+
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
-
 
 configure_logging()
 logger = logging.getLogger(__name__)

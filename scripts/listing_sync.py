@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+
+# Allow importing monitoring utilities
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -12,9 +15,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Listing
-
-# Allow importing monitoring utilities
-import sys
 
 monitoring_path = Path(__file__).resolve().parents[1] / "backend" / "monitoring" / "src"
 sys.path.append(str(monitoring_path))

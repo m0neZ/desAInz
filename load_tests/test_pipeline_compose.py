@@ -12,7 +12,6 @@ import psycopg2
 import pytest
 import requests
 
-
 COMPOSE_FILES = ["docker-compose.dev.yml", "docker-compose.test.yml"]
 DB_DSN = "postgresql://user:password@localhost:5432/app_test"
 S3_ENDPOINT = "http://localhost:9000"

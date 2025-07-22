@@ -9,17 +9,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "backend" / "scoring-engine"))  # noqa: E402
 
 from fastapi.testclient import TestClient  # noqa: E402
+from scoring_engine import app as scoring_app  # noqa: E402
+
 from backend.analytics import api as analytics_api  # noqa: E402
-from backend.optimization import api as optimization_api  # noqa: E402
-from backend.monitoring.src.monitoring import main as monitoring_main  # noqa: E402
-from backend.marketplace_publisher.src import (  # noqa: E402
+from backend.api_gateway.src.api_gateway import main as gateway_main  # noqa: E402
+from backend.marketplace_publisher.src import (
     marketplace_publisher as mp_main,
 )  # noqa: E402
-from backend.signal_ingestion import main as ingestion_main  # noqa: E402
-from backend.api_gateway.src.api_gateway import main as gateway_main  # noqa: E402
+from backend.monitoring.src.monitoring import main as monitoring_main  # noqa: E402
+from backend.optimization import api as optimization_api  # noqa: E402
 from backend.service_template import main as template_main  # noqa: E402
-
-from scoring_engine import app as scoring_app  # noqa: E402
+from backend.signal_ingestion import main as ingestion_main  # noqa: E402
 
 
 def _assert_error(body: dict) -> None:

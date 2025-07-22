@@ -4,13 +4,12 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 import sys
 import time
-from pathlib import Path
-import importlib
-
 import types
+from pathlib import Path
 
 import pytest
 from sqlalchemy import select
@@ -33,7 +32,7 @@ def _patched_create_async_engine(url: str, *args: object, **kwargs: object) -> A
 
 sa_async.create_async_engine = _patched_create_async_engine  # type: ignore[assignment]
 
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
     shared_config: Any = None
@@ -41,7 +40,8 @@ else:  # pragma: no cover - runtime import and reload
     shared_config = importlib.import_module("backend.shared.config")  # type: ignore[assignment]
     importlib.reload(shared_config)  # type: ignore[arg-type]
 
-from signal_ingestion import database as database_mod, tasks as tasks_mod  # noqa: E402
+from signal_ingestion import database as database_mod  # noqa: E402
+from signal_ingestion import tasks as tasks_mod
 from signal_ingestion.adapters.base import BaseAdapter  # noqa: E402
 from signal_ingestion.models import Signal as DBSignal  # noqa: E402
 

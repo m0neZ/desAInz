@@ -6,18 +6,17 @@ from __future__ import annotations
 import json
 import logging
 import sys
-from pathlib import Path
-
 from collections import defaultdict
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from typing import Callable, ContextManager, Mapping
-
-from sqlalchemy import func, select
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from backend.shared.db import session_scope
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
+
+from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Mockup
 from backend.shared.logging import configure_logging
 
@@ -58,11 +57,7 @@ async def _marketplace_stats(since: datetime) -> Mapping[str, int]:
             / "src"
         )
     )
-    from marketplace_publisher.db import (
-        PublishStatus,
-        PublishTask,
-        SessionLocal,
-    )
+    from marketplace_publisher.db import PublishStatus, PublishTask, SessionLocal
 
     async with SessionLocal() as session:
         stmt = (

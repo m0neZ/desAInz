@@ -7,8 +7,8 @@ import json
 from time import perf_counter
 from typing import Iterable
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from prometheus_client import Counter, Histogram
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from .adapters.base import BaseAdapter
 from .adapters.events import EventsAdapter
@@ -20,21 +20,21 @@ from .adapters.youtube import YouTubeAdapter
 from .celery_app import app
 from .database import SessionLocal
 from .dedup import add_key, is_duplicate
-from .models import Signal as DBSignal
 from .embedding import generate_embeddings
-from .privacy import purge_row
-from .normalization import Signal as NormalizedSignal, normalize
-from .publisher import publish
-from .retention import purge_old_signals
-from .settings import settings
-from .trending import extract_keywords, store_keywords
 from .errors import (
     AdapterFetchError,
     EmbeddingGenerationError,
     SignalIngestionError,
     UnknownAdapterError,
 )
-
+from .models import Signal as DBSignal
+from .normalization import Signal as NormalizedSignal
+from .normalization import normalize
+from .privacy import purge_row
+from .publisher import publish
+from .retention import purge_old_signals
+from .settings import settings
+from .trending import extract_keywords, store_keywords
 
 EMBEDDING_CHUNK_SIZE = 16
 

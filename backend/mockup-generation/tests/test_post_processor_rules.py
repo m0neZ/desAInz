@@ -2,21 +2,21 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
+
 import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.append(str(ROOT))  # noqa: E402
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))  # noqa: E402
 
-from PIL import Image
-
 from mockup_generation.post_processor import (
     post_process_image,
     validate_dimensions,
     validate_file_size,
 )
+from PIL import Image
 
 
 def test_validate_dimensions(tmp_path: Path) -> None:

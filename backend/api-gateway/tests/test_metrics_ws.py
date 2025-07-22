@@ -10,6 +10,7 @@ import socket
 import sys
 import threading
 import time
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -18,7 +19,6 @@ import pytest
 import uvicorn
 import websockets
 from fastapi import FastAPI
-import warnings
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 sys.path.append(

@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
+import warnings
 from datetime import datetime, timedelta
 
 import boto3
 import pytest
 from moto import mock_aws
 
-from scripts import maintenance
 from backend.shared import config
-import warnings
+from scripts import maintenance
 
 
 @mock_aws

@@ -1,13 +1,15 @@
 """Unit tests for model repository helpers."""
 
+from pathlib import Path
+
 from mockup_generation.model_repository import (
     get_default_model_id,
-    set_default,
     list_models,
+    set_default,
 )
+
 from backend.shared.db import session_scope
 from backend.shared.db.models import AIModel
-from pathlib import Path
 
 
 def test_default_model_switch(tmp_path: Path) -> None:

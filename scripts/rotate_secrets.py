@@ -8,7 +8,6 @@ import secrets
 import subprocess
 from typing import Iterable
 
-
 SECRET_NAMES: list[str] = [
     "api-gateway",
     "marketplace-publisher",

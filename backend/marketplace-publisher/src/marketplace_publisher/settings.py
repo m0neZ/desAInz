@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from backend.shared.config import settings as shared_settings
-
 from pydantic import AnyUrl, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict  # noqa: I201
+
+from backend.shared.config import settings as shared_settings
 
 if TYPE_CHECKING:  # pragma: no cover - for type checking only
     from .db import Marketplace

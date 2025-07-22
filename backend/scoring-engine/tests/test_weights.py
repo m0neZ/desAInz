@@ -2,9 +2,10 @@
 
 # mypy: ignore-errors
 
-from fastapi.testclient import TestClient
 import importlib
 from pathlib import Path
+
+from fastapi.testclient import TestClient
 from scoring_engine.app import app
 
 scoring_module = importlib.import_module("scoring_engine.app")

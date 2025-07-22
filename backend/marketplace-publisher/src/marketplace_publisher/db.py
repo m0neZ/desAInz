@@ -7,15 +7,16 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from backend.shared.db import models as shared_models
-
 from sqlalchemy import DateTime
 from sqlalchemy import Enum as SqlEnum
 from sqlalchemy import ForeignKey, Integer, String, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-from backend.shared.db import async_engine, AsyncSessionLocal, session_scope
+from backend.shared.db import AsyncSessionLocal, async_engine
+from backend.shared.db import models as shared_models
+from backend.shared.db import session_scope
+
 from .settings import settings
 
 

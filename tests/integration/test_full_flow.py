@@ -4,15 +4,17 @@
 
 from __future__ import annotations
 
-import sys
-from datetime import UTC, datetime
 import os
+import sys
+import warnings
+from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import MagicMock
-import warnings
 
 import pytest
+import redis
+import sqlalchemy
 import vcr
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import (
@@ -22,12 +24,11 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-# stub external dependencies before importing services
-from backend.shared.kafka import utils as kafka_utils
-from backend.shared.kafka import schema_registry as kafka_schema
 from backend.shared.config import settings as shared_settings
-import redis
-import sqlalchemy
+
+# stub external dependencies before importing services
+from backend.shared.kafka import schema_registry as kafka_schema
+from backend.shared.kafka import utils as kafka_utils
 
 _orig_async_engine = sqlalchemy.ext.asyncio.create_async_engine
 sqlalchemy.ext.asyncio.create_async_engine = lambda url, *a, **k: _orig_async_engine(
@@ -73,12 +74,14 @@ sys.path.append(str(ROOT / "backend" / "scoring-engine"))
 sys.path.append(str(ROOT))
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))
 
-from signal_ingestion import ingestion, publisher
-from signal_ingestion import database as ing_db
-from signal_ingestion.adapters.tiktok import TikTokAdapter
+import importlib
+
 from mockup_generation.generator import MockupGenerator
 from scoring_engine import scoring, weight_repository
-import importlib
+from signal_ingestion import database as ing_db
+from signal_ingestion import ingestion, publisher
+from signal_ingestion.adapters.tiktok import TikTokAdapter
+
 from backend.optimization.storage import MetricsStore
 
 opt_api = importlib.import_module("backend.optimization.api")

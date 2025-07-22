@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
+
 from backend.analytics import api
 from backend.analytics.auth import create_access_token
 from backend.shared.db import Base, SessionLocal, engine, models

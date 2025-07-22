@@ -3,27 +3,25 @@
 from __future__ import annotations
 
 import asyncio
+import sys
 from pathlib import Path
 from typing import Any
 
-import sys
 import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.append(str(ROOT))
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-import requests
-
 import os
 import warnings
+
+import requests
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
-from marketplace_publisher import notifications
-
-from marketplace_publisher import db, main, publisher
+from marketplace_publisher import db, main, notifications, publisher
 from marketplace_publisher.settings import settings
 
 

@@ -9,7 +9,8 @@ from random import Random
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))
 
-from mockup_generation.prompt_builder import PromptContext, build_prompt  # noqa: E402
+from mockup_generation.prompt_builder import PromptContext  # noqa: E402
+from mockup_generation.prompt_builder import build_prompt
 
 
 def test_build_prompt_deterministic() -> None:

@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from fastapi.responses import JSONResponse, Response
 import zlib
-from typing import Iterable, AsyncIterator
+from typing import AsyncIterator, Iterable
+
+from fastapi.responses import JSONResponse, Response
 
 CACHE_TTL_SECONDS = 60
 

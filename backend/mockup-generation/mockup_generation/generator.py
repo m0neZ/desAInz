@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Lock
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-from .settings import settings
-from .model_repository import get_default_model_id
 import httpx
-import asyncio
+
 from backend.shared.http import get_async_http_client
+
+from .model_repository import get_default_model_id
+from .settings import settings
 
 
 async def get_async_client() -> httpx.AsyncClient:
@@ -21,8 +23,8 @@ async def get_async_client() -> httpx.AsyncClient:
 
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
-    from PIL import Image
     from diffusers import StableDiffusionXLPipeline
+    from PIL import Image
 
 
 logger = logging.getLogger(__name__)
@@ -54,8 +56,8 @@ class MockupGenerator:
         current = model_identifier or get_default_model_id()
         with self._lock:
             if self.pipeline is None or self.model_id != current:
-                from diffusers import StableDiffusionXLPipeline
                 import torch
+                from diffusers import StableDiffusionXLPipeline
 
                 self.model_id = current
                 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -143,8 +145,9 @@ class MockupGenerator:
         GenerationError
             If all retry attempts fail.
         """
-        from io import BytesIO
         import base64
+        from io import BytesIO
+
         from PIL import Image
 
         provider = settings.fallback_provider.lower()

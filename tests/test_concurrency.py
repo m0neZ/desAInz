@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
+import sys
+import warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
-import sys
 
 import fakeredis.aioredis
-from PIL import Image
-
-from fastapi.testclient import TestClient
 import pytest
-import warnings
+from fastapi.testclient import TestClient
+from PIL import Image
 
 # Ensure the scoring engine package can be imported when running this test alone.
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,10 +19,10 @@ sys.path.insert(0, str(ROOT / "backend" / "scoring-engine"))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "backend" / "mockup-generation"))
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-from scoring_engine.app import app as scoring_app
 import scoring_engine.app as scoring_module
-from scoring_engine.weight_repository import get_weights, update_weights
 from mockup_generation.generator import MockupGenerator
+from scoring_engine.app import app as scoring_app
+from scoring_engine.weight_repository import get_weights, update_weights
 
 
 def _setup_scoring(redis_client: fakeredis.aioredis.FakeRedis) -> ThreadPoolExecutor:

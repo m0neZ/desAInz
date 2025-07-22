@@ -5,10 +5,10 @@
 from datetime import UTC, datetime
 
 import numpy as np
-
+from scoring_engine.centroid_job import compute_and_store_centroids
 from scoring_engine.scoring import Signal, calculate_score, compute_novelty
 from scoring_engine.weight_repository import update_weights
-from scoring_engine.centroid_job import compute_and_store_centroids
+
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 

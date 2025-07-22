@@ -23,12 +23,12 @@ import asyncio
 import logging
 
 import pytest
-import responses
 import requests
-import backend.shared.http as http
-
+import responses
 from marketplace_publisher import notifications  # noqa: E402
 from monitoring import pagerduty  # noqa: E402
+
+import backend.shared.http as http
 
 
 @pytest.mark.asyncio()  # type: ignore[misc]

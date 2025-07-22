@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from pathlib import Path
-import yaml
-import pytest
 
-from marketplace_publisher.clients import SeleniumFallback
-from marketplace_publisher import rules
-from marketplace_publisher.db import Marketplace
+import pytest
 import selenium.webdriver
+import yaml
+from marketplace_publisher import rules
+from marketplace_publisher.clients import SeleniumFallback
+from marketplace_publisher.db import Marketplace
 
 
 @pytest.fixture(autouse=True)

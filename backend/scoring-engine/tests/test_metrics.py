@@ -2,13 +2,13 @@
 
 # mypy: ignore-errors
 
-from datetime import UTC, datetime
 import importlib
+import warnings
+from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 from scoring_engine.app import app
 from scoring_engine.weight_repository import update_weights
-import warnings
 
 scoring_module = importlib.import_module("scoring_engine.app")
 

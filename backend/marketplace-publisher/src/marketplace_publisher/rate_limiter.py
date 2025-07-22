@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from redis.asyncio import WatchError
+
 from backend.shared.cache import AsyncRedis, get_async_client
 
 from .db import Marketplace

@@ -11,10 +11,11 @@ sys.path.append(str(ROOT / "backend" / "scoring-engine"))
 sys.path.append(str(ROOT))
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))
 
-from unittest.mock import MagicMock  # noqa: E402
 from types import ModuleType, SimpleNamespace  # noqa: E402
-from backend.shared.kafka import utils as kafka_utils  # noqa: E402
+from unittest.mock import MagicMock  # noqa: E402
+
 from backend.shared.kafka import schema_registry as kafka_schema  # noqa: E402
+from backend.shared.kafka import utils as kafka_utils  # noqa: E402
 
 diffusers_stub = ModuleType("diffusers")
 setattr(diffusers_stub, "StableDiffusionXLPipeline", object)
@@ -31,25 +32,21 @@ kafka_utils.KafkaProducer = kafka_producer_mock  # type: ignore[assignment]
 kafka_schema.SchemaRegistryClient.register = MagicMock()  # type: ignore[assignment]
 kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})  # type: ignore[assignment]
 
-import psutil  # noqa: E402
+import importlib  # noqa: E402
 import time  # noqa: E402
 from datetime import UTC, datetime  # noqa: E402
+from typing import Any, cast  # noqa: E402
 
+import psutil  # noqa: E402
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-from sqlalchemy.ext.asyncio import (  # noqa: E402
-    AsyncSession,
-    AsyncEngine,
-    async_sessionmaker,
-)
-from sqlalchemy import select  # noqa: E402
-
-from signal_ingestion import ingestion, publisher  # noqa: E402
-from signal_ingestion import database as ing_db  # noqa: E402
 from mockup_generation.generator import MockupGenerator  # noqa: E402
 from scoring_engine import weight_repository  # noqa: E402
-import importlib  # noqa: E402
-from typing import Any, cast  # noqa: E402
+from signal_ingestion import database as ing_db  # noqa: E402
+from signal_ingestion import ingestion, publisher  # noqa: E402
+from sqlalchemy import select  # noqa: E402
+from sqlalchemy.ext.asyncio import AsyncSession  # noqa: E402
+from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
 
 opt_api = cast(Any, importlib.import_module("backend.optimization.api"))
 from backend.optimization.storage import MetricsStore  # noqa: E402

@@ -42,7 +42,12 @@ def _node_licenses() -> list[str]:
 
 def main() -> None:
     """Generate the LICENSES file."""
-    content = ["Python packages:"] + _python_licenses() + ["", "Node packages:"] + _node_licenses()
+    content = (
+        ["Python packages:"]
+        + _python_licenses()
+        + ["", "Node packages:"]
+        + _node_licenses()
+    )
     Path("LICENSES").write_text("\n".join(content) + "\n")
 
 

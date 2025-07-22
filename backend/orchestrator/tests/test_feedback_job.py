@@ -17,10 +17,10 @@ FEEDBACK_SRC = ROOT / "backend" / "feedback-loop"
 sys.path.append(str(FEEDBACK_SRC))  # noqa: E402
 
 from orchestrator.jobs import feedback_update_job  # noqa: E402
-from orchestrator.schedules import (
+from orchestrator.schedules import (  # noqa: E402
     daily_feedback_update_schedule,
     hourly_idea_schedule,
-)  # noqa: E402
+)
 
 
 def test_feedback_update_schedule() -> None:

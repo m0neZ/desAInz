@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
 import types
 import warnings
+from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
 sys.path.append(str(root))  # noqa: E402
@@ -102,11 +102,11 @@ sys.modules.setdefault("pgvector.sqlalchemy", types.ModuleType("pgvector.sqlalch
 sys.modules["pgvector.sqlalchemy"].Vector = object
 warnings.filterwarnings("ignore", category=UserWarning)
 
-from mockup_generation.model_repository import (  # noqa: E402
+from mockup_generation.model_repository import get_model  # noqa: E402
+from mockup_generation.model_repository import (
     list_generated_mockups,
-    save_generated_mockup,
     register_model,
-    get_model,
+    save_generated_mockup,
 )
 
 

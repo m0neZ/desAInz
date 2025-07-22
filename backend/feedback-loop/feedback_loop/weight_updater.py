@@ -6,8 +6,8 @@ import logging
 from typing import Iterable, Mapping
 
 import numpy as np
-
 import requests
+
 from backend.shared.http import request_with_retry
 
 logger = logging.getLogger(__name__)

@@ -2,20 +2,15 @@
 
 from __future__ import annotations
 
+import re
+from collections import defaultdict
 from time import perf_counter
 from typing import Callable, Coroutine, DefaultDict, Iterable
-from collections import defaultdict
-import re
 
 from fastapi import FastAPI, Request, Response
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
 from .responses import cache_header
-from prometheus_client import (
-    CONTENT_TYPE_LATEST,
-    Counter,
-    Histogram,
-    generate_latest,
-)
 
 METRICS_CACHE_TTL = 3600
 

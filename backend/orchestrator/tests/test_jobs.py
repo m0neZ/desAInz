@@ -11,25 +11,24 @@ sys.path.append(str(ORCHESTRATOR_PATH))  # noqa: E402
 MONITORING_SRC = ROOT / "backend" / "monitoring" / "src"
 sys.path.append(str(MONITORING_SRC))  # noqa: E402
 
-from orchestrator.jobs import (  # noqa: E402
-    backup_job,
-    cleanup_job,
-    idea_job,
-    rotate_secrets_job,
-    daily_summary_job,
-)
+import httpx  # noqa: E402
 import pytest  # noqa: E402
 from dagster import DagsterInstance, RunRequest, build_sensor_context  # noqa: E402
-
-from orchestrator.schedules import (  # noqa: E402
-    daily_backup_schedule,
+from orchestrator.jobs import cleanup_job  # noqa: E402
+from orchestrator.jobs import (
+    backup_job,
+    daily_summary_job,
+    idea_job,
+    rotate_secrets_job,
+)
+from orchestrator.schedules import daily_backup_schedule  # noqa: E402
+from orchestrator.schedules import (
     daily_query_plan_schedule,
-    hourly_cleanup_schedule,
     daily_summary_schedule,
+    hourly_cleanup_schedule,
     monthly_secret_rotation_schedule,
 )
 from orchestrator.sensors import idea_sensor  # noqa: E402
-import httpx  # noqa: E402
 
 
 def test_job_structure() -> None:

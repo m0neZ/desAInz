@@ -2,16 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
+import atexit
 import os
 from typing import Any
 
-import asyncio
-import atexit
-
-import requests
-
 import httpx
-
+import requests
 from tenacity import (
     retry,
     retry_if_exception_type,

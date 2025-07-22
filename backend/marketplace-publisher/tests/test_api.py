@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-import fakeredis.aioredis
-from typing import Any
-from pathlib import Path
 import warnings
+from pathlib import Path
+from typing import Any
+
+import fakeredis.aioredis
+from fastapi.testclient import TestClient
 
 
 def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
@@ -15,9 +16,9 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     monkeypatch.setenv("SELENIUM_SKIP", "1")
     warnings.filterwarnings("ignore", category=DeprecationWarning)
+    from marketplace_publisher import publisher
     from marketplace_publisher.db import Marketplace
     from marketplace_publisher.main import app, rate_limiter
-    from marketplace_publisher import publisher
 
     rate_limiter._redis = fakeredis.aioredis.FakeRedis()
 

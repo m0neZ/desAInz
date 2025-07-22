@@ -2,22 +2,22 @@
 """Generate OpenAPI specs for microservices."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
-import os
-import sys
 import logging
-import hashlib
+import os
 import re
+import sys
 from pathlib import Path
 from typing import Iterable
 
 logging.basicConfig(level=logging.INFO)
 
-from openapi_schema_validator import OAS30Validator
-
 import types
 from typing import Callable, TypeVar
+
+from openapi_schema_validator import OAS30Validator
 
 T = TypeVar("T")
 

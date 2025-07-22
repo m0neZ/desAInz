@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-import threading
 from pathlib import Path
 
 import pytest
 import torch
-
 from mockup_generation.generator import MockupGenerator
 
 
@@ -24,8 +23,9 @@ def test_generation_speed(tmp_path: Path) -> None:
 
 def test_cleanup_reduces_memory() -> None:
     """Pipeline resources are released after cleanup."""
-    import psutil
     import gc
+
+    import psutil
 
     generator = MockupGenerator()
     generator.pipeline = bytearray(50 * 1024 * 1024)

@@ -1,7 +1,7 @@
 """Package and distribute the desAInz application."""
 
-from setuptools import Extension, find_packages, setup
 import numpy
+from setuptools import Extension, find_packages, setup
 
 ext_modules = [
     Extension(

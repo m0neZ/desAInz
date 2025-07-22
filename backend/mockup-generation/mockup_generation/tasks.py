@@ -2,29 +2,28 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-from contextlib import asynccontextmanager
-import subprocess
-from typing import Any, AsyncIterator, cast
-from dataclasses import dataclass, asdict
+import hashlib
+import os
 import signal
+import subprocess
 import sys
+import time
+from contextlib import asynccontextmanager
+from dataclasses import asdict, dataclass
+from pathlib import Path
+from time import perf_counter
+from typing import Any, AsyncIterator, cast
 
 from aiobotocore.client import AioBaseClient
 from aiobotocore.session import get_session
-import hashlib
-import os
-import time
 from botocore.exceptions import ClientError
-
-from redis.lock import Lock as RedisLock
-from redis.asyncio.lock import Lock as AsyncRedisLock
 from celery import Task, chord
-from prometheus_client import Counter, Gauge, Histogram
 from opentelemetry import trace
-from time import perf_counter
-
 from PIL import Image
+from prometheus_client import Counter, Gauge, Histogram
+from redis.asyncio.lock import Lock as AsyncRedisLock
+from redis.lock import Lock as RedisLock
+
 from .celery_app import app
 from .generator import MockupGenerator
 
@@ -50,20 +49,21 @@ class MockupError:
     keywords: list[str]
 
 
-from .prompt_builder import PromptContext, build_prompt
+from backend.shared.config import settings
+
+from . import model_repository
 from .listing_generator import ListingGenerator
 from .post_processor import (
     compress_lossless,
     convert_to_cmyk,
     ensure_not_nsfw,
     remove_background,
-    validate_dimensions,
-    validate_file_size,
     validate_color_space,
+    validate_dimensions,
     validate_dpi_image,
+    validate_file_size,
 )
-from backend.shared.config import settings
-from . import model_repository
+from .prompt_builder import PromptContext, build_prompt
 
 
 def _invalidate_cdn_cache(path: str) -> None:
@@ -169,11 +169,12 @@ GPU_QUEUE_PREFIX = os.getenv("GPU_QUEUE_PREFIX", "gpu")
 GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
 
 import asyncio
+
 from backend.shared.cache import (
-    SyncRedis,
     AsyncRedis,
-    get_sync_client,
+    SyncRedis,
     get_async_client,
+    get_sync_client,
 )
 
 redis_client: SyncRedis = get_sync_client()

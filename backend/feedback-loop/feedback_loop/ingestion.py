@@ -2,23 +2,23 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from datetime import UTC, datetime
 from typing import Iterable, Mapping
 
 import requests
-from backend.shared.http import request_with_retry
-import asyncio
 from apscheduler.job import Job
-from apscheduler.schedulers.base import BaseScheduler
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from marketplace_publisher.publisher import CLIENTS
+from apscheduler.schedulers.base import BaseScheduler
 from marketplace_publisher.clients import BaseClient
+from marketplace_publisher.publisher import CLIENTS
+from scoring_engine import weight_repository
 from sqlalchemy import func
 
-from backend.shared.db import session_scope
-from backend.shared.db import models
-from scoring_engine import weight_repository
+from backend.shared.db import models, session_scope
+from backend.shared.http import request_with_retry
+
 from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)

@@ -12,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.append(str(ROOT))
 
 from dagster import DagsterInstance, build_run_status_sensor_context
-
 from orchestrator.jobs import idea_job  # noqa: E402
 from orchestrator.sensors import run_failure_notifier  # noqa: E402
 

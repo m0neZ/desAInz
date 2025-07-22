@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import sys
+import types
 from pathlib import Path
 
-import types
 from fastapi.testclient import TestClient
 
 root = Path(__file__).resolve().parents[3]

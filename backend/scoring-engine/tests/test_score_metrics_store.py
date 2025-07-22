@@ -2,13 +2,12 @@
 
 # mypy: ignore-errors
 
-from datetime import UTC, datetime
-from pathlib import Path
 import importlib
 import sqlite3
+from datetime import UTC, datetime
+from pathlib import Path
 
 from fastapi.testclient import TestClient
-
 from scoring_engine.app import app
 from scoring_engine.weight_repository import update_weights
 

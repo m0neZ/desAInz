@@ -3,7 +3,6 @@
 # mypy: ignore-errors
 
 from fastapi.testclient import TestClient
-
 from scoring_engine.app import app
 
 client = TestClient(app)

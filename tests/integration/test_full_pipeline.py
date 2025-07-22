@@ -23,8 +23,7 @@ sys.modules.setdefault(
 )
 os.makedirs("/run/secrets", exist_ok=True)
 
-from orchestrator import idea_job
-from orchestrator import ops
+from orchestrator import idea_job, ops
 
 
 class DummyResponse:
@@ -61,7 +60,9 @@ def test_full_pipeline(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
         ops,
         "requests",
-        SimpleNamespace(post=_mock_post, get=lambda *a, **k: DummyResponse({"approved": True})),
+        SimpleNamespace(
+            post=_mock_post, get=lambda *a, **k: DummyResponse({"approved": True})
+        ),
     )
     os.environ["APPROVAL_SERVICE_URL"] = "http://approval"
     result = idea_job.execute_in_process()

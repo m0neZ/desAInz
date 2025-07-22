@@ -7,27 +7,27 @@ from functools import lru_cache
 from time import perf_counter
 from typing import Callable, Coroutine, cast
 
+from brotli_asgi import BrotliMiddleware
 from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from brotli_asgi import BrotliMiddleware
-from backend.shared.cache import get_async_client
 from fastapi.security import HTTPAuthorizationCredentials
 from prometheus_client import Counter, Histogram
 
-from .routes import router, close_http_clients
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers, require_status_api_key
-from backend.shared.responses import json_cached
-from backend.shared.logging import configure_logging
-from backend.shared.db import run_migrations_if_needed
 from backend.shared import ServiceName, add_error_handlers, configure_sentry
+from backend.shared.cache import get_async_client
 from backend.shared.config import settings as shared_settings
-from .rate_limiter import UserRateLimiter
-from .settings import settings
-from .auth import verify_token
+from backend.shared.db import run_migrations_if_needed
+from backend.shared.logging import configure_logging
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
 
+from .auth import verify_token
+from .rate_limiter import UserRateLimiter
+from .routes import close_http_clients, router
+from .settings import settings
 
 configure_logging()
 logger = logging.getLogger(__name__)

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
-import json
 
 sys.path.append(
     str(
@@ -15,8 +15,9 @@ sys.path.append(
     )
 )
 
-import pytest
 from contextlib import contextmanager
+
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 

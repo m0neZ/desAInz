@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import Lock
-from typing import Callable, Mapping, Tuple, cast, TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, Callable, Mapping, Tuple, TypedDict, cast
 
 from PIL import Image
 

@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-
 import asyncio
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .retention import purge_old_signals
 from .settings import settings
-from .tasks import ADAPTERS as TASK_ADAPTERS, schedule_ingestion
+from .tasks import ADAPTERS as TASK_ADAPTERS
+from .tasks import schedule_ingestion
 
 
 async def ingest(session: AsyncSession) -> None:

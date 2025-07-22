@@ -5,10 +5,8 @@ from __future__ import annotations
 import hashlib
 from functools import lru_cache
 
-
 import numpy as np
 from numpy.typing import NDArray
-
 
 DIMENSION = 32
 

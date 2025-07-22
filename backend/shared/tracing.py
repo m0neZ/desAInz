@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
+import os
+from typing import Any, cast
+
 from fastapi import FastAPI
 from flask import Flask
-from typing import Any, cast
-import os
 from opentelemetry import trace
-from pydantic import HttpUrl
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # The exporter classes are imported lazily within ``configure_tracing`` to avoid
 # heavy dependencies and noisy warnings during package import.
@@ -17,6 +16,8 @@ from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from pydantic import HttpUrl
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class TraceSettings(BaseSettings):  # type: ignore[misc]
@@ -34,7 +35,11 @@ trace_settings = TraceSettings()
 
 def configure_tracing(app: FastAPI | Flask, service_name: str) -> None:
     """Configure basic tracing for ``app``."""
-    if trace_settings.sdk_disabled or os.getenv("OTEL_SDK_DISABLED") in {"1", "true", "True"}:
+    if trace_settings.sdk_disabled or os.getenv("OTEL_SDK_DISABLED") in {
+        "1",
+        "true",
+        "True",
+    }:
         return
     from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
         OTLPSpanExporter as OTLPGrpcSpanExporter,

@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import sys
 import time
-from pathlib import Path
-from typing import Iterator
 import types
 from enum import Enum
+from pathlib import Path
+from typing import Iterator
 
 sys.path.append(
     str(
@@ -28,7 +28,6 @@ stub_db.Marketplace = _Marketplace  # type: ignore[attr-defined]
 sys.modules["marketplace_publisher.db"] = stub_db
 
 import pytest
-
 from marketplace_publisher import rules
 
 Marketplace = _Marketplace

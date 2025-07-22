@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from fastapi.testclient import TestClient  # noqa: E402
 import feedback_loop.main as main  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
 
 class DummyScheduler:
@@ -58,8 +58,8 @@ def test_startup_schedules_ingestion(monkeypatch) -> None:
         called["ids"] = ids
         called["url"] = url
 
-    import feedback_loop.scheduler as scheduler_mod
     import feedback_loop.ingestion as ingestion_mod
+    import feedback_loop.scheduler as scheduler_mod
 
     monkeypatch.setattr(scheduler_mod, "setup_scheduler", fake_setup_scheduler)
     monkeypatch.setattr(ingestion_mod, "schedule_marketplace_ingestion", fake_schedule)

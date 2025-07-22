@@ -8,17 +8,18 @@ sys.path.append(
     str(Path(__file__).resolve().parents[2] / "signal-ingestion" / "src")
 )  # noqa: E402
 
-from fastapi.testclient import TestClient  # noqa: E402
-import httpx  # noqa: E402
-import pytest  # noqa: E402
-
 from types import TracebackType  # noqa: E402
 from typing import Any, Optional, Type  # noqa: E402
+
+import httpx  # noqa: E402
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
 
 def test_status(monkeypatch: pytest.MonkeyPatch) -> None:
     """Status endpoint should return OK."""
     import importlib
+
     import fakeredis.aioredis
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
@@ -26,7 +27,6 @@ def test_status(monkeypatch: pytest.MonkeyPatch) -> None:
 
     shared_config.settings.redis_url = "redis://localhost:6379/0"
     import api_gateway.main as main_module
-
     import api_gateway.routes as routes
 
     main_module.rate_limiter._redis = fakeredis.aioredis.FakeRedis()
@@ -47,6 +47,7 @@ import pytest  # noqa: E402
 def test_trpc_ping(monkeypatch: pytest.MonkeyPatch) -> None:
     """Proxy tRPC ping to backend service."""
     import importlib
+
     import fakeredis.aioredis
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
@@ -107,6 +108,7 @@ def test_trpc_etag(monkeypatch: pytest.MonkeyPatch) -> None:
     """TRPC endpoint should respond with 304 when ETag matches."""
     import importlib
     import warnings
+
     import fakeredis.aioredis
     import prometheus_client
 
@@ -172,6 +174,7 @@ def test_trpc_etag(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_optimization_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     """Proxy optimization endpoint to optimization service."""
     import importlib
+
     import fakeredis.aioredis
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
@@ -213,6 +216,7 @@ def test_optimization_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_monitoring_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     """Proxy monitoring endpoint."""
     import importlib
+
     import fakeredis.aioredis
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
@@ -257,6 +261,7 @@ def test_monitoring_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_analytics_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     """Proxy analytics endpoint."""
     import importlib
+
     import fakeredis.aioredis
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")

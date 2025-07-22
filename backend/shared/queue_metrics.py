@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Iterable
 import os
+from typing import Iterable
+
 import redis
 from prometheus_client import REGISTRY
 from prometheus_client.core import GaugeMetricFamily

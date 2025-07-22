@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, List, Optional
 
 import numpy as np
 

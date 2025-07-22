@@ -1,14 +1,15 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
-from typing import Any, Dict, AsyncGenerator, cast
-from hashlib import md5
-from functools import lru_cache
-
-import httpx
-from backend.shared.http import DEFAULT_TIMEOUT
 import asyncio
 import json
+from datetime import UTC, datetime, timedelta
+from functools import lru_cache
+from hashlib import md5
+from typing import Any, AsyncGenerator, Dict, cast
+from uuid import uuid4
 
+import httpx
+import sqlalchemy as sa
 from fastapi import (
     APIRouter,
     Depends,
@@ -20,16 +21,24 @@ from fastapi import (
     status,
 )
 from fastapi.routing import APIRoute
-from sse_starlette.sse import EventSourceResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
-import sqlalchemy as sa
+from sse_starlette.sse import EventSourceResponse
 
-from .auth import (
-    verify_token,
-    require_role,
-    revoke_token,
-)
+from backend.analytics.auth import create_access_token
+from backend.shared.cache import async_get, async_set, get_async_client
+from backend.shared.config import settings as shared_settings
+from backend.shared.db import session_scope
+from backend.shared.db.models import AuditLog, RefreshToken, UserRole
+from backend.shared.feature_flags import is_enabled
+from backend.shared.feature_flags import list_flags as ff_list
+from backend.shared.feature_flags import set_flag as ff_set
+from backend.shared.http import DEFAULT_TIMEOUT
+from backend.shared.responses import cache_header
+from scripts import maintenance
+
+from .audit import log_admin_action
+from .auth import require_role, revoke_token, verify_token
 from .models import (
     ApprovalStatus,
     FlagState,
@@ -42,25 +51,9 @@ from .models import (
     RolesResponse,
     StatusResponse,
     TokenResponse,
-    UserResponse,
     UsernameRequest,
+    UserResponse,
 )
-from .audit import log_admin_action
-from backend.analytics.auth import create_access_token
-from datetime import UTC, datetime
-from backend.shared.responses import cache_header
-from backend.shared.cache import async_get, async_set, get_async_client
-from backend.shared.config import settings as shared_settings
-from backend.shared.feature_flags import (
-    list_flags as ff_list,
-    set_flag as ff_set,
-    is_enabled,
-)
-from backend.shared.db import session_scope
-from backend.shared.db.models import AuditLog, UserRole, RefreshToken
-from uuid import uuid4
-from datetime import timedelta
-from scripts import maintenance
 
 
 class CacheControlRoute(APIRoute):

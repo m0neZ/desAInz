@@ -2,19 +2,20 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
 import sys
-import warnings
-import asyncio
-from types import TracebackType
 import types
-from typing import cast, Generator
-import pytest
-import fakeredis.aioredis
+import warnings
+from types import TracebackType
+from typing import Generator, cast
+
 import fakeredis
+import fakeredis.aioredis
+import pytest
+import vcr
 
 from backend.shared import cache
-import vcr
 
 warnings.filterwarnings("ignore", category=ResourceWarning)
 import httpx
@@ -89,13 +90,13 @@ class AsyncFakeRedis:
         return None
 
 
+from signal_ingestion.adapters.base import BaseAdapter  # noqa: E402
 from signal_ingestion.adapters.events import EventsAdapter  # noqa: E402
 from signal_ingestion.adapters.instagram import InstagramAdapter  # noqa: E402
 from signal_ingestion.adapters.nostalgia import NostalgiaAdapter  # noqa: E402
 from signal_ingestion.adapters.reddit import RedditAdapter  # noqa: E402
 from signal_ingestion.adapters.tiktok import TikTokAdapter  # noqa: E402
 from signal_ingestion.adapters.youtube import YouTubeAdapter  # noqa: E402
-from signal_ingestion.adapters.base import BaseAdapter  # noqa: E402
 
 ADAPTERS = [
     (TikTokAdapter, "tiktok"),

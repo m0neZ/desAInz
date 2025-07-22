@@ -2,22 +2,20 @@
 
 from __future__ import annotations
 
+import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-import sys
 
 from fastapi.testclient import TestClient
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "backend" / "analytics"))
 
+from fastapi.security import HTTPAuthorizationCredentials
+
 from backend.analytics import api  # noqa: E402
-from backend.analytics.auth import (
-    create_access_token,
-    verify_token,
-)
+from backend.analytics.auth import create_access_token, verify_token
 from backend.shared.db import SessionLocal  # noqa: E402
 from backend.shared.db.models import RevokedToken, UserRole  # noqa: E402
-from fastapi.security import HTTPAuthorizationCredentials
 
 client = TestClient(api.app)
 

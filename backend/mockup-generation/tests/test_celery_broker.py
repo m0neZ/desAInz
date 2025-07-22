@@ -7,8 +7,8 @@ import os
 import socket
 from typing import Iterator
 
-from celery.contrib.testing.worker import start_worker
 import pytest
+from celery.contrib.testing.worker import start_worker
 
 
 def _port_open(host: str, port: int) -> bool:

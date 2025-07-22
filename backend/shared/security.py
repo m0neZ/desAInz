@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from typing import Awaitable, Callable
 
-from fastapi import FastAPI, Request, Response
-from fastapi import HTTPException
+from fastapi import FastAPI, HTTPException, Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from .config import settings

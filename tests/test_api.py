@@ -1,7 +1,7 @@
 """Tests for the optimization API."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "optimization")
@@ -12,7 +12,6 @@ from datetime import UTC, datetime  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.optimization.api import app  # noqa: E402
-
 
 client = TestClient(app)
 

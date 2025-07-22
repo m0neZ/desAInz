@@ -11,18 +11,18 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 from functools import lru_cache
-from typing import Any, Dict, Callable, cast
+from typing import Any, Callable, Dict, cast
 from uuid import uuid4
 
+import httpx
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from sqlalchemy import select
-import httpx
 
+from backend.shared.config import settings as shared_settings
 from backend.shared.db import session_scope
 from backend.shared.db.models import RevokedToken
-from backend.shared.config import settings as shared_settings
 
 SECRET_KEY = shared_settings.secret_key or "change_this"
 ALGORITHM = "HS256"

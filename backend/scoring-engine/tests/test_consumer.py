@@ -4,17 +4,18 @@
 
 from __future__ import annotations
 
-from threading import Event
-from fastapi.testclient import TestClient
 import warnings
+from threading import Event
+
+from fastapi.testclient import TestClient
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+import pytest
+from scoring_engine import app as app_module
+from scoring_engine.app import consume_signals
 from sqlalchemy import select
 
-import pytest
-from scoring_engine.app import consume_signals
-from scoring_engine import app as app_module
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 

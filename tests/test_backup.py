@@ -1,9 +1,10 @@
 """Tests for the PostgreSQL backup script."""
 
 from __future__ import annotations
+
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 

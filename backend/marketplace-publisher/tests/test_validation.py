@@ -2,20 +2,21 @@
 
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-import fakeredis.aioredis
-from PIL import Image
-from typing import Any
 from pathlib import Path
+from typing import Any
+
+import fakeredis.aioredis
+from fastapi.testclient import TestClient
+from PIL import Image
 
 
 def test_invalid_dimensions(monkeypatch: Any, tmp_path: Path) -> None:
     """Return 400 for mockups exceeding dimension limits."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    from marketplace_publisher import publisher
     from marketplace_publisher.db import Marketplace
     from marketplace_publisher.main import app, rate_limiter
-    from marketplace_publisher import publisher
 
     rate_limiter._redis = fakeredis.aioredis.FakeRedis()
 

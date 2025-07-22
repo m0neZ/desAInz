@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-import orjson
 from typing import Mapping, cast
 
+import orjson
 from celery import Task
-from prometheus_client import Counter, Histogram
 from opentelemetry import trace
+from prometheus_client import Counter, Histogram
+from signal_ingestion.embedding import generate_embedding
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
-from signal_ingestion.embedding import generate_embedding
 
 from .celery_app import app
 

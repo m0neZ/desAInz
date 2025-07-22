@@ -2,12 +2,12 @@
 
 import importlib
 import sys
+import warnings
 from pathlib import Path
 from typing import Any
 
-from fastapi.testclient import TestClient
 import fakeredis.aioredis
-import warnings
+from fastapi.testclient import TestClient
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 

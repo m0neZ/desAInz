@@ -3,16 +3,16 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-import orjson
 from pathlib import Path
+
+import orjson
 from sqlalchemy import select
 
-from .affinity import metadata_embedding
-
 from backend.shared.db import engine, session_scope
-from backend.shared.db.models import Weights
 from backend.shared.db.base import Base
+from backend.shared.db.models import Weights
 
+from .affinity import metadata_embedding
 
 # Weight update smoothing factor for feedback adjustments
 FEEDBACK_SMOOTHING = 0.1

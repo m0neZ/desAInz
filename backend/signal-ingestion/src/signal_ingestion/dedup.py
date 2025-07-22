@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from backend.shared.cache import SyncRedis, get_sync_client
 from backend.shared.config import settings as shared_settings
+
 from .settings import settings
 
 redis_client: SyncRedis = get_sync_client()

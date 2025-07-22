@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+from scoring_engine.tasks import batch_embed
 from sqlalchemy import select
 
-from scoring_engine.tasks import batch_embed
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 

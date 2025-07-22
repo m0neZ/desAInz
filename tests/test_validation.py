@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,8 +13,9 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "api-gateway" / "src")
 )
-from api_gateway.main import app as gateway_app  # noqa: E402
 from api_gateway.auth import create_access_token  # noqa: E402
+from api_gateway.main import app as gateway_app  # noqa: E402
+
 from backend.shared.db import session_scope  # noqa: E402
 from backend.shared.db.models import UserRole  # noqa: E402
 

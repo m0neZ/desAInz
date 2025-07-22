@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import requests
-
 import pytest
-
+import requests
 from marketplace_publisher.trademark import is_trademarked
 
 

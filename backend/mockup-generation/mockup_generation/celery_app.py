@@ -5,16 +5,15 @@ from __future__ import annotations
 import os
 from typing import Iterable, cast
 
+import redis
 from celery import Celery
 from celery.signals import worker_ready
 from prometheus_client import REGISTRY
 from prometheus_client.core import GaugeMetricFamily
-import redis
 
 from backend.shared.queue_metrics import register_redis_queue_collector
 
 from .tasks import queue_for_gpu
-
 
 CELERY_BROKER = os.getenv("CELERY_BROKER", "redis")
 if CELERY_BROKER == "redis":

@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
-import itertools
 import asyncio
 import atexit
+import itertools
 from typing import Any, Iterable, Optional, cast
+
+import httpx
+
+from backend.shared.cache import async_get, async_set
+from backend.shared.http import DEFAULT_TIMEOUT
 
 from ..rate_limit import AdapterRateLimiter
 from ..settings import settings
-from backend.shared.cache import async_get, async_set
-
-import httpx
-from backend.shared.http import DEFAULT_TIMEOUT
 
 _HTTP_CLIENTS: dict[str | None, httpx.AsyncClient] = {}
 

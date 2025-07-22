@@ -6,12 +6,11 @@ import json
 import threading
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 from typing import Iterator
 
-from pathlib import Path
-
-from dagster import DagsterInstance
 import pytest
+from dagster import DagsterInstance
 
 ROOT = Path(__file__).resolve().parents[3]
 import sys

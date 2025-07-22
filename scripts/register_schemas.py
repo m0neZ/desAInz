@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import pathlib
+import sys
 from typing import Iterable
 
 from pydantic import HttpUrl, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-import importlib.util
-import sys
 
 MODULE_PATH = (
     pathlib.Path(__file__).resolve().parent.parent

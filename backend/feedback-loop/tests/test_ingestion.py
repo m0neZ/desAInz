@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-import os
 import importlib
-from pathlib import Path
+import os
 import sys
+import types
+from pathlib import Path
 
 import pytest
 from apscheduler.schedulers.background import BackgroundScheduler
-import types
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))
@@ -37,7 +37,8 @@ def _db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     import backend.shared.db as db
 
     importlib.reload(db)
-    from backend.shared.db import Base, models as db_models  # noqa: F401
+    from backend.shared.db import Base
+    from backend.shared.db import models as db_models  # noqa: F401
 
     Base.metadata.create_all(db.engine)
     try:

@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from contextlib import contextmanager
+from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from typing import Iterator, Mapping
 
+import numpy as np
 from sqlalchemy import (
     Boolean,
     Date,
@@ -17,10 +18,10 @@ from sqlalchemy import (
     func,
     select,
 )
-from sqlalchemy.pool import StaticPool
-from backend.shared.db import register_pool_metrics
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
-import numpy as np
+from sqlalchemy.pool import StaticPool
+
+from backend.shared.db import register_pool_metrics
 
 
 class Base(DeclarativeBase):  # type: ignore[misc]

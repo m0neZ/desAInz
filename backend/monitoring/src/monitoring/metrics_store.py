@@ -3,19 +3,18 @@
 from __future__ import annotations
 
 import os
+import sqlite3
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from typing import ClassVar, Iterable, Iterator, MutableMapping, cast
 
-from backend.shared.cache import sync_delete, sync_get, sync_set
-
-import requests
-from backend.shared.http import request_with_retry
-
-import sqlite3
 import psycopg2
+import requests
 from psycopg2.pool import SimpleConnectionPool
+
+from backend.shared.cache import sync_delete, sync_get, sync_set
+from backend.shared.http import request_with_retry
 
 LATENCY_CACHE_KEY = "monitoring:latency_avg"
 ACTIVE_USERS_CACHE_KEY = "monitoring:active_users"

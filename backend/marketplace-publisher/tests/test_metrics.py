@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-from fastapi.testclient import TestClient
 import importlib
+from pathlib import Path
+
 import pytest
+from fastapi.testclient import TestClient
 
 
 @pytest.fixture()
@@ -15,6 +16,7 @@ def _setup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     sync_url = f"sqlite:///{tmp_path}/metrics.db"
     monkeypatch.setenv("DATABASE_URL", async_url)
     from marketplace_publisher.main import app
+
     import backend.shared.db as db
 
     monkeypatch.setenv("DATABASE_URL", sync_url)

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import warnings
+
 import psycopg2
 import pytest
 from fastapi.testclient import TestClient

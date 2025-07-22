@@ -8,9 +8,8 @@ Create Date: 2025-07-21 15:15:48.712385
 This merge revision ensures the migration history remains linear.
 """
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "4ed6b262010c"

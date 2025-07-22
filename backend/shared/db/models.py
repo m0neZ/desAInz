@@ -3,21 +3,20 @@
 from __future__ import annotations
 
 from datetime import datetime
-
 from typing import Any
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
+    JSON,
     Boolean,
     DateTime,
     Float,
     ForeignKey,
+    Index,
     Integer,
     String,
-    JSON,
-    Index,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from pgvector.sqlalchemy import Vector
 
 from .base import Base
 

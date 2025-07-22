@@ -1,14 +1,16 @@
 """Root-level pytest configuration."""
 
-from tests.conftest import *  # noqa: F401,F403
-import warnings
 import os
+import sys
+import warnings
 from types import ModuleType, SimpleNamespace
+
 import redis
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sqlalchemy
-import sys
+
+from tests.conftest import *  # noqa: F401,F403
 
 sys.modules.setdefault(
     "selenium",

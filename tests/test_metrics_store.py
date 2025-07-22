@@ -1,13 +1,12 @@
 """Test the Timescale metrics storage utilities."""
 
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from contextlib import contextmanager
 
 import fakeredis
-
-import pytest
 import psycopg2
+import pytest
 
 import backend.monitoring.src.monitoring.metrics_store as metrics_store
 from backend.monitoring.src.monitoring.metrics_store import (

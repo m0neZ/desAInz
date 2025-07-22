@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 
+import numpy as np
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-from sqlalchemy import select, desc
-from datetime import datetime
-import numpy as np
+from sqlalchemy import desc, select
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding, Weights

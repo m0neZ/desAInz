@@ -4,16 +4,15 @@ import os
 
 os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"  # noqa: E402
 
+import pytest
+from marketplace_publisher.db import Marketplace  # noqa: E402
 from marketplace_publisher.pricing import (
+    BASE_PRICE,
+    FEE_PERCENT,
+    SCORE_FACTOR,
     adjust_price,
     create_listing_metadata,
-    BASE_PRICE,
-    SCORE_FACTOR,
-    FEE_PERCENT,
 )
-from marketplace_publisher.db import Marketplace  # noqa: E402
-
-import pytest
 
 
 def test_adjust_price_includes_score_and_fee() -> None:

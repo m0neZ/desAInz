@@ -6,10 +6,9 @@ import time
 from pathlib import Path
 from typing import Iterator
 
+import pytest
 from marketplace_publisher import rules
 from marketplace_publisher.db import Marketplace
-
-import pytest
 
 
 @pytest.fixture(autouse=True)

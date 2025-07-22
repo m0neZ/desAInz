@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import json
 import logging
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Dict, cast
 
+import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import requests
 
 from backend.shared.cache import SyncRedis, get_sync_client
 from backend.shared.config import settings

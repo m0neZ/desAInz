@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from pgvector.sqlalchemy import Vector
 
 revision = "0008"
@@ -24,9 +24,7 @@ def upgrade() -> None:
     )
     op.add_column("weights", sa.Column("centroid", Vector(768), nullable=True))
     if op.get_context().dialect.name != "sqlite":
-        op.create_unique_constraint(
-            op.f("uq_weights_source"), "weights", ["source"]
-        )
+        op.create_unique_constraint(op.f("uq_weights_source"), "weights", ["source"])
     op.create_table(
         "embeddings",
         sa.Column("id", sa.Integer, primary_key=True),

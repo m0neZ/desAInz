@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import asyncio
-from time import perf_counter
-import warnings
 import os
 import sys
+import warnings
+from time import perf_counter
 
 import fakeredis.aioredis
 import pytest

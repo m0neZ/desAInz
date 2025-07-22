@@ -14,6 +14,11 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
 
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, ConfigDict  # noqa: I201
+from sqlalchemy import func, update
+
 from backend.shared import (
     add_error_handlers,
     configure_sentry,
@@ -27,15 +32,8 @@ from backend.shared.db import run_migrations_if_needed, session_scope
 from backend.shared.metrics import register_metrics
 from backend.shared.profiling import add_profiling
 from backend.shared.responses import json_cached
-from backend.shared.security import add_security_headers
+from backend.shared.security import add_security_headers, require_status_api_key
 from backend.shared.tracing import configure_tracing
-
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
-from backend.shared.security import require_status_api_key
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ConfigDict  # noqa: I201
-
-from sqlalchemy import func, update
 
 from . import notifications, publisher
 from .db import (
@@ -420,8 +418,8 @@ if __name__ == "__main__":  # pragma: no cover
     if args.no_selenium:
         os.environ["SELENIUM_SKIP"] = "1"
 
-    import uvloop
     import uvicorn
+    import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

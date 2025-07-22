@@ -16,8 +16,8 @@ except Exception:  # pragma: no cover - fallback on pure Python
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
+from .affinity import DIMENSION, metadata_embedding
 from .weight_repository import get_centroid, get_weights
-from .affinity import metadata_embedding, DIMENSION
 
 
 class Signal:

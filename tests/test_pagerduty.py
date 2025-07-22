@@ -1,8 +1,9 @@
 """Tests for PagerDuty utility functions."""
 
 from __future__ import annotations
-from pathlib import Path
+
 import sys
+from pathlib import Path
 from typing import Any
 
 # Add monitoring src to path
@@ -11,7 +12,6 @@ sys.path.append(
 )
 
 from monitoring import pagerduty  # noqa: E402
-
 
 PAGERDUTY_URL = pagerduty.PAGERDUTY_URL
 

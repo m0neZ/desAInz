@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import atexit
 import os
 from typing import Any
 
-import atexit
 import requests
 
 from backend.shared.http import request_with_retry
+
 from .settings import settings
 
 PAGERDUTY_URL = "https://events.pagerduty.com/v2/enqueue"

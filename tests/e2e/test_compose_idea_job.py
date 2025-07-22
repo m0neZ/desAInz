@@ -2,8 +2,8 @@
 
 import os
 import subprocess
-import time
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Iterator
 
@@ -11,7 +11,6 @@ import psycopg2
 import pytest
 import requests
 from dagster import DagsterInstance
-
 from orchestrator import idea_job
 
 pytestmark = pytest.mark.xdist_group("compose")

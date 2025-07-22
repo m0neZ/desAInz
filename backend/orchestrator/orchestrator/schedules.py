@@ -3,17 +3,17 @@
 from dagster import ScheduleEvaluationContext, schedule
 
 from .jobs import (
+    analyze_query_plans_job,
     backup_job,
     cleanup_job,
-    analyze_query_plans_job,
     daily_summary_job,
-    rotate_secrets_job,
-    rotate_s3_keys_job,
-    sync_listings_job,
-    privacy_purge_job,
-    idea_job,
     feedback_update_job,
+    idea_job,
     maintain_spot_nodes_job,
+    privacy_purge_job,
+    rotate_s3_keys_job,
+    rotate_secrets_job,
+    sync_listings_job,
 )
 
 

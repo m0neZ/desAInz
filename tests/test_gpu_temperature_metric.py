@@ -1,10 +1,10 @@
-from typing import Any
+"""Tests for GPU temperature metric update logic."""
 
 import subprocess
-
 import sys
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
+from typing import Any
 
 sys.path.insert(
     0, str(Path(__file__).resolve().parents[1] / "backend/mockup-generation")
@@ -31,7 +31,7 @@ sys.modules["celery.signals"] = signals_mod
 def test_gpu_temperature_metric(monkeypatch: Any) -> None:
     """GPU temperature gauge should use output from ``nvidia-smi``."""
 
-    from mockup_generation.tasks import _update_gpu_temperature, GPU_TEMPERATURE
+    from mockup_generation.tasks import GPU_TEMPERATURE, _update_gpu_temperature
 
     class Result:
         stdout = "55\n"

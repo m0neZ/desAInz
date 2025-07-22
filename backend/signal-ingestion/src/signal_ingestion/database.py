@@ -2,17 +2,14 @@
 
 from __future__ import annotations
 
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
 from collections.abc import AsyncGenerator
 
-from .models import Base
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
 from backend.shared.config import settings
 from backend.shared.db import register_pool_metrics
 
+from .models import Base
 
 DATABASE_URL = str(settings.effective_database_url)
 engine = create_async_engine(DATABASE_URL, echo=False)

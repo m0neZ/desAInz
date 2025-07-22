@@ -6,6 +6,7 @@ import logging
 from typing import Any, cast
 
 import requests
+
 from backend.shared.http import request_with_retry
 
 logger = logging.getLogger(__name__)

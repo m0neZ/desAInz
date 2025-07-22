@@ -13,10 +13,10 @@ import time
 from typing import Any, cast
 
 import redis
-from UnleashClient import UnleashClient
 from ldclient import LDClient
 from ldclient.config import Config
 from ldclient.context import Context
+from UnleashClient import UnleashClient
 
 _unleash_client: UnleashClient | None = None
 _ld_client: LDClient | None = None

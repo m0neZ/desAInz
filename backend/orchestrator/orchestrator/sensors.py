@@ -15,7 +15,6 @@ from dagster import (
     run_failure_sensor,
     sensor,
 )
-
 from monitoring.pagerduty import notify_listing_issue
 
 from .jobs import idea_job

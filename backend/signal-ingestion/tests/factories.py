@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import factory
-
 from signal_ingestion.models import Signal
 
 

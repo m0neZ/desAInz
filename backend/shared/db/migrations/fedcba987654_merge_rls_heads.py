@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 revision = "fedcba987654"
 down_revision = ("0017", "0009", "e07f77a52d6f", "0004", "0002", "abcdef123456")

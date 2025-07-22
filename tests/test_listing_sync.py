@@ -22,7 +22,7 @@ def setup_module(module: object) -> None:
     """Create tables for tests."""
     Base.metadata.create_all(engine)
     with session_scope() as session:
-        from datetime import datetime, UTC
+        from datetime import UTC, datetime
 
         session.add(
             Listing(

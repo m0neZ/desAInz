@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from PIL import Image
-
 from mockup_generation.post_processor import ensure_not_nsfw
+from PIL import Image
 
 
 def test_ensure_not_nsfw() -> None:

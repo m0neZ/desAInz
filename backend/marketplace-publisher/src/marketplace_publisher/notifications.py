@@ -3,19 +3,17 @@
 from __future__ import annotations
 
 import asyncio
+import atexit
 import logging
 import os
 from typing import Any
 
-import atexit
-
+import requests
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .db import create_webhook_event
-
-import requests
 from backend.shared.http import request_with_retry
 
+from .db import create_webhook_event
 
 logger = logging.getLogger(__name__)
 

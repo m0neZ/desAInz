@@ -1,16 +1,17 @@
 """Tests for feature flag routes."""
 
-import sys
 import os
+import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 
-from fastapi.testclient import TestClient  # noqa: E402
 import importlib  # noqa: E402
-import fakeredis.aioredis  # noqa: E402
 
+import fakeredis.aioredis  # noqa: E402
 from api_gateway.auth import create_access_token  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+
 from backend.shared import feature_flags  # noqa: E402
 
 

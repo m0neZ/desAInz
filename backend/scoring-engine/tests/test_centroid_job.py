@@ -6,13 +6,11 @@ from __future__ import annotations
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-
-from scoring_engine.centroid_job import (
-    scheduler as module_scheduler,
-    start_centroid_scheduler,
-    compute_and_store_centroids,
-)
+from scoring_engine.centroid_job import compute_and_store_centroids
+from scoring_engine.centroid_job import scheduler as module_scheduler
+from scoring_engine.centroid_job import start_centroid_scheduler
 from scoring_engine.weight_repository import get_centroid
+
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 

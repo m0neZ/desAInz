@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, cast, Iterable
+from typing import Any, Callable, Dict, Iterable, cast
 
 from fastapi import Depends, HTTPException, status
 

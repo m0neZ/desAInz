@@ -49,6 +49,7 @@ import redis  # noqa: E402
 redis.Redis = _DummyRedis  # type: ignore[attr-defined]
 
 from types import SimpleNamespace
+
 import pytest
 from apscheduler.triggers.cron import CronTrigger  # noqa: E402
 from apscheduler.triggers.interval import IntervalTrigger  # noqa: E402

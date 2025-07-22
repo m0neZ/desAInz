@@ -2,24 +2,21 @@
 
 from __future__ import annotations
 
-from contextlib import asynccontextmanager, contextmanager
-from typing import Any, Iterator, AsyncIterator
 import asyncio
 import os
+from contextlib import asynccontextmanager, contextmanager
+from typing import Any, AsyncIterator, Iterator
+
 from alembic import command
 from alembic.config import Config
-
-from sqlalchemy import create_engine, event, text
 from prometheus_client import Gauge
+from sqlalchemy import create_engine, event, text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+
+from backend.shared.config import settings
 
 from .base import Base
-from backend.shared.config import settings
 
 SKIP_MIGRATIONS_ENV = "SKIP_MIGRATIONS"
 

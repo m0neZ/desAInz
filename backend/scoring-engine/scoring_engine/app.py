@@ -4,57 +4,51 @@
 
 from __future__ import annotations
 
-import uuid
 import asyncio
 import logging
-import orjson
-from functools import lru_cache
+import uuid
 from datetime import datetime
-from threading import Event, Thread
+from functools import lru_cache
 from pathlib import Path
+from threading import Event, Thread
 from typing import Any, Callable, Coroutine, cast
 
-from fastapi import FastAPI, HTTPException, Request, Response
-from backend.shared.security import require_status_api_key
-from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
-from backend.shared.cache import AsyncRedis, get_async_client
-from sqlalchemy import select
 import numpy as np
-from prometheus_client import (
-    CONTENT_TYPE_LATEST,
-    Counter,
-    Histogram,
-    generate_latest,
-)
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
+import orjson
+from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from pydantic import BaseModel
+from sqlalchemy import select
 from starlette.concurrency import run_in_threadpool
 
-from backend.shared.config import settings
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
-from backend.shared.logging import configure_logging
-from backend.shared import add_error_handlers, configure_sentry
-from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
-from .celery_app import app as celery_app
-from backend.shared.db import session_scope
-from backend.shared.db import run_migrations_if_needed
-from backend.shared.db.models import Embedding
 from backend.monitoring.src.monitoring.metrics_store import (
     ScoreMetric,
     TimescaleMetricsStore,
 )
+from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.cache import AsyncRedis, get_async_client
+from backend.shared.config import settings
+from backend.shared.db import run_migrations_if_needed, session_scope
+from backend.shared.db.models import Embedding
+from backend.shared.kafka import KafkaConsumerWrapper, SchemaRegistryClient
+from backend.shared.logging import configure_logging
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
+
+from .celery_app import app as celery_app
+from .centroid_job import start_centroid_scheduler
 from .scoring import Signal, calculate_score
 from .weight_repository import (
     FEEDBACK_SMOOTHING,
+    get_centroid,
     get_weights,
     update_weights,
-    get_centroid,
 )
-from .centroid_job import start_centroid_scheduler
 
 # Cache metric keys
 CACHE_HIT_KEY = "cache_hits"
@@ -412,8 +406,8 @@ async def ready(request: Request) -> Response:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    import uvloop
     import uvicorn
+    import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

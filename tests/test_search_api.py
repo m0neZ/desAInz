@@ -2,12 +2,12 @@
 
 # mypy: ignore-errors
 
-from pathlib import Path
+import importlib
 import os
 import sys
-import importlib
-from unittest import mock
 import warnings
+from pathlib import Path
+from unittest import mock
 
 from fastapi.testclient import TestClient
 

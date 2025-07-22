@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import importlib
+from pathlib import Path
 
 import pytest
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
 from marketplace_publisher import db, main, publisher
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 
 @pytest.mark.asyncio()

@@ -7,9 +7,9 @@ import os
 from dataclasses import dataclass
 from typing import List
 
-from .settings import settings
-
 import requests
+
+from .settings import settings
 
 
 @dataclass(slots=True)

@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
+import os
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool
 from alembic import context
-
-import os
+from sqlalchemy import engine_from_config, pool
 
 target_metadata = None
 

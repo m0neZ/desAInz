@@ -8,11 +8,10 @@ sys.path.append(
     str(Path(__file__).resolve().parents[2] / "signal-ingestion" / "src")
 )  # noqa: E402
 
-from fastapi.testclient import TestClient  # noqa: E402
-import pytest  # noqa: E402
-
 import api_gateway.main as main_module  # noqa: E402
 import api_gateway.routes as routes  # noqa: E402
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
 client = TestClient(main_module.app)
 

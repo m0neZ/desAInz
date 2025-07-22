@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
 import types
 import warnings
-from fastapi.testclient import TestClient
+from pathlib import Path
+
 import pytest
+from fastapi.testclient import TestClient
 
 root = Path(__file__).resolve().parents[3]
 sys.path.append(str(root))

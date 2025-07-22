@@ -7,10 +7,11 @@ root_path = Path(__file__).resolve().parents[3]
 sys.path.append(str(root_path))  # noqa: E402
 sys.path.append(str(root_path / "backend" / "api-gateway" / "src"))  # noqa: E402
 
-from fastapi.testclient import TestClient  # noqa: E402
 from typing import cast
 
 from api_gateway.main import app  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+
 from backend.shared.db import Base, engine, session_scope  # noqa: E402
 from backend.shared.db.models import UserRole  # noqa: E402
 

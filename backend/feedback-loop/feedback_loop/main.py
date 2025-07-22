@@ -8,19 +8,19 @@ import sys
 import uuid
 from typing import Any, Callable, Coroutine, Optional
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response
-from backend.shared.security import require_status_api_key
-from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
-from backend.shared.tracing import configure_tracing
+from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+from backend.shared.config import settings as shared_settings
+from backend.shared.metrics import register_metrics
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
 
 from .ab_testing import ABTestManager
 from .auth import require_role
-from backend.shared.config import settings as shared_settings
 from .settings import settings
 
 app = FastAPI(title="Feedback Loop")
@@ -63,8 +63,8 @@ async def startup() -> None:
     """Start background scheduler and setup exception logging."""
     global scheduler
     # Import here to avoid heavy dependencies at module import time
-    from .scheduler import setup_scheduler
     from .ingestion import schedule_marketplace_ingestion
+    from .scheduler import setup_scheduler
 
     listing_env = os.environ.get("MARKETPLACE_LISTING_IDS", "")
     listing_ids = [int(i) for i in listing_env.split(",") if i.strip()]
@@ -179,8 +179,9 @@ async def get_stats(
 
 if __name__ == "__main__":  # pragma: no cover
     import asyncio
-    import uvloop
+
     import uvicorn
+    import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

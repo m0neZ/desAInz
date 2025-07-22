@@ -2,17 +2,13 @@
 
 from __future__ import annotations
 
-import re
-from typing import Iterable
-from typing import Pattern
-import math
-import time
-
 import json
-from typing import cast
+import math
+import re
+import time
+from typing import Iterable, Pattern, cast
 
-from backend.shared.cache import get_sync_client
-from backend.shared.cache import sync_get, sync_set
+from backend.shared.cache import get_sync_client, sync_get, sync_set
 from backend.shared.config import settings
 
 TRENDING_KEY = "trending:keywords"

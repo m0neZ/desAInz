@@ -7,14 +7,15 @@ from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import MagicMock
+
 import pytest
 import vcr
 from PIL import Image
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 # Stub external dependencies before importing service modules
-from backend.shared.kafka import utils as kafka_utils
 from backend.shared.kafka import schema_registry as kafka_schema
+from backend.shared.kafka import utils as kafka_utils
 
 kafka_utils.KafkaProducer = MagicMock(
     return_value=SimpleNamespace(send=lambda *a, **k: None, flush=lambda: None)
@@ -36,10 +37,10 @@ sys.path.append(str(ROOT / "backend" / "scoring-engine"))
 sys.path.append(str(ROOT))
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))  # noqa: E402
 
-from signal_ingestion import ingestion, publisher  # type: ignore  # noqa: E402
-from signal_ingestion import database as ing_db  # type: ignore  # noqa: E402
 from mockup_generation.generator import MockupGenerator  # type: ignore  # noqa: E402
 from scoring_engine import scoring, weight_repository  # noqa: E402
+from signal_ingestion import database as ing_db  # type: ignore  # noqa: E402
+from signal_ingestion import ingestion, publisher  # type: ignore  # noqa: E402
 
 
 @vcr.use_cassette(

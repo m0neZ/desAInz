@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, Callable, cast
+from typing import Any, Callable, Dict, cast
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from flask import Flask, jsonify, request as flask_request, Response as FlaskResponse
+from flask import Flask
+from flask import Response as FlaskResponse
+from flask import jsonify
+from flask import request as flask_request
+from opentelemetry import trace
 from starlette.responses import Response
 from werkzeug.exceptions import HTTPException as FlaskHTTPException
-from opentelemetry import trace
 
 try:  # pragma: no cover - optional dependency
     import sentry_sdk

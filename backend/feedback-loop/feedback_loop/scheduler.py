@@ -10,8 +10,8 @@ from apscheduler.triggers.interval import IntervalTrigger
 
 from .ab_testing import ABTestManager
 from .ingestion import ingest_metrics, schedule_marketplace_ingestion
-from .weight_updater import update_weights
 from .settings import settings
+from .weight_updater import update_weights
 
 logger = logging.getLogger(__name__)
 

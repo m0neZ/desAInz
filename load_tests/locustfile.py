@@ -5,14 +5,11 @@
 from __future__ import annotations
 
 import os
-from locust import HttpUser, task, between, events
 
-from baseline_scenarios import (  # noqa: F401
-    IngestionApiUser,
-    PublishingApiUser,
-    ScoringApiUser,
-)
 from api_gateway_scenarios import ApiGatewayUser  # noqa: F401
+from baseline_scenarios import IngestionApiUser  # noqa: F401
+from baseline_scenarios import PublishingApiUser, ScoringApiUser
+from locust import HttpUser, between, events, task
 
 THRESHOLD_FAILURE_RATIO = float(os.environ.get("THRESHOLD_FAILURE_RATIO", "0.01"))
 THRESHOLD_AVG_RESPONSE_TIME = float(

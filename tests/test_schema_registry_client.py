@@ -5,8 +5,8 @@ import pathlib
 import sys
 from types import ModuleType
 
-import requests
 import pytest
+import requests
 
 MODULE_PATH = (
     pathlib.Path(__file__).resolve().parents[1]

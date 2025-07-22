@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from contextlib import AsyncExitStack
+from pathlib import Path
 
 import pytest
 from typer.testing import CliRunner
 
 from scripts.cli import app
-
 
 runner = CliRunner()
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import HttpUrl, ValidationError, field_validator, TypeAdapter
+from pydantic import HttpUrl, TypeAdapter, ValidationError, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

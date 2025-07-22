@@ -3,14 +3,14 @@
 import importlib
 from typing import Any
 
+import api_gateway.main as main_module
+import api_gateway.routes as routes
 import httpx
 import pytest
 import respx
 from fastapi.testclient import TestClient
 
 from backend.shared.http import DEFAULT_TIMEOUT
-import api_gateway.main as main_module
-import api_gateway.routes as routes
 
 
 class AssertTimeoutClient(httpx.AsyncClient):

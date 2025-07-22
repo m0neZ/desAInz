@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+import importlib
 import sys
 import types
 from pathlib import Path
-import importlib
 
+import pytest
 from fastapi import FastAPI
 from opentelemetry import trace
-import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT))

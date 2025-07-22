@@ -7,9 +7,9 @@ import sqlite3
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator, List
+from urllib.parse import urlparse
 
 import psycopg2
-from urllib.parse import urlparse
 
 from .metrics import ResourceMetric
 

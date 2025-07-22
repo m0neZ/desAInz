@@ -6,25 +6,25 @@ from dagster import RetryPolicy, job
 
 DEFAULT_JOB_RETRY_POLICY = RetryPolicy(max_retries=3, delay=1)
 
+from .hooks import record_failure, record_success
 from .ops import (
+    analyze_query_plans_op,
     await_approval,
     backup_data,
+    benchmark_score_op,
     cleanup_data,
-    analyze_query_plans_op,
+    generate_content,
+    ingest_signals,
+    maintain_spot_nodes_op,
+    publish_content,
+    purge_pii_rows_op,
     rotate_k8s_secrets_op,
     rotate_s3_keys_op,
     run_daily_summary,
-    generate_content,
-    ingest_signals,
-    publish_content,
     score_signals,
-    update_feedback,
     sync_listing_states_op,
-    purge_pii_rows_op,
-    benchmark_score_op,
-    maintain_spot_nodes_op,
+    update_feedback,
 )
-from .hooks import record_failure, record_success
 
 
 @job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]

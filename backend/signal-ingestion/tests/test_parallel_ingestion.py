@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
+import pytest
 from signal_ingestion import database, tasks
-from signal_ingestion.normalization import Signal as NormalizedSignal
 from signal_ingestion.adapters.base import BaseAdapter
 from signal_ingestion.models import Signal as DBSignal
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from signal_ingestion.normalization import Signal as NormalizedSignal
 from sqlalchemy import select
-import pytest
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 
 class DummyApp:

@@ -9,26 +9,25 @@ from functools import lru_cache
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
-from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.shared.logging import configure_logging
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
 from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
+from backend.shared.logging import configure_logging
 from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
+from backend.shared.profiling import add_profiling
 from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
 
+from .celery_app import app as celery_app
 from .model_repository import (
     list_generated_mockups,
     list_models,
     register_model,
     set_default,
 )
-from .celery_app import app as celery_app
 
 configure_logging()
 logger = logging.getLogger(__name__)

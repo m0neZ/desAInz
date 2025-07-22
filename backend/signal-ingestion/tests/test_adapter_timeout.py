@@ -6,9 +6,9 @@ from typing import Any, Optional
 import httpx
 import pytest
 import respx
+from signal_ingestion.adapters.base import BaseAdapter
 
 from backend.shared.http import DEFAULT_TIMEOUT
-from signal_ingestion.adapters.base import BaseAdapter
 
 
 class _DummyAdapter(BaseAdapter):

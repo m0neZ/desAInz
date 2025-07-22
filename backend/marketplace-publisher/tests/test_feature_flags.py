@@ -2,18 +2,20 @@
 
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-import fakeredis.aioredis
-from typing import Any
 from pathlib import Path
+from typing import Any
+
+import fakeredis.aioredis
+from fastapi.testclient import TestClient
 
 
 def test_society6_flag(monkeypatch: Any, tmp_path: Path) -> None:
     """Return 403 when Society6 integration is disabled."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
+    from marketplace_publisher import publisher
     from marketplace_publisher.db import Marketplace
     from marketplace_publisher.main import app, rate_limiter
-    from marketplace_publisher import publisher
+
     from backend.shared import feature_flags
 
     rate_limiter._redis = fakeredis.aioredis.FakeRedis()
@@ -47,9 +49,10 @@ def test_society6_flag(monkeypatch: Any, tmp_path: Path) -> None:
 def test_zazzle_flag(monkeypatch: Any, tmp_path: Path) -> None:
     """Return 403 when Zazzle integration is disabled."""
     monkeypatch.setenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
+    from marketplace_publisher import publisher
     from marketplace_publisher.db import Marketplace
     from marketplace_publisher.main import app, rate_limiter
-    from marketplace_publisher import publisher
+
     from backend.shared import feature_flags
 
     rate_limiter._redis = fakeredis.aioredis.FakeRedis()

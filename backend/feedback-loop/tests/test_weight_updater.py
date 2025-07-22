@@ -1,9 +1,10 @@
 """Tests for weight updater."""
 
+import importlib.util
+import sys
 from pathlib import Path
 from typing import Any
-import sys
-import importlib.util
+
 import pytest
 from requests import RequestException
 

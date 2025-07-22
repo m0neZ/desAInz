@@ -7,7 +7,6 @@ from typing import Iterator
 from unittest import mock
 
 import fakeredis
-
 import pytest
 
 from backend.shared import feature_flags

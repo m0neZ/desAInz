@@ -3,11 +3,11 @@
 from typing import Any
 
 import httpx
+import monitoring.main as main_module
 import pytest
 import respx
 
 from backend.shared.http import DEFAULT_TIMEOUT
-import monitoring.main as main_module
 
 
 class AssertTimeoutClient(httpx.AsyncClient):

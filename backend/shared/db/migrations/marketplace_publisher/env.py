@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool
 from alembic import context
-
 from marketplace_publisher.settings import settings
+from sqlalchemy import engine_from_config, pool
 
 target_metadata = None
 

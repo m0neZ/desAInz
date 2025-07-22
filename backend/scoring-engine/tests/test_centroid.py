@@ -3,10 +3,10 @@
 # mypy: ignore-errors
 
 from fastapi.testclient import TestClient
-
 from scoring_engine.app import app as scoring_app
 from scoring_engine.centroid_job import compute_and_store_centroids
 from scoring_engine.weight_repository import get_centroid
+
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
 

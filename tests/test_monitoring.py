@@ -1,7 +1,7 @@
 """Tests for the monitoring service."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Any
 
 sys.path.append(
@@ -9,7 +9,6 @@ sys.path.append(
 )  # noqa: E402
 
 from fastapi.testclient import TestClient  # noqa: E402
-
 from monitoring.main import app  # noqa: E402
 
 client = TestClient(app)

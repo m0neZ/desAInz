@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import uuid
 from datetime import UTC, datetime
 from typing import Callable, Iterable, Iterator, List
 
@@ -10,7 +11,6 @@ from alembic import command
 from alembic.config import Config
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
-import uuid
 
 ADMIN_URL = "postgresql://postgres@localhost/postgres"
 

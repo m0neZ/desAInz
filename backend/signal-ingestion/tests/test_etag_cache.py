@@ -14,12 +14,13 @@ sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
 )
 
-from backend.shared import cache  # noqa: E402
-from backend.shared.config import settings as shared_settings  # noqa: E402
-import signal_ingestion.rate_limit as rl  # noqa: E402
 import warnings
+
+import signal_ingestion.rate_limit as rl  # noqa: E402
 from signal_ingestion.adapters.base import BaseAdapter  # noqa: E402
 
+from backend.shared import cache  # noqa: E402
+from backend.shared.config import settings as shared_settings  # noqa: E402
 
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="redis.*")
 

@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import argparse
-from datetime import UTC, datetime
-from typing import Iterable
 import logging
 import tracemalloc
+from datetime import UTC, datetime
+from typing import Iterable
 
 import requests
 

@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from logging import getLogger
 import time
+from logging import getLogger
 from typing import Any, Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
-from flask import Flask, request as flask_request
+from flask import Flask
+from flask import request as flask_request
 
 logger = getLogger(__name__)
 

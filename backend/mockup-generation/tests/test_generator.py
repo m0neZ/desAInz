@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
 import types
+from pathlib import Path
 from typing import Iterator
 
 import pytest
@@ -19,7 +19,8 @@ sys.modules.setdefault("torch", types.ModuleType("torch"))
 sys.modules["torch"].cuda = types.SimpleNamespace(is_available=lambda: False)  # type: ignore[attr-defined]
 sys.modules.setdefault("torch.nn", types.ModuleType("nn"))
 
-from mockup_generation.generator import MockupGenerator, GenerationError  # noqa: E402
+from mockup_generation.generator import GenerationError  # noqa: E402
+from mockup_generation.generator import MockupGenerator
 from mockup_generation.settings import settings  # noqa: E402
 
 
@@ -72,6 +73,7 @@ async def test_fallback_api_raises(monkeypatch: pytest.MonkeyPatch) -> None:
 async def test_fallback_api_openai(monkeypatch: pytest.MonkeyPatch) -> None:
     """Image is returned when OpenAI responds successfully."""
     from io import BytesIO
+
     from PIL import Image
 
     buf = BytesIO()
@@ -115,6 +117,7 @@ async def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
     """Image is returned when Stability responds successfully."""
     import base64
     from io import BytesIO
+
     from PIL import Image
 
     buf = BytesIO()

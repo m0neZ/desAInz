@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 
 import pytest
-from opentelemetry import trace
 from fastapi.testclient import TestClient
+from opentelemetry import trace
 
 SERVICES = [
     (

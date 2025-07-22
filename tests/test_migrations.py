@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(REPO_ROOT))
@@ -11,9 +11,10 @@ sys.path.append(str(REPO_ROOT / "backend" / "api-gateway" / "src"))
 sys.path.append(str(REPO_ROOT / "backend" / "marketplace-publisher" / "src"))
 sys.path.append(str(REPO_ROOT / "backend" / "signal-ingestion" / "src"))
 
+import pytest
 from alembic import command
 from alembic.config import Config
-import pytest
+
 from tests.utils import assert_single_head
 
 

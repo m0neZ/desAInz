@@ -4,11 +4,12 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import UTC, datetime
 import os
+from datetime import UTC, datetime
 from time import perf_counter
 
 import httpx
+
 from backend.shared.http import get_async_http_client
 
 

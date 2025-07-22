@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Callable
 import os
 from datetime import datetime
+from pathlib import Path
+from typing import Callable
 
 import pytest
 import responses
@@ -189,8 +189,8 @@ async def test_tokens_persisted_and_reused(
 ) -> None:
     """Load tokens from database and refresh when expired."""
 
-    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
     from marketplace_publisher import db
+    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
@@ -237,8 +237,8 @@ async def test_oauth_endpoints(monkeypatch: pytest.MonkeyPatch) -> None:
     """Test OAuth login and callback storing tokens."""
 
     from fastapi.testclient import TestClient
-    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
     from marketplace_publisher import db, main
+    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
@@ -247,6 +247,7 @@ async def test_oauth_endpoints(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("DATABASE_URL", "sqlite:///:memory:")
 
     import importlib
+
     import backend.shared.db as shared_db
 
     importlib.reload(shared_db)

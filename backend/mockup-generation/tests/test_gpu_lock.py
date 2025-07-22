@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import contextlib
 import sys
 from pathlib import Path
-import contextlib
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))  # noqa: E402
 
@@ -118,11 +118,11 @@ sys.modules.setdefault(
     types.ModuleType("opentelemetry.exporter.otlp.proto.http.trace_exporter"),
 )
 
-import threading  # noqa: E402
 import asyncio
+import threading  # noqa: E402
+
 import fakeredis.aioredis  # noqa: E402
 import pytest  # noqa: E402
-
 from mockup_generation import tasks  # noqa: E402
 
 

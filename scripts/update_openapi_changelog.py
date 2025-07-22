@@ -12,9 +12,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-import pyjson5
 import subprocess
 from pathlib import Path
+
+import pyjson5
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OPENAPI_DIR = PROJECT_ROOT / "openapi"

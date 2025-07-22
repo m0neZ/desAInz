@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import importlib
 import sys
+import warnings
 from pathlib import Path
 from typing import Any, Optional, Type
-from pydantic import RedisDsn
-import warnings
 
+import fakeredis.aioredis
 import httpx
 from fastapi.testclient import TestClient
-import fakeredis.aioredis
+from pydantic import RedisDsn
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "api-gateway" / "src")

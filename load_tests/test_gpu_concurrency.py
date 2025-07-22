@@ -2,22 +2,22 @@
 
 from __future__ import annotations
 
-import time
-from pathlib import Path
-from typing import Iterator, AsyncIterator
-from contextlib import contextmanager, asynccontextmanager
 import sys
+import time
+from contextlib import asynccontextmanager, contextmanager
+from pathlib import Path
+from typing import AsyncIterator, Iterator
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "backend" / "mockup-generation"))
 
-import fakeredis
 import importlib
+import types
+
+import fakeredis
 import pytest
 from celery import Celery
 from celery.contrib.testing.worker import start_worker
-
-import types
 
 APP = Celery("test", broker="memory://", backend="cache+memory://")
 celery_stub = types.ModuleType("mockup_generation.celery_app")

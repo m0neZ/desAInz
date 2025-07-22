@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import warnings
+
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import warnings
 from pytest import MonkeyPatch
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)

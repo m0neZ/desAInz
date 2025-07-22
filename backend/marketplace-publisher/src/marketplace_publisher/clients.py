@@ -2,30 +2,25 @@
 
 from __future__ import annotations
 
+import asyncio
+import gzip
+import os
+import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any, cast
-import gzip
 
-import os
-import requests
 import httpx
-from backend.shared.http import request_with_retry, get_async_http_client
+import requests
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
-import time
-import asyncio
 
-from datetime import datetime
+from backend.shared.http import get_async_http_client, request_with_retry
 
-from .settings import settings
-
-from .db import (
-    Marketplace,
-    get_oauth_token_sync,
-    upsert_oauth_token_sync,
-)
 from . import rules
+from .db import Marketplace, get_oauth_token_sync, upsert_oauth_token_sync
+from .settings import settings
 
 
 async def get_async_client() -> httpx.AsyncClient:

@@ -5,12 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import pytest
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
-from fastapi.testclient import TestClient
 import fakeredis.aioredis
-from marketplace_publisher import publisher, db
+import pytest
+from fastapi.testclient import TestClient
+from marketplace_publisher import db, publisher
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 
 @pytest.mark.asyncio()

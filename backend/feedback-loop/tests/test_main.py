@@ -1,21 +1,23 @@
 """Tests for feedback loop main endpoints."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
+import feedback_loop.main as main  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from feedback_loop import ABTestManager  # noqa: E402
-import feedback_loop.main as main  # noqa: E402
 from feedback_loop.auth import create_access_token  # noqa: E402
+
 from backend.shared.db import Base, SessionLocal, engine, models  # noqa: E402
 
 
 def test_impression_conversion_allocation(tmp_path, monkeypatch) -> None:
     """Recorded events should influence allocation."""
-    import backend.shared.db as shared_db
     import feedback_loop.ab_testing as abt
+
+    import backend.shared.db as shared_db
 
     monkeypatch.setattr(shared_db, "register_pool_metrics", lambda *_: None)
     monkeypatch.setattr(abt, "register_pool_metrics", lambda *_: None)
@@ -57,8 +59,9 @@ def test_impression_conversion_allocation(tmp_path, monkeypatch) -> None:
 
 def test_stats_endpoint(tmp_path, monkeypatch) -> None:
     """/stats should return conversion totals."""
-    import backend.shared.db as shared_db
     import feedback_loop.ab_testing as abt
+
+    import backend.shared.db as shared_db
 
     monkeypatch.setattr(shared_db, "register_pool_metrics", lambda *_: None)
     monkeypatch.setattr(abt, "register_pool_metrics", lambda *_: None)

@@ -1,13 +1,12 @@
 """Validation for signal_ingestion settings."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 
 import pytest  # noqa: E402
 from pydantic import ValidationError  # noqa: E402
-
 from signal_ingestion.settings import Settings  # noqa: E402
 
 

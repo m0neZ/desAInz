@@ -5,10 +5,10 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))  # noqa: E402
 
+from api_gateway.auth import create_access_token  # noqa: E402
+from api_gateway.main import app  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 
-from api_gateway.main import app  # noqa: E402
-from api_gateway.auth import create_access_token  # noqa: E402
 from backend.shared.db import Base, engine, session_scope  # noqa: E402
 from backend.shared.db.models import UserRole  # noqa: E402
 

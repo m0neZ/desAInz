@@ -2,8 +2,8 @@
 
 # mypy: ignore-errors
 
-from datetime import UTC, datetime
 import importlib
+from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 from scoring_engine import app

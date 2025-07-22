@@ -2,56 +2,55 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
-import uuid
-import time
 import os
+import time
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
 import httpx
-import asyncio
-from backend.shared.http import DEFAULT_TIMEOUT, get_async_http_client
-
 import psutil
+import redis
 from fastapi import FastAPI, Request, Response
-from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Histogram
-from backend.shared.metrics import register_metrics
-from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
+from sqlalchemy import func, select
 
-from backend.shared.tracing import configure_tracing
-from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
+from backend.shared.cache import sync_get, sync_set
 from backend.shared.config import settings as shared_settings
 from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Listing, Mockup, Signal
-from sqlalchemy import func, select
+from backend.shared.http import DEFAULT_TIMEOUT, get_async_http_client
+from backend.shared.metrics import register_metrics
+from backend.shared.profiling import add_profiling
+from backend.shared.responses import json_cached
+from backend.shared.security import add_security_headers, require_status_api_key
+from backend.shared.tracing import configure_tracing
 
-from .pagerduty import trigger_sla_violation, trigger_queue_backlog
 from .metrics_store import (
+    LATENCY_CACHE_KEY,
     PublishLatencyMetric,
     TimescaleMetricsStore,
-    LATENCY_CACHE_KEY,
 )
-
-from backend.shared.cache import sync_get, sync_set
-import redis
+from .pagerduty import trigger_queue_backlog, trigger_sla_violation
 
 LAST_ALERT_KEY = "sla:last_alert"
 QUEUE_ALERT_KEY = "queue:last_alert"
 
+from scripts.daily_summary import generate_daily_summary
+
 from .logging_config import configure_logging
 from .settings import settings
-from scripts.daily_summary import generate_daily_summary
 
 
 async def get_http_client() -> httpx.AsyncClient:
     """Return a shared HTTP client instance."""
     return await get_async_http_client()
+
 
 metrics_store = TimescaleMetricsStore()
 
@@ -318,8 +317,9 @@ async def ready(request: Request) -> Response:
 
 if __name__ == "__main__":  # pragma: no cover
     import asyncio as _asyncio
-    import uvloop
+
     import uvicorn
+    import uvloop
 
     _asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

@@ -14,12 +14,12 @@ sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
 )
 
-from signal_ingestion.adapters.tiktok import TikTokAdapter
-from signal_ingestion.adapters.instagram import InstagramAdapter
-from signal_ingestion.adapters.reddit import RedditAdapter
-from signal_ingestion.adapters.youtube import YouTubeAdapter
 from signal_ingestion.adapters.events import EventsAdapter
+from signal_ingestion.adapters.instagram import InstagramAdapter
 from signal_ingestion.adapters.nostalgia import NostalgiaAdapter
+from signal_ingestion.adapters.reddit import RedditAdapter
+from signal_ingestion.adapters.tiktok import TikTokAdapter
+from signal_ingestion.adapters.youtube import YouTubeAdapter
 from signal_ingestion.normalization import normalize
 
 ADAPTERS: list[tuple[Type[object], str]] = [

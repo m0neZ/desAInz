@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
 import uuid
 from datetime import UTC, datetime
 from typing import Any
 
-import asyncio
 import httpx
 from dagster import Failure, RetryPolicy, op
 
 from backend.shared.http import get_async_http_client
-
 from scripts import maintenance
 
 
@@ -280,9 +279,9 @@ def run_daily_summary(  # type: ignore[no-untyped-def]
 ) -> None:
     """Execute the daily summary script and log the result."""
     context.log.info("generating daily summary")
-    from scripts.daily_summary import generate_daily_summary
-
     import asyncio
+
+    from scripts.daily_summary import generate_daily_summary
 
     summary = asyncio.run(generate_daily_summary())
     context.log.debug("summary: %s", summary)
@@ -336,6 +335,7 @@ def purge_pii_rows_op(context) -> None:  # type: ignore[no-untyped-def]
     """Run :func:`signal_ingestion.privacy.purge_pii_rows`."""
     context.log.info("purging stored PII")
     import asyncio
+
     from signal_ingestion.privacy import purge_pii_rows
 
     count = asyncio.run(purge_pii_rows())
@@ -347,8 +347,9 @@ def benchmark_score_op(context) -> None:  # type: ignore[no-untyped-def]
     """Run benchmark_score script and persist results."""
     context.log.info("benchmarking scoring endpoint")
     import asyncio
+
+    from backend.shared.db import models, session_scope
     from scripts import benchmark_score
-    from backend.shared.db import session_scope, models
 
     uncached, cached, runs = asyncio.run(benchmark_score.main())
     with session_scope() as session:

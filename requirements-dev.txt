@@ -1,5 +1,6 @@
 flake8
 black
+isort
 mypy
 pydocstyle
 flake8-docstrings

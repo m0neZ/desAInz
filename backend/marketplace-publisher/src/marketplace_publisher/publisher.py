@@ -2,29 +2,26 @@
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any, Literal, Mapping
-import logging
 
+from mockup_generation.post_processor import ensure_not_nsfw
+from PIL import Image
 from requests import RequestException
-from sqlalchemy.exc import SQLAlchemyError
-
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from . import rules
 from .clients import (
     AmazonMerchClient,
     EtsyClient,
     RedbubbleClient,
+    SeleniumFallback,
     Society6Client,
     ZazzleClient,
-    SeleniumFallback,
 )
-from .trademark import is_trademarked
-from .notifications import notify_failure
-from mockup_generation.post_processor import ensure_not_nsfw
-from PIL import Image
-from . import rules
 from .db import (
     Marketplace,
     PublishStatus,
@@ -32,7 +29,8 @@ from .db import (
     increment_attempts,
     update_task_status,
 )
-
+from .notifications import notify_failure
+from .trademark import is_trademarked
 
 CLIENTS = {
     Marketplace.redbubble: RedbubbleClient(),

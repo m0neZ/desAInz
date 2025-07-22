@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import logging
 import os
+from typing import Any, Dict
+
 from fastapi import FastAPI
 from sentry_sdk import init
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
@@ -19,7 +21,7 @@ def configure_sentry(app: FastAPI, service_name: str) -> None:
         logger.debug("Sentry DSN not provided; skipping setup")
         return
 
-    def _before_send(event: dict, hint: dict | None) -> dict | None:
+    def _before_send(event: Any, hint: Dict[str, Any] | None) -> Any:
         request = hint.get("request") if hint else None
         if request is not None:
             correlation_id = getattr(request.state, "correlation_id", None)

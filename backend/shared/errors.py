@@ -3,18 +3,19 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Callable, cast
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from flask import Flask, jsonify, request as flask_request, Response
+from flask import Flask, jsonify, request as flask_request, Response as FlaskResponse
+from starlette.responses import Response
 from werkzeug.exceptions import HTTPException as FlaskHTTPException
 from opentelemetry import trace
 
 try:  # pragma: no cover - optional dependency
     import sentry_sdk
 except Exception:  # pragma: no cover - sentry optional
-    sentry_sdk = None
+    sentry_sdk = None  # type: ignore[assignment]
 
 
 def _trace_id() -> str | None:
@@ -65,15 +66,18 @@ def unhandled_exception_handler(request: Request, exc: Exception) -> JSONRespons
 
 def add_error_handlers(app: FastAPI) -> None:
     """Register standard error handlers on ``app``."""
-    app.add_exception_handler(HTTPException, http_exception_handler)
+    app.add_exception_handler(
+        HTTPException,
+        cast(Callable[[Request, Exception], Response], http_exception_handler),
+    )
     app.add_exception_handler(Exception, unhandled_exception_handler)
 
 
 def add_flask_error_handlers(app: Flask) -> None:
     """Register standard error handlers on a Flask ``app``."""
 
-    @app.errorhandler(FlaskHTTPException)  # type: ignore[misc]
-    def _http_error(exc: FlaskHTTPException) -> Response:
+    @app.errorhandler(FlaskHTTPException)
+    def _http_error(exc: FlaskHTTPException) -> FlaskResponse:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)
         body = {
@@ -82,11 +86,11 @@ def add_flask_error_handlers(app: Flask) -> None:
             "trace_id": trace_id,
         }
         resp = jsonify(body)
-        resp.status_code = exc.code
+        resp.status_code = int(exc.code or 500)
         return resp
 
-    @app.errorhandler(Exception)  # type: ignore[misc]
-    def _unhandled(exc: Exception) -> Response:
+    @app.errorhandler(Exception)
+    def _unhandled(exc: Exception) -> FlaskResponse:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)
         logging.getLogger(__name__).exception(

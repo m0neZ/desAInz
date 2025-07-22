@@ -6,7 +6,7 @@ from pydantic import AnyUrl, Field, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):  # type: ignore[misc]
+class Settings(BaseSettings):
     """Centralized configuration for backend services."""
 
     model_config = SettingsConfigDict(
@@ -38,7 +38,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     hsts: str | None = None
     allow_status_unauthenticated: bool = True
 
-    @field_validator("allowed_origins", mode="before")  # type: ignore[misc]
+    @field_validator("allowed_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: str | list[str]) -> list[str]:
         """Parse comma separated origins from environment variables."""
@@ -52,7 +52,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
         "trending_max_keywords",
         "trending_cache_ttl",
         "db_pool_size",
-    )  # type: ignore[misc]
+    )
     @classmethod
     def _positive(cls, value: int) -> int:
         if value <= 0:

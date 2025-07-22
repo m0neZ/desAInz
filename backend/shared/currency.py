@@ -6,7 +6,7 @@ import json
 import logging
 import os
 from decimal import Decimal, ROUND_HALF_UP
-from typing import Dict
+from typing import Dict, cast
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -34,7 +34,8 @@ def _fetch_rates(base: str = BASE_CURRENCY) -> Dict[str, float]:
     response = requests.get(EXCHANGE_API_URL, params={"base": base}, timeout=10)
     response.raise_for_status()
     data = response.json()
-    return data.get("rates", {})
+    rates = cast(dict[str, float], data.get("rates", {}))
+    return rates
 
 
 def update_rates() -> None:
@@ -63,7 +64,7 @@ def get_rate(currency: str) -> float:
     if data is None:
         update_rates()
         data = redis_client.get(REDIS_KEY) or "{}"
-    rates = json.loads(data)
+    rates = json.loads(cast(str, data))
     if currency not in rates:
         raise KeyError(currency)
     return float(rates[currency])

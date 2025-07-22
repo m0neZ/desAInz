@@ -1,7 +1,5 @@
 """FastAPI application exposing optimization endpoints."""
 
-# mypy: ignore-errors
-
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -52,7 +50,8 @@ add_security_headers(app)
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = request.client.host if request.client else "unknown"
+    return cast(str, request.headers.get("X-User", client_host))
 
 
 @app.middleware("http")

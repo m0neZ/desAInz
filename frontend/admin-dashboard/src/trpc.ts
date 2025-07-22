@@ -125,22 +125,26 @@ export const trpc = {
     mutate: () => call<{ message: string; user: string }>('ping'),
   },
   signals: {
-    list: () => call<Signal[]>('signals.list'),
+    list: (page = 1, limit = 20) =>
+      call<Signal[]>('signals.list', { page, limit }),
   },
   ideas: {
     list: () => call<Idea[]>('ideas.list'),
   },
   mockups: {
-    list: () => call<Mockup[]>('mockups.list'),
+    list: (page = 1, limit = 20) =>
+      call<Mockup[]>('mockups.list', { page, limit }),
   },
   heatmap: {
     list: () => call<HeatmapEntry[]>('heatmap.list'),
   },
   gallery: {
-    list: () => call<GalleryItem[]>('gallery.list'),
+    list: (page = 1, limit = 20) =>
+      call<GalleryItem[]>('gallery.list', { page, limit }),
   },
   publishTasks: {
-    list: () => call<PublishTask[]>('publishTasks.list'),
+    list: (page = 1, limit = 20) =>
+      call<PublishTask[]>('publishTasks.list', { page, limit }),
   },
   approvals: {
     approve: (runId: string) => post(`/approvals/${encodeURIComponent(runId)}`),
@@ -157,8 +161,8 @@ export const trpc = {
     list: () => getJson<string[]>('/recommendations'),
   },
   auditLogs: {
-    list: (limit = 50, offset = 0) =>
-      getJson<AuditLogResponse>(`/audit-logs?limit=${limit}&offset=${offset}`),
+    list: (page = 1, limit = 50) =>
+      getJson<AuditLogResponse>(`/audit-logs?page=${page}&limit=${limit}`),
   },
   optimizations: {
     list: () => getJson<string[]>('/optimizations'),

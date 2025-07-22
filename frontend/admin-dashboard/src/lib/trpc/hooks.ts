@@ -16,17 +16,17 @@ export function useAbTestSummary(abTestId: number) {
   });
 }
 
-export function useSignals() {
+export function useSignals(page: number = 1, limit: number = 20) {
   return useQuery({
-    queryKey: ['signals'],
-    queryFn: () => trpc.signals.list(),
+    queryKey: ['signals', page, limit],
+    queryFn: () => trpc.signals.list(page, limit),
   });
 }
 
-export function useGalleryItems() {
+export function useGalleryItems(page: number = 1, limit: number = 20) {
   return useQuery({
-    queryKey: ['gallery'],
-    queryFn: () => trpc.gallery.list(),
+    queryKey: ['gallery', page, limit],
+    queryFn: () => trpc.gallery.list(page, limit),
   });
 }
 
@@ -37,10 +37,10 @@ export function useHeatmap() {
   });
 }
 
-export function usePublishTasks() {
+export function usePublishTasks(page: number = 1, limit: number = 20) {
   return useQuery({
-    queryKey: ['publishTasks'],
-    queryFn: () => trpc.publishTasks.list(),
+    queryKey: ['publishTasks', page, limit],
+    queryFn: () => trpc.publishTasks.list(page, limit),
   });
 }
 
@@ -65,10 +65,10 @@ export function useMetricsSummary() {
   });
 }
 
-export function useAuditLogs(limit = 50, offset = 0) {
+export function useAuditLogs(page: number = 1, limit: number = 50) {
   return useQuery({
-    queryKey: ['auditLogs', limit, offset],
-    queryFn: () => trpc.auditLogs.list(limit, offset),
+    queryKey: ['auditLogs', page, limit],
+    queryFn: () => trpc.auditLogs.list(page, limit),
   });
 }
 
@@ -86,10 +86,10 @@ export function useOptimizationRecommendations() {
   });
 }
 
-export function useMockups() {
+export function useMockups(page: number = 1, limit: number = 20) {
   return useQuery({
-    queryKey: ['mockups'],
-    queryFn: () => trpc.mockups.list(),
+    queryKey: ['mockups', page, limit],
+    queryFn: () => trpc.mockups.list(page, limit),
   });
 }
 

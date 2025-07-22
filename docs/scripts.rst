@@ -95,9 +95,10 @@ Shell utilities
 
    ./scripts/configure_cdn.sh <bucket>
 
-``deploy.sh`` performs a blue‑green deployment::
+``deploy.sh`` performs a blue‑green deployment with traffic shifting and
+automatic rollback::
 
-   ./scripts/deploy.sh production
+   ./scripts/deploy.sh orchestrator ghcr.io/example/orchestrator:latest prod
 
 ``helm_deploy.sh`` installs services via Helm::
 

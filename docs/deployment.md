@@ -177,3 +177,18 @@ update the service selector and scale down the newer deployment:
 ```bash
 ./scripts/deploy.sh <service> example/<service>:<tag> <namespace>
 ```
+
+## Automated Traffic Shifting
+
+The `deploy.sh` script can also orchestrate a gradual rollout. It scales the new
+deployment up one replica at a time while scaling the old deployment down. The
+service selector is temporarily widened to include both colors so traffic is
+split between them. After each step ``scripts/check_k8s_health.sh`` verifies that
+the service is healthy. If any check fails, the script restores the previous
+state and exits with a non-zero status.
+
+Run the script with the service name, target image and namespace:
+
+```bash
+./scripts/deploy.sh <service> ghcr.io/example/<service>:<tag> <namespace>
+```

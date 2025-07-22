@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class InstagramAdapter(BaseAdapter):
@@ -22,11 +21,9 @@ class InstagramAdapter(BaseAdapter):
         rate_limit: int = 5,
     ) -> None:
         """Initialize adapter with API credentials and limits."""
-        self.token = token or os.environ.get("INSTAGRAM_TOKEN", "")
-        self.user_id = user_id or os.environ.get("INSTAGRAM_USER_ID", "")
-        self.fetch_limit = fetch_limit or int(
-            os.environ.get("INSTAGRAM_FETCH_LIMIT", "1")
-        )
+        self.token = token or settings.instagram_token or ""
+        self.user_id = user_id or settings.instagram_user_id or ""
+        self.fetch_limit = fetch_limit or settings.instagram_fetch_limit
         super().__init__(
             base_url or "https://graph.facebook.com/v19.0", proxies, rate_limit
         )

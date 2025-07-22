@@ -2,7 +2,6 @@
 
 from typing import Any, Dict, AsyncGenerator, cast
 from hashlib import md5
-import os
 
 import httpx
 from backend.shared.http import DEFAULT_TIMEOUT
@@ -67,6 +66,7 @@ class CacheControlRoute(APIRoute):
     """APIRoute that attaches caching headers and uses Redis for GET responses."""
 
     def get_route_handler(self):  # type: ignore[override]
+        """Return handler that caches GET responses based on request URI."""
         original_handler = super().get_route_handler()
 
         async def handler(request: Request) -> Response:
@@ -91,30 +91,15 @@ class CacheControlRoute(APIRoute):
         return handler
 
 
-SIGNAL_INGESTION_URL = os.environ.get(
-    "SIGNAL_INGESTION_URL", "http://signal-ingestion:8004"
-)
 from .rate_limiter import UserRateLimiter
 from .settings import settings
 
-PUBLISHER_URL = os.environ.get(
-    "PUBLISHER_URL",
-    "http://marketplace-publisher:8000",
-)
-
-TRPC_SERVICE_URL = os.environ.get("TRPC_SERVICE_URL", "http://backend:8000")
-OPTIMIZATION_URL = os.environ.get(
-    "OPTIMIZATION_URL",
-    "http://optimization:8000",
-)
-MONITORING_URL = os.environ.get(
-    "MONITORING_URL",
-    "http://monitoring:8000",
-)
-ANALYTICS_URL = os.environ.get(
-    "ANALYTICS_URL",
-    "http://analytics:8000",
-)
+SIGNAL_INGESTION_URL = settings.signal_ingestion_url
+PUBLISHER_URL = settings.publisher_url
+TRPC_SERVICE_URL = settings.trpc_service_url
+OPTIMIZATION_URL = settings.optimization_url
+MONITORING_URL = settings.monitoring_url
+ANALYTICS_URL = settings.analytics_url
 
 # Redis set storing runs awaiting manual approval
 PENDING_RUNS_KEY = "pending_runs"

@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     trending_ttl: int = 3600
     trending_max_keywords: int = 100
     trending_cache_ttl: int = 30
+    exchange_api_url: HttpUrl = HttpUrl("https://api.exchangerate.host/latest")
+    base_currency: str = "USD"
+    exchange_update_minutes: int = 60
     s3_endpoint: str | None = None
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
@@ -52,6 +55,7 @@ class Settings(BaseSettings):
         "trending_max_keywords",
         "trending_cache_ttl",
         "db_pool_size",
+        "exchange_update_minutes",
     )
     @classmethod
     def _positive(cls, value: int) -> int:

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict, cast
 
@@ -18,12 +17,10 @@ from backend.shared.config import settings
 logger = logging.getLogger(__name__)
 
 REDIS_URL = settings.redis_url
-EXCHANGE_API_URL = os.environ.get(
-    "EXCHANGE_API_URL", "https://api.exchangerate.host/latest"
-)
-BASE_CURRENCY = os.environ.get("BASE_CURRENCY", "USD")
+EXCHANGE_API_URL = settings.exchange_api_url
+BASE_CURRENCY = settings.base_currency
 REDIS_KEY = "exchange_rates"
-UPDATE_INTERVAL_MINUTES = int(os.environ.get("EXCHANGE_UPDATE_MINUTES", "60"))
+UPDATE_INTERVAL_MINUTES = settings.exchange_update_minutes
 
 redis_client: SyncRedis = get_sync_client()
 scheduler = BackgroundScheduler()

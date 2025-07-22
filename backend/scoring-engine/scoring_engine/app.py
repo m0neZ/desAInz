@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import os
 import uuid
 import asyncio
 import logging
@@ -100,7 +99,9 @@ class SearchRequest(BaseModel):
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "scoring-engine")
+from .settings import settings as app_settings
+
+SERVICE_NAME = app_settings.service_name
 app = FastAPI(title="Scoring Engine")
 app.add_middleware(
     CORSMiddleware,
@@ -119,7 +120,7 @@ REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
 metrics_store = TimescaleMetricsStore()
-EMBED_BATCH_SIZE = int(os.getenv("EMBED_BATCH_SIZE", "50"))
+EMBED_BATCH_SIZE = app_settings.embed_batch_size
 
 
 # Background Kafka consumer setup
@@ -174,7 +175,7 @@ async def apply_migrations() -> None:
 async def start_consumer() -> None:
     """Launch background Kafka consumer."""
     global _consumer_thread, _consumer
-    if os.getenv("KAFKA_SKIP") == "1":
+    if app_settings.kafka_skip:
         return
     _consumer = _create_consumer()
     _stop_event.clear()

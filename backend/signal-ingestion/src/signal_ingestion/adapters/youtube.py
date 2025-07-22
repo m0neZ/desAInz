@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class YouTubeAdapter(BaseAdapter):
@@ -21,10 +20,8 @@ class YouTubeAdapter(BaseAdapter):
         fetch_limit: int | None = None,
     ) -> None:
         """Initialize adapter with API key and limits."""
-        self.api_key = api_key or os.environ.get("YOUTUBE_API_KEY", "")
-        self.fetch_limit = fetch_limit or int(
-            os.environ.get("YOUTUBE_FETCH_LIMIT", "1")
-        )
+        self.api_key = api_key or settings.youtube_api_key or ""
+        self.fetch_limit = fetch_limit or settings.youtube_fetch_limit
         super().__init__(base_url or "https://www.googleapis.com", proxies, rate_limit)
 
     async def _oembed(self, video_id: str) -> dict[str, Any]:

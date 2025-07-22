@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class NostalgiaAdapter(BaseAdapter):
@@ -21,10 +20,8 @@ class NostalgiaAdapter(BaseAdapter):
         fetch_limit: int | None = None,
     ) -> None:
         """Initialize adapter with optional ``base_url``."""
-        self.query = query or os.environ.get("NOSTALGIA_QUERY", 'subject:"nostalgia"')
-        self.fetch_limit = fetch_limit or int(
-            os.environ.get("NOSTALGIA_FETCH_LIMIT", "1")
-        )
+        self.query = query or settings.nostalgia_query
+        self.fetch_limit = fetch_limit or settings.nostalgia_fetch_limit
         super().__init__(base_url or "https://archive.org", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:

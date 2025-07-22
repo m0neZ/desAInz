@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import os
-from pydantic import RedisDsn, field_validator
+from pydantic import Field, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from backend.shared.config import settings as shared_settings
@@ -18,8 +17,14 @@ class Settings(BaseSettings):
     redis_url: RedisDsn = RedisDsn(shared_settings.redis_url)
     rate_limit_per_user: int = 60
     rate_limit_window: int = 60
-    ws_interval_ms: int = int(os.environ.get("API_GATEWAY_WS_INTERVAL_MS", "5000"))
-    request_cache_ttl: int = int(os.environ.get("API_GATEWAY_REQUEST_CACHE_TTL", "0"))
+    ws_interval_ms: int = Field(5000, alias="API_GATEWAY_WS_INTERVAL_MS")
+    request_cache_ttl: int = Field(0, alias="API_GATEWAY_REQUEST_CACHE_TTL")
+    signal_ingestion_url: HttpUrl = HttpUrl("http://signal-ingestion:8004")
+    publisher_url: HttpUrl = HttpUrl("http://marketplace-publisher:8000")
+    trpc_service_url: HttpUrl = HttpUrl("http://backend:8000")
+    optimization_url: HttpUrl = HttpUrl("http://optimization:8000")
+    monitoring_url: HttpUrl = HttpUrl("http://monitoring:8000")
+    analytics_url: HttpUrl = HttpUrl("http://analytics:8000")
 
     @field_validator(
         "rate_limit_per_user",

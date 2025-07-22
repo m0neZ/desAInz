@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class TikTokAdapter(BaseAdapter):
@@ -23,13 +22,14 @@ class TikTokAdapter(BaseAdapter):
         """Initialize adapter with optional ``base_url``."""
         self.video_urls = video_urls or [
             v.strip()
-            for v in os.environ.get(
-                "TIKTOK_VIDEO_URLS",
-                "https://www.tiktok.com/@scout2015/video/6718335390845095173",
-            ).split(",")
+            for v in (settings.tiktok_video_urls or "").split(",")
             if v.strip()
         ]
-        self.fetch_limit = fetch_limit or int(os.environ.get("TIKTOK_FETCH_LIMIT", "1"))
+        if not self.video_urls:
+            self.video_urls = [
+                "https://www.tiktok.com/@scout2015/video/6718335390845095173"
+            ]
+        self.fetch_limit = fetch_limit or settings.tiktok_fetch_limit
         super().__init__(base_url or "https://www.tiktok.com", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:

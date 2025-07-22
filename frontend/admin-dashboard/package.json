@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --profile",
+    "build": "next build --profile && next export && node scripts/compress-assets.mjs",
     "analyze": "cross-env ANALYZE=true next build --profile",
     "start": "node scripts/monitorAndStart.js",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0 --cache",

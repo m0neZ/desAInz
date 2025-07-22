@@ -17,3 +17,9 @@ Install dependencies with ``npm install --legacy-peer-deps`` and start the dev s
    npm run dev
 
 Environment variables are loaded from ``.env.local``. See ``frontend/admin-dashboard/README.md`` for details.
+
+Production Build
+----------------
+Run ``npm run build`` to create an optimized build. This command performs
+``next build`` followed by ``next export`` and then compresses the exported
+assets with Brotli and gzip for efficient delivery.

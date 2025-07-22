@@ -12,7 +12,7 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
-    ignores: ['coverage/**'],
+    ignores: ['coverage/**', '__mocks__/@auth0/nextjs-auth0/client.js'],
   },
 ];
 

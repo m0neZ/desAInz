@@ -28,6 +28,7 @@ def test_gpu_lock_released_on_sigterm(tmp_path: Path) -> None:
             import signal
             import sys
             import time
+            import asyncio
             from pathlib import Path
             import types
 
@@ -76,12 +77,15 @@ def test_gpu_lock_released_on_sigterm(tmp_path: Path) -> None:
                 def get(self, key: str):
                     return None
 
-            tasks.redis_client = _DummyRedis(Path({repr(str(lock_dir))}))
+            tasks.async_redis_client = _DummyRedis(Path({repr(str(lock_dir))}))
             tasks.get_gpu_slots = lambda: 1
-            with tasks.gpu_slot():
-                print('acquired', flush=True)
-                while True:
-                    time.sleep(0.1)
+            async def run() -> None:
+                async with tasks.gpu_slot():
+                    print('acquired', flush=True)
+                    while True:
+                        await asyncio.sleep(0.1)
+
+            asyncio.run(run())
             """
         )
     )

@@ -8,6 +8,7 @@ import types
 from pathlib import Path
 
 import sys
+import asyncio
 import warnings
 import pytest
 
@@ -36,7 +37,7 @@ def _call_generate_mockup(
     keywords: list[list[str]], output_dir: str, **kw: object
 ) -> object:
     dummy = types.SimpleNamespace(request=types.SimpleNamespace(delivery_info={}))
-    return _orig_generate_mockup(dummy, keywords, output_dir, **kw)
+    return asyncio.run(_orig_generate_mockup(dummy, keywords, output_dir, **kw))
 
 
 tasks.generate_mockup = _call_generate_mockup

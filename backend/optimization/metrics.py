@@ -4,9 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, TYPE_CHECKING
 
 import pandas as pd
+
+if TYPE_CHECKING:  # pragma: no cover - imports for type checking
+    from .storage import MetricsStore
 
 
 @dataclass
@@ -21,6 +24,17 @@ class ResourceMetric:
 
 class MetricsAnalyzer:
     """Analyze resource metrics for optimization recommendations."""
+
+    @classmethod
+    def from_store(
+        cls, store: "MetricsStore", limit: int | None = None
+    ) -> "MetricsAnalyzer":
+        """Create analyzer from a :class:`MetricsStore` instance."""
+        if limit is None:
+            metrics = store.get_metrics()
+        else:
+            metrics = store.get_recent_metrics(limit)
+        return cls(metrics)
 
     def __init__(self, metrics: Iterable[ResourceMetric]) -> None:
         """Initialize the analyzer with historical metrics."""

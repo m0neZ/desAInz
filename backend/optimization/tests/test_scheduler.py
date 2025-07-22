@@ -26,3 +26,12 @@ def test_scheduler_job_registration(monkeypatch) -> None:
     assert isinstance(job.trigger, IntervalTrigger)
     assert int(job.trigger.interval.total_seconds()) == 3600
     opt_api.scheduler.shutdown()
+
+
+def test_metrics_collection_scheduled(monkeypatch) -> None:
+    """Metrics collection job should be added on startup."""
+    monkeypatch.setattr(opt_api, "scheduler", BackgroundScheduler())
+    opt_api.start_metrics_collection()
+    jobs = {job.id for job in opt_api.scheduler.get_jobs()}
+    assert "collect_metrics" in jobs
+    opt_api.scheduler.shutdown()

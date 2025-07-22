@@ -59,3 +59,21 @@ def test_trend_calculation() -> None:
     assert analyzer.cpu_trend() > 0
     assert analyzer.memory_trend() > 0
     assert analyzer.disk_usage_trend() > 0
+
+
+def test_recommendations_for_high_usage() -> None:
+    """Recommendations should mention scaling when usage is high."""
+    now = datetime.now(timezone.utc)
+    metrics = [
+        ResourceMetric(
+            timestamp=now - timedelta(minutes=20 - i),
+            cpu_percent=85 + i,
+            memory_mb=1500 + 10 * i,
+            disk_usage_mb=11 * 1024 + 50 * i,
+        )
+        for i in range(20)
+    ]
+    analyzer = MetricsAnalyzer(metrics)
+    recs = analyzer.recommend_optimizations()
+    assert any("CPU usage is trending upward" in r for r in recs)
+    assert any("Disk usage exceeds" in r for r in recs)

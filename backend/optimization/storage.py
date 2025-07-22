@@ -119,6 +119,64 @@ class MetricsStore:
             )
         return result
 
+    def get_recent_metrics(self, limit: int) -> List[ResourceMetric]:
+        """Return the most recent ``limit`` metrics ordered oldest to newest."""
+        if self._use_sqlite:
+            with self._get_sqlite_conn() as conn:
+                rows = conn.execute(
+                    "SELECT timestamp, cpu, memory, disk FROM metrics"
+                    " ORDER BY timestamp DESC LIMIT ?",
+                    (limit,),
+                ).fetchall()
+        else:
+            with self._get_pg_conn() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT timestamp, cpu, memory, disk FROM metrics"
+                        " ORDER BY timestamp DESC LIMIT %s",
+                        (limit,),
+                    )
+                    rows = cur.fetchall()
+        return list(reversed(self._rows_to_metrics(rows)))
+
+    def get_metrics_since(self, since: datetime) -> List[ResourceMetric]:
+        """Return metrics recorded at or after ``since``."""
+        if self._use_sqlite:
+            with self._get_sqlite_conn() as conn:
+                rows = conn.execute(
+                    "SELECT timestamp, cpu, memory, disk FROM metrics"
+                    " WHERE timestamp >= ? ORDER BY timestamp",
+                    (since.isoformat(),),
+                ).fetchall()
+        else:
+            with self._get_pg_conn() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT timestamp, cpu, memory, disk FROM metrics"
+                        " WHERE timestamp >= %s ORDER BY timestamp",
+                        (since.isoformat(),),
+                    )
+                    rows = cur.fetchall()
+        return self._rows_to_metrics(rows)
+
+    def _rows_to_metrics(self, rows: list[tuple]) -> List[ResourceMetric]:
+        """Convert database rows to :class:`ResourceMetric` objects."""
+        result: List[ResourceMetric] = []
+        for ts, cpu, memory, disk in rows:
+            if isinstance(ts, datetime):
+                timestamp = ts
+            else:
+                timestamp = datetime.fromisoformat(str(ts))
+            result.append(
+                ResourceMetric(
+                    timestamp=timestamp,
+                    cpu_percent=cpu,
+                    memory_mb=memory,
+                    disk_usage_mb=disk,
+                )
+            )
+        return result
+
     def create_hourly_continuous_aggregate(self) -> None:
         """Create an hourly materialized view when using PostgreSQL."""
         if self._use_sqlite:

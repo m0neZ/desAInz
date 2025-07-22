@@ -99,15 +99,16 @@ def record_resource_usage(target_store: MetricsStore = store) -> None:
 
 
 @app.on_event("startup")
-async def start_metrics_collection() -> None:
-    """Begin periodic recording of container resource usage."""
-
-    async def _run() -> None:
-        while True:
-            record_resource_usage()
-            await asyncio.sleep(30)
-
-    asyncio.create_task(_run())
+def start_metrics_collection() -> None:
+    """Schedule periodic resource usage collection."""
+    if not scheduler.running:
+        scheduler.start()
+    scheduler.add_job(
+        record_resource_usage,
+        trigger=IntervalTrigger(seconds=30),
+        id="collect_metrics",
+        replace_existing=True,
+    )
 
 
 @app.on_event("startup")

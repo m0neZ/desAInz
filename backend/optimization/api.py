@@ -22,7 +22,7 @@ from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
-from backend.shared import add_error_handlers, configure_sentry
+from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from .metrics import MetricsAnalyzer, ResourceMetric
 from .storage import MetricsStore
@@ -31,7 +31,7 @@ from .storage import MetricsStore
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "optimization")
+SERVICE_NAME = os.getenv("SERVICE_NAME", ServiceName.OPTIMIZATION.value)
 app = FastAPI(title="Optimization Service")
 app.add_middleware(
     CORSMiddleware,

@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import types
 import os
+from datetime import UTC, datetime
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "monitoring" / "src")
@@ -31,14 +32,25 @@ def test_check_sla_triggers_alert(monkeypatch):
 
     monkeypatch.setattr(main, "trigger_sla_violation", fake_trigger)
 
-    monkeypatch.setattr(main, "_record_latencies", lambda: [7200.0, 10800.0])
     recorded = []
+
+    def fake_record() -> list[float]:
+        metrics = [
+            main.PublishLatencyMetric(1, datetime.now(UTC), 7200.0),
+            main.PublishLatencyMetric(1, datetime.now(UTC), 10800.0),
+        ]
+        main.metrics_store.add_latencies(metrics)
+        return [m.latency_seconds for m in metrics]
 
     class DummyStore:
         def add_latency(self, metric):
             recorded.append(metric)
 
+        def add_latencies(self, metrics):
+            recorded.extend(metrics)
+
     monkeypatch.setattr(main, "metrics_store", DummyStore())
+    monkeypatch.setattr(main, "_record_latencies", fake_record)
     monkeypatch.setattr(main.settings, "SLA_THRESHOLD_HOURS", 2)
     avg = main._check_sla()
     assert triggered["hours"] == avg / 3600

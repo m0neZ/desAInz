@@ -17,75 +17,54 @@ sys.path.insert(
 from backend.shared import cache
 
 
-class FakeBloom:
-    """Minimal bloom filter simulation."""
-
-    def __init__(self, redis: fakeredis.FakeRedis) -> None:
-        self.redis = redis
-        self.items: set[str] = set()
-
-    def create(self, key: str, error_rate: float, capacity: int) -> None:
-        self.redis.set(key, "1")
-
-    def add(self, key: str, item: str) -> None:
-        self.items.add(item)
-
-    def exists(self, key: str, item: str) -> int:
-        return int(item in self.items)
-
-
-class RedisWithBloom(fakeredis.FakeRedis):
-    """FakeRedis with bloom filter support."""
+class RedisWithTTL(fakeredis.FakeRedis):
+    """Fakeredis client with expiration support."""
 
     def __init__(self, *args: object, **kwargs: object) -> None:
         kwargs["decode_responses"] = True
         super().__init__(*args, **kwargs)
-        self._bloom = FakeBloom(self)
-
-    def bf(self) -> FakeBloom:
-        return self._bloom
 
 
 @pytest.fixture()
 def dedup_module(
     monkeypatch: pytest.MonkeyPatch,
-) -> Generator[tuple[object, RedisWithBloom], None, None]:
+) -> Generator[tuple[object, RedisWithTTL], None, None]:
     """Reload ``dedup`` with a fake redis client."""
-    fake = RedisWithBloom()
+    fake = RedisWithTTL()
     monkeypatch.setattr(cache, "get_sync_client", lambda: fake)
     sys.modules.pop("signal_ingestion.dedup", None)
     module = importlib.import_module("signal_ingestion.dedup")
-    fake.delete(module.BLOOM_KEY)
+    fake.delete(module.SET_KEY)
     yield module, fake
 
 
-def test_initialize_creates_bloom_and_sets_ttl(
-    dedup_module: tuple[object, RedisWithBloom],
+def test_initialize_creates_set_and_sets_ttl(
+    dedup_module: tuple[object, RedisWithTTL],
 ) -> None:
-    """``initialize`` creates bloom filter and sets TTL."""
+    """``initialize`` creates set and sets TTL."""
     module, redis = dedup_module
-    module.initialize(0.1, 10, 5)
-    assert redis.exists(module.BLOOM_KEY)
-    ttl = redis.ttl(module.BLOOM_KEY)
+    module.initialize(5)
+    assert redis.exists(module.SET_KEY)
+    ttl = redis.ttl(module.SET_KEY)
     assert 0 < ttl <= 5
 
 
-def test_add_key_refreshes_ttl(dedup_module: tuple[object, RedisWithBloom]) -> None:
-    """``add_key`` refreshes expiry on the bloom filter."""
+def test_add_key_refreshes_ttl(dedup_module: tuple[object, RedisWithTTL]) -> None:
+    """``add_key`` refreshes expiry on the set."""
     module, redis = dedup_module
     module.settings.dedup_ttl = 7
-    module.initialize(0.1, 10, 3)
-    redis.expire(module.BLOOM_KEY, 1)
+    module.initialize(3)
+    redis.expire(module.SET_KEY, 1)
     module.add_key("foo")
-    ttl = redis.ttl(module.BLOOM_KEY)
+    ttl = redis.ttl(module.SET_KEY)
     assert ttl > 1
     assert ttl <= module.settings.dedup_ttl
 
 
-def test_is_duplicate(dedup_module: tuple[object, RedisWithBloom]) -> None:
+def test_is_duplicate(dedup_module: tuple[object, RedisWithTTL]) -> None:
     """``is_duplicate`` reports presence correctly."""
     module, _ = dedup_module
-    module.initialize(0.1, 10, 5)
+    module.initialize(5)
     assert not module.is_duplicate("foo")
     module.add_key("foo")
     assert module.is_duplicate("foo")

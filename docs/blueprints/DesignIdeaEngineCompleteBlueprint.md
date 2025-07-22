@@ -249,7 +249,7 @@ The Design Idea Engine follows a microservices architecture pattern with clear s
 
 - **Source Adapters**: Modular adapters for each signal source (TikTok, Instagram, Reddit, YouTube, etc.)
 - **Normalization Engine**: Converts diverse signal formats into a unified schema
-- **Deduplication Service**: Uses Redis Bloom filters to prevent duplicate signal processing
+- **Deduplication Service**: Uses a Redis set to prevent duplicate signal processing
 - **Rate Limiter**: Intelligent rate limiting based on source-specific quotas and policies
 
 **Data Flow**:
@@ -1221,7 +1221,7 @@ Event-driven microservices with a robust vector store provide scalability and fl
 | Event & Holiday Calendars            | Static CSV \+ lightweight scrape    | Event name, locale, date           | Cache with long TTL                         |
 | Nostalgia Archives (Wiki, TV Tropes) | Daily scrape                        | Topic, anniversary year            | Low-frequency job                           |
 
-**Normalization** into a common `Signal` schema; dedupe with a Redis Bloom filter.
+**Normalization** into a common `Signal` schema; dedupe with a Redis set.
 
 ### **3.2 Data Store**
 
@@ -1455,7 +1455,7 @@ npm run dev
 
 - **Multi-platform support**: TikTok, Instagram, Reddit, YouTube
 - **Real-time processing**: Webhook-based and scheduled ingestion
-- **Deduplication**: Redis Bloom filters prevent duplicate processing
+- **Deduplication**: A Redis set prevents duplicate processing
 - **Rate limiting**: Intelligent quota management
 
 ### AI-Powered Scoring

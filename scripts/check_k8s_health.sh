@@ -18,7 +18,8 @@ for svc in "${SERVICES[@]}"; do
   echo "Waiting for $svc in namespace $NAMESPACE"
   port="$(kubectl get service "$svc" -n "$NAMESPACE" -o jsonpath='{.spec.ports[0].port}')"
   local_port=$((RANDOM%30000 + 1025))
-  kubectl port-forward "service/$svc" "$local_port:$port" -n "$NAMESPACE" >/tmp/pf-$svc.log 2>&1 &
+  kubectl port-forward "service/$svc" "$local_port:$port" -n "$NAMESPACE" \
+    >"/tmp/pf-${svc}.log" 2>&1 &
   pf_pid=$!
   start=$(date +%s)
   until curl -fsS "http://localhost:$local_port/ready" >/dev/null 2>&1; do
@@ -31,7 +32,7 @@ for svc in "${SERVICES[@]}"; do
   done
   kill "$pf_pid"
   echo "$svc is healthy"
-  rm -f "/tmp/pf-$svc.log"
+  rm -f "/tmp/pf-${svc}.log"
 done
 
 echo "All services healthy"

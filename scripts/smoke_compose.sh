@@ -5,15 +5,18 @@ set -euo pipefail
 
 TIMEOUT=60
 
-COMPOSE_FILES="-f docker-compose.dev.yml -f docker-compose.test.yml"
+COMPOSE_FILES=(
+  -f docker-compose.dev.yml
+  -f docker-compose.test.yml
+)
 SERVICES=(api-gateway scoring-engine marketplace-publisher signal-ingestion feedback-loop)
 
 cleanup() {
-  docker compose $COMPOSE_FILES down
+  docker compose "${COMPOSE_FILES[@]}" down
 }
 trap cleanup EXIT
 
-docker compose $COMPOSE_FILES up -d "${SERVICES[@]}"
+docker compose "${COMPOSE_FILES[@]}" up -d "${SERVICES[@]}"
 
 declare -A PORTS=(
   [api-gateway]=8001
@@ -25,7 +28,7 @@ declare -A PORTS=(
 
 for svc in "${SERVICES[@]}"; do
   port="${PORTS[$svc]}"
-  cid=$(docker compose $COMPOSE_FILES ps -q "$svc")
+  cid=$(docker compose "${COMPOSE_FILES[@]}" ps -q "$svc")
   start=$(date +%s)
   echo "Waiting for $svc on port $port ..."
   while ! curl -fsS "http://localhost:${port}/ready" >/dev/null 2>&1; do
@@ -42,7 +45,7 @@ for svc in "${SERVICES[@]}"; do
     fi
     if [[ $(($(date +%s) - start)) -ge $TIMEOUT ]]; then
       echo "Timed out waiting for $svc"
-      docker compose $COMPOSE_FILES logs "$svc"
+      docker compose "${COMPOSE_FILES[@]}" logs "$svc"
       exit 1
     fi
   done

@@ -30,6 +30,11 @@ repos:
     hooks:
       - id: interrogate
         args: ["--fail-under=100"]
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        files: \.(sh)$
   - repo: local
     hooks:
       - id: eslint

@@ -5,8 +5,12 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 from typing import Iterable
+import logging
+import tracemalloc
 
 import requests
+
+logger = logging.getLogger(__name__)
 
 
 def fetch_overview(url: str) -> dict[str, float]:
@@ -47,7 +51,17 @@ def main() -> None:
         help="Optimization service base URL",
     )
     args = parser.parse_args()
-    collect(args.services, args.optimization_url)
+    tracemalloc.start()
+    try:
+        collect(args.services, args.optimization_url)
+    finally:
+        current, peak = tracemalloc.get_traced_memory()
+        logger.info(
+            "Current memory usage: %.1f KiB; Peak: %.1f KiB",
+            current / 1024,
+            peak / 1024,
+        )
+        tracemalloc.stop()
 
 
 if __name__ == "__main__":  # pragma: no cover

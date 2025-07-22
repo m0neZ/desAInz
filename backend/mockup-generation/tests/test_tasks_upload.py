@@ -267,3 +267,70 @@ def test_generate_mockup_duplicate_not_uploaded(
     assert gen.cleaned
     assert not client.calls
     assert not called
+
+
+def test_generate_mockup_uses_multipart(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Multipart upload is triggered for large files."""
+    gen = DummyGenerator()
+    monkeypatch.setattr(tasks, "generator", gen)
+    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+
+    @asynccontextmanager
+    async def _client() -> AsyncIterator[DummyClient]:
+        yield DummyClient()
+
+    monkeypatch.setattr(tasks, "_get_storage_client", _client)
+    monkeypatch.setattr(
+        tasks,
+        "redis_client",
+        types.SimpleNamespace(
+            lock=lambda *a, **k: types.SimpleNamespace(
+                acquire=lambda *a, **k: True,
+                locked=lambda: False,
+                release=lambda: None,
+            )
+        ),
+    )
+
+    class _Lock:
+        async def acquire(self, *args: object, **kwargs: object) -> bool:
+            return True
+
+        def locked(self) -> bool:
+            return False
+
+        async def release(self) -> None:
+            return None
+
+    monkeypatch.setattr(
+        tasks,
+        "async_redis_client",
+        types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
+    )
+    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
+    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
+    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
+    monkeypatch.setattr(
+        tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
+    )
+    called: list[str] = []
+
+    async def _multipart_upload(*_a: object, **_kw: object) -> None:
+        called.append("multipart")
+
+    monkeypatch.setattr(tasks, "_multipart_upload", _multipart_upload)
+    monkeypatch.setattr(tasks, "MULTIPART_THRESHOLD", 0)
+    monkeypatch.setattr(
+        tasks, "_invalidate_cdn_cache", lambda path: called.append(path)
+    )
+    tasks.settings.s3_bucket = "b"
+    tasks.settings.s3_endpoint = "http://test"  # type: ignore
+    tasks.settings.s3_base_url = "http://cdn.test"  # type: ignore
+
+    tasks.generate_mockup([["kw"]], str(tmp_path), model="m", gpu_index=0)
+    assert gen.cleaned
+    assert "multipart" in called

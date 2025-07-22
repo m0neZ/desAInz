@@ -18,6 +18,15 @@ resources:
   - ai-mockup-generation-service.yaml
   - ai-mockup-generation-servicemonitor.yaml
   - ai-mockup-generation-hpa.yaml
+  - api-gateway-hpa.yaml
+  - analytics-hpa.yaml
+  - feedback-loop-hpa.yaml
+  - marketplace-publisher-hpa.yaml
+  - signal-ingestion-hpa.yaml
+  - scoring-engine-hpa.yaml
+  - optimization-hpa.yaml
+  - monitoring-hpa.yaml
+  - loki-hpa.yaml
   - feedback-loop-deployment.yaml
   - feedback-loop-service.yaml
   - feedback-loop-servicemonitor.yaml

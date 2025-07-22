@@ -20,16 +20,29 @@ sys.modules.setdefault(
 )
 os.makedirs("/run/secrets", exist_ok=True)
 
-from monitoring import main  # noqa: E402
+import pytest
 
 
-def test_check_sla_triggers_alert(monkeypatch):
+def _import_main(monkeypatch: pytest.MonkeyPatch):
+    """Import ``monitoring.main`` with database connections patched."""
+    monkeypatch.setitem(
+        sys.modules,
+        "psycopg2",
+        types.SimpleNamespace(connect=lambda *a, **k: types.SimpleNamespace()),
+    )
+    from monitoring import main as main_module  # noqa: E402
+
+    return main_module
+
+
+def test_check_sla_triggers_alert(monkeypatch: pytest.MonkeyPatch) -> None:
     """Alert should be triggered when average latency is high."""
     triggered = {}
 
     def fake_trigger(duration):
         triggered["hours"] = duration
 
+    main = _import_main(monkeypatch)
     monkeypatch.setattr(main, "trigger_sla_violation", fake_trigger)
 
     recorded = []
@@ -51,24 +64,25 @@ def test_check_sla_triggers_alert(monkeypatch):
 
     monkeypatch.setattr(main, "metrics_store", DummyStore())
     monkeypatch.setattr(main, "_record_latencies", fake_record)
-    monkeypatch.setattr(main.settings, "SLA_THRESHOLD_HOURS", 2)
-    avg = main._check_sla()
+    cfg = main.Settings(SLA_THRESHOLD_HOURS=2)
+    avg = main._check_sla(cfg)
     assert triggered["hours"] == avg / 3600
     assert avg == 9000.0
     assert len(recorded) == 2
 
 
-def test_check_sla_below_threshold(monkeypatch):
+def test_check_sla_below_threshold(monkeypatch: pytest.MonkeyPatch) -> None:
     """No alert should be sent when average latency is low."""
+    main = _import_main(monkeypatch)
     monkeypatch.setattr(main, "_record_latencies", lambda: [60.0, 30.0])
     monkeypatch.setattr(main, "metrics_store", object())
-    monkeypatch.setattr(main.settings, "SLA_THRESHOLD_HOURS", 2)
+    cfg = main.Settings(SLA_THRESHOLD_HOURS=2)
     called = []
 
     def fake_trigger(duration):
         called.append(duration)
 
     monkeypatch.setattr(main, "trigger_sla_violation", fake_trigger)
-    avg = main._check_sla()
+    avg = main._check_sla(cfg)
     assert called == []
     assert avg == 45.0

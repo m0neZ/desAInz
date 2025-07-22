@@ -45,13 +45,14 @@ LAST_ALERT_KEY = "sla:last_alert"
 QUEUE_ALERT_KEY = "queue:last_alert"
 
 from .logging_config import configure_logging
-from .settings import settings
+from .settings import Settings, settings
 from scripts.daily_summary import generate_daily_summary
 
 
 async def get_http_client() -> httpx.AsyncClient:
     """Return a shared HTTP client instance."""
     return await get_async_http_client()
+
 
 metrics_store = TimescaleMetricsStore()
 
@@ -197,20 +198,20 @@ def get_queue_length() -> int:
         client.close()
 
 
-def _check_queue_backlog() -> int:
+def _check_queue_backlog(cfg: Settings = settings) -> int:
     """Return queue length and trigger alert when threshold exceeded."""
     length = get_queue_length()
     threshold = getattr(
-        settings,
+        cfg,
         "queue_backlog_threshold",
-        getattr(settings, "queue_backlog_threshold", 50),
+        getattr(cfg, "queue_backlog_threshold", 50),
     )
     if length > threshold:
         last = sync_get(QUEUE_ALERT_KEY)
         cooldown = getattr(
-            settings,
+            cfg,
             "queue_backlog_alert_cooldown_minutes",
-            getattr(settings, "queue_backlog_alert_cooldown_minutes", 60),
+            getattr(cfg, "queue_backlog_alert_cooldown_minutes", 60),
         )
         now = time.time()
         try:
@@ -226,18 +227,18 @@ def _check_queue_backlog() -> int:
     return length
 
 
-def _check_sla() -> float:
+def _check_sla(cfg: Settings = settings) -> float:
     """Return average latency and trigger PagerDuty when breached."""
     avg = get_average_latency()
     if avg == 0.0:
         return avg
-    threshold = getattr(settings, "SLA_THRESHOLD_HOURS", settings.sla_threshold_hours)
+    threshold = getattr(cfg, "SLA_THRESHOLD_HOURS", cfg.sla_threshold_hours)
     if avg > threshold * 3600:
         last = sync_get(LAST_ALERT_KEY)
         cooldown = getattr(
-            settings,
+            cfg,
             "SLA_ALERT_COOLDOWN_MINUTES",
-            settings.sla_alert_cooldown_minutes,
+            cfg.sla_alert_cooldown_minutes,
         )
         now = time.time()
         try:

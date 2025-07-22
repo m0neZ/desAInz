@@ -10,21 +10,31 @@ sys.path.append(
 
 from fastapi.testclient import TestClient  # noqa: E402
 
-from monitoring.main import app  # noqa: E402
-
-client = TestClient(app)
+import importlib
 
 
-def test_metrics_endpoint() -> None:
+def _get_client(monkeypatch: Any, **env: str) -> TestClient:
+    """Return a ``TestClient`` for the monitoring app."""
+    for key, value in env.items():
+        monkeypatch.setenv(key, value)
+    import monitoring.main as main
+
+    importlib.reload(main)
+    return TestClient(main.app)
+
+
+def test_metrics_endpoint(monkeypatch: Any) -> None:
     """Metrics endpoint should return prometheus data."""
+    client = _get_client(monkeypatch)
     response = client.get("/metrics")
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/plain")
     assert response.headers["Cache-Control"].startswith("public")
 
 
-def test_overview_endpoint() -> None:
+def test_overview_endpoint(monkeypatch: Any) -> None:
     """Overview should include cpu and memory usage."""
+    client = _get_client(monkeypatch)
     response = client.get("/overview")
     assert response.status_code == 200
     body = response.json()
@@ -32,8 +42,9 @@ def test_overview_endpoint() -> None:
     assert "memory_mb" in body
 
 
-def test_health_ready_endpoints() -> None:
+def test_health_ready_endpoints(monkeypatch: Any) -> None:
     """Health and readiness should return status."""
+    client = _get_client(monkeypatch)
     response = client.get("/health")
     assert response.status_code == 200
     assert response.headers["Cache-Control"].startswith("public")
@@ -46,6 +57,7 @@ def test_health_ready_endpoints() -> None:
 
 def test_daily_summary_endpoint(monkeypatch: Any) -> None:
     """Daily summary endpoint returns generated summary."""
+    client = _get_client(monkeypatch)
     from unittest.mock import AsyncMock
 
     monkeypatch.setattr(
@@ -71,11 +83,7 @@ def test_daily_summary_report_endpoint(tmp_path: Path, monkeypatch: Any) -> None
     report = {"ideas_generated": 1, "mockup_success_rate": 1.0, "marketplace_stats": {}}
     file_path = tmp_path / "report.json"
     file_path.write_text(json.dumps(report), encoding="utf-8")
-    from monitoring import settings as monitoring_settings
-
-    monkeypatch.setattr(
-        monitoring_settings.settings, "daily_summary_file", str(file_path)
-    )
+    client = _get_client(monkeypatch, DAILY_SUMMARY_FILE=str(file_path))
     response = client.get("/daily_summary/report")
     assert response.status_code == 200
     assert response.json() == report

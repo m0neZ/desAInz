@@ -2,6 +2,8 @@ version: '3.8'
 services:
   postgres:
     image: ghcr.io/example/postgres:latest
+    mem_limit: 512m
+    cpus: 0.50
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -22,6 +24,8 @@ services:
     - huggingface_token
   pgbouncer:
     image: ghcr.io/example/pgbouncer:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 6432:6432
     depends_on:
@@ -34,6 +38,8 @@ services:
     - huggingface_token
   redis:
     image: ghcr.io/example/redis:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 6379:6379
     volumes:
@@ -50,6 +56,8 @@ services:
     - huggingface_token
   zookeeper:
     image: bitnami/zookeeper:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 2181:2181
     environment:
@@ -68,6 +76,8 @@ services:
     - huggingface_token
   kafka:
     image: ghcr.io/example/kafka:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 9092:9092
     environment:
@@ -92,6 +102,8 @@ services:
     - huggingface_token
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 8081:8081
     environment:
@@ -108,6 +120,8 @@ services:
     - huggingface_token
   kafka-init:
     image: bitnami/kafka:latest
+    mem_limit: 512m
+    cpus: 0.50
     depends_on:
     - kafka
     volumes:
@@ -122,6 +136,8 @@ services:
     - huggingface_token
   minio:
     image: ghcr.io/example/minio:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 9000:9000
     environment:
@@ -142,6 +158,8 @@ services:
     - huggingface_token
   mockup-generation:
     build: ./backend/mockup-generation
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
     - gpu
     deploy:
@@ -157,6 +175,8 @@ services:
     - secret_key
   monitoring:
     build: ./backend/monitoring
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m monitoring.main
     profiles:
     - monitoring
@@ -178,6 +198,8 @@ services:
     - huggingface_token
   otel-collector:
     image: otel/opentelemetry-collector:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
     - monitoring
     ports:
@@ -191,6 +213,8 @@ services:
     - huggingface_token
   loki:
     image: grafana/loki:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
     - monitoring
     ports:
@@ -204,6 +228,8 @@ services:
     - huggingface_token
   prometheus:
     image: prom/prometheus:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
     - monitoring
     ports:
@@ -218,6 +244,8 @@ services:
     - huggingface_token
   grafana:
     image: grafana/grafana:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
     - monitoring
     ports:
@@ -230,6 +258,8 @@ services:
     - huggingface_token
   api-gateway:
     build: ./backend/api-gateway
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 8001:8000
     environment:
@@ -250,6 +280,8 @@ services:
     - huggingface_token
   scoring-engine:
     build: ./backend/scoring-engine
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 5002:5002
     depends_on:
@@ -266,6 +298,8 @@ services:
     - huggingface_token
   marketplace-publisher:
     build: ./backend/marketplace-publisher
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 8003:8000
     depends_on:
@@ -283,6 +317,8 @@ services:
     - huggingface_token
   signal-ingestion:
     build: ./backend/signal-ingestion
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 8004:8000
     depends_on:
@@ -302,6 +338,8 @@ services:
     build:
       context: .
       dockerfile: backend/feedback-loop/Dockerfile
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 8005:8000
     labels:
@@ -316,6 +354,8 @@ services:
     - huggingface_token
   admin-dashboard:
     build: ./frontend/admin-dashboard
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 3000:3000
     depends_on:
@@ -330,6 +370,8 @@ services:
     build:
       context: .
       dockerfile: backend/orchestrator/Dockerfile
+    mem_limit: 512m
+    cpus: 0.50
     ports:
     - 3001:3000
     labels:
@@ -344,6 +386,8 @@ services:
     - huggingface_token
   backup:
     image: ghcr.io/example/backup:latest
+    mem_limit: 512m
+    cpus: 0.50
     environment:
     - BACKUP_BUCKET=${BACKUP_BUCKET}
     command: >-

@@ -3,6 +3,8 @@ version: '3.8'
 services:
   postgres:
     build: ./docker/postgres
+    mem_limit: 512m
+    cpus: 0.50
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -18,6 +20,8 @@ services:
 
   pgbouncer:
     build: ./docker/pgbouncer
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "6432:6432"
     depends_on:
@@ -25,6 +29,8 @@ services:
 
   redis:
     build: ./docker/redis
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "6379:6379"
     volumes:
@@ -36,6 +42,8 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "2181:2181"
     environment:
@@ -49,6 +57,8 @@ services:
 
   kafka:
     build: ./docker/kafka
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "9092:9092"
     environment:
@@ -68,6 +78,8 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "8081:8081"
     environment:
@@ -79,6 +91,8 @@ services:
 
   kafka-init:
     image: bitnami/kafka:latest
+    mem_limit: 512m
+    cpus: 0.50
     depends_on:
       - kafka
     volumes:
@@ -88,6 +102,8 @@ services:
 
   minio:
     build: ./docker/minio
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "9000:9000"
     environment:
@@ -104,6 +120,8 @@ services:
   # Optional GPU-based service
   mockup-generation:
     build: ./backend/mockup-generation
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
       - gpu
     deploy:
@@ -119,6 +137,8 @@ services:
   # Optional monitoring stack
   monitoring:
     build: ./backend/monitoring
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m monitoring.main
     profiles:
       - monitoring
@@ -135,6 +155,8 @@ services:
 
   otel-collector:
     image: otel/opentelemetry-collector:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
       - monitoring
     ports:
@@ -143,6 +165,8 @@ services:
 
   loki:
     image: grafana/loki:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
       - monitoring
     ports:
@@ -151,6 +175,8 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
       - monitoring
     ports:
@@ -160,6 +186,8 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    mem_limit: 512m
+    cpus: 0.50
     profiles:
       - monitoring
     ports:
@@ -169,6 +197,8 @@ services:
 
   api-gateway:
     build: ./backend/api-gateway
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m api_gateway.main
     ports:
       - "8001:8000"
@@ -185,6 +215,8 @@ services:
 
   scoring-engine:
     build: ./backend/scoring-engine
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m scoring_engine.app
     ports:
       - "5002:5002"
@@ -197,6 +229,8 @@ services:
 
   marketplace-publisher:
     build: ./backend/marketplace-publisher
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m marketplace_publisher.main
     ports:
       - "8003:8000"
@@ -210,6 +244,8 @@ services:
 
   signal-ingestion:
     build: ./backend/signal-ingestion
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m signal_ingestion.main
     ports:
       - "8004:8000"
@@ -223,6 +259,8 @@ services:
 
   feedback-loop:
     build: ./backend/feedback-loop
+    mem_limit: 512m
+    cpus: 0.50
     command: python -m feedback_loop.main
     ports:
       - "8005:8000"
@@ -233,6 +271,8 @@ services:
 
   admin-dashboard:
     build: ./frontend/admin-dashboard
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "3000:3000"
     depends_on:
@@ -242,6 +282,8 @@ services:
     build:
       context: .
       dockerfile: backend/orchestrator/Dockerfile
+    mem_limit: 512m
+    cpus: 0.50
     ports:
       - "3001:3000"
     labels:

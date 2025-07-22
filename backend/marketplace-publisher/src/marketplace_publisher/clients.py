@@ -39,12 +39,15 @@ class BaseClient:
         authorize_url: str | None = None,
         redirect_uri: str | None = None,
         scope: str | None = None,
+        publish_path: str = "/publish",
+        metrics_path_template: str = "/listings/{listing_id}/metrics",
     ) -> None:
         """Initialize API configuration and credentials."""
         self.marketplace = marketplace
         self.base_url = base_url.rstrip("/")
         self.token_url = token_url
-        self.publish_url = f"{self.base_url}/publish"
+        self.publish_url = f"{self.base_url}{publish_path}"
+        self.metrics_path_template = f"{self.base_url}{metrics_path_template}"
         self.authorize_url = authorize_url
         self.redirect_uri = redirect_uri or ""
         self.scope: list[str] | None = scope.split() if scope else None
@@ -180,21 +183,14 @@ class BaseClient:
             headers["Authorization"] = f"Bearer {token}"
         if self._api_key:
             headers["X-API-Key"] = self._api_key
-        response = request_with_retry(
-            "GET",
-            f"{self.base_url}/listings/{listing_id}/metrics",
-            headers=headers,
-            timeout=30,
-        )
+        metrics_url = self.metrics_path_template.format(listing_id=listing_id)
+        response = request_with_retry("GET", metrics_url, headers=headers, timeout=30)
         if response.status_code == 401:
             self._refresh_token_if_needed()
             if self._token:
                 headers["Authorization"] = f"Bearer {self._token}"
             response = request_with_retry(
-                "GET",
-                f"{self.base_url}/listings/{listing_id}/metrics",
-                headers=headers,
-                timeout=30,
+                "GET", metrics_url, headers=headers, timeout=30
             )
         return cast(dict[str, Any], response.json())
 
@@ -214,6 +210,8 @@ class RedbubbleClient(BaseClient):
             settings.redbubble_authorize_url,
             settings.redbubble_redirect_uri,
             settings.redbubble_scope,
+            publish_path="/works",
+            metrics_path_template="/works/{listing_id}/metrics",
         )
 
 
@@ -232,6 +230,8 @@ class AmazonMerchClient(BaseClient):
             settings.amazon_merch_authorize_url,
             settings.amazon_merch_redirect_uri,
             settings.amazon_merch_scope,
+            publish_path="/listings",
+            metrics_path_template="/listings/{listing_id}/metrics",
         )
 
 
@@ -250,6 +250,8 @@ class EtsyClient(BaseClient):
             settings.etsy_authorize_url,
             settings.etsy_redirect_uri,
             settings.etsy_scope,
+            publish_path="/listings",
+            metrics_path_template="/listings/{listing_id}/stats",
         )
 
 
@@ -268,6 +270,8 @@ class Society6Client(BaseClient):
             settings.society6_authorize_url,
             settings.society6_redirect_uri,
             settings.society6_scope,
+            publish_path="/products",
+            metrics_path_template="/products/{listing_id}/stats",
         )
 
 
@@ -286,6 +290,8 @@ class ZazzleClient(BaseClient):
             settings.zazzle_authorize_url,
             settings.zazzle_redirect_uri,
             settings.zazzle_scope,
+            publish_path="/products",
+            metrics_path_template="/products/{listing_id}/metrics",
         )
 
 
@@ -310,12 +316,12 @@ class SeleniumFallback:
         metadata: dict[str, Any],
         max_attempts: int = 3,
     ) -> None:
-        """
-        Automate browser interactions for publishing a design.
+        """Publish a design using browser automation.
 
-        The method retries failed attempts using exponential backoff. On each
-        failure a screenshot and browser network logs are written to
-        ``screenshot_dir``.
+        The function fills the configured form fields, submitting the design
+        when all interactions succeed. Failures trigger retries using
+        exponential backoff. Each failed attempt stores a screenshot and
+        captured browser logs in ``screenshot_dir``.
         """
         if self.driver is None:
             return
@@ -339,6 +345,22 @@ class SeleniumFallback:
                 self.driver.find_element(
                     "css selector", selectors["title_input"]
                 ).send_keys(metadata.get("title", ""))
+                if "description_input" in selectors:
+                    self.driver.find_element(
+                        "css selector", selectors["description_input"]
+                    ).send_keys(metadata.get("description", ""))
+                if "tags_input" in selectors and metadata.get("tags"):
+                    tags = metadata.get("tags")
+                    joined = ",".join(cast(list[str], tags))
+                    self.driver.find_element(
+                        "css selector", selectors["tags_input"]
+                    ).send_keys(joined)
+                if "price_input" in selectors and "price" in metadata:
+                    el = self.driver.find_element(
+                        "css selector", selectors["price_input"]
+                    )
+                    el.clear()
+                    el.send_keys(str(metadata["price"]))
                 self.driver.find_element(
                     "css selector", selectors["submit_button"]
                 ).click()

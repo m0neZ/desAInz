@@ -198,11 +198,13 @@ class TimescaleMetricsStore:
         self._send_loki_log("continuous_aggregate_created")
 
     def get_active_users(self, since: datetime) -> int:
-        """Return the number of unique ideas with scores since ``since``."""
+        """Return the number of ideas with a recent score."""
         with self._get_conn() as conn:
             if self._use_sqlite:
                 cur = conn.execute(
-                    "SELECT COUNT(DISTINCT idea_id) FROM scores WHERE timestamp >= ?",
+                    "SELECT COUNT(*) FROM ("
+                    "SELECT idea_id, MAX(timestamp) AS ts FROM scores GROUP BY idea_id"
+                    ") WHERE ts >= ?",
                     (since.isoformat(),),
                 )
                 row = cur.fetchone()
@@ -210,20 +212,27 @@ class TimescaleMetricsStore:
             pg_conn = cast(psycopg2.extensions.connection, conn)
             with pg_conn.cursor() as cur:
                 cur.execute(
-                    "SELECT COUNT(DISTINCT idea_id) FROM scores WHERE timestamp >= %s",
+                    (
+                        "SELECT COUNT(*) FROM ("
+                        "SELECT idea_id, MAX(timestamp) AS ts FROM scores GROUP BY idea_id"
+                        ") s WHERE ts >= %s"
+                    ),
                     (since,),
                 )
                 result = cur.fetchone()
             return int(result[0] if result is not None else 0)
 
     def get_error_rate(self, since: datetime) -> float:
-        """Return fraction of score rows below 0.5 since ``since``."""
+        """Return fraction of latest scores below ``0.5`` since ``since``."""
         with self._get_conn() as conn:
             if self._use_sqlite:
                 cur = conn.execute(
                     (
-                        "SELECT SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END), "
-                        "COUNT(*) FROM scores WHERE timestamp >= ?"
+                        "SELECT SUM(CASE WHEN s.score < 0.5 THEN 1 ELSE 0 END), "
+                        "COUNT(*) FROM scores s "
+                        "JOIN (SELECT idea_id, MAX(timestamp) ts FROM scores GROUP BY idea_id) m "
+                        "ON s.idea_id = m.idea_id AND s.timestamp = m.ts "
+                        "WHERE s.timestamp >= ?"
                     ),
                     (since.isoformat(),),
                 )
@@ -233,8 +242,9 @@ class TimescaleMetricsStore:
                 with pg_conn.cursor() as cur:
                     cur.execute(
                         (
-                            "SELECT SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END), "
-                            "COUNT(*) FROM scores WHERE timestamp >= %s"
+                            "SELECT SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END), COUNT(*) "
+                            "FROM (SELECT DISTINCT ON (idea_id) score, timestamp FROM scores "
+                            "ORDER BY idea_id, timestamp DESC) s WHERE timestamp >= %s"
                         ),
                         (since,),
                     )

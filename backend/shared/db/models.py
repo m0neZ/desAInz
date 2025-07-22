@@ -205,6 +205,9 @@ class ScoreMetric(Base):
     """Score metric for a design idea."""
 
     __tablename__ = "score_metrics"
+    __table_args__ = (
+        Index("ix_score_metrics_idea_id_timestamp", "idea_id", "timestamp"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     idea_id: Mapped[int] = mapped_column(ForeignKey("ideas.id"))

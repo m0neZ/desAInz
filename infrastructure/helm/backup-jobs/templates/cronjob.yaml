@@ -27,6 +27,8 @@ spec:
                 - name: secret-volume
                   mountPath: /run/secrets
                   readOnly: true
+                - name: tmpfs-volume
+                  mountPath: /tmpfs
               resources:
 {{ toYaml .Values.resources | nindent 14 }}
               command: ["python", "/app/backup.py"]
@@ -34,3 +36,6 @@ spec:
             - name: secret-volume
               secret:
                 secretName: {{ .Values.secretName }}
+            - name: tmpfs-volume
+              emptyDir:
+                medium: Memory

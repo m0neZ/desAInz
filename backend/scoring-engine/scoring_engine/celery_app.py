@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import os
-
 from celery import Celery
 
 from backend.shared.queue_metrics import register_redis_queue_collector
+from .settings import settings
 
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_BROKER_URL = settings.celery_broker_url
 app = Celery("scoring_engine", broker=CELERY_BROKER_URL)
 app.conf.result_backend = CELERY_BROKER_URL
 

@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import os
 import uuid
 import asyncio
 import logging
@@ -34,6 +33,7 @@ from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 
 from backend.shared.config import settings
+from .settings import settings as service_settings
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.logging import configure_logging
@@ -100,7 +100,7 @@ class SearchRequest(BaseModel):
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "scoring-engine")
+SERVICE_NAME = service_settings.service_name
 app = FastAPI(title="Scoring Engine")
 app.add_middleware(
     CORSMiddleware,
@@ -119,7 +119,7 @@ REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
 metrics_store = TimescaleMetricsStore()
-EMBED_BATCH_SIZE = int(os.getenv("EMBED_BATCH_SIZE", "50"))
+EMBED_BATCH_SIZE = service_settings.embed_batch_size
 
 
 # Background Kafka consumer setup
@@ -174,7 +174,7 @@ async def apply_migrations() -> None:
 async def start_consumer() -> None:
     """Launch background Kafka consumer."""
     global _consumer_thread, _consumer
-    if os.getenv("KAFKA_SKIP") == "1":
+    if service_settings.kafka_skip:
         return
     _consumer = _create_consumer()
     _stop_event.clear()

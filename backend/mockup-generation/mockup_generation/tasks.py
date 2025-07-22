@@ -12,7 +12,6 @@ import sys
 from aiobotocore.client import AioBaseClient
 from aiobotocore.session import get_session
 import hashlib
-import os
 import time
 from botocore.exceptions import ClientError
 
@@ -25,6 +24,7 @@ from time import perf_counter
 
 from PIL import Image
 from .celery_app import app
+from .settings import settings
 from .generator import MockupGenerator
 
 tracer = trace.get_tracer(__name__)
@@ -40,13 +40,13 @@ from .post_processor import (
     validate_color_space,
     validate_dpi_image,
 )
-from backend.shared.config import settings
+from backend.shared.config import settings as shared_settings
 from . import model_repository
 
 
 def _invalidate_cdn_cache(path: str) -> None:
     """Invalidate CDN caches for ``path`` if configured."""
-    distribution = settings.cdn_distribution_id
+    distribution = shared_settings.cdn_distribution_id
     if not distribution:
         return
     script = Path(__file__).resolve().parents[2] / "scripts" / "invalidate_cache.sh"
@@ -66,11 +66,11 @@ async def _get_storage_client() -> AsyncIterator[AioBaseClient]:
         yield client
 
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-DEFAULT_GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
-GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
-GPU_QUEUE_PREFIX = os.getenv("GPU_QUEUE_PREFIX", "gpu")
-GPU_WORKER_INDEX = int(os.getenv("GPU_WORKER_INDEX", "-1"))
+REDIS_URL = settings.redis_url
+DEFAULT_GPU_SLOTS = settings.gpu_slots
+GPU_LOCK_TIMEOUT = settings.gpu_lock_timeout
+GPU_QUEUE_PREFIX = settings.gpu_queue_prefix
+GPU_WORKER_INDEX = settings.gpu_worker_index
 
 import asyncio
 from backend.shared.cache import (

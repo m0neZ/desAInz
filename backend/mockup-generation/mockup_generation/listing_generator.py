@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 from dataclasses import dataclass
 from typing import List
 
@@ -26,9 +25,9 @@ class ListingGenerator:
 
     def __init__(self) -> None:
         """Initialize with API credentials from the environment."""
-        self._openai_key = settings.openai_api_key or os.getenv("OPENAI_API_KEY")
+        self._openai_key = settings.openai_api_key
         self._openai_model = settings.openai_model
-        self._claude_key = os.getenv("CLAUDE_API_KEY")
+        self._claude_key = settings.claude_api_key
         self._session = requests.Session()
 
     def generate(self, keywords: List[str]) -> ListingMetadata:

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import os
 import uuid
 from typing import Callable, Coroutine
 
@@ -17,6 +16,7 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
+from .settings import settings as service_settings
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
@@ -32,7 +32,7 @@ from .celery_app import app as celery_app
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "mockup-generation")
+SERVICE_NAME = service_settings.service_name
 app = FastAPI(title="Mockup Generation Service")
 app.add_middleware(
     CORSMiddleware,

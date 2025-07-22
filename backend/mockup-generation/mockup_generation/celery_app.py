@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from typing import Iterable, cast
 
 from celery import Celery
@@ -14,28 +13,29 @@ import redis
 from backend.shared.queue_metrics import register_redis_queue_collector
 
 from .tasks import queue_for_gpu
+from .settings import settings
 
 
-CELERY_BROKER = os.getenv("CELERY_BROKER", "redis")
+CELERY_BROKER = settings.celery_broker
 if CELERY_BROKER == "redis":
-    host = os.getenv("REDIS_HOST", "localhost")
-    port = os.getenv("REDIS_PORT", "6379")
-    db = os.getenv("REDIS_DB", "0")
-    CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", f"redis://{host}:{port}/{db}")
+    host = settings.redis_host
+    port = settings.redis_port
+    db = settings.redis_db
+    CELERY_BROKER_URL = settings.celery_broker_url or f"redis://{host}:{port}/{db}"
     RESULT_BACKEND = CELERY_BROKER_URL
 elif CELERY_BROKER == "rabbitmq":
-    host = os.getenv("RABBITMQ_HOST", "localhost")
-    port = os.getenv("RABBITMQ_PORT", "5672")
-    user = os.getenv("RABBITMQ_USER", "guest")
-    password = os.getenv("RABBITMQ_PASSWORD", "guest")
-    CELERY_BROKER_URL = os.getenv(
-        "CELERY_BROKER_URL", f"amqp://{user}:{password}@{host}:{port}//"
+    host = settings.rabbitmq_host
+    port = settings.rabbitmq_port
+    user = settings.rabbitmq_user
+    password = settings.rabbitmq_password
+    CELERY_BROKER_URL = (
+        settings.celery_broker_url or f"amqp://{user}:{password}@{host}:{port}//"
     )
-    RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", CELERY_BROKER_URL)
+    RESULT_BACKEND = settings.celery_result_backend or CELERY_BROKER_URL
 elif CELERY_BROKER == "kafka":
-    servers = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-    CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", f"kafka://{servers}")
-    RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "rpc://")
+    servers = settings.kafka_bootstrap_servers
+    CELERY_BROKER_URL = settings.celery_broker_url or f"kafka://{servers}"
+    RESULT_BACKEND = settings.celery_result_backend or "rpc://"
 else:  # pragma: no cover - invalid broker selection
     raise ValueError(f"Unsupported CELERY_BROKER: {CELERY_BROKER}")
 
@@ -102,7 +102,7 @@ def _autoscale_workers(sender: object, **_: object) -> None:
         from .tasks import get_gpu_slots
 
         slots = get_gpu_slots()
-        factor = int(os.getenv("GPU_AUTOSCALE_FACTOR", "2"))
+        factor = settings.gpu_autoscale_factor
         sender.app.control.autoscale(slots * factor, slots)
     except Exception:
         pass

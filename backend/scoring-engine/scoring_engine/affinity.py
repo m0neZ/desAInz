@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from functools import lru_cache
 
 
 import numpy as np
@@ -29,13 +30,18 @@ def hashtag_embedding(tag: str) -> NDArray[np.floating]:
     return _hash_embedding(f"hashtag:{tag.lower()}")
 
 
-def metadata_embedding(metadata: dict[str, float]) -> NDArray[np.floating]:
-    """Aggregate embeddings for keys in ``metadata``."""
+@lru_cache(maxsize=1024)
+def metadata_embedding(metadata: tuple[tuple[str, float], ...]) -> NDArray[np.floating]:
+    """
+    Aggregate embeddings for keys in ``metadata``.
+
+    Results are cached to avoid repeated hashing of the same metadata.
+    """
     if not metadata:
         return np.zeros(DIMENSION, dtype=float)
     total = np.zeros(DIMENSION, dtype=float)
     weight_sum = 0.0
-    for key, weight in metadata.items():
+    for key, weight in metadata:
         if key.startswith("r/"):
             vec = subreddit_embedding(key[2:])
         elif key.startswith("#"):

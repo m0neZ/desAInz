@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from sqlalchemy import select
 
+from .affinity import metadata_embedding
+
 from backend.shared.db import engine, session_scope
 from backend.shared.db.models import Weights
 from backend.shared.db.base import Base
@@ -96,4 +98,8 @@ def update_weights(*, smoothing: float = 1.0, **kwargs: float) -> WeightParams:
         WEIGHTS_FILE.write_text(json.dumps(asdict(params)))
     except Exception:  # pragma: no cover - persistence failures should not crash
         pass
+
+    # Clear cached metadata embeddings since weights may affect downstream
+    # calculations that rely on them.
+    metadata_embedding.cache_clear()
     return params

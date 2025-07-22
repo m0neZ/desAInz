@@ -66,7 +66,7 @@ def compute_community_fit(metadata: dict[str, float]) -> float:
     """Return community affinity score based on metadata embeddings."""
     if not metadata:
         return 0.0
-    vec = metadata_embedding(metadata)
+    vec = metadata_embedding(tuple(sorted(metadata.items())))
     norm = float(np.linalg.norm(vec))
     return norm / math.sqrt(DIMENSION)
 

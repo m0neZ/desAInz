@@ -18,7 +18,7 @@ from botocore.exceptions import ClientError
 
 from redis.lock import Lock as RedisLock
 from redis.asyncio.lock import Lock as AsyncRedisLock
-from celery import Task
+from celery import Task, chord
 from prometheus_client import Counter, Gauge, Histogram
 from opentelemetry import trace
 from time import perf_counter
@@ -207,6 +207,108 @@ async def gpu_slot(slot: int | None = None) -> AsyncIterator[None]:
 
 
 @app.task(bind=True)  # type: ignore[misc]
+def generate_single_mockup(
+    self: Task[Any, Any],
+    keywords: list[str],
+    output_dir: str,
+    *,
+    model: str | None = None,
+    gpu_index: int | None = None,
+    num_inference_steps: int = 30,
+    index: int = 0,
+) -> dict[str, object]:
+    """Generate a single mockup on the GPU."""
+    delivery_info: dict[str, Any] = dict(self.request.delivery_info or {})
+    queue = str(delivery_info.get("routing_key", ""))
+    try:
+        slot: int | None = int(queue.split("-")[-1])
+    except (ValueError, AttributeError):
+        slot = (
+            gpu_index
+            if gpu_index is not None
+            else (GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None)
+        )
+
+    listing_gen = ListingGenerator()
+
+    async def runner() -> dict[str, object]:
+        async with gpu_slot(slot), _get_storage_client() as client:
+            context = PromptContext(keywords=keywords)
+            prompt = build_prompt(context)
+            output_path = Path(output_dir) / f"mockup_{index}.png"
+            try:
+                gen_result = generator.generate(
+                    prompt,
+                    str(output_path),
+                    num_inference_steps=num_inference_steps,
+                    model_identifier=model,
+                )
+
+                processed = remove_background(Image.open(gen_result.image_path))
+                processed = convert_to_cmyk(processed)
+                ensure_not_nsfw(processed)
+                if not validate_dpi_image(processed):
+                    raise ValueError("Invalid DPI")
+                if not validate_color_space(processed):
+                    raise ValueError("Invalid color space")
+                if not validate_dimensions(processed):
+                    raise ValueError("Invalid dimensions")
+                compress_lossless(processed, output_path)
+                if not validate_file_size(output_path):
+                    raise ValueError("File size too large")
+                with open(output_path, "rb") as fh:
+                    data = fh.read()
+                sha256 = hashlib.sha256(data).hexdigest()
+                obj_name = f"generated-mockups/{sha256}.png"
+                bucket = settings.s3_bucket or ""
+                try:
+                    await client.head_object(Bucket=bucket, Key=obj_name)
+                except ClientError as exc:
+                    if exc.response.get("Error", {}).get("Code") in {
+                        "404",
+                        "NotFound",
+                        "NoSuchKey",
+                    }:
+                        await client.put_object(Bucket=bucket, Key=obj_name, Body=data)
+                        _invalidate_cdn_cache(obj_name)
+                    else:
+                        raise
+                base = settings.s3_base_url or settings.s3_endpoint
+                if base:
+                    base = base.rstrip("/")
+                    uri = f"{base}/{settings.s3_bucket}/{obj_name}"
+                else:
+                    uri = f"s3://{settings.s3_bucket}/{obj_name}"
+                metadata = listing_gen.generate(keywords)
+                model_repository.save_generated_mockup(
+                    prompt,
+                    num_inference_steps,
+                    0,
+                    uri,
+                    metadata.title,
+                    metadata.description,
+                    metadata.tags,
+                )
+                return {
+                    "image_path": str(output_path),
+                    "uri": uri,
+                    "title": metadata.title,
+                    "description": metadata.description,
+                    "tags": metadata.tags,
+                }
+            except Exception as exc:  # pragma: no cover - error path tested separately
+                return {"error": str(exc), "keywords": keywords}
+
+    return asyncio.run(runner())
+
+
+@app.task
+def _aggregate_mockups(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Return aggregated mockup generation results."""
+    return results
+
+
+@app.task(bind=True)  # type: ignore[misc]
 def generate_mockup(
     self: Task[Any, Any],
     keywords_batch: list[list[str]],
@@ -216,127 +318,36 @@ def generate_mockup(
     gpu_index: int | None = None,
     num_inference_steps: int = 30,
 ) -> list[dict[str, object]]:
-    """
-    Generate mockups sequentially on the GPU.
-
-    Parameters
-    ----------
-    self : Task
-        Celery task instance.
-    keywords_batch : list[list[str]]
-        List of keyword groups used to build prompts.
-    output_dir : str
-        Directory where generated mockups will be written.
-    model : str | None, optional
-        Model identifier to use for generation.
-    gpu_index : int | None, optional
-        Preferred GPU slot index.
-    num_inference_steps : int, optional
-        Number of inference steps for the diffusion model.
-
-    Returns
-    -------
-    list[dict[str, object]]
-        Each item contains the image path and listing metadata. If a prompt
-        fails, the item will include an ``error`` key with the message.
-    """
+    """Generate mockups in parallel across available GPUs."""
     start = perf_counter()
     with tracer.start_as_current_span("generate_mockup"):
         try:
-            delivery_info: dict[str, Any] = dict(self.request.delivery_info or {})
-            queue = str(delivery_info.get("routing_key", ""))
-            try:
-                slot: int | None = int(queue.split("-")[-1])
-            except (ValueError, AttributeError):
-                slot = (
-                    gpu_index
-                    if gpu_index is not None
-                    else (GPU_WORKER_INDEX if GPU_WORKER_INDEX >= 0 else None)
-                )
-
-            listing_gen = ListingGenerator()
-            results: list[dict[str, object]] = []
-
-            async def runner() -> list[dict[str, object]]:
-                async with gpu_slot(slot), _get_storage_client() as client:
-                    for idx, keywords in enumerate(keywords_batch):
-                        context = PromptContext(keywords=keywords)
-                        prompt = build_prompt(context)
-                        output_path = Path(output_dir) / f"mockup_{idx}.png"
-                        try:
-                            gen_result = generator.generate(
-                                prompt,
-                                str(output_path),
-                                num_inference_steps=num_inference_steps,
-                                model_identifier=model,
-                            )
-
-                            processed = remove_background(
-                                Image.open(gen_result.image_path)
-                            )
-                            processed = convert_to_cmyk(processed)
-                            ensure_not_nsfw(processed)
-                            if not validate_dpi_image(processed):
-                                raise ValueError("Invalid DPI")
-                            if not validate_color_space(processed):
-                                raise ValueError("Invalid color space")
-                            if not validate_dimensions(processed):
-                                raise ValueError("Invalid dimensions")
-                            compress_lossless(processed, output_path)
-                            if not validate_file_size(output_path):
-                                raise ValueError("File size too large")
-                            with open(output_path, "rb") as fh:
-                                data = fh.read()
-                            sha256 = hashlib.sha256(data).hexdigest()
-                            obj_name = f"generated-mockups/{sha256}.png"
-                            bucket = settings.s3_bucket or ""
-                            try:
-                                await client.head_object(Bucket=bucket, Key=obj_name)
-                            except ClientError as exc:
-                                if exc.response.get("Error", {}).get("Code") in {
-                                    "404",
-                                    "NotFound",
-                                    "NoSuchKey",
-                                }:
-                                    await client.put_object(
-                                        Bucket=bucket, Key=obj_name, Body=data
-                                    )
-                                    _invalidate_cdn_cache(obj_name)
-                                else:
-                                    raise
-                            base = settings.s3_base_url or settings.s3_endpoint
-                            if base:
-                                base = base.rstrip("/")
-                                uri = f"{base}/{settings.s3_bucket}/{obj_name}"
-                            else:
-                                uri = f"s3://{settings.s3_bucket}/{obj_name}"
-                            metadata = listing_gen.generate(keywords)
-                            model_repository.save_generated_mockup(
-                                prompt,
-                                num_inference_steps,
-                                0,
-                                uri,
-                                metadata.title,
-                                metadata.description,
-                                metadata.tags,
-                            )
-                            results.append(
-                                {
-                                    "image_path": str(output_path),
-                                    "uri": uri,
-                                    "title": metadata.title,
-                                    "description": metadata.description,
-                                    "tags": metadata.tags,
-                                }
-                            )
-                        except (
-                            Exception
-                        ) as exc:  # pragma: no cover - error path tested separately
-                            results.append({"error": str(exc), "keywords": keywords})
-                return results
-
-            results = asyncio.run(runner())
-            generator.cleanup()
+            if not hasattr(self.request, "id"):
+                results = [
+                    generate_single_mockup.run(
+                        keywords,
+                        output_dir,
+                        model=model,
+                        gpu_index=gpu_index,
+                        num_inference_steps=num_inference_steps,
+                        index=idx,
+                    )
+                    for idx, keywords in enumerate(keywords_batch)
+                ]
+            else:
+                tasks = [
+                    generate_single_mockup.s(
+                        keywords,
+                        output_dir,
+                        model=model,
+                        gpu_index=gpu_index,
+                        num_inference_steps=num_inference_steps,
+                        index=idx,
+                    )
+                    for idx, keywords in enumerate(keywords_batch)
+                ]
+                async_result = chord(tasks)(_aggregate_mockups.s())
+                results = async_result.get()
             GENERATE_SUCCESS.inc()
             return results
         except Exception:

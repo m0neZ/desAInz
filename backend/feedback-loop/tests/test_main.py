@@ -23,14 +23,25 @@ def test_impression_conversion_allocation(tmp_path, monkeypatch) -> None:
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     with SessionLocal() as session:
-        session.add(models.UserRole(username="admin", role="admin"))
+        session.add_all(
+            [
+                models.UserRole(username="admin", role="admin"),
+                models.UserRole(username="tester", role="editor"),
+            ]
+        )
         session.commit()
     client = TestClient(main.app)
 
     resp = client.post("/impression", params={"variant": "A"})
+    assert resp.status_code == 403
+    token_editor = create_access_token({"sub": "tester", "roles": ["editor"]})
+    headers_editor = {"Authorization": f"Bearer {token_editor}"}
+    resp = client.post("/impression", params={"variant": "A"}, headers=headers_editor)
     assert resp.status_code == 200
 
     resp = client.post("/conversion", params={"variant": "B"})
+    assert resp.status_code == 403
+    resp = client.post("/conversion", params={"variant": "B"}, headers=headers_editor)
     assert resp.status_code == 200
 
     resp = client.get("/allocation", params={"total_budget": 100})
@@ -55,14 +66,21 @@ def test_stats_endpoint(tmp_path, monkeypatch) -> None:
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     with SessionLocal() as session:
-        session.add(models.UserRole(username="admin", role="admin"))
+        session.add_all(
+            [
+                models.UserRole(username="admin", role="admin"),
+                models.UserRole(username="editor", role="editor"),
+            ]
+        )
         session.commit()
     client = TestClient(main.app)
 
+    token_editor = create_access_token({"sub": "editor", "roles": ["editor"]})
+    headers_editor = {"Authorization": f"Bearer {token_editor}"}
     for _ in range(3):
-        client.post("/conversion", params={"variant": "A"})
+        client.post("/conversion", params={"variant": "A"}, headers=headers_editor)
     for _ in range(2):
-        client.post("/conversion", params={"variant": "B"})
+        client.post("/conversion", params={"variant": "B"}, headers=headers_editor)
 
     resp = client.get("/stats")
     assert resp.status_code == 403

@@ -129,7 +129,10 @@ def _validate_variant(variant: str) -> None:
 
 
 @app.post("/impression")
-async def record_impression(variant: str) -> dict[str, str]:
+async def record_impression(
+    variant: str,
+    payload: dict[str, Any] = Depends(require_role("editor")),
+) -> dict[str, str]:
     """Persist a variant impression."""
     _validate_variant(variant)
     manager.record_result(variant, success=False)
@@ -137,7 +140,10 @@ async def record_impression(variant: str) -> dict[str, str]:
 
 
 @app.post("/conversion")
-async def record_conversion(variant: str) -> dict[str, str]:
+async def record_conversion(
+    variant: str,
+    payload: dict[str, Any] = Depends(require_role("editor")),
+) -> dict[str, str]:
     """Persist a variant conversion."""
     _validate_variant(variant)
     manager.record_result(variant, success=True)

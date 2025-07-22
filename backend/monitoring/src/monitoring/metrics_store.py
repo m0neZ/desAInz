@@ -54,6 +54,7 @@ class TimescaleMetricsStore:
         env_url = os.environ.get("METRICS_DB_URL", "postgresql://localhost/metrics")
         self.db_url: str = db_url or env_url
         self.loki_url = loki_url or os.environ.get("LOKI_URL")
+        self._session = requests.Session()
 
         self._use_sqlite = self.db_url.startswith("sqlite://")
         if self._use_sqlite:
@@ -85,6 +86,7 @@ class TimescaleMetricsStore:
         pool = getattr(self, "_pool", None)
         if pool is not None:
             pool.closeall()
+        self._session.close()
 
     def _send_loki_log(
         self, message: str, labels: MutableMapping[str, str] | None = None
@@ -109,6 +111,7 @@ class TimescaleMetricsStore:
                 f"{loki_url}/loki/api/v1/push",
                 json=payload,
                 timeout=2,
+                session=self._session,
             )
         except requests.RequestException:
             pass

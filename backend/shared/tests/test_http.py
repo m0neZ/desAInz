@@ -28,3 +28,24 @@ def test_request_with_retry_failure(requests_mock):
     requests_mock.get("http://example.com", exc=requests.ConnectionError)
     with pytest.raises(requests.ConnectionError):
         request_with_retry("GET", "http://example.com", retries=2)
+
+
+def test_request_with_retry_custom_session(requests_mock):
+    """Custom session is used for the request."""
+
+    session = requests.Session()
+    requests_mock.get(
+        "http://example.com",
+        [
+            {"status_code": 500},
+            {"text": "ok"},
+        ],
+    )
+    resp = request_with_retry(
+        "GET",
+        "http://example.com",
+        retries=2,
+        session=session,
+    )
+    assert resp.text == "ok"
+    assert requests_mock.call_count == 2

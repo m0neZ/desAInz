@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 30, // 30 minutes
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 60, // 60 minutes
+      staleTime: 1000 * 60 * 10, // 10 minutes
     },
   },
 });

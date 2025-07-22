@@ -32,6 +32,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     youtube_fetch_limit: int = 1
     tiktok_video_urls: str | None = None
     tiktok_fetch_limit: int = 1
+    celery_broker_url: str = "redis://localhost:6379/0"
     nostalgia_query: str = 'subject:"nostalgia"'
     nostalgia_fetch_limit: int = 1
     events_country_code: str = "US"

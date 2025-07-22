@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class RedditAdapter(BaseAdapter):
@@ -21,10 +20,8 @@ class RedditAdapter(BaseAdapter):
         user_agent: str | None = None,
     ) -> None:
         """Initialize adapter with endpoint configuration."""
-        self.fetch_limit = fetch_limit or int(os.environ.get("REDDIT_FETCH_LIMIT", "1"))
-        self.user_agent = user_agent or os.environ.get(
-            "REDDIT_USER_AGENT", "signal-bot"
-        )
+        self.fetch_limit = fetch_limit or settings.reddit_fetch_limit
+        self.user_agent = user_agent or settings.reddit_user_agent
         super().__init__(base_url or "https://www.reddit.com", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:

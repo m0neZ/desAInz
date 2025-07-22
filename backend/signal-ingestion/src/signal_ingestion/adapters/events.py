@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import os
-
 from .base import BaseAdapter
+from ..settings import settings
 
 
 class EventsAdapter(BaseAdapter):
@@ -21,8 +20,8 @@ class EventsAdapter(BaseAdapter):
         fetch_limit: int | None = None,
     ) -> None:
         """Initialize adapter with optional ``base_url``."""
-        self.country_code = country_code or os.environ.get("EVENTS_COUNTRY_CODE", "US")
-        self.fetch_limit = fetch_limit or int(os.environ.get("EVENTS_FETCH_LIMIT", "1"))
+        self.country_code = country_code or settings.events_country_code
+        self.fetch_limit = fetch_limit or settings.events_fetch_limit
         super().__init__(base_url or "https://date.nager.at", proxies, rate_limit)
 
     async def fetch(self) -> list[dict[str, Any]]:

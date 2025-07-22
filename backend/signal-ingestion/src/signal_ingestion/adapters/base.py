@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import itertools
-import os
 import asyncio
 from typing import Any, Iterable, Optional, cast
 
 from ..rate_limit import AdapterRateLimiter
+from ..settings import settings
 from backend.shared.cache import async_get, async_set
 
 import httpx
@@ -48,8 +48,8 @@ class BaseAdapter:
             )
         self._rate_limiter = BaseAdapter._limiters[self.__class__]
         if proxies is None:
-            raw = os.environ.get("HTTP_PROXIES")
-            parsed = raw.split(",") if raw else []
+            raw = settings.http_proxies
+            parsed = str(raw).split(",") if raw else []
             proxy_list = cast(list[str | None], parsed)
             if not proxy_list:
                 proxy_list = [None]

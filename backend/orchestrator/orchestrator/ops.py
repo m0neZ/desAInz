@@ -331,3 +331,19 @@ def update_feedback(context) -> None:  # type: ignore[no-untyped-def]
         context.log.warning("failed to update feedback weights: %s", exc)
     else:
         context.log.debug("updated weights: %s", weights)
+
+
+@op  # type: ignore[misc]
+def maintain_spot_nodes_op(context) -> None:  # type: ignore[no-untyped-def]
+    """Ensure the configured number of spot nodes are running."""
+    context.log.info("checking spot nodes")
+    from scripts.manage_spot_instances import maintain_nodes
+
+    ami = os.environ["SPOT_AMI_ID"]
+    itype = os.environ["SPOT_INSTANCE_TYPE"]
+    key = os.environ["SPOT_KEY_NAME"]
+    sg = os.environ["SPOT_SECURITY_GROUP"]
+    subnet = os.environ["SPOT_SUBNET_ID"]
+    label = os.environ.get("SPOT_LABEL", "node-role.kubernetes.io/spot=yes")
+    count = int(os.environ.get("SPOT_COUNT", "1"))
+    maintain_nodes(ami, itype, key, sg, subnet, label=label, count=count)

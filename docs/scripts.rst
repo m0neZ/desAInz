@@ -51,8 +51,8 @@ Python utilities
      - Scheduled cleanup tasks executed by Dagster.
      - ``python scripts/maintenance.py``
    * - ``manage_spot_instances.py``
-     - Request or release AWS spot nodes.
-     - ``python scripts/manage_spot_instances.py request``
+     - Manage AWS spot nodes.
+     - ``python scripts/manage_spot_instances.py maintain --count 2``
    * - ``register_schemas.py``
      - Upload JSON schemas to the registry.
      - ``python scripts/register_schemas.py``

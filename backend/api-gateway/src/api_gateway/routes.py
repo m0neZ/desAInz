@@ -29,7 +29,21 @@ from .auth import (
     require_role,
     revoke_token,
 )
-from .models import FlagState, MetadataPatch, RoleAssignment, UsernameRequest
+from .models import (
+    ApprovalStatus,
+    FlagState,
+    MetadataPatch,
+    PendingRuns,
+    PurgeResult,
+    RefreshRequest,
+    RoleAssignment,
+    RoleItem,
+    RolesResponse,
+    StatusResponse,
+    TokenResponse,
+    UserResponse,
+    UsernameRequest,
+)
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
@@ -219,17 +233,17 @@ privacy_router = APIRouter(
 
 
 @approvals_router.get("/", summary="List pending run IDs")
-async def list_pending_runs() -> Dict[str, list[str]]:
+async def list_pending_runs() -> PendingRuns:
     """Return IDs of runs awaiting manual approval."""
     client = get_async_client()
     run_ids = await client.smembers(PENDING_RUNS_KEY)
-    return {"runs": sorted(run_ids)}
+    return PendingRuns(runs=sorted(run_ids))
 
 
 @router.get("/status", tags=["Status"], summary="Public status")
-async def status_endpoint() -> Dict[str, str]:
+async def status_endpoint() -> StatusResponse:
     """Public status endpoint."""
-    return {"status": "ok"}
+    return StatusResponse(status="ok")
 
 
 @router.get("/api/health", tags=["Status"], summary="System health")
@@ -249,7 +263,7 @@ async def system_health() -> Dict[str, str]:
 
 
 @router.post("/auth/token", tags=["Authentication"], summary="Issue JWT token")
-async def issue_token(body: UsernameRequest) -> Dict[str, str]:
+async def issue_token(body: UsernameRequest) -> TokenResponse:
     """Return JWT tokens for ``username`` if it exists."""
     username = body.username
     with session_scope() as session:
@@ -267,17 +281,16 @@ async def issue_token(body: UsernameRequest) -> Dict[str, str]:
             )
         )
     token = create_access_token({"sub": username})
-    return {
-        "access_token": token,
-        "refresh_token": refresh,
-        "token_type": "bearer",
-    }
+    return TokenResponse(
+        access_token=token,
+        refresh_token=refresh,
+    )
 
 
 @router.post("/auth/revoke", tags=["Authentication"], summary="Revoke JWT token")
 async def revoke_auth_token(
     credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
-) -> Dict[str, str]:
+) -> StatusResponse:
     """Invalidate the provided JWT token."""
     payload = verify_token(credentials)
     jti = payload.get("jti")
@@ -285,13 +298,13 @@ async def revoke_auth_token(
     if jti is None or exp is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid token")
     revoke_token(str(jti), datetime.fromtimestamp(exp, tz=UTC))
-    return {"status": "revoked"}
+    return StatusResponse(status="revoked")
 
 
 @router.post("/auth/refresh", tags=["Authentication"], summary="Refresh JWT token")
-async def refresh_auth_token(body: Dict[str, str]) -> Dict[str, str]:
+async def refresh_auth_token(body: RefreshRequest) -> TokenResponse:
     """Issue new tokens using ``refresh_token`` in ``body``."""
-    token = body.get("refresh_token")
+    token = body.refresh_token
     if token is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Missing token")
     with session_scope() as session:
@@ -311,11 +324,10 @@ async def refresh_auth_token(body: Dict[str, str]) -> Dict[str, str]:
             )
         )
     access = create_access_token({"sub": username})
-    return {
-        "access_token": access,
-        "refresh_token": new_refresh,
-        "token_type": "bearer",
-    }
+    return TokenResponse(
+        access_token=access,
+        refresh_token=new_refresh,
+    )
 
 
 @router.get("/roles", tags=["Roles"], summary="List user roles")
@@ -336,10 +348,10 @@ async def list_roles(
         ).all()
         total = session.execute(select(sa.func.count(UserRole.username))).scalar()
     log_admin_action(payload.get("sub", "unknown"), "list_roles")
-    return {
-        "total": total,
-        "items": [{"username": row.username, "role": row.role} for row in rows],
-    }
+    return RolesResponse(
+        total=total,
+        items=[RoleItem(username=row.username, role=row.role) for row in rows],
+    )
 
 
 @router.post("/roles/{username}", tags=["Roles"], summary="Assign role")
@@ -347,7 +359,7 @@ async def assign_role(
     username: str,
     body: RoleAssignment,
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> Dict[str, str]:
+) -> RoleItem:
     """Assign ``role`` in ``body`` to ``username``."""
     role = body.role
     if role not in {"admin", "editor", "viewer"}:
@@ -365,7 +377,7 @@ async def assign_role(
         "assign_role",
         {"username": username, "role": role},
     )
-    return {"username": username, "role": role}
+    return RoleItem(username=username, role=role)
 
 
 @router.get("/feature-flags", tags=["Flags"], summary="List feature flags")
@@ -396,53 +408,53 @@ async def toggle_feature_flag(
 @router.get("/protected", tags=["Protected"], summary="Protected example")
 async def protected(
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> Dict[str, Any]:
+) -> UserResponse:
     """Protected endpoint requiring ``admin`` role."""
     log_admin_action(payload.get("sub", "unknown"), "access_protected")
-    return {"user": payload.get("sub")}
+    return UserResponse(user=payload.get("sub"))
 
 
 @router.post("/maintenance/cleanup", tags=["Maintenance"], summary="Run cleanup")
 async def trigger_cleanup(
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> Dict[str, str]:
+) -> StatusResponse:
     """Run cleanup tasks immediately."""
     maintenance.archive_old_mockups()
     maintenance.purge_stale_records()
     log_admin_action(payload.get("sub", "unknown"), "trigger_cleanup")
-    return {"status": "ok"}
+    return StatusResponse(status="ok")
 
 
 @privacy_router.delete("/signals", summary="Purge stored PII")
 async def purge_pii_endpoint(
     limit: int | None = None,
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> Dict[str, Any]:
+) -> PurgeResult:
     """Remove PII from stored signals."""
     from signal_ingestion.privacy import purge_pii_rows
 
     purged = await purge_pii_rows(limit)
     log_admin_action(payload.get("sub", "unknown"), "purge_pii", {"rows": purged})
-    return {"status": "ok", "purged": purged}
+    return PurgeResult(status="ok", purged=purged)
 
 
 @approvals_router.post("/{run_id}", summary="Approve job run")
 async def approve_run(
     run_id: str,
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> Dict[str, str]:
+) -> StatusResponse:
     """Approve the Dagster run identified by ``run_id``."""
     await async_set(f"approval:{run_id}", "true", ttl=3600)
     await get_async_client().srem(PENDING_RUNS_KEY, run_id)
     log_admin_action(payload.get("sub", "unknown"), "approve_run", {"run_id": run_id})
-    return {"status": "approved"}
+    return StatusResponse(status="approved")
 
 
 @approvals_router.get("/{run_id}", summary="Check approval status")
-async def check_approval(run_id: str) -> Dict[str, bool]:
+async def check_approval(run_id: str) -> ApprovalStatus:
     """Return ``True`` if ``run_id`` has been approved."""
     approved = await async_get(f"approval:{run_id}") is not None
-    return {"approved": approved}
+    return ApprovalStatus(approved=approved)
 
 
 @router.post("/trpc/{procedure}", tags=["tRPC"], summary="Proxy tRPC call")

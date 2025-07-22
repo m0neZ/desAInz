@@ -111,6 +111,7 @@ class ABTestResult(Base):
     """Outcome metrics for an A/B test variant."""
 
     __tablename__ = "ab_test_results"
+    __table_args__ = (Index("ix_ab_test_results_ab_test_id", "ab_test_id"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     ab_test_id: Mapped[int] = mapped_column(ForeignKey("ab_tests.id"))

@@ -1,3 +1,5 @@
+"""Tests for prompt builder helpers."""
+
 from __future__ import annotations
 
 import sys
@@ -11,6 +13,7 @@ from mockup_generation.prompt_builder import PromptContext, build_prompt  # noqa
 
 
 def test_build_prompt_deterministic() -> None:
+    """Prompt generation is deterministic when seeded."""
     ctx = PromptContext(keywords=["red", "cat", "hat"], extra={"note": "test"})
     rng = Random(0)
     prompt1 = build_prompt(ctx, rng=rng)

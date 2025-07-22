@@ -1,3 +1,5 @@
+"""Tests for service startup logic."""
+
 import sys
 from types import SimpleNamespace
 from pathlib import Path
@@ -7,22 +9,29 @@ import pytest
 
 @pytest.mark.asyncio()
 async def test_dedup_initialized_on_startup(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify deduplication cache is initialized on service startup."""
     sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
-    sys.modules.setdefault("pgvector.sqlalchemy", SimpleNamespace(Vector=lambda *a, **k: None))
+    sys.modules.setdefault(
+        "pgvector.sqlalchemy", SimpleNamespace(Vector=lambda *a, **k: None)
+    )
     sys.modules.setdefault(
         "signal_ingestion.database",
-        SimpleNamespace(get_session=lambda: None, init_db=lambda: None, SessionLocal=lambda: None),
+        SimpleNamespace(
+            get_session=lambda: None, init_db=lambda: None, SessionLocal=lambda: None
+        ),
     )
     sys.modules.setdefault(
         "signal_ingestion.models", SimpleNamespace(Base=object, Signal=object)
     )
     sys.modules.setdefault(
-        "celery", SimpleNamespace(Celery=lambda *a, **k: SimpleNamespace(conf=SimpleNamespace()))
+        "celery",
+        SimpleNamespace(Celery=lambda *a, **k: SimpleNamespace(conf=SimpleNamespace())),
     )
     scheduler = SimpleNamespace(start=lambda: None, shutdown=lambda: None)
     sys.modules.setdefault(
-        "signal_ingestion.scheduler", SimpleNamespace(create_scheduler=lambda: scheduler)
+        "signal_ingestion.scheduler",
+        SimpleNamespace(create_scheduler=lambda: scheduler),
     )
     sys.modules.setdefault(
         "signal_ingestion.ingestion", SimpleNamespace(ingest=lambda *a, **k: None)
@@ -51,7 +60,9 @@ async def test_dedup_initialized_on_startup(monkeypatch: pytest.MonkeyPatch) -> 
     sys.modules.setdefault(
         "kafka",
         SimpleNamespace(
-            KafkaProducer=lambda *a, **k: SimpleNamespace(send=lambda *a, **k: None, flush=lambda: None),
+            KafkaProducer=lambda *a, **k: SimpleNamespace(
+                send=lambda *a, **k: None, flush=lambda: None
+            ),
             KafkaConsumer=object,
         ),
     )

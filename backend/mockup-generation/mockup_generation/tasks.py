@@ -31,7 +31,7 @@ from .generator import MockupGenerator
 tracer = trace.get_tracer(__name__)
 
 
-@dataclass
+@dataclass(slots=True)
 class MockupResult:
     """Result from successful mockup generation."""
 
@@ -42,7 +42,7 @@ class MockupResult:
     tags: list[str]
 
 
-@dataclass
+@dataclass(slots=True)
 class MockupError:
     """Error information for failed mockup generation."""
 
@@ -106,7 +106,7 @@ async def _multipart_upload(
     resp = await client.create_multipart_upload(Bucket=bucket, Key=key)
     upload_id = resp["UploadId"]
 
-    @dataclass
+    @dataclass(slots=True)
     class UploadedPart:
         """Information about a single uploaded part."""
 

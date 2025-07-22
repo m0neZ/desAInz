@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 from jinja2 import Template
 
 
-@dataclass
+@dataclass(slots=True)
 class PromptContext:
     """Context data for prompt generation."""
 
@@ -30,7 +30,6 @@ TEMPLATES: List[Template] = [
 
 def _mix_keywords(keywords: list[str], rng: Random) -> list[str]:
     """Return ``keywords`` shuffled and occasionally combined."""
-
     mixed = keywords.copy()
     rng.shuffle(mixed)
     if len(mixed) > 1 and rng.random() > 0.5:
@@ -42,7 +41,6 @@ def _mix_keywords(keywords: list[str], rng: Random) -> list[str]:
 
 def build_prompt(context: PromptContext, rng: Random | None = None) -> str:
     """Return a formatted prompt string using mixed keywords."""
-
     rng = rng or Random()
     keywords = _mix_keywords(context.keywords, rng)
     template = rng.choice(TEMPLATES)

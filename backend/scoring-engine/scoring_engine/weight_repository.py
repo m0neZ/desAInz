@@ -24,7 +24,7 @@ WEIGHTS_FILE = Path(__file__).with_name("weights.json")
 Base.metadata.create_all(bind=engine)
 
 
-@dataclass
+@dataclass(slots=True)
 class WeightParams:
     """Dataclass for weight values."""
 

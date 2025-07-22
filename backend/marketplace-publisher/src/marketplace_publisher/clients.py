@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, cast
+import gzip
 
 import os
 import requests
@@ -169,8 +170,28 @@ class BaseClient:
             headers["Authorization"] = f"Bearer {token}"
         if self._api_key:
             headers["X-API-Key"] = self._api_key
+
         with open(design_path, "rb") as file:
-            files = {"file": file}
+            data = file.read()
+
+        if design_path.suffix.lower() == ".png":
+            data = gzip.compress(data)
+            headers["Content-Encoding"] = "gzip"
+
+        files = {"file": (design_path.name, data)}
+        response = request_with_retry(
+            "POST",
+            self.publish_url,
+            files=files,
+            data=metadata,
+            headers=headers,
+            timeout=30,
+        )
+
+        if response.status_code == 401:
+            self._refresh_token_if_needed()
+            if self._token:
+                headers["Authorization"] = f"Bearer {self._token}"
             response = request_with_retry(
                 "POST",
                 self.publish_url,
@@ -179,20 +200,6 @@ class BaseClient:
                 headers=headers,
                 timeout=30,
             )
-        if response.status_code == 401:
-            self._refresh_token_if_needed()
-            if self._token:
-                headers["Authorization"] = f"Bearer {self._token}"
-            with open(design_path, "rb") as file:
-                files = {"file": file}
-                response = request_with_retry(
-                    "POST",
-                    self.publish_url,
-                    files=files,
-                    data=metadata,
-                    headers=headers,
-                    timeout=30,
-                )
         response.raise_for_status()
         data = response.json()
         return str(data["id"])

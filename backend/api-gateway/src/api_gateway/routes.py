@@ -295,13 +295,26 @@ async def refresh_auth_token(body: Dict[str, str]) -> Dict[str, str]:
 
 @router.get("/roles", tags=["Roles"], summary="List user roles")
 async def list_roles(
+    page: int = 1,
+    limit: int = 20,
     payload: Dict[str, Any] = Depends(require_role("admin")),
-) -> list[Dict[str, str]]:
-    """Return all user role assignments."""
+) -> Dict[str, Any]:
+    """Return paginated user role assignments."""
+    if page < 1:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid page")
+    if limit < 1 or limit > 100:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid limit")
+    offset = (page - 1) * limit
     with session_scope() as session:
-        rows = session.execute(select(UserRole.username, UserRole.role)).all()
+        rows = session.execute(
+            select(UserRole.username, UserRole.role).limit(limit).offset(offset)
+        ).all()
+        total = session.execute(select(sa.func.count(UserRole.username))).scalar()
     log_admin_action(payload.get("sub", "unknown"), "list_roles")
-    return [{"username": row.username, "role": row.role} for row in rows]
+    return {
+        "total": total,
+        "items": [{"username": row.username, "role": row.role} for row in rows],
+    }
 
 
 @router.post("/roles/{username}", tags=["Roles"], summary="Assign role")
@@ -494,14 +507,18 @@ async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
 
 
 @analytics_router.get("/low_performers", summary="Lowest performing listings")
-async def low_performers(limit: int = 10) -> list[Dict[str, Any]]:
+async def low_performers(page: int = 1, limit: int = 10) -> Dict[str, Any]:
     """Proxy low performer data from the analytics service."""
-    url = f"{ANALYTICS_URL}/low_performers?limit={limit}"
+    if page < 1:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid page")
+    if limit < 1 or limit > 100:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid limit")
+    url = f"{ANALYTICS_URL}/low_performers?limit={limit}&page={page}"
     client = _get_client("analytics")
     resp = await client.get(url)
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
-    return cast(list[Dict[str, Any]], resp.json())
+    return cast(Dict[str, Any], resp.json())
 
 
 @optimization_router.get(
@@ -520,11 +537,16 @@ async def recommendations() -> list[str]:
 
 @router.get("/audit-logs", tags=["Audit"], summary="Retrieve audit logs")
 async def get_audit_logs(
+    page: int = 1,
     limit: int = 50,
-    offset: int = 0,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> Dict[str, Any]:
     """Return paginated audit log entries."""
+    if page < 1:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid page")
+    if limit < 1 or limit > 100:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid limit")
+    offset = (page - 1) * limit
     with session_scope() as session:
         rows = (
             session.execute(

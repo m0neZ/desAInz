@@ -42,7 +42,7 @@ describe('tRPC ping', () => {
 test('auditLogs.list fetches data', async () => {
   await trpc.auditLogs.list();
   expect(global.fetch).toHaveBeenCalledWith(
-    'http://localhost:8000/audit-logs?limit=50&offset=0'
+    'http://localhost:8000/audit-logs?page=1&limit=50'
   );
 });
 

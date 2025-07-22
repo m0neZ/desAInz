@@ -2,7 +2,8 @@ OpenAPI Specifications
 ======================
 
 The following specifications describe each microservice's HTTP API. They are
-automatically generated using ``scripts/generate_openapi.py``.
+automatically generated using ``scripts/generate_openapi.py``. Each service
+exposes its schema at ``/openapi.json``.
 
 .. toctree::
    :maxdepth: 1

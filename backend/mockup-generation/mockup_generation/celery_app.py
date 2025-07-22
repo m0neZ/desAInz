@@ -94,7 +94,6 @@ app.conf.task_routes = (_route_gpu_tasks,)
 @worker_ready.connect
 def _autoscale_workers(sender: object, **_: object) -> None:
     """Autoscale based on configured GPU slots."""
-
     try:
         from .tasks import get_gpu_slots
 

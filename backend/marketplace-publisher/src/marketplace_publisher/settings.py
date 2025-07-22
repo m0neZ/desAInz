@@ -84,7 +84,6 @@ class Settings(BaseSettings):
     @property
     def webhook_secrets(self) -> dict[Marketplace, str]:
         """Return mapping of marketplaces to webhook secrets."""
-
         secrets: dict[Marketplace, str] = {}
         for marketplace in Marketplace:
             value = getattr(self, f"webhook_secret_{marketplace.value}")

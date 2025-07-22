@@ -64,6 +64,11 @@ sys.modules.setdefault(
 # Stub LaunchDarkly client to avoid heavy dependency.
 ld_mod = sys.modules.setdefault("ldclient", ModuleType("ldclient"))
 ld_mod.LDClient = object
+ld_mod.config = SimpleNamespace(Config=object)
+ld_mod.context = SimpleNamespace(Context=object)
+ld_mod.__path__ = []
+sys.modules.setdefault("ldclient.config", ld_mod.config)
+sys.modules.setdefault("ldclient.context", ld_mod.context)
 
 os.makedirs("/run/secrets", exist_ok=True)
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")

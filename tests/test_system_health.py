@@ -63,6 +63,7 @@ def test_system_health(monkeypatch: Any) -> None:
     client = TestClient(main_module.app)
     resp = client.get("/api/health")
     assert resp.status_code == 200
+    assert resp.headers["Cache-Control"].startswith("public")
     body = resp.json()
     for service in routes.HEALTH_ENDPOINTS:
         assert body[service] == "ok"

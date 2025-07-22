@@ -206,6 +206,7 @@ def test_optimization_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(httpx, "AsyncClient", MockClient)
     resp = client.get("/optimizations", headers={"Authorization": f"Bearer {token}"})
     assert resp.status_code == 200
+    assert resp.headers["Cache-Control"].startswith("public")
     assert resp.json() == ["a", "b"]
 
 
@@ -249,6 +250,7 @@ def test_monitoring_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(httpx, "AsyncClient", MockClient)
     resp = client.get("/monitoring/overview")
     assert resp.status_code == 200
+    assert resp.headers["Cache-Control"].startswith("public")
     assert resp.json() == {"cpu": 1}
 
 
@@ -292,4 +294,5 @@ def test_analytics_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(httpx, "AsyncClient", MockClient)
     resp = client.get("/analytics/low_performers?limit=5")
     assert resp.status_code == 200
+    assert resp.headers["Cache-Control"].startswith("public")
     assert resp.json() == [{"id": 1}]

@@ -51,4 +51,5 @@ def test_trending_proxy(monkeypatch: Any) -> None:
 
     resp = client.get("/trending?limit=5")
     assert resp.status_code == 200
+    assert resp.headers["Cache-Control"].startswith("public")
     assert resp.json() == ["foo", "bar"]

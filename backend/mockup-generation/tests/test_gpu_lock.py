@@ -122,6 +122,7 @@ import threading  # noqa: E402
 import asyncio
 import fakeredis.aioredis  # noqa: E402
 import pytest  # noqa: E402
+from tests.utils import return_one
 
 from mockup_generation import tasks  # noqa: E402
 
@@ -130,7 +131,7 @@ def test_gpu_slot(monkeypatch: pytest.MonkeyPatch) -> None:
     """Lock is acquired and released using the context manager."""
     fake = fakeredis.aioredis.FakeRedis()
     monkeypatch.setattr(tasks, "async_redis_client", fake)
-    monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
+    monkeypatch.setattr(tasks, "get_gpu_slots", return_one)
 
     async def run() -> None:
         async with tasks.gpu_slot():
@@ -144,7 +145,7 @@ def test_gpu_slot_contention(monkeypatch: pytest.MonkeyPatch) -> None:
     """Multiple workers should acquire the lock sequentially."""
     fake = fakeredis.aioredis.FakeRedis()
     monkeypatch.setattr(tasks, "async_redis_client", fake)
-    monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
+    monkeypatch.setattr(tasks, "get_gpu_slots", return_one)
 
     order: list[str] = []
 

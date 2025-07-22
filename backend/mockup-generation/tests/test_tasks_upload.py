@@ -11,6 +11,7 @@ import sys
 import asyncio
 import warnings
 from contextlib import asynccontextmanager
+from functools import partial
 from typing import AsyncIterator
 import pytest
 
@@ -51,6 +52,7 @@ otel_root = types.ModuleType("opentelemetry")
 otel_root.trace = trace_mod
 sys.modules["opentelemetry"] = otel_root
 from mockup_generation import tasks  # noqa: E402
+from tests.utils import identity, return_true, return_none
 
 _orig_generate_mockup = tasks.generate_mockup.run
 
@@ -151,7 +153,7 @@ def test_generate_mockup_upload(
     """Image is uploaded using the storage client."""
     gen = DummyGenerator()
     monkeypatch.setattr(tasks, "generator", gen)
-    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+    monkeypatch.setattr(tasks, "ListingGenerator", partial(DummyListingGen))
 
     @asynccontextmanager
     async def _client() -> AsyncIterator[DummyClient]:
@@ -185,11 +187,11 @@ def test_generate_mockup_upload(
         "async_redis_client",
         types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
     )
-    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
-    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
-    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
-    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
+    monkeypatch.setattr(tasks, "remove_background", identity)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", identity)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", return_none)
+    monkeypatch.setattr(tasks, "validate_dpi_image", return_true)
+    monkeypatch.setattr(tasks, "validate_color_space", return_true)
     monkeypatch.setattr(
         tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
     )
@@ -211,7 +213,7 @@ def test_generate_mockup_duplicate_not_uploaded(
     """Skip upload when an object with the same hash exists."""
     gen = DummyGenerator()
     monkeypatch.setattr(tasks, "generator", gen)
-    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+    monkeypatch.setattr(tasks, "ListingGenerator", partial(DummyListingGen))
 
     client = DummyClient(exists=True)
 
@@ -247,11 +249,11 @@ def test_generate_mockup_duplicate_not_uploaded(
         "async_redis_client",
         types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
     )
-    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
-    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
-    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
-    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
+    monkeypatch.setattr(tasks, "remove_background", identity)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", identity)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", return_none)
+    monkeypatch.setattr(tasks, "validate_dpi_image", return_true)
+    monkeypatch.setattr(tasks, "validate_color_space", return_true)
     monkeypatch.setattr(
         tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
     )
@@ -275,7 +277,7 @@ def test_generate_mockup_uses_multipart(
     """Multipart upload is triggered for large files."""
     gen = DummyGenerator()
     monkeypatch.setattr(tasks, "generator", gen)
-    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+    monkeypatch.setattr(tasks, "ListingGenerator", partial(DummyListingGen))
 
     @asynccontextmanager
     async def _client() -> AsyncIterator[DummyClient]:
@@ -309,11 +311,11 @@ def test_generate_mockup_uses_multipart(
         "async_redis_client",
         types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
     )
-    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
-    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
-    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
-    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
+    monkeypatch.setattr(tasks, "remove_background", identity)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", identity)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", return_none)
+    monkeypatch.setattr(tasks, "validate_dpi_image", return_true)
+    monkeypatch.setattr(tasks, "validate_color_space", return_true)
     monkeypatch.setattr(
         tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
     )

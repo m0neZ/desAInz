@@ -117,17 +117,21 @@ def _run_apidoc(app: "Sphinx") -> None:
     if os.environ.get("SKIP_APIDOC", "0") == "1":
         return
     output_path = os.path.join(app.srcdir, "api")
-    module_path = os.path.abspath(os.path.join(app.srcdir, "..", "backend"))
-    subprocess.check_call(
-        [
-            "sphinx-apidoc",
-            "--force",
-            "--module-first",
-            "--output-dir",
-            output_path,
-            module_path,
-        ]
-    )
+    root = os.path.abspath(os.path.join(app.srcdir, ".."))
+    for package in ("backend", "frontend"):
+        module_path = os.path.join(root, package)
+        if not os.path.exists(module_path):
+            continue
+        subprocess.check_call(
+            [
+                "sphinx-apidoc",
+                "--force",
+                "--module-first",
+                "--output-dir",
+                output_path,
+                module_path,
+            ]
+        )
 
 
 def _generate_openapi(app: "Sphinx") -> None:

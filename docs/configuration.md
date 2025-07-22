@@ -7,7 +7,7 @@ appropriate file to `.env` and adjust the values before running services
 locally or in CI. In production, sensitive variables are mounted from Docker or
 Kubernetes secrets under `/run/secrets` and loaded automatically by the
 application settings classes.
-See the [blueprint environment variables section](blueprints/DesignIdeaEngineCompleteBlueprint.md#environment-variables) for a complete example of the `.env` layout for each service.
+See the blueprint environment variables section in `blueprints/DesignIdeaEngineCompleteBlueprint.md` for a complete example of the `.env` layout for each service.
 
 
 | Variable | Description |

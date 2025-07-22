@@ -46,8 +46,8 @@ Kubernetes manifests under `infrastructure/k8s/`.
 
 ### CI/CD
 
-- **GitHub Actions** – workflows under [`../.github/workflows`](../.github/workflows)
-  run linting, testing and deployment.
+ - **GitHub Actions** – workflows under `../.github/workflows` run linting,
+   testing and deployment.
 - **Helm** and **Kustomize** – `pipeline.yml` deploys the manifests from
   `infrastructure/k8s/` using Helm.
 

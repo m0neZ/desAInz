@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
 import httpx
+import asyncio
+import atexit
 from backend.shared.http import DEFAULT_TIMEOUT
 
 import psutil
@@ -36,6 +38,24 @@ from .metrics_store import (
     TimescaleMetricsStore,
     LATENCY_CACHE_KEY,
 )
+
+_HTTP_CLIENT: httpx.AsyncClient | None = None
+
+
+async def get_http_client() -> httpx.AsyncClient:
+    """Return a shared HTTP client instance."""
+    global _HTTP_CLIENT
+    if _HTTP_CLIENT is None:
+        _HTTP_CLIENT = httpx.AsyncClient(timeout=DEFAULT_TIMEOUT)
+    return _HTTP_CLIENT
+
+
+@atexit.register
+def _close_http_client() -> None:
+    if _HTTP_CLIENT is not None:
+        asyncio.run(_HTTP_CLIENT.aclose())
+
+
 from backend.shared.cache import sync_get, sync_set
 import redis
 
@@ -118,15 +138,15 @@ async def status() -> dict[str, str]:
         "orchestrator": "http://orchestrator:8000/health",
     }
     results: dict[str, str] = {}
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
-        for name, url in services.items():
-            try:
-                resp = await client.get(url)
-                results[name] = (
-                    resp.json().get("status") if resp.status_code == 200 else "down"
-                )
-            except Exception:  # pragma: no cover - network failures
-                results[name] = "down"
+    client = await get_http_client()
+    for name, url in services.items():
+        try:
+            resp = await client.get(url)
+            results[name] = (
+                resp.json().get("status") if resp.status_code == 200 else "down"
+            )
+        except Exception:  # pragma: no cover - network failures
+            results[name] = "down"
     return results
 
 
@@ -308,11 +328,11 @@ async def ready(request: Request) -> Response:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    import asyncio
+    import asyncio as _asyncio
     import uvloop
     import uvicorn
 
-    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    _asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
     uvicorn.run(
         "monitoring.main:app",

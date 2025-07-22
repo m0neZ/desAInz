@@ -9,6 +9,23 @@ import os
 from time import perf_counter
 
 import httpx
+import atexit
+
+_HTTP_CLIENT: httpx.AsyncClient | None = None
+
+
+async def get_http_client() -> httpx.AsyncClient:
+    """Return a shared HTTP client."""
+    global _HTTP_CLIENT
+    if _HTTP_CLIENT is None:
+        _HTTP_CLIENT = httpx.AsyncClient()
+    return _HTTP_CLIENT
+
+
+@atexit.register
+def _close_http_client() -> None:
+    if _HTTP_CLIENT is not None:
+        asyncio.run(_HTTP_CLIENT.aclose())
 
 
 async def _run(
@@ -30,11 +47,11 @@ async def main() -> tuple[float, float, int]:
         "engagement_rate": 1.0,
         "embedding": [0.1, 0.2],
     }
-    async with httpx.AsyncClient() as client:
-        # Warm up
-        await client.post(url, json=payload)
-        uncached = await _run(client, url, payload, runs)
-        cached = await _run(client, url, payload, runs)
+    client = await get_http_client()
+    # Warm up
+    await client.post(url, json=payload)
+    uncached = await _run(client, url, payload, runs)
+    cached = await _run(client, url, payload, runs)
     print(f"Uncached: {uncached:.2f}s for {runs} runs")
     print(f"Cached:   {cached:.2f}s for {runs} runs")
     return uncached, cached, runs

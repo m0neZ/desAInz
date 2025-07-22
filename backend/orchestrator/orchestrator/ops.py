@@ -157,10 +157,10 @@ def score_signals(  # type: ignore[no-untyped-def]
     )
 
     async def _run() -> list[float]:
-        async with httpx.AsyncClient() as client:
-            async with asyncio.TaskGroup() as tg:
-                tasks = [tg.create_task(_score(client)) for _ in signals]
-            return [t.result() for t in tasks]
+        client = await _get_client()
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(_score(client)) for _ in signals]
+        return [t.result() for t in tasks]
 
     return list(asyncio.run(_run()))
 
@@ -220,17 +220,17 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
     url = f"{base_url}/approvals/{context.run_id}"
     headers = _auth_headers(context)
 
-    async with httpx.AsyncClient() as client:
-        for _ in range(30):
-            try:
-                resp = await client.get(url, headers=headers, timeout=5)
-                resp.raise_for_status()
-                if resp.json().get("approved"):
-                    context.log.info("publishing approved")
-                    return
-            except httpx.HTTPError as exc:  # noqa: BLE001
-                context.log.warning("approval check failed: %s", exc)
-            await asyncio.sleep(10)
+    client = await _get_client()
+    for _ in range(30):
+        try:
+            resp = await client.get(url, headers=headers, timeout=5)
+            resp.raise_for_status()
+            if resp.json().get("approved"):
+                context.log.info("publishing approved")
+                return
+        except httpx.HTTPError as exc:  # noqa: BLE001
+            context.log.warning("approval check failed: %s", exc)
+        await asyncio.sleep(10)
     raise Failure("publishing not approved")
 
 

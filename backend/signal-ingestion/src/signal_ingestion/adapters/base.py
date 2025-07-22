@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import itertools
 import asyncio
+import atexit
 from typing import Any, Iterable, Optional, cast
 
 from ..rate_limit import AdapterRateLimiter
@@ -12,6 +13,27 @@ from backend.shared.cache import async_get, async_set
 
 import httpx
 from backend.shared.http import DEFAULT_TIMEOUT
+
+_HTTP_CLIENTS: dict[str | None, httpx.AsyncClient] = {}
+
+
+async def get_http_client(proxy: str | None) -> httpx.AsyncClient:
+    """Return a cached HTTP client for ``proxy``."""
+    client = _HTTP_CLIENTS.get(proxy)
+    if client is None:
+        client = httpx.AsyncClient(proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT)
+        _HTTP_CLIENTS[proxy] = client
+    return client
+
+
+@atexit.register
+def _close_clients() -> None:
+    async def _close_all() -> None:
+        for cli in _HTTP_CLIENTS.values():
+            await cli.aclose()
+        _HTTP_CLIENTS.clear()
+
+    asyncio.run(_close_all())
 
 
 class BaseAdapter:
@@ -77,21 +99,19 @@ class BaseAdapter:
 
         for attempt in range(self.retries):
             proxy = next(self._proxies_cycle)
-            async with httpx.AsyncClient(
-                proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT
-            ) as client:
-                try:
-                    resp = await client.get(url, headers=req_headers or None)
-                    if resp.status_code == 304:
-                        return None
-                    if etag := resp.headers.get("ETag"):
-                        await async_set(etag_key, etag)
-                    resp.raise_for_status()
-                    return resp
-                except httpx.HTTPError:
-                    if attempt >= self.retries - 1:
-                        raise
-                    await asyncio.sleep(2**attempt)
+            client = await get_http_client(proxy)
+            try:
+                resp = await client.get(url, headers=req_headers or None)
+                if resp.status_code == 304:
+                    return None
+                if etag := resp.headers.get("ETag"):
+                    await async_set(etag_key, etag)
+                resp.raise_for_status()
+                return resp
+            except httpx.HTTPError:
+                if attempt >= self.retries - 1:
+                    raise
+                await asyncio.sleep(2**attempt)
 
         raise RuntimeError("Unreachable")
 

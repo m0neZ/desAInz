@@ -4,6 +4,7 @@ requests
 Pillow
 opencv-python-headless
 numpy
+uvloop
 jinja2
 diffusers
 transformers

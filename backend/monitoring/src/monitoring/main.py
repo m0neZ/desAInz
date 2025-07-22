@@ -258,7 +258,11 @@ async def ready(request: Request) -> Response:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    import asyncio
+    import uvloop
     import uvicorn
+
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
     uvicorn.run(
         "monitoring.main:app",

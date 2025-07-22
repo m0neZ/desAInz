@@ -1,5 +1,6 @@
 fastapi
 uvicorn
+uvloop
 pydantic
 pandas
 pytest

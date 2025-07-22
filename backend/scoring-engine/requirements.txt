@@ -4,6 +4,7 @@ psycopg2-binary
 redis
 fakeredis
 pydantic
+uvloop
 pytest
 scikit-learn
 numpy

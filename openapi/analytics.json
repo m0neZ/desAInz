@@ -171,6 +171,49 @@
         }
       }
     },
+    "/performance_metrics/{listing_id}/export": {
+      "get": {
+        "summary": "Export Performance Metrics",
+        "description": "Return all performance metrics rows for ``listing_id`` as CSV.",
+        "operationId": "export_performance_metrics_performance_metrics__listing_id__export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Listing Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/low_performers": {
       "get": {
         "summary": "Low Performers",

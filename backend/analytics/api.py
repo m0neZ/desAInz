@@ -221,6 +221,36 @@ def export_marketplace_metrics(
     )
 
 
+@app.get("/performance_metrics/{listing_id}/export")  # type: ignore[misc]
+def export_performance_metrics(
+    listing_id: int,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> StreamingResponse:
+    """Return all performance metrics rows for ``listing_id`` as CSV."""
+
+    def _iter() -> Iterable[str]:
+        yield "timestamp,views,favorites,orders,revenue\n"
+        with SessionLocal() as session:
+            query = (
+                session.query(models.MarketplacePerformanceMetric)
+                .filter(models.MarketplacePerformanceMetric.listing_id == listing_id)
+                .order_by(models.MarketplacePerformanceMetric.timestamp)
+                .yield_per(1000)
+            )
+            for r in query:
+                yield (
+                    f"{r.timestamp.isoformat()},{r.views},{r.favorites},{r.orders},{r.revenue}\n"
+                )
+
+    return StreamingResponse(
+        _iter(),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename=performance_{listing_id}.csv"
+        },
+    )
+
+
 @app.get("/health")  # type: ignore[misc]
 async def health() -> Response:
     """Return service liveness."""

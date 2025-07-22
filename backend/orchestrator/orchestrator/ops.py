@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import os
-import time
 import uuid
 from datetime import datetime, timezone
 from typing import Any
 
 import asyncio
 import httpx
-import requests
 from dagster import Failure, RetryPolicy, op
 
 from scripts import maintenance
@@ -25,39 +23,7 @@ def _auth_headers(context: Any) -> dict[str, str]:
     return headers
 
 
-def _post_with_retry(
-    context: Any,
-    url: str,
-    *,
-    json: Any | None = None,
-    headers: dict[str, str] | None = None,
-    timeout: int = 30,
-    retries: int = 3,
-) -> requests.Response:
-    """Send a POST request with simple exponential backoff."""
-    for attempt in range(1, retries + 1):
-        try:
-            response = requests.post(url, json=json, headers=headers, timeout=timeout)
-            response.raise_for_status()
-            return response
-        except requests.RequestException as exc:  # noqa: BLE001
-            if attempt == retries:
-                context.log.error(
-                    "request to %s failed after %d attempts: %s", url, attempt, exc
-                )
-                raise
-            context.log.warning(
-                "request to %s failed: %s (attempt %d/%d)",
-                url,
-                exc,
-                attempt,
-                retries,
-            )
-            time.sleep(2 ** (attempt - 1))
-    raise RuntimeError("unreachable")
-
-
-async def _post_with_retry_async(
+async def _post_with_retry(
     context: Any,
     url: str,
     *,
@@ -96,10 +62,10 @@ async def _post_with_retry_async(
 
 
 @op  # type: ignore[misc]
-def ingest_signals(  # type: ignore[no-untyped-def]
+async def ingest_signals(  # type: ignore[no-untyped-def]
     context,
 ) -> list[str]:
-    """Fetch new signals."""
+    """Fetch new signals asynchronously."""
     context.log.info("ingesting signals")
     base_url = os.environ.get(
         "SIGNAL_INGESTION_URL",
@@ -107,10 +73,10 @@ def ingest_signals(  # type: ignore[no-untyped-def]
     )
     headers = _auth_headers(context)
     try:
-        response = _post_with_retry(
+        response = await _post_with_retry(
             context, f"{base_url}/ingest", headers=headers, timeout=30
         )
-    except requests.RequestException as exc:  # noqa: BLE001
+    except httpx.HTTPError as exc:  # noqa: BLE001
         raise Failure(f"ingestion failed: {exc}") from exc
 
     payload = response.json()
@@ -179,11 +145,11 @@ def score_signals(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def generate_content(  # type: ignore[no-untyped-def]
+async def generate_content(  # type: ignore[no-untyped-def]
     context,
     scores: list[float],
 ) -> list[str]:
-    """Generate content based on scores."""
+    """Generate content based on scores asynchronously."""
     context.log.info("generating %d items", len(scores))
     base_url = os.environ.get(
         "MOCKUP_GENERATION_URL",
@@ -191,7 +157,7 @@ def generate_content(  # type: ignore[no-untyped-def]
     )
 
     async def _generate(score: float) -> list[str]:
-        resp = await _post_with_retry_async(
+        resp = await _post_with_retry(
             context,
             f"{base_url}/generate",
             json={"scores": [score]},
@@ -205,7 +171,7 @@ def generate_content(  # type: ignore[no-untyped-def]
 
     if len(scores) <= 1:
         try:
-            resp = _post_with_retry(
+            resp = await _post_with_retry(
                 context,
                 f"{base_url}/generate",
                 json={"scores": scores},
@@ -215,20 +181,13 @@ def generate_content(  # type: ignore[no-untyped-def]
             items = resp.json().get("items", [])
             if not isinstance(items, list):
                 items = []
-        except requests.RequestException as exc:  # noqa: BLE001
+        except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("generation failed after retries: %s", exc)
             items = []
         return [str(item) for item in items]
 
-    async def _generate_all() -> list[str]:
-        results = await asyncio.gather(*[_generate(s) for s in scores])
-        return [item for sub in results for item in sub]
-
-    try:
-        return asyncio.run(_generate_all())
-    except httpx.HTTPError as exc:  # noqa: BLE001
-        context.log.warning("generation failed after retries: %s", exc)
-        return []
+    results = await asyncio.gather(*[_generate(s) for s in scores])
+    return [item for sub in results for item in sub]
 
 
 @op  # type: ignore[misc]
@@ -253,11 +212,11 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
 
 
 @op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]
-def publish_content(  # type: ignore[no-untyped-def]
+async def publish_content(  # type: ignore[no-untyped-def]
     context,
     items: list[str],
 ) -> None:
-    """Publish generated content."""
+    """Publish generated content asynchronously."""
     context.log.info("publishing %d items", len(items))
     base_url = os.environ.get(
         "PUBLISHER_URL",
@@ -266,7 +225,7 @@ def publish_content(  # type: ignore[no-untyped-def]
     for item in items:
         payload = {"marketplace": "redbubble", "design_path": item}
         try:
-            resp = _post_with_retry(
+            resp = await _post_with_retry(
                 context,
                 f"{base_url}/publish",
                 json=payload,
@@ -275,7 +234,7 @@ def publish_content(  # type: ignore[no-untyped-def]
             )
             task_id = resp.json().get("task_id")
             context.log.debug("created publish task %s", task_id)
-        except requests.RequestException as exc:  # noqa: BLE001
+        except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("failed to publish %s after retries: %s", item, exc)
 
 
@@ -324,7 +283,7 @@ def run_daily_summary(  # type: ignore[no-untyped-def]
 
 
 @op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]
-def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
+async def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
     """Rotate Kubernetes secrets via :mod:`scripts.rotate_secrets` and notify Slack."""
@@ -336,13 +295,13 @@ def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
     webhook = os.environ.get("SLACK_WEBHOOK_URL")
     if webhook:
         try:
-            _post_with_retry(
+            await _post_with_retry(
                 context,
                 webhook,
                 json={"text": "Kubernetes secrets rotated"},
                 timeout=5,
             )
-        except requests.RequestException as exc:  # noqa: BLE001
+        except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("slack notification failed: %s", exc)
 
 

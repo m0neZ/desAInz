@@ -8,6 +8,11 @@ from typing import Iterable
 
 from numpy.typing import NDArray
 
+try:  # pragma: no cover - optional extension
+    from ._novelty_ext import compute_novelty as _compute_novelty_ext
+except Exception:  # pragma: no cover - fallback on pure Python
+    _compute_novelty_ext = None
+
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
@@ -56,7 +61,13 @@ def compute_engagement(current: float, median: float) -> float:
 def compute_novelty(
     embedding: NDArray[np.floating], centroid: NDArray[np.floating]
 ) -> float:
-    """One minus cosine similarity to centroid."""
+    """
+    Return novelty score using cosine distance.
+
+    If an optimized extension is available, it will be used automatically.
+    """
+    if _compute_novelty_ext is not None:
+        return float(_compute_novelty_ext(embedding, centroid))
     dot = float(np.dot(embedding, centroid))
     norm = float(np.linalg.norm(embedding) * np.linalg.norm(centroid))
     if norm == 0:

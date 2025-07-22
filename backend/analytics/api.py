@@ -6,6 +6,7 @@ import logging
 import os
 import uuid
 from typing import Any, Callable, Coroutine, Dict, Iterable, cast
+from collections.abc import AsyncIterator
 
 from datetime import datetime
 
@@ -13,17 +14,16 @@ from fastapi import Depends, FastAPI, Request, Response
 from backend.shared.security import require_status_api_key
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from sqlalchemy import func
+from sqlalchemy import func, select
 
-from backend.shared.db import SessionLocal
+from backend.shared.db import AsyncSessionLocal
 from backend.shared.db import models
 from .auth import require_role
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
-from backend.shared.responses import json_cached
-from backend.shared.responses import gzip_iter
+from backend.shared.responses import json_cached, gzip_aiter
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
@@ -52,7 +52,8 @@ add_security_headers(app)
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = request.client.host if request.client else "unknown"
+    return cast(str, request.headers.get("X-User", client_host))
 
 
 @app.middleware("http")  # type: ignore[misc]
@@ -108,17 +109,16 @@ class LowPerformer(BaseModel):  # type: ignore[misc]
 
 
 @app.get("/ab_test_results/{ab_test_id}")  # type: ignore[misc]
-def ab_test_results(ab_test_id: int) -> ABTestSummary:
+async def ab_test_results(ab_test_id: int) -> ABTestSummary:
     """Return aggregated A/B test results."""
-    with SessionLocal() as session:
-        conversions, impressions = (
-            session.query(
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(
+            select(
                 func.coalesce(func.sum(models.ABTestResult.conversions), 0),
                 func.coalesce(func.sum(models.ABTestResult.impressions), 0),
-            )
-            .filter(models.ABTestResult.ab_test_id == ab_test_id)
-            .one()
+            ).filter(models.ABTestResult.ab_test_id == ab_test_id)
         )
+        conversions, impressions = result.one()
     return ABTestSummary(
         ab_test_id=ab_test_id,
         conversions=conversions,
@@ -127,7 +127,7 @@ def ab_test_results(ab_test_id: int) -> ABTestSummary:
 
 
 @app.get("/ab_test_results/{ab_test_id}/export")  # type: ignore[misc]
-def export_ab_test_results(
+async def export_ab_test_results(
     ab_test_id: int,
     start: datetime | None = None,
     end: datetime | None = None,
@@ -140,22 +140,25 @@ def export_ab_test_results(
     range of exported rows.
     """
 
-    def _iter() -> Iterable[str]:
+    async def _iter() -> AsyncIterator[str]:
         yield "timestamp,conversions,impressions\n"
-        with SessionLocal() as session:
-            query = session.query(models.ABTestResult).filter(
-                models.ABTestResult.ab_test_id == ab_test_id
+        async with AsyncSessionLocal() as session:
+            stmt = (
+                select(models.ABTestResult)
+                .filter(models.ABTestResult.ab_test_id == ab_test_id)
+                .order_by(models.ABTestResult.timestamp)
+                .execution_options(yield_per=1000)
             )
             if start is not None:
-                query = query.filter(models.ABTestResult.timestamp >= start)
+                stmt = stmt.filter(models.ABTestResult.timestamp >= start)
             if end is not None:
-                query = query.filter(models.ABTestResult.timestamp <= end)
-            query = query.order_by(models.ABTestResult.timestamp).yield_per(1000)
-            for r in query:
-                yield (f"{r.timestamp.isoformat()},{r.conversions},{r.impressions}\n")
+                stmt = stmt.filter(models.ABTestResult.timestamp <= end)
+            result = await session.stream_scalars(stmt)
+            async for r in result:
+                yield f"{r.timestamp.isoformat()},{r.conversions},{r.impressions}\n"
 
     return StreamingResponse(
-        gzip_iter(_iter()),
+        gzip_aiter(_iter()),
         media_type="text/csv",
         headers={
             "Content-Disposition": f"attachment; filename=ab_test_{ab_test_id}.csv",
@@ -165,18 +168,17 @@ def export_ab_test_results(
 
 
 @app.get("/marketplace_metrics/{listing_id}")  # type: ignore[misc]
-def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
+async def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
     """Return aggregated metrics for a listing."""
-    with SessionLocal() as session:
-        clicks, purchases, revenue = (
-            session.query(
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(
+            select(
                 func.coalesce(func.sum(models.MarketplaceMetric.clicks), 0),
                 func.coalesce(func.sum(models.MarketplaceMetric.purchases), 0),
                 func.coalesce(func.sum(models.MarketplaceMetric.revenue), 0.0),
-            )
-            .filter(models.MarketplaceMetric.listing_id == listing_id)
-            .one()
+            ).filter(models.MarketplaceMetric.listing_id == listing_id)
         )
+        clicks, purchases, revenue = result.one()
     return MarketplaceSummary(
         listing_id=listing_id,
         clicks=clicks,
@@ -186,11 +188,11 @@ def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
 
 
 @app.get("/low_performers")  # type: ignore[misc]
-def low_performers(limit: int = 10) -> list[LowPerformer]:
+async def low_performers(limit: int = 10) -> list[LowPerformer]:
     """Return listings with the lowest total revenue."""
-    with SessionLocal() as session:
-        rows = (
-            session.query(
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(
+            select(
                 models.MarketplaceMetric.listing_id,
                 func.coalesce(func.sum(models.MarketplaceMetric.revenue), 0.0).label(
                     "rev"
@@ -199,13 +201,13 @@ def low_performers(limit: int = 10) -> list[LowPerformer]:
             .group_by(models.MarketplaceMetric.listing_id)
             .order_by("rev")
             .limit(limit)
-            .all()
         )
+        rows = result.all()
     return [LowPerformer(listing_id=row[0], revenue=row[1]) for row in rows]
 
 
 @app.get("/marketplace_metrics/{listing_id}/export")  # type: ignore[misc]
-def export_marketplace_metrics(
+async def export_marketplace_metrics(
     listing_id: int,
     start: datetime | None = None,
     end: datetime | None = None,
@@ -217,24 +219,27 @@ def export_marketplace_metrics(
     ``start`` and ``end`` bound the timestamp range of exported rows.
     """
 
-    def _iter() -> Iterable[str]:
+    async def _iter() -> AsyncIterator[str]:
         yield "timestamp,clicks,purchases,revenue\n"
-        with SessionLocal() as session:
-            query = session.query(models.MarketplaceMetric).filter(
-                models.MarketplaceMetric.listing_id == listing_id
+        async with AsyncSessionLocal() as session:
+            stmt = (
+                select(models.MarketplaceMetric)
+                .filter(models.MarketplaceMetric.listing_id == listing_id)
+                .order_by(models.MarketplaceMetric.timestamp)
+                .execution_options(yield_per=1000)
             )
             if start is not None:
-                query = query.filter(models.MarketplaceMetric.timestamp >= start)
+                stmt = stmt.filter(models.MarketplaceMetric.timestamp >= start)
             if end is not None:
-                query = query.filter(models.MarketplaceMetric.timestamp <= end)
-            query = query.order_by(models.MarketplaceMetric.timestamp).yield_per(1000)
-            for r in query:
+                stmt = stmt.filter(models.MarketplaceMetric.timestamp <= end)
+            result = await session.stream_scalars(stmt)
+            async for r in result:
                 yield (
                     f"{r.timestamp.isoformat()},{r.clicks},{r.purchases},{r.revenue}\n"
                 )
 
     return StreamingResponse(
-        gzip_iter(_iter()),
+        gzip_aiter(_iter()),
         media_type="text/csv",
         headers={
             "Content-Disposition": f"attachment; filename=listing_{listing_id}.csv",
@@ -244,7 +249,7 @@ def export_marketplace_metrics(
 
 
 @app.get("/performance_metrics/{listing_id}/export")  # type: ignore[misc]
-def export_performance_metrics(
+async def export_performance_metrics(
     listing_id: int,
     start: datetime | None = None,
     end: datetime | None = None,
@@ -256,30 +261,27 @@ def export_performance_metrics(
     Use ``start`` and ``end`` to bound the timestamp range.
     """
 
-    def _iter() -> Iterable[str]:
+    async def _iter() -> AsyncIterator[str]:
         yield "timestamp,views,favorites,orders,revenue\n"
-        with SessionLocal() as session:
-            query = session.query(models.MarketplacePerformanceMetric).filter(
-                models.MarketplacePerformanceMetric.listing_id == listing_id
+        async with AsyncSessionLocal() as session:
+            stmt = (
+                select(models.MarketplacePerformanceMetric)
+                .filter(models.MarketplacePerformanceMetric.listing_id == listing_id)
+                .order_by(models.MarketplacePerformanceMetric.timestamp)
+                .execution_options(yield_per=1000)
             )
             if start is not None:
-                query = query.filter(
-                    models.MarketplacePerformanceMetric.timestamp >= start
-                )
+                stmt = stmt.filter(models.MarketplacePerformanceMetric.timestamp >= start)
             if end is not None:
-                query = query.filter(
-                    models.MarketplacePerformanceMetric.timestamp <= end
-                )
-            query = query.order_by(
-                models.MarketplacePerformanceMetric.timestamp
-            ).yield_per(1000)
-            for r in query:
+                stmt = stmt.filter(models.MarketplacePerformanceMetric.timestamp <= end)
+            result = await session.stream_scalars(stmt)
+            async for r in result:
                 yield (
                     f"{r.timestamp.isoformat()},{r.views},{r.favorites},{r.orders},{r.revenue}\n"
                 )
 
     return StreamingResponse(
-        gzip_iter(_iter()),
+        gzip_aiter(_iter()),
         media_type="text/csv",
         headers={
             "Content-Disposition": f"attachment; filename=performance_{listing_id}.csv",

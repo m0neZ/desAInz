@@ -5,6 +5,7 @@ from __future__ import annotations
 from fastapi import FastAPI
 from flask import Flask
 from typing import Any, cast
+import os
 from opentelemetry import trace
 from pydantic import HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -18,7 +19,7 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 
-class TraceSettings(BaseSettings):
+class TraceSettings(BaseSettings):  # type: ignore[misc]
     """Environment settings controlling tracing behaviour."""
 
     model_config = SettingsConfigDict(env_file=".env", secrets_dir="/run/secrets")
@@ -33,7 +34,7 @@ trace_settings = TraceSettings()
 
 def configure_tracing(app: FastAPI | Flask, service_name: str) -> None:
     """Configure basic tracing for ``app``."""
-    if trace_settings.sdk_disabled:
+    if trace_settings.sdk_disabled or os.getenv("OTEL_SDK_DISABLED") in {"1", "true", "True"}:
         return
     from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
         OTLPSpanExporter as OTLPGrpcSpanExporter,

@@ -152,7 +152,7 @@ automatic rollback::
 
    ./scripts/sync_staging_secrets.sh
 
-``validate_migrations.sh`` ensures Alembic has a single head::
+``validate_migrations.sh`` ensures Alembic has a single head and no branches::
 
    ./scripts/validate_migrations.sh
 

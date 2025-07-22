@@ -19,8 +19,8 @@ The API Gateway exposes `/approvals` for fetching pending runs and
 
 ## Spot Instances
 
-Use `scripts/manage_spot_instances.py` to request and release AWS spot nodes. A
-typical workflow to add a worker is:
+Use `scripts/manage_spot_instances.py` to request, release, or maintain AWS spot
+nodes. A typical workflow to add a worker is:
 
 ```bash
 python scripts/manage_spot_instances.py request \
@@ -39,7 +39,19 @@ python scripts/manage_spot_instances.py release i-0abcd1234ef567890
 ```
 
 Workers will checkpoint tasks using Celery's statedb so another node can resume
-processing when a spot instance is reclaimed.
+processing when a spot instance is reclaimed. To keep ``N`` workers running at
+all times execute the ``maintain`` command, which is scheduled every ten
+minutes by the orchestrator:
+
+```bash
+python scripts/manage_spot_instances.py maintain \
+  --ami-id ami-12345678 \
+  --instance-type g4dn.xlarge \
+  --key-name kube-key \
+  --security-group sg-12345678 \
+  --subnet-id subnet-12345678 \
+  --count 2
+```
 
 ## Quota Handling
 

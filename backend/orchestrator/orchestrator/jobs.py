@@ -22,6 +22,7 @@ from .ops import (
     sync_listing_states_op,
     purge_pii_rows_op,
     benchmark_score_op,
+    maintain_spot_nodes_op,
 )
 from .hooks import record_failure, record_success
 
@@ -127,3 +128,9 @@ def publishing_job() -> None:
 def feedback_update_job() -> None:
     """Job updating scoring weights from feedback data."""
     update_feedback()
+
+
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def maintain_spot_nodes_job() -> None:
+    """Job ensuring spot nodes are present."""
+    maintain_spot_nodes_op()

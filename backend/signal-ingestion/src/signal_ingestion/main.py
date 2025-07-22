@@ -16,6 +16,7 @@ from .database import get_session, init_db
 from backend.shared.db import run_migrations_if_needed
 from .scheduler import create_scheduler
 from .ingestion import ingest
+from . import dedup
 from .trending import get_top_keywords
 from .logging_config import configure_logging
 from .settings import settings
@@ -57,6 +58,9 @@ async def startup() -> None:
     """Initialize resources."""
     await run_migrations_if_needed("backend/shared/db/alembic_signal_ingestion.ini")
     await init_db()
+    dedup.initialize(
+        settings.dedup_error_rate, settings.dedup_capacity, settings.dedup_ttl
+    )
     scheduler.start()
 
 

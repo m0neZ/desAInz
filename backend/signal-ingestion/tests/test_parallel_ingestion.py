@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from signal_ingestion import database, tasks
-from signal_ingestion.normalization import NormalizedSignal
+from signal_ingestion.normalization import Signal as NormalizedSignal
 from signal_ingestion.adapters.base import BaseAdapter
-from signal_ingestion.models import Signal
+from signal_ingestion.models import Signal as DBSignal
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy import select
 import pytest
@@ -68,7 +68,7 @@ async def test_ingest_from_adapter_publishes(monkeypatch: pytest.MonkeyPatch) ->
 
     async with database.SessionLocal() as session:
         await tasks._ingest_from_adapter(session, DummyAdapter())
-        row = (await session.execute(select(Signal))).scalars().first()
+        row = (await session.execute(select(DBSignal))).scalars().first()
 
     assert row is not None
     assert isinstance(row.embedding, list)
@@ -114,7 +114,7 @@ async def test_ingest_from_adapter_redacts_pii(monkeypatch: pytest.MonkeyPatch) 
 
     async with database.SessionLocal() as session:
         await tasks._ingest_from_adapter(session, DummyAdapter())
-        row = (await session.execute(select(Signal))).scalars().first()
+        row = (await session.execute(select(DBSignal))).scalars().first()
 
     assert row is not None
     assert "user@example.com" not in row.content

@@ -20,10 +20,10 @@ from .adapters.youtube import YouTubeAdapter
 from .celery_app import app
 from .database import SessionLocal
 from .dedup import add_key, is_duplicate
-from .models import Signal
+from .models import Signal as DBSignal
 from .embedding import generate_embedding
 from .privacy import purge_row
-from .normalization import NormalizedSignal, normalize
+from .normalization import Signal as NormalizedSignal, normalize
 from .publisher import publish
 from .retention import purge_old_signals
 from .settings import settings
@@ -87,7 +87,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         add_key(key)
         clean_row = purge_row(signal_data.asdict())
         sanitized_json = json.dumps(clean_row)
-        signal = Signal(
+        signal = DBSignal(
             source=adapter.__class__.__name__,
             content=sanitized_json,
             embedding=generate_embedding(sanitized_json),

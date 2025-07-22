@@ -9,6 +9,10 @@ import boto3
 import pytest
 from moto import mock_aws
 
+pytestmark = pytest.mark.filterwarnings(
+    r"ignore:datetime\.datetime\.utcnow\(\) is deprecated"
+)
+
 from scripts.rotate_s3_keys import rotate
 
 

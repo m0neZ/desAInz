@@ -1,9 +1,9 @@
-"""add marketplace perf listing id index
+"""
+Add marketplace perf listing id index.
 
 Revision ID: 7544cf9b2fd7
 Revises: 0019
 Create Date: 2025-07-22 16:30:59.175652
-
 """
 
 from alembic import op

@@ -5,9 +5,10 @@ from __future__ import annotations
 import os
 from typing import Any
 
+import requests
+
 import httpx
 
-import requests
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -26,9 +27,25 @@ def request_with_retry(
     url: str,
     *,
     retries: int | None = None,
+    session: requests.Session | None = None,
     **kwargs: Any,
 ) -> requests.Response:
-    """Return the response from ``requests`` with exponential backoff."""
+    """Return the response from ``requests`` with exponential backoff.
+
+    Parameters
+    ----------
+    method:
+        HTTP method to use for the request.
+    url:
+        Target URL for the request.
+    retries:
+        Maximum number of attempts before giving up. Defaults to
+        ``DEFAULT_RETRIES`` when ``None``.
+    session:
+        Optional :class:`requests.Session` to use for sending the request.
+    **kwargs:
+        Additional keyword arguments forwarded to ``requests``.
+    """
     attempts = retries or DEFAULT_RETRIES
 
     @retry(
@@ -38,7 +55,8 @@ def request_with_retry(
         reraise=True,
     )
     def _send() -> requests.Response:
-        resp = requests.request(method, url, **kwargs)
+        requester = session or requests
+        resp = requester.request(method, url, **kwargs)
         resp.raise_for_status()
         return resp
 

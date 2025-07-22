@@ -10,7 +10,7 @@ from prometheus_client import Counter, Histogram
 
 from backend.shared.db import session_scope
 from backend.shared.db.models import Embedding
-from signal_ingestion.embedding import generate_embedding
+from signal_ingestion.embedding import generate_embedding, generate_embeddings
 
 from .celery_app import app
 
@@ -31,14 +31,29 @@ def batch_embed(self: Task, signals: list[Mapping[str, object]]) -> int:
     SIGNAL_COUNTER.inc(len(signals))
 
     with session_scope() as session:
+        prepared: list[tuple[str, list[float] | None]] = []
+        payloads: list[str] = []
+
         for msg in signals:
             embedding = msg.get("embedding")
             if embedding is None:
                 payload = json.dumps(msg, default=str, sort_keys=True)
-                embedding_value = generate_embedding(payload)
+                payloads.append(payload)
+                prepared.append((str(msg.get("source", "global")), None))
             else:
-                embedding_value = list(cast(list[float], embedding))
-            source = str(msg.get("source", "global"))
-            session.add(Embedding(source=source, embedding=embedding_value))
+                prepared.append(
+                    (
+                        str(msg.get("source", "global")),
+                        list(cast(list[float], embedding)),
+                    )
+                )
+
+        computed = generate_embeddings(payloads)
+        comp_idx = 0
+        for source, emb in prepared:
+            if emb is None:
+                emb = computed[comp_idx]
+                comp_idx += 1
+            session.add(Embedding(source=source, embedding=emb))
         session.flush()
     return len(signals)

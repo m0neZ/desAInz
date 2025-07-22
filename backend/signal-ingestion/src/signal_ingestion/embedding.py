@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import hashlib
-from typing import List
+from typing import List, Sequence
 
 from typing import cast
 
@@ -37,6 +37,7 @@ def _load_clip() -> None:
 
 
 def _clip_embedding(text: str) -> List[float]:
+    """Return CLIP embedding for ``text``."""
     assert open_clip is not None and torch is not None
     assert _tokenizer is not None and _model is not None
     tokens = _tokenizer([text])
@@ -51,8 +52,23 @@ def _fallback_embedding(text: str, dim: int = 768) -> List[float]:
     return cast(List[float], rng.random(dim).astype(float).tolist())
 
 
-def generate_embedding(text: str) -> List[float]:
-    """Return an embedding vector for ``text``."""
+def _clip_embeddings(texts: Sequence[str]) -> list[List[float]]:
+    """Return CLIP embeddings for ``texts`` as a batch."""
+    assert open_clip is not None and torch is not None
+    assert _tokenizer is not None and _model is not None
+    tokens = _tokenizer(list(texts))
+    with torch.no_grad():
+        vecs = _model.encode_text(tokens).float().cpu().numpy()
+    return cast(list[List[float]], vecs.tolist())
+
+
+def _fallback_embeddings(texts: Sequence[str]) -> list[List[float]]:
+    """Return deterministic random embeddings for ``texts``."""
+    return [_fallback_embedding(text) for text in texts]
+
+
+def generate_embeddings(texts: Sequence[str]) -> list[List[float]]:
+    """Return embeddings for each string in ``texts``."""
     _load_clip()
     if (
         open_clip is not None
@@ -60,5 +76,10 @@ def generate_embedding(text: str) -> List[float]:
         and _model is not None
         and _tokenizer is not None
     ):
-        return _clip_embedding(text)
-    return _fallback_embedding(text)
+        return _clip_embeddings(texts)
+    return _fallback_embeddings(texts)
+
+
+def generate_embedding(text: str) -> List[float]:
+    """Return an embedding vector for ``text``."""
+    return generate_embeddings([text])[0]

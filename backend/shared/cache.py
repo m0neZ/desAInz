@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional, TypeAlias
+from typing import Optional, TypeAlias, cast
 
 import redis
 from redis import asyncio as aioredis
@@ -26,20 +26,30 @@ __all__ = [
 ]
 
 
+_SYNC_CLIENT: SyncRedis = redis.Redis.from_url(
+    str(settings.redis_url), decode_responses=True
+)
+
+
 def get_sync_client() -> SyncRedis:
-    """Return a synchronous Redis client."""
-    return redis.Redis.from_url(settings.redis_url, decode_responses=True)
+    """Return the cached synchronous Redis client."""
+    return _SYNC_CLIENT
+
+
+_ASYNC_CLIENT: AsyncRedis = aioredis.Redis.from_url(
+    str(settings.redis_url), decode_responses=True
+)
 
 
 def get_async_client() -> AsyncRedis:
-    """Return an asynchronous Redis client."""
-    return aioredis.Redis.from_url(settings.redis_url, decode_responses=True)
+    """Return the cached asynchronous Redis client."""
+    return _ASYNC_CLIENT
 
 
 def sync_get(key: str, client: SyncRedis | None = None) -> Optional[str]:
     """Return the value for ``key`` using the provided or default sync client."""
     cli = client or get_sync_client()
-    return cli.get(key)
+    return cast(Optional[str], cli.get(key))
 
 
 def sync_set(
@@ -62,7 +72,7 @@ def sync_delete(key: str, client: SyncRedis | None = None) -> None:
 async def async_get(key: str, client: AsyncRedis | None = None) -> Optional[str]:
     """Return the value for ``key`` using the provided or default async client."""
     cli = client or get_async_client()
-    return await cli.get(key)
+    return cast(Optional[str], await cli.get(key))
 
 
 async def async_set(

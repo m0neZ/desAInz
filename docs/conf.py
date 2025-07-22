@@ -108,7 +108,14 @@ if TYPE_CHECKING:  # pragma: no cover
 def _run_linters(app: "Sphinx") -> None:
     """Run docformatter and flake8-docstrings before building docs."""
     docs_dir = os.path.dirname(os.path.abspath(__file__))
-    subprocess.check_call(["docformatter", "--in-place", "--recursive", docs_dir])
+    result = subprocess.run(
+        ["docformatter", "--check", "--recursive", docs_dir],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(result.stdout)
+        raise RuntimeError("docformatter found issues. Run docformatter")
     subprocess.check_call(["flake8", "--select=D", docs_dir])
 
 

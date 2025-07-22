@@ -6,6 +6,7 @@ from pathlib import Path
 from contextlib import asynccontextmanager
 import subprocess
 from typing import Any, AsyncIterator, cast
+from dataclasses import dataclass, asdict
 import signal
 import sys
 
@@ -28,6 +29,27 @@ from .celery_app import app
 from .generator import MockupGenerator
 
 tracer = trace.get_tracer(__name__)
+
+
+@dataclass
+class MockupResult:
+    """Result from successful mockup generation."""
+
+    image_path: str
+    uri: str
+    title: str
+    description: str
+    tags: list[str]
+
+
+@dataclass
+class MockupError:
+    """Error information for failed mockup generation."""
+
+    error: str
+    keywords: list[str]
+
+
 from .prompt_builder import PromptContext, build_prompt
 from .listing_generator import ListingGenerator
 from .post_processor import (
@@ -84,7 +106,14 @@ async def _multipart_upload(
     resp = await client.create_multipart_upload(Bucket=bucket, Key=key)
     upload_id = resp["UploadId"]
 
-    async def _upload(part_number: int, chunk: bytes) -> dict[str, object]:
+    @dataclass
+    class UploadedPart:
+        """Information about a single uploaded part."""
+
+        PartNumber: int
+        ETag: str
+
+    async def _upload(part_number: int, chunk: bytes) -> UploadedPart:
         part = await client.upload_part(
             Bucket=bucket,
             Key=key,
@@ -92,21 +121,21 @@ async def _multipart_upload(
             PartNumber=part_number,
             Body=chunk,
         )
-        return {"PartNumber": part_number, "ETag": part["ETag"]}
+        return UploadedPart(part_number, part["ETag"])
 
     try:
         tasks = [
             asyncio.create_task(_upload(i, data[offset : offset + chunk_size]))
             for i, offset in enumerate(range(0, len(data), chunk_size), 1)
         ]
-        parts: list[dict[str, object]] = await asyncio.gather(*tasks)
+        parts: list[UploadedPart] = await asyncio.gather(*tasks)
         await client.complete_multipart_upload(
             Bucket=bucket,
             Key=key,
             UploadId=upload_id,
             MultipartUpload={
                 "Parts": sorted(
-                    parts,
+                    [asdict(p) for p in parts],
                     key=lambda p: int(cast(int, p["PartNumber"])),
                 ),
             },
@@ -283,7 +312,7 @@ def generate_single_mockup(
     gpu_index: int | None = None,
     num_inference_steps: int = 30,
     index: int = 0,
-) -> dict[str, object]:
+) -> MockupResult | MockupError:
     """Generate a single mockup on the GPU."""
     delivery_info: dict[str, Any] = dict(self.request.delivery_info or {})
     queue = str(delivery_info.get("routing_key", ""))
@@ -298,7 +327,7 @@ def generate_single_mockup(
 
     listing_gen = ListingGenerator()
 
-    async def runner() -> dict[str, object]:
+    async def runner() -> MockupResult | MockupError:
         async with gpu_slot(slot), _get_storage_client() as client:
             context = PromptContext(keywords=keywords)
             prompt = build_prompt(context)
@@ -356,21 +385,23 @@ def generate_single_mockup(
                     metadata.description,
                     metadata.tags,
                 )
-                return {
-                    "image_path": str(output_path),
-                    "uri": uri,
-                    "title": metadata.title,
-                    "description": metadata.description,
-                    "tags": metadata.tags,
-                }
+                return MockupResult(
+                    image_path=str(output_path),
+                    uri=uri,
+                    title=metadata.title,
+                    description=metadata.description,
+                    tags=metadata.tags,
+                )
             except Exception as exc:  # pragma: no cover - error path tested separately
-                return {"error": str(exc), "keywords": keywords}
+                return MockupError(error=str(exc), keywords=keywords)
 
     return asyncio.run(runner())
 
 
 @app.task  # type: ignore[misc]
-def _aggregate_mockups(results: list[dict[str, object]]) -> list[dict[str, object]]:
+def _aggregate_mockups(
+    results: list[MockupResult | MockupError],
+) -> list[MockupResult | MockupError]:
     """Return aggregated mockup generation results."""
     return results
 
@@ -384,7 +415,7 @@ def generate_mockup(
     model: str | None = None,
     gpu_index: int | None = None,
     num_inference_steps: int = 30,
-) -> list[dict[str, object]]:
+) -> list[MockupResult | MockupError]:
     """Generate mockups in parallel across available GPUs."""
     start = perf_counter()
     with tracer.start_as_current_span("generate_mockup"):

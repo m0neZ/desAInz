@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-import re
 from typing import Any
+
+import regex as re
+
+from backend.shared.regex_utils import compile_cached
 
 # Regex patterns for basic PII detection
 #
@@ -12,19 +15,19 @@ from typing import Any
 # analytics payloads without incurring a noticeable performance hit.
 PII_PATTERNS = [
     # Email addresses
-    re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE),
+    compile_cached(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE),
     # US phone numbers
-    re.compile(r"\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b"),
+    compile_cached(r"\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b"),
     # Simple street addresses (e.g. "123 Main St")
-    re.compile(
+    compile_cached(
         r"\b\d{1,5}\s+(?:[A-Za-z0-9.-]+\s)+(?:Street|St|Avenue|Ave|Road|Rd|"
         r"Boulevard|Blvd|Lane|Ln)\b",
         re.IGNORECASE,
     ),
     # Credit card numbers (13 to 16 digits allowing separators)
-    re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
+    compile_cached(r"\b(?:\d[ -]*?){13,16}\b"),
     # Two capitalized words that could represent a name
-    re.compile(r"\b[A-Z][a-z]+\s+[A-Z][a-z]+\b"),
+    compile_cached(r"\b[A-Z][a-z]+\s+[A-Z][a-z]+\b"),
 ]
 
 

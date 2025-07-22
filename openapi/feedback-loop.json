@@ -108,7 +108,8 @@
               }
             }
           }
-        }
+        },
+        "security": [{"HTTPBearer": []}]
       }
     },
     "/conversion": {
@@ -152,7 +153,8 @@
               }
             }
           }
-        }
+        },
+        "security": [{"HTTPBearer": []}]
       }
     },
     "/allocation": {
@@ -193,7 +195,8 @@
               }
             }
           }
-        }
+        },
+        "security": [{"HTTPBearer": []}]
       }
     },
     "/stats": {
@@ -212,7 +215,8 @@
               }
             }
           }
-        }
+        },
+        "security": [{"HTTPBearer": []}]
       }
     }
   },

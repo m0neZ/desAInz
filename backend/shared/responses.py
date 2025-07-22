@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from fastapi.responses import JSONResponse, Response
+import zlib
+from typing import Iterable
 
 CACHE_TTL_SECONDS = 60
 
@@ -17,3 +19,15 @@ def json_cached(
 ) -> JSONResponse:
     """Return ``JSONResponse`` with Cache-Control header."""
     return JSONResponse(content=payload, headers=cache_header(ttl))
+
+
+def gzip_iter(text_iter: Iterable[str]) -> Iterable[bytes]:
+    """Yield gzip-compressed bytes from an iterable of strings."""
+    compressor = zlib.compressobj(wbits=31)
+    for chunk in text_iter:
+        data = compressor.compress(chunk.encode())
+        if data:
+            yield data
+    data = compressor.flush()
+    if data:
+        yield data

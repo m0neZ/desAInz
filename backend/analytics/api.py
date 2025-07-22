@@ -21,6 +21,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
+from backend.shared.responses import gzip_iter
 from backend.shared.logging import configure_logging
 from backend.shared import add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
@@ -52,7 +53,7 @@ def _identify_user(request: Request) -> str:
     return cast(str, request.headers.get("X-User", request.client.host))
 
 
-@app.middleware("http")
+@app.middleware("http")  # type: ignore[misc]
 async def add_correlation_id(
     request: Request,
     call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -143,10 +144,11 @@ def export_ab_test_results(
                 yield (f"{r.timestamp.isoformat()},{r.conversions},{r.impressions}\n")
 
     return StreamingResponse(
-        _iter(),
+        gzip_iter(_iter()),
         media_type="text/csv",
         headers={
-            "Content-Disposition": f"attachment; filename=ab_test_{ab_test_id}.csv"
+            "Content-Disposition": f"attachment; filename=ab_test_{ab_test_id}.csv",
+            "Content-Encoding": "gzip",
         },
     )
 
@@ -213,10 +215,11 @@ def export_marketplace_metrics(
                 )
 
     return StreamingResponse(
-        _iter(),
+        gzip_iter(_iter()),
         media_type="text/csv",
         headers={
-            "Content-Disposition": f"attachment; filename=listing_{listing_id}.csv"
+            "Content-Disposition": f"attachment; filename=listing_{listing_id}.csv",
+            "Content-Encoding": "gzip",
         },
     )
 
@@ -243,10 +246,11 @@ def export_performance_metrics(
                 )
 
     return StreamingResponse(
-        _iter(),
+        gzip_iter(_iter()),
         media_type="text/csv",
         headers={
-            "Content-Disposition": f"attachment; filename=performance_{listing_id}.csv"
+            "Content-Disposition": f"attachment; filename=performance_{listing_id}.csv",
+            "Content-Encoding": "gzip",
         },
     )
 

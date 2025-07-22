@@ -146,16 +146,22 @@ def ingest_adapter_task(adapter_name: str) -> None:
         INGEST_DURATION.labels(adapter_name).observe(perf_counter() - start)
 
 
+@app.task(name="signal_ingestion.ingest_batch")  # type: ignore[misc]
+def ingest_batch_task(adapter_names: list[str]) -> int:
+    """Run ingestion for multiple adapters in one task."""
+    for name in adapter_names:
+        ingest_adapter_task.run(name)
+    return len(adapter_names)
+
+
 def queue_for(adapter_name: str) -> str:
     """Return queue name for ``adapter_name``."""
     return f"ingestion_{adapter_name}"
 
 
 def schedule_ingestion(adapter_names: Iterable[str]) -> None:
-    """Dispatch ingestion tasks for ``adapter_names``."""
-    for name in adapter_names:
-        app.send_task(
-            "signal_ingestion.ingest_adapter",
-            args=[name],
-            queue=queue_for(name),
-        )
+    """Dispatch a batched ingestion task for ``adapter_names``."""
+    names = list(adapter_names)
+    if not names:
+        return
+    app.send_task("signal_ingestion.ingest_batch", args=[names])

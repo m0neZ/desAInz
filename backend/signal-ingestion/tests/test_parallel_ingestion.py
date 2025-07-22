@@ -26,17 +26,12 @@ class DummyApp:
 
 
 def test_schedule_ingestion(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Ensure each adapter is dispatched to its own queue."""
+    """Ensure adapters are dispatched in a single batch."""
     dummy = DummyApp()
     monkeypatch.setattr(tasks, "app", dummy)
     tasks.schedule_ingestion(["tiktok", "instagram"])
     assert dummy.sent == [
-        ("signal_ingestion.ingest_adapter", ["tiktok"], tasks.queue_for("tiktok")),
-        (
-            "signal_ingestion.ingest_adapter",
-            ["instagram"],
-            tasks.queue_for("instagram"),
-        ),
+        ("signal_ingestion.ingest_batch", ["tiktok", "instagram"], None)
     ]
 
 

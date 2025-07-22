@@ -56,6 +56,8 @@ alembic -c backend/shared/db/alembic_scoring_engine.ini merge \
 The new revision should live in ``backend/shared/db/migrations`` and replace
 ``example_merge_revision.py``. After committing the merge file, run
 ``scripts/validate_migrations.sh`` to confirm that only a single head exists.
+This script invokes ``scripts/check_heads.py`` which inspects every Alembic
+configuration and fails if more than one head is found.
 
 ## Verifying Migrations
 

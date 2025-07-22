@@ -17,9 +17,9 @@ Python utilities
    * - ``analyze_query_plans.py``
      - Inspect ``pg_stat_statements`` and suggest indexes.
      - ``python scripts/analyze_query_plans.py``
-  * - ``apply_s3_lifecycle.py``
-    - Configure bucket lifecycle rules.
-    - ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
+   * - ``apply_s3_lifecycle.py``
+     - Configure bucket lifecycle rules.
+     - ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
    * - ``approve_job.py``
      - Approve Dagster runs from the approval service.
      - ``python scripts/approve_job.py <run_id>``
@@ -152,9 +152,15 @@ automatic rollback::
 
    ./scripts/sync_staging_secrets.sh
 
-``validate_migrations.sh`` ensures Alembic has a single head::
+``validate_migrations.sh`` ensures Alembic has a single head by calling
+``check_heads.py``::
 
    ./scripts/validate_migrations.sh
+
+``check_heads.py`` can be run directly to validate specific Alembic
+configuration files::
+
+   python scripts/check_heads.py backend/shared/db/alembic_api_gateway.ini
 
 ``wait-for-services.sh`` waits until local services are ready::
 

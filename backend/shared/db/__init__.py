@@ -8,6 +8,7 @@ import asyncio
 import os
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 
 from sqlalchemy import create_engine, event, text
 from prometheus_client import Gauge
@@ -34,6 +35,7 @@ __all__ = [
     "DB_POOL_SIZE",
     "DB_POOL_IN_USE",
     "register_pool_metrics",
+    "ensure_single_head",
 ]
 
 DATABASE_URL = str(settings.effective_database_url)
@@ -151,6 +153,15 @@ async def async_session_scope(
         await session.close()
 
 
+def ensure_single_head(config_path: str) -> None:
+    """Raise ``RuntimeError`` if ``config_path`` contains multiple heads."""
+    cfg = Config(config_path)
+    script = ScriptDirectory.from_config(cfg)
+    heads = script.get_heads()
+    if len(heads) != 1:
+        raise RuntimeError(f"{config_path} has multiple heads: {heads}")
+
+
 async def run_migrations_if_needed(config_path: str) -> None:
     """Upgrade the database to the latest revision when required."""
     if os.getenv(SKIP_MIGRATIONS_ENV) in {"1", "true", "True"}:
@@ -158,6 +169,7 @@ async def run_migrations_if_needed(config_path: str) -> None:
 
     cfg = Config(config_path)
     cfg.set_main_option("sqlalchemy.url", str(settings.effective_database_url))
+    ensure_single_head(config_path)
     await asyncio.to_thread(command.upgrade, cfg, "head")
 
 

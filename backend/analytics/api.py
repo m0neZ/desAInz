@@ -7,6 +7,8 @@ import os
 import uuid
 from typing import Any, Callable, Coroutine, Dict, Iterable, cast
 
+from datetime import datetime
+
 from fastapi import Depends, FastAPI, Request, Response
 from backend.shared.security import require_status_api_key
 from fastapi.responses import StreamingResponse
@@ -127,19 +129,28 @@ def ab_test_results(ab_test_id: int) -> ABTestSummary:
 @app.get("/ab_test_results/{ab_test_id}/export")  # type: ignore[misc]
 def export_ab_test_results(
     ab_test_id: int,
+    start: datetime | None = None,
+    end: datetime | None = None,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> StreamingResponse:
-    """Return all A/B test result rows for ``ab_test_id`` as CSV."""
+    """
+    Return all A/B test result rows for ``ab_test_id`` as CSV.
+
+    The optional ``start`` and ``end`` query parameters bound the timestamp
+    range of exported rows.
+    """
 
     def _iter() -> Iterable[str]:
         yield "timestamp,conversions,impressions\n"
         with SessionLocal() as session:
-            query = (
-                session.query(models.ABTestResult)
-                .filter(models.ABTestResult.ab_test_id == ab_test_id)
-                .order_by(models.ABTestResult.timestamp)
-                .yield_per(1000)
+            query = session.query(models.ABTestResult).filter(
+                models.ABTestResult.ab_test_id == ab_test_id
             )
+            if start is not None:
+                query = query.filter(models.ABTestResult.timestamp >= start)
+            if end is not None:
+                query = query.filter(models.ABTestResult.timestamp <= end)
+            query = query.order_by(models.ABTestResult.timestamp).yield_per(1000)
             for r in query:
                 yield (f"{r.timestamp.isoformat()},{r.conversions},{r.impressions}\n")
 
@@ -196,19 +207,27 @@ def low_performers(limit: int = 10) -> list[LowPerformer]:
 @app.get("/marketplace_metrics/{listing_id}/export")  # type: ignore[misc]
 def export_marketplace_metrics(
     listing_id: int,
+    start: datetime | None = None,
+    end: datetime | None = None,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> StreamingResponse:
-    """Return all marketplace metrics rows for ``listing_id`` as CSV."""
+    """
+    Return all marketplace metrics rows for ``listing_id`` as CSV.
+
+    ``start`` and ``end`` bound the timestamp range of exported rows.
+    """
 
     def _iter() -> Iterable[str]:
         yield "timestamp,clicks,purchases,revenue\n"
         with SessionLocal() as session:
-            query = (
-                session.query(models.MarketplaceMetric)
-                .filter(models.MarketplaceMetric.listing_id == listing_id)
-                .order_by(models.MarketplaceMetric.timestamp)
-                .yield_per(1000)
+            query = session.query(models.MarketplaceMetric).filter(
+                models.MarketplaceMetric.listing_id == listing_id
             )
+            if start is not None:
+                query = query.filter(models.MarketplaceMetric.timestamp >= start)
+            if end is not None:
+                query = query.filter(models.MarketplaceMetric.timestamp <= end)
+            query = query.order_by(models.MarketplaceMetric.timestamp).yield_per(1000)
             for r in query:
                 yield (
                     f"{r.timestamp.isoformat()},{r.clicks},{r.purchases},{r.revenue}\n"
@@ -227,19 +246,33 @@ def export_marketplace_metrics(
 @app.get("/performance_metrics/{listing_id}/export")  # type: ignore[misc]
 def export_performance_metrics(
     listing_id: int,
+    start: datetime | None = None,
+    end: datetime | None = None,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> StreamingResponse:
-    """Return all performance metrics rows for ``listing_id`` as CSV."""
+    """
+    Return all performance metrics rows for ``listing_id`` as CSV.
+
+    Use ``start`` and ``end`` to bound the timestamp range.
+    """
 
     def _iter() -> Iterable[str]:
         yield "timestamp,views,favorites,orders,revenue\n"
         with SessionLocal() as session:
-            query = (
-                session.query(models.MarketplacePerformanceMetric)
-                .filter(models.MarketplacePerformanceMetric.listing_id == listing_id)
-                .order_by(models.MarketplacePerformanceMetric.timestamp)
-                .yield_per(1000)
+            query = session.query(models.MarketplacePerformanceMetric).filter(
+                models.MarketplacePerformanceMetric.listing_id == listing_id
             )
+            if start is not None:
+                query = query.filter(
+                    models.MarketplacePerformanceMetric.timestamp >= start
+                )
+            if end is not None:
+                query = query.filter(
+                    models.MarketplacePerformanceMetric.timestamp <= end
+                )
+            query = query.order_by(
+                models.MarketplacePerformanceMetric.timestamp
+            ).yield_per(1000)
             for r in query:
                 yield (
                     f"{r.timestamp.isoformat()},{r.views},{r.favorites},{r.orders},{r.revenue}\n"

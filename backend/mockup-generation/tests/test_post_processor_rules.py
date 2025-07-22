@@ -35,6 +35,7 @@ def test_validate_file_size(tmp_path: Path) -> None:
 
 
 def test_post_process_image(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Post-processing pipeline returns saved image."""
     img = Image.new("RGB", (10, 10))
     path = tmp_path / "img.png"
     img.save(path)

@@ -1,3 +1,5 @@
+"""Common readiness endpoint tests."""
+
 import importlib
 import sys
 from pathlib import Path
@@ -23,8 +25,7 @@ SERVICES = [
 def test_ready_requires_api_key(
     base: str, module: str, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """``/ready`` returns 401 without API key when unauthenticated access is
-    disabled."""
+    """Return 401 for unauthenticated requests when disabled."""
     monkeypatch.setenv("ALLOW_STATUS_UNAUTHENTICATED", "false")
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / base))
     mod = importlib.import_module(module)

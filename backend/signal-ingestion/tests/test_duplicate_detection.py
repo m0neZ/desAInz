@@ -1,3 +1,5 @@
+"""Tests for duplicate detection logic."""
+
 import os
 import sys
 from types import SimpleNamespace
@@ -16,6 +18,8 @@ from signal_ingestion.models import Signal
 
 
 class DummyAdapter(BaseAdapter):
+    """Simple adapter returning one signal for testing."""
+
     def __init__(self) -> None:
         super().__init__(base_url="")
 
@@ -25,6 +29,7 @@ class DummyAdapter(BaseAdapter):
 
 @pytest.mark.asyncio()
 async def test_duplicate_rows_are_skipped(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Skip ingestion when adapter returns already ingested signals."""
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     database.engine = engine
     database.SessionLocal = async_sessionmaker(engine, expire_on_commit=False)

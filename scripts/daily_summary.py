@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -18,6 +19,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from backend.shared.db import session_scope
 from sqlalchemy.orm import Session
 from backend.shared.db.models import Idea, Mockup
+from backend.shared.logging import configure_logging
 
 
 class Settings(BaseSettings):
@@ -109,5 +111,7 @@ async def generate_daily_summary(
 if __name__ == "__main__":  # pragma: no cover
     import asyncio
 
+    configure_logging()
+    logger = logging.getLogger(__name__)
     summary = asyncio.run(generate_daily_summary())
-    print(json.dumps(summary, indent=2))
+    logger.info(json.dumps(summary, indent=2))

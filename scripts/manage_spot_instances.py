@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import subprocess
 import time
 from typing import Iterable
@@ -158,7 +159,8 @@ def main() -> None:
             label=args.label,
         )
         label_node(instance_id, args.label)
-        print(instance_id)
+        logging.basicConfig(level=logging.INFO)
+        logging.getLogger(__name__).info("%s", instance_id)
     elif args.cmd == "release":
         release_instance(args.instance_id)
     elif args.cmd == "maintain":
@@ -174,4 +176,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()

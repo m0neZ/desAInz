@@ -6,10 +6,13 @@ import importlib.util
 import json
 import os
 import sys
+import logging
 import hashlib
 import re
 from pathlib import Path
 from typing import Iterable
+
+logging.basicConfig(level=logging.INFO)
 
 from openapi_schema_validator import OAS30Validator
 
@@ -212,7 +215,7 @@ def generate_from_file(main_file: Path) -> None:
     try:
         spec_obj.loader.exec_module(module)
     except Exception as exc:  # pragma: no cover - best effort
-        print(f"Skipping {service}: {exc}", file=sys.stderr)
+        logging.getLogger(__name__).warning("Skipping %s: %s", service, exc)
         return
     app = getattr(module, "app", None)
     if not app or not hasattr(app, "openapi"):
@@ -231,7 +234,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "backend" / "scoring-engine"))
 try:
     from scoring_engine.app import ScoreRequest, WeightsUpdate
 except Exception as exc:  # pragma: no cover - runtime import guard
-    print(f"Skipping scoring-engine: {exc}", file=sys.stderr)
+    logging.getLogger(__name__).warning("Skipping scoring-engine: %s", exc)
 else:
 
     spec = {

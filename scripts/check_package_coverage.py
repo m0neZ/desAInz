@@ -2,6 +2,7 @@
 """Check coverage for specific packages."""
 from __future__ import annotations
 
+import logging
 import sys
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -25,8 +26,9 @@ def coverage_for_package(xml_path: Path, package: str) -> float:
 def main() -> None:
     """Entry point for package coverage check."""
     xml = Path("coverage.xml")
+    logger = logging.getLogger(__name__)
     if not xml.exists():
-        print("coverage.xml not found", file=sys.stderr)
+        logger.error("coverage.xml not found")
         sys.exit(1)
 
     packages = ["backend/scoring-engine", "backend/mockup-generation"]
@@ -34,11 +36,12 @@ def main() -> None:
     for pkg in packages:
         pct = coverage_for_package(xml, pkg)
         if pct < 100.0:
-            print(f"{pkg} coverage {pct:.2f}% < 100%", file=sys.stderr)
+            logger.error("%s coverage %.2f%% < 100%%", pkg, pct)
             failed = True
     if failed:
         sys.exit(1)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()

@@ -20,8 +20,9 @@ test:
 	npm run test:e2e
 	docker compose -f docker-compose.dev.yml -f docker-compose.test.yml down
 
+
 lint:
-	flake8 .
+	flake8 --cache .
 	mypy backend --explicit-package-bases --exclude "tests"
 	pydocstyle .
 	docformatter --check --recursive .

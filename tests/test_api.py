@@ -7,7 +7,7 @@ sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "optimization")
 )  # noqa: E402
 
-from datetime import datetime, timezone  # noqa: E402
+from datetime import UTC, datetime  # noqa: E402
 
 from fastapi.testclient import TestClient  # noqa: E402
 
@@ -20,7 +20,7 @@ client = TestClient(app)
 def test_add_metric_and_get_optimizations() -> None:
     """Ensure metrics endpoint stores data and returns suggestions."""
     metric = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "cpu_percent": 90,
         "memory_mb": 2048,
     }

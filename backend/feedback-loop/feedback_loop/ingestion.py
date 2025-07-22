@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Iterable, Mapping
 
 import requests
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 def ingest_metrics(metrics: Iterable[Mapping[str, float]]) -> list[dict[str, float]]:
     """Persist incoming metrics and return them as a list of dictionaries."""
     metrics_list = [dict(m) for m in metrics]
-    now = datetime.now(timezone.utc)
+    now = datetime.utcnow().replace(tzinfo=UTC)
     for entry in metrics_list:
         entry.setdefault("timestamp", now)
     logger.info("ingested %s metrics", len(metrics_list))
@@ -64,7 +64,7 @@ def store_marketplace_metrics(metrics: Iterable[Mapping[str, float]]) -> None:
     rows = [
         models.MarketplacePerformanceMetric(
             listing_id=int(m["listing_id"]),
-            timestamp=datetime.now(timezone.utc),
+            timestamp=datetime.utcnow().replace(tzinfo=UTC),
             views=int(m["views"]),
             favorites=int(m["favorites"]),
             orders=int(m["orders"]),

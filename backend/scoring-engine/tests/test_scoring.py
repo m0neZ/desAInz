@@ -2,7 +2,7 @@
 
 # mypy: ignore-errors
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import numpy as np
 
@@ -24,7 +24,7 @@ def test_calculate_score_simple(tmp_path, monkeypatch):
     )
     signal = Signal(
         source="src",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         engagement_rate=1.0,
         embedding=[1.0, 0.0],
         metadata={"a": 1.0, "b": 0.0},
@@ -59,7 +59,7 @@ def test_scoring_uses_db_centroid(tmp_path) -> None:
     compute_and_store_centroids()
     signal = Signal(
         source="src",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         engagement_rate=0.0,
         embedding=dim_vec1,
         metadata={},

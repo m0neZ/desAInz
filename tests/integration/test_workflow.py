@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import MagicMock
@@ -91,7 +91,7 @@ async def test_end_to_end(
     )
     sig = scoring.Signal(
         source="global",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         engagement_rate=1.0,
         embedding=[0.1, 0.2],
         metadata={},

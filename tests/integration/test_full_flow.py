@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import os
 from pathlib import Path
 from types import SimpleNamespace
@@ -137,7 +137,7 @@ async def test_full_flow(
     monkeypatch.setattr(weight_repository, "update_weights", lambda **k: None)
     sig = scoring.Signal(
         source="global",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         engagement_rate=1.0,
         embedding=[0.1, 0.2],
         metadata={},
@@ -159,7 +159,7 @@ async def test_full_flow(
     )
     client = TestClient(opt_api.app)
     metric = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "cpu_percent": 10,
         "memory_mb": 100,
     }

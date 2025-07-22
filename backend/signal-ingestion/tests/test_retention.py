@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from sqlalchemy import select
@@ -22,8 +22,8 @@ async def test_purge_old_signals() -> None:
     await database.init_db()
 
     async with database.SessionLocal() as session:
-        old_ts = datetime.now(timezone.utc) - timedelta(days=100)
-        new_ts = datetime.now(timezone.utc)
+        old_ts = datetime.utcnow().replace(tzinfo=UTC) - timedelta(days=100)
+        new_ts = datetime.utcnow().replace(tzinfo=UTC)
         session.add_all(
             [
                 Signal(

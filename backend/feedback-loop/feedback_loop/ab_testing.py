@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from contextlib import contextmanager
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from typing import Iterator, Mapping
 
 from sqlalchemy import (
@@ -34,7 +34,7 @@ class TestResult(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     timestamp: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
+        DateTime, default=lambda: datetime.utcnow().replace(tzinfo=UTC)
     )
     variant: Mapped[str] = mapped_column(String(1))
     success: Mapped[bool] = mapped_column(Boolean)

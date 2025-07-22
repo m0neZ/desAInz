@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Iterable
 
 from numpy.typing import NDArray
@@ -45,7 +45,7 @@ _SCALER_BUF: NDArray[np.floating] = np.empty((2, 1), dtype=float)
 
 def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> float:
     """Return freshness score weighted by ``trending_factor``."""
-    hours = (datetime.now(timezone.utc) - timestamp).total_seconds() / 3600
+    hours = (datetime.utcnow().replace(tzinfo=UTC) - timestamp).total_seconds() / 3600
     base = 1 / (1 + math.exp(hours / 24))
     return base * trending_factor
 

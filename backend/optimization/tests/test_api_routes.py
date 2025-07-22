@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 
@@ -18,7 +18,7 @@ def test_recommendation_routes(tmp_path: Path) -> None:
     client = TestClient(opt_api.app)
 
     metric = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "cpu_percent": 85.0,
         "memory_mb": 2048.0,
         "disk_usage_mb": 4096.0,

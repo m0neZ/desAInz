@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 from collections import defaultdict
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Callable, ContextManager, Mapping
 
 from sqlalchemy import func, select
@@ -89,7 +89,7 @@ async def generate_daily_summary(
     The summary is persisted as JSON to ``output_file`` or to the path
     specified by the ``DAILY_SUMMARY_FILE`` environment variable.
     """
-    now = datetime.now(timezone.utc)
+    now = datetime.utcnow().replace(tzinfo=UTC)
     since = now - timedelta(days=1)
 
     with session_provider() as session:

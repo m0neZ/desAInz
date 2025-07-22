@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 import sys
 
@@ -60,7 +60,7 @@ def _fake_load(self: MockupGenerator) -> None:  # noqa: D401 - short helper
 
 def _worker(client, gen: MockupGenerator, tmp: Path, idx: int) -> None:
     payload = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "engagement_rate": 1.0,
         "embedding": [1.0, 0.0],
         "metadata": {},

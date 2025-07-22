@@ -17,6 +17,8 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 import fakeredis.aioredis
+import psycopg2
+import testing.postgresql
 
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 warnings.filterwarnings(
@@ -99,3 +101,30 @@ def session_factory(sqlite_engine: AsyncEngine) -> async_sessionmaker[AsyncSessi
 def fake_redis() -> fakeredis.aioredis.FakeRedis:
     """Return a fakeredis instance."""
     return fakeredis.aioredis.FakeRedis()
+
+
+class _PostgresConnectionWrapper:
+    """Wrapper for a psycopg2 connection with ``info.dsn`` attribute."""
+
+    def __init__(self, conn: psycopg2.extensions.connection, dsn: str) -> None:
+        self._conn = conn
+        self.info = SimpleNamespace(dsn=dsn)
+
+    def __getattr__(self, name: str) -> object:
+        return getattr(self._conn, name)
+
+
+@pytest.fixture()
+def postgresql() -> _PostgresConnectionWrapper:
+    """Yield a temporary PostgreSQL connection."""
+    try:
+        pg = testing.postgresql.Postgresql()
+    except (FileNotFoundError, RuntimeError):
+        pytest.skip("PostgreSQL not available")
+    with pg:
+        conn = psycopg2.connect(**pg.dsn())
+        wrapper = _PostgresConnectionWrapper(conn, pg.url())
+        try:
+            yield wrapper
+        finally:
+            conn.close()

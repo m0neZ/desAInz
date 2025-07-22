@@ -153,6 +153,9 @@ export const trpc = {
     summary: () => call<Metric[]>('metrics.summary'),
     list: () => getText('/metrics'),
   },
+  recommendations: {
+    list: () => getJson<string[]>('/recommendations'),
+  },
   auditLogs: {
     list: (limit = 50, offset = 0) =>
       getJson<AuditLogResponse>(`/audit-logs?limit=${limit}&offset=${offset}`),

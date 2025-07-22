@@ -6,7 +6,7 @@ import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from datetime import datetime
 import numpy as np
 
@@ -17,14 +17,19 @@ logger = logging.getLogger(__name__)
 
 scheduler = BackgroundScheduler()
 
+RECENT_EMBEDDINGS = 100
 
-def compute_and_store_centroids() -> None:
-    """Aggregate embeddings per source and store centroids."""
+
+def compute_and_store_centroids(limit: int = RECENT_EMBEDDINGS) -> None:
+    """Compute and persist centroids from the most recent embeddings."""
     with session_scope() as session:
         sources = session.scalars(select(Embedding.source).distinct()).all()
         for src in sources:
             vectors = session.scalars(
-                select(Embedding.embedding).where(Embedding.source == src)
+                select(Embedding.embedding)
+                .where(Embedding.source == src)
+                .order_by(desc(Embedding.id))
+                .limit(limit)
             ).all()
             if not vectors:
                 continue

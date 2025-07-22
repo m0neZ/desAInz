@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from contextlib import contextmanager
+import subprocess
 from typing import Iterator, Any
 import signal
 import sys
@@ -35,6 +36,15 @@ from .post_processor import (
 )
 from backend.shared.config import settings
 from . import model_repository
+
+
+def _invalidate_cdn_cache(path: str) -> None:
+    """Invalidate CDN caches for ``path`` if configured."""
+    distribution = settings.cdn_distribution_id
+    if not distribution:
+        return
+    script = Path(__file__).resolve().parents[2] / "scripts" / "invalidate_cache.sh"
+    subprocess.run([str(script), distribution, f"/{path}"], check=True)
 
 
 def _get_storage_client() -> Minio | BaseClient:
@@ -242,6 +252,7 @@ def generate_mockup(
                         client.fput_object(bucket, obj_name, str(output_path))
                     else:
                         client.upload_file(str(output_path), bucket, obj_name)
+                    _invalidate_cdn_cache(obj_name)
                     base = settings.s3_base_url or settings.s3_endpoint
                     if base:
                         base = base.rstrip("/")

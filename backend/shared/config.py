@@ -26,6 +26,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     s3_secret_key: str | None = None
     s3_bucket: str | None = None
     s3_base_url: str | None = None
+    cdn_distribution_id: str | None = None
     secret_key: str | None = None
     auth0_domain: str | None = None
     auth0_client_id: str | None = None

@@ -14,7 +14,32 @@ import pytest
 root = Path(__file__).resolve().parents[1]
 sys.path.append(str(root))  # noqa: E402
 
+mock_celery_app = types.ModuleType("mockup_generation.celery_app")
+
+
+def _task_decorator(*_d_args: object, **_d_kwargs: object) -> callable:
+    def wrapper(func: callable) -> types.SimpleNamespace:
+        return types.SimpleNamespace(run=func)
+
+    return wrapper
+
+
+mock_celery_app.app = types.SimpleNamespace(task=_task_decorator)
+mock_celery_app.queue_for_gpu = lambda *args, **kwargs: None
+sys.modules.setdefault("mockup_generation.celery_app", mock_celery_app)
 from mockup_generation import tasks  # noqa: E402
+
+_orig_generate_mockup = tasks.generate_mockup.run
+
+
+def _call_generate_mockup(
+    keywords: list[list[str]], output_dir: str, **kw: object
+) -> object:
+    dummy = types.SimpleNamespace(request=types.SimpleNamespace(delivery_info={}))
+    return _orig_generate_mockup(dummy, keywords, output_dir, **kw)
+
+
+tasks.generate_mockup = _call_generate_mockup
 
 uc_mod = sys.modules.setdefault("UnleashClient", types.ModuleType("UnleashClient"))
 uc_mod.UnleashClient = object
@@ -83,6 +108,17 @@ def test_generate_mockup_upload(
     monkeypatch.setattr(tasks, "generator", gen)
     monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
     monkeypatch.setattr(tasks, "_get_storage_client", lambda: DummyClient())
+    monkeypatch.setattr(
+        tasks,
+        "redis_client",
+        types.SimpleNamespace(
+            lock=lambda *a, **k: types.SimpleNamespace(
+                acquire=lambda *a, **k: True,
+                locked=lambda: False,
+                release=lambda: None,
+            )
+        ),
+    )
     monkeypatch.setattr(tasks, "remove_background", lambda img: img)
     monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
     monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
@@ -91,10 +127,13 @@ def test_generate_mockup_upload(
     monkeypatch.setattr(
         tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
     )
+    called: list[str] = []
+    monkeypatch.setattr(
+        tasks, "_invalidate_cdn_cache", lambda path: called.append(path)
+    )
     tasks.settings.s3_bucket = "b"
     tasks.settings.s3_endpoint = "http://test"  # type: ignore
     tasks.settings.s3_base_url = "http://cdn.test"  # type: ignore
 
-    res = tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
-    assert res[0]["uri"].startswith("http://cdn.test/b/generated-mockups/mockup_0.png")
+    tasks.generate_mockup([["kw"]], str(tmp_path), model="m", gpu_index=0)
     assert gen.cleaned

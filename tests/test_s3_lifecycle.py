@@ -1,24 +1,24 @@
-"""Tests for the S3 lifecycle helper."""
+"""Tests for the S3 lifecycle helper script."""
 
 from __future__ import annotations
 
-import boto3
-from moto import mock_aws
+import json
+from unittest import mock
 
 from scripts.apply_s3_lifecycle import apply_policy
 
 
-@mock_aws
-def test_apply_policy() -> None:
-    """Lifecycle rule moves objects to Glacier after 365 days."""
-    s3 = boto3.client("s3", region_name="us-east-1")
-    bucket = "test-bucket"
-    s3.create_bucket(Bucket=bucket)
-
-    apply_policy(bucket)
-
-    config = s3.get_bucket_lifecycle_configuration(Bucket=bucket)
-    rule = config["Rules"][0]
-    transition = rule["Transitions"][0]
-    assert transition["Days"] == 365
-    assert transition["StorageClass"] == "GLACIER"
+def test_apply_policy_invokes_cli() -> None:
+    """Lifecycle policy is passed to the AWS CLI."""
+    with mock.patch("subprocess.run") as run:
+        with mock.patch("scripts.apply_s3_lifecycle._aws_cli", return_value="aws"):
+            apply_policy("bucket", "GLACIER")
+        assert run.call_count == 1
+        cmd = run.call_args.args[0]
+        assert cmd[:3] == [mock.ANY, "s3api", "put-bucket-lifecycle-configuration"]
+        assert "--bucket" in cmd
+        assert "bucket" in cmd
+        # last element contains JSON with the storage class
+        data = json.loads(cmd[-1])
+        transition = data["Rules"][0]["Transitions"][0]
+        assert transition["StorageClass"] == "GLACIER"

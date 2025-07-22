@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import pytest
 from PIL import Image
 
 from mockup_generation.post_processor import ensure_not_nsfw
 
 
-@pytest.mark.skip("model heavy")
 def test_ensure_not_nsfw() -> None:
     """Smoke test for NSFW detection function."""
     img = Image.new("RGB", (32, 32), color="white")

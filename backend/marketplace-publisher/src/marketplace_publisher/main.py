@@ -50,9 +50,9 @@ from .db import (
 )
 from .logging_config import configure_logging
 from .pricing import create_listing_metadata
-from .publisher import publish_with_retry
+from .publisher import publish_with_retry, validate_mockup
 from .rate_limiter import MarketplaceRateLimiter
-from .rules import load_rules, validate_mockup
+from .rules import load_default_rules
 from .settings import settings
 
 configure_logging()
@@ -109,12 +109,7 @@ async def startup() -> None:
         "backend/shared/db/alembic_marketplace_publisher.ini"
     )
     await init_db()
-    rules_path = (
-        Path(__file__).resolve().parent.parent.parent
-        / "config"
-        / "marketplace_rules.yaml"
-    )
-    load_rules(rules_path, watch=True)
+    load_default_rules(watch=True)
     init_feature_flags()
 
 
@@ -247,9 +242,11 @@ async def publish(req: PublishRequest, background: BackgroundTasks) -> dict[str,
         )
         raise HTTPException(status_code=429, detail="Rate limit exceeded")
     try:
-        validate_mockup(req.marketplace, req.design_path)
+        reason = validate_mockup(req.marketplace, req.design_path, req.metadata or {})
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if reason is not None:
+        raise HTTPException(status_code=400, detail=reason)
     async with SessionLocal() as session:
         metadata = create_listing_metadata(req.score, req.marketplace, req.metadata)
         task = await create_task(

@@ -47,6 +47,11 @@ rules_registry: RulesRegistry | None = None
 _rules_path: Path | None = None
 _observer: Observer | None = None
 
+# Path to the repository-wide rules configuration file
+DEFAULT_RULES_PATH = (
+    Path(__file__).resolve().parents[3] / "config" / "marketplace_rules.yaml"
+)
+
 
 def _reload_rules() -> None:
     """Reload rules from ``_rules_path`` into the global registry."""
@@ -88,6 +93,11 @@ def load_rules(path: Path, watch: bool = False) -> None:
         _observer.daemon = True
         _observer.schedule(handler, str(path.parent), recursive=False)
         _observer.start()
+
+
+def load_default_rules(watch: bool = False) -> None:
+    """Load rules from :data:`DEFAULT_RULES_PATH`."""
+    load_rules(DEFAULT_RULES_PATH, watch=watch)
 
 
 def get_upload_limit(marketplace: Marketplace) -> int | None:

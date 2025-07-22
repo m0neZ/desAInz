@@ -8,7 +8,8 @@ import os
 import sys
 import logging
 import hashlib
-import re
+import regex as re
+from backend.shared.regex_utils import compile_cached
 from pathlib import Path
 from typing import Iterable
 
@@ -73,7 +74,10 @@ OPENAPI_DIR = PROJECT_ROOT / "openapi"
 OPENAPI_DIR.mkdir(exist_ok=True)
 
 
-def _write_spec(service: str, data: dict) -> None:
+from typing import Any
+
+
+def _write_spec(service: str, data: dict[str, Any]) -> None:
     """Write ``data`` to ``service`` JSON file with version hash."""
     stripped = dict(data)
     stripped.pop("x-spec-version", None)
@@ -172,7 +176,7 @@ def _patch_shared_dependencies() -> None:
             return cls()
 
     asyncio_mod.Redis = _AsyncRedis  # type: ignore[attr-defined]
-    asyncio_mod.WatchError = Exception
+    asyncio_mod.WatchError = Exception  # type: ignore[attr-defined]
     sys.modules.setdefault("redis", redis_mod)
     sys.modules.setdefault("redis.asyncio", asyncio_mod)
 
@@ -182,7 +186,7 @@ def _patch_shared_dependencies() -> None:
         def _db_url(self: _config.Settings) -> str:
             return str(self.pgbouncer_url or self.database_url)
 
-        _config.Settings.effective_database_url = property(_db_url)  # type: ignore[attr-defined]
+        _config.Settings.effective_database_url = property(_db_url)
         _config.settings = _config.Settings()
     except Exception:  # pragma: no cover - best effort
         pass
@@ -310,7 +314,11 @@ else:
     ensure_doc("scoring-engine")
 
 
-def _parse_ts_type(type_str: str) -> dict:
+_PROP_RE = compile_cached(r"(\w+): ([^;]+);")
+_INTERFACE_RE = compile_cached(r"export interface (\w+) \{([^}]*)\}", re.DOTALL)
+
+
+def _parse_ts_type(type_str: str) -> dict[str, Any]:
     """Return JSON schema for basic TypeScript ``type_str``."""
     type_str = type_str.strip()
     if type_str.endswith("[]"):
@@ -320,10 +328,10 @@ def _parse_ts_type(type_str: str) -> dict:
     if type_str == "void":
         return {"type": "null"}
     if type_str.startswith("{") and type_str.endswith("}"):
-        props: dict[str, dict] = {}
+        props: dict[str, Any] = {}
         required: list[str] = []
         body = type_str[1:-1].strip()
-        for m in re.finditer(r"(\w+): ([^;]+);", body):
+        for m in _PROP_RE.finditer(body):
             name, t = m.groups()
             props[name] = _parse_ts_type(t)
             required.append(name)
@@ -331,18 +339,16 @@ def _parse_ts_type(type_str: str) -> dict:
     return {"$ref": f"#/components/schemas/{type_str}"}
 
 
-def parse_trpc(path: Path) -> dict[str, dict]:
+def parse_trpc(path: Path) -> dict[str, dict[str, Any]]:
     """Parse interfaces from the tRPC TypeScript definitions."""
     text = path.read_text(encoding="utf-8")
-    schemas: dict[str, dict] = {}
-    for name, body in re.findall(
-        r"export interface (\w+) \{([^}]*)\}", text, re.DOTALL
-    ):
+    schemas: dict[str, dict[str, Any]] = {}
+    for name, body in _INTERFACE_RE.findall(text):
         if name == "AppRouter":
             continue
-        props: dict[str, dict] = {}
+        props: dict[str, Any] = {}
         required: list[str] = []
-        for prop, typ in re.findall(r"(\w+): ([^;]+);", body):
+        for prop, typ in _PROP_RE.findall(body):
             props[prop] = _parse_ts_type(typ)
             required.append(prop)
         schemas[name] = {

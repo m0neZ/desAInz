@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-import re
-from typing import Iterable
-from typing import Pattern
+from typing import Iterable, Pattern, cast
+
+import json
 import math
 import time
 
-import json
-from typing import cast
+from backend.shared.regex_utils import compile_cached
 
 from backend.shared.cache import get_sync_client
 from backend.shared.cache import sync_get, sync_set
@@ -19,7 +18,7 @@ TRENDING_KEY = "trending:keywords"
 TRENDING_TS_KEY = "trending:timestamps"
 TRENDING_CACHE_PREFIX = "trending:list:"
 _DECAY_BASE = math.e
-_WORD_RE: Pattern[str] = re.compile(r"\w+")
+_WORD_RE: Pattern[str] = compile_cached(r"\w+")
 
 
 def extract_keywords(text: str | None) -> list[str]:
@@ -43,7 +42,8 @@ def store_keywords(keywords: Iterable[str]) -> None:
 
 
 def get_trending(limit: int = 10, offset: int = 0) -> list[str]:
-    """Return ``limit`` popular keywords starting from ``offset``.
+    """
+    Return ``limit`` popular keywords starting from ``offset``.
 
     Results are cached in Redis for a short period of time to avoid repeatedly scanning
     the sorted set on each request.

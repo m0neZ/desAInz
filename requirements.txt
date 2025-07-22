@@ -33,3 +33,4 @@ sentry-sdk
 Deprecated
 typer
 brotli-asgi
+regex

@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from pathlib import Path
-from contextlib import contextmanager, asynccontextmanager
+from contextlib import asynccontextmanager
 import subprocess
-from typing import Iterator, Any, AsyncIterator
+from typing import Any, AsyncIterator
 import signal
 import sys
 
-from botocore.client import BaseClient
-from minio import Minio
+from aiobotocore.client import AioBaseClient
+from aiobotocore.session import get_session
 import os
 import time
 
@@ -48,25 +48,17 @@ def _invalidate_cdn_cache(path: str) -> None:
     subprocess.run([str(script), distribution, f"/{path}"], check=True)
 
 
-def _get_storage_client() -> Minio | BaseClient:
-    """Return a MinIO or boto3 client based on environment configuration."""
-    if settings.s3_endpoint and "amazonaws" not in settings.s3_endpoint:
-        secure = settings.s3_endpoint.startswith("https")
-        host = settings.s3_endpoint.replace("https://", "").replace("http://", "")
-        return Minio(
-            host,
-            access_key=settings.s3_access_key,
-            secret_key=settings.s3_secret_key,
-            secure=secure,
-        )
-    import boto3
-
-    return boto3.client(
+@asynccontextmanager
+async def _get_storage_client() -> AsyncIterator[AioBaseClient]:
+    """Yield an asynchronous S3 client."""
+    session = get_session()
+    async with session.create_client(
         "s3",
         endpoint_url=settings.s3_endpoint,
         aws_access_key_id=settings.s3_access_key,
         aws_secret_access_key=settings.s3_secret_key,
-    )
+    ) as client:
+        yield client
 
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -227,11 +219,10 @@ def generate_mockup(
             )
 
         listing_gen = ListingGenerator()
-        client = _get_storage_client()
         results: list[dict[str, object]] = []
 
         async def runner() -> list[dict[str, object]]:
-            async with gpu_slot(slot):
+            async with gpu_slot(slot), _get_storage_client() as client:
                 for idx, keywords in enumerate(keywords_batch):
                     context = PromptContext(keywords=keywords)
                     prompt = build_prompt(context)
@@ -258,10 +249,12 @@ def generate_mockup(
                             raise ValueError("File size too large")
                         obj_name = f"generated-mockups/{output_path.name}"
                         bucket = settings.s3_bucket or ""
-                        if hasattr(client, "fput_object"):
-                            client.fput_object(bucket, obj_name, str(output_path))
-                        else:
-                            client.upload_file(str(output_path), bucket, obj_name)
+                        with open(output_path, "rb") as fh:
+                            await client.put_object(
+                                Bucket=bucket,
+                                Key=obj_name,
+                                Body=fh.read(),
+                            )
                         _invalidate_cdn_cache(obj_name)
                         base = settings.s3_base_url or settings.s3_endpoint
                         if base:

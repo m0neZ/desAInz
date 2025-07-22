@@ -8,7 +8,8 @@ import sys
 import types
 from pathlib import Path
 import asyncio
-from typing import Any
+from typing import Any, AsyncIterator
+from contextlib import asynccontextmanager
 
 import pytest
 from fastapi.testclient import TestClient
@@ -117,16 +118,20 @@ uc_mod = sys.modules.setdefault("UnleashClient", types.ModuleType("UnleashClient
 uc_mod.UnleashClient = object
 ld_mod = sys.modules.setdefault("ldclient", types.ModuleType("ldclient"))
 ld_mod.LDClient = object
-prom_mod = sys.modules.setdefault(
-    "prometheus_client", types.ModuleType("prometheus_client")
-)
+prom_mod = types.ModuleType("prometheus_client")
+sys.modules["prometheus_client"] = prom_mod
 prom_mod.CONTENT_TYPE_LATEST = ""
 prom_mod.Counter = lambda *a, **k: types.SimpleNamespace(
     labels=lambda *_, **__: types.SimpleNamespace(inc=lambda *_, **__: None)
 )
+prom_mod.Gauge = lambda *a, **k: types.SimpleNamespace(
+    inc=lambda *_, **__: None,
+    dec=lambda *_, **__: None,
+)
 prom_mod.Histogram = lambda *a, **k: types.SimpleNamespace(
     labels=lambda *_, **__: types.SimpleNamespace(observe=lambda *_, **__: None)
 )
+prom_mod.REGISTRY = types.SimpleNamespace(register=lambda *a, **k: None)
 prom_mod.generate_latest = lambda *a, **k: b""
 sys.modules.setdefault("pgvector.sqlalchemy", types.ModuleType("pgvector.sqlalchemy"))
 sys.modules["pgvector.sqlalchemy"].Vector = object
@@ -135,8 +140,8 @@ sys.modules["pgvector.sqlalchemy"].Vector = object
 class DummyClient:
     """Collect uploaded objects."""
 
-    def upload_file(self, src: str, bucket: str, obj: str) -> None:
-        """Pretend to upload ``src`` to ``bucket/obj``."""
+    async def put_object(self, Bucket: str, Key: str, Body: bytes | str) -> None:
+        """Pretend to upload ``Body`` to ``Bucket/Key``."""
         return None
 
 
@@ -195,7 +200,39 @@ def test_metadata_recorded_and_listed(
     api = importlib.import_module("mockup_generation.api")
     monkeypatch.setattr(tasks, "generator", DummyGenerator())
     monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
-    monkeypatch.setattr(tasks, "_get_storage_client", lambda: DummyClient())
+
+    @asynccontextmanager
+    async def _client() -> AsyncIterator[DummyClient]:
+        yield DummyClient()
+
+    monkeypatch.setattr(tasks, "_get_storage_client", _client)
+    monkeypatch.setattr(
+        tasks,
+        "redis_client",
+        types.SimpleNamespace(
+            lock=lambda *a, **k: types.SimpleNamespace(
+                acquire=lambda *a, **k: True,
+                locked=lambda: False,
+                release=lambda: None,
+            )
+        ),
+    )
+
+    class _Lock:
+        async def acquire(self, *args: object, **kwargs: object) -> bool:
+            return True
+
+        def locked(self) -> bool:
+            return False
+
+        async def release(self) -> None:
+            return None
+
+    monkeypatch.setattr(
+        tasks,
+        "async_redis_client",
+        types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
+    )
     monkeypatch.setattr(tasks, "remove_background", lambda img: img)
     monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
     monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
@@ -207,9 +244,7 @@ def test_metadata_recorded_and_listed(
     tasks.settings.s3_endpoint = "http://test"
     tasks.settings.s3_base_url = "http://cdn.test"
 
-    asyncio.run(
-        tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
-    )
+    tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
 
     client = TestClient(api.app)
     resp = client.get("/mockups")

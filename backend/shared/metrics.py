@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from time import perf_counter
-from typing import Callable, Coroutine, DefaultDict
+from typing import Callable, Coroutine, DefaultDict, Iterable
 from collections import defaultdict
 import re
 
@@ -52,17 +52,33 @@ def _normalize_path(path: str) -> str:
 
 def _flush_metrics() -> None:
     """Update Prometheus metrics and clear in-memory buffers."""
+
+    def _batch_observe(hist: Histogram, values: Iterable[float]) -> None:
+        """Record ``values`` in ``hist`` using a single update."""
+        vals = list(values)
+        if not vals:
+            return
+        hist._sum.inc(sum(vals))
+        buckets = [0] * len(hist._upper_bounds)
+        for v in vals:
+            for i, bound in enumerate(hist._upper_bounds):
+                if v <= bound:
+                    buckets[i] += 1
+                    break
+        for bucket, inc in zip(hist._buckets, buckets):
+            if inc:
+                bucket.inc(inc)
+
     for (method, endpoint), durations in list(_BUFFER.items()):
         REQUEST_COUNTER.labels(method, endpoint).inc(len(durations))
-        for dur in durations:
-            REQUEST_LATENCY.labels(method, endpoint).observe(dur)
+        _batch_observe(REQUEST_LATENCY.labels(method, endpoint), durations)
     _BUFFER.clear()
 
 
 def register_metrics(app: FastAPI) -> None:
     """Attach metrics middleware and /metrics endpoint to ``app``."""
 
-    @app.middleware("http")  # type: ignore[misc]
+    @app.middleware("http")
     async def _record_metrics(
         request: Request,
         call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -77,7 +93,7 @@ def register_metrics(app: FastAPI) -> None:
             _flush_metrics()
         return response
 
-    @app.get("/metrics")  # type: ignore[misc]
+    @app.get("/metrics")
     async def metrics() -> Response:
         """Return Prometheus metrics with aggressive caching."""
         _flush_metrics()

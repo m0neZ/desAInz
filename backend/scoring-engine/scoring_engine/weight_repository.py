@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+import json
+from pathlib import Path
 from sqlalchemy import select
 
 from backend.shared.db import engine, session_scope
@@ -12,6 +14,9 @@ from backend.shared.db.base import Base
 
 # Weight update smoothing factor for feedback adjustments
 FEEDBACK_SMOOTHING = 0.1
+
+# JSON file storing the latest persisted weights
+WEIGHTS_FILE = Path(__file__).with_name("weights.json")
 
 # Create table if not exists
 Base.metadata.create_all(bind=engine)
@@ -85,4 +90,10 @@ def update_weights(*, smoothing: float = 1.0, **kwargs: float) -> WeightParams:
                 setattr(weights, key, current * (1 - smoothing) + target * smoothing)
         session.flush()
         params = _to_params(weights)
+
+    # Persist updated weights to a JSON file for durability
+    try:
+        WEIGHTS_FILE.write_text(json.dumps(asdict(params)))
+    except Exception:  # pragma: no cover - persistence failures should not crash
+        pass
     return params

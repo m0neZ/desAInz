@@ -146,17 +146,19 @@ def _record_latencies() -> Iterable[float]:
     with session_scope() as session:
         rows = session.execute(stmt).all()
     latencies: list[float] = []
+    metrics: list[PublishLatencyMetric] = []
     for idea_id, signal_time, listing_time in rows:
         seconds = (listing_time - signal_time).total_seconds()
         latencies.append(seconds)
         SIGNAL_TO_PUBLISH_SECONDS.observe(seconds)
-        metrics_store.add_latency(
+        metrics.append(
             PublishLatencyMetric(
                 idea_id=idea_id,
                 timestamp=listing_time,
                 latency_seconds=seconds,
             )
         )
+    metrics_store.add_latencies(metrics)
     return latencies
 
 

@@ -6,7 +6,7 @@ import os
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
-from typing import ClassVar, Iterator, MutableMapping, cast
+from typing import ClassVar, Iterable, Iterator, MutableMapping, cast
 
 from backend.shared.cache import sync_delete, sync_get, sync_set
 
@@ -194,6 +194,40 @@ class TimescaleMetricsStore:
             "latency_metric",
             {"idea_id": str(metric.idea_id), "type": "publish_latency"},
         )
+
+    def add_latencies(self, metrics: Iterable[PublishLatencyMetric]) -> None:
+        """Insert multiple latency metrics in a single batch."""
+        if not metrics:
+            return
+        with self._get_conn() as conn:
+            values = [
+                (
+                    m.idea_id,
+                    m.timestamp if not self._use_sqlite else m.timestamp.isoformat(),
+                    m.latency_seconds,
+                )
+                for m in metrics
+            ]
+            if self._use_sqlite:
+                conn.executemany(
+                    "INSERT INTO publish_latency VALUES (?, ?, ?)",
+                    values,
+                )
+            else:
+                pg_conn = cast(psycopg2.extensions.connection, conn)
+                with pg_conn.cursor() as cur:
+                    cur.executemany(
+                        "INSERT INTO publish_latency VALUES (%s, %s, %s)",
+                        values,
+                    )
+                    pg_conn.commit()
+        invalidate_latency_cache()
+        invalidate_analytics_cache()
+        for metric in metrics:
+            self._send_loki_log(
+                "latency_metric",
+                {"idea_id": str(metric.idea_id), "type": "publish_latency"},
+            )
 
     def create_hourly_continuous_aggregate(self) -> None:
         """Create an hourly downsampled view for latency metrics."""

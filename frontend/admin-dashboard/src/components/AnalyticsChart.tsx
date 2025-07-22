@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export function AnalyticsChart() {
+export const AnalyticsChart = React.memo(function AnalyticsChart() {
   const [range, setRange] = useState('24h');
   const { data } = useAnalyticsData(range);
 
@@ -58,4 +58,4 @@ export function AnalyticsChart() {
       />
     </div>
   );
-}
+});

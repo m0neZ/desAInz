@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export function LatencyChart() {
+export const LatencyChart = React.memo(function LatencyChart() {
   const [range, setRange] = useState('24h');
   const { data } = useLatencyData(range);
 
@@ -58,4 +58,4 @@ export function LatencyChart() {
       />
     </div>
   );
-}
+});

@@ -2,6 +2,10 @@
 import React from 'react';
 import { useTrendingKeywords } from '../lib/trpc/hooks';
 
+/**
+ * List keywords with the highest recent search volume.
+ */
+
 export function TrendingKeywords({ limit }: { limit?: number }) {
   const { data, isLoading } = useTrendingKeywords(limit);
 

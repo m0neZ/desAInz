@@ -1,6 +1,10 @@
 // @flow
 import React from 'react';
 
+/**
+ * Checkbox for toggling a single feature flag.
+ */
+
 interface Props {
   name: string;
   enabled: boolean;

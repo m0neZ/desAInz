@@ -1,6 +1,10 @@
 // @flow
 import React from 'react';
 
+/**
+ * Reusable button styled for the admin dashboard.
+ */
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**

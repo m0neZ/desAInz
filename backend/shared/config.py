@@ -36,6 +36,8 @@ class Settings(BaseSettings):
     auth0_domain: str | None = None
     auth0_client_id: str | None = None
     weights_token: str | None = None
+    model_cache_dir: str = "prebuilt/models"
+    dataset_dir: str = "prebuilt/datasets"
     allowed_origins: list[str] = Field(default_factory=list)
     content_security_policy: str | None = None
     hsts: str | None = None

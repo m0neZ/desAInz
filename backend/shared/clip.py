@@ -10,6 +10,10 @@ from __future__ import annotations
 
 from threading import Lock
 from typing import Any, Callable, Dict, Tuple
+from pathlib import Path
+import os
+
+from .config import settings as shared_settings
 
 open_clip = None
 torch = None
@@ -32,6 +36,7 @@ def load_clip(
             return None
         open_clip = _open_clip
         torch = _torch
+        os.environ.setdefault("TORCH_HOME", shared_settings.model_cache_dir)
 
     key = f"{model_name}:{pretrained}"
     with _lock:

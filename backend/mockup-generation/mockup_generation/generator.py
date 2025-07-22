@@ -9,6 +9,7 @@ from threading import Lock
 from typing import Optional, TYPE_CHECKING
 
 from .settings import settings
+from backend.shared.config import settings as shared_settings
 from .model_repository import get_default_model_id
 import httpx
 import asyncio
@@ -56,12 +57,20 @@ class MockupGenerator:
             if self.pipeline is None or self.model_id != current:
                 from diffusers import StableDiffusionXLPipeline
                 import torch
+                from pathlib import Path
 
                 self.model_id = current
                 device = "cuda" if torch.cuda.is_available() else "cpu"
-                self.pipeline = StableDiffusionXLPipeline.from_pretrained(
-                    self.model_id
-                ).to(device)
+                local_dir = Path(shared_settings.model_cache_dir) / self.model_id
+                if local_dir.exists():
+                    self.pipeline = StableDiffusionXLPipeline.from_pretrained(
+                        local_dir
+                    ).to(device)
+                else:
+                    self.pipeline = StableDiffusionXLPipeline.from_pretrained(
+                        self.model_id,
+                        cache_dir=shared_settings.model_cache_dir,
+                    ).to(device)
                 self.pipeline.enable_attention_slicing()
 
     def generate(

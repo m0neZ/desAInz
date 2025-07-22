@@ -19,6 +19,7 @@ Welcome to desAInz's documentation!
    privacy
    backup
    quickstart
+   prebuilt_resources
    recommendations
    optimization
    deployment

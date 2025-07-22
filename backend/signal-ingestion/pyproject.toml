@@ -14,7 +14,7 @@ uvloop = "*"
 httpx = "*"
 sqlalchemy = "*"
 asyncpg = "*"
-redis = {extras = ["bloom"], version = "*"}
+redis = "*"
 kafka-python = "*"
 
 [tool.poetry.dev-dependencies]

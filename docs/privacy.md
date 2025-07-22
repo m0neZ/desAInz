@@ -17,11 +17,9 @@ Signals older than the configured `signal_retention_days` setting (default: 90 d
 
 ## Deduplication
 
-`signal_ingestion.dedup` uses a Redis Bloom filter to avoid processing duplicates.
-The filter is created on startup with the error rate specified by the
-`dedup_error_rate` setting (default: `0.01`).
-Entries remain for the number of seconds configured by `dedup_ttl` (default:
-`86400` seconds).
+`signal_ingestion.dedup` uses a Redis set to avoid processing duplicates.
+The set expires after the number of seconds configured by `dedup_ttl`
+(default: `86400` seconds).
 
 ## Compliance Steps
 

@@ -1,4 +1,4 @@
-"""Deduplication utilities using Redis Bloom filter."""
+"""Deduplication utilities using a Redis set."""
 
 from __future__ import annotations
 
@@ -7,25 +7,28 @@ from backend.shared.config import settings as shared_settings
 from .settings import settings
 
 redis_client: SyncRedis = get_sync_client()
-BLOOM_KEY = "signals:bloom"
+SET_KEY = "signals:dedup"
 
 
-def initialize(error_rate: float, capacity: int, ttl: int) -> None:
-    """Create the bloom filter if it does not already exist."""
-    if not redis_client.exists(BLOOM_KEY):
-        redis_client.bf().create(BLOOM_KEY, error_rate, capacity)
-        redis_client.expire(BLOOM_KEY, ttl)
+def initialize(ttl: int) -> None:
+    """Create the set if it does not already exist and set expiry."""
+    if not redis_client.exists(SET_KEY):
+        redis_client.sadd(SET_KEY, "__init__")
+        redis_client.expire(SET_KEY, ttl)
+        redis_client.srem(SET_KEY, "__init__")
+    else:
+        redis_client.expire(SET_KEY, ttl)
 
 
 def is_duplicate(key: str) -> bool:
-    """Return ``True`` if ``key`` already exists in the bloom filter."""
-    return bool(redis_client.bf().exists(BLOOM_KEY, key))
+    """Return ``True`` if ``key`` already exists in the set."""
+    return bool(redis_client.sismember(SET_KEY, key))
 
 
 def add_key(key: str) -> None:
-    """Add ``key`` to the bloom filter and refresh TTL."""
-    redis_client.bf().add(BLOOM_KEY, key)
-    redis_client.expire(BLOOM_KEY, settings.dedup_ttl)
+    """Add ``key`` to the set and refresh TTL."""
+    redis_client.sadd(SET_KEY, key)
+    redis_client.expire(SET_KEY, settings.dedup_ttl)
 
 
-initialize(settings.dedup_error_rate, settings.dedup_capacity, settings.dedup_ttl)
+initialize(settings.dedup_ttl)

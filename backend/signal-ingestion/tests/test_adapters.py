@@ -280,35 +280,16 @@ async def test_proxy_rotation(monkeypatch: pytest.MonkeyPatch) -> None:
 
 @pytest.fixture()  # type: ignore[misc]
 def _redis_with_dedup(monkeypatch: pytest.MonkeyPatch) -> Generator[object, None, None]:
-    """Provide fakeredis with bloom filter and real dedup module."""
+    """Provide fakeredis with real dedup module."""
 
-    class FakeBloom:
-        """Minimal bloom filter simulation."""
-
-        def __init__(self, redis: fakeredis.FakeRedis) -> None:
-            self.redis = redis
-            self.items: set[str] = set()
-
-        def create(self, key: str, error_rate: float, capacity: int) -> None:
-            self.redis.set(key, "1")
-
-        def add(self, key: str, item: str) -> None:
-            self.items.add(item)
-
-        def exists(self, key: str, item: str) -> int:
-            return int(item in self.items)
-
-    class RedisWithBloom(fakeredis.FakeRedis):  # type: ignore[misc]
-        """FakeRedis with bloom filter support."""
+    class RedisWithTTL(fakeredis.FakeRedis):  # type: ignore[misc]
+        """Fakeredis client with expiration support."""
 
         def __init__(self, *args: object, **kwargs: object) -> None:
             super().__init__(*args, **kwargs)
-            self._bloom = FakeBloom(self)
+            self.decode_responses = True
 
-        def bf(self) -> FakeBloom:
-            return self._bloom
-
-    fake_sync = RedisWithBloom()
+    fake_sync = RedisWithTTL()
     fake_async = fakeredis.aioredis.FakeRedis()
     monkeypatch.setattr(cache, "get_sync_client", lambda: fake_sync)
     monkeypatch.setattr(cache, "get_async_client", lambda: fake_async)
@@ -320,7 +301,7 @@ def _redis_with_dedup(monkeypatch: pytest.MonkeyPatch) -> Generator[object, None
 
     dedup = importlib.import_module("signal_ingestion.dedup")
     dedup.redis_client = fake_sync  # type: ignore[attr-defined]
-    dedup.initialize(0.1, 10, 5)
+    dedup.initialize(5)
     yield dedup
     fake_sync.close()
     asyncio.run(fake_async.aclose())

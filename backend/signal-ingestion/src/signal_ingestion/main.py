@@ -58,9 +58,7 @@ async def startup() -> None:
     """Initialize resources."""
     await run_migrations_if_needed("backend/shared/db/alembic_signal_ingestion.ini")
     await init_db()
-    dedup.initialize(
-        settings.dedup_error_rate, settings.dedup_capacity, settings.dedup_ttl
-    )
+    dedup.initialize(settings.dedup_ttl)
     scheduler.start()
 
 

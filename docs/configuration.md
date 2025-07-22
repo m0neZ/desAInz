@@ -38,8 +38,6 @@ See the blueprint environment variables section in `blueprints/DesignIdeaEngineC
 | `PAGERDUTY_ROUTING_KEY`              | Integration key for sending PagerDuty incidents                                   |
 | `ENABLE_PAGERDUTY`                   | Set to `true` to enable PagerDuty notifications                                   |
 | `SLA_ALERT_COOLDOWN_MINUTES`         | Minimum minutes between SLA alerts                                                |
-| `DEDUP_ERROR_RATE`                   | Probability of false positives in the Bloom filter                                |
-| `DEDUP_CAPACITY`                     | Estimated maximum number of entries in the Bloom filter                           |
 | `DEDUP_TTL`                          | Time-to-live in seconds for deduplication keys                                    |
 | `PUBLISHER_METRICS_INTERVAL_MINUTES` | Interval for fetching publisher metrics                                           |
 | `WEIGHT_UPDATE_INTERVAL_MINUTES`     | Interval for updating scoring weights                                             |

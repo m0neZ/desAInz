@@ -34,6 +34,7 @@ from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
 from backend.shared.cache import async_get, async_set, get_async_client
+from backend.shared.config import settings as shared_settings
 from backend.shared.feature_flags import (
     list_flags as ff_list,
     set_flag as ff_set,
@@ -73,6 +74,9 @@ ANALYTICS_URL = os.environ.get(
 # Redis set storing runs awaiting manual approval
 PENDING_RUNS_KEY = "pending_runs"
 
+# Prefix for cached trending keyword lists
+TRENDING_CACHE_PREFIX = "trending:list:"
+
 # Cached ``httpx.AsyncClient`` instances for external services
 _CLIENTS: dict[str, httpx.AsyncClient] = {}
 
@@ -99,6 +103,27 @@ async def close_http_clients() -> None:
         except Exception:  # pragma: no cover - closing best effort
             pass
     _CLIENTS.clear()
+
+
+async def get_trending(limit: int = 10) -> list[str]:
+    """Return trending keywords via ingestion service with Redis caching."""
+    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}"
+    cached = await async_get(cache_key)
+    if cached:
+        return cast(list[str], json.loads(cached))
+
+    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
+    client = _get_client("signal_ingestion")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    result = cast(list[str], resp.json())
+    await async_set(
+        cache_key,
+        json.dumps(result),
+        ttl=shared_settings.trending_cache_ttl,
+    )
+    return result
 
 
 # Mapping of services to their health check endpoints
@@ -452,12 +477,7 @@ async def optimizations() -> list[str]:
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
 async def trending(limit: int = 10) -> list[str]:
     """Return up to ``limit`` trending keywords from the ingestion service."""
-    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
-    client = _get_client("signal_ingestion")
-    resp = await client.get(url)
-    if resp.status_code != 200:
-        raise HTTPException(resp.status_code, resp.text)
-    return cast(list[str], resp.json())
+    return await get_trending(limit)
 
 
 @monitoring_router.get("/overview", summary="System overview")

@@ -32,6 +32,9 @@ dependencies:
   - name: logrotate-jobs
     version: 0.1.0
     repository: "file://../logrotate-jobs"
+  - name: s3-lifecycle-jobs
+    version: 0.1.0
+    repository: "file://../s3-lifecycle-jobs"
   - name: monitoring
     version: 0.1.0
     repository: "file://../monitoring"

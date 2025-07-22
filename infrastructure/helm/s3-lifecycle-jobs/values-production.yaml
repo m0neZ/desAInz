@@ -1,0 +1,11 @@
+image:
+  repository: example/s3-lifecycle
+  tag: latest
+  pullPolicy: IfNotPresent
+schedule: "0 2 * * *"
+bucket: my-bucket
+storageClass: GLACIER
+# Additional environment variables
+extraEnv: {}
+# Name of the Kubernetes secret mounted at /run/secrets
+secretName: shared-secret

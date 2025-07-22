@@ -1,0 +1,2 @@
+0 2 * * * BUCKET=$BUCKET STORAGE_CLASS=$STORAGE_CLASS python /app/apply_s3_lifecycle.py >> /var/log/s3lifecycle.log 2>&1
+

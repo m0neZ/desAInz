@@ -12,8 +12,7 @@ from typing import Callable, Coroutine, Iterable
 
 import httpx
 import asyncio
-import atexit
-from backend.shared.http import DEFAULT_TIMEOUT
+from backend.shared.http import DEFAULT_TIMEOUT, get_async_http_client
 
 import psutil
 from fastapi import FastAPI, Request, Response
@@ -39,23 +38,6 @@ from .metrics_store import (
     LATENCY_CACHE_KEY,
 )
 
-_HTTP_CLIENT: httpx.AsyncClient | None = None
-
-
-async def get_http_client() -> httpx.AsyncClient:
-    """Return a shared HTTP client instance."""
-    global _HTTP_CLIENT
-    if _HTTP_CLIENT is None:
-        _HTTP_CLIENT = httpx.AsyncClient(timeout=DEFAULT_TIMEOUT)
-    return _HTTP_CLIENT
-
-
-@atexit.register
-def _close_http_client() -> None:
-    if _HTTP_CLIENT is not None:
-        asyncio.run(_HTTP_CLIENT.aclose())
-
-
 from backend.shared.cache import sync_get, sync_set
 import redis
 
@@ -65,6 +47,11 @@ QUEUE_ALERT_KEY = "queue:last_alert"
 from .logging_config import configure_logging
 from .settings import settings
 from scripts.daily_summary import generate_daily_summary
+
+
+async def get_http_client() -> httpx.AsyncClient:
+    """Return a shared HTTP client instance."""
+    return await get_async_http_client()
 
 metrics_store = TimescaleMetricsStore()
 

@@ -11,24 +11,13 @@ from typing import Optional, TYPE_CHECKING
 from .settings import settings
 from .model_repository import get_default_model_id
 import httpx
-import atexit
 import asyncio
-
-_async_client: httpx.AsyncClient | None = None
+from backend.shared.http import get_async_http_client
 
 
 async def get_async_client() -> httpx.AsyncClient:
     """Return a shared ``AsyncClient`` instance."""
-    global _async_client
-    if _async_client is None:
-        _async_client = httpx.AsyncClient(timeout=30)
-    return _async_client
-
-
-@atexit.register
-def _close_client() -> None:
-    if _async_client is not None:
-        asyncio.run(_async_client.aclose())
+    return await get_async_http_client(timeout=httpx.Timeout(30))
 
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
@@ -129,8 +118,6 @@ class MockupGenerator:
             ).images[0]
         except (RuntimeError, ValueError, OSError) as exc:
             logger.warning("Local generation failed: %s. Falling back to API", exc)
-            import asyncio
-
             image = asyncio.run(self._fallback_api(prompt))
         duration = perf_counter() - start
         image.save(temp_path)
@@ -159,7 +146,6 @@ class MockupGenerator:
         from io import BytesIO
         import base64
         from PIL import Image
-        import asyncio
 
         provider = settings.fallback_provider.lower()
 

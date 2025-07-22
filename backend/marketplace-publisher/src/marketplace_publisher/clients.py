@@ -9,8 +9,7 @@ import gzip
 import os
 import requests
 import httpx
-import atexit
-from backend.shared.http import request_with_retry
+from backend.shared.http import request_with_retry, get_async_http_client
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -29,23 +28,9 @@ from .db import (
 from . import rules
 
 
-_async_client: httpx.AsyncClient | None = None
-
-
 async def get_async_client() -> httpx.AsyncClient:
     """Return a shared ``AsyncClient`` for marketplace requests."""
-    global _async_client
-    if _async_client is None:
-        _async_client = httpx.AsyncClient(timeout=30)
-    return _async_client
-
-
-@atexit.register
-def _close_client() -> None:
-    if _async_client is not None:
-        import asyncio
-
-        asyncio.run(_async_client.aclose())
+    return await get_async_http_client(timeout=httpx.Timeout(30))
 
 
 class BaseClient:

@@ -17,9 +17,9 @@ Python utilities
    * - ``analyze_query_plans.py``
      - Inspect ``pg_stat_statements`` and suggest indexes.
      - ``python scripts/analyze_query_plans.py``
-  * - ``apply_s3_lifecycle.py``
-    - Configure bucket lifecycle rules.
-    - ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
+   * - ``apply_s3_lifecycle.py``
+     - Configure bucket lifecycle rules.
+     - ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
    * - ``approve_job.py``
      - Approve Dagster runs from the approval service.
      - ``python scripts/approve_job.py <run_id>``

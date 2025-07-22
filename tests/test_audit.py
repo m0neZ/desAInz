@@ -25,20 +25,33 @@ audit = importlib.util.module_from_spec(spec)
 assert spec and spec.loader
 spec.loader.exec_module(audit)
 log_admin_action = audit.log_admin_action
-from backend.shared.db import Base, SessionLocal, engine  # noqa: E402
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from typing import Iterator
+
+import pytest
+
+from backend.shared.db import Base  # noqa: E402
 from backend.shared.db.models import AuditLog  # noqa: E402
 
-
-def setup_module(module: object) -> None:
-    """Create tables for tests."""
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        Base.metadata.create_all(engine)
+SessionLocal = sessionmaker()
 
 
-def teardown_module(module: object) -> None:
-    """Drop tables after tests."""
-    Base.metadata.drop_all(engine)
+@pytest.fixture(autouse=True)
+def _audit_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
+    """Provide isolated database for audit tests."""
+    db_path = tmp_path / "audit.db"
+    engine = create_engine(f"sqlite:///{db_path}", future=True)
+    SessionLocal = sessionmaker(bind=engine, future=True)
+    globals()["SessionLocal"] = SessionLocal
+    monkeypatch.setattr("backend.shared.db.SessionLocal", SessionLocal, raising=False)
+    monkeypatch.setattr("backend.shared.db.engine", engine, raising=False)
+    Base.metadata.create_all(engine)
+    try:
+        yield
+    finally:
+        Base.metadata.drop_all(engine)
+        engine.dispose()
 
 
 def test_log_admin_action_persists() -> None:

@@ -7,8 +7,9 @@ import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Iterator
 
-import psycopg2
 import pytest
+
+import psycopg2
 import requests
 from dagster import DagsterInstance
 
@@ -16,6 +17,8 @@ from orchestrator import idea_job
 
 COMPOSE_FILES = ["docker-compose.dev.yml", "docker-compose.test.yml"]
 DB_DSN = "postgresql://user:password@localhost:5432/app_test"
+
+pytestmark = pytest.mark.xdist_group("compose")
 
 
 class _ApprovalHandler(BaseHTTPRequestHandler):

@@ -2,16 +2,34 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from pathlib import Path
+from typing import Iterator
+
+import pytest
+
 from backend.analytics import api
 from backend.analytics.auth import create_access_token
-from backend.shared.db import Base, SessionLocal, engine, models
+from backend.shared.db import Base, models
+
+SessionLocal = sessionmaker()
 
 
-def setup_module(module: object) -> None:
-    """Create tables in the temporary database."""
+@pytest.fixture(autouse=True)
+def _analytics_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
+    """Provide isolated database for analytics tests."""
+    db_path = tmp_path / "analytics.db"
+    engine = create_engine(f"sqlite:///{db_path}", future=True)
+    SessionLocal = sessionmaker(bind=engine, future=True)
+    globals()["SessionLocal"] = SessionLocal
+    monkeypatch.setattr(api, "SessionLocal", SessionLocal, raising=False)
+    monkeypatch.setattr(api, "engine", engine, raising=False)
+    monkeypatch.setattr("backend.shared.db.SessionLocal", SessionLocal, raising=False)
+    monkeypatch.setattr("backend.shared.db.engine", engine, raising=False)
     Base.metadata.create_all(engine)
     with SessionLocal() as session:
         ab_test = models.ABTest(listing_id=1, variant="A", conversion_rate=0)
@@ -24,13 +42,13 @@ def setup_module(module: object) -> None:
                     ab_test_id=ab_test.id,
                     conversions=5,
                     impressions=10,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(timezone.utc),
                 ),
                 models.ABTestResult(
                     ab_test_id=ab_test.id,
                     conversions=3,
                     impressions=8,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(timezone.utc),
                 ),
             ]
         )
@@ -40,7 +58,7 @@ def setup_module(module: object) -> None:
                 clicks=20,
                 purchases=2,
                 revenue=40.0,
-                timestamp=datetime.now(datetime.UTC),
+                timestamp=datetime.now(timezone.utc),
             )
         )
         session.add(
@@ -50,11 +68,15 @@ def setup_module(module: object) -> None:
                 favorites=1,
                 orders=1,
                 revenue=10.0,
-                timestamp=datetime.now(datetime.UTC),
+                timestamp=datetime.now(timezone.utc),
             )
         )
         session.add(models.UserRole(username="admin", role="admin"))
         session.commit()
+    try:
+        yield
+    finally:
+        engine.dispose()
 
 
 def test_ab_test_results() -> None:
@@ -118,7 +140,7 @@ def test_ab_test_results_export_large_dataset() -> None:
                     ab_test_id=ab_test_id,
                     conversions=i,
                     impressions=i * 2,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(timezone.utc),
                 )
                 for i in range(100)
             ]
@@ -147,7 +169,7 @@ def test_marketplace_metrics_export_large_dataset() -> None:
                     clicks=i,
                     purchases=1,
                     revenue=float(i),
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(timezone.utc),
                 )
                 for i in range(50)
             ]
@@ -193,7 +215,7 @@ def test_performance_metrics_export_large_dataset() -> None:
                     favorites=1,
                     orders=1,
                     revenue=float(i),
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(timezone.utc),
                 )
                 for i in range(30)
             ]

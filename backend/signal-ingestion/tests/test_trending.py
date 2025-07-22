@@ -47,6 +47,20 @@ def test_get_top_keywords_sorted(monkeypatch: pytest.MonkeyPatch) -> None:
     assert trending.get_top_keywords(2) == ["bar", "baz"]
 
 
+def test_get_trending_uses_cache(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Cache the trending list to avoid repeated reads."""
+    fake = fakeredis.FakeRedis()
+    monkeypatch.setattr(trending, "get_sync_client", lambda: fake)
+    fake.zadd(trending.TRENDING_KEY, {"foo": 1, "bar": 2})
+    result1 = trending.get_trending(2)
+    assert result1 == ["bar", "foo"]
+    cache_key = f"{trending.TRENDING_CACHE_PREFIX}2"
+    assert fake.ttl(cache_key) > 0
+    fake.zadd(trending.TRENDING_KEY, {"baz": 3})
+    result2 = trending.get_trending(2)
+    assert result2 == result1
+
+
 def test_trim_keywords_removes_stale_and_decays(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

@@ -21,6 +21,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     score_cache_ttl: int = 3600
     trending_ttl: int = 3600
     trending_max_keywords: int = 100
+    trending_cache_ttl: int = 30
     s3_endpoint: str | None = None
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
@@ -44,7 +45,12 @@ class Settings(BaseSettings):  # type: ignore[misc]
             return [v.strip() for v in value.split(",") if v.strip()]
         return value
 
-    @field_validator("score_cache_ttl", "trending_ttl", "trending_max_keywords")  # type: ignore[misc]
+    @field_validator(
+        "score_cache_ttl",
+        "trending_ttl",
+        "trending_max_keywords",
+        "trending_cache_ttl",
+    )  # type: ignore[misc]
     @classmethod
     def _positive(cls, value: int) -> int:
         if value <= 0:

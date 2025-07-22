@@ -14,6 +14,9 @@ from typing import Iterable
 from openapi_schema_validator import OAS30Validator
 
 import types
+from typing import Callable, TypeVar
+
+T = TypeVar("T")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))

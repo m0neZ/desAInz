@@ -1,5 +1,7 @@
 // @flow
 
+/* eslint-disable no-var */
+
 declare var self: mixed;
 
 self.addEventListener('message', (event: MessageEvent<mixed>): void => {

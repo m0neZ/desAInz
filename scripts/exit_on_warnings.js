@@ -6,8 +6,10 @@
  * @param {Error | string} warning - The warning object or message.
  */
 process.on('warning', (warning: Error | string): void => {
-  console.error(
-    typeof warning === 'string' ? warning : warning.stack || String(warning)
+  process.stderr.write(
+    `${
+      typeof warning === 'string' ? warning : warning.stack || String(warning)
+    }\n`
   );
   if (process.exitCode === undefined) {
     process.exitCode = 1;

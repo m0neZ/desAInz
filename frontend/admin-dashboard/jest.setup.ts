@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import '@testing-library/jest-dom';
 
 // Mock i18n translation hook used in dashboard pages

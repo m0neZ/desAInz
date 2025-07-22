@@ -18,7 +18,9 @@ const next = spawn(
 setInterval((): void => {
   /** @type {NodeJS.MemoryUsage} */
   const usage = process.memoryUsage();
-  console.log(`Memory Usage - RSS: ${usage.rss}, Heap Used: ${usage.heapUsed}`);
+  process.stdout.write(
+    `Memory Usage - RSS: ${usage.rss}, Heap Used: ${usage.heapUsed}\n`
+  );
 }, 60000);
 
 next.on('close', (code) => process.exit(code ?? 0));

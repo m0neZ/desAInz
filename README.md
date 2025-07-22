@@ -6,6 +6,11 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 ./scripts/setup_codex.sh
 ```
 
+## Environment
+
+The project targets **Python 3.11** and **Node.js 20**. Ensure these versions
+are available before installing dependencies or running any commands.
+
 ## Installing dependencies
 
 Install Python and Node requirements before running tests or building the

@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build",
-    "start": "node scripts/monitorAndStart.js",
+    "start": "node server.js",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0",
     "lint:css": "stylelint \"**/*.{css,scss}\" --max-warnings=0 --allow-empty-input",
     "format": "prettier \"**/*.{js,jsx,ts,tsx,css,scss,md}\" --write",

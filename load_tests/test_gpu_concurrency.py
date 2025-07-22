@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import time
 from pathlib import Path
-from typing import Iterator
-from contextlib import contextmanager
+from typing import Iterator, AsyncIterator
+from contextlib import contextmanager, asynccontextmanager
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -135,12 +135,18 @@ def celery_app(monkeypatch: pytest.MonkeyPatch) -> Iterator[Celery]:
 def patched_tasks(monkeypatch: pytest.MonkeyPatch) -> None:
     """Stub out heavy components in :mod:`tasks`."""
 
-    fake = fakeredis.FakeRedis()
+    fake = fakeredis.aioredis.FakeRedis()
     monkeypatch.setattr(tasks, "redis_client", fake)
+    monkeypatch.setattr(tasks, "async_redis_client", fake)
     monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
     monkeypatch.setattr(tasks, "generator", DummyGenerator())
     monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
-    monkeypatch.setattr(tasks, "_get_storage_client", lambda: DummyClient())
+
+    @asynccontextmanager
+    async def _client() -> AsyncIterator[DummyClient]:
+        yield DummyClient()
+
+    monkeypatch.setattr(tasks, "_get_storage_client", _client)
     monkeypatch.setattr(tasks, "remove_background", lambda img: img)
     monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
     monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)

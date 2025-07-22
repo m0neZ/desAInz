@@ -19,8 +19,14 @@ class Settings(BaseSettings):
     rate_limit_per_user: int = 60
     rate_limit_window: int = 60
     ws_interval_ms: int = int(os.environ.get("API_GATEWAY_WS_INTERVAL_MS", "5000"))
+    request_cache_ttl: int = int(os.environ.get("API_GATEWAY_REQUEST_CACHE_TTL", "0"))
 
-    @field_validator("rate_limit_per_user", "rate_limit_window", "ws_interval_ms")
+    @field_validator(
+        "rate_limit_per_user",
+        "rate_limit_window",
+        "ws_interval_ms",
+        "request_cache_ttl",
+    )
     @classmethod
     def _positive(cls, value: int) -> int:
         if value <= 0:

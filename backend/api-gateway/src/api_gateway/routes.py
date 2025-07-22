@@ -19,6 +19,7 @@ from fastapi import (
     WebSocketDisconnect,
     status,
 )
+from fastapi.routing import APIRoute
 from sse_starlette.sse import EventSourceResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
@@ -47,6 +48,7 @@ from .models import (
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
 from datetime import UTC, datetime
+from backend.shared.responses import cache_header
 from backend.shared.cache import async_get, async_set, get_async_client
 from backend.shared.config import settings as shared_settings
 from backend.shared.feature_flags import (
@@ -59,6 +61,35 @@ from backend.shared.db.models import AuditLog, UserRole, RefreshToken
 from uuid import uuid4
 from datetime import timedelta
 from scripts import maintenance
+
+
+class CacheControlRoute(APIRoute):
+    """APIRoute that attaches caching headers and uses Redis for GET responses."""
+
+    def get_route_handler(self):  # type: ignore[override]
+        original_handler = super().get_route_handler()
+
+        async def handler(request: Request) -> Response:
+            cache_key = None
+            ttl = settings.request_cache_ttl
+            if request.method == "GET" and ttl > 0:
+                key_bytes = f"{request.url.path}?{request.url.query}".encode()
+                cache_key = f"route_cache:{md5(key_bytes).hexdigest()}"
+                cached = await async_get(cache_key)
+                if cached is not None:
+                    response = Response(content=cached, media_type="application/json")
+                    response.headers.update(cache_header(ttl))
+                    return response
+
+            response = await original_handler(request)
+            if request.method == "GET":
+                response.headers.update(cache_header())
+                if cache_key and response.status_code < 400:
+                    await async_set(cache_key, response.body.decode(), ttl=ttl)
+            return response
+
+        return handler
+
 
 SIGNAL_INGESTION_URL = os.environ.get(
     "SIGNAL_INGESTION_URL", "http://signal-ingestion:8004"
@@ -154,7 +185,7 @@ HEALTH_ENDPOINTS: dict[str, str] = {
 }
 auth_scheme = HTTPBearer()
 
-router = APIRouter()
+router = APIRouter(route_class=CacheControlRoute)
 
 optimization_limiter = UserRateLimiter(
     settings.rate_limit_per_user,
@@ -211,21 +242,27 @@ async def limit_analytics(request: Request) -> None:
 
 
 optimization_router = APIRouter(
+    route_class=CacheControlRoute,
     tags=["Optimization"],
     dependencies=[Depends(limit_optimization)],
 )
 monitoring_router = APIRouter(
+    route_class=CacheControlRoute,
     prefix="/monitoring",
     tags=["Monitoring"],
     dependencies=[Depends(limit_monitoring)],
 )
 analytics_router = APIRouter(
+    route_class=CacheControlRoute,
     prefix="/analytics",
     tags=["Analytics"],
     dependencies=[Depends(limit_analytics)],
 )
-approvals_router = APIRouter(prefix="/approvals", tags=["Approvals"])
+approvals_router = APIRouter(
+    route_class=CacheControlRoute, prefix="/approvals", tags=["Approvals"]
+)
 privacy_router = APIRouter(
+    route_class=CacheControlRoute,
     prefix="/privacy",
     tags=["Privacy"],
     dependencies=[Depends(require_role("admin"))],

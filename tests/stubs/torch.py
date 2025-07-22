@@ -19,5 +19,10 @@ class cuda:
         """No-op IPC collector."""
         return None
 
+    @staticmethod
+    def device_count() -> int:  # pragma: no cover - simple stub
+        """Return zero as no CUDA devices are available during tests."""
+        return 0
+
 
 __all__ = ["cuda"]

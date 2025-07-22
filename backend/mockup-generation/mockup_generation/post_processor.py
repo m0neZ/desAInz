@@ -146,11 +146,29 @@ def validate_dimensions(
 ) -> bool:
     """Return ``True`` if ``image`` fits within ``max_width`` and ``max_height``."""
     width, height = image.size
-    width_i, height_i = cast(Tuple[int, int], (width, height))
-    return width_i <= max_width and height_i <= max_height
+    return width <= max_width and height <= max_height
 
 
 def validate_file_size(path: Path, max_file_size_mb: int = MAX_FILE_SIZE_MB) -> bool:
     """Return ``True`` if ``path`` does not exceed ``max_file_size_mb``."""
     size_mb = path.stat().st_size / (1024 * 1024)
     return size_mb <= max_file_size_mb
+
+
+def post_process_image(path: Path) -> Path:
+    """Run the full post-processing pipeline on ``path``."""
+
+    image: Image.Image = Image.open(path)
+    image = remove_background(image)
+    image = convert_to_cmyk(image)
+    ensure_not_nsfw(image)
+    if not validate_dpi_image(image):
+        raise ValueError("Invalid DPI")
+    if not validate_color_space(image):
+        raise ValueError("Invalid color space")
+    if not validate_dimensions(image):
+        raise ValueError("Invalid dimensions")
+    compress_lossless(image, path)
+    if not validate_file_size(path):
+        raise ValueError("File size too large")
+    return path

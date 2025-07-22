@@ -6,6 +6,7 @@ import os
 from typing import Iterable, cast
 
 from celery import Celery
+from celery.signals import worker_ready
 from prometheus_client import REGISTRY
 from prometheus_client.core import GaugeMetricFamily
 import redis
@@ -18,9 +19,7 @@ if CELERY_BROKER == "redis":
     host = os.getenv("REDIS_HOST", "localhost")
     port = os.getenv("REDIS_PORT", "6379")
     db = os.getenv("REDIS_DB", "0")
-    CELERY_BROKER_URL = os.getenv(
-        "CELERY_BROKER_URL", f"redis://{host}:{port}/{db}"
-    )
+    CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", f"redis://{host}:{port}/{db}")
     RESULT_BACKEND = CELERY_BROKER_URL
 elif CELERY_BROKER == "rabbitmq":
     host = os.getenv("RABBITMQ_HOST", "localhost")
@@ -90,3 +89,17 @@ def _route_gpu_tasks(
 
 
 app.conf.task_routes = (_route_gpu_tasks,)
+
+
+@worker_ready.connect
+def _autoscale_workers(sender: object, **_: object) -> None:
+    """Autoscale based on configured GPU slots."""
+
+    try:
+        from .tasks import get_gpu_slots
+
+        slots = get_gpu_slots()
+        factor = int(os.getenv("GPU_AUTOSCALE_FACTOR", "2"))
+        sender.app.control.autoscale(slots * factor, slots)
+    except Exception:
+        pass

@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../hooks/useAuthFetch';
 
+/**
+ * Manage and toggle all available feature flags.
+ */
+
 export function FeatureFlagsList() {
   const [flags, setFlags] = useState<Record<string, boolean>>({});
   useEffect(() => {

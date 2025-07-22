@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../hooks/useAuthFetch';
 import PaginationControls from './PaginationControls';
 
+/**
+ * Paginated list of user role assignments.
+ */
+
 interface Assignment {
   username: string;
   role: string;

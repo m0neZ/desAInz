@@ -2,6 +2,10 @@
 import React from 'react';
 import { useAlertStatus } from '../hooks/useMonitoringData';
 
+/**
+ * Show whether the monitoring system is currently alerting.
+ */
+
 export function AlertStatusIndicator() {
   const alert = useAlertStatus(2);
   return (

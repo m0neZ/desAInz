@@ -5,20 +5,30 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
+import sys
 
 import fakeredis.aioredis
 from PIL import Image
 
 from fastapi.testclient import TestClient
 import pytest
+import warnings
+
+# Ensure the scoring engine package can be imported when running this test alone.
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "backend" / "scoring-engine"))
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "backend" / "mockup-generation"))
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 from scoring_engine.app import app as scoring_app
 import scoring_engine.app as scoring_module
-from scoring_engine.weight_repository import update_weights
+from scoring_engine.weight_repository import get_weights, update_weights
 from mockup_generation.generator import MockupGenerator
 
 
 def _setup_scoring(redis_client: fakeredis.aioredis.FakeRedis) -> ThreadPoolExecutor:
     scoring_module.redis_client = redis_client
+    get_weights()  # ensure weight row exists with defaults
     update_weights(
         freshness=1.0,
         engagement=1.0,
@@ -29,17 +39,23 @@ def _setup_scoring(redis_client: fakeredis.aioredis.FakeRedis) -> ThreadPoolExec
     return ThreadPoolExecutor(max_workers=5)
 
 
+class _DummyPipeline:
+    """Lightweight stub for the diffusion pipeline."""
+
+    def __call__(self, prompt: str, num_inference_steps: int = 30):
+        """Return a simple result with a dummy image."""
+
+        class _Result:
+            def __init__(self) -> None:
+                self.images = [Image.new("RGB", (1, 1))]
+
+        return _Result()
+
+
 def _fake_load(self: MockupGenerator) -> None:  # noqa: D401 - short helper
     """Patch pipeline with a dummy implementation."""
-    self.pipeline = type(
-        "P",
-        (),
-        {
-            "__call__": lambda _self, prompt, num_inference_steps=30: type(
-                "R", (), {"images": [Image.new("RGB", (1, 1))]}
-            )()
-        },
-    )()
+
+    self.pipeline = _DummyPipeline()
 
 
 def _worker(client, gen: MockupGenerator, tmp: Path, idx: int) -> None:

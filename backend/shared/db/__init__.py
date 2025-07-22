@@ -78,11 +78,24 @@ def register_pool_metrics(engine_obj: Any) -> None:
     _update()
 
 
-engine = create_engine(DATABASE_URL, echo=False, future=True)
+_pool_size_env = os.getenv("DB_POOL_SIZE")
+_pool_size = int(_pool_size_env) if _pool_size_env else settings.db_pool_size
+
+engine = create_engine(
+    DATABASE_URL,
+    echo=False,
+    future=True,
+    pool_size=_pool_size,
+)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 register_pool_metrics(engine)
 
-async_engine = create_async_engine(ASYNC_DATABASE_URL, echo=False, future=True)
+async_engine = create_async_engine(
+    ASYNC_DATABASE_URL,
+    echo=False,
+    future=True,
+    pool_size=_pool_size,
+)
 AsyncSessionLocal = async_sessionmaker(async_engine, expire_on_commit=False)
 register_pool_metrics(async_engine)
 

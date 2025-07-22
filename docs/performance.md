@@ -66,6 +66,8 @@ Each service now reports connection pool usage via two gauges:
 - ``db_pool_in_use`` – currently checked out connections.
 
 Monitoring these values helps detect connection leaks and tune pool sizes.
+To change the pool size, set the ``DB_POOL_SIZE`` environment variable (or
+``db_pool_size`` setting) before starting services.
 
 ## CDN Configuration
 

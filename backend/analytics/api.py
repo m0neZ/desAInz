@@ -186,7 +186,7 @@ def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
 
 
 @app.get("/low_performers")  # type: ignore[misc]
-def low_performers(limit: int = 10) -> list[LowPerformer]:
+def low_performers(limit: int = 10, offset: int = 0) -> list[LowPerformer]:
     """Return listings with the lowest total revenue."""
     with SessionLocal() as session:
         rows = (
@@ -199,6 +199,7 @@ def low_performers(limit: int = 10) -> list[LowPerformer]:
             .group_by(models.MarketplaceMetric.listing_id)
             .order_by("rev")
             .limit(limit)
+            .offset(offset)
             .all()
         )
     return [LowPerformer(listing_id=row[0], revenue=row[1]) for row in rows]

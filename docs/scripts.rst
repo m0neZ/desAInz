@@ -8,81 +8,31 @@ root. Examples below show the basic command structure.
 Python utilities
 ----------------
 
-.. list-table::
-   :header-rows: 1
+The following helpers live in ``scripts``:
 
-   * - Script
-     - Purpose
-     - Example
-   * - ``analyze_query_plans.py``
-     - Inspect ``pg_stat_statements`` and suggest indexes.
-     - ``python scripts/analyze_query_plans.py``
-  * - ``apply_s3_lifecycle.py``
-    - Configure bucket lifecycle rules.
-    - ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
-   * - ``approve_job.py``
-     - Approve Dagster runs from the approval service.
-     - ``python scripts/approve_job.py <run_id>``
-   * - ``backup.py``
-     - Dump the PostgreSQL database to S3.
-     - ``python scripts/backup.py``
-   * - ``benchmark_score.py``
-     - Compare scoring latency with and without caching.
-     - ``python scripts/benchmark_score.py``
-   * - ``cli.py``
-     - Entry point exposing ingestion and publishing helpers.
-     - ``python scripts/cli.py --help``
-   * - ``collect_licenses.py``
-     - Gather third‑party license information.
-     - ``python scripts/collect_licenses.py``
-   * - ``collect_metrics.py``
-     - Forward resource usage metrics to monitoring.
-     - ``python scripts/collect_metrics.py``
-   * - ``daily_summary.py``
-     - Produce a JSON activity report.
-     - ``./scripts/daily_summary.py``
-   * - ``generate_openapi.py``
-     - Build OpenAPI specs for all services.
-     - ``python scripts/generate_openapi.py``
-   * - ``listing_sync.py``
-     - Sync marketplace listing states.
-     - ``python scripts/listing_sync.py``
-   * - ``maintenance.py``
-     - Scheduled cleanup tasks executed by Dagster.
-     - ``python scripts/maintenance.py``
-   * - ``manage_spot_instances.py``
-     - Manage AWS spot nodes.
-     - ``python scripts/manage_spot_instances.py maintain --count 2``
-   * - ``register_schemas.py``
-     - Upload JSON schemas to the registry.
-     - ``python scripts/register_schemas.py``
-   * - ``review_monthly_costs.py``
-     - Parse cost reports for anomalies.
-     - ``python scripts/review_monthly_costs.py``
-   * - ``rotate_logs.py``
-     - Archive and prune log files.
-     - ``python scripts/rotate_logs.py``
-   * - ``rotate_s3_keys.py``
-     - Generate new S3 access keys and update secrets.
-     - ``python scripts/rotate_s3_keys.py``
-   * - ``rotate_secrets.py``
-     - Rotate application credentials in Kubernetes.
-     - ``python scripts/rotate_secrets.py``
-   * - ``run_dagster_webserver.py``
-     - Start the Dagster web UI locally.
-     - ``python scripts/run_dagster_webserver.py``
-   * - ``run_integration_tests.py``
-     - Execute integration tests with strict settings.
-     - ``python scripts/run_integration_tests.py``
-   * - ``setup_codex.py``
-     - Prepare dependencies in the Codex environment.
-     - ``python scripts/setup_codex.py``
-   * - ``update_openapi_changelog.py``
-     - Update the changelog after specs change.
-     - ``python scripts/update_openapi_changelog.py``
-   * - ``wait_for_services.py``
-     - Block until dependencies respond on their ports.
-     - ``python scripts/wait_for_services.py``
+* ``analyze_query_plans.py`` - Inspect ``pg_stat_statements`` and suggest indexes. Example: ``python scripts/analyze_query_plans.py``
+* ``apply_s3_lifecycle.py`` - Configure bucket lifecycle rules. Example: ``python scripts/apply_s3_lifecycle.py <bucket> [storage-class]``
+* ``approve_job.py`` - Approve Dagster runs from the approval service. Example: ``python scripts/approve_job.py <run_id>``
+* ``backup.py`` - Dump the PostgreSQL database to S3. Example: ``python scripts/backup.py``
+* ``benchmark_score.py`` - Compare scoring latency with and without caching. Example: ``python scripts/benchmark_score.py``
+* ``cli.py`` - Entry point exposing ingestion and publishing helpers. Example: ``python scripts/cli.py --help``
+* ``collect_licenses.py`` - Gather third-party license information. Example: ``python scripts/collect_licenses.py``
+* ``collect_metrics.py`` - Forward resource usage metrics to monitoring. Example: ``python scripts/collect_metrics.py``
+* ``daily_summary.py`` - Produce a JSON activity report. Example: ``./scripts/daily_summary.py``
+* ``generate_openapi.py`` - Build OpenAPI specs for all services. Example: ``python scripts/generate_openapi.py``
+* ``listing_sync.py`` - Sync marketplace listing states. Example: ``python scripts/listing_sync.py``
+* ``maintenance.py`` - Scheduled cleanup tasks executed by Dagster. Example: ``python scripts/maintenance.py``
+* ``manage_spot_instances.py`` - Manage AWS spot nodes. Example: ``python scripts/manage_spot_instances.py maintain --count 2``
+* ``register_schemas.py`` - Upload JSON schemas to the registry. Example: ``python scripts/register_schemas.py``
+* ``review_monthly_costs.py`` - Parse cost reports for anomalies. Example: ``python scripts/review_monthly_costs.py``
+* ``rotate_logs.py`` - Archive and prune log files. Example: ``python scripts/rotate_logs.py``
+* ``rotate_s3_keys.py`` - Generate new S3 access keys and update secrets. Example: ``python scripts/rotate_s3_keys.py``
+* ``rotate_secrets.py`` - Rotate application credentials in Kubernetes. Example: ``python scripts/rotate_secrets.py``
+* ``run_dagster_webserver.py`` - Start the Dagster web UI locally. Example: ``python scripts/run_dagster_webserver.py``
+* ``run_integration_tests.py`` - Execute integration tests with strict settings. Example: ``python scripts/run_integration_tests.py``
+* ``setup_codex.py`` - Prepare dependencies in the Codex environment. Example: ``python scripts/setup_codex.py``
+* ``update_openapi_changelog.py`` - Update the changelog after specs change. Example: ``python scripts/update_openapi_changelog.py``
+* ``wait_for_services.py`` - Block until dependencies respond on their ports. Example: ``python scripts/wait_for_services.py``
 
 Shell utilities
 ---------------
@@ -95,7 +45,7 @@ Shell utilities
 
    ./scripts/configure_cdn.sh <bucket>
 
-``deploy.sh`` performs a blue‑green deployment with traffic shifting and
+``deploy.sh`` performs a blue-green deployment with traffic shifting and
 automatic rollback::
 
    ./scripts/deploy.sh orchestrator ghcr.io/example/orchestrator:latest prod

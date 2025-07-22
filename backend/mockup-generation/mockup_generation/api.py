@@ -108,9 +108,11 @@ async def ready(request: Request) -> Response:
 
 
 @app.get("/models")
-async def get_models() -> list[dict[str, object]]:
-    """Return all registered models."""
-    return [m.__dict__ for m in list_models()]
+async def get_models(
+    limit: int | None = None, offset: int = 0
+) -> list[dict[str, object]]:
+    """Return registered models."""
+    return [m.__dict__ for m in list_models(limit=limit, offset=offset)]
 
 
 @app.post("/models")
@@ -160,6 +162,8 @@ async def generate(payload: GeneratePayload) -> dict[str, list[str]]:
 
 
 @app.get("/mockups")
-async def get_mockups() -> list[dict[str, object]]:
+async def get_mockups(
+    limit: int | None = None, offset: int = 0
+) -> list[dict[str, object]]:
     """Return recently generated mockups."""
-    return [m.__dict__ for m in list_generated_mockups()]
+    return [m.__dict__ for m in list_generated_mockups(limit=limit, offset=offset)]

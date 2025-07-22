@@ -161,17 +161,19 @@ def add_metric(metric: MetricIn) -> dict[str, str]:
 
 
 @app.get("/optimizations")
-def get_optimizations() -> List[str]:
+def get_optimizations(limit: int = 10, offset: int = 0) -> List[str]:
     """Return recommended cost optimizations."""
     analyzer = MetricsAnalyzer(store.get_metrics())
-    return analyzer.recommend_optimizations()
+    recs = analyzer.recommend_optimizations()
+    return recs[offset : offset + limit]
 
 
 @app.get("/recommendations")
-def get_recommendations() -> List[str]:
+def get_recommendations(limit: int = 3, offset: int = 0) -> List[str]:
     """Return top optimization actions."""
     analyzer = MetricsAnalyzer(store.get_metrics())
-    return analyzer.top_recommendations()
+    recs = analyzer.top_recommendations(limit + offset)
+    return recs[offset : offset + limit]
 
 
 @app.get("/health")

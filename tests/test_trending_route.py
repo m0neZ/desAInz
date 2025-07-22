@@ -42,14 +42,14 @@ def test_trending_proxy(monkeypatch: Any) -> None:
             return None
 
         async def get(self, url: str) -> httpx.Response:
-            assert url == "http://ingest:1234/trending?limit=5"
+            assert url == "http://ingest:1234/trending?limit=5&offset=2"
             return httpx.Response(200, json=["foo", "bar"])
 
     monkeypatch.setattr(httpx, "AsyncClient", MockClient)
     importlib.reload(routes)
     client = TestClient(main_module.app)
 
-    resp = client.get("/trending?limit=5")
+    resp = client.get("/trending?limit=5&offset=2")
     assert resp.status_code == 200
     assert resp.headers["Cache-Control"].startswith("public")
     assert resp.json() == ["foo", "bar"]

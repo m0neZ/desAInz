@@ -70,10 +70,13 @@ def remove_model(model_id: int) -> None:
         session.execute(delete(AIModel).where(AIModel.id == model_id))
 
 
-def list_models() -> List[ModelInfo]:
-    """Return all registered models."""
+def list_models(limit: int | None = None, offset: int = 0) -> List[ModelInfo]:
+    """Return registered models with optional pagination."""
     with session_scope() as session:
-        rows: Iterable[AIModel] = session.scalars(select(AIModel)).all()
+        stmt = select(AIModel).offset(offset)
+        if limit is not None:
+            stmt = stmt.limit(limit)
+        rows: Iterable[AIModel] = session.scalars(stmt).all()
         return [
             ModelInfo(
                 id=row.id,
@@ -146,10 +149,17 @@ def save_generated_mockup(
         return int(obj.id)
 
 
-def list_generated_mockups() -> List[GeneratedMockupInfo]:
-    """Return all stored generation parameter entries."""
+def list_generated_mockups(
+    limit: int | None = None, offset: int = 0
+) -> List[GeneratedMockupInfo]:
+    """Return stored generation parameter entries."""
     with session_scope() as session:
-        rows: Iterable[GeneratedMockup] = session.scalars(select(GeneratedMockup)).all()
+        stmt = (
+            select(GeneratedMockup).order_by(GeneratedMockup.id.desc()).offset(offset)
+        )
+        if limit is not None:
+            stmt = stmt.limit(limit)
+        rows: Iterable[GeneratedMockup] = session.scalars(stmt).all()
         return [
             GeneratedMockupInfo(
                 id=row.id,

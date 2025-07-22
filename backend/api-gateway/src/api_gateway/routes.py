@@ -135,14 +135,14 @@ async def close_http_clients() -> None:
     _CLIENTS.clear()
 
 
-async def get_trending(limit: int = 10) -> list[str]:
+async def get_trending(limit: int = 10, offset: int = 0) -> list[str]:
     """Return trending keywords via ingestion service with Redis caching."""
-    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}"
+    cache_key = f"{TRENDING_CACHE_PREFIX}{offset}:{limit}"
     cached = await async_get(cache_key)
     if cached:
         return cast(list[str], json.loads(cached))
 
-    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
+    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}&offset={offset}"
     client = _get_client("signal_ingestion")
     resp = await client.get(url)
     if resp.status_code != 200:
@@ -255,11 +255,11 @@ privacy_router = APIRouter(
 
 
 @approvals_router.get("/", summary="List pending run IDs")
-async def list_pending_runs() -> PendingRuns:
+async def list_pending_runs(limit: int = 100, offset: int = 0) -> PendingRuns:
     """Return IDs of runs awaiting manual approval."""
     client = get_async_client()
-    run_ids = await client.smembers(PENDING_RUNS_KEY)
-    return PendingRuns(runs=sorted(run_ids))
+    run_ids = sorted(await client.smembers(PENDING_RUNS_KEY))
+    return PendingRuns(runs=run_ids[offset : offset + limit])
 
 
 @router.get("/status", tags=["Status"], summary="Public status")
@@ -522,9 +522,9 @@ async def optimizations() -> list[str]:
 
 
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
-async def trending(limit: int = 10) -> list[str]:
+async def trending(limit: int = 10, offset: int = 0) -> list[str]:
     """Return up to ``limit`` trending keywords from the ingestion service."""
-    return await get_trending(limit)
+    return await get_trending(limit, offset)
 
 
 @monitoring_router.get("/overview", summary="System overview")
@@ -631,13 +631,15 @@ async def get_audit_logs(
 
 @router.get("/models", tags=["Models"], summary="List AI models")
 async def get_models(
+    limit: int | None = None,
+    offset: int = 0,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[dict[str, Any]]:
-    """Return all available AI models."""
+    """Return available AI models."""
     from mockup_generation.model_repository import list_models
 
     log_admin_action(payload.get("sub", "unknown"), "list_models")
-    return [m.__dict__ for m in list_models()]
+    return [m.__dict__ for m in list_models(limit=limit, offset=offset)]
 
 
 @router.post("/models/{model_id}/default", tags=["Models"], summary="Set default model")

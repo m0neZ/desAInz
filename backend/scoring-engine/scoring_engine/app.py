@@ -93,6 +93,7 @@ class SearchRequest(BaseModel):
 
     embedding: list[float]
     limit: int = 5
+    offset: int = 0
     source: str | None = None
 
 
@@ -335,10 +336,11 @@ async def search_embeddings(body: SearchRequest) -> JSONResponse:
                         np.linalg.norm(query - np.array(r.embedding, dtype=float))
                     )
                 )
-                return rows[: body.limit]
+                return rows[body.offset : body.offset + body.limit]
             stmt = (
                 select(Embedding)
                 .order_by(Embedding.embedding.op("<->")(body.embedding))
+                .offset(body.offset)
                 .limit(body.limit)
             )
             if body.source is not None:

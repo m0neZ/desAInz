@@ -120,9 +120,9 @@ async def ingest_signals(
 
 
 @app.get("/trending")
-async def trending(limit: int = 10) -> list[str]:
+async def trending(limit: int = 10, offset: int = 0) -> list[str]:
     """Return up to ``limit`` trending keywords."""
-    return trending_mod.get_top_keywords(limit)
+    return trending_mod.get_top_keywords(limit, offset)
 
 
 if __name__ == "__main__":  # pragma: no cover

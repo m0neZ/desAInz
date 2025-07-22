@@ -1,6 +1,7 @@
 FROM python:3.11-slim AS builder
 WORKDIR /install
-RUN pip install --prefix=/usr/local dagster dagster-webserver
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --prefix=/usr/local dagster dagster-webserver
 
 FROM python:3.11-slim
 WORKDIR /app

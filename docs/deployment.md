@@ -7,6 +7,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 - Docker Engine with the Buildx plugin installed
 - QEMU emulation binaries for cross-platform builds
 - `docker buildx` configured as the default builder
+- Docker BuildKit enabled to cache pip and npm packages using `--mount=type=cache`
 
 ## Docker Compose
 

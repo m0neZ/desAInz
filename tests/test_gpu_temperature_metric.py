@@ -1,3 +1,5 @@
+"""Tests for GPU temperature metric."""
+
 from typing import Any
 
 import subprocess

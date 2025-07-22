@@ -26,10 +26,7 @@ from .auth import (
     verify_token,
     require_role,
     revoke_token,
-    SECRET_KEY,
-    ALGORITHM,
 )
-from jose import JWTError, jwt
 from .models import FlagState, MetadataPatch, RoleAssignment, UsernameRequest
 from .audit import log_admin_action
 from backend.analytics.auth import create_access_token
@@ -112,12 +109,13 @@ def _identify_user(request: Request) -> str:
     auth_header = request.headers.get("Authorization")
     if auth_header and auth_header.startswith("Bearer "):
         token = auth_header.split(" ", 1)[1]
+        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
         try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            payload = verify_token(credentials)
             sub = cast(str | None, payload.get("sub"))
             if sub is not None:
                 return sub
-        except JWTError:  # pragma: no cover - invalid token
+        except Exception:  # pragma: no cover - invalid token
             pass
     return cast(str, request.client.host)
 

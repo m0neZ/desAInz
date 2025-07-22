@@ -42,20 +42,19 @@ def store_keywords(keywords: Iterable[str]) -> None:
     pipe.execute()
 
 
-def get_trending(limit: int = 10) -> list[str]:
-    """
-    Return up to ``limit`` most popular keywords.
+def get_trending(limit: int = 10, offset: int = 0) -> list[str]:
+    """Return ``limit`` popular keywords starting from ``offset``.
 
     Results are cached in Redis for a short period of time to avoid repeatedly scanning
     the sorted set on each request.
     """
     client = get_sync_client()
-    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}"
+    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}:{offset}"
     cached = sync_get(cache_key, client)
     if cached:
         return cast(list[str], json.loads(cached))
 
-    words = client.zrevrange(TRENDING_KEY, 0, limit - 1)
+    words = client.zrevrange(TRENDING_KEY, offset, offset + limit - 1)
     result = [w.decode("utf-8") if isinstance(w, bytes) else w for w in words]
     sync_set(
         cache_key, json.dumps(result), ttl=settings.trending_cache_ttl, client=client
@@ -63,9 +62,9 @@ def get_trending(limit: int = 10) -> list[str]:
     return result
 
 
-def get_top_keywords(limit: int) -> list[str]:
-    """Return the top ``limit`` keywords ordered by popularity."""
-    return get_trending(limit)
+def get_top_keywords(limit: int, offset: int = 0) -> list[str]:
+    """Return ``limit`` keywords ordered by popularity starting from ``offset``."""
+    return get_trending(limit, offset)
 
 
 def trim_keywords(max_size: int) -> None:

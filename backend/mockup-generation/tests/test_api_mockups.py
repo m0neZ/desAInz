@@ -247,7 +247,7 @@ def test_metadata_recorded_and_listed(
     tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
 
     client = TestClient(api.app)
-    resp = client.get("/mockups")
+    resp = client.get("/mockups?limit=50&offset=0")
     assert resp.status_code == 200
     data = resp.json()
     assert len(data) == 1

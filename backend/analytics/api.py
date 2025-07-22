@@ -188,7 +188,7 @@ async def marketplace_metrics(listing_id: int) -> MarketplaceSummary:
 
 
 @app.get("/low_performers")  # type: ignore[misc]
-async def low_performers(limit: int = 10) -> list[LowPerformer]:
+async def low_performers(limit: int = 10, offset: int = 0) -> list[LowPerformer]:
     """Return listings with the lowest total revenue."""
     async with AsyncSessionLocal() as session:
         result = await session.execute(
@@ -200,6 +200,7 @@ async def low_performers(limit: int = 10) -> list[LowPerformer]:
             )
             .group_by(models.MarketplaceMetric.listing_id)
             .order_by("rev")
+            .offset(offset)
             .limit(limit)
         )
         rows = result.all()

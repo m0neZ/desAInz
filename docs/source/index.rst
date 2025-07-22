@@ -8,6 +8,7 @@ Welcome to desAInz's documentation!
    :caption: Contents:
 
    modules
+   api/index
    analytics
    api_gateway
    feedback_loop

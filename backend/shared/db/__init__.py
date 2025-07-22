@@ -89,6 +89,12 @@ engine = create_engine(
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 register_pool_metrics(engine)
+if engine.dialect.name == "sqlite":
+
+    @event.listens_for(engine, "connect")
+    def _set_sqlite_wal(dbapi_connection: Any, _: Any) -> None:
+        dbapi_connection.execute("PRAGMA journal_mode=WAL")
+
 
 async_engine = create_async_engine(
     ASYNC_DATABASE_URL,
@@ -98,6 +104,11 @@ async_engine = create_async_engine(
 )
 AsyncSessionLocal = async_sessionmaker(async_engine, expire_on_commit=False)
 register_pool_metrics(async_engine)
+if async_engine.dialect.name == "sqlite":
+
+    @event.listens_for(async_engine.sync_engine, "connect")
+    def _set_async_sqlite_wal(dbapi_connection: Any, _: Any) -> None:
+        dbapi_connection.execute("PRAGMA journal_mode=WAL")
 
 
 @contextmanager
@@ -113,7 +124,7 @@ def session_scope(username: str | None = None) -> Iterator[Session]:
 
     if username is not None:
 
-        @event.listens_for(session, "after_begin")  # type: ignore[misc]
+        @event.listens_for(session, "after_begin")
         def _set_username(  # noqa: D401 -- event listener, not a docstring
             _session: Session,
             _transaction: Any,
@@ -143,7 +154,7 @@ async def async_session_scope(
 
     if username is not None:
 
-        @event.listens_for(session.sync_session, "after_begin")  # type: ignore[misc]
+        @event.listens_for(session.sync_session, "after_begin")
         def _set_username(
             _session: Session,
             _transaction: Any,

@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: {{ include "ai-mockup-generation.fullname" . }}
   labels: {{- include "ai-mockup-generation.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "{{ .Values.service.port }}"
 spec:
   type: {{ .Values.service.type }}
   selector: {{- include "ai-mockup-generation.selectorLabels" . | nindent 4 }}

@@ -15,11 +15,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
+from backend.shared.tracing import configure_tracing
 from pydantic import BaseModel
 
 from .ab_testing import ABTestManager
 from .auth import require_role
 from backend.shared.config import settings as shared_settings
+from .settings import settings
 
 app = FastAPI(title="Feedback Loop")
 app.add_middleware(
@@ -29,6 +31,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+configure_tracing(app, "feedback-loop")
 register_metrics(app)
 add_security_headers(app)
 logger = logging.getLogger(__name__)

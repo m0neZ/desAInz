@@ -12,6 +12,7 @@ fakeredis
 tenacity
 responses
 respx
+pytest-xdist
 Pillow
 redis
 asyncpg

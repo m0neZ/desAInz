@@ -14,6 +14,8 @@ from dagster import DagsterInstance
 
 from orchestrator import idea_job
 
+pytestmark = pytest.mark.xdist_group("compose")
+
 COMPOSE_FILES = ["docker-compose.dev.yml", "docker-compose.test.yml"]
 DB_DSN = "postgresql://user:password@localhost:5432/app_test"
 
@@ -65,6 +67,9 @@ services:
       METRICS_DB_URL: postgresql://user:password@postgres:5432/app_test
 """,
     )
+    project_name = f"compose_{os.environ.get('PYTEST_XDIST_WORKER', 'gw0')}"
+    env = os.environ.copy()
+    env["COMPOSE_PROJECT_NAME"] = project_name
     cmd = [
         "docker-compose",
         *sum([["-f", f] for f in COMPOSE_FILES + [str(override)]], []),
@@ -78,9 +83,9 @@ services:
         "mockup-generation",
         "monitoring",
     ]
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, env=env)
     try:
-        subprocess.run(["scripts/wait-for-services.sh"], check=True)
+        subprocess.run(["scripts/wait-for-services.sh"], check=True, env=env)
         yield
     finally:
         subprocess.run(
@@ -91,6 +96,7 @@ services:
                 "-v",
             ],
             check=True,
+            env=env,
         )
 
 

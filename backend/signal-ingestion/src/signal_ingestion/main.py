@@ -17,7 +17,7 @@ from backend.shared.db import run_migrations_if_needed
 from .scheduler import create_scheduler
 from .ingestion import ingest
 from . import dedup
-from .trending import get_top_keywords
+from . import trending as trending_mod
 from .logging_config import configure_logging
 from .settings import settings
 from backend.shared.config import settings as shared_settings
@@ -124,7 +124,7 @@ async def ingest_signals(
 @app.get("/trending")
 async def trending(limit: int = 10) -> list[str]:
     """Return up to ``limit`` trending keywords."""
-    return get_top_keywords(limit)
+    return trending_mod.get_top_keywords(limit)
 
 
 if __name__ == "__main__":  # pragma: no cover

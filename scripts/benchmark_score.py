@@ -9,23 +9,12 @@ import os
 from time import perf_counter
 
 import httpx
-import atexit
-
-_HTTP_CLIENT: httpx.AsyncClient | None = None
+from backend.shared.http import get_async_http_client
 
 
 async def get_http_client() -> httpx.AsyncClient:
     """Return a shared HTTP client."""
-    global _HTTP_CLIENT
-    if _HTTP_CLIENT is None:
-        _HTTP_CLIENT = httpx.AsyncClient()
-    return _HTTP_CLIENT
-
-
-@atexit.register
-def _close_http_client() -> None:
-    if _HTTP_CLIENT is not None:
-        asyncio.run(_HTTP_CLIENT.aclose())
+    return await get_async_http_client()
 
 
 async def _run(

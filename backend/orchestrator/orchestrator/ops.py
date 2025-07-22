@@ -9,8 +9,9 @@ from typing import Any
 
 import asyncio
 import httpx
-import atexit
 from dagster import Failure, RetryPolicy, op
+
+from backend.shared.http import get_async_http_client
 
 from scripts import maintenance
 
@@ -24,24 +25,6 @@ def _auth_headers(context: Any) -> dict[str, str]:
     return headers
 
 
-_CLIENT: httpx.AsyncClient | None = None
-
-
-async def _get_client() -> httpx.AsyncClient:
-    global _CLIENT
-    if _CLIENT is None:
-        _CLIENT = httpx.AsyncClient()
-    return _CLIENT
-
-
-@atexit.register
-def _close_client() -> None:
-    if _CLIENT is not None:
-        import asyncio as _asyncio
-
-        _asyncio.run(_CLIENT.aclose())
-
-
 async def _post_with_retry(
     context: Any,
     url: str,
@@ -52,7 +35,7 @@ async def _post_with_retry(
     retries: int = 3,
 ) -> httpx.Response:
     """Send a POST request asynchronously with exponential backoff."""
-    client = await _get_client()
+    client = await get_async_http_client()
     for attempt in range(1, retries + 1):
         try:
             response = await client.post(
@@ -157,7 +140,7 @@ def score_signals(  # type: ignore[no-untyped-def]
     )
 
     async def _run() -> list[float]:
-        client = await _get_client()
+        client = await get_async_http_client()
         async with asyncio.TaskGroup() as tg:
             tasks = [tg.create_task(_score(client)) for _ in signals]
         return [t.result() for t in tasks]
@@ -220,7 +203,7 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
     url = f"{base_url}/approvals/{context.run_id}"
     headers = _auth_headers(context)
 
-    client = await _get_client()
+    client = await get_async_http_client()
     for _ in range(30):
         try:
             resp = await client.get(url, headers=headers, timeout=5)

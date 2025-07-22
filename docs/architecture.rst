@@ -51,6 +51,6 @@ HTTP Timeouts
 
 All services make outbound requests using ``httpx``. The recommended timeout
 for these calls is 10 seconds and is exposed as
-``backend.shared.http.DEFAULT_TIMEOUT``. Instantiate
-``httpx.AsyncClient`` with this timeout to ensure consistent behavior across
-services.
+``backend.shared.http.DEFAULT_TIMEOUT``. Use
+``backend.shared.http.get_async_http_client()`` to obtain a shared
+``httpx.AsyncClient`` instance configured with this timeout.

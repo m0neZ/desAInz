@@ -58,6 +58,13 @@ export function useMetrics() {
   });
 }
 
+export function useMetricsSummary() {
+  return useQuery({
+    queryKey: ['metricsSummary'],
+    queryFn: () => trpc.metrics.summary(),
+  });
+}
+
 export function useAuditLogs(limit = 50, offset = 0) {
   return useQuery({
     queryKey: ['auditLogs', limit, offset],
@@ -69,6 +76,20 @@ export function useOptimizations() {
   return useQuery({
     queryKey: ['optimizations'],
     queryFn: () => trpc.optimizations.list(),
+  });
+}
+
+export function useOptimizationRecommendations() {
+  return useQuery({
+    queryKey: ['optimizationRecommendations'],
+    queryFn: () => trpc.recommendations.list(),
+  });
+}
+
+export function useMockups() {
+  return useQuery({
+    queryKey: ['mockups'],
+    queryFn: () => trpc.mockups.list(),
   });
 }
 

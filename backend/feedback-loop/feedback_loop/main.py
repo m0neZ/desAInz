@@ -61,8 +61,19 @@ async def startup() -> None:
     global scheduler
     # Import here to avoid heavy dependencies at module import time
     from .scheduler import setup_scheduler
+    from .ingestion import schedule_marketplace_ingestion
 
-    scheduler = setup_scheduler([], "")
+    listing_env = os.environ.get("MARKETPLACE_LISTING_IDS", "")
+    listing_ids = [int(i) for i in listing_env.split(",") if i.strip()]
+    scoring_api = os.environ.get("SCORING_ENGINE_URL", "")
+    scheduler = setup_scheduler([], scoring_api)
+    if listing_ids:
+        schedule_marketplace_ingestion(
+            scheduler,
+            listing_ids,
+            scoring_api,
+            interval_minutes=settings.publisher_metrics_interval_minutes,
+        )
     scheduler.start()
 
     def log_unhandled(

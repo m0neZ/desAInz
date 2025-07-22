@@ -40,3 +40,32 @@ def test_scheduler_shutdown(monkeypatch) -> None:
         assert dummy.started
         client.get("/health")
     assert dummy.stopped
+
+
+def test_startup_schedules_ingestion(monkeypatch) -> None:
+    """Marketplace ingestion should be scheduled on startup."""
+
+    dummy = DummyScheduler()
+
+    def fake_setup_scheduler(*_: object, **__: object) -> DummyScheduler:
+        return dummy
+
+    called = {}
+
+    def fake_schedule(
+        sched: object, ids: list[int], url: str, interval_minutes: int
+    ) -> None:
+        called["ids"] = ids
+        called["url"] = url
+
+    import feedback_loop.scheduler as scheduler_mod
+    import feedback_loop.ingestion as ingestion_mod
+
+    monkeypatch.setattr(scheduler_mod, "setup_scheduler", fake_setup_scheduler)
+    monkeypatch.setattr(ingestion_mod, "schedule_marketplace_ingestion", fake_schedule)
+    monkeypatch.setenv("MARKETPLACE_LISTING_IDS", "1,2")
+    monkeypatch.setenv("SCORING_ENGINE_URL", "http://api")
+
+    with TestClient(main.app):
+        assert called["ids"] == [1, 2]
+        assert called["url"] == "http://api"

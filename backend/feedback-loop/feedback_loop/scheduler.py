@@ -51,6 +51,7 @@ def setup_scheduler(
         schedule_marketplace_ingestion(
             scheduler,
             list(listing_ids),
+            scoring_api,
             interval_minutes=settings.publisher_metrics_interval_minutes,
         )
     return scheduler

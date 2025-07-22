@@ -685,7 +685,11 @@ async def metrics_ws(websocket: WebSocket) -> None:
         while True:
             overview_req = client.get(f"{MONITORING_URL}/overview")
             analytics_req = client.get(f"{MONITORING_URL}/analytics")
-            overview, analytics = await asyncio.gather(overview_req, analytics_req)
+            async with asyncio.TaskGroup() as tg:
+                overview_task = tg.create_task(overview_req)
+                analytics_task = tg.create_task(analytics_req)
+            overview = overview_task.result()
+            analytics = analytics_task.result()
             data: Dict[str, Any] = {}
             if overview.status_code == 200:
                 data.update(cast(Dict[str, Any], overview.json()))
@@ -706,7 +710,11 @@ async def metrics_sse() -> EventSourceResponse:
         while True:
             overview_req = client.get(f"{MONITORING_URL}/overview")
             analytics_req = client.get(f"{MONITORING_URL}/analytics")
-            overview, analytics = await asyncio.gather(overview_req, analytics_req)
+            async with asyncio.TaskGroup() as tg:
+                overview_task = tg.create_task(overview_req)
+                analytics_task = tg.create_task(analytics_req)
+            overview = overview_task.result()
+            analytics = analytics_task.result()
             data: Dict[str, Any] = {}
             if overview.status_code == 200:
                 data.update(cast(Dict[str, Any], overview.json()))

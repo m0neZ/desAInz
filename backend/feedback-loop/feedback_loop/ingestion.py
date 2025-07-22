@@ -98,8 +98,9 @@ async def _fetch_metrics_async(
             "revenue": float(data.get("revenue", 0.0)),
         }
 
-    tasks = [_get(c, lid) for c in clients for lid in listing_ids]
-    results = await asyncio.gather(*tasks)
+    async with asyncio.TaskGroup() as tg:
+        tasks = [tg.create_task(_get(c, lid)) for c in clients for lid in listing_ids]
+    results = [t.result() for t in tasks]
     return [r for r in results if r]
 
 

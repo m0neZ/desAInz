@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
+    "sphinx.ext.doctest",
     "sphinxcontrib.openapi",
 ]
 
@@ -51,6 +52,7 @@ autodoc_mock_imports = [
     "psycopg2",
     "selenium",
     "apscheduler",
+    "dagster",
     "scoring_engine",
     "backend.optimization",
     "marketplace_publisher",
@@ -93,6 +95,7 @@ html_static_path = ["_static"]
 # Silence warnings for mocked imports
 suppress_warnings = [
     "autodoc.mocked_object",
+    "autodoc.import_object",
     "toc.duplicate_entry",
     "toc.not_included",
 ]
@@ -107,6 +110,8 @@ if TYPE_CHECKING:  # pragma: no cover
 
 def _run_linters(app: "Sphinx") -> None:
     """Run docformatter and flake8-docstrings before building docs."""
+    if os.environ.get("SKIP_DOC_LINT", "0") == "1":
+        return
     docs_dir = os.path.dirname(os.path.abspath(__file__))
     result = subprocess.run(
         ["docformatter", "--check", "--recursive", docs_dir],

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import uuid
+import asyncio
 
 from datetime import datetime, timezone
 from typing import Any
@@ -12,6 +13,7 @@ import asyncio
 
 import httpx
 import requests
+import httpx
 from dagster import Failure, RetryPolicy, op
 
 import time
@@ -57,6 +59,44 @@ def _post_with_retry(
                 retries,
             )
             time.sleep(2 ** (attempt - 1))
+    raise RuntimeError("unreachable")
+
+
+async def _post_with_retry_async(
+    context: Any,
+    url: str,
+    *,
+    json: Any | None = None,
+    headers: dict[str, str] | None = None,
+    timeout: int = 30,
+    retries: int = 3,
+) -> httpx.Response:
+    """Send a POST request asynchronously with exponential backoff."""
+    for attempt in range(1, retries + 1):
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(
+                    url, json=json, headers=headers, timeout=timeout
+                )
+                response.raise_for_status()
+                return response
+            except httpx.HTTPError as exc:  # noqa: BLE001
+                if attempt == retries:
+                    context.log.error(
+                        "request to %s failed after %d attempts: %s",
+                        url,
+                        attempt,
+                        exc,
+                    )
+                    raise
+                context.log.warning(
+                    "request to %s failed: %s (attempt %d/%d)",
+                    url,
+                    exc,
+                    attempt,
+                    retries,
+                )
+                await asyncio.sleep(2 ** (attempt - 1))
     raise RuntimeError("unreachable")
 
 
@@ -154,21 +194,46 @@ def generate_content(  # type: ignore[no-untyped-def]
         "MOCKUP_GENERATION_URL",
         "http://mockup-generation:8000",
     )
-    try:
-        resp = _post_with_retry(
+
+    async def _generate(score: float) -> list[str]:
+        resp = await _post_with_retry_async(
             context,
             f"{base_url}/generate",
-            json={"scores": scores},
+            json={"scores": [score]},
             headers=_auth_headers(context),
             timeout=60,
         )
         items = resp.json().get("items", [])
         if not isinstance(items, list):
             items = []
-    except requests.RequestException as exc:  # noqa: BLE001
+        return [str(item) for item in items]
+
+    if len(scores) <= 1:
+        try:
+            resp = _post_with_retry(
+                context,
+                f"{base_url}/generate",
+                json={"scores": scores},
+                headers=_auth_headers(context),
+                timeout=60,
+            )
+            items = resp.json().get("items", [])
+            if not isinstance(items, list):
+                items = []
+        except requests.RequestException as exc:  # noqa: BLE001
+            context.log.warning("generation failed after retries: %s", exc)
+            items = []
+        return [str(item) for item in items]
+
+    async def _generate_all() -> list[str]:
+        results = await asyncio.gather(*[_generate(s) for s in scores])
+        return [item for sub in results for item in sub]
+
+    try:
+        return asyncio.run(_generate_all())
+    except httpx.HTTPError as exc:  # noqa: BLE001
         context.log.warning("generation failed after retries: %s", exc)
-        items = []
-    return [str(item) for item in items]
+        return []
 
 
 @op  # type: ignore[misc]

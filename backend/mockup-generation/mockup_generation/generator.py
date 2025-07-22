@@ -215,5 +215,5 @@ class MockupGenerator:
 
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
-            if hasattr(torch.cuda, "ipc_collect"):
+            if torch.cuda.device_count() > 0 and hasattr(torch.cuda, "ipc_collect"):
                 torch.cuda.ipc_collect()

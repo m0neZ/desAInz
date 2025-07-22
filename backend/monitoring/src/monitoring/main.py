@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
 import httpx
+import atexit
+import asyncio
 from backend.shared.http import DEFAULT_TIMEOUT
 
 import psutil
@@ -45,6 +47,23 @@ QUEUE_ALERT_KEY = "queue:last_alert"
 from .logging_config import configure_logging
 from .settings import settings
 from scripts.daily_summary import generate_daily_summary
+
+_ASYNC_CLIENT: httpx.AsyncClient | None = None
+
+
+async def get_async_client() -> httpx.AsyncClient:
+    """Return a shared ``AsyncClient`` instance."""
+    global _ASYNC_CLIENT
+    if _ASYNC_CLIENT is None:
+        _ASYNC_CLIENT = httpx.AsyncClient(timeout=DEFAULT_TIMEOUT)
+    return _ASYNC_CLIENT
+
+
+@atexit.register
+def _close_client() -> None:
+    if _ASYNC_CLIENT is not None:
+        asyncio.run(_ASYNC_CLIENT.aclose())
+
 
 metrics_store = TimescaleMetricsStore()
 
@@ -118,15 +137,15 @@ async def status() -> dict[str, str]:
         "orchestrator": "http://orchestrator:8000/health",
     }
     results: dict[str, str] = {}
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
-        for name, url in services.items():
-            try:
-                resp = await client.get(url)
-                results[name] = (
-                    resp.json().get("status") if resp.status_code == 200 else "down"
-                )
-            except Exception:  # pragma: no cover - network failures
-                results[name] = "down"
+    client = await get_async_client()
+    for name, url in services.items():
+        try:
+            resp = await client.get(url)
+            results[name] = (
+                resp.json().get("status") if resp.status_code == 200 else "down"
+            )
+        except Exception:  # pragma: no cover - network failures
+            results[name] = "down"
     return results
 
 

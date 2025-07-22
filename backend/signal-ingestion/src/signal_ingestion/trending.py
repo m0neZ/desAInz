@@ -72,6 +72,7 @@ def trim_keywords(max_size: int) -> None:
     """Decay scores, drop stale entries and limit sorted set size."""
     client = get_sync_client()
     now = int(time.time())
+    step_decay = _DECAY_BASE ** (-1 / settings.trending_ttl)
     cutoff = now - settings.trending_ttl
     stale_words = client.zrangebyscore(TRENDING_TS_KEY, 0, cutoff)
     pipe = client.pipeline()
@@ -92,7 +93,7 @@ def trim_keywords(max_size: int) -> None:
                 pipe.zrem(TRENDING_TS_KEY, w)
                 continue
             elapsed = now - int(last_seen)
-            decay = _DECAY_BASE ** (-elapsed / settings.trending_ttl)
+            decay = step_decay**elapsed
             new_score = float(score) * decay
             if new_score <= 0:
                 pipe.zrem(TRENDING_KEY, w)

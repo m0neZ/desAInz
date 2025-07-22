@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from functools import cached_property
+
 from pydantic import AnyUrl, Field, HttpUrl, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -63,9 +65,14 @@ class Settings(BaseSettings):
             raise ValueError("must be positive")
         return value
 
-    @property
+    @cached_property
     def effective_database_url(self) -> AnyUrl:
-        """Return ``pgbouncer_url`` if set, otherwise ``database_url``."""
+        """
+        Return ``pgbouncer_url`` if set, otherwise ``database_url``.
+
+        The value is cached so that it is computed only once per ``Settings``
+        instance.
+        """
         return self.pgbouncer_url or self.database_url
 
 

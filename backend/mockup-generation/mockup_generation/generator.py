@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
+from pathlib import Path
 from threading import Lock
 from typing import Optional, TYPE_CHECKING
 
@@ -105,13 +106,19 @@ class MockupGenerator:
         """
         from time import perf_counter
 
+        output_file = Path(output_path)
+        tmp_dir = Path("/tmpfs") if Path("/tmpfs").is_dir() else output_file.parent
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        temp_path = tmp_dir / output_file.name
+
         if settings.use_comfyui:
             from .comfy_workflow import ComfyUIWorkflow
 
-            workflow = {"prompt": prompt, "output": output_path}
+            workflow = {"prompt": prompt, "output": str(temp_path)}
             runner = ComfyUIWorkflow(settings.comfyui_url)
-            res = runner.execute(workflow, output_path)
-            return GenerationResult(image_path=res.image_path, duration=res.duration)
+            res = runner.execute(workflow, str(temp_path))
+            Path(temp_path).replace(output_file)
+            return GenerationResult(image_path=str(output_file), duration=res.duration)
 
         self.load(model_identifier)
         assert self.pipeline is not None
@@ -126,8 +133,9 @@ class MockupGenerator:
 
             image = asyncio.run(self._fallback_api(prompt))
         duration = perf_counter() - start
-        image.save(output_path)
-        return GenerationResult(image_path=output_path, duration=duration)
+        image.save(temp_path)
+        Path(temp_path).replace(output_file)
+        return GenerationResult(image_path=str(output_file), duration=duration)
 
     async def _fallback_api(self, prompt: str) -> Image.Image:
         """

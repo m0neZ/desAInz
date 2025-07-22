@@ -64,11 +64,10 @@ class BaseAdapter:
         """
         self.base_url = base_url
         self.retries = retries
-        if self.__class__ not in BaseAdapter._limiters:
-            BaseAdapter._limiters[self.__class__] = AdapterRateLimiter(
-                {self.__class__.__name__: rate_limit}
-            )
-        self._rate_limiter = BaseAdapter._limiters[self.__class__]
+        self._rate_limiter = BaseAdapter._limiters.setdefault(
+            self.__class__,
+            AdapterRateLimiter({self.__class__.__name__: rate_limit}),
+        )
         if proxies is None:
             raw = settings.http_proxies
             parsed = str(raw).split(",") if raw else []

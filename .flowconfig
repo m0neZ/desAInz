@@ -6,6 +6,7 @@
 <PROJECT_ROOT>/scripts/.*
 <PROJECT_ROOT>/load_tests/.*
 frontend/admin-dashboard/scripts/.*
+<PROJECT_ROOT>/frontend/admin-dashboard/public/sw.js
 
 [libs]
 

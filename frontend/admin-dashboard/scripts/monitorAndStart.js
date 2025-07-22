@@ -7,13 +7,16 @@
  */
 import { spawn } from 'child_process';
 
+// Type annotation for the spawned Next.js process
+/** @type {import('child_process').ChildProcess} */
 const next = spawn(
   'node',
   ['--max-old-space-size=2048', './node_modules/.bin/next', 'start'],
   { stdio: 'inherit' }
 );
 
-setInterval(() => {
+setInterval((): void => {
+  /** @type {NodeJS.MemoryUsage} */
   const usage = process.memoryUsage();
   console.log(`Memory Usage - RSS: ${usage.rss}, Heap Used: ${usage.heapUsed}`);
 }, 60000);

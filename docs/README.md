@@ -87,7 +87,8 @@ deviations should be investigated.
 
 Documentation is automatically built and deployed via GitHub Actions. The
 workflow defined in `.github/workflows/docs.yml` runs `make -C docs html`, which
-invokes Sphinx with warnings treated as errors. `docformatter` and
-`flake8-docstrings` are executed as part of the build process. The generated
+invokes Sphinx with warnings treated as errors. `docformatter`,
+`flake8-docstrings`, and `interrogate` are executed as part of the build
+process. The generated
 HTML is uploaded as an artifact and deployed to GitHub Pages using
 `actions/deploy-pages` whenever changes are pushed to the `main` branch.

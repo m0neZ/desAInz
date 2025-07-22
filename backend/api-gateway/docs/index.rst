@@ -9,6 +9,12 @@ Metrics
 
 Prometheus metrics are exposed at ``/metrics``.
 
+Compression
+-----------
+
+Responses larger than 1000 bytes are compressed using Brotli with a gzip
+fallback for clients that do not advertise ``br`` support.
+
 Environment Variables
 ---------------------
 

@@ -34,7 +34,8 @@ class Signal:
         self.metadata = metadata
 
 
-_SCALER: StandardScaler = StandardScaler()
+_SCALER: StandardScaler = StandardScaler(copy=False)
+_SCALER_BUF: NDArray[np.floating] = np.empty((2, 1), dtype=float)
 
 
 def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> float:
@@ -45,10 +46,11 @@ def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> floa
 
 
 def compute_engagement(current: float, median: float) -> float:
-    """Z-score of engagement rate against median."""
-    arr = np.array([[current], [median]])
-    scaled = _SCALER.fit_transform(arr)
-    return float(scaled[0][0])
+    """Z-score of engagement rate against median without new allocations."""
+    _SCALER_BUF[0, 0] = current
+    _SCALER_BUF[1, 0] = median
+    scaled = _SCALER.fit_transform(_SCALER_BUF)
+    return float(scaled[0, 0])
 
 
 def compute_novelty(

@@ -39,7 +39,7 @@ if TYPE_CHECKING:  # pragma: no cover - type checking only
 logger = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(slots=True)
 class GenerationResult:
     """Result from a generation request."""
 

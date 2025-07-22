@@ -12,7 +12,7 @@ from .settings import settings
 import requests
 
 
-@dataclass
+@dataclass(slots=True)
 class ListingMetadata:
     """Metadata for a marketplace listing."""
 

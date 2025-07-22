@@ -34,7 +34,7 @@ def _load_yaml(path: Path) -> Mapping[str, Any]:
     return _raw_rules_cache
 
 
-@dataclass
+@dataclass(slots=True)
 class MarketplaceRules:
     """Validation rules for a single marketplace."""
 

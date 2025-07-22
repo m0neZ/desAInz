@@ -12,7 +12,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(slots=True)
 class ComfyResult:
     """Result information for a ComfyUI run."""
 

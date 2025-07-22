@@ -51,7 +51,7 @@ class DailySummary(Base):
     conversions_b: Mapped[int] = mapped_column(Integer, default=0)
 
 
-@dataclass
+@dataclass(slots=True)
 class BudgetAllocation:
     """Promotion budget allocation for variants."""
 

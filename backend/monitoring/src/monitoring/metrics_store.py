@@ -39,7 +39,7 @@ def invalidate_analytics_cache() -> None:
         pass
 
 
-@dataclass
+@dataclass(slots=True)
 class ScoreMetric:
     """Score metric for a design idea."""
 
@@ -48,7 +48,7 @@ class ScoreMetric:
     score: float
 
 
-@dataclass
+@dataclass(slots=True)
 class PublishLatencyMetric:
     """Publish latency metric for a design idea."""
 

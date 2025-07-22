@@ -14,7 +14,7 @@ from backend.shared.db.models import AIModel, GeneratedMockup
 Base.metadata.create_all(bind=engine)
 
 
-@dataclass
+@dataclass(slots=True)
 class ModelInfo:
     """Dataclass representing an AI model entry."""
 
@@ -26,7 +26,7 @@ class ModelInfo:
     is_default: bool
 
 
-@dataclass
+@dataclass(slots=True)
 class GeneratedMockupInfo:
     """Dataclass representing a generated mockup entry."""
 

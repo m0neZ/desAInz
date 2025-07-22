@@ -12,7 +12,7 @@ if TYPE_CHECKING:  # pragma: no cover - imports for type checking
     from .storage import MetricsStore
 
 
-@dataclass
+@dataclass(slots=True)
 class ResourceMetric:
     """Represents a single resource usage metric."""
 

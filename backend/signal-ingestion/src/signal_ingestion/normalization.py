@@ -6,7 +6,7 @@ from dataclasses import dataclass, asdict
 from typing import Any, Callable, Dict
 
 
-@dataclass
+@dataclass(slots=True)
 class Signal:
     """Standard representation of an ingested signal."""
 

@@ -1,13 +1,14 @@
 // @flow
-import * as React from 'react';
+const React = require('react');
 
-export type UserProviderProps = {|
+/*::
+type UserProviderProps = {
   children: React.Node,
-|};
+};
+*/
 
 module.exports = {
-  withPageAuthRequired: <P>(
-    Component: React.ComponentType<P>
-  ): React.ComponentType<P> => Component,
-  UserProvider: ({ children }: UserProviderProps): React.Node => children,
+  withPageAuthRequired: (Component /*: React.ComponentType<any> */) => Component,
+  UserProvider: ({ children } /*: UserProviderProps */) => children,
 };
+

@@ -1,24 +1,34 @@
 // @flow
 import React, { useState } from 'react';
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import dynamic from 'next/dynamic';
 import { useAnalyticsData } from '../hooks/useMonitoringData';
 
-ChartJS.register(
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
+const Line = dynamic(
+  async () => {
+    const [chartJs, chart] = await Promise.all([
+      import('chart.js'),
+      import('react-chartjs-2'),
+    ]);
+    const {
+      Chart: ChartJS,
+      LineElement,
+      PointElement,
+      CategoryScale,
+      LinearScale,
+      Tooltip,
+      Legend,
+    } = chartJs;
+    ChartJS.register(
+      LineElement,
+      PointElement,
+      CategoryScale,
+      LinearScale,
+      Tooltip,
+      Legend
+    );
+    return chart.Line;
+  },
+  { ssr: false }
 );
 
 export const AnalyticsChart = React.memo(function AnalyticsChart() {

@@ -7,3 +7,7 @@ logDir: /var/log
 
 # Additional environment variables
 extraEnv: {}
+
+# Name of the Kubernetes secret mounted at /run/secrets
+# Name of the Kubernetes secret mounted at /run/secrets
+secretName: shared-secret

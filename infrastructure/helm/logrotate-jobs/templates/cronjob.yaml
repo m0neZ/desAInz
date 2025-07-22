@@ -21,4 +21,14 @@ spec:
                 - name: {{ $key }}
                   value: {{ $value | quote }}
 {{- end }}
+              volumeMounts:
+                - name: secret-volume
+                  mountPath: /run/secrets
+                  readOnly: true
+              resources:
+{{ toYaml .Values.resources | nindent 14 }}
               command: ["python", "/app/rotate_logs.py"]
+          volumes:
+            - name: secret-volume
+              secret:
+                secretName: {{ .Values.secretName }}

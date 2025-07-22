@@ -17,8 +17,26 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.service.port }}
           env:
 {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
 {{- end }}
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /run/secrets
+              readOnly: true
+          resources:
+{{ toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: {{ .Values.secretName }}

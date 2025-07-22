@@ -8,3 +8,6 @@ minioDataPath: /data
 
 # Additional environment variables
 extraEnv: {}
+
+# Name of the Kubernetes secret mounted at /run/secrets
+secretName: shared-secret

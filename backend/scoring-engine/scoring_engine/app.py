@@ -284,8 +284,14 @@ async def update_weights_endpoint(
 
 
 @app.post("/weights/feedback")
-async def feedback_weights(body: WeightsUpdate) -> JSONResponse:
-    """Update weights from feedback loop with smoothing."""
+async def feedback_weights(request: Request, body: WeightsUpdate) -> JSONResponse:
+    """Update weights from feedback loop with smoothing.
+
+    Requires ``X-Weights-Token`` header matching ``settings.weights_token``.
+    """
+    token = request.headers.get("X-Weights-Token")
+    if settings.weights_token and token != settings.weights_token:
+        raise HTTPException(status_code=401, detail="invalid token")
     weights = await run_in_threadpool(
         update_weights, smoothing=FEEDBACK_SMOOTHING, **body.model_dump()
     )

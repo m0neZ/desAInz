@@ -14,6 +14,7 @@ from requests_oauthlib import OAuth2Session
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import time
+import asyncio
 
 from datetime import datetime
 
@@ -330,7 +331,7 @@ class SeleniumFallback:
         self.screenshot_dir = screenshot_dir or Path("screenshots")
         self.screenshot_dir.mkdir(parents=True, exist_ok=True)
 
-    def publish(
+    async def publish(
         self,
         marketplace: Marketplace,
         design_path: Path,
@@ -396,9 +397,11 @@ class SeleniumFallback:
                 log_path = (
                     self.screenshot_dir / f"{marketplace.value}_{ts}_{attempts}.log"
                 )
-                self.driver.save_screenshot(str(screenshot_path))
+                await asyncio.to_thread(
+                    self.driver.save_screenshot, str(screenshot_path)
+                )
                 try:
-                    logs = self.driver.get_log("browser")
+                    logs = await asyncio.to_thread(self.driver.get_log, "browser")
                     log_path.write_text("\n".join(str(entry) for entry in logs))
                 except Exception:  # pragma: no cover - logging optional
                     pass

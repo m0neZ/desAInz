@@ -28,7 +28,7 @@ async def test_publish_trademark_failure(
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
+    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
     monkeypatch.setattr(publisher, "is_trademarked", lambda term: True)
     monkeypatch.setattr(publisher, "ensure_not_nsfw", lambda img: None)
 
@@ -65,7 +65,7 @@ async def test_publish_nsfw_failure(
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
+    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
     monkeypatch.setattr(publisher, "is_trademarked", lambda term: False)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001
@@ -104,8 +104,12 @@ def test_api_trademark_failure(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
-    publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+
+    async def _noop(*args: Any, **kwargs: Any) -> None:
+        return None
+
+    publisher._fallback.publish = _noop
     monkeypatch.setattr(publisher, "is_trademarked", lambda term: True)
     monkeypatch.setattr(publisher, "ensure_not_nsfw", lambda img: None)
 
@@ -137,8 +141,12 @@ def test_api_nsfw_failure(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
-    publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+
+    async def _noop2(*args: Any, **kwargs: Any) -> None:
+        return None
+
+    publisher._fallback.publish = _noop2
     monkeypatch.setattr(publisher, "is_trademarked", lambda term: False)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001

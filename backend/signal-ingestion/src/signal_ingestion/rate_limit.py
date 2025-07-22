@@ -27,7 +27,11 @@ class AdapterRateLimiter:
         self._window = window
 
     async def acquire(self, adapter: str) -> None:
-        """Block until a token is available for ``adapter``."""
+        """
+        Block until a token is available for ``adapter``.
+
+        This coroutine must be awaited.
+        """
         limit = self._limits.get(adapter, self._limits.get("default"))
         if limit is None:
             return

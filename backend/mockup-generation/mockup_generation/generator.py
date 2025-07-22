@@ -133,9 +133,9 @@ class MockupGenerator:
         session = requests.Session()
         provider = settings.fallback_provider.lower()
 
-        for attempt in range(3):
+        for attempt in range(1, 4):
             try:
-                if provider == "dall-e":
+                if provider in {"openai", "dall-e", "dalle"}:
                     response = session.post(
                         "https://api.openai.com/v1/images/generations",
                         headers={"Authorization": f"Bearer {settings.openai_api_key}"},
@@ -163,9 +163,9 @@ class MockupGenerator:
                     response.raise_for_status()
                     data = base64.b64decode(response.json()["artifacts"][0]["base64"])
                 return Image.open(BytesIO(data))
-            except (requests.RequestException, OSError, ValueError) as exc:
+            except (requests.RequestException, OSError, ValueError, KeyError) as exc:
                 logger.warning("Fallback provider error: %s", exc)
-                if attempt == 2:
+                if attempt == 3:
                     raise GenerationError(
                         "Failed to generate image via fallback provider"
                     ) from exc

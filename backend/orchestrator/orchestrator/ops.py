@@ -315,3 +315,19 @@ def benchmark_score_op(context) -> None:  # type: ignore[no-untyped-def]
                 cached_seconds=cached,
             )
         )
+
+
+@op  # type: ignore[misc]
+def update_feedback(context) -> None:  # type: ignore[no-untyped-def]
+    """Update scoring weights based on marketplace feedback."""
+    context.log.info("updating feedback weights")
+    from feedback_loop import update_weights_from_db
+
+    base_url = os.environ.get("SCORING_ENGINE_URL", "http://scoring-engine:5002")
+
+    try:
+        weights = update_weights_from_db(base_url)
+    except Exception as exc:  # noqa: BLE001
+        context.log.warning("failed to update feedback weights: %s", exc)
+    else:
+        context.log.debug("updated weights: %s", weights)

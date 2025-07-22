@@ -27,8 +27,12 @@ def test_publish_and_progress(monkeypatch: Any, tmp_path: Path) -> None:
             assert metadata["price"] > 0
             return "1"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
-    publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+
+    async def _noop(*args: Any, **kwargs: Any) -> None:
+        return None
+
+    publisher._fallback.publish = _noop
 
     with TestClient(app) as client:
         design = tmp_path / "a.png"

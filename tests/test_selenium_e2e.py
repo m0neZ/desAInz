@@ -63,7 +63,8 @@ def _write_page(tmp_path: Path) -> Path:
     return page
 
 
-def test_selenium_publish_success(tmp_path: Path) -> None:
+@pytest.mark.asyncio()
+async def test_selenium_publish_success(tmp_path: Path) -> None:
     """Publishing with valid selectors should not create screenshots."""
     page = _write_page(tmp_path)
     rules_path = _write_rules(tmp_path, page)
@@ -71,11 +72,12 @@ def test_selenium_publish_success(tmp_path: Path) -> None:
     design = tmp_path / "design.png"
     design.write_text("img")
     fallback = SeleniumFallback(screenshot_dir=tmp_path)
-    fallback.publish(Marketplace.redbubble, design, {"title": "t"})
+    await fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert not list(tmp_path.glob("*.png"))
 
 
-def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
+@pytest.mark.asyncio()
+async def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
     """Failures should store a screenshot in the specified directory."""
     page = _write_page(tmp_path)
     rules_path = _write_rules(tmp_path, page, bad=True)
@@ -84,6 +86,6 @@ def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
     design.write_text("img")
     fallback = SeleniumFallback(screenshot_dir=tmp_path)
     with pytest.raises(Exception):
-        fallback.publish(Marketplace.redbubble, design, {"title": "t"})
+        await fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert list(tmp_path.glob("*.png"))
     assert list(tmp_path.glob("*.log"))

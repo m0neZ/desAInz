@@ -23,8 +23,12 @@ def test_society6_flag(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "1"
 
-    publisher.CLIENTS[Marketplace.society6] = DummyClient()  # type: ignore[assignment]
-    publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
+    publisher.CLIENTS[Marketplace.society6] = DummyClient()
+
+    async def _noop(*args: Any, **kwargs: Any) -> None:
+        return None
+
+    publisher._fallback.publish = _noop
 
     with TestClient(app) as client:
         design = tmp_path / "a.png"
@@ -55,8 +59,12 @@ def test_zazzle_flag(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "1"
 
-    publisher.CLIENTS[Marketplace.zazzle] = DummyClient()  # type: ignore[assignment]
-    publisher._fallback.publish = lambda *args, **kwargs: None  # type: ignore
+    publisher.CLIENTS[Marketplace.zazzle] = DummyClient()
+
+    async def _noop2(*args: Any, **kwargs: Any) -> None:
+        return None
+
+    publisher._fallback.publish = _noop2
 
     with TestClient(app) as client:
         design = tmp_path / "a.png"

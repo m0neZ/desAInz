@@ -84,7 +84,8 @@ def _write_rules(tmp_path: Path, url: str, bad: bool = False) -> Path:
     return path
 
 
-def test_publish_failure_produces_artifacts(
+@pytest.mark.asyncio()
+async def test_publish_failure_produces_artifacts(
     marketplace_form_server: str, tmp_path: Path
 ) -> None:
     """Verify screenshots and logs are created when publishing fails."""
@@ -94,6 +95,6 @@ def test_publish_failure_produces_artifacts(
     design.write_text("img")
     fallback = SeleniumFallback(screenshot_dir=tmp_path)
     with pytest.raises(Exception):
-        fallback.publish(Marketplace.redbubble, design, {"title": "t"})
+        await fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert list(tmp_path.glob("*.png"))
     assert list(tmp_path.glob("*.log"))

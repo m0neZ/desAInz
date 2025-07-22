@@ -9,6 +9,7 @@ signal-ingestion:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -27,6 +28,7 @@ data-storage:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -45,6 +47,7 @@ scoring-engine:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -63,6 +66,7 @@ ai-mockup-generation:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -81,6 +85,7 @@ marketplace-publisher:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -99,6 +104,7 @@ feedback-loop:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -117,6 +123,7 @@ orchestrator:
     port: 80
   resources: {}
   env: {}
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1
@@ -153,6 +160,7 @@ monitoring:
   resources: {}
   env:
     LOKI_URL: http://loki:3100
+  secretName: shared-secret
   hpa:
     enabled: false
     minReplicas: 1

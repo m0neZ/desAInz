@@ -11,6 +11,9 @@ resources: {}
 # Environment variables
 env: {}
 
+# Name of the Kubernetes secret mounted at /run/secrets
+secretName: shared-secret
+
 # Horizontal pod autoscaler
 hpa:
   enabled: false

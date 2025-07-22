@@ -48,3 +48,11 @@ Use `scripts/sync_staging_secrets.sh` to copy production secrets to the staging 
 ```
 
 Deploy the services with the staging values files to complete the mirror.
+
+### Configuration options
+
+Each chart includes sensible defaults for liveness and readiness probes,
+resource requests and limits, horizontal pod autoscaling and secret mounting.
+Secrets referenced via `secretName` are mounted under `/run/secrets`.
+Adjust these settings in the values files or override them on the command line
+to tune deployments for your environment.

@@ -73,8 +73,12 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
      -f infrastructure/helm/monitoring/values.yaml
    ```
 
-   Production deployments use the corresponding `values-production.yaml` files under
-   each chart directory.
+  Production deployments use the corresponding `values-production.yaml` files under
+  each chart directory.
+
+   Charts define default liveness and readiness probes and mount the secret
+   referenced via `secretName` at `/run/secrets`. Resource requests, limits and
+   autoscaling parameters can be tweaked in the values files.
 
    The `ai-mockup-generation` chart uses the `gpu_queue_length` metric to scale GPU
    workers. Set `hpa.enabled` to `true` and configure `hpa.gpuQueueAverageValue` in

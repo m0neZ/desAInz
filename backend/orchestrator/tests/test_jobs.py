@@ -124,7 +124,6 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
     ) -> object:
         return fake_post(url, *args, **kwargs)
 
-    monkeypatch.setattr("requests.post", fake_post)
     monkeypatch.setattr(httpx.AsyncClient, "post", fake_post_async)
     monkeypatch.setattr(httpx.AsyncClient, "get", fake_get)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
@@ -180,7 +179,6 @@ def test_rotate_secrets_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
     ) -> object:
         return fake_post(url, *args, **kwargs)
 
-    monkeypatch.setattr("requests.post", fake_post)
     monkeypatch.setattr(httpx.AsyncClient, "post", fake_post_async)
     monkeypatch.setattr(httpx.AsyncClient, "get", fake_get)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")

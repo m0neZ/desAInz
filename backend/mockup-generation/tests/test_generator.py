@@ -24,17 +24,25 @@ from mockup_generation.settings import settings  # noqa: E402
 
 
 class DummySession:
-    """HTTP client that always raises ``RequestException``."""
+    """HTTP client that always raises ``HTTPError``."""
 
-    def post(self, *a: object, **k: object) -> None:
-        from requests.exceptions import RequestException
+    async def __aenter__(self) -> "DummySession":
+        """Enter the async context manager."""
+        return self
 
-        raise RequestException("boom")
+    async def __aexit__(self, *exc: object) -> None:
+        """Exit the async context manager."""
+        return None
 
-    def get(self, *a: object, **k: object) -> None:
-        from requests.exceptions import RequestException
+    async def post(self, *a: object, **k: object) -> None:
+        from httpx import HTTPError
 
-        raise RequestException("boom")
+        raise HTTPError("boom")
+
+    async def get(self, *a: object, **k: object) -> None:
+        from httpx import HTTPError
+
+        raise HTTPError("boom")
 
 
 @pytest.fixture(autouse=True)  # type: ignore[misc]
@@ -45,16 +53,18 @@ def restore_provider() -> Iterator[None]:
     settings.fallback_provider = prev_provider
 
 
-def test_fallback_api_raises(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.asyncio()
+async def test_fallback_api_raises(monkeypatch: pytest.MonkeyPatch) -> None:
     """Fallback API should raise :class:`GenerationError` after retries."""
-    monkeypatch.setattr("requests.Session", lambda: DummySession())
-    monkeypatch.setattr("time.sleep", lambda *_: None)
+    monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: DummySession())
+    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
     gen = MockupGenerator()
     with pytest.raises(GenerationError):
-        gen._fallback_api("prompt")
+        await gen._fallback_api("prompt")
 
 
-def test_fallback_api_openai(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.asyncio()
+async def test_fallback_api_openai(monkeypatch: pytest.MonkeyPatch) -> None:
     """Image is returned when OpenAI responds successfully."""
     from io import BytesIO
     from PIL import Image
@@ -64,27 +74,34 @@ def test_fallback_api_openai(monkeypatch: pytest.MonkeyPatch) -> None:
     data = buf.getvalue()
 
     class Session:
-        def post(self, url: str, **_: object) -> object:
+        async def __aenter__(self) -> "Session":
+            return self
+
+        async def __aexit__(self, *exc: object) -> None:
+            return None
+
+        async def post(self, url: str, **_: object) -> object:
             assert url == "https://api.openai.com/v1/images/generations"
             return types.SimpleNamespace(
                 json=lambda: {"data": [{"url": "http://x"}]},
                 raise_for_status=lambda: None,
             )
 
-        def get(self, url: str, **_: object) -> object:
+        async def get(self, url: str, **_: object) -> object:
             assert url == "http://x"
             return types.SimpleNamespace(content=data, raise_for_status=lambda: None)
 
     settings.fallback_provider = "openai"
     settings.openai_api_key = "x"
-    monkeypatch.setattr("requests.Session", lambda: Session())
-    monkeypatch.setattr("time.sleep", lambda *_: None)
+    monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: Session())
+    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
     gen = MockupGenerator()
-    img = gen._fallback_api("prompt")
+    img = await gen._fallback_api("prompt")
     assert img.size == (1, 1)
 
 
-def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.asyncio()
+async def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
     """Image is returned when Stability responds successfully."""
     import base64
     from io import BytesIO
@@ -95,7 +112,13 @@ def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
     data = buf.getvalue()
 
     class Session:
-        def post(self, url: str, **_: object) -> object:
+        async def __aenter__(self) -> "Session":
+            return self
+
+        async def __aexit__(self, *exc: object) -> None:
+            return None
+
+        async def post(self, url: str, **_: object) -> object:
             assert url.startswith("https://api.stability.ai/v1/generation/")
             return types.SimpleNamespace(
                 json=lambda: {
@@ -104,13 +127,13 @@ def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
                 raise_for_status=lambda: None,
             )
 
-        def get(self, *a: object, **k: object) -> None:
+        async def get(self, *a: object, **k: object) -> None:
             raise AssertionError("should not fetch external URL")
 
     settings.fallback_provider = "stability"
     settings.stability_ai_api_key = "x"
-    monkeypatch.setattr("requests.Session", lambda: Session())
-    monkeypatch.setattr("time.sleep", lambda *_: None)
+    monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: Session())
+    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
     gen = MockupGenerator()
-    img = gen._fallback_api("prompt")
+    img = await gen._fallback_api("prompt")
     assert img.size == (1, 1)

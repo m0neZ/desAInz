@@ -117,10 +117,14 @@ async def test_pipeline_with_metrics(
         self.pipeline = None
 
     monkeypatch.setattr(MockupGenerator, "load", fake_load)
+
+    async def _fallback(_: str) -> SimpleNamespace:  # pragma: no cover
+        return SimpleNamespace(save=lambda pth: Path(pth).touch())
+
     monkeypatch.setattr(
         MockupGenerator,
         "_fallback_api",
-        staticmethod(lambda p: SimpleNamespace(save=lambda pth: Path(pth).touch())),
+        staticmethod(_fallback),
     )
 
     store = set()

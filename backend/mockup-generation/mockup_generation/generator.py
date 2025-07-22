@@ -62,7 +62,8 @@ class MockupGenerator:
         num_inference_steps: int = 30,
         model_identifier: str | None = None,
     ) -> GenerationResult:
-        """Generate an image.
+        """
+        Generate an image.
 
         If local generation fails, an external provider is used as a fallback.
 
@@ -101,13 +102,16 @@ class MockupGenerator:
             ).images[0]
         except (RuntimeError, ValueError, OSError) as exc:
             logger.warning("Local generation failed: %s. Falling back to API", exc)
-            image = self._fallback_api(prompt)
+            import asyncio
+
+            image = asyncio.run(self._fallback_api(prompt))
         duration = perf_counter() - start
         image.save(output_path)
         return GenerationResult(image_path=output_path, duration=duration)
 
-    def _fallback_api(self, prompt: str) -> Image.Image:
-        """Fetch an image from a third-party provider.
+    async def _fallback_api(self, prompt: str) -> Image.Image:
+        """
+        Fetch an image from a third-party provider.
 
         Parameters
         ----------
@@ -126,50 +130,52 @@ class MockupGenerator:
         """
         from io import BytesIO
         import base64
-        import time
-        import requests
+        import httpx
+        import asyncio
         from PIL import Image
 
-        session = requests.Session()
         provider = settings.fallback_provider.lower()
 
-        for attempt in range(1, 4):
-            try:
-                if provider in {"openai", "dall-e", "dalle"}:
-                    response = session.post(
-                        "https://api.openai.com/v1/images/generations",
-                        headers={"Authorization": f"Bearer {settings.openai_api_key}"},
-                        json={"prompt": prompt, "n": 1, "size": "1024x1024"},
-                        timeout=30,
-                    )
-                    response.raise_for_status()
-                    image_url = response.json()["data"][0]["url"]
-                    image_resp = session.get(image_url, timeout=30)
-                    image_resp.raise_for_status()
-                    data = image_resp.content
-                else:
-                    response = session.post(
-                        (
-                            "https://api.stability.ai/v1/generation/"
-                            "stable-diffusion-v1-6/text-to-image"
-                        ),
-                        headers={
-                            "Authorization": f"Bearer {settings.stability_ai_api_key}",
-                            "Accept": "application/json",
-                        },
-                        json={"text_prompts": [{"text": prompt}]},
-                        timeout=30,
-                    )
-                    response.raise_for_status()
-                    data = base64.b64decode(response.json()["artifacts"][0]["base64"])
-                return Image.open(BytesIO(data))
-            except (requests.RequestException, OSError, ValueError, KeyError) as exc:
-                logger.warning("Fallback provider error: %s", exc)
-                if attempt == 3:
-                    raise GenerationError(
-                        "Failed to generate image via fallback provider"
-                    ) from exc
-                time.sleep(2**attempt)
+        async with httpx.AsyncClient(timeout=30) as session:
+            for attempt in range(1, 4):
+                try:
+                    if provider in {"openai", "dall-e", "dalle"}:
+                        response = await session.post(
+                            "https://api.openai.com/v1/images/generations",
+                            headers={
+                                "Authorization": f"Bearer {settings.openai_api_key}"
+                            },
+                            json={"prompt": prompt, "n": 1, "size": "1024x1024"},
+                        )
+                        response.raise_for_status()
+                        image_url = response.json()["data"][0]["url"]
+                        image_resp = await session.get(image_url)
+                        image_resp.raise_for_status()
+                        data = image_resp.content
+                    else:
+                        response = await session.post(
+                            (
+                                "https://api.stability.ai/v1/generation/"
+                                "stable-diffusion-v1-6/text-to-image"
+                            ),
+                            headers={
+                                "Authorization": f"Bearer {settings.stability_ai_api_key}",
+                                "Accept": "application/json",
+                            },
+                            json={"text_prompts": [{"text": prompt}]},
+                        )
+                        response.raise_for_status()
+                        data = base64.b64decode(
+                            response.json()["artifacts"][0]["base64"]
+                        )
+                    return Image.open(BytesIO(data))
+                except (httpx.HTTPError, OSError, ValueError, KeyError) as exc:
+                    logger.warning("Fallback provider error: %s", exc)
+                    if attempt == 3:
+                        raise GenerationError(
+                            "Failed to generate image via fallback provider"
+                        ) from exc
+                    await asyncio.sleep(2**attempt)
 
         raise GenerationError("Failed to generate image via fallback provider")
 

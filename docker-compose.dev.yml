@@ -252,6 +252,14 @@ services:
     - openai_api_key
     - stability_ai_api_key
     - huggingface_token
+  api-gateway-cache:
+    image: nginx:1.25-alpine
+    ports:
+    - 8000:80
+    depends_on:
+    - api-gateway
+    volumes:
+    - ./docker/api_gateway_sidecar/nginx.conf:/etc/nginx/nginx.conf:ro
   scoring-engine:
     build: ./backend/scoring-engine
     command: python -m scoring_engine.app

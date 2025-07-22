@@ -77,8 +77,19 @@ def test_schedule_marketplace_ingestion(_db) -> None:
 
     scheduler = BackgroundScheduler()
     ingestion.CLIENTS = {"dummy": DummyClient()}  # type: ignore[attr-defined]
-    job = ingestion.schedule_marketplace_ingestion(scheduler, [1], 1)
+    called = False
+
+    def _fake_update(url: str) -> dict[str, float]:
+        nonlocal called
+        called = True
+        return {}
+
+    ingestion.update_weights_from_db = _fake_update  # type: ignore[assignment]
+    job = ingestion.schedule_marketplace_ingestion(
+        scheduler, [1], "http://api.example.com", 1
+    )
     job.func()
+    assert called
 
     with _db.session_scope() as session:
         row = session.query(ingestion.models.MarketplacePerformanceMetric).first()

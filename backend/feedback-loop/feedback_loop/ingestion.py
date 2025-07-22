@@ -106,13 +106,15 @@ async def _fetch_metrics_async(
 def schedule_marketplace_ingestion(
     scheduler: "BaseScheduler",
     listing_ids: Iterable[int],
+    scoring_api: str,
     interval_minutes: int = 60,
 ) -> "Job":
-    """Register a job fetching metrics from all marketplace API clients."""
+    """Register a job fetching metrics and update scoring weights."""
 
     async def _job() -> None:
         metrics = await _fetch_metrics_async(list(CLIENTS.values()), listing_ids)
         store_marketplace_metrics(metrics)
+        await asyncio.to_thread(update_weights_from_db, scoring_api)
 
     if isinstance(scheduler, AsyncIOScheduler):
         return scheduler.add_job(

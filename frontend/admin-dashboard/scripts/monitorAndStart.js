@@ -2,7 +2,7 @@
 /**
  * Start the Next.js server with memory monitoring.
  *
- * This script runs "next start" with a maximum heap size and logs
+ * This script runs the custom HTTP/2 server with a maximum heap size and logs
  * memory usage every minute.
  */
 import { spawn } from 'child_process';
@@ -11,7 +11,7 @@ import { spawn } from 'child_process';
 /** @type {import('child_process').ChildProcess} */
 const next = spawn(
   'node',
-  ['--max-old-space-size=2048', './node_modules/.bin/next', 'start'],
+  ['--max-old-space-size=2048', './server.js'],
   { stdio: 'inherit' }
 );
 

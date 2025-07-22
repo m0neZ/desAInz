@@ -355,6 +355,9 @@ def generate_single_mockup(
                 with open(output_path, "rb") as fh:
                     data = fh.read()
                 sha256 = hashlib.sha256(data).hexdigest()
+                hashed_path = Path(output_dir) / f"{sha256}.png"
+                Path(output_path).replace(hashed_path)
+                output_path = hashed_path
                 obj_name = f"generated-mockups/{sha256}.png"
                 bucket = settings.s3_bucket or ""
                 try:

@@ -4,9 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping
-
-from typing import Any
+from typing import Any, Mapping, cast
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
@@ -14,6 +12,26 @@ from watchdog.observers import Observer
 import yaml
 
 from .db import Marketplace
+
+_raw_rules_cache: Mapping[str, Any] | None = None
+_raw_rules_mtime: float | None = None
+
+
+def _load_yaml(path: Path) -> Mapping[str, Any]:
+    """Return parsed YAML from ``path`` using an in-memory cache."""
+    global _raw_rules_cache, _raw_rules_mtime
+    mtime = path.stat().st_mtime
+    if _raw_rules_cache is not None and _raw_rules_mtime == mtime:
+        return _raw_rules_cache
+
+    loaded = yaml.safe_load(path.read_text()) or {}
+    if not isinstance(loaded, Mapping):
+        msg = "Invalid rules format"
+        raise TypeError(msg)
+
+    _raw_rules_cache = cast(Mapping[str, Any], loaded)
+    _raw_rules_mtime = mtime
+    return _raw_rules_cache
 
 
 @dataclass
@@ -32,8 +50,8 @@ class RulesRegistry:
     """Registry loading rules from a YAML configuration file."""
 
     def __init__(self, path: Path) -> None:
-        """Load rules from ``path``."""
-        raw = yaml.safe_load(path.read_text())
+        """Load rules from ``path`` using the cached YAML."""
+        raw = _load_yaml(path)
         self.rules: Mapping[Marketplace, MarketplaceRules] = {
             Marketplace(key): MarketplaceRules(**val) for key, val in raw.items()
         }

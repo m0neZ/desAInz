@@ -48,3 +48,40 @@ Dashboards include:
 - `queue_length.json`
 - `resource_usage.json`
 - `optimization.json`
+- `service_health.json`
+
+## Prometheus Scrape Configuration
+
+Prometheus is configured through `docker/prometheus/prometheus.yml`. Each service exposes metrics on `/metrics` and the file defines one scrape job per service:
+
+```yaml
+    scrape_configs:
+      - job_name: 'monitoring'
+        static_configs:
+          - targets: ['monitoring:8000']
+      - job_name: 'api-gateway'
+        static_configs:
+          - targets: ['api-gateway:8000']
+      - job_name: 'mockup-generation'
+        static_configs:
+          - targets: ['mockup-generation:8000']
+      - job_name: 'scoring-engine'
+        static_configs:
+          - targets: ['scoring-engine:5002']
+      - job_name: 'marketplace-publisher'
+        static_configs:
+          - targets: ['marketplace-publisher:8000']
+      - job_name: 'signal-ingestion'
+        static_configs:
+          - targets: ['signal-ingestion:8000']
+      - job_name: 'feedback-loop'
+        static_configs:
+          - targets: ['feedback-loop:8000']
+      - job_name: 'orchestrator'
+        static_configs:
+          - targets: ['orchestrator:3000']
+```
+
+## PagerDuty Alerts
+
+Set `PAGERDUTY_ROUTING_KEY` and `ENABLE_PAGERDUTY=true` in the environment to enable alerting. The monitoring service triggers alerts when the average publish latency breaches the configured SLA and when listing synchronization detects issues.

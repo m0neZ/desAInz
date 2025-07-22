@@ -11,6 +11,8 @@ from .jobs import (
     rotate_s3_keys_job,
     sync_listings_job,
     privacy_purge_job,
+    idea_job,
+    feedback_update_job,
 )
 
 
@@ -69,4 +71,18 @@ def weekly_privacy_purge_schedule(
     _context: ScheduleEvaluationContext,
 ) -> dict[str, object]:
     """Run ``privacy_purge_job`` once a week."""
+    return {}
+
+
+@schedule(cron_schedule="15 * * * *", job=idea_job, execution_timezone="UTC")
+def hourly_idea_schedule(_context: ScheduleEvaluationContext) -> dict[str, object]:
+    """Run ``idea_job`` every hour."""
+    return {}
+
+
+@schedule(cron_schedule="0 3 * * *", job=feedback_update_job, execution_timezone="UTC")
+def daily_feedback_update_schedule(
+    _context: ScheduleEvaluationContext,
+) -> dict[str, object]:
+    """Update feedback weights once per day."""
     return {}

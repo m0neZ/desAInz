@@ -13,6 +13,11 @@ from .jobs import (
     sync_listings_job,
     privacy_purge_job,
     benchmark_score_job,
+    feedback_update_job,
+    signal_ingestion_job,
+    scoring_job,
+    mockup_generation_job,
+    publishing_job,
 )
 from .schedules import (
     daily_backup_schedule,
@@ -23,6 +28,8 @@ from .schedules import (
     rotate_s3_keys_schedule,
     daily_listing_sync_schedule,
     weekly_privacy_purge_schedule,
+    hourly_idea_schedule,
+    daily_feedback_update_schedule,
 )
 from .sensors import idea_sensor, run_failure_notifier
 
@@ -39,6 +46,11 @@ defs = Definitions(
         sync_listings_job,
         privacy_purge_job,
         benchmark_score_job,
+        feedback_update_job,
+        signal_ingestion_job,
+        scoring_job,
+        mockup_generation_job,
+        publishing_job,
     ],
     schedules=[
         daily_backup_schedule,
@@ -49,6 +61,8 @@ defs = Definitions(
         rotate_s3_keys_schedule,
         daily_listing_sync_schedule,
         weekly_privacy_purge_schedule,
+        hourly_idea_schedule,
+        daily_feedback_update_schedule,
     ],
     sensors=[idea_sensor, run_failure_notifier],
 )

@@ -18,6 +18,7 @@ from .ops import (
     ingest_signals,
     publish_content,
     score_signals,
+    update_feedback,
     sync_listing_states_op,
     purge_pii_rows_op,
     benchmark_score_op,
@@ -89,3 +90,40 @@ def privacy_purge_job() -> None:
 def benchmark_score_job() -> None:
     """Job benchmarking scoring service and recording results."""
     benchmark_score_op()
+
+
+@job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def signal_ingestion_job() -> None:
+    """Job that only ingests signals."""
+    ingest_signals()
+
+
+@job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def scoring_job() -> None:
+    """Job that ingests and scores signals."""
+    signals = ingest_signals()
+    score_signals(signals)
+
+
+@job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def mockup_generation_job() -> None:
+    """Job that ingests, scores, and generates mockups."""
+    signals = ingest_signals()
+    scores = score_signals(signals)
+    generate_content(scores)
+
+
+@job(op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def publishing_job() -> None:
+    """Job that ingests, scores, generates, and publishes content."""
+    signals = ingest_signals()
+    scores = score_signals(signals)
+    items = generate_content(scores)
+    await_approval()
+    publish_content(items)
+
+
+@job(hooks={record_success, record_failure}, op_retry_policy=DEFAULT_JOB_RETRY_POLICY)  # type: ignore[misc]
+def feedback_update_job() -> None:
+    """Job updating scoring weights from feedback data."""
+    update_feedback()

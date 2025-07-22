@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import ClassVar, Iterator, MutableMapping, cast
 
-from backend.shared.cache import sync_delete
+from backend.shared.cache import sync_delete, sync_get, sync_set
 
 import requests
 from backend.shared.http import request_with_retry
@@ -18,12 +18,23 @@ import psycopg2
 from psycopg2.pool import SimpleConnectionPool
 
 LATENCY_CACHE_KEY = "monitoring:latency_avg"
+ACTIVE_USERS_CACHE_KEY = "monitoring:active_users"
+ERROR_RATE_CACHE_KEY = "monitoring:error_rate"
 
 
 def invalidate_latency_cache() -> None:
     """Remove cached average latency from Redis."""
     try:
         sync_delete(LATENCY_CACHE_KEY)
+    except Exception:  # pragma: no cover - redis optional
+        pass
+
+
+def invalidate_analytics_cache() -> None:
+    """Remove cached analytics metrics from Redis."""
+    try:
+        sync_delete(ACTIVE_USERS_CACHE_KEY)
+        sync_delete(ERROR_RATE_CACHE_KEY)
     except Exception:  # pragma: no cover - redis optional
         pass
 
@@ -152,6 +163,7 @@ class TimescaleMetricsStore:
                         (metric.idea_id, metric.timestamp, metric.score),
                     )
                     pg_conn.commit()
+        invalidate_analytics_cache()
         self._send_loki_log(
             "score_metric", {"idea_id": str(metric.idea_id), "type": "score"}
         )
@@ -177,6 +189,7 @@ class TimescaleMetricsStore:
                     )
                     pg_conn.commit()
         invalidate_latency_cache()
+        invalidate_analytics_cache()
         self._send_loki_log(
             "latency_metric",
             {"idea_id": str(metric.idea_id), "type": "publish_latency"},
@@ -202,6 +215,15 @@ class TimescaleMetricsStore:
 
     def get_active_users(self, since: datetime) -> int:
         """Return the number of ideas with a recent score."""
+        try:
+            cached = sync_get(ACTIVE_USERS_CACHE_KEY)
+        except Exception:  # pragma: no cover - redis optional
+            cached = None
+        if cached is not None:
+            try:
+                return int(cached)
+            except (TypeError, ValueError):
+                pass
         with self._get_conn() as conn:
             if self._use_sqlite:
                 cur = conn.execute(
@@ -211,22 +233,37 @@ class TimescaleMetricsStore:
                     (since.isoformat(),),
                 )
                 row = cur.fetchone()
-                return int(row[0] if row is not None else 0)
-            pg_conn = cast(psycopg2.extensions.connection, conn)
-            with pg_conn.cursor() as cur:
-                cur.execute(
-                    (
-                        "SELECT COUNT(*) FROM ("
-                        "SELECT idea_id, MAX(timestamp) AS ts FROM scores GROUP BY idea_id"
-                        ") s WHERE ts >= %s"
-                    ),
-                    (since,),
-                )
-                result = cur.fetchone()
-            return int(result[0] if result is not None else 0)
+                count = int(row[0] if row is not None else 0)
+            else:
+                pg_conn = cast(psycopg2.extensions.connection, conn)
+                with pg_conn.cursor() as cur:
+                    cur.execute(
+                        (
+                            "SELECT COUNT(*) FROM ("
+                            "SELECT idea_id, MAX(timestamp) AS ts FROM scores GROUP BY idea_id"
+                            ") s WHERE ts >= %s",
+                        ),
+                        (since,),
+                    )
+                    result = cur.fetchone()
+                count = int(result[0] if result is not None else 0)
+        try:
+            sync_set(ACTIVE_USERS_CACHE_KEY, str(count), ttl=300)
+        except Exception:  # pragma: no cover - redis optional
+            pass
+        return count
 
     def get_error_rate(self, since: datetime) -> float:
         """Return fraction of latest scores below ``0.5`` since ``since``."""
+        try:
+            cached = sync_get(ERROR_RATE_CACHE_KEY)
+        except Exception:  # pragma: no cover - redis optional
+            cached = None
+        if cached is not None:
+            try:
+                return float(cached)
+            except (TypeError, ValueError):
+                pass
         with self._get_conn() as conn:
             if self._use_sqlite:
                 cur = conn.execute(
@@ -253,4 +290,9 @@ class TimescaleMetricsStore:
                     )
                     result = cur.fetchone()
                     errors, total = result if result is not None else (0, 0)
-        return 0.0 if total == 0 else float(errors) / float(total)
+        rate = 0.0 if total == 0 else float(errors) / float(total)
+        try:
+            sync_set(ERROR_RATE_CACHE_KEY, str(rate), ttl=300)
+        except Exception:  # pragma: no cover - redis optional
+            pass
+        return rate

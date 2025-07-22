@@ -2,6 +2,9 @@
 
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from contextlib import contextmanager
+
+import fakeredis
 
 import pytest
 import psycopg2
@@ -82,3 +85,62 @@ def test_postgresql_metrics(
     store.add_latency(latency_metric)
     since = datetime.now(timezone.utc) - timedelta(minutes=5)
     assert store.get_active_users(since) == 1
+
+
+def test_active_users_cached(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """Active user aggregation should be cached and invalidated."""
+    db = tmp_path / "metrics.db"
+    store = TimescaleMetricsStore(f"sqlite:///{db}")
+    fake = fakeredis.FakeRedis()
+    monkeypatch.setattr(metrics_store, "sync_get", lambda key: fake.get(key))
+    monkeypatch.setattr(
+        metrics_store,
+        "sync_set",
+        lambda key, value, ttl=None: (
+            fake.setex(key, ttl, value) if ttl else fake.set(key, value)
+        ),
+    )
+    monkeypatch.setattr(metrics_store, "sync_delete", lambda key: fake.delete(key))
+    metric = ScoreMetric(idea_id=3, timestamp=datetime.now(timezone.utc), score=0.8)
+    store.add_score(metric)
+
+    calls: list[int] = []
+    orig_get_conn = store._get_conn
+
+    @contextmanager
+    def counting_conn():
+        calls.append(1)
+        with orig_get_conn() as conn:
+            yield conn
+
+    monkeypatch.setattr(store, "_get_conn", counting_conn)
+    since = datetime.now(timezone.utc) - timedelta(hours=1)
+    assert store.get_active_users(since) == 1
+    assert store.get_active_users(since) == 1
+    assert len(calls) == 1
+
+
+def test_cache_invalidated_on_new_score(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Adding a new score should clear cached aggregations."""
+    db = tmp_path / "metrics.db"
+    store = TimescaleMetricsStore(f"sqlite:///{db}")
+    fake = fakeredis.FakeRedis()
+    monkeypatch.setattr(metrics_store, "sync_get", lambda key: fake.get(key))
+    monkeypatch.setattr(
+        metrics_store,
+        "sync_set",
+        lambda key, value, ttl=None: (
+            fake.setex(key, ttl, value) if ttl else fake.set(key, value)
+        ),
+    )
+    monkeypatch.setattr(metrics_store, "sync_delete", lambda key: fake.delete(key))
+    metric = ScoreMetric(idea_id=4, timestamp=datetime.now(timezone.utc), score=0.8)
+    store.add_score(metric)
+    since = datetime.now(timezone.utc) - timedelta(hours=1)
+    assert store.get_active_users(since) == 1
+    assert fake.get(metrics_store.ACTIVE_USERS_CACHE_KEY) is not None
+    metric2 = ScoreMetric(idea_id=5, timestamp=datetime.now(timezone.utc), score=0.7)
+    store.add_score(metric2)
+    assert fake.get(metrics_store.ACTIVE_USERS_CACHE_KEY) is None

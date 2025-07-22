@@ -139,7 +139,9 @@ def score_signals(  # type: ignore[no-untyped-def]
 
     async def _run() -> list[float]:
         async with httpx.AsyncClient() as client:
-            return await asyncio.gather(*[_score(client) for _ in signals])
+            async with asyncio.TaskGroup() as tg:
+                tasks = [tg.create_task(_score(client)) for _ in signals]
+            return [t.result() for t in tasks]
 
     return list(asyncio.run(_run()))
 
@@ -186,7 +188,9 @@ async def generate_content(  # type: ignore[no-untyped-def]
             items = []
         return [str(item) for item in items]
 
-    results = await asyncio.gather(*[_generate(s) for s in scores])
+    async with asyncio.TaskGroup() as tg:
+        tasks = [tg.create_task(_generate(s)) for s in scores]
+    results = [task.result() for task in tasks]
     return [item for sub in results for item in sub]
 
 

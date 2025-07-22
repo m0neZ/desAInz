@@ -204,9 +204,11 @@ async def trending_factor(topics: list[str]) -> float:
     """Return multiplier based on cached trending topics."""
     if not topics:
         return 1.0
-    scores = await asyncio.gather(
-        *[redis_client.zscore("trending:keywords", t) for t in topics]
-    )
+    async with asyncio.TaskGroup() as tg:
+        tasks = [
+            tg.create_task(redis_client.zscore("trending:keywords", t)) for t in topics
+        ]
+    scores = [t.result() for t in tasks]
     max_score = max((s or 0.0) for s in scores)
     return 1.0 + max_score / 100.0
 

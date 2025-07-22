@@ -46,7 +46,9 @@ async def _dispatch_notifications(task_id: int, marketplace: str) -> None:
         except Exception as exc:  # pragma: no cover - best effort
             logger.warning("pagerduty notification failed: %s", exc)
 
-    await asyncio.gather(slack(), pagerduty())
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(slack())
+        tg.create_task(pagerduty())
 
 
 def notify_failure(task_id: int, marketplace: str) -> None:

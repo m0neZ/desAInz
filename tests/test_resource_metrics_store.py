@@ -7,32 +7,21 @@ from pathlib import Path
 
 import pytest
 
-from backend.optimization.storage import MetricsStore
 from backend.optimization.metrics import ResourceMetric
-import psycopg2
+from backend.optimization.storage import MetricsStore
 
 
-@pytest.mark.parametrize(
-    "url",
-    [
-        None,  # default sqlite
-        "postgresql://postgres:postgres@localhost/test_metrics",
-    ],
-)
-def test_add_and_get_metrics(url: str | None, tmp_path: Path) -> None:
+@pytest.mark.parametrize("use_postgres", [False, True])
+def test_add_and_get_metrics(use_postgres: bool, tmp_path: Path, postgresql) -> None:
     """Ensure metrics are persisted and fetched using different backends."""
-    if url is None:
+    if not use_postgres:
         db_path = tmp_path / "metrics.db"
         store = MetricsStore(f"sqlite:///{db_path}")
     else:
-        try:
-            with psycopg2.connect(url) as conn:
-                with conn.cursor() as cur:
-                    cur.execute("TRUNCATE metrics")
-                conn.commit()
-        except psycopg2.OperationalError:
-            pytest.skip("PostgreSQL not available")
-        store = MetricsStore(url)
+        with postgresql.cursor() as cur:
+            cur.execute("TRUNCATE metrics")
+        postgresql.commit()
+        store = MetricsStore(postgresql.info.dsn)
 
     metric = ResourceMetric(
         timestamp=datetime.now(timezone.utc),

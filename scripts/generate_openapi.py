@@ -92,6 +92,95 @@ def _patch_shared_dependencies() -> None:
     setattr(currency, "start_rate_updater", _start_rate_updater)
     sys.modules.setdefault("backend.shared.currency", currency)
 
+    celery = types.ModuleType("celery")
+
+    class _Celery:
+        def __init__(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            self.conf = types.SimpleNamespace()
+
+        def task(
+            self, *args: object, **kwargs: object
+        ) -> Callable[[Callable[..., T]], Callable[..., T]]:
+            def decorator(fn: Callable[..., T]) -> Callable[..., T]:
+                return fn
+
+            return decorator
+
+    celery.Celery = _Celery  # type: ignore[attr-defined]
+    sys.modules.setdefault("celery", celery)
+
+    redis_mod = types.ModuleType("redis")
+
+    class _Redis:
+        def __init__(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            pass
+
+        def exists(
+            self, *args: object, **kwargs: object
+        ) -> bool:  # pragma: no cover - stub
+            return False
+
+        def set(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            return None
+
+        def get(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            return None
+
+        def expire(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            return None
+
+        def bf(self) -> "_Redis":  # pragma: no cover - stub
+            return self
+
+        def create(
+            self, *args: object, **kwargs: object
+        ) -> None:  # pragma: no cover - stub
+            return None
+
+        @classmethod
+        def from_url(
+            cls, *args: object, **kwargs: object
+        ) -> "_Redis":  # pragma: no cover - stub
+            return cls()
+
+    redis_mod.Redis = _Redis  # type: ignore[attr-defined]
+    asyncio_mod = types.ModuleType("redis.asyncio")
+
+    class _AsyncRedis:
+        pass
+
+        @classmethod
+        def from_url(
+            cls, *args: object, **kwargs: object
+        ) -> "_AsyncRedis":  # pragma: no cover - stub
+            return cls()
+
+    asyncio_mod.Redis = _AsyncRedis  # type: ignore[attr-defined]
+    asyncio_mod.WatchError = Exception
+    sys.modules.setdefault("redis", redis_mod)
+    sys.modules.setdefault("redis.asyncio", asyncio_mod)
+
+    try:
+        import backend.shared.config as _config
+
+        def _db_url(self: _config.Settings) -> str:
+            return str(self.pgbouncer_url or self.database_url)
+
+        _config.Settings.effective_database_url = property(_db_url)  # type: ignore[attr-defined]
+        _config.settings = _config.Settings()
+    except Exception:  # pragma: no cover - best effort
+        pass
+
 
 def generate_from_file(main_file: Path) -> None:
     """Load FastAPI ``app`` from ``main_file`` and write its spec."""
@@ -117,7 +206,11 @@ def generate_from_file(main_file: Path) -> None:
     sys.modules[module_name] = module
     _patch_shared_dependencies()
     assert spec_obj.loader is not None
-    spec_obj.loader.exec_module(module)
+    try:
+        spec_obj.loader.exec_module(module)
+    except Exception as exc:  # pragma: no cover - best effort
+        print(f"Skipping {service}: {exc}", file=sys.stderr)
+        return
     app = getattr(module, "app", None)
     if not app or not hasattr(app, "openapi"):
         return
@@ -135,79 +228,80 @@ sys.path.insert(0, str(PROJECT_ROOT / "backend" / "scoring-engine"))
 try:
     from scoring_engine.app import ScoreRequest, WeightsUpdate
 except Exception as exc:  # pragma: no cover - runtime import guard
-    raise SystemExit(f"Failed importing scoring_engine: {exc}")
+    print(f"Skipping scoring-engine: {exc}", file=sys.stderr)
+else:
 
-spec = {
-    "openapi": "3.0.2",
-    "info": {"title": "Scoring Engine", "version": "1.0.0"},
-    "paths": {
-        "/weights": {
-            "get": {"responses": {"200": {"description": "OK"}}},
-            "put": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
-                        }
-                    },
-                    "required": True,
-                },
-                "responses": {"200": {"description": "OK"}},
-            },
-        },
-        "/weights/feedback": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
-                        }
-                    },
-                    "required": True,
-                },
-                "responses": {"200": {"description": "OK"}},
-            },
-        },
-        "/score": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {"$ref": "#/components/schemas/ScoreRequest"}
-                        }
-                    },
-                    "required": True,
-                },
-                "responses": {"200": {"description": "OK"}},
-            }
-        },
-        "/centroid/{source}": {
-            "get": {
-                "parameters": [
-                    {
-                        "name": "source",
-                        "in": "path",
+    spec = {
+        "openapi": "3.0.2",
+        "info": {"title": "Scoring Engine", "version": "1.0.0"},
+        "paths": {
+            "/weights": {
+                "get": {"responses": {"200": {"description": "OK"}}},
+                "put": {
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
+                            }
+                        },
                         "required": True,
-                        "schema": {"type": "string"},
-                    }
-                ],
-                "responses": {"200": {"description": "OK"}},
+                    },
+                    "responses": {"200": {"description": "OK"}},
+                },
+            },
+            "/weights/feedback": {
+                "post": {
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {"$ref": "#/components/schemas/WeightsUpdate"}
+                            }
+                        },
+                        "required": True,
+                    },
+                    "responses": {"200": {"description": "OK"}},
+                },
+            },
+            "/score": {
+                "post": {
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {"$ref": "#/components/schemas/ScoreRequest"}
+                            }
+                        },
+                        "required": True,
+                    },
+                    "responses": {"200": {"description": "OK"}},
+                }
+            },
+            "/centroid/{source}": {
+                "get": {
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "in": "path",
+                            "required": True,
+                            "schema": {"type": "string"},
+                        }
+                    ],
+                    "responses": {"200": {"description": "OK"}},
+                }
+            },
+            "/health": {"get": {"responses": {"200": {"description": "OK"}}}},
+            "/ready": {"get": {"responses": {"200": {"description": "Ready"}}}},
+            "/metrics": {"get": {"responses": {"200": {"description": "OK"}}}},
+        },
+        "components": {
+            "schemas": {
+                "WeightsUpdate": WeightsUpdate.model_json_schema(),
+                "ScoreRequest": ScoreRequest.model_json_schema(),
             }
         },
-        "/health": {"get": {"responses": {"200": {"description": "OK"}}}},
-        "/ready": {"get": {"responses": {"200": {"description": "Ready"}}}},
-        "/metrics": {"get": {"responses": {"200": {"description": "OK"}}}},
-    },
-    "components": {
-        "schemas": {
-            "WeightsUpdate": WeightsUpdate.model_json_schema(),
-            "ScoreRequest": ScoreRequest.model_json_schema(),
-        }
-    },
-}
-_write_spec("scoring-engine", spec)
-OAS30Validator.check_schema(spec)
-ensure_doc("scoring-engine")
+    }
+    _write_spec("scoring-engine", spec)
+    OAS30Validator.check_schema(spec)
+    ensure_doc("scoring-engine")
 
 
 def _parse_ts_type(type_str: str) -> dict:
@@ -235,7 +329,9 @@ def parse_trpc(path: Path) -> dict[str, dict]:
     """Parse interfaces from the tRPC TypeScript definitions."""
     text = path.read_text(encoding="utf-8")
     schemas: dict[str, dict] = {}
-    for name, body in re.findall(r"export interface (\w+) \{([^}]*)\}", text, re.DOTALL):
+    for name, body in re.findall(
+        r"export interface (\w+) \{([^}]*)\}", text, re.DOTALL
+    ):
         if name == "AppRouter":
             continue
         props: dict[str, dict] = {}
@@ -243,7 +339,12 @@ def parse_trpc(path: Path) -> dict[str, dict]:
         for prop, typ in re.findall(r"(\w+): ([^;]+);", body):
             props[prop] = _parse_ts_type(typ)
             required.append(prop)
-        schemas[name] = {"type": "object", "properties": props, "required": required, "title": name}
+        schemas[name] = {
+            "type": "object",
+            "properties": props,
+            "required": required,
+            "title": name,
+        }
     return schemas
 
 

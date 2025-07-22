@@ -24,8 +24,8 @@ services:
   otel-collector:
     image: otel/opentelemetry-collector:latest
     ports:
-      - "4317:4317"
-      - "4318:4318"
+      - '4317:4317'
+      - '4318:4318'
 ```
 
 Run:
@@ -55,31 +55,31 @@ Dashboards include:
 Prometheus is configured through `docker/prometheus/prometheus.yml`. Each service exposes metrics on `/metrics` and the file defines one scrape job per service:
 
 ```yaml
-    scrape_configs:
-      - job_name: 'monitoring'
-        static_configs:
-          - targets: ['monitoring:8000']
-      - job_name: 'api-gateway'
-        static_configs:
-          - targets: ['api-gateway:8000']
-      - job_name: 'mockup-generation'
-        static_configs:
-          - targets: ['mockup-generation:8000']
-      - job_name: 'scoring-engine'
-        static_configs:
-          - targets: ['scoring-engine:5002']
-      - job_name: 'marketplace-publisher'
-        static_configs:
-          - targets: ['marketplace-publisher:8000']
-      - job_name: 'signal-ingestion'
-        static_configs:
-          - targets: ['signal-ingestion:8000']
-      - job_name: 'feedback-loop'
-        static_configs:
-          - targets: ['feedback-loop:8000']
-      - job_name: 'orchestrator'
-        static_configs:
-          - targets: ['orchestrator:3000']
+scrape_configs:
+  - job_name: 'monitoring'
+    static_configs:
+      - targets: ['monitoring:8000']
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:8000']
+  - job_name: 'mockup-generation'
+    static_configs:
+      - targets: ['mockup-generation:8000']
+  - job_name: 'scoring-engine'
+    static_configs:
+      - targets: ['scoring-engine:5002']
+  - job_name: 'marketplace-publisher'
+    static_configs:
+      - targets: ['marketplace-publisher:8000']
+  - job_name: 'signal-ingestion'
+    static_configs:
+      - targets: ['signal-ingestion:8000']
+  - job_name: 'feedback-loop'
+    static_configs:
+      - targets: ['feedback-loop:8000']
+  - job_name: 'orchestrator'
+    static_configs:
+      - targets: ['orchestrator:3000']
 ```
 
 ## PagerDuty Alerts

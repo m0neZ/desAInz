@@ -39,7 +39,7 @@ Commit the resulting merge file so that the migration chain has a single head.
 
 ## Generating a Merge Revision
 
-Use the ``heads`` command to inspect whether multiple heads exist:
+Use the `heads` command to inspect whether multiple heads exist:
 
 ```bash
 alembic -c backend/shared/db/alembic_scoring_engine.ini heads
@@ -53,9 +53,9 @@ alembic -c backend/shared/db/alembic_scoring_engine.ini merge \
   -m "merge heads" HEADS
 ```
 
-The new revision should live in ``backend/shared/db/migrations`` and replace
-``example_merge_revision.py``. After committing the merge file, run
-``scripts/validate_migrations.sh`` to confirm that only a single head exists
+The new revision should live in `backend/shared/db/migrations` and replace
+`example_merge_revision.py`. After committing the merge file, run
+`scripts/validate_migrations.sh` to confirm that only a single head exists
 and that no divergent branches remain.
 
 ## Verifying Migrations
@@ -69,7 +69,6 @@ pytest tests/test_migrations.py
 
 ## Automatic Migrations
 
-Every FastAPI service runs ``alembic upgrade head`` on startup to apply any
+Every FastAPI service runs `alembic upgrade head` on startup to apply any
 pending migrations before initializing resources. Set the environment variable
-``SKIP_MIGRATIONS=1`` to bypass this step during tests.
-
+`SKIP_MIGRATIONS=1` to bypass this step during tests.

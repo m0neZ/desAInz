@@ -8,7 +8,6 @@ Application logs are written to the directory defined by the `LOG_DIR` environme
 
 A cron job executes `scripts/rotate_logs.py` daily at 01:00. The job moves log files into `LOG_DIR/archive` with a timestamp suffix and removes archives older than seven days. The cronjob definition can be found in `infrastructure/k8s/base/cronjobs/logrotate.yaml` and the Docker image used is built from `docker/logrotate`.
 
-
 ## Moderator Workflow
 
 Moderators approve content generation runs from the Admin Dashboard.
@@ -39,8 +38,8 @@ python scripts/manage_spot_instances.py release i-0abcd1234ef567890
 ```
 
 Workers will checkpoint tasks using Celery's statedb so another node can resume
-processing when a spot instance is reclaimed. To keep ``N`` workers running at
-all times execute the ``maintain`` command, which is scheduled every ten
+processing when a spot instance is reclaimed. To keep `N` workers running at
+all times execute the `maintain` command, which is scheduled every ten
 minutes by the orchestrator:
 
 ```bash
@@ -55,15 +54,15 @@ python scripts/manage_spot_instances.py maintain \
 
 ## Quota Handling
 
-The signal ingestion service caches HTTP ``ETag`` headers in Redis. When a
+The signal ingestion service caches HTTP `ETag` headers in Redis. When a
 resource has not changed, the adapter sends the cached value using the
-``If-None-Match`` header and skips further processing when receiving a
-``304 Not Modified`` response. This reduces bandwidth usage and helps stay
+`If-None-Match` header and skips further processing when receiving a
+`304 Not Modified` response. This reduces bandwidth usage and helps stay
 within third-party API quotas.
 
 ## Command Line Interface
 
-``scripts/cli.py`` exposes operational helpers using subcommands.
+`scripts/cli.py` exposes operational helpers using subcommands.
 
 ### Ingest
 

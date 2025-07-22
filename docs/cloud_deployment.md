@@ -59,4 +59,3 @@ Check that all Pods are running and inspect logs using `kubectl get pods` and
 3. **Create an ingress controller** if using AKS and configure TLS.
 
 These high-level steps give an overview of deploying the application on each cloud platform. Refer to the provider documentation for production hardening guidance.
-

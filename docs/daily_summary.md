@@ -6,8 +6,8 @@
 - **mockup_success_rate** – ratio of generated mockups to ideas
 - **marketplace_stats** – count of successful listings per marketplace
 
-``generate_daily_summary`` accepts an optional ``session_provider`` parameter for
-tests. By default it uses ``backend.shared.db.session_scope``.
+`generate_daily_summary` accepts an optional `session_provider` parameter for
+tests. By default it uses `backend.shared.db.session_scope`.
 
 Run the script manually or schedule it via cron:
 
@@ -16,8 +16,8 @@ Run the script manually or schedule it via cron:
 ```
 
 The script writes the summary to the path defined by the
-``DAILY_SUMMARY_FILE`` environment variable which defaults to
-``daily_summary.json``:
+`DAILY_SUMMARY_FILE` environment variable which defaults to
+`daily_summary.json`:
 
 ```bash
 DAILY_SUMMARY_FILE=/var/reports/summary.json ./scripts/daily_summary.py

@@ -22,39 +22,39 @@ Kubernetes manifests under `infrastructure/k8s/`.
 
 ### Database
 
-- **PostgreSQL 15 with pgvector** – see the ``postgres`` service in
+- **PostgreSQL 15 with pgvector** – see the `postgres` service in
   [`../docker-compose.yml`](../docker-compose.yml). Connection details are
   templated in [`../infrastructure/k8s/base/configmap.yaml`](../infrastructure/k8s/base/configmap.yaml).
-- **Redis** for caching and as a Celery broker – defined as ``redis`` in the
+- **Redis** for caching and as a Celery broker – defined as `redis` in the
   compose files.
-- **MinIO** object storage – provided by the ``minio`` service.
+- **MinIO** object storage – provided by the `minio` service.
 
 ### Message Broker
 
-- **Kafka** with **Zookeeper** and **Schema Registry** – see the ``kafka``,
-  ``zookeeper`` and ``schema-registry`` services in `docker-compose.yml`. The
+- **Kafka** with **Zookeeper** and **Schema Registry** – see the `kafka`,
+  `zookeeper` and `schema-registry` services in `docker-compose.yml`. The
   manifests in `infrastructure/k8s/base/` reference the external broker via
   environment variables.
 
 ### AI Components
 
 - **OpenAI GPT‑4** and **Stable Diffusion XL** – used by the
-  ``mockup-generation`` service defined in [`../docker-compose.yml`](../docker-compose.yml)
+  `mockup-generation` service defined in [`../docker-compose.yml`](../docker-compose.yml)
   and [`../infrastructure/k8s/base/ai-mockup-generation-deployment.yaml`](../infrastructure/k8s/base/ai-mockup-generation-deployment.yaml).
-- **Scoring Engine** – container named ``scoring-engine`` in the compose file
+- **Scoring Engine** – container named `scoring-engine` in the compose file
   with a matching deployment manifest.
 
 ### CI/CD
 
- - **GitHub Actions** – workflows under `../.github/workflows` run linting,
-   testing and deployment.
+- **GitHub Actions** – workflows under `../.github/workflows` run linting,
+  testing and deployment.
 - **Helm** and **Kustomize** – `pipeline.yml` deploys the manifests from
   `infrastructure/k8s/` using Helm.
 
 ### Monitoring
 
-- **Prometheus**, **Grafana** and **Loki** – available through the ``prometheus``,
-  ``grafana`` and ``loki`` services in [`../docker-compose.yml`](../docker-compose.yml)
+- **Prometheus**, **Grafana** and **Loki** – available through the `prometheus`,
+  `grafana` and `loki` services in [`../docker-compose.yml`](../docker-compose.yml)
   and corresponding manifests in `infrastructure/k8s/base/`.
-- **OpenTelemetry Collector** – the ``otel-collector`` service in
+- **OpenTelemetry Collector** – the `otel-collector` service in
   [`../docker-compose.tracing.yml`](../docker-compose.tracing.yml) aggregates traces from all services.

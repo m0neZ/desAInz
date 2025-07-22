@@ -17,6 +17,15 @@ Use the provided setup script to install Python and Node packages and build the 
 ./scripts/setup_codex.sh
 ```
 
+For faster repeated runs, activate a virtual environment stored outside the
+repository before executing the script:
+
+```bash
+python -m venv ~/.cache/desainz_venv
+source ~/.cache/desainz_venv/bin/activate
+./scripts/setup_codex.sh
+```
+
 ## 3. Launch the stack
 
 Start the application and its services with Docker Compose.

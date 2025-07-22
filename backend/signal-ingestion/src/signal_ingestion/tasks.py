@@ -28,6 +28,12 @@ from .publisher import publish
 from .retention import purge_old_signals
 from .settings import settings
 from .trending import extract_keywords, store_keywords
+from .errors import (
+    AdapterFetchError,
+    EmbeddingGenerationError,
+    SignalIngestionError,
+    UnknownAdapterError,
+)
 
 
 EMBEDDING_CHUNK_SIZE = 16
@@ -79,7 +85,10 @@ INGEST_FAILURE = Counter(
 async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> None:
     """Ingest signals from ``adapter`` and persist them in batches."""
     await purge_old_signals(session, settings.signal_retention_days)
-    rows: list[dict[str, object]] = await adapter.fetch()
+    try:
+        rows: list[dict[str, object]] = await adapter.fetch()
+    except Exception as exc:  # pragma: no cover - passthrough
+        raise AdapterFetchError(adapter.__class__.__name__, str(exc)) from exc
     sanitized: list[tuple[str, str, NormalizedSignal]] = []
     for row in rows:
         signal_data = normalize(
@@ -95,7 +104,10 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
 
     for i in range(0, len(sanitized), EMBEDDING_CHUNK_SIZE):
         chunk = sanitized[i : i + EMBEDDING_CHUNK_SIZE]
-        embeddings = generate_embeddings([text for _key, text, _data in chunk])
+        try:
+            embeddings = generate_embeddings([text for _key, text, _data in chunk])
+        except Exception as exc:  # pragma: no cover - passthrough
+            raise EmbeddingGenerationError(str(exc)) from exc
         for (key, sanitized_json, signal_data), embedding in zip(chunk, embeddings):
             signal = DBSignal(
                 source=adapter.__class__.__name__,
@@ -116,15 +128,20 @@ def ingest_adapter_task(adapter_name: str) -> None:
     try:
 
         async def runner() -> None:
-            adapter = ADAPTERS[adapter_name]
+            adapter = ADAPTERS.get(adapter_name)
+            if adapter is None:
+                raise UnknownAdapterError(adapter_name)
             async with SessionLocal() as session:
                 await _ingest_from_adapter(session, adapter)
 
         asyncio.run(runner())
         INGEST_SUCCESS.labels(adapter_name).inc()
-    except Exception:
+    except SignalIngestionError:
         INGEST_FAILURE.labels(adapter_name).inc()
         raise
+    except Exception as exc:  # pragma: no cover - passthrough
+        INGEST_FAILURE.labels(adapter_name).inc()
+        raise SignalIngestionError(str(exc)) from exc
     finally:
         INGEST_DURATION.labels(adapter_name).observe(perf_counter() - start)
 

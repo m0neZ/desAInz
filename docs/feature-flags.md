@@ -7,7 +7,7 @@ Experimental features are toggled using [LaunchDarkly](https://launchdarkly.com/
 1. Provide a `LAUNCHDARKLY_SDK_KEY` to fetch flags from LaunchDarkly.
 2. Set `FEATURE_FLAGS` to a JSON mapping of flag names to booleans for simple environment-based toggles.
 3. Set `FEATURE_FLAGS_REDIS_URL` to read and write overrides from Redis, ensuring values persist across restarts.
-4. Results are cached for `FEATURE_FLAGS_CACHE_TTL` seconds (default `30`).
+4. Results are cached in Redis (and memory) for `FEATURE_FLAGS_CACHE_TTL` seconds (default `30`).
 
 ## Disabling a flag
 

@@ -1,4 +1,9 @@
-"""Feature flag utilities supporting LaunchDarkly and environment overrides."""
+"""
+Feature flag utilities supporting LaunchDarkly, Redis and env overrides.
+
+Results are cached both in memory and Redis for the configured TTL to avoid repeated
+provider lookups.
+"""
 
 from __future__ import annotations
 
@@ -18,6 +23,7 @@ _ld_client: LDClient | None = None
 _redis: redis.Redis | None = None
 _cache: dict[str, tuple[bool, float]] = {}
 _cache_ttl: int = 30
+_cache_prefix = "ff_cache:"
 _defaults: dict[str, bool] = {}
 _env_flags: dict[str, bool] = {}
 
@@ -67,8 +73,18 @@ def is_enabled(name: str, context: dict[str, Any] | None = None) -> bool:
     if cached and cached[1] > now:
         return cached[0]
 
+    if _redis is not None:
+        try:
+            raw = _redis.get(f"{_cache_prefix}{name}")
+            if isinstance(raw, str):
+                cached_result = raw == "1"
+                _cache[name] = (cached_result, now + _cache_ttl)
+                return cached_result
+        except Exception:
+            pass
+
     default = _defaults.get(name, False)
-    result = None
+    result: bool | None = None
 
     if name in _env_flags:
         result = _env_flags[name]
@@ -98,6 +114,11 @@ def is_enabled(name: str, context: dict[str, Any] | None = None) -> bool:
         result = default
 
     _cache[name] = (result, now + _cache_ttl)
+    if _redis is not None:
+        try:
+            _redis.setex(f"{_cache_prefix}{name}", _cache_ttl, "1" if result else "0")
+        except Exception:
+            pass
     return result
 
 
@@ -122,7 +143,10 @@ def list_flags() -> dict[str, bool]:
         try:
             keys = _redis.keys("*")
             if isinstance(keys, list):
-                names.update(str(k) for k in keys)
+                for k in keys:
+                    key = str(k)
+                    if not key.startswith(_cache_prefix):
+                        names.add(key)
         except Exception:
             pass
     return {name: is_enabled(name) for name in names}

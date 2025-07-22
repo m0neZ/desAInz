@@ -13,7 +13,7 @@ import pytest
 from backend.shared import feature_flags
 
 
-@pytest.fixture(autouse=True)  # type: ignore[misc]
+@pytest.fixture(autouse=True)
 def reload_module() -> Iterator[None]:
     """Reload feature_flags module after each test."""
     yield
@@ -65,7 +65,7 @@ def test_redis_flags(monkeypatch: pytest.MonkeyPatch) -> None:
     """Flags are read from Redis when configured."""
     fake = fakeredis.FakeRedis(decode_responses=True)
     monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
-    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)  # type: ignore[attr-defined]
     fake.set("demo", "1")
     feature_flags.initialize()
     assert feature_flags.is_enabled("demo") is True
@@ -75,7 +75,7 @@ def test_redis_persistence(monkeypatch: pytest.MonkeyPatch) -> None:
     """Flags stored in Redis persist across module reloads."""
     fake = fakeredis.FakeRedis(decode_responses=True)
     monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
-    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)  # type: ignore[attr-defined]
     feature_flags.initialize()
     feature_flags.set_flag("demo", True)
     importlib.reload(feature_flags)
@@ -87,7 +87,7 @@ def test_redis_update(monkeypatch: pytest.MonkeyPatch) -> None:
     """Flags can be updated in Redis with sensible defaults."""
     fake = fakeredis.FakeRedis(decode_responses=True)
     monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
-    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)  # type: ignore[attr-defined]
     feature_flags.initialize()
     assert feature_flags.is_enabled("demo") is False
     feature_flags.set_flag("demo", True)
@@ -96,3 +96,22 @@ def test_redis_update(monkeypatch: pytest.MonkeyPatch) -> None:
     feature_flags.set_flag("demo", False)
     assert fake.get("demo") == "0"
     assert feature_flags.is_enabled("demo") is False
+
+
+def test_redis_result_cache(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Results are cached in Redis across reloads."""
+    fake = fakeredis.FakeRedis(decode_responses=True)
+    monkeypatch.setenv("FEATURE_FLAGS_REDIS_URL", "redis://test")
+    monkeypatch.setenv("LAUNCHDARKLY_SDK_KEY", "sdk")
+    monkeypatch.setenv("FEATURE_FLAGS_CACHE_TTL", "60")
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)  # type: ignore[attr-defined]
+    client = mock.MagicMock()
+    client.variation.return_value = True
+    monkeypatch.setattr(feature_flags, "LDClient", lambda *_, **__: client)
+    feature_flags.initialize()
+    assert feature_flags.is_enabled("flag") is True
+    importlib.reload(feature_flags)
+    monkeypatch.setattr(feature_flags.redis, "Redis", lambda *_, **__: fake)  # type: ignore[attr-defined]
+    feature_flags.initialize()
+    assert feature_flags.is_enabled("flag") is True
+    client.variation.assert_called_once()

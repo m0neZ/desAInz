@@ -14,13 +14,19 @@ SERVICES = [
 ]
 
 
-def _wait(host: str, port: int) -> None:
-    while True:
+DEFAULT_TIMEOUT = int(os.getenv("WAIT_TIMEOUT", "30"))
+
+
+def _wait(host: str, port: int, timeout: int = DEFAULT_TIMEOUT) -> None:
+    """Wait for ``host``:``port`` to accept connections or raise ``TimeoutError``."""
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
         try:
             with socket.create_connection((host, port), timeout=1):
                 return
         except OSError:
             time.sleep(1)
+    raise TimeoutError(f"Service {host}:{port} did not respond in {timeout} seconds")
 
 
 def main() -> None:

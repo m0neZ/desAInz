@@ -46,4 +46,3 @@ You can stop the stack with:
 ```bash
 docker-compose down
 ```
-

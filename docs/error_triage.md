@@ -9,4 +9,3 @@ Unhandled exceptions from backend services are sent to Sentry when `SENTRY_DSN` 
 5. Resolve or ignore the issue once it has been addressed.
 
 For local testing you can export `SENTRY_DSN` and run any service; captured errors will appear in your project shortly after triggering them.
-

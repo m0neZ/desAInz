@@ -4,7 +4,7 @@ The mockup generation service runs inside CUDA-enabled containers. Each
 Celery worker is pinned to a specific GPU using the `GPU_WORKER_INDEX`
 environment variable. Workers listen on dedicated queues `gpu-<index>`
 so Kubernetes can scale them independently. Tasks can target a specific
-GPU by passing ``gpu_index`` to the ``/generate`` endpoint, which will
+GPU by passing `gpu_index` to the `/generate` endpoint, which will
 route them to the corresponding queue.
 
 ```bash
@@ -26,4 +26,4 @@ An example HPA manifest lives in `infrastructure/k8s/examples/gpu-worker-hpa.yam
 and scales the `mockup-generation` deployment according to queue length.
 
 The metadata generation service uses OpenAI's GPT‑4 model by default. The
-model can be changed by setting the ``OPENAI_MODEL`` environment variable.
+model can be changed by setting the `OPENAI_MODEL` environment variable.

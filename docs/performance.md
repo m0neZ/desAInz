@@ -33,6 +33,18 @@ The Dagster job `benchmark_score_job` executes
 `score_benchmarks` table. Grafana uses the PostgreSQL data source to visualize
 these benchmarks over time, allowing quick detection of regressions.
 
+## Capturing Profiling Data
+
+Use ``scripts/capture_profile.py`` to collect CPU profiling statistics for any
+Python module. The command saves data in ``cProfile`` format and prints the
+top 20 functions by cumulative time.
+
+```bash
+python scripts/capture_profile.py backend.app.main --output run.prof
+```
+The output file can be visualized with tools like ``snakeviz`` for deeper
+analysis.
+
 ## tRPC Response Caching
 
 The API Gateway now attaches ``ETag`` headers to tRPC responses. When a client

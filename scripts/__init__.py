@@ -7,6 +7,7 @@ from .run_dagster_webserver import main as run_dagster_webserver
 from .rotate_logs import main as rotate_logs
 from .wait_for_services import main as wait_for_services
 from .setup_codex import main as setup_codex
+from .capture_profile import main as capture_profile
 
 __all__ = [
     "maintenance",
@@ -17,4 +18,5 @@ __all__ = [
     "rotate_logs",
     "wait_for_services",
     "setup_codex",
+    "capture_profile",
 ]

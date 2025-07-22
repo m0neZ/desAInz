@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import uuid
 import time
+import os
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Callable, Coroutine, Iterable
@@ -29,15 +30,17 @@ from backend.shared.db import session_scope
 from backend.shared.db.models import Idea, Listing, Mockup, Signal
 from sqlalchemy import func, select
 
-from .pagerduty import trigger_sla_violation
+from .pagerduty import trigger_sla_violation, trigger_queue_backlog
 from .metrics_store import (
     PublishLatencyMetric,
     TimescaleMetricsStore,
     LATENCY_CACHE_KEY,
 )
 from backend.shared.cache import sync_get, sync_set
+import redis
 
 LAST_ALERT_KEY = "sla:last_alert"
+QUEUE_ALERT_KEY = "queue:last_alert"
 
 from .logging_config import configure_logging
 from .settings import settings
@@ -174,6 +177,46 @@ def get_average_latency() -> float:
     return avg
 
 
+def get_queue_length() -> int:
+    """Return total length of configured Celery queues."""
+    url = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+    queues = os.getenv("CELERY_QUEUES", "celery").split(",")
+    client = redis.Redis.from_url(url)
+    try:
+        return int(sum(client.llen(q) for q in queues))
+    finally:
+        client.close()
+
+
+def _check_queue_backlog() -> int:
+    """Return queue length and trigger alert when threshold exceeded."""
+    length = get_queue_length()
+    threshold = getattr(
+        settings,
+        "queue_backlog_threshold",
+        getattr(settings, "queue_backlog_threshold", 50),
+    )
+    if length > threshold:
+        last = sync_get(QUEUE_ALERT_KEY)
+        cooldown = getattr(
+            settings,
+            "queue_backlog_alert_cooldown_minutes",
+            getattr(settings, "queue_backlog_alert_cooldown_minutes", 60),
+        )
+        now = time.time()
+        try:
+            last_ts = float(last) if last is not None else 0.0
+        except (TypeError, ValueError):
+            last_ts = 0.0
+        if last is None or now - last_ts >= cooldown * 60:
+            trigger_queue_backlog(length)
+            try:
+                sync_set(QUEUE_ALERT_KEY, str(now))
+            except Exception:  # pragma: no cover - redis optional
+                pass
+    return length
+
+
 def _check_sla() -> float:
     """Return average latency and trigger PagerDuty when breached."""
     avg = get_average_latency()
@@ -213,6 +256,13 @@ async def latency() -> dict[str, float]:
     """Return average signal-to-publish latency without triggering alerts."""
     avg = get_average_latency()
     return {"average_seconds": avg}
+
+
+@app.get("/queue_length")
+async def queue_length() -> dict[str, int]:
+    """Check queue backlog and emit PagerDuty alert when needed."""
+    length = _check_queue_backlog()
+    return {"length": length}
 
 
 @app.get("/daily_summary")

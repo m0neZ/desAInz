@@ -14,7 +14,8 @@ docker build -f backend/mockup-generation/Dockerfile \
 ```
 
 The provided HorizontalPodAutoscaler manifests scale the deployment
-based on CPU, memory and the `celery_queue_length` metric. The number of
+based on CPU, memory and the `celery_queue_length` metric exported from Redis.
+The number of
 concurrent GPU tasks is controlled by the Redis key `gpu_slots`. Update the
 key at runtime to change how many workers can acquire a GPU lock:
 

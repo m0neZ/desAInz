@@ -63,9 +63,11 @@ payloads and improves perceived latency when data has not changed.
 
 Production workloads run under Kubernetes with [Horizontal Pod Autoscalers](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
 Each service scales between two and five replicas based on CPU and memory usage.
-The `signal-ingestion` deployment also reacts to queue pressure using a custom
-`celery_queue_length` metric. When the average queue length exceeds 30 pending
-tasks, additional workers are spawned automatically.
+The `signal-ingestion` deployment also reacts to queue pressure using the
+`celery_queue_length` metric exported by each worker. Queue lengths are measured
+directly from Redis and exposed via Prometheus. When the average queue length
+exceeds 30 pending tasks a PagerDuty alert is triggered and additional workers
+are spawned automatically.
 
 ## GPU Slot Metrics
 

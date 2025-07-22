@@ -90,7 +90,8 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
             continue
         add_key(key)
         clean_row = purge_row(signal_data.asdict())
-        sanitized.append((key, json.dumps(clean_row), signal_data))
+        sanitized_json = json.dumps(clean_row)
+        sanitized.append((key, sanitized_json, signal_data))
 
     for i in range(0, len(sanitized), EMBEDDING_CHUNK_SIZE):
         chunk = sanitized[i : i + EMBEDDING_CHUNK_SIZE]

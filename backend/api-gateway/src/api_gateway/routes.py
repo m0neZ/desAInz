@@ -136,14 +136,14 @@ async def close_http_clients() -> None:
     _CLIENTS.clear()
 
 
-async def get_trending(limit: int = 10) -> list[str]:
+async def get_trending(limit: int = 10, offset: int = 0) -> list[str]:
     """Return trending keywords via ingestion service with Redis caching."""
-    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}"
+    cache_key = f"{TRENDING_CACHE_PREFIX}{limit}:{offset}"
     cached = await async_get(cache_key)
     if cached:
         return cast(list[str], json.loads(cached))
 
-    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}"
+    url = f"{SIGNAL_INGESTION_URL}/trending?limit={limit}&offset={offset}"
     client = _get_client("signal_ingestion")
     resp = await client.get(url)
     if resp.status_code != 200:
@@ -530,9 +530,9 @@ async def optimizations() -> list[str]:
 
 
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
-async def trending(limit: int = 10) -> list[str]:
-    """Return up to ``limit`` trending keywords from the ingestion service."""
-    return await get_trending(limit)
+async def trending(limit: int = 10, offset: int = 0) -> list[str]:
+    """Return trending keywords from the ingestion service."""
+    return await get_trending(limit, offset)
 
 
 @monitoring_router.get("/overview", summary="System overview")
@@ -575,7 +575,8 @@ async def low_performers(page: int = 1, limit: int = 10) -> Dict[str, Any]:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid page")
     if limit < 1 or limit > 100:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid limit")
-    url = f"{ANALYTICS_URL}/low_performers?limit={limit}&page={page}"
+    offset = (page - 1) * limit
+    url = f"{ANALYTICS_URL}/low_performers?limit={limit}&offset={offset}"
     client = _get_client("analytics")
     resp = await client.get(url)
     if resp.status_code != 200:
@@ -639,13 +640,15 @@ async def get_audit_logs(
 
 @router.get("/models", tags=["Models"], summary="List AI models")
 async def get_models(
+    limit: int = 100,
+    offset: int = 0,
     payload: Dict[str, Any] = Depends(require_role("admin")),
 ) -> list[dict[str, Any]]:
-    """Return all available AI models."""
+    """Return AI models with pagination."""
     from mockup_generation.model_repository import list_models
 
     log_admin_action(payload.get("sub", "unknown"), "list_models")
-    return [m.__dict__ for m in list_models()]
+    return [m.__dict__ for m in list_models(limit=limit, offset=offset)]
 
 
 @router.post("/models/{model_id}/default", tags=["Models"], summary="Set default model")

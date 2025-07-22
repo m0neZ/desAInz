@@ -52,12 +52,12 @@ def test_get_trending_uses_cache(monkeypatch: pytest.MonkeyPatch) -> None:
     fake = fakeredis.FakeRedis()
     monkeypatch.setattr(trending, "get_sync_client", lambda: fake)
     fake.zadd(trending.TRENDING_KEY, {"foo": 1, "bar": 2})
-    result1 = trending.get_trending(2)
+    result1 = trending.get_trending(2, 0)
     assert result1 == ["bar", "foo"]
-    cache_key = f"{trending.TRENDING_CACHE_PREFIX}2"
+    cache_key = f"{trending.TRENDING_CACHE_PREFIX}2:0"
     assert fake.ttl(cache_key) > 0
     fake.zadd(trending.TRENDING_KEY, {"baz": 3})
-    result2 = trending.get_trending(2)
+    result2 = trending.get_trending(2, 0)
     assert result2 == result1
 
 
@@ -141,8 +141,8 @@ def test_trending_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
     )
     from signal_ingestion import main as main_module
 
-    monkeypatch.setattr(trending, "get_top_keywords", lambda limit=10: ["foo", "bar"])
+    monkeypatch.setattr(trending, "get_top_keywords", lambda limit=10, offset=0: ["foo", "bar"])
     client = TestClient(main_module.app)
-    resp = client.get("/trending?limit=2")
+    resp = client.get("/trending?limit=2&offset=0")
     assert resp.status_code == 200
     assert resp.json() == ["foo", "bar"]

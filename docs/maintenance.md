@@ -79,6 +79,13 @@ In production Docker Compose deployments a `backup` service runs `scripts/backup
 using cron. The container uploads a PostgreSQL dump to the bucket defined by
 `BACKUP_BUCKET` every night at midnight UTC.
 
+## Bucket Lifecycle Enforcement
+
+To ensure objects transition to cheaper storage tiers, the `s3-lifecycle` job
+invokes `scripts/apply_s3_lifecycle.py` daily. The job passes the target bucket
+and optional storage class through environment variables. It runs as a
+Kubernetes CronJob created by the `s3-lifecycle-jobs` Helm chart.
+
 ## Monthly Secret Rotation
 
 Secrets used by internal services are rotated automatically. The

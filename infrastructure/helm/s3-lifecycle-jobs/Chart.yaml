@@ -1,0 +1,6 @@
+apiVersion: v2
+name: s3-lifecycle-jobs
+version: 0.1.0
+description: Helm chart for applying S3 lifecycle policies
+type: application
+appVersion: "1.0"

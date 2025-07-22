@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "s3-lifecycle-jobs.fullname" . }}
+  labels: {{- include "s3-lifecycle-jobs.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: s3-lifecycle
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: BUCKET
+                  value: {{ .Values.bucket | quote }}
+                - name: STORAGE_CLASS
+                  value: {{ .Values.storageClass | quote }}
+{{- range $key, $value := .Values.extraEnv }}
+                - name: {{ $key }}
+                  value: {{ $value | quote }}
+{{- end }}
+              volumeMounts:
+                - name: secret-volume
+                  mountPath: /run/secrets
+                  readOnly: true
+                - name: tmpfs-volume
+                  mountPath: /tmpfs
+              resources:
+{{ toYaml .Values.resources | nindent 14 }}
+              command: ["python", "/app/apply_s3_lifecycle.py"]
+          volumes:
+            - name: secret-volume
+              secret:
+                secretName: {{ .Values.secretName }}
+            - name: tmpfs-volume
+              emptyDir:
+                medium: Memory

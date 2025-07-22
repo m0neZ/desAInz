@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 📚 Documentation
 
+- Document Python 3.12 performance benefits
+
 - Add admin dashboard trpc guide
 - Add admin dashboard path and section
 - Add security guidelines and dotenv usage

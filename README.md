@@ -10,12 +10,14 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 
 Make sure the following tools are available before setting up the project:
 
-- **Python 3.11**
+- **Python 3.12**
 - **Node.js 20**
 - **Docker** and **Docker Compose** supporting schema version 3.8
 
 These versions match the containers used in `docker-compose.prod.yml` and the
 development tooling. Newer versions may also work but are not tested.
+Using Python 3.12 improves performance thanks to a faster interpreter and more
+efficient memory management. CI now verifies compatibility on 3.12.
 
 ## Installing dependencies
 

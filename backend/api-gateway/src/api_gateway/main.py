@@ -21,7 +21,7 @@ from backend.shared.security import add_security_headers, require_status_api_key
 from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
 from backend.shared.db import run_migrations_if_needed
-from backend.shared import add_error_handlers, configure_sentry
+from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from .rate_limiter import UserRateLimiter
 from .settings import settings
@@ -57,7 +57,7 @@ tags_metadata = [
     {"name": "Privacy", "description": "Handle deletion requests and PII purging."},
 ]
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "api-gateway")
+SERVICE_NAME = os.getenv("SERVICE_NAME", ServiceName.API_GATEWAY.value)
 app = FastAPI(title="API Gateway", openapi_tags=tags_metadata)
 app.add_middleware(
     CORSMiddleware,

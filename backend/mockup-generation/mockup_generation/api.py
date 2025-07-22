@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from backend.shared.logging import configure_logging
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
-from backend.shared import add_error_handlers, configure_sentry
+from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
@@ -32,7 +32,7 @@ from .celery_app import app as celery_app
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "mockup-generation")
+SERVICE_NAME = os.getenv("SERVICE_NAME", ServiceName.MOCKUP_GENERATION.value)
 app = FastAPI(title="Mockup Generation Service")
 app.add_middleware(
     CORSMiddleware,

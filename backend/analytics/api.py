@@ -25,7 +25,7 @@ from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from backend.shared.responses import gzip_iter
 from backend.shared.logging import configure_logging
-from backend.shared import add_error_handlers, configure_sentry
+from backend.shared import ServiceName, add_error_handlers, configure_sentry
 from backend.shared.config import settings as shared_settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -33,7 +33,7 @@ from fastapi.middleware.cors import CORSMiddleware
 configure_logging()
 logger = logging.getLogger(__name__)
 
-SERVICE_NAME = os.getenv("SERVICE_NAME", "analytics")
+SERVICE_NAME = os.getenv("SERVICE_NAME", ServiceName.ANALYTICS.value)
 app = FastAPI(title="Analytics Service")
 app.add_middleware(
     CORSMiddleware,

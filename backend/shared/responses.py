@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi.responses import JSONResponse, Response
 import zlib
-from typing import Iterable
+from typing import Iterable, AsyncIterator
 
 CACHE_TTL_SECONDS = 60
 
@@ -25,6 +25,18 @@ def gzip_iter(text_iter: Iterable[str]) -> Iterable[bytes]:
     """Yield gzip-compressed bytes from an iterable of strings."""
     compressor = zlib.compressobj(wbits=31)
     for chunk in text_iter:
+        data = compressor.compress(chunk.encode())
+        if data:
+            yield data
+    data = compressor.flush()
+    if data:
+        yield data
+
+
+async def gzip_aiter(text_iter: AsyncIterator[str]) -> AsyncIterator[bytes]:
+    """Yield gzip-compressed bytes from an async iterator of strings."""
+    compressor = zlib.compressobj(wbits=31)
+    async for chunk in text_iter:
         data = compressor.compress(chunk.encode())
         if data:
             yield data

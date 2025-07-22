@@ -9,7 +9,7 @@ from .feature_flags import initialize as init_feature_flags, is_enabled
 from .errors import add_error_handlers, add_flask_error_handlers
 from .currency import convert_price, start_rate_updater
 from .metrics import register_metrics
-from .responses import cache_header, json_cached, gzip_iter
+from .responses import cache_header, json_cached, gzip_iter, gzip_aiter
 from .config import settings
 from .service_names import ServiceName
 from .security import add_security_headers
@@ -30,6 +30,7 @@ __all__ = [
     "cache_header",
     "json_cached",
     "gzip_iter",
+    "gzip_aiter",
     "settings",
     "add_security_headers",
     "load_clip",

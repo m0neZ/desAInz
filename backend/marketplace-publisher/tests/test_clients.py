@@ -34,14 +34,19 @@ def _setup_settings(monkeypatch: pytest.MonkeyPatch, prefix: str) -> None:
 @pytest.mark.parametrize(
     "client_cls,prefix,publish_url",
     [
-        (clients.RedbubbleClient, "redbubble", "https://api.redbubble.com/v1/publish"),
+        (clients.RedbubbleClient, "redbubble", "https://api.redbubble.com/v1/works"),
         (
             clients.AmazonMerchClient,
             "amazon_merch",
-            "https://merch.amazon.com/api/publish",
+            "https://merch.amazon.com/api/listings",
         ),
-        (clients.EtsyClient, "etsy", "https://openapi.etsy.com/v3/application/publish"),
-        (clients.Society6Client, "society6", "https://api.society6.com/v1/publish"),
+        (
+            clients.EtsyClient,
+            "etsy",
+            "https://openapi.etsy.com/v3/application/listings",
+        ),
+        (clients.Society6Client, "society6", "https://api.society6.com/v1/products"),
+        (clients.ZazzleClient, "zazzle", "https://api.zazzle.com/v1/products"),
     ],
 )
 def test_publish_design_oauth(
@@ -92,7 +97,7 @@ def test_token_refresh_on_expiry(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             json={"id": 1},
         )
         rsps.add(
@@ -102,7 +107,7 @@ def test_token_refresh_on_expiry(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             json={"id": 2},
         )
 
@@ -129,7 +134,7 @@ def test_refresh_on_unauthorized(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             status=401,
         )
         rsps.add(
@@ -139,7 +144,7 @@ def test_refresh_on_unauthorized(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             json={"id": 2},
         )
 
@@ -166,7 +171,7 @@ def test_publish_design_retries(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             [{"status": 500}, {"json": {"id": 3}}],
         )
 
@@ -211,7 +216,7 @@ async def test_tokens_persisted_and_reused(
         )
         rsps.add(
             responses.POST,
-            "https://api.redbubble.com/v1/publish",
+            "https://api.redbubble.com/v1/works",
             json={"id": 3},
         )
 
@@ -269,3 +274,58 @@ async def test_oauth_endpoints(monkeypatch: pytest.MonkeyPatch) -> None:
         token = await db.get_oauth_token(session, db.Marketplace.redbubble)
         assert token is not None
         assert token.refresh_token == "r"
+
+
+@pytest.mark.parametrize(
+    "client_cls,prefix,metrics_url",
+    [
+        (
+            clients.RedbubbleClient,
+            "redbubble",
+            "https://api.redbubble.com/v1/works/1/metrics",
+        ),
+        (
+            clients.AmazonMerchClient,
+            "amazon_merch",
+            "https://merch.amazon.com/api/listings/1/metrics",
+        ),
+        (
+            clients.EtsyClient,
+            "etsy",
+            "https://openapi.etsy.com/v3/application/listings/1/stats",
+        ),
+        (
+            clients.Society6Client,
+            "society6",
+            "https://api.society6.com/v1/products/1/stats",
+        ),
+        (
+            clients.ZazzleClient,
+            "zazzle",
+            "https://api.zazzle.com/v1/products/1/metrics",
+        ),
+    ],
+)
+def test_get_listing_metrics(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    client_cls: Callable[[], clients.BaseClient],
+    prefix: str,
+    metrics_url: str,
+) -> None:
+    """Ensure metrics retrieval attaches auth headers."""
+
+    _setup_settings(monkeypatch, prefix)
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.POST, "https://example.com/token", json={"access_token": "tok"}
+        )
+        rsps.add(responses.GET, metrics_url, json={"views": 1})
+        design = tmp_path / "d.png"
+        design.write_text("x")
+        client = client_cls()
+        metrics = client.get_listing_metrics(1)
+        assert metrics["views"] == 1
+        assert rsps.calls[1].request.url == metrics_url
+        assert rsps.calls[1].request.headers["Authorization"] == "Bearer tok"
+        assert rsps.calls[1].request.headers["X-API-Key"] == "key"

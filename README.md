@@ -97,11 +97,11 @@ Execute `scripts/analyze_query_plans.py` periodically to inspect query plans and
 identify missing indexes.
 
 ## Configuration and Secrets
-Local development uses dotenv files. Copy the root `.env.example` to `.env` and the `.env.example` in **every** `backend` service directory to their respective `.env` files. The services automatically load these variables using Pydantic `BaseSettings`.
+Local development uses dotenv files. For a quick start copy `.env.quickstart.example` to `.env`. This file contains only the variables required for running the stack with default local services. If you need the full configuration copy the root `.env.example` to `.env` and the `.env.example` in **every** `backend` service directory to their respective `.env` files. The services automatically load these variables using Pydantic `BaseSettings`.
 For convenience you can run:
 
 ```bash
-for f in backend/*/.env.example; do cp "$f" "$(dirname "$f")/.env"; done
+for f in backend/*/.env.quickstart.example; do cp "$f" "$(dirname "$f")/.env"; done
 ```
 
 In production, secrets are stored in HashiCorp Vault or AWS Secrets Manager and surfaced to the containers via Docker secrets or Kubernetes Secrets. The settings modules read from `/run/secrets` if present. Do not rely on `.env` files in production.

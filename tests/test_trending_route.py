@@ -6,6 +6,8 @@ import importlib
 import sys
 from pathlib import Path
 from typing import Any, Optional, Type
+from pydantic import RedisDsn
+import warnings
 
 import httpx
 from fastapi.testclient import TestClient
@@ -19,12 +21,18 @@ sys.path.append(
 def test_trending_proxy(monkeypatch: Any) -> None:
     """Proxy trending requests to the ingestion service."""
     monkeypatch.setenv("SIGNAL_INGESTION_URL", "http://ingest:1234")
+    monkeypatch.setenv("API_GATEWAY_REQUEST_CACHE_TTL", "1")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
+    monkeypatch.setenv("SDK_DISABLED", "1")
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
     import backend.shared.config as shared_config
 
-    shared_config.settings.redis_url = "redis://localhost:6379/0"
+    shared_config.settings.redis_url = RedisDsn("redis://localhost:6379/0")
     monkeypatch.setattr(
         "backend.shared.cache.get_async_client", lambda: fakeredis.aioredis.FakeRedis()
+    )
+    monkeypatch.setattr(
+        "backend.shared.tracing.configure_tracing", lambda *_, **__: None
     )
     import api_gateway.main as main_module
     import api_gateway.routes as routes

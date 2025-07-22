@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import uuid
+from functools import lru_cache
 from typing import Callable, Coroutine
 
 from fastapi import FastAPI, HTTPException, Request, Response
@@ -47,6 +48,12 @@ add_profiling(app)
 add_error_handlers(app)
 
 
+@lru_cache(maxsize=256)
+def _cached_user(x_user: str | None, client_host: str) -> str:
+    """Return user identifier from ``x_user`` or ``client_host``."""
+    return x_user or client_host
+
+
 class ModelCreate(BaseModel):  # type: ignore[misc]
     """Schema for registering a new model."""
 
@@ -59,7 +66,8 @@ class ModelCreate(BaseModel):  # type: ignore[misc]
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return str(request.headers.get("X-User", request.client.host))
+    client_host = str(request.client.host)
+    return _cached_user(request.headers.get("X-User"), client_host)
 
 
 @app.middleware("http")

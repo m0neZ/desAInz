@@ -10,6 +10,7 @@ from collections.abc import AsyncIterator
 
 from datetime import datetime
 
+from functools import lru_cache
 from fastapi import Depends, FastAPI, Request, Response
 from backend.shared.security import require_status_api_key
 from fastapi.responses import StreamingResponse
@@ -50,10 +51,16 @@ register_metrics(app)
 add_security_headers(app)
 
 
+@lru_cache(maxsize=256)
+def _cached_user(x_user: str | None, client_host: str) -> str:
+    """Return user identifier from ``x_user`` or ``client_host``."""
+    return x_user or client_host
+
+
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
     client_host = request.client.host if request.client else "unknown"
-    return cast(str, request.headers.get("X-User", client_host))
+    return _cached_user(request.headers.get("X-User"), cast(str, client_host))
 
 
 @app.middleware("http")  # type: ignore[misc]
@@ -271,7 +278,9 @@ async def export_performance_metrics(
                 .execution_options(yield_per=1000)
             )
             if start is not None:
-                stmt = stmt.filter(models.MarketplacePerformanceMetric.timestamp >= start)
+                stmt = stmt.filter(
+                    models.MarketplacePerformanceMetric.timestamp >= start
+                )
             if end is not None:
                 stmt = stmt.filter(models.MarketplacePerformanceMetric.timestamp <= end)
             result = await session.stream_scalars(stmt)

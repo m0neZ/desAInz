@@ -8,6 +8,7 @@ import uuid
 import asyncio
 import logging
 import orjson
+from functools import lru_cache
 from datetime import datetime
 from threading import Event, Thread
 from pathlib import Path
@@ -116,6 +117,14 @@ add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
 add_security_headers(app)
+
+
+@lru_cache(maxsize=256)
+def _cached_user(x_user: str | None, client_host: str) -> str:
+    """Return user identifier from ``x_user`` or ``client_host``."""
+    return x_user or client_host
+
+
 REDIS_URL = settings.redis_url
 CACHE_TTL_SECONDS = settings.score_cache_ttl
 redis_client: AsyncRedis = get_async_client()
@@ -216,7 +225,8 @@ async def trending_factor(topics: list[str]) -> float:
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = cast(str, request.client.host)
+    return _cached_user(request.headers.get("X-User"), client_host)
 
 
 @app.middleware("http")

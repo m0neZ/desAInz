@@ -3,29 +3,33 @@ uvicorn
 pydantic
 pandas
 pytest
-pytest - cov
+pytest-cov
 requests
 tenacity
 httpx
-requests - mock
-kafka - python
+requests-mock
+kafka-python
 jsonschema
 dagster
-prometheus - client
+prometheus-client
 psutil
-opentelemetry - sdk
-opentelemetry - instrumentation - fastapi
-opentelemetry - instrumentation - flask
-opentelemetry - exporter - jaeger
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-flask
+opentelemetry-exporter-jaeger
 apscheduler
 pgvector
 watchtower
 watchdog
 Flask
-pydantic - settings
-psycopg2 - binary
+pydantic-settings
+psycopg2-binary
 UnleashClient
-launchdarkly - server - sdk
-sentry - sdk
+launchdarkly-server-sdk
+sentry-sdk
 Deprecated
 typer
+sqlalchemy
+alembic
+boto3
+selenium

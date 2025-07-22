@@ -1,9 +1,14 @@
 # desAInz
 
-This repository contains the desAInz project. Use `scripts/setup_codex.sh` to install dependencies and build the documentation in a Codex environment.
+This repository contains the desAInz project. Use `scripts/setup_codex.sh` to install dependencies and build the documentation in a Codex environment. You can also install the requirements manually for running tests and building the docs.
 
 ```bash
 ./scripts/setup_codex.sh
+```
+
+```bash
+python -m pip install -r requirements.txt -r requirements-dev.txt
+npm ci --legacy-peer-deps
 ```
 
 

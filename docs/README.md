@@ -40,6 +40,22 @@ application loads configuration from environment variables using
 development or via Docker/Kubernetes secrets mounted under `/run/secrets`. The
 `Settings` class is defined in `src/settings.py` and read on startup.
 
+## Installing Dependencies
+
+Install the Python requirements and Node packages before running tests or
+building the documentation:
+
+```bash
+python -m pip install -r requirements.txt -r requirements-dev.txt
+npm ci --legacy-peer-deps
+```
+
+Build the docs locally with:
+
+```bash
+make -C docs html
+```
+
 ## Load Testing
 
 Load tests use [Locust](https://locust.io/) and live in the `load_tests`

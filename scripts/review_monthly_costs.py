@@ -4,18 +4,20 @@ from __future__ import annotations
 
 import argparse
 import csv
+import logging
 from pathlib import Path
 
 
 def summarize(csv_file: Path) -> None:
-    """Print summary statistics for a cost CSV file."""
+    """Log summary statistics for a cost CSV file."""
     with csv_file.open(encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
         costs = {row["service"]: float(row["cost"] or 0.0) for row in reader}
     total = sum(costs.values())
-    print(f"Total monthly cost: ${total:.2f}")
+    logger = logging.getLogger(__name__)
+    logger.info("Total monthly cost: $%.2f", total)
     for service, value in sorted(costs.items(), key=lambda x: x[1], reverse=True):
-        print(f"- {service}: ${value:.2f}")
+        logger.info("- %s: $%.2f", service, value)
 
 
 def main() -> None:
@@ -27,4 +29,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    logging.basicConfig(level=logging.INFO)
     main()

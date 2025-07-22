@@ -27,7 +27,6 @@ def _aws_cli() -> str:
 
 def apply_policy(bucket: str, storage_class: str = "GLACIER") -> None:
     """Apply transition to ``storage_class`` after 365 days in ``bucket``."""
-
     policy: Dict[str, Any] = {
         "Rules": [
             {
@@ -56,10 +55,7 @@ def apply_policy(bucket: str, storage_class: str = "GLACIER") -> None:
 def main(argv: list[str]) -> int:
     """CLI entrypoint."""
     if not argv or len(argv) > 2:
-        print(
-            "Usage: apply_s3_lifecycle.py <bucket> [storage-class]",
-            file=sys.stderr,
-        )
+        logger.error("Usage: apply_s3_lifecycle.py <bucket> [storage-class]")
         return 1
     storage_class = argv[1] if len(argv) == 2 else "GLACIER"
     apply_policy(argv[0], storage_class)

@@ -24,6 +24,7 @@ from signal_ingestion.normalization import normalize
 
 ADAPTERS: list[tuple[Type[object], str]] = [
     (TikTokAdapter, "tiktok"),
+    (InstagramAdapter, "instagram"),
     (RedditAdapter, "reddit"),
     (YouTubeAdapter, "youtube"),
     (EventsAdapter, "events"),
@@ -36,7 +37,8 @@ ADAPTERS: list[tuple[Type[object], str]] = [
 async def test_normalize_success(adapter_cls: Type[object], name: str) -> None:
     """Adapter fetch results can be normalized."""
     adapter = adapter_cls()
-    cassette = f"backend/signal-ingestion/tests/cassettes/{name}_real.yaml"
+    suffix = "_real" if name != "instagram" else ""
+    cassette = f"backend/signal-ingestion/tests/cassettes/{name}{suffix}.yaml"
     with vcr.use_cassette(cassette, record_mode="new_episodes"):
         rows = await adapter.fetch()
     sig = normalize(name, rows[0])

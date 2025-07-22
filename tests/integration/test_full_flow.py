@@ -118,10 +118,14 @@ async def test_full_flow(
         self.pipeline = DummyPipe()
 
     monkeypatch.setattr(MockupGenerator, "load", fake_load)
+
+    async def _fallback(_: str) -> SimpleNamespace:  # pragma: no cover
+        return SimpleNamespace(save=lambda pth: Path(pth).touch())
+
     monkeypatch.setattr(
         MockupGenerator,
         "_fallback_api",
-        staticmethod(lambda p: SimpleNamespace(save=lambda pth: Path(pth).touch())),
+        staticmethod(_fallback),
     )
 
     import signal_ingestion.dedup as dedup

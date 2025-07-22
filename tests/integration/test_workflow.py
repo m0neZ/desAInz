@@ -69,7 +69,7 @@ async def test_end_to_end(
     def fake_load(self) -> None:  # pragma: no cover
         self.pipeline = None
 
-    def fallback(prompt: str) -> Image.Image:  # pragma: no cover
+    async def fallback(prompt: str) -> Image.Image:  # pragma: no cover
         return Image.new("RGB", (1, 1), color="white")
 
     monkeypatch.setattr(MockupGenerator, "load", fake_load)

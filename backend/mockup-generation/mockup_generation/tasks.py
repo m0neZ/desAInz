@@ -158,7 +158,13 @@ async def _acquire_gpu_lock(slot: int | None = None) -> AsyncRedisLock:
 
 @asynccontextmanager
 async def gpu_slot(slot: int | None = None) -> AsyncIterator[None]:
-    """Yield while holding a GPU slot lock."""
+    """
+    Yield while holding a GPU slot lock.
+
+    The ``GPU_SLOTS_IN_USE`` gauge is incremented whenever a slot is acquired
+    and decremented when released. Each successful acquisition also increments
+    the ``GPU_SLOT_ACQUIRE_TOTAL`` counter.
+    """
     lock = await _acquire_gpu_lock(slot)
     GPU_SLOTS_IN_USE.inc()
     GPU_SLOT_ACQUIRE_TOTAL.inc()

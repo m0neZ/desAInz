@@ -120,7 +120,21 @@ def _run_linters(app: "Sphinx") -> None:
 
 
 def _run_apidoc(app: "Sphinx") -> None:
-    """Generate API docs for all Python modules."""
+    """
+    Generate API docs for all Python modules.
+
+    Parameters
+    ----------
+    app:
+        Instance of :class:`~sphinx.application.Sphinx` representing the current
+        build.
+
+    Behavior
+    --------
+    The function executes :command:`sphinx-apidoc` for every package listed in
+    ``("backend", "frontend")``. Setting the ``SKIP_APIDOC`` environment
+    variable to ``"1"`` aborts the generation step.
+    """
     if os.environ.get("SKIP_APIDOC", "0") == "1":
         return
     output_path = os.path.join(app.srcdir, "api")

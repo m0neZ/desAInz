@@ -43,6 +43,16 @@ def setup_module(module: object) -> None:
                 timestamp=datetime.now(datetime.UTC),
             )
         )
+        session.add(
+            models.MarketplacePerformanceMetric(
+                listing_id=1,
+                views=5,
+                favorites=1,
+                orders=1,
+                revenue=10.0,
+                timestamp=datetime.now(datetime.UTC),
+            )
+        )
         session.add(models.UserRole(username="admin", role="admin"))
         session.commit()
 
@@ -151,3 +161,49 @@ def test_marketplace_metrics_export_large_dataset() -> None:
     lines = resp.text.strip().splitlines()
     assert lines[0] == "timestamp,clicks,purchases,revenue"
     assert len(lines) == 52
+
+
+def test_performance_metrics_export_csv() -> None:
+    """Exported performance metrics contain all rows in CSV format."""
+    client = TestClient(api.app)
+    token = create_access_token({"sub": "admin"})
+    resp = client.get(
+        "/performance_metrics/1/export",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert resp.status_code == 200
+    lines = resp.text.strip().splitlines()
+    assert lines[0].startswith("timestamp,views,favorites,orders,revenue")
+    assert len(lines) == 2
+
+
+def test_performance_metrics_export_large_dataset() -> None:
+    """Performance metrics export streams large datasets correctly."""
+    client = TestClient(api.app)
+    token = create_access_token({"sub": "admin"})
+    with SessionLocal() as session:
+        listing_id = session.query(
+            models.MarketplacePerformanceMetric.listing_id
+        ).first()[0]
+        session.add_all(
+            [
+                models.MarketplacePerformanceMetric(
+                    listing_id=listing_id,
+                    views=i,
+                    favorites=1,
+                    orders=1,
+                    revenue=float(i),
+                    timestamp=datetime.now(datetime.UTC),
+                )
+                for i in range(30)
+            ]
+        )
+        session.commit()
+    resp = client.get(
+        f"/performance_metrics/{listing_id}/export",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert resp.status_code == 200
+    lines = resp.text.strip().splitlines()
+    assert lines[0] == "timestamp,views,favorites,orders,revenue"
+    assert len(lines) == 32

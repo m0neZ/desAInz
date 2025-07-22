@@ -142,6 +142,7 @@ class MarketplacePerformanceMetric(Base):
     """Detailed performance metrics for a listing."""
 
     __tablename__ = "marketplace_performance_metrics"
+    __table_args__ = (Index("ix_marketplace_perf_listing_id", "listing_id"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     listing_id: Mapped[int] = mapped_column(ForeignKey("listings.id"))

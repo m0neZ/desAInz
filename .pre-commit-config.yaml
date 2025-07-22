@@ -30,6 +30,11 @@ repos:
     hooks:
       - id: interrogate
         args: ["--fail-under=100"]
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        args: ["-ll"]
   - repo: local
     hooks:
       - id: eslint

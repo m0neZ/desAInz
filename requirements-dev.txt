@@ -5,6 +5,7 @@ pydocstyle
 flake8-docstrings
 docformatter
 interrogate
+bandit
 uvloop
 watchdog
 vcrpy

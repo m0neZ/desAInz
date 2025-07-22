@@ -81,6 +81,13 @@ def _insert_row(session: Session, table_name: str) -> None:
             ),
             {"idea_id": idea_id},
         )
+    elif table_name == "refresh_tokens":
+        session.execute(
+            text(
+                "INSERT INTO refresh_tokens (token, username, expires_at) "
+                "VALUES ('t', 'alice', now())"
+            )
+        )
     else:  # pragma: no cover - safeguard for future tables
         raise ValueError(f"Unhandled RLS table {table_name}")
     session.commit()
@@ -88,7 +95,7 @@ def _insert_row(session: Session, table_name: str) -> None:
 
 @pytest.mark.parametrize(
     "table_name",
-    ["audit_logs", "ideas", "signals", "user_roles"],
+    ["audit_logs", "ideas", "signals", "user_roles", "refresh_tokens"],
 )
 def test_rls_enforcement(table_name: str) -> None:
     """Ensure users cannot view each other's rows."""
@@ -130,7 +137,7 @@ def test_identify_rls_tables() -> None:
     with engine.connect() as conn:
         tables = _rls_tables(conn)
 
-    expected = ["audit_logs", "ideas", "signals", "user_roles"]
+    expected = ["audit_logs", "ideas", "signals", "user_roles", "refresh_tokens"]
     assert set(tables) == set(expected)
 
     cleanup()

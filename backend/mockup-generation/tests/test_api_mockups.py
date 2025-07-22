@@ -7,6 +7,7 @@ import os
 import sys
 import types
 from pathlib import Path
+import asyncio
 from typing import Any
 
 import pytest
@@ -206,7 +207,9 @@ def test_metadata_recorded_and_listed(
     tasks.settings.s3_endpoint = "http://test"
     tasks.settings.s3_base_url = "http://cdn.test"
 
-    tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
+    asyncio.run(
+        tasks.generate_mockup.run([["kw"]], str(tmp_path), model="m", gpu_index=0)
+    )
 
     client = TestClient(api.app)
     resp = client.get("/mockups")

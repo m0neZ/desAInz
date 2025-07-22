@@ -119,7 +119,8 @@ sys.modules.setdefault(
 )
 
 import threading  # noqa: E402
-import fakeredis  # noqa: E402
+import asyncio
+import fakeredis.aioredis  # noqa: E402
 import pytest  # noqa: E402
 
 from mockup_generation import tasks  # noqa: E402
@@ -127,26 +128,32 @@ from mockup_generation import tasks  # noqa: E402
 
 def test_gpu_slot(monkeypatch: pytest.MonkeyPatch) -> None:
     """Lock is acquired and released using the context manager."""
-    fake = fakeredis.FakeRedis()
-    monkeypatch.setattr(tasks, "redis_client", fake)
+    fake = fakeredis.aioredis.FakeRedis()
+    monkeypatch.setattr(tasks, "async_redis_client", fake)
     monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
 
-    with tasks.gpu_slot():
-        assert fake.lock("gpu_slot:0").locked()
+    async def run() -> None:
+        async with tasks.gpu_slot():
+            assert fake.lock("gpu_slot:0").locked()
+
+    asyncio.run(run())
     assert not fake.lock("gpu_slot:0").locked()
 
 
 def test_gpu_slot_contention(monkeypatch: pytest.MonkeyPatch) -> None:
     """Multiple workers should acquire the lock sequentially."""
-    fake = fakeredis.FakeRedis()
-    monkeypatch.setattr(tasks, "redis_client", fake)
+    fake = fakeredis.aioredis.FakeRedis()
+    monkeypatch.setattr(tasks, "async_redis_client", fake)
     monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
 
     order: list[str] = []
 
     def worker(label: str) -> None:
-        with tasks.gpu_slot():
-            order.append(label)
+        async def run() -> None:
+            async with tasks.gpu_slot():
+                order.append(label)
+
+        asyncio.run(run())
 
     t1 = threading.Thread(target=worker, args=("a",))
     t2 = threading.Thread(target=worker, args=("b",))

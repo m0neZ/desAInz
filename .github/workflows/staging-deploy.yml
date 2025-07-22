@@ -26,4 +26,9 @@ jobs:
             scoring-engine marketplace-publisher feedback-loop
           registry: example
           tag: main
+      - name: Wait for health checks
+        run: |
+          ./scripts/check_k8s_health.sh staging \
+            orchestrator ai-mockup-generation data-storage signal-ingestion \
+            scoring-engine marketplace-publisher feedback-loop
 

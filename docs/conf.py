@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import os
-import subprocess
 import sys
+import subprocess
+import asyncio
 from typing import TYPE_CHECKING
 
 # -- Path setup --------------------------------------------------------------
@@ -108,23 +109,46 @@ if TYPE_CHECKING:  # pragma: no cover
     from sphinx.application import Sphinx
 
 
-def _run_linters(app: "Sphinx") -> None:
+from typing import Any
+
+
+async def _run(cmd: list[str], **kwargs: Any) -> None:
+    """Run an external command asynchronously."""
+    process = await asyncio.create_subprocess_exec(
+        *cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
+        **kwargs,
+    )
+    stdout, _ = await process.communicate()
+    if process.returncode != 0:
+        if stdout:
+            print(stdout.decode())
+        raise RuntimeError(f"Command {' '.join(cmd)} failed")
+
+
+async def _linters_task() -> None:
     """Run docformatter and flake8-docstrings before building docs."""
     if os.environ.get("SKIP_DOC_LINT", "0") == "1":
         return
     docs_dir = os.path.dirname(os.path.abspath(__file__))
-    result = subprocess.run(
-        ["docformatter", "--check", "--recursive", docs_dir],
-        capture_output=True,
-        text=True,
+    proc = await asyncio.create_subprocess_exec(
+        "docformatter",
+        "--check",
+        "--recursive",
+        docs_dir,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
     )
-    if result.returncode != 0:
-        print(result.stdout)
+    stdout, _ = await proc.communicate()
+    if proc.returncode != 0:
+        if stdout:
+            print(stdout.decode())
         raise RuntimeError("docformatter found issues. Run docformatter")
-    subprocess.check_call(["flake8", "--select=D", docs_dir])
+    await _run(["flake8", "--select=D", docs_dir])
 
 
-def _run_apidoc(app: "Sphinx") -> None:
+async def _apidoc_task(app: "Sphinx") -> None:
     """
     Generate API docs for all Python modules.
 
@@ -148,7 +172,7 @@ def _run_apidoc(app: "Sphinx") -> None:
         module_path = os.path.join(root, package)
         if not os.path.exists(module_path):
             continue
-        subprocess.check_call(
+        await _run(
             [
                 "sphinx-apidoc",
                 "--force",
@@ -160,7 +184,7 @@ def _run_apidoc(app: "Sphinx") -> None:
         )
 
 
-def _generate_openapi(app: "Sphinx") -> None:
+async def _openapi_task(app: "Sphinx") -> None:
     """Generate OpenAPI specifications for all services."""
     if os.environ.get("SKIP_OPENAPI", "0") == "1":
         return
@@ -168,7 +192,7 @@ def _generate_openapi(app: "Sphinx") -> None:
     env = os.environ.copy()
     env["KAFKA_SKIP"] = "1"
     env["SELENIUM_SKIP"] = "1"
-    subprocess.check_call(
+    await _run(
         [sys.executable, os.path.join(root, "scripts", "generate_openapi.py")],
         env=env,
     )
@@ -176,6 +200,15 @@ def _generate_openapi(app: "Sphinx") -> None:
 
 def setup(app: "Sphinx") -> None:
     """Set up Sphinx hooks."""
-    app.connect("builder-inited", _run_linters)
-    app.connect("builder-inited", _run_apidoc)
-    app.connect("builder-inited", _generate_openapi)
+
+    def _pre_build(app: "Sphinx") -> None:
+        async def _tasks() -> None:
+            await asyncio.gather(
+                _linters_task(),
+                _apidoc_task(app),
+                _openapi_task(app),
+            )
+
+        asyncio.run(_tasks())
+
+    app.connect("builder-inited", _pre_build)

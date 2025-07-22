@@ -27,6 +27,11 @@ Cached:   0.25s for 100 runs
 
 Caching reduces request latency by roughly 3x in this small test.
 
+## Event Loop Optimization
+
+All FastAPI services install `uvloop` and configure it during startup for better
+I/O performance.
+
 ## Benchmark Automation
 
 The Dagster job `benchmark_score_job` executes

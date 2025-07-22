@@ -412,7 +412,10 @@ if __name__ == "__main__":  # pragma: no cover
     if args.no_selenium:
         os.environ["SELENIUM_SKIP"] = "1"
 
+    import uvloop
     import uvicorn
+
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
     uvicorn.run(
         "main:app",

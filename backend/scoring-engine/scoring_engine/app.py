@@ -285,7 +285,8 @@ async def update_weights_endpoint(
 
 @app.post("/weights/feedback")
 async def feedback_weights(request: Request, body: WeightsUpdate) -> JSONResponse:
-    """Update weights from feedback loop with smoothing.
+    """
+    Update weights from feedback loop with smoothing.
 
     Requires ``X-Weights-Token`` header matching ``settings.weights_token``.
     """
@@ -394,7 +395,10 @@ async def ready(request: Request) -> Response:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    import uvloop
     import uvicorn
+
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
     uvicorn.run(
         "scoring_engine.app:app",

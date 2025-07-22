@@ -19,7 +19,7 @@ TRENDING_KEY = "trending:keywords"
 TRENDING_TS_KEY = "trending:timestamps"
 TRENDING_CACHE_PREFIX = "trending:list:"
 _DECAY_BASE = math.e
-_WORD_RE: Pattern[str] = re.compile(r"[A-Za-z0-9]+")
+_WORD_RE: Pattern[str] = re.compile(r"\w+")
 
 
 def extract_keywords(text: str | None) -> list[str]:

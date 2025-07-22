@@ -29,6 +29,7 @@ from orchestrator.schedules import (  # noqa: E402
     monthly_secret_rotation_schedule,
 )
 from orchestrator.sensors import idea_sensor  # noqa: E402
+import httpx  # noqa: E402
 
 
 def test_job_structure() -> None:
@@ -104,7 +105,9 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
-    def fake_get(url: str, *args: object, **kwargs: object) -> object:
+    async def fake_get(
+        self: object, url: str, *args: object, **kwargs: object
+    ) -> object:
         calls.append(url)
 
         class Resp:
@@ -116,8 +119,14 @@ def test_idea_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
+    async def fake_post_async(
+        self: object, url: str, *args: object, **kwargs: object
+    ) -> object:
+        return fake_post(url, *args, **kwargs)
+
     monkeypatch.setattr("requests.post", fake_post)
-    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setattr(httpx.AsyncClient, "post", fake_post_async)
+    monkeypatch.setattr(httpx.AsyncClient, "get", fake_get)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
     instance = DagsterInstance.ephemeral()
     result = idea_job.execute_in_process(instance=instance)
@@ -152,7 +161,9 @@ def test_rotate_secrets_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
-    def fake_get(url: str, *args: object, **kwargs: object) -> object:
+    async def fake_get(
+        self: object, url: str, *args: object, **kwargs: object
+    ) -> object:
         called.append(url)
 
         class Resp:
@@ -164,8 +175,14 @@ def test_rotate_secrets_job_execution(monkeypatch: pytest.MonkeyPatch) -> None:
 
         return Resp()
 
+    async def fake_post_async(
+        self: object, url: str, *args: object, **kwargs: object
+    ) -> object:
+        return fake_post(url, *args, **kwargs)
+
     monkeypatch.setattr("requests.post", fake_post)
-    monkeypatch.setattr("requests.get", fake_get)
+    monkeypatch.setattr(httpx.AsyncClient, "post", fake_post_async)
+    monkeypatch.setattr(httpx.AsyncClient, "get", fake_get)
     monkeypatch.setenv("APPROVAL_SERVICE_URL", "http://approval")
     monkeypatch.setenv("SLACK_WEBHOOK_URL", "http://slack")
     monkeypatch.setattr(

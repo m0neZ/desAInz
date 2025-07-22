@@ -1,7 +1,8 @@
 FROM python:3.11-slim AS builder
 WORKDIR /app
 COPY pyproject.toml poetry.lock* ./
-RUN pip install --upgrade pip && \
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip && \
     pip install poetry && \
     poetry export -f requirements.txt --without-hashes --output requirements.txt && \
     pip install --prefix=/usr/local --no-cache-dir -r requirements.txt

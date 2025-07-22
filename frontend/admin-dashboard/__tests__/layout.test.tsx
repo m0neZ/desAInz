@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { render, screen } from '@testing-library/react';
 import Router from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';

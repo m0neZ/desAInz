@@ -21,7 +21,7 @@ from .celery_app import app
 from .database import SessionLocal
 from .dedup import add_key, is_duplicate
 from .models import Signal as DBSignal
-from .embedding import generate_embedding
+from .embedding import generate_embeddings
 from .privacy import purge_row
 from .normalization import Signal as NormalizedSignal, normalize
 from .publisher import publish
@@ -29,6 +29,8 @@ from .retention import purge_old_signals
 from .settings import settings
 from .trending import extract_keywords, store_keywords
 
+
+EMBEDDING_CHUNK_SIZE = 16
 
 _PROXIES = (
     [p or None for p in settings.http_proxies.split(",")]
@@ -75,10 +77,12 @@ INGEST_FAILURE = Counter(
 
 
 async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> None:
+    """Ingest signals from ``adapter`` and persist them in batches."""
     await purge_old_signals(session, settings.signal_retention_days)
     rows: list[dict[str, object]] = await adapter.fetch()
+    sanitized: list[tuple[str, str, NormalizedSignal]] = []
     for row in rows:
-        signal_data: NormalizedSignal = normalize(
+        signal_data = normalize(
             adapter.__class__.__name__.replace("Adapter", "").lower(), row
         )
         key = f"{adapter.__class__.__name__}:{signal_data.id}"
@@ -86,17 +90,22 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
             continue
         add_key(key)
         clean_row = purge_row(signal_data.asdict())
-        sanitized_json = json.dumps(clean_row)
-        signal = DBSignal(
-            source=adapter.__class__.__name__,
-            content=sanitized_json,
-            embedding=generate_embedding(sanitized_json),
-        )
-        session.add(signal)
-        await session.commit()
-        publish("signals", key)
-        publish("signals.ingested", sanitized_json)
-        store_keywords(extract_keywords(signal_data.title))
+        sanitized.append((key, json.dumps(clean_row), signal_data))
+
+    for i in range(0, len(sanitized), EMBEDDING_CHUNK_SIZE):
+        chunk = sanitized[i : i + EMBEDDING_CHUNK_SIZE]
+        embeddings = generate_embeddings([text for _key, text, _data in chunk])
+        for (key, sanitized_json, signal_data), embedding in zip(chunk, embeddings):
+            signal = DBSignal(
+                source=adapter.__class__.__name__,
+                content=sanitized_json,
+                embedding=embedding,
+            )
+            session.add(signal)
+            await session.commit()
+            publish("signals", key)
+            publish("signals.ingested", sanitized_json)
+            store_keywords(extract_keywords(signal_data.title))
 
 
 @app.task(name="signal_ingestion.ingest_adapter")  # type: ignore[misc]

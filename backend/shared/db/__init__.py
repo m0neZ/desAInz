@@ -63,7 +63,8 @@ def register_pool_metrics(engine_obj: Any) -> None:
         pool = engine_obj.sync_engine.pool
 
     def _update(*_: Any) -> None:
-        size = pool.size() if callable(getattr(pool, "size", None)) else pool.size
+        size_attr = getattr(pool, "size", 0)
+        size = size_attr() if callable(size_attr) else size_attr
         if callable(getattr(pool, "checkedout", None)):
             in_use = pool.checkedout()
         else:

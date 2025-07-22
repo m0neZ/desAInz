@@ -158,6 +158,11 @@ analytics_router = APIRouter(
     dependencies=[Depends(limit_analytics)],
 )
 approvals_router = APIRouter(prefix="/approvals", tags=["Approvals"])
+privacy_router = APIRouter(
+    prefix="/privacy",
+    tags=["Privacy"],
+    dependencies=[Depends(require_role("admin"))],
+)
 
 
 @approvals_router.get("/", summary="List pending run IDs")
@@ -340,6 +345,19 @@ async def trigger_cleanup(
     maintenance.purge_stale_records()
     log_admin_action(payload.get("sub", "unknown"), "trigger_cleanup")
     return {"status": "ok"}
+
+
+@privacy_router.delete("/signals", summary="Purge stored PII")
+async def purge_pii_endpoint(
+    limit: int | None = None,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> Dict[str, Any]:
+    """Remove PII from stored signals."""
+    from signal_ingestion.privacy import purge_pii_rows
+
+    purged = await purge_pii_rows(limit)
+    log_admin_action(payload.get("sub", "unknown"), "purge_pii", {"rows": purged})
+    return {"status": "ok", "purged": purged}
 
 
 @approvals_router.post("/{run_id}", summary="Approve job run")
@@ -600,3 +618,4 @@ router.include_router(optimization_router)
 router.include_router(monitoring_router)
 router.include_router(analytics_router)
 router.include_router(approvals_router)
+router.include_router(privacy_router)

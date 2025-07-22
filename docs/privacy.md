@@ -7,6 +7,9 @@ This project stores user generated signals and analytics metrics. To comply with
 Incoming signal data is sanitized by `signal_ingestion.privacy.purge_row`, which strips email addresses and phone numbers before a signal is persisted.
 Stored records can be cleaned retroactively via `signal_ingestion.privacy.purge_pii_rows`.
 The Dagster `privacy_purge_job` runs this routine once per week.
+Deletion requests can be sent to `DELETE /privacy/signals` on the API gateway.
+This endpoint calls `signal_ingestion.privacy.purge_pii_rows` and records an
+audit log entry for traceability.
 
 ## Data Retention
 
@@ -24,4 +27,5 @@ Entries remain for the number of seconds configured by `dedup_ttl` (default:
 
 1. Set the retention period in the environment if different from the default.
 2. Schedule periodic execution of the retention routine.
-3. Ensure documentation is built and published on every commit to main.
+3. Use the API gateway deletion endpoint when users request removal.
+4. Ensure documentation is built and published on every commit to main.

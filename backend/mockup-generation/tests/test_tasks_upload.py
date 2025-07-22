@@ -107,7 +107,36 @@ class DummyClient:
             raise DummyError()
 
     async def put_object(self, Bucket: str, Key: str, Body: bytes | str) -> None:
-        self.calls.append((Bucket, Key, ""))
+        self.calls.append((Bucket, Key, "put"))
+
+    async def create_multipart_upload(self, Bucket: str, Key: str) -> dict[str, str]:
+        self.calls.append((Bucket, Key, "create"))
+        return {"UploadId": "1"}
+
+    async def upload_part(
+        self,
+        Bucket: str,
+        Key: str,
+        UploadId: str,
+        PartNumber: int,
+        Body: bytes,
+    ) -> dict[str, str]:
+        self.calls.append((Bucket, Key, f"part-{PartNumber}"))
+        return {"ETag": "tag"}
+
+    async def complete_multipart_upload(
+        self,
+        Bucket: str,
+        Key: str,
+        UploadId: str,
+        MultipartUpload: dict[str, list[dict[str, str]]],
+    ) -> None:
+        self.calls.append((Bucket, Key, "complete"))
+
+    async def abort_multipart_upload(
+        self, Bucket: str, Key: str, UploadId: str
+    ) -> None:
+        self.calls.append((Bucket, Key, "abort"))
 
 
 class DummyGenerator:

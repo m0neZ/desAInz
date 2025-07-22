@@ -66,6 +66,75 @@ async def _get_storage_client() -> AsyncIterator[AioBaseClient]:
         yield client
 
 
+def _compute_sha256(path: Path) -> str:
+    """Return the SHA-256 hex digest for ``path``."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(8192), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+async def _upload_file(
+    client: AioBaseClient,
+    bucket: str,
+    key: str,
+    path: Path,
+    *,
+    part_size: int = 8 * 1024 * 1024,
+    concurrency: int = 4,
+) -> None:
+    """Upload ``path`` to S3, using multipart uploads when appropriate."""
+    size = path.stat().st_size
+    if size < part_size:
+        with open(path, "rb") as fh:
+            await client.put_object(Bucket=bucket, Key=key, Body=fh)
+        return
+
+    mpu = await client.create_multipart_upload(Bucket=bucket, Key=key)
+    upload_id = mpu["UploadId"]
+    semaphore = asyncio.Semaphore(concurrency)
+
+    async def _send(part_no: int, data: bytes) -> dict[str, int | str]:
+        async with semaphore:
+            resp = await client.upload_part(
+                Bucket=bucket,
+                Key=key,
+                UploadId=upload_id,
+                PartNumber=part_no,
+                Body=data,
+            )
+        return {"PartNumber": part_no, "ETag": resp["ETag"]}
+
+    tasks_list = []
+    part_no = 1
+    with open(path, "rb") as fh:
+        while True:
+            chunk = fh.read(part_size)
+            if not chunk:
+                break
+            tasks_list.append(asyncio.create_task(_send(part_no, chunk)))
+            part_no += 1
+
+    try:
+        parts = await asyncio.gather(*tasks_list)
+        await client.complete_multipart_upload(
+            Bucket=bucket,
+            Key=key,
+            UploadId=upload_id,
+            MultipartUpload={
+                "Parts": sorted(parts, key=lambda p: int(p["PartNumber"]))
+            },
+        )
+    except Exception:
+        await client.abort_multipart_upload(
+            Bucket=bucket,
+            Key=key,
+            UploadId=upload_id,
+        )
+        raise
+
+
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 DEFAULT_GPU_SLOTS = int(os.getenv("GPU_SLOTS", "1"))
 GPU_LOCK_TIMEOUT = int(os.getenv("GPU_LOCK_TIMEOUT", "600"))
@@ -121,7 +190,7 @@ GPU_UTILIZATION = Gauge(
 def _update_gpu_utilization() -> None:
     """Update the GPU utilization gauge using ``torch.cuda.utilization_rate``."""
     try:
-        import torch  # type: ignore
+        import torch
 
         available = getattr(torch.cuda, "is_available", lambda: False)()
         util_fn = getattr(torch.cuda, "utilization_rate", None)
@@ -285,9 +354,7 @@ def generate_mockup(
                             compress_lossless(processed, output_path)
                             if not validate_file_size(output_path):
                                 raise ValueError("File size too large")
-                            with open(output_path, "rb") as fh:
-                                data = fh.read()
-                            sha256 = hashlib.sha256(data).hexdigest()
+                            sha256 = _compute_sha256(output_path)
                             obj_name = f"generated-mockups/{sha256}.png"
                             bucket = settings.s3_bucket or ""
                             try:
@@ -298,8 +365,8 @@ def generate_mockup(
                                     "NotFound",
                                     "NoSuchKey",
                                 }:
-                                    await client.put_object(
-                                        Bucket=bucket, Key=obj_name, Body=data
+                                    await _upload_file(
+                                        client, bucket, obj_name, output_path
                                     )
                                     _invalidate_cdn_cache(obj_name)
                                 else:

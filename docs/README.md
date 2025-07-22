@@ -21,8 +21,29 @@ The `scripts` directory provides helper scripts for setting up storage and CDN r
 - Base Kubernetes manifests can be found in `infrastructure/k8s` with instructions for
   customizing them for local Minikube testing.
   Each script performs basic sanity checks and is safe to run multiple times.
-  Re-running them will validate the existing resources and skip changes when not needed.
-  This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.
+Re-running them will validate the existing resources and skip changes when not needed.
+This document merges the original project summary, system architecture, deployment guide, implementation plan and all earlier blueprint versions into one reference.
+
+## Installing dependencies
+
+Use pip and npm to install the packages required for running tests and building the documentation.
+
+```bash
+python -m pip install -r requirements.txt -r requirements-dev.txt
+npm ci --legacy-peer-deps
+```
+
+Build the HTML documentation with:
+
+```bash
+make -C docs html
+```
+
+Execute the full test suite using:
+
+```bash
+make test
+```
 
 Example lifecycle rule for AWS S3 buckets:
 

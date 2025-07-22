@@ -21,9 +21,11 @@ aiosqlite
 typer
 locust
 pynvml
+pydantic-settings
 UnleashClient
 launchdarkly-server-sdk
 pip-audit
+sphinx
 sphinxcontrib-openapi
 myst-parser
 sentry-sdk

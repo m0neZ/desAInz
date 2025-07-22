@@ -10,9 +10,11 @@ from pathlib import Path
 import asyncio
 from typing import Any, AsyncIterator
 from contextlib import asynccontextmanager
+from functools import partial
 
 import pytest
 from fastapi.testclient import TestClient
+from tests.utils import identity, return_true, return_none
 
 root = Path(__file__).resolve().parents[3]
 sys.path.append(str(root))
@@ -199,7 +201,7 @@ def test_metadata_recorded_and_listed(
     tasks = importlib.import_module("mockup_generation.tasks")
     api = importlib.import_module("mockup_generation.api")
     monkeypatch.setattr(tasks, "generator", DummyGenerator())
-    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+    monkeypatch.setattr(tasks, "ListingGenerator", partial(DummyListingGen))
 
     @asynccontextmanager
     async def _client() -> AsyncIterator[DummyClient]:
@@ -233,13 +235,13 @@ def test_metadata_recorded_and_listed(
         "async_redis_client",
         types.SimpleNamespace(lock=lambda *a, **k: _Lock()),
     )
-    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
-    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
-    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
-    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_dimensions", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_file_size", lambda p: True)
+    monkeypatch.setattr(tasks, "remove_background", identity)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", identity)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", return_none)
+    monkeypatch.setattr(tasks, "validate_dpi_image", return_true)
+    monkeypatch.setattr(tasks, "validate_color_space", return_true)
+    monkeypatch.setattr(tasks, "validate_dimensions", return_true)
+    monkeypatch.setattr(tasks, "validate_file_size", return_true)
     tasks.settings.s3_bucket = "b"
     tasks.settings.s3_endpoint = "http://test"
     tasks.settings.s3_base_url = "http://cdn.test"

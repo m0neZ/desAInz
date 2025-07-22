@@ -9,6 +9,7 @@ import types
 
 import fakeredis
 import pytest
+from tests.utils import return_one
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))  # noqa: E402
@@ -29,7 +30,7 @@ def test_gpu_queue_metric(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(redis.Redis, "from_url", lambda *a, **k: fake)
 
     stub_tasks = types.ModuleType("mockup_generation.tasks")
-    stub_tasks.get_gpu_slots = lambda: 1  # type: ignore[attr-defined]
+    stub_tasks.get_gpu_slots = return_one  # type: ignore[attr-defined]
     stub_tasks.queue_for_gpu = lambda idx: f"gpu-{idx}"  # type: ignore[attr-defined]
     sys.modules["mockup_generation.tasks"] = stub_tasks
 

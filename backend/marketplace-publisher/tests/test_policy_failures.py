@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from fastapi.testclient import TestClient
 import fakeredis.aioredis
 from marketplace_publisher import publisher, db
+from tests.utils import return_none, return_true, return_false
 
 
 @pytest.mark.asyncio()
@@ -29,8 +30,8 @@ async def test_publish_trademark_failure(
             return "ok"
 
     publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
-    monkeypatch.setattr(publisher, "is_trademarked", lambda term: True)
-    monkeypatch.setattr(publisher, "ensure_not_nsfw", lambda img: None)
+    monkeypatch.setattr(publisher, "is_trademarked", return_true)
+    monkeypatch.setattr(publisher, "ensure_not_nsfw", return_none)
 
     async with session_factory() as session:
         task = await db.create_task(
@@ -66,7 +67,7 @@ async def test_publish_nsfw_failure(
             return "ok"
 
     publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
-    monkeypatch.setattr(publisher, "is_trademarked", lambda term: False)
+    monkeypatch.setattr(publisher, "is_trademarked", return_false)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001
         raise ValueError("NSFW")
@@ -110,8 +111,8 @@ def test_api_trademark_failure(monkeypatch: Any, tmp_path: Path) -> None:
         return None
 
     publisher._fallback.publish = _noop
-    monkeypatch.setattr(publisher, "is_trademarked", lambda term: True)
-    monkeypatch.setattr(publisher, "ensure_not_nsfw", lambda img: None)
+    monkeypatch.setattr(publisher, "is_trademarked", return_true)
+    monkeypatch.setattr(publisher, "ensure_not_nsfw", return_none)
 
     with TestClient(app) as client:
         design = tmp_path / "img.png"
@@ -147,7 +148,7 @@ def test_api_nsfw_failure(monkeypatch: Any, tmp_path: Path) -> None:
         return None
 
     publisher._fallback.publish = _noop2
-    monkeypatch.setattr(publisher, "is_trademarked", lambda term: False)
+    monkeypatch.setattr(publisher, "is_trademarked", return_false)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001
         raise ValueError("NSFW")

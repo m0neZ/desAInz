@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 from typing import Iterator, AsyncIterator
 from contextlib import contextmanager, asynccontextmanager
+from functools import partial
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,7 @@ from celery import Celery
 from celery.contrib.testing.worker import start_worker
 
 import types
+from tests.utils import identity, return_true, return_none, return_one
 
 APP = Celery("test", broker="memory://", backend="cache+memory://")
 celery_stub = types.ModuleType("mockup_generation.celery_app")
@@ -138,23 +140,23 @@ def patched_tasks(monkeypatch: pytest.MonkeyPatch) -> None:
     fake = fakeredis.aioredis.FakeRedis()
     monkeypatch.setattr(tasks, "redis_client", fake)
     monkeypatch.setattr(tasks, "async_redis_client", fake)
-    monkeypatch.setattr(tasks, "get_gpu_slots", lambda: 1)
+    monkeypatch.setattr(tasks, "get_gpu_slots", return_one)
     monkeypatch.setattr(tasks, "generator", DummyGenerator())
-    monkeypatch.setattr(tasks, "ListingGenerator", lambda: DummyListingGen())
+    monkeypatch.setattr(tasks, "ListingGenerator", partial(DummyListingGen))
 
     @asynccontextmanager
     async def _client() -> AsyncIterator[DummyClient]:
         yield DummyClient()
 
     monkeypatch.setattr(tasks, "_get_storage_client", _client)
-    monkeypatch.setattr(tasks, "remove_background", lambda img: img)
-    monkeypatch.setattr(tasks, "convert_to_cmyk", lambda img: img)
-    monkeypatch.setattr(tasks, "ensure_not_nsfw", lambda img: None)
-    monkeypatch.setattr(tasks, "validate_dpi_image", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_color_space", lambda img: True)
-    monkeypatch.setattr(tasks, "validate_dimensions", lambda img: True)
-    monkeypatch.setattr(tasks, "compress_lossless", lambda img, path: None)
-    monkeypatch.setattr(tasks, "validate_file_size", lambda path: True)
+    monkeypatch.setattr(tasks, "remove_background", identity)
+    monkeypatch.setattr(tasks, "convert_to_cmyk", identity)
+    monkeypatch.setattr(tasks, "ensure_not_nsfw", return_none)
+    monkeypatch.setattr(tasks, "validate_dpi_image", return_true)
+    monkeypatch.setattr(tasks, "validate_color_space", return_true)
+    monkeypatch.setattr(tasks, "validate_dimensions", return_true)
+    monkeypatch.setattr(tasks, "compress_lossless", return_none)
+    monkeypatch.setattr(tasks, "validate_file_size", return_true)
     monkeypatch.setattr(
         tasks.model_repository, "save_generated_mockup", lambda *a, **k: 1
     )

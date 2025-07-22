@@ -6,6 +6,22 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 ./scripts/setup_codex.sh
 ```
 
+## Installing dependencies
+
+Install Python and Node requirements before running tests or building the
+documentation.
+
+```bash
+python -m pip install -r requirements.txt -r requirements-dev.txt
+npm ci --legacy-peer-deps
+```
+
+Build the HTML documentation locally with:
+
+```bash
+make -C docs html
+```
+
 
 ## Development helpers
 

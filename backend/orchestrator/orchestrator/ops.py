@@ -14,7 +14,6 @@ import httpx
 import requests
 from dagster import Failure, RetryPolicy, op
 
-import time
 
 from scripts import maintenance
 
@@ -28,7 +27,7 @@ def _auth_headers(context: Any) -> dict[str, str]:
     return headers
 
 
-def _post_with_retry(
+async def _post_with_retry(
     context: Any,
     url: str,
     *,
@@ -36,27 +35,30 @@ def _post_with_retry(
     headers: dict[str, str] | None = None,
     timeout: int = 30,
     retries: int = 3,
-) -> requests.Response:
+) -> httpx.Response:
     """Send a POST request with simple exponential backoff."""
-    for attempt in range(1, retries + 1):
-        try:
-            response = requests.post(url, json=json, headers=headers, timeout=timeout)
-            response.raise_for_status()
-            return response
-        except requests.RequestException as exc:  # noqa: BLE001
-            if attempt == retries:
-                context.log.error(
-                    "request to %s failed after %d attempts: %s", url, attempt, exc
+    async with httpx.AsyncClient() as client:
+        for attempt in range(1, retries + 1):
+            try:
+                response = await client.post(
+                    url, json=json, headers=headers, timeout=timeout
                 )
-                raise
-            context.log.warning(
-                "request to %s failed: %s (attempt %d/%d)",
-                url,
-                exc,
-                attempt,
-                retries,
-            )
-            time.sleep(2 ** (attempt - 1))
+                response.raise_for_status()
+                return response
+            except httpx.HTTPError as exc:  # noqa: BLE001
+                if attempt == retries:
+                    context.log.error(
+                        "request to %s failed after %d attempts: %s", url, attempt, exc
+                    )
+                    raise
+                context.log.warning(
+                    "request to %s failed: %s (attempt %d/%d)",
+                    url,
+                    exc,
+                    attempt,
+                    retries,
+                )
+                await asyncio.sleep(2 ** (attempt - 1))
     raise RuntimeError("unreachable")
 
 
@@ -72,10 +74,10 @@ def ingest_signals(  # type: ignore[no-untyped-def]
     )
     headers = _auth_headers(context)
     try:
-        response = _post_with_retry(
-            context, f"{base_url}/ingest", headers=headers, timeout=30
+        response = asyncio.run(
+            _post_with_retry(context, f"{base_url}/ingest", headers=headers, timeout=30)
         )
-    except requests.RequestException as exc:  # noqa: BLE001
+    except httpx.HTTPError as exc:  # noqa: BLE001
         raise Failure(f"ingestion failed: {exc}") from exc
 
     payload = response.json()
@@ -155,17 +157,19 @@ def generate_content(  # type: ignore[no-untyped-def]
         "http://mockup-generation:8000",
     )
     try:
-        resp = _post_with_retry(
-            context,
-            f"{base_url}/generate",
-            json={"scores": scores},
-            headers=_auth_headers(context),
-            timeout=60,
+        resp = asyncio.run(
+            _post_with_retry(
+                context,
+                f"{base_url}/generate",
+                json={"scores": scores},
+                headers=_auth_headers(context),
+                timeout=60,
+            )
         )
         items = resp.json().get("items", [])
         if not isinstance(items, list):
             items = []
-    except requests.RequestException as exc:  # noqa: BLE001
+    except httpx.HTTPError as exc:  # noqa: BLE001
         context.log.warning("generation failed after retries: %s", exc)
         items = []
     return [str(item) for item in items]
@@ -186,7 +190,7 @@ def await_approval(context) -> None:  # type: ignore[no-untyped-def]
                 return
         except requests.RequestException as exc:  # noqa: BLE001
             context.log.warning("approval check failed: %s", exc)
-        time.sleep(10)
+        asyncio.run(asyncio.sleep(10))
     raise Failure("publishing not approved")
 
 
@@ -204,16 +208,18 @@ def publish_content(  # type: ignore[no-untyped-def]
     for item in items:
         payload = {"marketplace": "redbubble", "design_path": item}
         try:
-            resp = _post_with_retry(
-                context,
-                f"{base_url}/publish",
-                json=payload,
-                headers=_auth_headers(context),
-                timeout=30,
+            resp = asyncio.run(
+                _post_with_retry(
+                    context,
+                    f"{base_url}/publish",
+                    json=payload,
+                    headers=_auth_headers(context),
+                    timeout=30,
+                )
             )
             task_id = resp.json().get("task_id")
             context.log.debug("created publish task %s", task_id)
-        except requests.RequestException as exc:  # noqa: BLE001
+        except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("failed to publish %s after retries: %s", item, exc)
 
 
@@ -274,13 +280,15 @@ def rotate_k8s_secrets_op(  # type: ignore[no-untyped-def]
     webhook = os.environ.get("SLACK_WEBHOOK_URL")
     if webhook:
         try:
-            _post_with_retry(
-                context,
-                webhook,
-                json={"text": "Kubernetes secrets rotated"},
-                timeout=5,
+            asyncio.run(
+                _post_with_retry(
+                    context,
+                    webhook,
+                    json={"text": "Kubernetes secrets rotated"},
+                    timeout=5,
+                )
             )
-        except requests.RequestException as exc:  # noqa: BLE001
+        except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("slack notification failed: %s", exc)
 
 

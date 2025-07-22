@@ -10,6 +10,14 @@ npm run dev
 npm run flow
 ```
 
+## Analyzing the Bundle Size
+
+Profile the production build and open the bundle analyzer report:
+
+```bash
+npm run analyze
+```
+
 ## Environment Variables
 
 The dashboard reads the following variables at build time:

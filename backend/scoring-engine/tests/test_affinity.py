@@ -28,7 +28,7 @@ def test_metadata_embedding_weighted_average() -> None:
     """metadata_embedding returns weighted average of components."""
     meta = {"r/foo": 2.0, "#bar": 1.0}
     expected = (subreddit_embedding("foo") * 2.0 + hashtag_embedding("bar")) / 3.0
-    result = metadata_embedding(meta)
+    result = metadata_embedding(tuple(sorted(meta.items())))
     assert np.allclose(result, expected)
 
 

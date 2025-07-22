@@ -10,9 +10,6 @@ monitoring_src = Path(__file__).resolve().parents[1] / "backend" / "monitoring" 
 sys.path.append(str(monitoring_src))
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-import warnings
-
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import pytest  # noqa: E402
 
@@ -23,11 +20,7 @@ from scripts import listing_sync  # noqa: E402
 
 def setup_module(module: object) -> None:
     """Create tables for tests."""
-    import warnings
-
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     with session_scope() as session:
         from datetime import datetime, UTC
 

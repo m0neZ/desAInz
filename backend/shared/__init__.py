@@ -12,6 +12,7 @@ from .metrics import register_metrics
 from .responses import cache_header, json_cached
 from .config import settings
 from .security import add_security_headers
+from .clip import load_clip, open_clip, torch
 
 __all__ = [
     "add_profiling",
@@ -29,4 +30,7 @@ __all__ = [
     "json_cached",
     "settings",
     "add_security_headers",
+    "load_clip",
+    "open_clip",
+    "torch",
 ]

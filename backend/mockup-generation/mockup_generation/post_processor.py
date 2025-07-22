@@ -12,8 +12,7 @@ if TYPE_CHECKING:  # pragma: no cover - type imports
     from torch import Tensor
     from torch.nn import Module
 
-open_clip = None
-torch = None
+from backend.shared.clip import load_clip, open_clip, torch
 
 _clip_model: Module | None = None
 _clip_preprocess: Callable[[Image.Image], Tensor] | None = None
@@ -25,7 +24,7 @@ _LIMITS: Mapping[str, Mapping[str, int]] = {}
 
 def _load_limits() -> Mapping[str, Mapping[str, int]]:
     """Load marketplace limits from the YAML configuration file."""
-    import yaml
+    import yaml  # type: ignore
 
     path = Path(__file__).resolve().parents[3] / "config" / "marketplace_rules.yaml"
     if not path.exists():
@@ -51,30 +50,6 @@ MAX_WIDTH = _strictest("max_width", 15000)
 MAX_HEIGHT = _strictest("max_height", 15000)
 
 
-def _load_clip() -> None:
-    """Load CLIP model on first use."""
-    global _clip_model, _clip_preprocess, _nsfw_tokens, open_clip, torch
-
-    if open_clip is None or torch is None:
-        try:  # pragma: no cover - optional heavy dependency
-            import open_clip as _open_clip
-            import torch as _torch
-        except Exception:  # pragma: no cover - fallback when open_clip unavailable
-            return
-        open_clip = _open_clip
-        torch = _torch
-
-    with _clip_lock:
-        if _clip_model is None:
-            _clip_model, _, _clip_preprocess = open_clip.create_model_and_transforms(
-                "ViT-B-32", pretrained="openai"
-            )
-            _nsfw_tokens = open_clip.tokenize(["nsfw", "nudity", "pornography"]).to(
-                "cpu"
-            )
-            _clip_model.eval()
-
-
 def remove_background(image: Image.Image) -> Image.Image:
     """Remove white background using OpenCV."""
     import cv2
@@ -97,7 +72,14 @@ def convert_to_cmyk(image: Image.Image) -> Image.Image:
 
 def ensure_not_nsfw(image: Image.Image, threshold: float = 0.3) -> None:
     """Raise ``ValueError`` if ``image`` is likely NSFW."""
-    _load_clip()
+    global _clip_model, _clip_preprocess, _nsfw_tokens
+    loaded = load_clip("ViT-B-32")
+    if loaded and open_clip is not None and torch is not None:
+        _clip_model, _clip_preprocess, _tokenizer = loaded
+        if _nsfw_tokens is None:
+            _nsfw_tokens = open_clip.tokenize(["nsfw", "nudity", "pornography"]).to(
+                "cpu"
+            )
     if (
         _clip_model is None
         or _clip_preprocess is None
@@ -146,7 +128,7 @@ def validate_dimensions(
 ) -> bool:
     """Return ``True`` if ``image`` fits within ``max_width`` and ``max_height``."""
     width, height = image.size
-    return width <= max_width and height <= max_height
+    return width <= max_width and height <= max_height  # type: ignore[no-any-return]
 
 
 def validate_file_size(path: Path, max_file_size_mb: int = MAX_FILE_SIZE_MB) -> bool:
@@ -157,7 +139,6 @@ def validate_file_size(path: Path, max_file_size_mb: int = MAX_FILE_SIZE_MB) -> 
 
 def post_process_image(path: Path) -> Path:
     """Run the full post-processing pipeline on ``path``."""
-
     image: Image.Image = Image.open(path)
     image = remove_background(image)
     image = convert_to_cmyk(image)

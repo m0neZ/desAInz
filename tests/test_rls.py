@@ -48,6 +48,23 @@ def test_rls_enforcement() -> None:
             session.execute(
                 text(
                     """
+                    INSERT INTO refresh_tokens (token, username, expires_at)
+                    VALUES ('tok', 'alice', now())
+                    """
+                )
+            )
+            session.execute(
+                text(
+                    """
+                    INSERT INTO mockups (idea_id, image_url, created_at, username)
+                    VALUES (:idea_id, 'u', now(), 'alice')
+                    """
+                ),
+                {"idea_id": idea_id},
+            )
+            session.execute(
+                text(
+                    """
                     INSERT INTO signals (username, idea_id, timestamp, engagement_rate)
                     VALUES ('alice', :idea_id, now(), 1.0)
                     """
@@ -61,3 +78,7 @@ def test_rls_enforcement() -> None:
             assert session.execute(text("SELECT * FROM audit_logs")).fetchall() == []
             assert session.execute(text("SELECT * FROM ideas")).fetchall() == []
             assert session.execute(text("SELECT * FROM signals")).fetchall() == []
+            assert (
+                session.execute(text("SELECT * FROM refresh_tokens")).fetchall() == []
+            )
+            assert session.execute(text("SELECT * FROM mockups")).fetchall() == []

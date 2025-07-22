@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -24,7 +24,7 @@ def test_add_and_get_metrics(use_postgres: bool, tmp_path: Path, postgresql) -> 
         store = MetricsStore(postgresql.info.dsn)
 
     metric = ResourceMetric(
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         cpu_percent=1.0,
         memory_mb=2.0,
         disk_usage_mb=3.0,

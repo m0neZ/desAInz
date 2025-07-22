@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from backend.optimization.metrics import ResourceMetric
@@ -13,7 +13,7 @@ def test_sqlite_metrics_store(tmp_path: Path) -> None:
     """Verify metrics are persisted in a temporary SQLite database."""
     store = MetricsStore(f"sqlite:///{tmp_path/'metrics.db'}")
     metric = ResourceMetric(
-        datetime.now(timezone.utc), 50.0, 128.0, disk_usage_mb=256.0
+        datetime.utcnow().replace(tzinfo=UTC), 50.0, 128.0, disk_usage_mb=256.0
     )
     store.add_metric(metric)
     metrics = store.get_metrics()

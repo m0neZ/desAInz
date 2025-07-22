@@ -33,7 +33,7 @@ kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})  # type: ig
 
 import psutil  # noqa: E402
 import time  # noqa: E402
-from datetime import datetime, timezone  # noqa: E402
+from datetime import UTC, datetime  # noqa: E402
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
@@ -90,7 +90,7 @@ async def test_pipeline_with_metrics(
                     source=adapter.__class__.__name__,
                     content=str(row),
                     content_hash=f"{adapter.__class__.__name__}:{row['id']}",
-                    timestamp=datetime.now(timezone.utc),
+                    timestamp=datetime.utcnow().replace(tzinfo=UTC),
                     embedding=[0.0, 0.0],
                 )
                 session.add(signal)
@@ -103,7 +103,7 @@ async def test_pipeline_with_metrics(
     monkeypatch.setattr(
         models,
         "datetime",
-        SimpleNamespace(utcnow=lambda: datetime.now(timezone.utc)),
+        SimpleNamespace(utcnow=lambda: datetime.utcnow().replace(tzinfo=UTC)),
     )
 
     sent: list[dict] = []
@@ -173,7 +173,7 @@ async def test_pipeline_with_metrics(
     monkeypatch.setattr(opt_api, "store", MetricsStore(str(tmp_path / "metrics.db")))
     client = TestClient(opt_api.app)
     metric = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "cpu_percent": 10,
         "memory_mb": 100,
     }

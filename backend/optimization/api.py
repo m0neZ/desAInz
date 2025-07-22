@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import asyncio
 import psutil
 import logging
@@ -89,7 +89,7 @@ scheduler = AsyncIOScheduler()
 def record_resource_usage(target_store: MetricsStore = store) -> None:
     """Capture current CPU, memory and disk usage and store the metric."""
     metric = ResourceMetric(
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         cpu_percent=psutil.cpu_percent(),
         memory_mb=psutil.virtual_memory().used / (1024 * 1024),
         disk_usage_mb=psutil.disk_usage("/").used / (1024 * 1024),

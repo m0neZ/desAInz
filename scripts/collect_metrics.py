@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Iterable
 import logging
 import tracemalloc
@@ -27,7 +27,7 @@ def fetch_overview(url: str) -> dict[str, float]:
 def submit_metric(opt_url: str, metric: dict[str, float]) -> None:
     """Send a metric to the optimization service."""
     payload = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "cpu_percent": metric["cpu_percent"],
         "memory_mb": metric["memory_mb"],
     }

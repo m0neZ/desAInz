@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import os
 from time import perf_counter
 
@@ -26,7 +26,7 @@ async def main() -> tuple[float, float, int]:
     url = os.environ.get("SCORING_URL", "http://localhost:5002/score")
     runs = int(os.environ.get("RUNS", "100"))
     payload = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "engagement_rate": 1.0,
         "embedding": [0.1, 0.2],
     }

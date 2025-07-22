@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import List
 
@@ -36,7 +36,7 @@ def score(engagement_rate: float, embedding: List[float]) -> None:
 
     signal = Signal(
         source="cli",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.utcnow().replace(tzinfo=UTC),
         engagement_rate=engagement_rate,
         embedding=embedding,
         metadata={},

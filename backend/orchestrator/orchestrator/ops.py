@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import asyncio
@@ -124,7 +124,7 @@ def score_signals(  # type: ignore[no-untyped-def]
 
     async def _score(client: httpx.AsyncClient) -> float:
         payload = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
             "engagement_rate": 0.0,
             "embedding": [0.0],
         }

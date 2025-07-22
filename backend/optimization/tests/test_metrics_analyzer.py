@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from backend.optimization.metrics import MetricsAnalyzer, ResourceMetric
 
@@ -11,7 +11,7 @@ def test_average_cpu_memory() -> None:
     """Validate average CPU and memory calculations."""
     metrics = [
         ResourceMetric(
-            timestamp=datetime.now(timezone.utc) - timedelta(minutes=i),
+            timestamp=datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
             cpu_percent=10 * i,
             memory_mb=256.0,
             disk_usage_mb=1024.0,
@@ -28,7 +28,7 @@ def test_top_recommendations() -> None:
     """Ensure prioritized recommendations are returned."""
     metrics = [
         ResourceMetric(
-            timestamp=datetime.now(timezone.utc) - timedelta(minutes=i),
+            timestamp=datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
             cpu_percent=90,
             memory_mb=2048,
             disk_usage_mb=12 * 1024.0,
@@ -45,7 +45,7 @@ def test_top_recommendations() -> None:
 
 def test_trend_calculation() -> None:
     """Verify trend slopes for CPU, memory and disk."""
-    now = datetime.now(timezone.utc)
+    now = datetime.utcnow().replace(tzinfo=UTC)
     metrics = [
         ResourceMetric(
             timestamp=now - timedelta(minutes=5 - i),
@@ -63,7 +63,7 @@ def test_trend_calculation() -> None:
 
 def test_recommendations_for_high_usage() -> None:
     """Recommendations should mention scaling when usage is high."""
-    now = datetime.now(timezone.utc)
+    now = datetime.utcnow().replace(tzinfo=UTC)
     metrics = [
         ResourceMetric(
             timestamp=now - timedelta(minutes=20 - i),

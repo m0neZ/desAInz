@@ -2,7 +2,7 @@
 
 # mypy: ignore-errors
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 import importlib
 import sqlite3
@@ -43,7 +43,7 @@ def test_score_metrics_written_once(monkeypatch, tmp_path: Path) -> None:
         seasonality=1.0,
     )
     payload = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "engagement_rate": 1.0,
         "embedding": [1.0, 0.0],
     }

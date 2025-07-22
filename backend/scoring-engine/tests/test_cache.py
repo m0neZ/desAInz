@@ -2,7 +2,7 @@
 
 # mypy: ignore-errors
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import importlib
 
 from fastapi.testclient import TestClient
@@ -30,7 +30,7 @@ def test_score_endpoint_caches() -> None:
         seasonality=1.0,
     )
     payload = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
         "engagement_rate": 1.0,
         "embedding": [1.0, 0.0],
         "metadata": {"a": 1.0},

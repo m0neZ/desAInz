@@ -10,6 +10,7 @@ fastapi = "^0.110"
 uvicorn = {extras = ["standard"], version = "^0.29"}
 uvloop = "*"
 python-jose = {extras = ["cryptography"], version = "^3.3"}
+brotli-asgi = "^1.4"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1"

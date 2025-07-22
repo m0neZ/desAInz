@@ -31,3 +31,4 @@ launchdarkly-server-sdk
 sentry-sdk
 Deprecated
 typer
+brotli-asgi

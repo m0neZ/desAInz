@@ -8,7 +8,7 @@ from typing import Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.gzip import GZipMiddleware
+from brotli_asgi import BrotliMiddleware
 from backend.shared.cache import get_async_client
 from fastapi.security import HTTPAuthorizationCredentials
 from prometheus_client import Counter, Histogram
@@ -66,7 +66,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(GZipMiddleware, minimum_size=1000)
+# Compress large responses using Brotli with gzip fallback for clients that
+# do not support Brotli encoding.
+app.add_middleware(BrotliMiddleware, minimum_size=1000, gzip_fallback=True)
 configure_tracing(app, SERVICE_NAME)
 configure_sentry(app, SERVICE_NAME)
 add_profiling(app)
@@ -75,7 +77,7 @@ register_metrics(app)
 add_security_headers(app)
 
 
-@app.on_event("startup")
+@app.on_event("startup")  # type: ignore[misc]
 async def apply_migrations() -> None:
     """Ensure database schema is current."""
     await run_migrations_if_needed("backend/shared/db/alembic_api_gateway.ini")
@@ -104,7 +106,7 @@ def _identify_user(request: Request) -> str:
     return cast(str, request.client.host)
 
 
-@app.middleware("http")
+@app.middleware("http")  # type: ignore[misc]
 async def add_correlation_id(
     request: Request,
     call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -147,7 +149,7 @@ async def add_correlation_id(
     return response
 
 
-@app.middleware("http")
+@app.middleware("http")  # type: ignore[misc]
 async def enforce_rate_limit(
     request: Request,
     call_next: Callable[[Request], Coroutine[None, None, Response]],
@@ -162,13 +164,13 @@ async def enforce_rate_limit(
     return await call_next(request)
 
 
-@app.get("/health", tags=["Status"], summary="Service liveness")
+@app.get("/health", tags=["Status"], summary="Service liveness")  # type: ignore[misc]
 async def health() -> Response:
     """Return service liveness."""
     return json_cached({"status": "ok"})
 
 
-@app.get("/ready", tags=["Status"], summary="Service readiness")
+@app.get("/ready", tags=["Status"], summary="Service readiness")  # type: ignore[misc]
 async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)

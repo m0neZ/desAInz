@@ -6,6 +6,7 @@ from pathlib import Path
 from contextlib import asynccontextmanager
 import subprocess
 from typing import Any, AsyncIterator
+from dataclasses import dataclass
 import signal
 import sys
 
@@ -151,6 +152,19 @@ GENERATE_FAILURE = Counter(
 )
 
 
+@dataclass(slots=True)
+class MockupResult:
+    """Result information for a generated mockup."""
+
+    image_path: str | None = None
+    uri: str | None = None
+    title: str | None = None
+    description: str | None = None
+    tags: list[str] | None = None
+    error: str | None = None
+    keywords: list[str] | None = None
+
+
 def get_gpu_slots() -> int:
     """Return the number of GPU slots defined in Redis or the default value."""
     value = redis_client.get("gpu_slots")
@@ -216,7 +230,7 @@ def generate_single_mockup(
     gpu_index: int | None = None,
     num_inference_steps: int = 30,
     index: int = 0,
-) -> dict[str, object]:
+) -> MockupResult:
     """Generate a single mockup on the GPU."""
     delivery_info: dict[str, Any] = dict(self.request.delivery_info or {})
     queue = str(delivery_info.get("routing_key", ""))
@@ -231,7 +245,7 @@ def generate_single_mockup(
 
     listing_gen = ListingGenerator()
 
-    async def runner() -> dict[str, object]:
+    async def runner() -> MockupResult:
         async with gpu_slot(slot), _get_storage_client() as client:
             context = PromptContext(keywords=keywords)
             prompt = build_prompt(context)
@@ -289,21 +303,21 @@ def generate_single_mockup(
                     metadata.description,
                     metadata.tags,
                 )
-                return {
-                    "image_path": str(output_path),
-                    "uri": uri,
-                    "title": metadata.title,
-                    "description": metadata.description,
-                    "tags": metadata.tags,
-                }
+                return MockupResult(
+                    image_path=str(output_path),
+                    uri=uri,
+                    title=metadata.title,
+                    description=metadata.description,
+                    tags=metadata.tags,
+                )
             except Exception as exc:  # pragma: no cover - error path tested separately
-                return {"error": str(exc), "keywords": keywords}
+                return MockupResult(error=str(exc), keywords=keywords)
 
     return asyncio.run(runner())
 
 
 @app.task
-def _aggregate_mockups(results: list[dict[str, object]]) -> list[dict[str, object]]:
+def _aggregate_mockups(results: list[MockupResult]) -> list[MockupResult]:
     """Return aggregated mockup generation results."""
     return results
 
@@ -317,7 +331,7 @@ def generate_mockup(
     model: str | None = None,
     gpu_index: int | None = None,
     num_inference_steps: int = 30,
-) -> list[dict[str, object]]:
+) -> list[MockupResult]:
     """Generate mockups in parallel across available GPUs."""
     start = perf_counter()
     with tracer.start_as_current_span("generate_mockup"):

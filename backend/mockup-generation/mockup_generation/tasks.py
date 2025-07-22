@@ -11,6 +11,7 @@ import sys
 
 from aiobotocore.client import AioBaseClient
 from aiobotocore.session import get_session
+import hashlib
 import os
 import time
 
@@ -190,6 +191,9 @@ def generate_mockup(
     """
     Generate mockups sequentially on the GPU.
 
+    Each generated image is hashed with SHA256 and uploaded only if an object
+    with the same hash does not already exist in the target bucket.
+
     Parameters
     ----------
     self : Task
@@ -253,15 +257,29 @@ def generate_mockup(
                         compress_lossless(processed, output_path)
                         if not validate_file_size(output_path):
                             raise ValueError("File size too large")
-                        obj_name = f"generated-mockups/{output_path.name}"
-                        bucket = settings.s3_bucket or ""
+
                         with open(output_path, "rb") as fh:
-                            await client.put_object(
-                                Bucket=bucket,
-                                Key=obj_name,
-                                Body=fh.read(),
-                            )
-                        _invalidate_cdn_cache(obj_name)
+                            data = fh.read()
+
+                        digest = hashlib.sha256(data).hexdigest()
+                        obj_name = f"generated-mockups/{digest}.png"
+                        bucket = settings.s3_bucket or ""
+                        try:
+                            await client.head_object(Bucket=bucket, Key=obj_name)
+                            uploaded = False
+                        except client.exceptions.ClientError as exc:
+                            if int(exc.response.get("Error", {}).get("Code", 0)) == 404:
+                                await client.put_object(
+                                    Bucket=bucket,
+                                    Key=obj_name,
+                                    Body=data,
+                                )
+                                uploaded = True
+                            else:
+                                raise
+
+                        if uploaded:
+                            _invalidate_cdn_cache(obj_name)
                         base = settings.s3_base_url or settings.s3_endpoint
                         if base:
                             base = base.rstrip("/")

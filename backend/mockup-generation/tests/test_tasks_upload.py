@@ -13,6 +13,7 @@ import warnings
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 import pytest
+from botocore.exceptions import ClientError
 
 root = Path(__file__).resolve().parents[1]
 sys.path.append(str(root))  # noqa: E402
@@ -73,9 +74,15 @@ class DummyClient:
 
     def __init__(self) -> None:
         self.calls: list[tuple[str, str, str]] = []
+        self.head_calls: list[tuple[str, str]] = []
+        self.exceptions = types.SimpleNamespace(ClientError=ClientError)
 
     async def put_object(self, Bucket: str, Key: str, Body: bytes | str) -> None:
         self.calls.append((Bucket, Key, ""))
+
+    async def head_object(self, Bucket: str, Key: str) -> None:
+        self.head_calls.append((Bucket, Key))
+        raise ClientError({"Error": {"Code": "404"}}, "HeadObject")
 
 
 class DummyGenerator:

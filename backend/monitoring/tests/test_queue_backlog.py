@@ -11,8 +11,6 @@ import fakeredis
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
-from monitoring import main as main_module  # noqa: E402
-
 
 def _import_main(monkeypatch: Any) -> Any:
     monkeypatch.setitem(
@@ -20,6 +18,8 @@ def _import_main(monkeypatch: Any) -> Any:
         "psycopg2",
         types.SimpleNamespace(connect=lambda *a, **k: types.SimpleNamespace()),
     )
+    from monitoring import main as main_module  # noqa: E402
+
     return main_module
 
 
@@ -32,8 +32,9 @@ def test_queue_backlog_respects_cooldown(monkeypatch: Any) -> None:
     monkeypatch.setattr(
         main, "sync_set", lambda key, value, ttl=None: fake.set(key, value)
     )
-    monkeypatch.setattr(main.settings, "queue_backlog_threshold", 1)
-    monkeypatch.setattr(main.settings, "queue_backlog_alert_cooldown_minutes", 10)
+    cfg = main.Settings(
+        QUEUE_BACKLOG_THRESHOLD=1, QUEUE_BACKLOG_ALERT_COOLDOWN_MINUTES=10
+    )
     fake.rpush("celery", b"job")
     times = iter([1000.0, 1000.0, 1000.0 + 601])
 
@@ -49,7 +50,7 @@ def test_queue_backlog_respects_cooldown(monkeypatch: Any) -> None:
     monkeypatch.setattr(
         main, "trigger_queue_backlog", lambda length: triggered.append(length)
     )
-    main._check_queue_backlog()
-    main._check_queue_backlog()
-    main._check_queue_backlog()
+    main._check_queue_backlog(cfg)
+    main._check_queue_backlog(cfg)
+    main._check_queue_backlog(cfg)
     assert len(triggered) == 2

@@ -59,9 +59,9 @@ def test_pagerduty_disabled_skips_request(requests_mock: Any, monkeypatch: Any) 
     """No request should be made when ENABLE_PAGERDUTY is false."""
     monkeypatch.setenv("PAGERDUTY_ROUTING_KEY", "key")
     main = _import_main(monkeypatch)
-    monkeypatch.setattr(main.settings, "enable_pagerduty", False)
+    cfg = main.Settings(ENABLE_PAGERDUTY=False)
     requests_mock.post(PAGERDUTY_URL, status_code=202)
-    pagerduty.trigger_sla_violation(1.0)
+    pagerduty.trigger_sla_violation(1.0, cfg=cfg)
     assert not requests_mock.called
 
 
@@ -77,8 +77,7 @@ def test_sla_alert_respects_cooldown(monkeypatch: Any) -> None:
             fake.set(key, value) if ttl is None else fake.setex(key, ttl, value)
         ),
     )
-    monkeypatch.setattr(main.settings, "SLA_THRESHOLD_HOURS", 2)
-    monkeypatch.setattr(main.settings, "SLA_ALERT_COOLDOWN_MINUTES", 10)
+    cfg = main.Settings(SLA_THRESHOLD_HOURS=2, SLA_ALERT_COOLDOWN_MINUTES=10)
     monkeypatch.setattr(main, "_record_latencies", lambda: [7200.0, 10800.0])
     times = iter([1000.0, 1000.0, 1000.0 + 601])
 
@@ -95,7 +94,7 @@ def test_sla_alert_respects_cooldown(monkeypatch: Any) -> None:
         triggered.append(hours)
 
     monkeypatch.setattr(main, "trigger_sla_violation", fake_trigger)
-    main._check_sla()
-    main._check_sla()
-    main._check_sla()
+    main._check_sla(cfg)
+    main._check_sla(cfg)
+    main._check_sla(cfg)
     assert len(triggered) == 2

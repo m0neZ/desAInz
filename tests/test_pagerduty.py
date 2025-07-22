@@ -44,9 +44,9 @@ def test_notify_listing_issue_sends_request(
 def test_pagerduty_disabled_skips_request(requests_mock: Any, monkeypatch: Any) -> None:
     """No request should be made when ENABLE_PAGERDUTY is false."""
     monkeypatch.setenv("PAGERDUTY_ROUTING_KEY", "key")
-    from monitoring import settings as monitoring_settings
+    from monitoring.settings import Settings
 
-    monkeypatch.setattr(monitoring_settings.settings, "enable_pagerduty", False)
+    cfg = Settings(ENABLE_PAGERDUTY=False)
     requests_mock.post(PAGERDUTY_URL, status_code=202)
-    pagerduty.trigger_sla_violation(1.0)
+    pagerduty.trigger_sla_violation(1.0, cfg=cfg)
     assert not requests_mock.called

@@ -6,6 +6,17 @@ This repository contains the desAInz project. Use `scripts/setup_codex.sh` to in
 ./scripts/setup_codex.sh
 ```
 
+## Environment requirements
+
+Make sure the following tools are available before setting up the project:
+
+- **Python 3.11**
+- **Node.js 20**
+- **Docker** and **Docker Compose** supporting schema version 3.8
+
+These versions match the containers used in `docker-compose.prod.yml` and the
+development tooling. Newer versions may also work but are not tested.
+
 ## Installing dependencies
 
 Install Python and Node requirements before running tests or building the

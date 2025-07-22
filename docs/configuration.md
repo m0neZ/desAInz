@@ -13,6 +13,7 @@ See the blueprint environment variables section in `blueprints/DesignIdeaEngineC
 | Variable | Description |
 | --- | --- |
 | `DATABASE_URL` | Database connection string |
+| `DB_POOL_SIZE` | Size of the SQLAlchemy connection pool |
 | `REDIS_URL` | Redis connection string |
 | `SECRET_KEY` | Secret key for cryptographic signing |
 | `AUTH0_DOMAIN` | Domain of the Auth0 tenant used for authentication |

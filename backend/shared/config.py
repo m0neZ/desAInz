@@ -18,6 +18,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
     kafka_bootstrap_servers: str = "localhost:9092"
     schema_registry_url: HttpUrl = HttpUrl("http://localhost:8081")
     redis_url: RedisDsn = RedisDsn("redis://localhost:6379/0")
+    db_pool_size: int = 5
     score_cache_ttl: int = 3600
     trending_ttl: int = 3600
     trending_max_keywords: int = 100
@@ -50,6 +51,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
         "trending_ttl",
         "trending_max_keywords",
         "trending_cache_ttl",
+        "db_pool_size",
     )  # type: ignore[misc]
     @classmethod
     def _positive(cls, value: int) -> int:

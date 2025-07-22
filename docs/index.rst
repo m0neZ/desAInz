@@ -21,6 +21,7 @@ Welcome to desAInz's documentation!
    quickstart
    recommendations
    optimization
+   api_gateway_sidecar
    deployment
    cloud_deployment
    troubleshooting

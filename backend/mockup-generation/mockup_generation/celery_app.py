@@ -83,7 +83,6 @@ def _route_gpu_tasks(
     args: tuple[object, ...],
     kwargs: dict[str, object],
     options: dict[str, object],
-    **kws: object,
 ) -> dict[str, object]:
     """Route tasks with a ``gpu_index`` kwarg to the corresponding queue."""
     gpu = kwargs.get("gpu_index")

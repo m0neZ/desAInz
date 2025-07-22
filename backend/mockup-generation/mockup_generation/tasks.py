@@ -17,7 +17,6 @@ import os
 import time
 from botocore.exceptions import ClientError
 
-from redis.lock import Lock as RedisLock
 from redis.asyncio.lock import Lock as AsyncRedisLock
 from celery import Task, chord
 from prometheus_client import Counter, Gauge, Histogram

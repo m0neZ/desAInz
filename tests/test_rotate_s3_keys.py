@@ -24,7 +24,7 @@ def test_rotate_s3_keys(monkeypatch: pytest.MonkeyPatch) -> None:
     iam.create_access_key(UserName="test")
     called: list[list[str]] = []
 
-    def fake_run(cmd: list[str], check: bool = True) -> None:
+    def fake_run(cmd: list[str], _check: bool = True) -> None:
         called.append(cmd)
 
     monkeypatch.setattr(subprocess, "run", fake_run)

@@ -162,9 +162,7 @@ def patched_tasks(monkeypatch: pytest.MonkeyPatch) -> None:
     tasks.settings.s3_endpoint = "http://test"
 
 
-def test_slot_contention(
-    celery_app: Celery, patched_tasks: None, tmp_path: Path
-) -> None:
+def test_slot_contention(celery_app: Celery, tmp_path: Path) -> None:
     """Run two tasks concurrently and observe lock metrics."""
 
     queues = ["q1", "q2"]

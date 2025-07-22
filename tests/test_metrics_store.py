@@ -46,7 +46,7 @@ def test_pool_used_for_postgres(monkeypatch: pytest.MonkeyPatch) -> None:
     created: dict[str, str] = {}
 
     class DummyPool:
-        def __init__(self, minconn: int, maxconn: int, dsn: str) -> None:
+        def __init__(self, _minconn: int, maxconn: int, dsn: str) -> None:
             created["dsn"] = dsn
 
         def getconn(self) -> object:  # pragma: no cover - dummy

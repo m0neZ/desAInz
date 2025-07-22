@@ -81,6 +81,7 @@ def test_publish_design_oauth(
         assert rsps.calls[1].request.url == publish_url
         assert rsps.calls[1].request.headers["Authorization"] == "Bearer tok"
         assert rsps.calls[1].request.headers["X-API-Key"] == "key"
+        assert rsps.calls[1].request.headers["Content-Encoding"] == "gzip"
 
 
 def test_token_refresh_on_expiry(

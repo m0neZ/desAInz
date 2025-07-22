@@ -57,24 +57,30 @@ def trim_keywords(max_size: int) -> None:
     pipe = client.pipeline()
     if stale_words:
         pipe.zrem(TRENDING_KEY, *stale_words)
-        pipe.zrem(TRENDING_TS_KEY, *stale_words)
-    all_words = client.zrange(TRENDING_KEY, 0, -1)
-    for word in all_words:
-        w = word.decode("utf-8") if isinstance(word, bytes) else word
-        score = client.zscore(TRENDING_KEY, w)
-        last_seen = client.zscore(TRENDING_TS_KEY, w)
-        if score is None or last_seen is None:
-            pipe.zrem(TRENDING_KEY, w)
-            pipe.zrem(TRENDING_TS_KEY, w)
-            continue
-        elapsed = now - int(last_seen)
-        decay = _DECAY_BASE ** (-elapsed / settings.trending_ttl)
-        new_score = float(score) * decay
-        if new_score <= 0:
-            pipe.zrem(TRENDING_KEY, w)
-            pipe.zrem(TRENDING_TS_KEY, w)
-        else:
-            pipe.zadd(TRENDING_KEY, {w: new_score})
+    pipe.zremrangebyscore(TRENDING_TS_KEY, 0, cutoff)
+    pipe.execute()
+    pipe = client.pipeline()
+
+    cursor = 0
+    while True:
+        cursor, words = client.zscan(TRENDING_KEY, cursor)
+        for word, score in words:
+            w = word.decode("utf-8") if isinstance(word, bytes) else word
+            last_seen = client.zscore(TRENDING_TS_KEY, w)
+            if last_seen is None:
+                pipe.zrem(TRENDING_KEY, w)
+                pipe.zrem(TRENDING_TS_KEY, w)
+                continue
+            elapsed = now - int(last_seen)
+            decay = _DECAY_BASE ** (-elapsed / settings.trending_ttl)
+            new_score = float(score) * decay
+            if new_score <= 0:
+                pipe.zrem(TRENDING_KEY, w)
+                pipe.zrem(TRENDING_TS_KEY, w)
+            else:
+                pipe.zadd(TRENDING_KEY, {w: new_score})
+        if cursor == 0:
+            break
     pipe.execute()
     size = client.zcard(TRENDING_KEY)
     if size > max_size:

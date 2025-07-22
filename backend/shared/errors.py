@@ -19,7 +19,10 @@ except Exception:  # pragma: no cover - sentry optional
 
 def _trace_id() -> str | None:
     """Return current trace ID if available."""
-    span = trace.get_current_span()
+    get_span = getattr(trace, "get_current_span", None)
+    if get_span is None:
+        return None
+    span = get_span()
     ctx = span.get_span_context()
     if ctx.trace_id == 0:
         return None
@@ -69,7 +72,7 @@ def add_error_handlers(app: FastAPI) -> None:
 def add_flask_error_handlers(app: Flask) -> None:
     """Register standard error handlers on a Flask ``app``."""
 
-    @app.errorhandler(FlaskHTTPException)
+    @app.errorhandler(FlaskHTTPException)  # type: ignore[misc]
     def _http_error(exc: FlaskHTTPException) -> Response:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)
@@ -82,7 +85,7 @@ def add_flask_error_handlers(app: Flask) -> None:
         resp.status_code = exc.code
         return resp
 
-    @app.errorhandler(Exception)
+    @app.errorhandler(Exception)  # type: ignore[misc]
     def _unhandled(exc: Exception) -> Response:
         trace_id = _trace_id()
         correlation_id = getattr(flask_request, "correlation_id", None)

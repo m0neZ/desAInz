@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     ENABLE_PAGERDUTY: bool = True
     sla_alert_cooldown_minutes: int = 60
     SLA_ALERT_COOLDOWN_MINUTES: int = 60
+    queue_backlog_threshold: int = 50
+    QUEUE_BACKLOG_THRESHOLD: int = 50
+    queue_backlog_alert_cooldown_minutes: int = 60
+    QUEUE_BACKLOG_ALERT_COOLDOWN_MINUTES: int = 60
     daily_summary_file: str = "daily_summary.json"
     DAILY_SUMMARY_FILE: str = "daily_summary.json"
 
@@ -32,6 +36,13 @@ class Settings(BaseSettings):
     @field_validator("sla_alert_cooldown_minutes")
     @classmethod
     def _cooldown_positive(cls, value: int) -> int:
+        if value <= 0:
+            raise ValueError("must be positive")
+        return value
+
+    @field_validator("queue_backlog_threshold", "queue_backlog_alert_cooldown_minutes")
+    @classmethod
+    def _queue_positive(cls, value: int) -> int:
         if value <= 0:
             raise ValueError("must be positive")
         return value

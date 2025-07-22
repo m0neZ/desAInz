@@ -36,6 +36,16 @@ PostgreSQL. Then run the following once per database:
 
    CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
+pgvector Extension
+------------------
+
+Vector similarity search relies on the `pgvector` extension. Enable it on each
+database before applying migrations:
+
+.. code-block:: sql
+
+   CREATE EXTENSION IF NOT EXISTS vector;
+
 HTTP Timeouts
 -------------
 

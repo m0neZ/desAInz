@@ -159,6 +159,9 @@ class Embedding(Base):
     """Content embedding stored as a pgvector."""
 
     __tablename__ = "embeddings"
+    __table_args__ = (
+        Index("ix_embeddings_vector", "embedding", postgresql_using="ivfflat"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     source: Mapped[str] = mapped_column(String(50))

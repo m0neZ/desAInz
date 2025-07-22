@@ -23,20 +23,23 @@ warnings.filterwarnings("ignore", category=ResourceWarning)
 @pytest.mark.asyncio()  # type: ignore[misc]
 async def test_limiter_blocks(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ensure acquiring more than the limit waits for tokens."""
-    redis = fakeredis.aioredis.FakeRedis()
-    limiter = AdapterRateLimiter({"foo": 1}, redis=redis)
-    start = perf_counter()
-    await limiter.acquire("foo")
-    await limiter.acquire("foo")
-    elapsed = perf_counter() - start
-    assert elapsed >= 1
+    async with fakeredis.aioredis.FakeRedis() as redis:
+        limiter = AdapterRateLimiter({"foo": 1}, redis=redis)
+        start = perf_counter()
+        await limiter.acquire("foo")
+        await limiter.acquire("foo")
+        await redis.connection_pool.disconnect()
+        elapsed = perf_counter() - start
+        assert elapsed >= 1
 
 
 @pytest.mark.asyncio()  # type: ignore[misc]
 async def test_limiter_allows_unlimited() -> None:
     """Adapters without a limit never block."""
-    limiter = AdapterRateLimiter({}, redis=fakeredis.aioredis.FakeRedis())
-    start = perf_counter()
-    await limiter.acquire("bar")
-    elapsed = perf_counter() - start
-    assert elapsed < 1
+    async with fakeredis.aioredis.FakeRedis() as redis:
+        limiter = AdapterRateLimiter({}, redis=redis)
+        start = perf_counter()
+        await limiter.acquire("bar")
+        await redis.connection_pool.disconnect()
+        elapsed = perf_counter() - start
+        assert elapsed < 1

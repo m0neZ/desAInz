@@ -21,7 +21,8 @@ class MarketplaceRateLimiter:
         window: int,
         redis: AsyncRedis | None = None,
     ) -> None:
-        """Instantiate the rate limiter.
+        """
+        Instantiate the rate limiter.
 
         Parameters
         ----------
@@ -37,7 +38,10 @@ class MarketplaceRateLimiter:
         self._window = window
 
     async def acquire(self, marketplace: Marketplace) -> bool:
-        """Attempt to consume a request slot.
+        """
+        Attempt to consume a request slot.
+
+        This coroutine must be awaited.
 
         Parameters
         ----------

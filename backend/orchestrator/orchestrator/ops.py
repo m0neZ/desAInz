@@ -10,6 +10,7 @@ from typing import Any
 import asyncio
 import httpx
 import atexit
+from backend.shared.http import get_async_client
 from dagster import Failure, RetryPolicy, op
 
 from scripts import maintenance
@@ -24,22 +25,8 @@ def _auth_headers(context: Any) -> dict[str, str]:
     return headers
 
 
-_CLIENT: httpx.AsyncClient | None = None
-
-
 async def _get_client() -> httpx.AsyncClient:
-    global _CLIENT
-    if _CLIENT is None:
-        _CLIENT = httpx.AsyncClient()
-    return _CLIENT
-
-
-@atexit.register
-def _close_client() -> None:
-    if _CLIENT is not None:
-        import asyncio as _asyncio
-
-        _asyncio.run(_CLIENT.aclose())
+    return await get_async_client()
 
 
 async def _post_with_retry(
@@ -157,10 +144,10 @@ def score_signals(  # type: ignore[no-untyped-def]
     )
 
     async def _run() -> list[float]:
-        async with httpx.AsyncClient() as client:
-            async with asyncio.TaskGroup() as tg:
-                tasks = [tg.create_task(_score(client)) for _ in signals]
-            return [t.result() for t in tasks]
+        client = await _get_client()
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(_score(client)) for _ in signals]
+        return [t.result() for t in tasks]
 
     return list(asyncio.run(_run()))
 
@@ -220,17 +207,17 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
     url = f"{base_url}/approvals/{context.run_id}"
     headers = _auth_headers(context)
 
-    async with httpx.AsyncClient() as client:
-        for _ in range(30):
-            try:
-                resp = await client.get(url, headers=headers, timeout=5)
-                resp.raise_for_status()
-                if resp.json().get("approved"):
-                    context.log.info("publishing approved")
-                    return
-            except httpx.HTTPError as exc:  # noqa: BLE001
-                context.log.warning("approval check failed: %s", exc)
-            await asyncio.sleep(10)
+    client = await _get_client()
+    for _ in range(30):
+        try:
+            resp = await client.get(url, headers=headers, timeout=5)
+            resp.raise_for_status()
+            if resp.json().get("approved"):
+                context.log.info("publishing approved")
+                return
+        except httpx.HTTPError as exc:  # noqa: BLE001
+            context.log.warning("approval check failed: %s", exc)
+        await asyncio.sleep(10)
     raise Failure("publishing not approved")
 
 

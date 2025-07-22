@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from typing import Any
+import atexit
 
 import requests
 
@@ -19,7 +20,7 @@ from tenacity import (
 DEFAULT_RETRIES = int(os.getenv("HTTP_RETRIES", "3"))
 DEFAULT_TIMEOUT = httpx.Timeout(10.0)
 
-__all__ = ["request_with_retry", "DEFAULT_TIMEOUT"]
+__all__ = ["request_with_retry", "DEFAULT_TIMEOUT", "get_async_client"]
 
 
 def request_with_retry(
@@ -30,7 +31,8 @@ def request_with_retry(
     session: requests.Session | None = None,
     **kwargs: Any,
 ) -> requests.Response:
-    """Return the response from ``requests`` with exponential backoff.
+    """
+    Return the response from ``requests`` with exponential backoff.
 
     Parameters
     ----------
@@ -61,3 +63,22 @@ def request_with_retry(
         return resp
 
     return _send()
+
+
+_async_client: httpx.AsyncClient | None = None
+
+
+async def get_async_client() -> httpx.AsyncClient:
+    """Return a shared ``AsyncClient`` instance with the default timeout."""
+    global _async_client
+    if _async_client is None:
+        _async_client = httpx.AsyncClient(timeout=DEFAULT_TIMEOUT)
+    return _async_client
+
+
+@atexit.register
+def _close_async_client() -> None:
+    if _async_client is not None:
+        import asyncio
+
+        asyncio.run(_async_client.aclose())

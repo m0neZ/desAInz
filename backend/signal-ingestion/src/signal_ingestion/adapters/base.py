@@ -9,9 +9,9 @@ from typing import Any, Iterable, Optional, cast
 from ..rate_limit import AdapterRateLimiter
 from ..settings import settings
 from backend.shared.cache import async_get, async_set
+from backend.shared.http import get_async_client
 
 import httpx
-from backend.shared.http import DEFAULT_TIMEOUT
 
 
 class BaseAdapter:
@@ -75,23 +75,25 @@ class BaseAdapter:
         if cached_etag:
             req_headers["If-None-Match"] = cached_etag
 
+        client = await get_async_client()
         for attempt in range(self.retries):
             proxy = next(self._proxies_cycle)
-            async with httpx.AsyncClient(
-                proxy=cast(Any, proxy), timeout=DEFAULT_TIMEOUT
-            ) as client:
-                try:
-                    resp = await client.get(url, headers=req_headers or None)
-                    if resp.status_code == 304:
-                        return None
-                    if etag := resp.headers.get("ETag"):
-                        await async_set(etag_key, etag)
-                    resp.raise_for_status()
-                    return resp
-                except httpx.HTTPError:
-                    if attempt >= self.retries - 1:
-                        raise
-                    await asyncio.sleep(2**attempt)
+            try:
+                resp = await client.get(
+                    url,
+                    headers=req_headers or None,
+                    proxies=cast(Any, proxy),
+                )
+                if resp.status_code == 304:
+                    return None
+                if etag := resp.headers.get("ETag"):
+                    await async_set(etag_key, etag)
+                resp.raise_for_status()
+                return resp
+            except httpx.HTTPError:
+                if attempt >= self.retries - 1:
+                    raise
+                await asyncio.sleep(2**attempt)
 
         raise RuntimeError("Unreachable")
 

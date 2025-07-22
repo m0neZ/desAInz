@@ -9,6 +9,7 @@ import os
 from time import perf_counter
 
 import httpx
+from backend.shared.http import get_async_client
 
 
 async def _run(
@@ -30,11 +31,11 @@ async def main() -> tuple[float, float, int]:
         "engagement_rate": 1.0,
         "embedding": [0.1, 0.2],
     }
-    async with httpx.AsyncClient() as client:
-        # Warm up
-        await client.post(url, json=payload)
-        uncached = await _run(client, url, payload, runs)
-        cached = await _run(client, url, payload, runs)
+    client = await get_async_client()
+    # Warm up
+    await client.post(url, json=payload)
+    uncached = await _run(client, url, payload, runs)
+    cached = await _run(client, url, payload, runs)
     print(f"Uncached: {uncached:.2f}s for {runs} runs")
     print(f"Cached:   {cached:.2f}s for {runs} runs")
     return uncached, cached, runs

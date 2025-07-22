@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Callable, Coroutine, Iterable
 
 import httpx
-from backend.shared.http import DEFAULT_TIMEOUT
+from backend.shared.http import DEFAULT_TIMEOUT, get_async_client
 
 import psutil
 from fastapi import FastAPI, Request, Response
@@ -118,15 +118,15 @@ async def status() -> dict[str, str]:
         "orchestrator": "http://orchestrator:8000/health",
     }
     results: dict[str, str] = {}
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
-        for name, url in services.items():
-            try:
-                resp = await client.get(url)
-                results[name] = (
-                    resp.json().get("status") if resp.status_code == 200 else "down"
-                )
-            except Exception:  # pragma: no cover - network failures
-                results[name] = "down"
+    client = await get_async_client()
+    for name, url in services.items():
+        try:
+            resp = await client.get(url, timeout=DEFAULT_TIMEOUT)
+            results[name] = (
+                resp.json().get("status") if resp.status_code == 200 else "down"
+            )
+        except Exception:  # pragma: no cover - network failures
+            results[name] = "down"
     return results
 
 

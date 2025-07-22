@@ -49,3 +49,25 @@ def test_centroid_job_executes(monkeypatch) -> None:
     module_scheduler.shutdown()
     centroid = get_centroid("src")
     assert centroid == [0.5] + [0.0] * 766 + [0.5]
+
+
+def test_centroid_job_uses_recent_embeddings(monkeypatch) -> None:
+    """Latest embeddings override older ones when computing centroids."""
+
+    monkeypatch.setattr("scoring_engine.centroid_job.scheduler", BackgroundScheduler())
+
+    with session_scope() as session:
+        v1 = [1.0] + [0.0] * 767
+        v2 = [0.0] * 767 + [1.0]
+        session.add(Embedding(source="src", embedding=v1))
+        session.flush()
+
+    compute_and_store_centroids(limit=1)
+    assert get_centroid("src") == v1
+
+    with session_scope() as session:
+        session.add(Embedding(source="src", embedding=v2))
+        session.flush()
+
+    compute_and_store_centroids(limit=1)
+    assert get_centroid("src") == v2

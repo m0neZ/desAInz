@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+from functools import lru_cache
 from typing import Callable, Coroutine, cast
 
 from fastapi import FastAPI, Request, Response
@@ -42,6 +43,12 @@ register_metrics(app)
 add_security_headers(app)
 
 
+@lru_cache(maxsize=256)
+def _cached_user(x_user: str | None, client_host: str) -> str:
+    """Return user identifier from ``x_user`` or ``client_host``."""
+    return x_user or client_host
+
+
 @app.on_event("startup")
 async def start_rates() -> None:
     """Start background exchange rate updates."""
@@ -51,7 +58,8 @@ async def start_rates() -> None:
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = cast(str, request.client.host)
+    return _cached_user(request.headers.get("X-User"), client_host)
 
 
 @app.middleware("http")

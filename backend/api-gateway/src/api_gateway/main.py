@@ -3,6 +3,7 @@
 import logging
 import os
 import uuid
+from functools import lru_cache
 from time import perf_counter
 from typing import Callable, Coroutine, cast
 
@@ -90,9 +91,9 @@ rate_limiter = UserRateLimiter(
 )
 
 
-def _identify_user(request: Request) -> str:
-    """Return identifier for rate limiting, token subject or client IP."""
-    auth_header = request.headers.get("Authorization")
+@lru_cache(maxsize=256)
+def _cached_user(auth_header: str | None, client_host: str) -> str:
+    """Return user identifier from ``auth_header`` or ``client_host``."""
     if auth_header and auth_header.startswith("Bearer "):
         token = auth_header.split(" ", 1)[1]
         credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
@@ -102,8 +103,14 @@ def _identify_user(request: Request) -> str:
             if sub is not None:
                 return sub
         except Exception:  # pragma: no cover - invalid tokens treated as anonymous
-            pass
-    return cast(str, request.client.host)
+            return client_host
+    return client_host
+
+
+def _identify_user(request: Request) -> str:
+    """Return identifier for rate limiting, token subject or client IP."""
+    client_host = cast(str, request.client.host)
+    return _cached_user(request.headers.get("Authorization"), client_host)
 
 
 @app.middleware("http")  # type: ignore[misc]

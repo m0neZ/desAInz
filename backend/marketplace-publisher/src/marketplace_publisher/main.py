@@ -10,6 +10,7 @@ import json
 import logging
 import os
 import uuid
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Callable, Coroutine, cast
 
@@ -71,9 +72,16 @@ add_profiling(app)
 add_error_handlers(app)
 
 
+@lru_cache(maxsize=256)
+def _cached_user(x_user: str | None, client_host: str) -> str:
+    """Return user identifier from ``x_user`` or ``client_host``."""
+    return x_user or client_host
+
+
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = cast(str, request.client.host)
+    return _cached_user(request.headers.get("X-User"), client_host)
 
 
 async def _verify_signature(request: Request, marketplace: Marketplace) -> None:

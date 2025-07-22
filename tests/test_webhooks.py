@@ -1,4 +1,3 @@
-# flake8: noqa
 """Tests for webhook handling in marketplace publisher."""
 
 from __future__ import annotations

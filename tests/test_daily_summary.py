@@ -1,4 +1,3 @@
-# flake8: noqa
 """Tests for daily summary script."""
 
 from __future__ import annotations

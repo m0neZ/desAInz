@@ -1,12 +1,13 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
-from typing import Any, Dict, cast
+from typing import Any, Dict, AsyncGenerator, cast
 from hashlib import md5
 import os
 
 import httpx
 from backend.shared.http import DEFAULT_TIMEOUT
 import asyncio
+import json
 
 from fastapi import (
     APIRouter,
@@ -18,6 +19,7 @@ from fastapi import (
     WebSocketDisconnect,
     status,
 )
+from sse_starlette.sse import EventSourceResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 import sqlalchemy as sa
@@ -599,8 +601,9 @@ async def metrics_ws(websocket: WebSocket) -> None:
     try:
         async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
             while True:
-                overview = await client.get(f"{MONITORING_URL}/overview")
-                analytics = await client.get(f"{MONITORING_URL}/analytics")
+                overview_req = client.get(f"{MONITORING_URL}/overview")
+                analytics_req = client.get(f"{MONITORING_URL}/analytics")
+                overview, analytics = await asyncio.gather(overview_req, analytics_req)
                 data: Dict[str, Any] = {}
                 if overview.status_code == 200:
                     data.update(cast(Dict[str, Any], overview.json()))
@@ -610,6 +613,27 @@ async def metrics_ws(websocket: WebSocket) -> None:
                 await asyncio.sleep(settings.ws_interval_ms / 1000)
     except WebSocketDisconnect:
         return
+
+
+@router.get("/sse/metrics")
+async def metrics_sse() -> EventSourceResponse:
+    """Stream monitoring metrics using Server-Sent Events."""
+
+    async def event_generator() -> AsyncGenerator[str, None]:
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+            while True:
+                overview_req = client.get(f"{MONITORING_URL}/overview")
+                analytics_req = client.get(f"{MONITORING_URL}/analytics")
+                overview, analytics = await asyncio.gather(overview_req, analytics_req)
+                data: Dict[str, Any] = {}
+                if overview.status_code == 200:
+                    data.update(cast(Dict[str, Any], overview.json()))
+                if analytics.status_code == 200:
+                    data.update(cast(Dict[str, Any], analytics.json()))
+                yield f"data: {json.dumps(data)}\n\n"
+                await asyncio.sleep(settings.ws_interval_ms / 1000)
+
+    return EventSourceResponse(event_generator())
 
 
 router.include_router(optimization_router)

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, UTC
 
 from fastapi.testclient import TestClient
 from backend.analytics import api
@@ -24,13 +24,13 @@ def setup_module(module: object) -> None:
                     ab_test_id=ab_test.id,
                     conversions=5,
                     impressions=10,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(UTC),
                 ),
                 models.ABTestResult(
                     ab_test_id=ab_test.id,
                     conversions=3,
                     impressions=8,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(UTC),
                 ),
             ]
         )
@@ -40,7 +40,7 @@ def setup_module(module: object) -> None:
                 clicks=20,
                 purchases=2,
                 revenue=40.0,
-                timestamp=datetime.now(datetime.UTC),
+                timestamp=datetime.now(UTC),
             )
         )
         session.add(
@@ -50,7 +50,7 @@ def setup_module(module: object) -> None:
                 favorites=1,
                 orders=1,
                 revenue=10.0,
-                timestamp=datetime.now(datetime.UTC),
+                timestamp=datetime.now(UTC),
             )
         )
         session.add(models.UserRole(username="admin", role="admin"))
@@ -81,12 +81,13 @@ def test_marketplace_metrics() -> None:
 def test_ab_test_results_export_csv() -> None:
     """Exported A/B test results contain all rows in CSV format."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     resp = client.get(
         "/ab_test_results/1/export",
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0].startswith("timestamp,conversions,impressions")
     assert len(lines) == 3
@@ -95,12 +96,13 @@ def test_ab_test_results_export_csv() -> None:
 def test_marketplace_metrics_export_csv() -> None:
     """Exported marketplace metrics contain all rows in CSV format."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     resp = client.get(
         "/marketplace_metrics/1/export",
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0].startswith("timestamp,clicks,purchases,revenue")
     assert len(lines) == 2
@@ -109,7 +111,7 @@ def test_marketplace_metrics_export_csv() -> None:
 def test_ab_test_results_export_large_dataset() -> None:
     """CSV export streams large datasets correctly."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     with SessionLocal() as session:
         ab_test_id = session.query(models.ABTest.id).first()[0]
         session.add_all(
@@ -118,7 +120,7 @@ def test_ab_test_results_export_large_dataset() -> None:
                     ab_test_id=ab_test_id,
                     conversions=i,
                     impressions=i * 2,
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(UTC),
                 )
                 for i in range(100)
             ]
@@ -129,6 +131,7 @@ def test_ab_test_results_export_large_dataset() -> None:
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0] == "timestamp,conversions,impressions"
     assert len(lines) == 103
@@ -137,7 +140,7 @@ def test_ab_test_results_export_large_dataset() -> None:
 def test_marketplace_metrics_export_large_dataset() -> None:
     """Marketplace metrics export streams large datasets correctly."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     with SessionLocal() as session:
         listing_id = session.query(models.MarketplaceMetric.listing_id).first()[0]
         session.add_all(
@@ -147,7 +150,7 @@ def test_marketplace_metrics_export_large_dataset() -> None:
                     clicks=i,
                     purchases=1,
                     revenue=float(i),
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(UTC),
                 )
                 for i in range(50)
             ]
@@ -158,6 +161,7 @@ def test_marketplace_metrics_export_large_dataset() -> None:
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0] == "timestamp,clicks,purchases,revenue"
     assert len(lines) == 52
@@ -166,12 +170,13 @@ def test_marketplace_metrics_export_large_dataset() -> None:
 def test_performance_metrics_export_csv() -> None:
     """Exported performance metrics contain all rows in CSV format."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     resp = client.get(
         "/performance_metrics/1/export",
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0].startswith("timestamp,views,favorites,orders,revenue")
     assert len(lines) == 2
@@ -180,7 +185,7 @@ def test_performance_metrics_export_csv() -> None:
 def test_performance_metrics_export_large_dataset() -> None:
     """Performance metrics export streams large datasets correctly."""
     client = TestClient(api.app)
-    token = create_access_token({"sub": "admin"})
+    token = create_access_token({"sub": "admin", "roles": ["admin"]})
     with SessionLocal() as session:
         listing_id = session.query(
             models.MarketplacePerformanceMetric.listing_id
@@ -193,7 +198,7 @@ def test_performance_metrics_export_large_dataset() -> None:
                     favorites=1,
                     orders=1,
                     revenue=float(i),
-                    timestamp=datetime.now(datetime.UTC),
+                    timestamp=datetime.now(UTC),
                 )
                 for i in range(30)
             ]
@@ -204,6 +209,7 @@ def test_performance_metrics_export_large_dataset() -> None:
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 200
+    assert resp.headers.get("Content-Encoding") == "gzip"
     lines = resp.text.strip().splitlines()
     assert lines[0] == "timestamp,views,favorites,orders,revenue"
     assert len(lines) == 32

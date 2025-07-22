@@ -9,7 +9,7 @@ from .feature_flags import initialize as init_feature_flags, is_enabled
 from .errors import add_error_handlers, add_flask_error_handlers
 from .currency import convert_price, start_rate_updater
 from .metrics import register_metrics
-from .responses import cache_header, json_cached
+from .responses import cache_header, json_cached, gzip_iter
 from .config import settings
 from .security import add_security_headers
 from .clip import load_clip, open_clip, torch
@@ -28,6 +28,7 @@ __all__ = [
     "register_metrics",
     "cache_header",
     "json_cached",
+    "gzip_iter",
     "settings",
     "add_security_headers",
     "load_clip",

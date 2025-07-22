@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, Coroutine
+from typing import Any, Awaitable, Callable
 
 from fastapi import FastAPI, Request, Response
 from fastapi import HTTPException
@@ -16,7 +16,7 @@ def add_security_headers(app: FastAPI) -> None:
 
     async def _set_headers(
         request: Request,
-        call_next: Callable[[Request], Coroutine[None, None, Response]],
+        call_next: Callable[[Request], Awaitable[Response]],
     ) -> Response:
         response = await call_next(request)
         response.headers.setdefault("X-Content-Type-Options", "nosniff")

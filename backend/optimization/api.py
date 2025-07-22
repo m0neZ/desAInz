@@ -1,7 +1,5 @@
 """FastAPI application exposing optimization endpoints."""
 
-# mypy: ignore-errors
-
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -10,7 +8,7 @@ import psutil
 import logging
 import os
 import uuid
-from typing import Callable, Coroutine, List, cast
+from typing import Any, Callable, Coroutine, List, cast
 
 from fastapi import FastAPI, Request, Response
 from backend.shared.security import require_status_api_key
@@ -52,13 +50,13 @@ add_security_headers(app)
 
 def _identify_user(request: Request) -> str:
     """Return identifier for logging, header ``X-User`` or client IP."""
-    return cast(str, request.headers.get("X-User", request.client.host))
+    client_host = request.client.host if request.client else "unknown"
+    return cast(str, request.headers.get("X-User", client_host))
 
 
-@app.middleware("http")
 async def add_correlation_id(
     request: Request,
-    call_next: Callable[[Request], Coroutine[None, None, Response]],
+    call_next: Callable[[Request], Coroutine[Any, Any, Response]],
 ) -> Response:
     """Ensure each request includes a correlation ID."""
     correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
@@ -83,6 +81,9 @@ async def add_correlation_id(
     return response
 
 
+app.middleware("http")(add_correlation_id)
+
+
 store = MetricsStore()
 scheduler = AsyncIOScheduler()
 
@@ -98,7 +99,6 @@ def record_resource_usage(target_store: MetricsStore = store) -> None:
     target_store.add_metric(metric)
 
 
-@app.on_event("startup")
 def start_metrics_collection() -> None:
     """Schedule periodic resource usage collection."""
     if not scheduler.running:
@@ -111,14 +111,18 @@ def start_metrics_collection() -> None:
     )
 
 
-@app.on_event("startup")
+app.on_event("startup")(start_metrics_collection)
+
+
 async def create_continuous_aggregate() -> None:
     """Create hourly aggregate view if PostgreSQL is used."""
     if not store._use_sqlite:
         store.create_hourly_continuous_aggregate()
 
 
-@app.on_event("startup")
+app.on_event("startup")(create_continuous_aggregate)
+
+
 def start_scheduler() -> None:
     """Start job scheduler for refreshing aggregates."""
     if scheduler.running:
@@ -131,11 +135,16 @@ def start_scheduler() -> None:
     scheduler.start()
 
 
-@app.on_event("shutdown")
+app.on_event("startup")(start_scheduler)
+
+
 def shutdown_scheduler() -> None:
     """Shutdown the aggregate scheduler."""
     if scheduler.running:
         scheduler.shutdown()
+
+
+app.on_event("shutdown")(shutdown_scheduler)
 
 
 class MetricIn(BaseModel):
@@ -147,7 +156,6 @@ class MetricIn(BaseModel):
     disk_usage_mb: float | None = None
 
 
-@app.post("/metrics")
 def add_metric(metric: MetricIn) -> dict[str, str]:
     """Store a new resource metric."""
     store.add_metric(
@@ -161,28 +169,39 @@ def add_metric(metric: MetricIn) -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.get("/optimizations")
+app.post("/metrics")(add_metric)
+
+
 def get_optimizations() -> List[str]:
     """Return recommended cost optimizations."""
     analyzer = MetricsAnalyzer(store.get_metrics())
     return analyzer.recommend_optimizations()
 
 
-@app.get("/recommendations")
+app.get("/optimizations")(get_optimizations)
+
+
 def get_recommendations() -> List[str]:
     """Return top optimization actions."""
     analyzer = MetricsAnalyzer(store.get_metrics())
     return analyzer.top_recommendations()
 
 
-@app.get("/health")
+app.get("/recommendations")(get_recommendations)
+
+
 async def health() -> Response:
     """Return service liveness."""
     return json_cached({"status": "ok"})
 
 
-@app.get("/ready")
+app.get("/health")(health)
+
+
 async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)
     return json_cached({"status": "ready"})
+
+
+app.get("/ready")(ready)

@@ -10,10 +10,13 @@ from typing import Any
 import redis
 from UnleashClient import UnleashClient
 from ldclient import LDClient
+from ldclient.config import Config
+from ldclient.context import Context
+from typing import Iterable, cast
 
 _unleash_client: UnleashClient | None = None
 _ld_client: LDClient | None = None
-_redis: redis.Redis[str] | None = None
+_redis: redis.Redis | None = None
 _cache: dict[str, tuple[bool, float]] = {}
 _cache_ttl: int = 30
 _defaults: dict[str, bool] = {}
@@ -55,7 +58,7 @@ def initialize() -> None:
 
     sdk_key = os.getenv("LAUNCHDARKLY_SDK_KEY")
     if sdk_key:
-        _ld_client = LDClient(sdk_key)
+        _ld_client = LDClient(Config(sdk_key))
 
 
 def is_enabled(name: str, context: dict[str, Any] | None = None) -> bool:
@@ -75,15 +78,19 @@ def is_enabled(name: str, context: dict[str, Any] | None = None) -> bool:
         try:
             raw = _redis.get(name)
             if raw is not None:
-                result = raw.lower() in {"1", "true", "yes"}
+                value = cast(str, raw)
+                result = value.lower() in {"1", "true", "yes"}
         except Exception:
             result = None
 
     if result is None and _ld_client is not None:
         try:
-            result = bool(
-                _ld_client.variation(name, context or {"key": "server"}, default)
-            )
+            ctx = context or {"key": "server"}
+            if isinstance(ctx, dict):
+                ld_context = Context(**ctx)
+            else:
+                ld_context = Context(key="server")
+            result = bool(_ld_client.variation(name, ld_context, default))
         except Exception:
             result = default
 
@@ -119,7 +126,7 @@ def list_flags() -> dict[str, bool]:
     names = set(_defaults) | set(_env_flags)
     if _redis is not None:
         try:
-            names.update(_redis.keys("*"))
+            names.update(cast(Iterable[str], _redis.keys("*")))
         except Exception:
             pass
     return {name: is_enabled(name) for name in names}
@@ -130,4 +137,4 @@ def shutdown() -> None:
     if _unleash_client is not None:
         _unleash_client.destroy()
     if _ld_client is not None:
-        _ld_client.close()
+        _ld_client.close()  # type: ignore[no-untyped-call]

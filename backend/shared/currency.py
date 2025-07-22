@@ -6,7 +6,7 @@ import json
 import logging
 import os
 from decimal import Decimal, ROUND_HALF_UP
-from typing import Dict
+from typing import cast
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -29,12 +29,15 @@ redis_client: SyncRedis = get_sync_client()
 scheduler = BackgroundScheduler()
 
 
-def _fetch_rates(base: str = BASE_CURRENCY) -> Dict[str, float]:
+def _fetch_rates(base: str = BASE_CURRENCY) -> dict[str, float]:
     """Fetch latest exchange rates from external API."""
     response = requests.get(EXCHANGE_API_URL, params={"base": base}, timeout=10)
     response.raise_for_status()
     data = response.json()
-    return data.get("rates", {})
+    rates: dict[str, float] = {
+        currency: float(rate) for currency, rate in data.get("rates", {}).items()
+    }
+    return rates
 
 
 def update_rates() -> None:
@@ -59,11 +62,15 @@ def start_rate_updater() -> None:
 
 def get_rate(currency: str) -> float:
     """Return rate for ``currency`` relative to base currency."""
-    data = redis_client.get(REDIS_KEY)
-    if data is None:
+    data_raw = redis_client.get(REDIS_KEY)
+    if data_raw is None:
         update_rates()
-        data = redis_client.get(REDIS_KEY) or "{}"
-    rates = json.loads(data)
+        data_raw = redis_client.get(REDIS_KEY) or "{}"
+    if isinstance(data_raw, bytes):
+        data_str = data_raw.decode()
+    else:
+        data_str = cast(str, data_raw)
+    rates = json.loads(data_str)
     if currency not in rates:
         raise KeyError(currency)
     return float(rates[currency])

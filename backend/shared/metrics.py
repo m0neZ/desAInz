@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from time import perf_counter
-from typing import Callable, Coroutine
+from typing import Any, Callable, Coroutine
 
 from fastapi import FastAPI, Request, Response
 
@@ -31,10 +31,9 @@ REQUEST_LATENCY = Histogram(
 def register_metrics(app: FastAPI) -> None:
     """Attach metrics middleware and /metrics endpoint to ``app``."""
 
-    @app.middleware("http")  # type: ignore[misc]
     async def _record_metrics(
         request: Request,
-        call_next: Callable[[Request], Coroutine[None, None, Response]],
+        call_next: Callable[[Request], Coroutine[Any, Any, Response]],
     ) -> Response:
         start = perf_counter()
         response = await call_next(request)
@@ -43,9 +42,11 @@ def register_metrics(app: FastAPI) -> None:
         REQUEST_LATENCY.labels(request.method, request.url.path).observe(duration)
         return response
 
-    @app.get("/metrics")  # type: ignore[misc]
     async def metrics() -> Response:
         """Return Prometheus metrics with aggressive caching."""
         data = generate_latest()
         headers = cache_header(ttl=METRICS_CACHE_TTL)
         return Response(content=data, media_type=CONTENT_TYPE_LATEST, headers=headers)
+
+    app.middleware("http")(_record_metrics)
+    app.get("/metrics")(metrics)

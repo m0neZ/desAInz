@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
-from fastapi import FastAPI
+from typing import Any, MutableMapping, cast, Callable
+
+from fastapi import FastAPI, Request
 from sentry_sdk import init
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from sentry_sdk.integrations.logging import LoggingIntegration
@@ -19,8 +21,10 @@ def configure_sentry(app: FastAPI, service_name: str) -> None:
         logger.debug("Sentry DSN not provided; skipping setup")
         return
 
-    def _before_send(event: dict, hint: dict | None) -> dict | None:
-        request = hint.get("request") if hint else None
+    def _before_send(
+        event: dict[str, Any], hint: dict[str, Any] | None
+    ) -> dict[str, Any] | None:
+        request = cast(Request, hint.get("request")) if hint else None
         if request is not None:
             correlation_id = getattr(request.state, "correlation_id", None)
             if correlation_id:
@@ -30,7 +34,7 @@ def configure_sentry(app: FastAPI, service_name: str) -> None:
     sentry_logging = LoggingIntegration(level=logging.INFO, event_level=logging.ERROR)
     init(
         dsn=dsn,
-        before_send=_before_send,
+        before_send=cast(Callable[[Any, Any], Any], _before_send),
         integrations=[sentry_logging],
         traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.0")),
         release=os.getenv("SENTRY_RELEASE"),

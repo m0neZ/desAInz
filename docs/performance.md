@@ -79,6 +79,11 @@ The context manager `tasks.gpu_slot` updates two metrics:
 
 These metrics appear alongside existing ones on the `/metrics` endpoint.
 
+In addition, GPU usage statistics are reported:
+
+- `gpu_utilization_percent` – a gauge with the current utilization rate.
+- `gpu_temperature_celsius` – a gauge with the GPU temperature in Celsius.
+
 ## Database Connection Metrics
 
 Each service now reports connection pool usage via two gauges:

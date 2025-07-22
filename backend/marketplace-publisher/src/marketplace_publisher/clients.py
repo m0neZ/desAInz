@@ -7,6 +7,8 @@ from typing import Any, cast
 
 import os
 import requests
+import httpx
+import atexit
 from backend.shared.http import request_with_retry
 from requests_oauthlib import OAuth2Session
 from selenium import webdriver
@@ -23,6 +25,25 @@ from .db import (
     upsert_oauth_token_sync,
 )
 from . import rules
+
+
+_async_client: httpx.AsyncClient | None = None
+
+
+async def get_async_client() -> httpx.AsyncClient:
+    """Return a shared ``AsyncClient`` for marketplace requests."""
+    global _async_client
+    if _async_client is None:
+        _async_client = httpx.AsyncClient(timeout=30)
+    return _async_client
+
+
+@atexit.register
+def _close_client() -> None:
+    if _async_client is not None:
+        import asyncio
+
+        asyncio.run(_async_client.aclose())
 
 
 class BaseClient:
@@ -316,7 +337,8 @@ class SeleniumFallback:
         metadata: dict[str, Any],
         max_attempts: int = 3,
     ) -> None:
-        """Publish a design using browser automation.
+        """
+        Publish a design using browser automation.
 
         The function fills the configured form fields, submitting the design
         when all interactions succeed. Failures trigger retries using

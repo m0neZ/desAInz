@@ -56,8 +56,13 @@ def restore_provider() -> Iterator[None]:
 @pytest.mark.asyncio()
 async def test_fallback_api_raises(monkeypatch: pytest.MonkeyPatch) -> None:
     """Fallback API should raise :class:`GenerationError` after retries."""
+
+    async def _sleep(*_: object) -> None:
+        return None
+
+    monkeypatch.setattr("mockup_generation.generator._async_client", None)
     monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: DummySession())
-    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
+    monkeypatch.setattr("asyncio.sleep", _sleep)
     gen = MockupGenerator()
     with pytest.raises(GenerationError):
         await gen._fallback_api("prompt")
@@ -93,8 +98,13 @@ async def test_fallback_api_openai(monkeypatch: pytest.MonkeyPatch) -> None:
 
     settings.fallback_provider = "openai"
     settings.openai_api_key = "x"
+
+    async def _sleep(*_: object) -> None:
+        return None
+
+    monkeypatch.setattr("mockup_generation.generator._async_client", None)
     monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: Session())
-    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
+    monkeypatch.setattr("asyncio.sleep", _sleep)
     gen = MockupGenerator()
     img = await gen._fallback_api("prompt")
     assert img.size == (1, 1)
@@ -132,8 +142,13 @@ async def test_fallback_api_stability(monkeypatch: pytest.MonkeyPatch) -> None:
 
     settings.fallback_provider = "stability"
     settings.stability_ai_api_key = "x"
+
+    async def _sleep(*_: object) -> None:
+        return None
+
+    monkeypatch.setattr("mockup_generation.generator._async_client", None)
     monkeypatch.setattr("httpx.AsyncClient", lambda *a, **k: Session())
-    monkeypatch.setattr("asyncio.sleep", lambda *_: None)
+    monkeypatch.setattr("asyncio.sleep", _sleep)
     gen = MockupGenerator()
     img = await gen._fallback_api("prompt")
     assert img.size == (1, 1)

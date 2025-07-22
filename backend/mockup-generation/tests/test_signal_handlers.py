@@ -80,9 +80,10 @@ def test_gpu_lock_released_on_sigterm(tmp_path: Path) -> None:
             tasks.async_redis_client = _DummyRedis(Path({repr(str(lock_dir))}))
             tasks.get_gpu_slots = lambda: 1
             async def run() -> None:
+                end = time.monotonic() + 30
                 async with tasks.gpu_slot():
                     print('acquired', flush=True)
-                    while True:
+                    while time.monotonic() < end:
                         await asyncio.sleep(0.1)
 
             asyncio.run(run())
@@ -95,6 +96,7 @@ def test_gpu_lock_released_on_sigterm(tmp_path: Path) -> None:
     proc = subprocess.Popen(
         [sys.executable, str(script)], stdout=subprocess.PIPE, env=env
     )
+    assert proc.stdout is not None
     assert proc.stdout.readline().decode().strip() == "acquired"
     proc.send_signal(signal.SIGTERM)
     proc.wait(timeout=5)

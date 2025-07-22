@@ -4,6 +4,7 @@ pydantic
 pandas
 pytest
 pytest-cov
+pytest-xdist
 requests
 tenacity
 httpx

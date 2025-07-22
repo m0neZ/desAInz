@@ -5,7 +5,7 @@
  *
  * @param {Error | string} warning - The warning object or message.
  */
-process.on('warning', (warning: Error | string): void => {
+process.on('warning', (warning) => {
   process.stderr.write(
     `${
       typeof warning === 'string' ? warning : warning.stack || String(warning)

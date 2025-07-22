@@ -6,7 +6,16 @@ from datetime import datetime
 
 from typing import Any
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, JSON
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    JSON,
+    Index,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from pgvector.sqlalchemy import Vector
 
@@ -116,6 +125,7 @@ class MarketplaceMetric(Base):
     """Aggregated metrics for a marketplace listing."""
 
     __tablename__ = "marketplace_metrics"
+    __table_args__ = (Index("ix_marketplace_metrics_listing_id", "listing_id"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     listing_id: Mapped[int] = mapped_column(ForeignKey("listings.id"))

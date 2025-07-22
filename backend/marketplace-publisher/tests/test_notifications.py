@@ -25,12 +25,13 @@ import logging
 import pytest
 import responses
 import requests
+import backend.shared.http as http
 
 from marketplace_publisher import notifications  # noqa: E402
 from monitoring import pagerduty  # noqa: E402
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio()  # type: ignore[misc]
 async def test_notify_failure_sends_discord_and_pagerduty(monkeypatch: Any) -> None:
     """notify_failure should POST to Discord and trigger PagerDuty."""
     sent: dict[str, Any] = {}
@@ -47,7 +48,11 @@ async def test_notify_failure_sends_discord_and_pagerduty(monkeypatch: Any) -> N
 
     monkeypatch.setenv("SLACK_WEBHOOK_URL", "http://slack")
     monkeypatch.setenv("PAGERDUTY_ROUTING_KEY", "key")
-    monkeypatch.setattr(notifications.requests, "post", fake_post)
+    monkeypatch.setattr(
+        http,
+        "request_with_retry",
+        lambda *a, **kw: fake_post(a[1], kw.get("json"), kw.get("timeout")),
+    )
     monkeypatch.setattr(pagerduty, "notify_listing_issue", fake_pd)
     monkeypatch.setattr(asyncio, "to_thread", lambda func, *a, **kw: func(*a, **kw))
 
@@ -59,7 +64,7 @@ async def test_notify_failure_sends_discord_and_pagerduty(monkeypatch: Any) -> N
     assert pd_calls == [(7, "failed")]
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio()  # type: ignore[misc]
 async def test_notify_failure_handles_timeout(
     monkeypatch: Any, caplog: pytest.LogCaptureFixture
 ) -> None:
@@ -83,7 +88,7 @@ async def test_notify_failure_handles_timeout(
     assert "notification failed" in caplog.text
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio()  # type: ignore[misc]
 async def test_notify_failure_pagerduty_timeout(
     monkeypatch: Any, caplog: pytest.LogCaptureFixture
 ) -> None:

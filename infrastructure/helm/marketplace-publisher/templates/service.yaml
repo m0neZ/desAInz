@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: {{ include "marketplace-publisher.fullname" . }}
   labels: {{- include "marketplace-publisher.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "{{ .Values.service.port }}"
 spec:
   type: {{ .Values.service.type }}
   selector: {{- include "marketplace-publisher.selectorLabels" . | nindent 4 }}

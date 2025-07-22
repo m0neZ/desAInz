@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
+from prometheus_client.parser import text_string_to_metric_families
 
 SERVICES = [
     ("backend/service-template/src", "main"),
@@ -35,3 +36,5 @@ def test_metrics_endpoint(base: str, module: str) -> None:
         assert resp.status_code == 200
         assert resp.headers["content-type"].startswith("text/plain")
         assert b"# TYPE" in resp.content
+        metrics = {m.name for m in text_string_to_metric_families(resp.text)}
+        assert "http_requests_total" in metrics

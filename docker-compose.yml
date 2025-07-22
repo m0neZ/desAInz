@@ -178,6 +178,10 @@ services:
       - kafka
       - redis
       - postgres
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=8000"
 
   scoring-engine:
     build: ./backend/scoring-engine
@@ -186,6 +190,10 @@ services:
       - "5002:5002"
     depends_on:
       - postgres
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=5002"
 
   marketplace-publisher:
     build: ./backend/marketplace-publisher
@@ -195,6 +203,10 @@ services:
     depends_on:
       - postgres
       - redis
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=8000"
 
   signal-ingestion:
     build: ./backend/signal-ingestion
@@ -204,12 +216,20 @@ services:
     depends_on:
       - postgres
       - kafka
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=8000"
 
   feedback-loop:
     build: ./backend/feedback-loop
     command: python -m feedback_loop.main
     ports:
       - "8005:8000"
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=8000"
 
   admin-dashboard:
     build: ./frontend/admin-dashboard
@@ -224,6 +244,10 @@ services:
       dockerfile: backend/orchestrator/Dockerfile
     ports:
       - "3001:3000"
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=3000"
 volumes:
   postgres-data:
   redis-data:

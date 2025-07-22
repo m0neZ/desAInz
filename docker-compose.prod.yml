@@ -238,6 +238,10 @@ services:
     - kafka
     - redis
     - postgres
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=8000
 
     secrets:
     - secret_key
@@ -250,6 +254,10 @@ services:
     - 5002:5002
     depends_on:
     - postgres
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=5002
 
     secrets:
     - secret_key
@@ -263,6 +271,10 @@ services:
     depends_on:
     - postgres
     - redis
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=8000
 
     secrets:
     - secret_key
@@ -276,6 +288,10 @@ services:
     depends_on:
     - postgres
     - kafka
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=8000
 
     secrets:
     - secret_key
@@ -288,6 +304,10 @@ services:
       dockerfile: backend/feedback-loop/Dockerfile
     ports:
     - 8005:8000
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=8000
 
     secrets:
     - secret_key
@@ -312,6 +332,10 @@ services:
       dockerfile: backend/orchestrator/Dockerfile
     ports:
     - 3001:3000
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=3000
 
     secrets:
     - secret_key

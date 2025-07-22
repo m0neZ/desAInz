@@ -29,3 +29,11 @@ pre-summary-newline = true
 [tool.pydocstyle]
 convention = "google"
 add-ignore = ["D212"]
+
+[tool.interrogate]
+fail-under = 100
+exclude = ["tests"]
+ignore-init-method = true
+ignore-init-module = true
+ignore-private = true
+verbose = 1

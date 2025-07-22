@@ -42,7 +42,7 @@ Run the common tasks using the `Makefile`:
 make up           # start services with Docker Compose for development
 make prod-up      # start services with the production compose file
 make test         # run unit and integration tests
-make lint         # run all linters and type checkers
+make lint         # run all linters, type checkers and docstring coverage
 make docker-build # build local Docker images
 make docker-push  # push images to REGISTRY with TAG
 make helm-deploy  # deploy charts with Helm

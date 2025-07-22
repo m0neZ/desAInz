@@ -31,8 +31,14 @@ class Idea(Base):
     title: Mapped[str] = mapped_column(String(200))
     description: Mapped[str] = mapped_column(String)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    signals: Mapped[list["Signal"]] = relationship(back_populates="idea")
-    mockups: Mapped[list["Mockup"]] = relationship(back_populates="idea")
+    signals: Mapped[list["Signal"]] = relationship(
+        back_populates="idea",
+        lazy="selectin",
+    )
+    mockups: Mapped[list["Mockup"]] = relationship(
+        back_populates="idea",
+        lazy="selectin",
+    )
 
 
 class Signal(Base):
@@ -47,7 +53,10 @@ class Signal(Base):
     details: Mapped[str | None] = mapped_column(String, nullable=True)
     content_hash: Mapped[str] = mapped_column(String(32), unique=True)
 
-    idea: Mapped[Idea] = relationship(back_populates="signals")
+    idea: Mapped[Idea] = relationship(
+        back_populates="signals",
+        lazy="selectin",
+    )
 
 
 class Mockup(Base):
@@ -60,8 +69,14 @@ class Mockup(Base):
     image_url: Mapped[str] = mapped_column(String)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    idea: Mapped[Idea] = relationship(back_populates="mockups")
-    listings: Mapped[list["Listing"]] = relationship(back_populates="mockup")
+    idea: Mapped[Idea] = relationship(
+        back_populates="mockups",
+        lazy="selectin",
+    )
+    listings: Mapped[list["Listing"]] = relationship(
+        back_populates="mockup",
+        lazy="selectin",
+    )
 
 
 class Listing(Base):
@@ -75,8 +90,14 @@ class Listing(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     state: Mapped[str] = mapped_column(String(50), default="pending")
 
-    mockup: Mapped[Mockup] = relationship(back_populates="listings")
-    tests: Mapped[list["ABTest"]] = relationship(back_populates="listing")
+    mockup: Mapped[Mockup] = relationship(
+        back_populates="listings",
+        lazy="selectin",
+    )
+    tests: Mapped[list["ABTest"]] = relationship(
+        back_populates="listing",
+        lazy="selectin",
+    )
 
 
 class Weights(Base):
@@ -104,7 +125,10 @@ class ABTest(Base):
     variant: Mapped[str] = mapped_column(String(50))
     conversion_rate: Mapped[float] = mapped_column(Float, default=0.0)
 
-    listing: Mapped[Listing] = relationship(back_populates="tests")
+    listing: Mapped[Listing] = relationship(
+        back_populates="tests",
+        lazy="selectin",
+    )
 
 
 class ABTestResult(Base):
@@ -119,7 +143,7 @@ class ABTestResult(Base):
     conversions: Mapped[int] = mapped_column(Integer, default=0)
     impressions: Mapped[int] = mapped_column(Integer, default=0)
 
-    ab_test: Mapped[ABTest] = relationship()
+    ab_test: Mapped[ABTest] = relationship(lazy="selectin")
 
 
 class MarketplaceMetric(Base):
@@ -135,7 +159,7 @@ class MarketplaceMetric(Base):
     purchases: Mapped[int] = mapped_column(Integer, default=0)
     revenue: Mapped[float] = mapped_column(Float, default=0.0)
 
-    listing: Mapped[Listing] = relationship()
+    listing: Mapped[Listing] = relationship(lazy="selectin")
 
 
 class MarketplacePerformanceMetric(Base):
@@ -152,7 +176,7 @@ class MarketplacePerformanceMetric(Base):
     orders: Mapped[int] = mapped_column(Integer, default=0)
     revenue: Mapped[float] = mapped_column(Float, default=0.0)
 
-    listing: Mapped[Listing] = relationship()
+    listing: Mapped[Listing] = relationship(lazy="selectin")
 
 
 class Embedding(Base):
@@ -217,7 +241,7 @@ class ScoreMetric(Base):
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     score: Mapped[float] = mapped_column(Float)
 
-    idea: Mapped[Idea] = relationship()
+    idea: Mapped[Idea] = relationship(lazy="selectin")
 
 
 class PublishLatencyMetric(Base):
@@ -230,7 +254,7 @@ class PublishLatencyMetric(Base):
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     latency_seconds: Mapped[float] = mapped_column(Float)
 
-    idea: Mapped[Idea] = relationship()
+    idea: Mapped[Idea] = relationship(lazy="selectin")
 
 
 class ScoreBenchmark(Base):

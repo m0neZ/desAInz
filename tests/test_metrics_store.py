@@ -2,11 +2,8 @@
 
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-import shutil
 
 import pytest
-import psycopg2
-from pytest_postgresql import factories
 
 import backend.monitoring.src.monitoring.metrics_store as metrics_store
 from backend.monitoring.src.monitoring.metrics_store import (
@@ -33,11 +30,6 @@ def test_metrics_insertion(tmp_path: Path) -> None:
     # create aggregate should not fail on SQLite
     store.create_hourly_continuous_aggregate()
     assert store.get_active_users(datetime.now(timezone.utc) - timedelta(hours=1)) == 1
-
-
-# PostgreSQL fixtures using pytest-postgresql
-postgresql_proc = factories.postgresql_proc()
-postgresql = factories.postgresql("postgresql_proc")
 
 
 def test_pool_used_for_postgres(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -74,10 +66,7 @@ def test_pool_used_for_postgres(monkeypatch: pytest.MonkeyPatch) -> None:
     assert isinstance(store, TimescaleMetricsStore)
 
 
-@pytest.mark.skipif(shutil.which("initdb") is None, reason="initdb not available")
-def test_postgresql_metrics(
-    postgresql: psycopg2.extensions.connection,
-) -> None:
+def test_postgresql_metrics(postgresql: object) -> None:
     """Verify metrics operations work with PostgreSQL."""
     store = TimescaleMetricsStore(postgresql.info.dsn)
     metric = ScoreMetric(idea_id=2, timestamp=datetime.now(timezone.utc), score=0.9)

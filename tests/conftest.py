@@ -8,6 +8,11 @@ from importlib import util as importlib_util
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
 import warnings
+import shutil
+from typing import Iterator
+
+import psycopg2
+from testing.postgresql import Postgresql
 
 import pytest
 from sqlalchemy.ext.asyncio import (
@@ -99,3 +104,33 @@ def session_factory(sqlite_engine: AsyncEngine) -> async_sessionmaker[AsyncSessi
 def fake_redis() -> fakeredis.aioredis.FakeRedis:
     """Return a fakeredis instance."""
     return fakeredis.aioredis.FakeRedis()
+
+
+class _PGWrapper:
+    """Simple wrapper around a psycopg2 connection."""
+
+    def __init__(self, conn: psycopg2.extensions.connection, dsn: str) -> None:
+        self._conn = conn
+        self.info = SimpleNamespace(dsn=dsn)
+
+    def cursor(self, *args: object, **kwargs: object) -> psycopg2.extensions.cursor:
+        """Return a new cursor from the underlying connection."""
+        return self._conn.cursor(*args, **kwargs)
+
+    def close(self) -> None:
+        """Close the underlying connection."""
+        self._conn.close()
+
+
+@pytest.fixture()
+def postgresql() -> Iterator[_PGWrapper]:
+    """Provide a temporary PostgreSQL instance for tests."""
+    if shutil.which("initdb") is None or shutil.which("postgres") is None:
+        pytest.skip("PostgreSQL binaries not available")
+    with Postgresql() as pg:
+        conn = psycopg2.connect(pg.url())
+        wrapper = _PGWrapper(conn, pg.url())
+        try:
+            yield wrapper
+        finally:
+            wrapper.close()

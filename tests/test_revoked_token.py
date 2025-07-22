@@ -12,13 +12,12 @@ sys.path.append(str(Path(__file__).resolve().parents[1] / "backend" / "analytics
 
 from backend.analytics import api  # noqa: E402
 from backend.analytics.auth import (
-    ALGORITHM,
-    SECRET_KEY,
     create_access_token,
+    verify_token,
 )
 from backend.shared.db import SessionLocal  # noqa: E402
 from backend.shared.db.models import RevokedToken, UserRole  # noqa: E402
-from jose import jwt
+from fastapi.security import HTTPAuthorizationCredentials
 
 client = TestClient(api.app)
 
@@ -26,7 +25,8 @@ client = TestClient(api.app)
 def test_revoked_token_rejected() -> None:
     """Access is denied when the token is revoked."""
     token = create_access_token({"sub": "admin"})
-    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
+    payload = verify_token(credentials)
     jti = str(payload["jti"])
     expires_at = datetime.now(UTC) + timedelta(minutes=30)
     with SessionLocal() as session:

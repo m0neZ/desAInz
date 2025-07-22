@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import Lock
-from typing import Callable, Mapping, Tuple, cast, TYPE_CHECKING
+from typing import Callable, Mapping, Tuple, cast, TYPE_CHECKING, TypedDict
 
 from PIL import Image
 
@@ -19,17 +19,28 @@ _clip_preprocess: Callable[[Image.Image], Tensor] | None = None
 _clip_lock = Lock()
 _nsfw_tokens: Tensor | None = None
 
-_LIMITS: Mapping[str, Mapping[str, int]] = {}
+
+class MarketplaceRule(TypedDict, total=False):
+    """Validation limits for a marketplace."""
+
+    max_file_size_mb: int
+    max_width: int
+    max_height: int
+    upload_limit: int
+    selectors: Mapping[str, str]
 
 
-def _load_limits() -> Mapping[str, Mapping[str, int]]:
+_LIMITS: Mapping[str, MarketplaceRule] = {}
+
+
+def _load_limits() -> Mapping[str, MarketplaceRule]:
     """Load marketplace limits from the YAML configuration file."""
     import yaml  # type: ignore
 
     path = Path(__file__).resolve().parents[3] / "config" / "marketplace_rules.yaml"
     if not path.exists():
         return {}
-    return cast(Mapping[str, Mapping[str, int]], yaml.safe_load(path.read_text()))
+    return cast(Mapping[str, MarketplaceRule], yaml.safe_load(path.read_text()))
 
 
 _LIMITS = _load_limits()
@@ -40,7 +51,7 @@ def _strictest(field: str, default: int) -> int:
     values: list[int] = []
     for v in _LIMITS.values():
         val = v.get(field)
-        if val is not None:
+        if isinstance(val, int):
             values.append(val)
     return min(values) if values else default
 

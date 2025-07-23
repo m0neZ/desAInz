@@ -168,6 +168,7 @@ python scripts/run_integration_tests.py # run integration tests
 python scripts/run_dagster_webserver.py # start the Dagster web UI
 python scripts/rotate_logs.py           # archive and prune logs
 python scripts/wait_for_services.py     # block until local services respond
+                                        # use --max-wait to override timeout
 ```
 
 Other scripts depend on tools like Docker, kubectl or AWS CLI and therefore

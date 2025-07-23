@@ -7,11 +7,13 @@ import os
 import sys
 import uuid
 from typing import Any, Callable, Coroutine, Optional
+from types import TracebackType
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from backend.shared.security import require_status_api_key
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
+from backend.shared.http import close_async_clients
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
@@ -80,10 +82,15 @@ async def startup() -> None:
     scheduler.start()
 
     def log_unhandled(
-        exc_type: type[BaseException], exc: BaseException, tb: object
+        exc_type: type[BaseException],
+        exc: BaseException,
+        tb: TracebackType | None,
     ) -> None:
         """Log any unhandled exception before exiting."""
-        logger.exception("Unhandled exception", exc_info=(exc_type, exc, tb))
+        logger.exception(
+            "Unhandled exception",
+            exc_info=(exc_type, exc, tb),
+        )
 
     sys.excepthook = log_unhandled
 
@@ -92,6 +99,7 @@ async def shutdown() -> None:
     """Stop the background scheduler."""
     if scheduler:
         scheduler.shutdown()
+    await close_async_clients()
 
 
 app.add_event_handler("startup", startup)

@@ -32,7 +32,7 @@ def setup_scheduler(
 
     def nightly_update() -> None:
         metrics = ingest_metrics(metrics_source)
-        weights = update_weights(scoring_api, metrics)
+        weights = update_weights(scoring_api, metrics)  # type: ignore[arg-type]
         allocation = ab_manager.allocate_budget(total_budget=100.0)
         logger.info("budget allocation %s", allocation)
         logger.info("updated weights payload %s", weights)

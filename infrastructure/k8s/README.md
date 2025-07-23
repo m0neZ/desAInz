@@ -21,3 +21,22 @@ Use `minikube service <service-name>` to access the service on your host machine
 If you have the Prometheus Operator installed in your cluster, the included
 `ServiceMonitor` will scrape metrics from the service's `/metrics` endpoint.
 
+
+## Blue-Green Deployments
+
+The `overlays/blue-green` directory defines separate `blue` and `green`
+Deployments for the API Gateway and the Admin Dashboard. The Service
+selectors default to the `blue` version.
+
+To switch traffic to the other color simply patch the Service selector:
+
+```bash
+# Switch API Gateway to green
+kubectl patch service api-gateway -p '{"spec":{"selector":{"app":"api-gateway","color":"green"}}}'
+
+# Switch Admin Dashboard to green
+kubectl patch service admin-dashboard -p '{"spec":{"selector":{"app":"admin-dashboard","color":"green"}}}'
+```
+
+New deployments can be rolled out with `scripts/deploy.sh`, which
+performs a gradual blue-green update and runs health checks.

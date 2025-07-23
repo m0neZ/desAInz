@@ -136,6 +136,19 @@ make prod-up
 
 The `docker-compose.prod.yml` file uses prebuilt images and is intended for use on servers.
 
+## UAT Checklist
+
+Use the following checklist to verify a release candidate in the staging environment:
+
+- [ ] Ingestion workflow completes successfully
+- [ ] Scoring jobs finish and persist results
+- [ ] Mock-up creation produces downloadable previews
+- [ ] Publishing pipeline uploads items and invalidates caches
+- [ ] Dashboard pages load and manual job triggers work
+- [ ] No errors appear in logs
+- [ ] Documentation and tests pass
+- [ ] Stakeholders sign off on the release
+
 ## Implementation Plan
 
 See [docs/implementation_plan.md](docs/implementation_plan.md) for the milestone roadmap derived from the [Design Idea Engine Complete Blueprint](docs/blueprints/DesignIdeaEngineCompleteBlueprint.md).

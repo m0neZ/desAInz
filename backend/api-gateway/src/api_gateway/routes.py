@@ -559,6 +559,56 @@ async def monitoring_overview() -> Dict[str, Any]:
     return cast(Dict[str, Any], resp.json())
 
 
+@analytics_router.get(
+    "/marketplace_metrics/{listing_id}",
+    summary="Marketplace metrics",
+)
+async def marketplace_metrics(listing_id: int) -> Dict[str, Any]:
+    """Proxy aggregated marketplace metrics."""
+    url = f"{ANALYTICS_URL}/marketplace_metrics/{listing_id}"
+    client = _get_client("analytics")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@analytics_router.get(
+    "/marketplace_metrics/{listing_id}/export",
+    summary="Export marketplace metrics",
+)
+async def export_marketplace_metrics(listing_id: int) -> Response:
+    """Stream CSV marketplace metrics for ``listing_id``."""
+    url = f"{ANALYTICS_URL}/marketplace_metrics/{listing_id}/export"
+    client = _get_client("analytics")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return Response(
+        content=resp.content,
+        media_type=resp.headers.get("content-type", "text/csv"),
+        headers={"Content-Disposition": resp.headers.get("content-disposition", "")},
+    )
+
+
+@analytics_router.get(
+    "/performance_metrics/{listing_id}/export",
+    summary="Export performance metrics",
+)
+async def export_performance_metrics(listing_id: int) -> Response:
+    """Stream CSV performance metrics for ``listing_id``."""
+    url = f"{ANALYTICS_URL}/performance_metrics/{listing_id}/export"
+    client = _get_client("analytics")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return Response(
+        content=resp.content,
+        media_type=resp.headers.get("content-type", "text/csv"),
+        headers={"Content-Disposition": resp.headers.get("content-disposition", "")},
+    )
+
+
 @monitoring_router.get("/status", summary="Service status")
 async def monitoring_status() -> Dict[str, Any]:
     """Proxy service status from the monitoring service."""
@@ -593,6 +643,24 @@ async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
     return cast(Dict[str, Any], resp.json())
+
+
+@analytics_router.get(
+    "/ab_test_results/{ab_test_id}/export",
+    summary="Export A/B test results",
+)
+async def export_ab_test_results(ab_test_id: int) -> Response:
+    """Stream CSV export for an A/B test."""
+    url = f"{ANALYTICS_URL}/ab_test_results/{ab_test_id}/export"
+    client = _get_client("analytics")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return Response(
+        content=resp.content,
+        media_type=resp.headers.get("content-type", "text/csv"),
+        headers={"Content-Disposition": resp.headers.get("content-disposition", "")},
+    )
 
 
 @analytics_router.get("/low_performers", summary="Lowest performing listings")

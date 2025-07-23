@@ -32,6 +32,10 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
 
 5. Secrets can be stored in files under `secrets/` and referenced as Docker secrets. The services read them from `/run/secrets`.
 
+6. The analytics service becomes available on `http://localhost:8006` when using
+   Docker Compose. Aggregated metrics can also be retrieved through the API
+   Gateway at `http://localhost:8000/analytics`.
+
 ## Kubernetes
 
 1. Base manifests live in `infrastructure/k8s`. Apply them to a cluster:

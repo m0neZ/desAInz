@@ -1,4 +1,11 @@
-"""Dagster sensors for conditional job triggers."""
+"""
+Dagster sensors for conditional job triggers.
+
+Environment variables
+---------------------
+AUTO_RUN_IDEA:
+    When set to ``"true"`` the :func:`idea_job` is triggered automatically.
+"""
 
 from __future__ import annotations
 

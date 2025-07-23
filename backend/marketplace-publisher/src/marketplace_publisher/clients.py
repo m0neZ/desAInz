@@ -1,4 +1,12 @@
-"""Marketplace API clients with Selenium fallback and OAuth support."""
+"""
+Marketplace API clients with Selenium fallback and OAuth support.
+
+Environment variables
+---------------------
+SELENIUM_SKIP:
+    Set to ``"1"`` to disable Selenium-based features during tests. Defaults to
+    ``"0"``.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,14 @@
-"""Expose Prometheus metrics and logs via FastAPI."""
+"""
+Expose Prometheus metrics and logs via FastAPI.
+
+Environment variables
+---------------------
+CELERY_BROKER_URL:
+    Connection string for the Celery broker. Defaults to
+    ``"redis://localhost:6379/0"``.
+CELERY_QUEUES:
+    Comma-separated list of queues to consume. Defaults to ``"celery"``.
+"""
 
 from __future__ import annotations
 

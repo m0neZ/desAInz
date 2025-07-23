@@ -22,6 +22,19 @@ test('navigates to Heatmap page when link clicked', async () => {
   expect(Router).toMatchObject({ pathname: '/dashboard/heatmap' });
 });
 
+test('navigates to Heatmap page via keyboard', async () => {
+  Router.setCurrentUrl('/dashboard');
+  renderWithRouter(
+    <AdminLayout>
+      <div>Home</div>
+    </AdminLayout>
+  );
+  const link = screen.getByText('Heatmap');
+  link.focus();
+  await userEvent.keyboard('{Enter}');
+  expect(Router).toMatchObject({ pathname: '/dashboard/heatmap' });
+});
+
 test('navigates to Roles page when link clicked', async () => {
   Router.setCurrentUrl('/dashboard');
   renderWithRouter(

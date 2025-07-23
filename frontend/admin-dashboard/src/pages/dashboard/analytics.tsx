@@ -6,9 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { useAnalyticsSummary } from '../../lib/trpc/hooks';
 import dynamic from 'next/dynamic';
 
-const AnalyticsChart = dynamic(() => import('../../components/AnalyticsChart'), {
-  ssr: false,
-});
+const AnalyticsChart = dynamic(
+  () => import('../../components/AnalyticsChart'),
+  {
+    ssr: false,
+  }
+);
 const LatencyChart = dynamic(() => import('../../components/LatencyChart'), {
   ssr: false,
 });

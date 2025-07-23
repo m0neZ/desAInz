@@ -9,11 +9,9 @@ import { spawn } from 'child_process';
 
 // Type annotation for the spawned Next.js process
 /** @type {import('child_process').ChildProcess} */
-const next = spawn(
-  'node',
-  ['--max-old-space-size=2048', './server.js'],
-  { stdio: 'inherit' }
-);
+const next = spawn('node', ['--max-old-space-size=2048', './server.js'], {
+  stdio: 'inherit',
+});
 
 setInterval((): void => {
   /** @type {NodeJS.MemoryUsage} */

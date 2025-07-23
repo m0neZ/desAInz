@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
  * Reusable button styled for the admin dashboard.
@@ -21,12 +22,13 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
-      className={`inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white focus:outline-none focus:ring ${className}`}
+    <motion.button
+      className={`inline-flex items-center justify-center rounded-md bg-blue-600 px-3 sm:px-4 py-1 sm:py-2 text-white focus:outline-none focus:ring ${className}`}
+      whileTap={{ scale: 0.95 }}
       aria-label={ariaLabel}
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }

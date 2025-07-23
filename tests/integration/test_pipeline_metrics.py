@@ -183,6 +183,6 @@ async def test_pipeline_with_metrics(
     response = client.get("/optimizations")
     assert response.status_code == 200
     metrics_time = time.perf_counter() - start
-    assert len(opt_api.store.get_metrics()) == 1
+    assert len(list(opt_api.store.get_metrics())) == 1
     assert metrics_time < thresholds["metrics"]
     assert proc.memory_info().rss / 1024**2 < thresholds["memory_mb"]

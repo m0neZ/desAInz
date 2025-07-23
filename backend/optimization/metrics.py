@@ -31,7 +31,7 @@ class MetricsAnalyzer:
     ) -> "MetricsAnalyzer":
         """Create analyzer from a :class:`MetricsStore` instance."""
         if limit is None:
-            metrics = store.get_metrics()
+            metrics = list(store.get_metrics())
         else:
             metrics = store.get_recent_metrics(limit)
         return cls(metrics)

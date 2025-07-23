@@ -184,21 +184,21 @@ def get_recent_metrics(limit: int = 10) -> List[ResourceMetric]:
 @app.get("/optimizations")
 def get_optimizations() -> List[str]:
     """Return recommended cost optimizations."""
-    analyzer = MetricsAnalyzer(store.get_metrics())
+    analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.recommend_optimizations()
 
 
 @app.get("/recommendations")
 def get_recommendations() -> List[str]:
     """Return top optimization actions."""
-    analyzer = MetricsAnalyzer(store.get_metrics())
+    analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.top_recommendations()
 
 
 @app.get("/cost_alerts")
 def get_cost_alerts() -> List[str]:
     """Return alerts when usage or cost thresholds are exceeded."""
-    analyzer = MetricsAnalyzer(store.get_metrics())
+    analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.cost_alerts()
 
 

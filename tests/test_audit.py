@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 import sys
-import warnings
 
 sys.path.append(
     str(Path(__file__).resolve().parents[1] / "backend" / "api-gateway" / "src")
@@ -31,9 +30,7 @@ from backend.shared.db.models import AuditLog  # noqa: E402
 
 def setup_module(module: object) -> None:
     """Create tables for tests."""
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
 
 def teardown_module(module: object) -> None:
@@ -43,9 +40,7 @@ def teardown_module(module: object) -> None:
 
 def test_log_admin_action_persists() -> None:
     """Audit entries should persist after logging."""
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        log_admin_action("alice", "login", {"ip": "127.0.0.1"})
+    log_admin_action("alice", "login", {"ip": "127.0.0.1"})
     with SessionLocal() as session:
         logs = session.query(AuditLog).all()
         assert len(logs) == 1

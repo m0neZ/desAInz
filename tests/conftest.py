@@ -22,9 +22,6 @@ import time
 import docker
 
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
-warnings.filterwarnings(
-    "ignore", category=UserWarning, message='directory "/run/secrets" does not exist'
-)
 
 # Inject lightweight stubs for heavy optional dependencies.
 if os.environ.get("SKIP_HEAVY_DEPS") == "1":

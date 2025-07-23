@@ -20,7 +20,7 @@ client = TestClient(app)
 def test_add_metric_and_get_optimizations() -> None:
     """Ensure metrics endpoint stores data and returns suggestions."""
     metric = {
-        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "cpu_percent": 90,
         "memory_mb": 2048,
     }

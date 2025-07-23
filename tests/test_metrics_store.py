@@ -22,12 +22,12 @@ def test_metrics_insertion(tmp_path: Path) -> None:
     db = tmp_path / "metrics.db"
     store = TimescaleMetricsStore(f"sqlite:///{db}")
     score_metric = ScoreMetric(
-        idea_id=1, timestamp=datetime.utcnow().replace(tzinfo=UTC), score=0.8
+        idea_id=1, timestamp=datetime.now(UTC), score=0.8
     )
     store.add_score(score_metric)
     latency_metric = PublishLatencyMetric(
         idea_id=1,
-        timestamp=datetime.utcnow().replace(tzinfo=UTC),
+        timestamp=datetime.now(UTC),
         latency_seconds=2.5,
     )
     store.add_latency(latency_metric)
@@ -35,7 +35,7 @@ def test_metrics_insertion(tmp_path: Path) -> None:
     store.create_hourly_continuous_aggregate()
     assert (
         store.get_active_users(
-            datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=1)
+            datetime.now(UTC) - timedelta(hours=1)
         )
         == 1
     )
@@ -81,16 +81,16 @@ def test_postgresql_metrics(
     """Verify metrics operations work with PostgreSQL."""
     store = TimescaleMetricsStore(postgresql.info.dsn)
     metric = ScoreMetric(
-        idea_id=2, timestamp=datetime.utcnow().replace(tzinfo=UTC), score=0.9
+        idea_id=2, timestamp=datetime.now(UTC), score=0.9
     )
     store.add_score(metric)
     latency_metric = PublishLatencyMetric(
         idea_id=2,
-        timestamp=datetime.utcnow().replace(tzinfo=UTC),
+        timestamp=datetime.now(UTC),
         latency_seconds=1.2,
     )
     store.add_latency(latency_metric)
-    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=5)
+    since = datetime.now(UTC) - timedelta(minutes=5)
     assert store.get_active_users(since) == 1
 
 
@@ -109,7 +109,7 @@ def test_active_users_cached(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) ->
     )
     monkeypatch.setattr(metrics_store, "sync_delete", lambda key: fake.delete(key))
     metric = ScoreMetric(
-        idea_id=3, timestamp=datetime.utcnow().replace(tzinfo=UTC), score=0.8
+        idea_id=3, timestamp=datetime.now(UTC), score=0.8
     )
     store.add_score(metric)
 
@@ -123,7 +123,7 @@ def test_active_users_cached(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) ->
             yield conn
 
     monkeypatch.setattr(store, "_get_conn", counting_conn)
-    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=1)
+    since = datetime.now(UTC) - timedelta(hours=1)
     assert store.get_active_users(since) == 1
     assert store.get_active_users(since) == 1
     assert len(calls) == 1
@@ -146,14 +146,14 @@ def test_cache_invalidated_on_new_score(
     )
     monkeypatch.setattr(metrics_store, "sync_delete", lambda key: fake.delete(key))
     metric = ScoreMetric(
-        idea_id=4, timestamp=datetime.utcnow().replace(tzinfo=UTC), score=0.8
+        idea_id=4, timestamp=datetime.now(UTC), score=0.8
     )
     store.add_score(metric)
-    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=1)
+    since = datetime.now(UTC) - timedelta(hours=1)
     assert store.get_active_users(since) == 1
     assert fake.get(metrics_store.ACTIVE_USERS_CACHE_KEY) is not None
     metric2 = ScoreMetric(
-        idea_id=5, timestamp=datetime.utcnow().replace(tzinfo=UTC), score=0.7
+        idea_id=5, timestamp=datetime.now(UTC), score=0.7
     )
     store.add_score(metric2)
     assert fake.get(metrics_store.ACTIVE_USERS_CACHE_KEY) is None

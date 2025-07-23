@@ -9,7 +9,7 @@ def test_average_cpu_memory() -> None:
     """Validate average calculations for CPU and memory."""
     metrics = [
         ResourceMetric(
-            datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
+            datetime.now(UTC) - timedelta(minutes=i),
             50 + i,
             512,
             disk_usage_mb=1024.0,
@@ -25,7 +25,7 @@ def test_top_recommendations() -> None:
     """Ensure top recommendations are returned in priority order."""
     metrics = [
         ResourceMetric(
-            datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
+            datetime.now(UTC) - timedelta(minutes=i),
             90,
             2048,
             disk_usage_mb=11 * 1024.0,
@@ -41,7 +41,7 @@ def test_top_recommendations() -> None:
 
 def test_trend_methods() -> None:
     """Check that trend utilities return positive slopes."""
-    now = datetime.utcnow().replace(tzinfo=UTC)
+    now = datetime.now(UTC)
     metrics = [
         ResourceMetric(
             now - timedelta(minutes=5 - i),

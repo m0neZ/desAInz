@@ -62,7 +62,6 @@ def dummy_consumer_factory(messages: list[tuple[str, Dict[str, Any]]]) -> type[o
     return DummyKafkaConsumer
 
 
-@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_schema_roundtrip(monkeypatch: pytest.MonkeyPatch) -> None:
     """Messages published by signal ingestion are deserialized by the scoring engine."""
 

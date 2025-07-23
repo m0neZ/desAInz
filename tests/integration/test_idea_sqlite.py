@@ -13,7 +13,6 @@ import vcr
 import pytest
 from dagster import DagsterInstance
 
-pytestmark = pytest.mark.filterwarnings("ignore::DeprecationWarning")
 
 ROOT = Path(__file__).resolve().parents[2]
 import sys

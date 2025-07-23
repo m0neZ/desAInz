@@ -91,7 +91,7 @@ async def test_pipeline_with_metrics(
                     source=adapter.__class__.__name__,
                     content=str(row),
                     content_hash=f"{adapter.__class__.__name__}:{row['id']}",
-                    timestamp=datetime.utcnow().replace(tzinfo=UTC),
+                    timestamp=datetime.now(UTC),
                     embedding=[0.0, 0.0],
                 )
                 session.add(signal)
@@ -104,7 +104,7 @@ async def test_pipeline_with_metrics(
     monkeypatch.setattr(
         models,
         "datetime",
-        SimpleNamespace(utcnow=lambda: datetime.utcnow().replace(tzinfo=UTC)),
+        SimpleNamespace(utcnow=lambda: datetime.now(UTC)),
     )
 
     sent: list[dict] = []
@@ -176,7 +176,7 @@ async def test_pipeline_with_metrics(
     monkeypatch.setattr(opt_api, "store", MetricsStore(str(tmp_path / "metrics.db")))
     client = TestClient(opt_api.app)
     metric = {
-        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "cpu_percent": 10,
         "memory_mb": 100,
     }

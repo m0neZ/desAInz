@@ -88,4 +88,4 @@ keeps label cardinality low even for dynamic endpoints.
 
 ## PagerDuty Alerts
 
-Set `PAGERDUTY_ROUTING_KEY` and `ENABLE_PAGERDUTY=true` in the environment to enable alerting. The monitoring service triggers alerts when the average publish latency breaches the configured SLA and when listing synchronization detects issues.
+Set `PAGERDUTY_ROUTING_KEY` and `ENABLE_PAGERDUTY=true` in the environment to enable alerting. The monitoring service triggers alerts when the average publish latency breaches the configured SLA and when listing synchronization detects issues. Rejections during publishing emit a `notify_listing_issue` event with a `nsfw` or `trademarked` state.

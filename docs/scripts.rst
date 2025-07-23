@@ -29,6 +29,9 @@ Python utilities
    * - ``benchmark_score.py``
      - Compare scoring latency with and without caching.
      - ``python scripts/benchmark_score.py``
+   * - ``benchmark_mockup.py``
+     - Measure latency for generating mock-ups.
+     - ``python scripts/benchmark_mockup.py``
    * - ``cli.py``
      - Entry point exposing ingestion and publishing helpers.
      - ``python scripts/cli.py --help``

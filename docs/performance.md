@@ -27,6 +27,16 @@ Cached:   0.25s for 100 runs
 
 Caching reduces request latency by roughly 3x in this small test.
 
+## Mock-up Generation Benchmarks
+
+Run `scripts/benchmark_mockup.py` to measure how long the Stable Diffusion
+pipeline takes to create sample images. The command accepts a prompt and the
+number of runs to execute:
+
+```bash
+python scripts/benchmark_mockup.py --prompt "shirt design" --runs 3
+```
+
 ## Event Loop Optimization
 
 All FastAPI services install `uvloop` and configure it during startup for better
@@ -38,6 +48,10 @@ The Dagster job `benchmark_score_job` executes
 `scripts.benchmark_score.main` on a schedule and persists the results in the
 `score_benchmarks` table. Grafana uses the PostgreSQL data source to visualize
 these benchmarks over time, allowing quick detection of regressions.
+
+In addition, a nightly GitHub Actions workflow runs both
+`benchmark_score.py --persist` and `benchmark_mockup.py` to catch performance
+regressions outside of Dagster.
 
 ## Capturing Profiling Data
 

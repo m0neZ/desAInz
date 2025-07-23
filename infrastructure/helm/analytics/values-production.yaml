@@ -1,0 +1,23 @@
+replicaCount: 1
+image:
+  repository: example/analytics
+  tag: production
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+resources: {}
+
+# Environment variables
+env: {}
+
+# Name of the Kubernetes secret mounted at /run/secrets
+secretName: shared-secret
+
+# Horizontal pod autoscaler
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 70

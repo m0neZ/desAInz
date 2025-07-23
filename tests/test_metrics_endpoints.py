@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib
 import sys
 from pathlib import Path
+import warnings
 
 import pytest
 from fastapi.testclient import TestClient

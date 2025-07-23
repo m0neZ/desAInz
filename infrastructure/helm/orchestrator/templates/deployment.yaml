@@ -12,7 +12,7 @@ spec:
       labels: {{- include "orchestrator.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: webserver
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -37,7 +37,24 @@ spec:
             - name: tmpfs-volume
               mountPath: /tmpfs
           resources:
-{{ toYaml .Values.resources | nindent 12 }}
+            {{ toYaml .Values.resources | nindent 12 }}
+        - name: scheduler
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["dagster-daemon", "run"]
+          env:
+{{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+{{- end }}
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /run/secrets
+              readOnly: true
+            - name: tmpfs-volume
+              mountPath: /tmpfs
+          resources:
+            {{ toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: secret-volume
           secret:

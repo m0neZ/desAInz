@@ -169,6 +169,7 @@ HEALTH_ENDPOINTS: dict[str, str] = {
     "monitoring": f"{MONITORING_URL}/health",
     "analytics": f"{ANALYTICS_URL}/health",
     "feedback_loop": "http://feedback-loop:8000/health",
+    "orchestrator": "http://orchestrator:3000/health",
 }
 auth_scheme = HTTPBearer()
 

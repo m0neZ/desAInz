@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+import os
 
 import pytest
 from dagster import DagsterInstance
@@ -17,6 +18,11 @@ MONITORING_SRC = ROOT / "backend" / "monitoring" / "src"
 sys.path.append(str(MONITORING_SRC))  # noqa: E402
 SIGNAL_SRC = ROOT / "backend" / "signal-ingestion" / "src"
 sys.path.append(str(SIGNAL_SRC))  # noqa: E402
+os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"
+from backend.shared.config import settings
+settings.database_url = "sqlite+aiosqlite:///:memory:"
+settings.pgbouncer_url = ""
+settings.__dict__.pop("effective_database_url", None)
 
 from orchestrator.jobs import privacy_purge_job  # noqa: E402
 from signal_ingestion import database  # noqa: E402

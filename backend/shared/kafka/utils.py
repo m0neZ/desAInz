@@ -23,10 +23,13 @@ class KafkaProducerWrapper:
         self._registry = registry
 
     def produce(self, topic: str, message: Dict[str, Any]) -> None:
-        """Validate and produce ``message`` to ``topic``."""
+        """Validate and send ``message`` to ``topic`` without flushing."""
         schema = self._registry.fetch(f"{topic}-value")
         validate(message, schema)
         self._producer.send(topic, message)
+
+    def flush(self) -> None:
+        """Flush buffered messages to Kafka."""
         self._producer.flush()
 
 

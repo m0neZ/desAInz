@@ -1,38 +1,36 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
-import LatencyIndicator from '../src/components/LatencyIndicator';
+import { render, act } from '@testing-library/react';
+import StatusIndicator from '../src/components/StatusIndicator';
 
-global.fetch = jest.fn(() =>
+(global.fetch as jest.Mock) = jest.fn(() =>
   Promise.resolve({
     ok: true,
-    json: () => Promise.resolve({ average_seconds: 7200 }),
+    json: () => Promise.resolve({ api: 'ok' }),
   })
 ) as jest.Mock;
 
-test('displays latency value', async () => {
-  render(<LatencyIndicator />);
-  await waitFor(() => screen.getByTestId('latency-indicator'));
-  expect(
-    screen.getByText(/Avg time from signal to publish/)
-  ).toBeInTheDocument();
+afterEach(() => {
+  (global.fetch as jest.Mock).mockClear();
 });
 
 test('pauses polling when tab hidden', () => {
   jest.useFakeTimers();
-  render(<LatencyIndicator />);
+  render(<StatusIndicator />);
   const startCount = (global.fetch as jest.Mock).mock.calls.length;
   act(() => {
     jest.advanceTimersByTime(5000);
   });
   expect((global.fetch as jest.Mock).mock.calls.length).toBe(startCount + 1);
+
   Object.defineProperty(document, 'visibilityState', {
     configurable: true,
     get: () => 'hidden',
   });
   act(() => {
     document.dispatchEvent(new Event('visibilitychange'));
-    jest.advanceTimersByTime(5000);
+    jest.advanceTimersByTime(10000);
   });
   expect((global.fetch as jest.Mock).mock.calls.length).toBe(startCount + 1);
+
   Object.defineProperty(document, 'visibilityState', {
     configurable: true,
     get: () => 'visible',

@@ -20,9 +20,35 @@ export default function StatusIndicator() {
         /* ignore */
       }
     }
-    fetchStatus();
-    const id = setInterval(fetchStatus, 5000);
-    return () => clearInterval(id);
+
+    let id: NodeJS.Timeout | null = null;
+
+    function start() {
+      void fetchStatus();
+      id = setInterval(fetchStatus, 5000);
+    }
+
+    function stop() {
+      if (id) {
+        clearInterval(id);
+        id = null;
+      }
+    }
+
+    function handleVisibility() {
+      if (document.visibilityState === 'visible') {
+        start();
+      } else {
+        stop();
+      }
+    }
+
+    handleVisibility();
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      stop();
+    };
   }, [url]);
 
   return (

@@ -1,0 +1,618 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - localhost:44945
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - ce845505-c9ec-4f0f-ba89-f705f5d5015f
+    method: GET
+    uri: http://localhost:44945/approvals/ce845505-c9ec-4f0f-ba89-f705f5d5015f
+  response:
+    body:
+      string: '{"approved": true}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:04:41 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      host:
+      - localhost:44945
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - ce845505-c9ec-4f0f-ba89-f705f5d5015f
+    method: POST
+    uri: http://localhost:44945/ingest
+  response:
+    body:
+      string: '{"signals": ["s1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:04:41 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - localhost:39667
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b4de76ca-145e-414a-9879-8a00486f8df8
+    method: GET
+    uri: http://localhost:39667/approvals/b4de76ca-145e-414a-9879-8a00486f8df8
+  response:
+    body:
+      string: '{"approved": true}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:14 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      host:
+      - localhost:39667
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b4de76ca-145e-414a-9879-8a00486f8df8
+    method: POST
+    uri: http://localhost:39667/ingest
+  response:
+    body:
+      string: '{"signals": ["s1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:14 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - localhost:35657
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - 0d9139ce-77ec-42e5-a5c9-73695ef3f914
+    method: GET
+    uri: http://localhost:35657/approvals/0d9139ce-77ec-42e5-a5c9-73695ef3f914
+  response:
+    body:
+      string: '{"approved": true}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:39 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      host:
+      - localhost:35657
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - 0d9139ce-77ec-42e5-a5c9-73695ef3f914
+    method: POST
+    uri: http://localhost:35657/ingest
+  response:
+    body:
+      string: '{"signals": ["s1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:40 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"timestamp":"2025-07-23T05:05:40.116315+00:00","engagement_rate":0.0,"embedding":[0.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '88'
+      content-type:
+      - application/json
+      host:
+      - localhost:35657
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - 0d9139ce-77ec-42e5-a5c9-73695ef3f914
+    method: POST
+    uri: http://localhost:35657/score
+  response:
+    body:
+      string: '{"score": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:40 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"scores":[1.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '16'
+      content-type:
+      - application/json
+      host:
+      - localhost:35657
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - 0d9139ce-77ec-42e5-a5c9-73695ef3f914
+    method: POST
+    uri: http://localhost:35657/generate
+  response:
+    body:
+      string: '{"items": ["i1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:40 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"marketplace":"redbubble","design_path":"i1"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '46'
+      content-type:
+      - application/json
+      host:
+      - localhost:35657
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - 0d9139ce-77ec-42e5-a5c9-73695ef3f914
+    method: POST
+    uri: http://localhost:35657/publish
+  response:
+    body:
+      string: '{"task_id": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:05:40 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - localhost:34301
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+    method: GET
+    uri: http://localhost:34301/approvals/dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+  response:
+    body:
+      string: '{"approved": true}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:04 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      host:
+      - localhost:34301
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+    method: POST
+    uri: http://localhost:34301/ingest
+  response:
+    body:
+      string: '{"signals": ["s1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:05 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"timestamp":"2025-07-23T05:06:05.114833+00:00","engagement_rate":0.0,"embedding":[0.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '88'
+      content-type:
+      - application/json
+      host:
+      - localhost:34301
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+    method: POST
+    uri: http://localhost:34301/score
+  response:
+    body:
+      string: '{"score": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:05 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"scores":[1.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '16'
+      content-type:
+      - application/json
+      host:
+      - localhost:34301
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+    method: POST
+    uri: http://localhost:34301/generate
+  response:
+    body:
+      string: '{"items": ["i1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:05 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"marketplace":"redbubble","design_path":"i1"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '46'
+      content-type:
+      - application/json
+      host:
+      - localhost:34301
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - dce1777c-6f2e-4c6f-b5db-6c5593e92eb7
+    method: POST
+    uri: http://localhost:34301/publish
+  response:
+    body:
+      string: '{"task_id": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:05 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      host:
+      - localhost:36599
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+    method: GET
+    uri: http://localhost:36599/approvals/b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+  response:
+    body:
+      string: '{"approved": true}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:25 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      host:
+      - localhost:36599
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+    method: POST
+    uri: http://localhost:36599/ingest
+  response:
+    body:
+      string: '{"signals": ["s1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:25 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"timestamp":"2025-07-23T05:06:25.211078+00:00","engagement_rate":0.0,"embedding":[0.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '88'
+      content-type:
+      - application/json
+      host:
+      - localhost:36599
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+    method: POST
+    uri: http://localhost:36599/score
+  response:
+    body:
+      string: '{"score": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:25 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"scores":[1.0]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '16'
+      content-type:
+      - application/json
+      host:
+      - localhost:36599
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+    method: POST
+    uri: http://localhost:36599/generate
+  response:
+    body:
+      string: '{"items": ["i1"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:25 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"marketplace":"redbubble","design_path":"i1"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate, br
+      connection:
+      - keep-alive
+      content-length:
+      - '46'
+      content-type:
+      - application/json
+      host:
+      - localhost:36599
+      user-agent:
+      - python-httpx/0.28.1
+      x-correlation-id:
+      - b1bfa9a0-82ec-4884-b82f-d84dca106e1d
+    method: POST
+    uri: http://localhost:36599/publish
+  response:
+    body:
+      string: '{"task_id": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 05:06:25 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+version: 1

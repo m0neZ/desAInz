@@ -140,14 +140,14 @@ The `docker-compose.prod.yml` file uses prebuilt images and is intended for use 
 
 Use the following checklist to verify a release candidate in the staging environment:
 
-- [ ] Ingestion workflow completes successfully
-- [ ] Scoring jobs finish and persist results
-- [ ] Mock-up creation produces downloadable previews
-- [ ] Publishing pipeline uploads items and invalidates caches
-- [ ] Dashboard pages load and manual job triggers work
-- [ ] No errors appear in logs
-- [ ] Documentation and tests pass
-- [ ] Stakeholders sign off on the release
+- [ ] Ingestion workflow completes successfully *(blocked by network restrictions on 2025-07-23)*
+- [ ] Scoring jobs finish and persist results *(blocked by network restrictions)*
+- [ ] Mock-up creation produces downloadable previews *(blocked by network restrictions)*
+- [ ] Publishing pipeline uploads items and invalidates caches *(blocked by network restrictions)*
+- [ ] Dashboard pages load and manual job triggers work *(blocked by network restrictions)*
+- [ ] No errors appear in logs *(unable to verify in staging)*
+- [ ] Documentation and tests pass *(lint checks reported issues)*
+- [ ] Stakeholders sign off on the release *(pending)*
 
 ## Implementation Plan
 

@@ -33,7 +33,7 @@ This document describes the steps for verifying new changes in the staging envir
 3. Confirm charts render and manual job triggers succeed.
 
 ## Results
-Attempted execution on 2024-08-14. Deployment and curl commands were blocked by network restrictions in the Codex environment, so workflows could not be fully validated. Dashboard access was also unavailable. No application issues were observed locally, but staging results remain unverified.
+Attempted execution on 2025-07-23. Deployment and curl commands were blocked by network restrictions in the Codex environment, so workflows could not be fully validated. Dashboard access was also unavailable. No application issues were observed locally, but staging results remain unverified.
 
 ## Reporting
 Record any defects in GitHub issues with logs or screenshots. Include references to the steps above for reproducibility.

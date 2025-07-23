@@ -195,6 +195,13 @@ def get_recommendations() -> List[str]:
     return analyzer.top_recommendations()
 
 
+@app.get("/cost_alerts")
+def get_cost_alerts() -> List[str]:
+    """Return alerts when usage or cost thresholds are exceeded."""
+    analyzer = MetricsAnalyzer(store.get_metrics())
+    return analyzer.cost_alerts()
+
+
 @app.get("/health")
 async def health() -> Response:
     """Return service liveness."""

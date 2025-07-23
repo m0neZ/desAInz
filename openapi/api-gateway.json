@@ -10,9 +10,9 @@
                 "responses": {
                     "200": {
                         "description": "Successful Response",
-                        "content": {"application/json": {"schema": {}}}
+                        "content": {"application/json": {"schema": {}}},
                     }
-                }
+                },
             }
         },
         "/health": {
@@ -373,6 +373,27 @@
                                     "items": {"type": "string"},
                                     "type": "array",
                                     "title": "Response Recommendations Recommendations Get",
+                                }
+                            }
+                        },
+                    }
+                },
+            }
+        },
+        "/optimization/cost_alerts": {
+            "get": {
+                "summary": "Cost Alerts",
+                "description": "Return cost alerts from the optimization service.",
+                "operationId": "cost_alerts_cost_alerts_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {"type": "string"},
+                                    "type": "array",
+                                    "title": "Response Cost Alerts Cost Alerts Get",
                                 }
                             }
                         },

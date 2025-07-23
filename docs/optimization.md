@@ -12,3 +12,9 @@ specifying a ``limit`` query parameter:
 ```bash
 curl http://localhost:8000/metrics/recent?limit=5
 ```
+
+## Cost alerts
+
+The ``/cost_alerts`` endpoint returns a list of warnings when average usage or
+estimated monthly cost surpass predefined thresholds. Integrate these alerts
+with monitoring dashboards or notification systems to react quickly.

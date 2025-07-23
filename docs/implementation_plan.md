@@ -58,3 +58,30 @@ Kubernetes manifests under `infrastructure/k8s/`.
   and corresponding manifests in `infrastructure/k8s/base/`.
 - **OpenTelemetry Collector** – the `otel-collector` service in
   [`../docker-compose.tracing.yml`](../docker-compose.tracing.yml) aggregates traces from all services.
+
+## Remaining Steps to Production
+
+The repository contains most microservices and infrastructure code. The
+following concrete steps will finalize the production rollout:
+
+1. **Build and Publish Images** – run `scripts/build-images.sh` followed by
+   `scripts/push-images.sh` to push container images for all services under
+   `backend/` and `frontend/`.
+2. **Validate Migrations** – execute `scripts/validate_migrations.sh` to ensure
+   the Alembic migration chain in `backend/shared/db` has no divergent heads.
+3. **Deploy to Kubernetes** – use `scripts/helm_deploy.sh` or the blue‑green
+   `scripts/deploy.sh` script to roll out the Helm charts in
+   `infrastructure/helm`.
+4. **Launch the Orchestrator** – run `scripts/run_dagster_webserver.sh` to start
+   the Dagster pipelines defined in `backend/orchestrator` for cross‑service
+   workflows.
+5. **Enable Monitoring and Optimization** – start the services under
+   `backend/monitoring` and `backend/optimization` and schedule metrics
+   collection with `scripts/collect_metrics.py`.
+6. **Publish Documentation** – generate the Sphinx site via `make -C docs html`
+   and upload through the GitHub Actions workflow in `.github/workflows/docs.yml`.
+7. **Run Final Tests** – call `scripts/run_integration_tests.py` and
+   `scripts/run_load_tests.sh` before promoting a build to the main branch.
+8. **Operations Setup** – configure regular backups and log rotation with
+   `scripts/backup.py`, `scripts/rotate_logs.sh` and
+   `scripts/apply_s3_lifecycle.py`.

@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 import PaginationControls from '../../components/PaginationControls';
 import { useLowPerformers } from '../../hooks/useLowPerformers';
 
-import type { Performer } from '../../hooks/useLowPerformers';
-
 const LIMIT = 20;
 
 function LowPerformersPage() {

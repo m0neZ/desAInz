@@ -11,3 +11,14 @@ test('toggles label when clicked', async () => {
   await userEvent.click(button);
   expect(button).toHaveTextContent('Off');
 });
+
+test('toggles label with keyboard', async () => {
+  render(<ToggleButton />);
+  const button = screen.getByTestId('toggle-button');
+  button.focus();
+  expect(button).toHaveTextContent('Off');
+  await userEvent.keyboard('{Enter}');
+  expect(button).toHaveTextContent('On');
+  await userEvent.keyboard(' ');
+  expect(button).toHaveTextContent('Off');
+});

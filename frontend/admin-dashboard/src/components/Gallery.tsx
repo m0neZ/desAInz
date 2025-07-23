@@ -1,5 +1,6 @@
 // @flow
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGalleryItems } from '../lib/trpc/hooks';
@@ -21,7 +22,13 @@ export function Gallery({ limit = 20 }: Props) {
   }
   return (
     <>
-      <div className="grid grid-cols-3 gap-2" data-testid="gallery">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2"
+        data-testid="gallery"
+        layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         {data.items.map((item) => (
           <Link key={item.id} href={`/dashboard/publish?mockupId=${item.id}`}>
             <Image
@@ -33,7 +40,7 @@ export function Gallery({ limit = 20 }: Props) {
             />
           </Link>
         ))}
-      </div>
+      </motion.div>
       <PaginationControls
         page={page}
         total={data.total}

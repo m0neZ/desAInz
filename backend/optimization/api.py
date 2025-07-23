@@ -152,6 +152,12 @@ def shutdown_scheduler() -> None:
         scheduler.shutdown()
 
 
+@app.on_event("shutdown")
+def shutdown_store() -> None:
+    """Close database connections on application shutdown."""
+    store.close()
+
+
 class MetricIn(BaseModel):
     """Request body for submitting a resource metric."""
 

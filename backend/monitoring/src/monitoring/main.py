@@ -82,6 +82,14 @@ add_profiling(app)
 add_error_handlers(app)
 register_metrics(app)
 add_security_headers(app)
+
+
+@app.on_event("shutdown")
+def shutdown_store() -> None:
+    """Close metrics store connections on shutdown."""
+    metrics_store.close()
+
+
 SIGNAL_TO_PUBLISH_SECONDS = Histogram(
     "signal_to_publish_seconds",
     "Latency from first signal ingestion to listing publish per idea",
@@ -148,7 +156,7 @@ async def status() -> dict[str, str]:
     return results
 
 
-def _record_latencies() -> Iterable[float]:
+def _record_latencies() -> list[float]:
     """Record per-idea publish latency and return all values."""
     stmt = (
         select(

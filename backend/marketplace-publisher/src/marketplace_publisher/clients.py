@@ -407,4 +407,4 @@ class SeleniumFallback:
                     pass
                 if attempts >= max_attempts:
                     raise
-                time.sleep(min(2**attempts, 30))
+                await asyncio.sleep(min(2**attempts, 30))

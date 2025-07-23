@@ -3,8 +3,22 @@
 from __future__ import annotations
 
 from pathlib import Path
+import asyncio
+import sys
+from types import SimpleNamespace
 import yaml
 import pytest
+
+
+class _Options:
+    def add_argument(self, arg: str) -> None:
+        pass
+
+
+sys.modules.setdefault(
+    "selenium.webdriver.firefox.options",
+    SimpleNamespace(Options=_Options),
+)
 
 from marketplace_publisher.clients import SeleniumFallback
 from marketplace_publisher import rules
@@ -89,3 +103,51 @@ async def test_selenium_publish_failure_with_screenshot(tmp_path: Path) -> None:
         await fallback.publish(Marketplace.redbubble, design, {"title": "t"})
     assert list(tmp_path.glob("*.png"))
     assert list(tmp_path.glob("*.log"))
+
+
+@pytest.mark.asyncio()
+async def test_selenium_publish_waits_async(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Ensure publish yields control using ``asyncio.sleep`` for retries."""
+    page = _write_page(tmp_path)
+    rules_path = _write_rules(tmp_path, page, bad=True)
+    rules.load_rules(rules_path)
+    design = tmp_path / "design.png"
+    design.write_text("img")
+    fallback = SeleniumFallback(screenshot_dir=tmp_path)
+
+    class DummyDriver:
+        def get(self, url: str) -> None:
+            pass
+
+        def find_element(self, *args: str, **kwargs: str) -> None:
+            raise Exception("fail")
+
+        def save_screenshot(self, path: str) -> None:
+            pass
+
+        def get_log(self, name: str) -> list[str]:
+            return []
+
+    fallback.driver = DummyDriver()
+
+    event = asyncio.Event()
+    original_sleep = asyncio.sleep
+
+    async def fake_sleep(seconds: float) -> None:
+        await original_sleep(0)
+        event.set()
+
+    monkeypatch.setattr(
+        "marketplace_publisher.clients.asyncio.sleep",
+        fake_sleep,
+    )
+    with pytest.raises(Exception):
+        await fallback.publish(
+            Marketplace.redbubble,
+            design,
+            {"title": "t"},
+            max_attempts=2,
+        )
+    assert event.is_set()

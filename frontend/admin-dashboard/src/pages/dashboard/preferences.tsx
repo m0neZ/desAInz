@@ -2,16 +2,16 @@
 import React, { useEffect } from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
-import { useStore } from '../../hooks/useStore';
+import { usePreferencesStore } from '../../store/usePreferencesStore';
 
 function PreferencesPage() {
   const { t } = useTranslation();
-  const notify = useStore((s) => s.notifyOnFail);
-  const toggleNotify = useStore((s) => s.toggleNotify);
+  const notify = usePreferencesStore((s) => s.notifyOnFail);
+  const toggleNotify = usePreferencesStore((s) => s.toggleNotify);
 
   useEffect(() => {
     // hydrate persisted state on mount
-    useStore.persist.rehydrate();
+    usePreferencesStore.persist.rehydrate();
   }, []);
 
   const toggle = () => {

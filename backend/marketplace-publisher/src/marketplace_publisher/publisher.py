@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Literal, Mapping
 import logging
+import subprocess
 
 from requests import RequestException
 from sqlalchemy.exc import SQLAlchemyError
@@ -47,6 +48,17 @@ _fallback = SeleniumFallback()
 logger = logging.getLogger(__name__)
 
 
+def _invalidate_cdn_cache(path: str) -> None:
+    """Invalidate CDN caches for ``path`` if configured."""
+    from backend.shared.config import settings as shared_settings
+
+    distribution = shared_settings.cdn_distribution_id
+    if not distribution:
+        return
+    script = Path(__file__).resolve().parents[2] / "scripts" / "invalidate_cache.sh"
+    subprocess.run([str(script), distribution, f"/{path}"], check=True)
+
+
 def validate_mockup(
     marketplace: Marketplace, design_path: Path, metadata: Mapping[str, Any]
 ) -> str | None:
@@ -67,7 +79,6 @@ def publish_design(
     marketplace: Marketplace, design_path: Path, metadata: Mapping[str, Any]
 ) -> str | Literal["trademarked"]:
     """Publish ``design_path`` to ``marketplace`` if allowed."""
-
     title = str(metadata.get("title", ""))
     if title and is_trademarked(title):
         return "trademarked"
@@ -103,6 +114,7 @@ async def publish_with_retry(
             notify_failure(task_id, marketplace.value)
             return "trademarked"
         await update_task_status(session, task_id, PublishStatus.success)
+        _invalidate_cdn_cache(design_path.name)
         return listing_id
     except (RequestException, SQLAlchemyError, RuntimeError) as exc:
         logger.exception(

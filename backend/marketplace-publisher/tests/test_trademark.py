@@ -40,6 +40,8 @@ db_stub = types.ModuleType("marketplace_publisher.db")
 
 
 class Marketplace(enum.Enum):
+    """Enumeration of supported marketplaces."""
+
     redbubble = "redbubble"
 
 

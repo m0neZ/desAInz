@@ -121,7 +121,15 @@ async def add_correlation_id(
 
 @app.get("/overview")
 async def overview() -> dict[str, float]:
-    """Return basic system information."""
+    """
+    Return basic system information.
+
+    Returns
+    -------
+    dict[str, float]
+        Current CPU and memory usage statistics.
+    """
+
     return {
         "cpu_percent": psutil.cpu_percent(),
         "memory_mb": psutil.virtual_memory().used / 1024**2,
@@ -130,7 +138,15 @@ async def overview() -> dict[str, float]:
 
 @app.get("/analytics")
 async def analytics() -> dict[str, float]:
-    """Return metrics derived from the TimescaleDB store."""
+    """
+    Return metrics derived from the TimescaleDB store.
+
+    Returns
+    -------
+    dict[str, float]
+        Number of active users and error rate for the last day.
+    """
+
     since = datetime.utcnow() - timedelta(days=1)
     active = metrics_store.get_active_users(since)
     error_rate = metrics_store.get_error_rate(since)
@@ -139,7 +155,14 @@ async def analytics() -> dict[str, float]:
 
 @app.get("/status")
 async def status() -> dict[str, str]:
-    """Return health status for core services."""
+    """
+    Return health status for core services.
+
+    Returns
+    -------
+    dict[str, str]
+        Mapping of service names to their health status.
+    """
     services = {
         "mockup_generation": "http://mockup-generation:8000/health",
         "marketplace_publisher": "http://marketplace-publisher:8000/health",
@@ -159,7 +182,14 @@ async def status() -> dict[str, str]:
 
 
 def _record_latencies() -> list[float]:
-    """Record per-idea publish latency and return all values."""
+    """
+    Record per-idea publish latency and return all values.
+
+    Returns
+    -------
+    list[float]
+        Latency values in seconds for each idea.
+    """
     stmt = (
         select(
             Idea.id,
@@ -191,7 +221,14 @@ def _record_latencies() -> list[float]:
 
 
 def get_average_latency() -> float:
-    """Return cached average latency or compute and store it."""
+    """
+    Return cached average latency or compute and store it.
+
+    Returns
+    -------
+    float
+        Average latency in seconds.
+    """
     cached = sync_get(LATENCY_CACHE_KEY)
     if cached is not None:
         try:
@@ -208,7 +245,14 @@ def get_average_latency() -> float:
 
 
 def get_queue_length() -> int:
-    """Return total length of configured Celery queues."""
+    """
+    Return total length of configured Celery queues.
+
+    Returns
+    -------
+    int
+        Number of messages waiting across all queues.
+    """
     url = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
     queues = os.getenv("CELERY_QUEUES", "celery").split(",")
     client = redis.Redis.from_url(url)
@@ -219,7 +263,19 @@ def get_queue_length() -> int:
 
 
 def _check_queue_backlog(cfg: Settings = settings) -> int:
-    """Return queue length and trigger alert when threshold exceeded."""
+    """
+    Return queue length and trigger alert when threshold exceeded.
+
+    Parameters
+    ----------
+    cfg : Settings, optional
+        Configuration object used to determine thresholds.
+
+    Returns
+    -------
+    int
+        Number of queued tasks.
+    """
     length = get_queue_length()
     threshold = getattr(
         cfg,
@@ -248,7 +304,19 @@ def _check_queue_backlog(cfg: Settings = settings) -> int:
 
 
 def _check_sla(cfg: Settings = settings) -> float:
-    """Return average latency and trigger PagerDuty when breached."""
+    """
+    Return average latency and trigger PagerDuty when breached.
+
+    Parameters
+    ----------
+    cfg : Settings, optional
+        Configuration controlling thresholds and cooldowns.
+
+    Returns
+    -------
+    float
+        Average signal-to-publish latency in seconds.
+    """
     avg = get_average_latency()
     if avg == 0.0:
         return avg
@@ -276,35 +344,70 @@ def _check_sla(cfg: Settings = settings) -> float:
 
 @app.get("/sla")
 async def sla() -> dict[str, float]:
-    """Check SLA status and emit PagerDuty alert if violated."""
+    """
+    Check SLA status and emit PagerDuty alert if violated.
+
+    Returns
+    -------
+    dict[str, float]
+        Average latency in seconds.
+    """
     avg = _check_sla()
     return {"average_seconds": avg}
 
 
 @app.get("/latency")
 async def latency() -> dict[str, float]:
-    """Return average signal-to-publish latency without triggering alerts."""
+    """
+    Return average signal-to-publish latency without triggering alerts.
+
+    Returns
+    -------
+    dict[str, float]
+        Average latency in seconds.
+    """
     avg = get_average_latency()
     return {"average_seconds": avg}
 
 
 @app.get("/queue_length")
 async def queue_length() -> dict[str, int]:
-    """Check queue backlog and emit PagerDuty alert when needed."""
+    """
+    Check queue backlog and emit PagerDuty alert when needed.
+
+    Returns
+    -------
+    dict[str, int]
+        Current queue length.
+    """
     length = _check_queue_backlog()
     return {"length": length}
 
 
 @app.get("/daily_summary")
 async def daily_summary() -> dict[str, object]:
-    """Return the daily summary generated from recent activity."""
+    """
+    Return the daily summary generated from recent activity.
+
+    Returns
+    -------
+    dict[str, object]
+        Summary content keyed by metric name.
+    """
     summary = await generate_daily_summary()
     return dict(summary)
 
 
 @app.get("/daily_summary/report")
 async def daily_summary_report() -> dict[str, object]:
-    """Return the latest persisted daily summary report."""
+    """
+    Return the latest persisted daily summary report.
+
+    Returns
+    -------
+    dict[str, object]
+        Parsed JSON report or an empty dictionary if missing.
+    """
     path = Path(settings.daily_summary_file)
     if not path.exists():
         return {}
@@ -316,7 +419,14 @@ async def daily_summary_report() -> dict[str, object]:
 
 @app.get("/logs")
 async def logs() -> dict[str, str]:
-    """Return the latest application logs."""
+    """
+    Return the latest application logs.
+
+    Returns
+    -------
+    dict[str, str]
+        Log output concatenated as a single string.
+    """
     path = Path(settings.log_file)
     if not path.exists():
         return {"logs": ""}
@@ -326,13 +436,32 @@ async def logs() -> dict[str, str]:
 
 @app.get("/health")
 async def health() -> Response:
-    """Return service liveness."""
+    """
+    Return service liveness.
+
+    Returns
+    -------
+    Response
+        Cached JSON payload ``{"status": "ok"}``.
+    """
     return json_cached({"status": "ok"})
 
 
 @app.get("/ready")
 async def ready(request: Request) -> Response:
-    """Return service readiness."""
+    """
+    Return service readiness.
+
+    Parameters
+    ----------
+    request : Request
+        Incoming request object.
+
+    Returns
+    -------
+    Response
+        Cached JSON payload ``{"status": "ready"}``.
+    """
     require_status_api_key(request)
     return json_cached({"status": "ready"})
 

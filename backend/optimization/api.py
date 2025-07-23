@@ -185,46 +185,112 @@ def add_metric(metric: MetricIn) -> dict[str, str]:
 
 @app.get("/metrics/recent", response_model=List[ResourceMetric])
 def get_recent_metrics(limit: int = 10) -> List[ResourceMetric]:
-    """Return the most recently captured metrics."""
+    """
+    Return the most recently captured metrics.
+
+    Parameters
+    ----------
+    limit : int, optional
+        Number of metrics to fetch ordered from newest to oldest.
+
+    Returns
+    -------
+    list[ResourceMetric]
+        Metrics ordered from oldest to newest.
+    """
+
     return store.get_recent_metrics(limit)
 
 
 @app.get("/optimizations")
 def get_optimizations() -> List[str]:
-    """Return recommended cost optimizations."""
+    """
+    Return recommended cost optimizations.
+
+    Returns
+    -------
+    list[str]
+        Ordered list of optimization suggestions.
+    """
+
     analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.recommend_optimizations()
 
 
 @app.get("/recommendations")
 def get_recommendations() -> List[str]:
-    """Return top optimization actions."""
+    """
+    Return prioritized optimization actions.
+
+    Returns
+    -------
+    list[str]
+        Recommendations ordered by impact.
+    """
+
     analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.top_recommendations()
 
 
 @app.get("/hints")
 def get_hints() -> List[str]:
-    """Return optimization hints based on recent metrics."""
+    """
+    Return optimization hints based on recent metrics.
+
+    Returns
+    -------
+    list[str]
+        Ranked hints derived from recent data.
+    """
+
     analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.top_recommendations()
 
 
 @app.get("/cost_alerts")
 def get_cost_alerts() -> List[str]:
-    """Return alerts when usage or cost thresholds are exceeded."""
+    """
+    Return alerts when usage or cost thresholds are exceeded.
+
+    Returns
+    -------
+    list[str]
+        Messages describing current cost concerns.
+    """
+
     analyzer = MetricsAnalyzer(list(store.get_metrics()))
     return analyzer.cost_alerts()
 
 
 @app.get("/health")
 async def health() -> Response:
-    """Return service liveness."""
+    """
+    Return service liveness.
+
+    Returns
+    -------
+    Response
+        Cached JSON payload containing ``{"status": "ok"}``.
+    """
+
     return json_cached({"status": "ok"})
 
 
 @app.get("/ready")
 async def ready(request: Request) -> Response:
-    """Return service readiness."""
+    """
+    Return service readiness if the API key is valid.
+
+    Parameters
+    ----------
+    request : Request
+        Incoming request object.
+
+    Returns
+    -------
+    Response
+        Cached JSON payload ``{"status": "ready"}``.
+    """
+
     require_status_api_key(request)
     return json_cached({"status": "ready"})

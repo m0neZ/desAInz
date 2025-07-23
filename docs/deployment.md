@@ -209,3 +209,11 @@ The CI pipeline checks that every service responds successfully to `/ready`
 after deploying the new images. If any health check fails, the workflow
 reverts to the previous image tag by running `make helm-deploy` with the prior
 commit SHA. Health checks are performed via `scripts/check_k8s_health.sh`.
+## Finalizing the Deployment
+
+Once all services are rolled out and the health checks pass, complete the release with the following steps:
+
+1. Verify the **orchestrator** is scheduling workflows correctly by running `dagster job list`.
+2. Confirm the **optimization** scheduler updates metrics and alerts appear in the **analytics** dashboards.
+3. Tag the release and push the versioned Helm charts to the registry for future rollbacks.
+

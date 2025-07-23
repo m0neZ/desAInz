@@ -165,3 +165,45 @@ class MetricsAnalyzer:
                 seen.add(rec)
 
         return unique[:limit]
+
+    # Cost calculation constants
+    _CPU_HOURLY_COST = 0.05  # dollars per vCPU hour
+    _MEMORY_GB_HOURLY_COST = 0.01  # dollars per GB hour
+    _DISK_GB_MONTHLY_COST = 0.2  # dollars per GB month
+    _HOURS_PER_MONTH = 730
+
+    def monthly_cost_estimate(self) -> float:
+        """Return the estimated monthly cost based on average usage."""
+        cpu_hours = self.average_cpu() / 100.0 * self._HOURS_PER_MONTH
+        cpu_cost = cpu_hours * self._CPU_HOURLY_COST
+
+        memory_gb_hours = self.average_memory() / 1024.0 * self._HOURS_PER_MONTH
+        memory_cost = memory_gb_hours * self._MEMORY_GB_HOURLY_COST
+
+        disk_gb = self.average_disk_usage() / 1024.0
+        disk_cost = disk_gb * self._DISK_GB_MONTHLY_COST
+
+        return float(cpu_cost + memory_cost + disk_cost)
+
+    _CPU_ALERT_THRESHOLD = 90.0
+    _MEMORY_ALERT_THRESHOLD_MB = 4096.0
+    _DISK_ALERT_THRESHOLD_MB = 50 * 1024.0
+    _MONTHLY_COST_THRESHOLD = 100.0
+
+    def cost_alerts(self) -> List[str]:
+        """Return alerts when resource usage or estimated cost is high."""
+        alerts: List[str] = []
+        if self.average_cpu(10) > self._CPU_ALERT_THRESHOLD:
+            alerts.append("CPU usage exceeded 90% over the last 10 samples")
+        if self.average_memory(10) > self._MEMORY_ALERT_THRESHOLD_MB:
+            alerts.append("Memory usage exceeded 4GB over the last 10 samples")
+        if self.average_disk_usage(10) > self._DISK_ALERT_THRESHOLD_MB:
+            alerts.append("Disk usage exceeded 50GB over the last 10 samples")
+
+        monthly_cost = self.monthly_cost_estimate()
+        if monthly_cost > self._MONTHLY_COST_THRESHOLD:
+            alerts.append(
+                f"Estimated monthly cost ${monthly_cost:.2f} exceeds threshold"
+            )
+
+        return alerts

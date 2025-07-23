@@ -11,7 +11,7 @@ def test_average_cpu_memory() -> None:
     """Validate average CPU and memory calculations."""
     metrics = [
         ResourceMetric(
-            timestamp=datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
+            timestamp=datetime.now(UTC) - timedelta(minutes=i),
             cpu_percent=10 * i,
             memory_mb=256.0,
             disk_usage_mb=1024.0,
@@ -28,7 +28,7 @@ def test_top_recommendations() -> None:
     """Ensure prioritized recommendations are returned."""
     metrics = [
         ResourceMetric(
-            timestamp=datetime.utcnow().replace(tzinfo=UTC) - timedelta(minutes=i),
+            timestamp=datetime.now(UTC) - timedelta(minutes=i),
             cpu_percent=90,
             memory_mb=2048,
             disk_usage_mb=12 * 1024.0,
@@ -45,7 +45,7 @@ def test_top_recommendations() -> None:
 
 def test_trend_calculation() -> None:
     """Verify trend slopes for CPU, memory and disk."""
-    now = datetime.utcnow().replace(tzinfo=UTC)
+    now = datetime.now(UTC)
     metrics = [
         ResourceMetric(
             timestamp=now - timedelta(minutes=5 - i),
@@ -63,7 +63,7 @@ def test_trend_calculation() -> None:
 
 def test_recommendations_for_high_usage() -> None:
     """Recommendations should mention scaling when usage is high."""
-    now = datetime.utcnow().replace(tzinfo=UTC)
+    now = datetime.now(UTC)
     metrics = [
         ResourceMetric(
             timestamp=now - timedelta(minutes=20 - i),
@@ -77,3 +77,36 @@ def test_recommendations_for_high_usage() -> None:
     recs = analyzer.recommend_optimizations()
     assert any("CPU usage is trending upward" in r for r in recs)
     assert any("Disk usage exceeds" in r for r in recs)
+
+
+def test_monthly_cost_estimate() -> None:
+    """Compute a positive monthly cost from metrics."""
+    metrics = [
+        ResourceMetric(
+            timestamp=datetime.now(UTC) - timedelta(minutes=i),
+            cpu_percent=50.0,
+            memory_mb=1024.0,
+            disk_usage_mb=10 * 1024.0,
+        )
+        for i in range(30)
+    ]
+    analyzer = MetricsAnalyzer(metrics)
+    cost = analyzer.monthly_cost_estimate()
+    assert cost > 0
+
+
+def test_cost_alerts_trigger() -> None:
+    """Cost alerts should fire when thresholds are exceeded."""
+    metrics = [
+        ResourceMetric(
+            timestamp=datetime.now(UTC) - timedelta(minutes=i),
+            cpu_percent=95.0,
+            memory_mb=8 * 1024.0,
+            disk_usage_mb=60 * 1024.0,
+        )
+        for i in range(15)
+    ]
+    analyzer = MetricsAnalyzer(metrics)
+    alerts = analyzer.cost_alerts()
+    assert any("CPU usage" in a for a in alerts)
+    assert any("Disk usage" in a for a in alerts)

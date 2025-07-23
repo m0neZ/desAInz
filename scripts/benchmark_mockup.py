@@ -10,12 +10,13 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import asyncio
 from time import perf_counter
 
 from mockup_generation.generator import MockupGenerator
 
 
-def main(prompt: str, output_dir: Path, steps: int, runs: int) -> float:
+async def main(prompt: str, output_dir: Path, steps: int, runs: int) -> float:
     """Return total duration in seconds for generating ``runs`` mock-ups."""
     generator = MockupGenerator()
     generator.load()
@@ -23,7 +24,7 @@ def main(prompt: str, output_dir: Path, steps: int, runs: int) -> float:
 
     start = perf_counter()
     for i in range(runs):
-        generator.generate(
+        await generator.generate(
             prompt,
             str(output_dir / f"mockup_{i}.png"),
             num_inference_steps=steps,
@@ -45,4 +46,4 @@ if __name__ == "__main__":
     parser.add_argument("--steps", type=int, default=30, help="inference steps")
     parser.add_argument("--runs", type=int, default=1, help="number of mock-ups")
     args = parser.parse_args()
-    main(args.prompt, args.output_dir, args.steps, args.runs)
+    asyncio.run(main(args.prompt, args.output_dir, args.steps, args.runs))

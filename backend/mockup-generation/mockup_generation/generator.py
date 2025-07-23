@@ -73,7 +73,7 @@ class MockupGenerator:
                     ).to(device)
                 self.pipeline.enable_attention_slicing()
 
-    def generate(
+    async def generate(
         self,
         prompt: str,
         output_path: str,
@@ -119,15 +119,20 @@ class MockupGenerator:
             return GenerationResult(image_path=str(output_file), duration=res.duration)
 
         self.load(model_identifier)
-        assert self.pipeline is not None
+        pipeline = self.pipeline
+        assert pipeline is not None
         start = perf_counter()
+        loop = asyncio.get_running_loop()
         try:
-            image = self.pipeline(
-                prompt=prompt, num_inference_steps=num_inference_steps
-            ).images[0]
+            image = await loop.run_in_executor(
+                None,
+                lambda: pipeline(
+                    prompt=prompt, num_inference_steps=num_inference_steps
+                ).images[0],
+            )
         except (RuntimeError, ValueError, OSError) as exc:
             logger.warning("Local generation failed: %s. Falling back to API", exc)
-            image = asyncio.run(self._fallback_api(prompt))
+            image = await self._fallback_api(prompt)
         duration = perf_counter() - start
         image.save(temp_path)
         Path(temp_path).replace(output_file)

@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from typing import Iterator
 
 import pytest
+import asyncio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))  # noqa: E402
@@ -44,7 +45,9 @@ def test_generate_with_diffusers(
     )
     gen = MockupGenerator()
     gen.pipeline = DummyPipeline()
-    result = gen.generate("test", str(tmp_path / "img.png"), num_inference_steps=1)
+    result = asyncio.run(
+        gen.generate("test", str(tmp_path / "img.png"), num_inference_steps=1)
+    )
     assert Path(result.image_path).exists()
 
 
@@ -66,6 +69,6 @@ def test_generate_with_comfyui(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) 
     )
     monkeypatch.setattr(MockupGenerator, "load", lambda *a, **k: None)
     gen = MockupGenerator()
-    result = gen.generate("prompt", str(tmp_path / "img.png"))
+    result = asyncio.run(gen.generate("prompt", str(tmp_path / "img.png")))
     assert called
     assert Path(result.image_path).exists()

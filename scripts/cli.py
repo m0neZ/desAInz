@@ -55,11 +55,15 @@ def generate_mockups(
     from mockup_generation.generator import MockupGenerator
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    generator = MockupGenerator()
-    result = generator.generate(
-        prompt, str(output_dir / "mockup.png"), num_inference_steps=steps
-    )
-    typer.echo(str(result.image_path))
+
+    async def _run() -> None:
+        generator = MockupGenerator()
+        result = await generator.generate(
+            prompt, str(output_dir / "mockup.png"), num_inference_steps=steps
+        )
+        typer.echo(str(result.image_path))
+
+    asyncio.run(_run())
 
 
 @app.command()

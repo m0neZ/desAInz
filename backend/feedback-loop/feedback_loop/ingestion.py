@@ -24,8 +24,11 @@ from .weight_updater import update_weights
 logger = logging.getLogger(__name__)
 
 
-def ingest_metrics(metrics: Iterable[Mapping[str, float]]) -> list[dict[str, float]]:
-    """Persist incoming metrics and return them as a list of dictionaries."""
+def ingest_metrics(
+    metrics: Iterable[Mapping[str, float | datetime]],
+) -> list[dict[str, float | datetime]]:
+    """Persist incoming metrics and return them with added timestamps."""
+
     metrics_list = [dict(m) for m in metrics]
     now = datetime.utcnow().replace(tzinfo=UTC)
     for entry in metrics_list:
@@ -147,9 +150,9 @@ def aggregate_marketplace_metrics() -> dict[str, float]:
     }
 
 
-def update_weights_from_db(scoring_api: str) -> dict[str, float]:
+def update_weights_from_db(scoring_api: str) -> Mapping[str, float]:
     """Update scoring weights using aggregated marketplace metrics."""
     metrics = aggregate_marketplace_metrics()
-    weights = update_weights(scoring_api, [metrics])
+    weights: Mapping[str, float] = update_weights(scoring_api, [metrics])
     weight_repository.update_weights(**weights)
     return weights

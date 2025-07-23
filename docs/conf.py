@@ -104,6 +104,16 @@ nitpick_ignore = [
     ("py:class", "datetime.datetime"),
     ("py:class", "ConfigDict"),
     ("py:class", "pathlib.Path"),
+    ("py:class", "dagster.HookContext"),
+    ("py:class", "dagster.ScheduleEvaluationContext"),
+    ("py:class", "dagster.SensorEvaluationContext"),
+    ("py:class", "dagster.RunRequest"),
+    ("py:class", "dagster.SkipReason"),
+    ("py:class", "dagster.RunFailureSensorContext"),
+    ("py:class", "_pytest.monkeypatch.MonkeyPatch"),
+    ("py:func", "signal_ingestion.privacy.purge_pii_rows"),
+    ("py:mod", "scripts.rotate_secrets"),
+    ("py:func", "idea_job"),
 ]
 
 # -- Options for HTML output -------------------------------------------------

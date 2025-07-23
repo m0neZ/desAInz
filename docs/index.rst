@@ -49,7 +49,27 @@ Kafka Utilities
     :members:
 
 .. automodule:: backend.shared.kafka.schema_registry
-    :members:
+   :members:
+   :noindex:
+
+
+Queue Metrics
+-------------
+.. automodule:: backend.shared.queue_metrics
+   :members:
+   :noindex:
+
+Regex Utilities
+---------------
+.. automodule:: backend.shared.regex_utils
+   :members:
+   :noindex:
+
+Service Names
+-------------
+.. automodule:: backend.shared.service_names
+   :members:
+   :noindex:
 
 
 Admin Dashboard

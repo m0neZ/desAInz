@@ -87,8 +87,9 @@ Python utilities
      - Update the changelog after specs change.
      - ``python scripts/update_openapi_changelog.py``
    * - ``wait_for_services.py``
-     - Block until dependencies respond on their ports.
-     - ``python scripts/wait_for_services.py``
+     - Block until dependencies respond on their ports. Use ``--max-wait`` to
+       control the timeout.
+     - ``python scripts/wait_for_services.py --max-wait 60``
 
 Shell utilities
 ---------------

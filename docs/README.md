@@ -101,3 +101,12 @@ invokes Sphinx with warnings treated as errors. `docformatter`,
 process. The generated
 HTML is uploaded as an artifact and deployed to GitHub Pages using
 `actions/deploy-pages` whenever changes are pushed to the `main` branch.
+
+## Deployment Steps
+
+For a full guide see [deployment.md](deployment.md). The basic process is:
+
+1. Build containers using `docker-compose` and push them to your registry.
+2. Deploy the Helm charts for each service including `orchestrator`, `analytics`, and the `optimization` scheduler.
+3. Validate that dashboards under the analytics service show recent metrics and that workflows appear in the orchestrator UI.
+

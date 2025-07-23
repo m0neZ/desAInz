@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
+import asyncio
 
 import pytest
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -29,9 +30,14 @@ async def test_publish_trademark_failure(
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
+    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
     monkeypatch.setattr(publisher, "is_trademarked", return_true)
     monkeypatch.setattr(publisher, "ensure_not_nsfw", return_none)
+    pd_calls: list[tuple[int, str]] = []
+    monkeypatch.setattr(
+        publisher, "notify_listing_issue", lambda *a: pd_calls.append(a)
+    )
+    monkeypatch.setattr(asyncio, "to_thread", lambda func, *a, **kw: func(*a, **kw))
 
     async with session_factory() as session:
         task = await db.create_task(
@@ -49,6 +55,7 @@ async def test_publish_trademark_failure(
             max_attempts=1,
         )
     assert result == "trademarked"
+    assert pd_calls == [(task.id, "trademarked")]
 
 
 @pytest.mark.asyncio()
@@ -66,13 +73,18 @@ async def test_publish_nsfw_failure(
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()
+    publisher.CLIENTS[db.Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
     monkeypatch.setattr(publisher, "is_trademarked", return_false)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001
         raise ValueError("NSFW")
 
     monkeypatch.setattr(publisher, "ensure_not_nsfw", raise_nsfw)
+    pd_calls_2: list[tuple[int, str]] = []
+    monkeypatch.setattr(
+        publisher, "notify_listing_issue", lambda *a: pd_calls_2.append(a)
+    )
+    monkeypatch.setattr(asyncio, "to_thread", lambda func, *a, **kw: func(*a, **kw))
 
     async with session_factory() as session:
         task = await db.create_task(
@@ -90,6 +102,7 @@ async def test_publish_nsfw_failure(
             max_attempts=1,
         )
     assert result == "nsfw"
+    assert pd_calls_2 == [(task.id, "nsfw")]
 
 
 def test_api_trademark_failure(monkeypatch: Any, tmp_path: Path) -> None:
@@ -105,12 +118,12 @@ def test_api_trademark_failure(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
 
     async def _noop(*args: Any, **kwargs: Any) -> None:
         return None
 
-    publisher._fallback.publish = _noop
+    publisher._fallback.publish = _noop  # type: ignore[method-assign]
     monkeypatch.setattr(publisher, "is_trademarked", return_true)
     monkeypatch.setattr(publisher, "ensure_not_nsfw", return_none)
 
@@ -142,12 +155,12 @@ def test_api_nsfw_failure(monkeypatch: Any, tmp_path: Path) -> None:
         def publish_design(self, design_path: Path, metadata: dict[str, Any]) -> str:
             return "ok"
 
-    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()
+    publisher.CLIENTS[Marketplace.redbubble] = DummyClient()  # type: ignore[assignment]
 
     async def _noop2(*args: Any, **kwargs: Any) -> None:
         return None
 
-    publisher._fallback.publish = _noop2
+    publisher._fallback.publish = _noop2  # type: ignore[method-assign]
     monkeypatch.setattr(publisher, "is_trademarked", return_false)
 
     def raise_nsfw(img: Any) -> None:  # noqa: ANN001

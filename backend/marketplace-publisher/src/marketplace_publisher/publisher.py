@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Literal, Mapping
 import logging
 import subprocess
+import asyncio
 
 from requests import RequestException
 from sqlalchemy.exc import SQLAlchemyError
@@ -23,6 +24,7 @@ from .clients import (
 )
 from .trademark import is_trademarked
 from .notifications import notify_failure
+from monitoring.pagerduty import notify_listing_issue  # type: ignore
 from mockup_generation.post_processor import ensure_not_nsfw
 from PIL import Image
 from . import rules
@@ -106,12 +108,20 @@ async def publish_with_retry(
         if reason is not None:
             await update_task_status(session, task_id, PublishStatus.failed)
             notify_failure(task_id, marketplace.value)
+            try:
+                await asyncio.to_thread(notify_listing_issue, task_id, reason)
+            except Exception as exc:  # pragma: no cover - best effort
+                logger.warning("listing notification failed: %s", exc)
             return reason
 
         listing_id = publish_design(marketplace, design_path, metadata)
         if listing_id == "trademarked":
             await update_task_status(session, task_id, PublishStatus.failed)
             notify_failure(task_id, marketplace.value)
+            try:
+                await asyncio.to_thread(notify_listing_issue, task_id, "trademarked")
+            except Exception as exc:  # pragma: no cover - best effort
+                logger.warning("listing notification failed: %s", exc)
             return "trademarked"
         await update_task_status(session, task_id, PublishStatus.success)
         _invalidate_cdn_cache(design_path.name)

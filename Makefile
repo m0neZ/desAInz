@@ -16,7 +16,7 @@ prod-up:
 test:
 	docker compose -f docker-compose.dev.yml -f docker-compose.test.yml up -d
 	python -m pytest -n auto -W error -vv
-	npm test
+	npm test -- --max-warnings=0
 	npm run test:e2e
 	docker compose -f docker-compose.dev.yml -f docker-compose.test.yml down
 

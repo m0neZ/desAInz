@@ -29,12 +29,16 @@ jobs:
           pip install -r requirements.txt -r requirements-dev.txt
           npm ci
           python -m pip install -e .
+      - name: Run pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure
       - name: Generate OpenAPI specs
         run: python scripts/generate_openapi.py
       - name: Run linting
         run: make lint
       - name: Run Flow
         run: npm run flow
+      - name: Run MyPy
+        run: mypy backend --explicit-package-bases --exclude "tests" --strict --config-file backend/mypy.ini
       - name: Run tests
         run: make test
 

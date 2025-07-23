@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-dashboard-green
+  labels:
+    app: admin-dashboard
+    color: green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-dashboard
+      color: green
+  template:
+    metadata:
+      labels:
+        app: admin-dashboard
+        color: green
+    spec:
+      containers:
+        - name: admin-dashboard
+          image: example/admin-dashboard:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 20

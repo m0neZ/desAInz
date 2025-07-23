@@ -49,5 +49,15 @@ for svc in "${SERVICES[@]}"; do
   echo "$svc is ready"
 done
 
-echo "All services are ready."
+expected_color="${ACTIVE_COLOR:-blue}"
+actual_color=$(docker inspect -f '{{range .Config.Env}}{{println .}}{{end}}' "$(docker compose $COMPOSE_FILES ps -q api-gateway)" | grep '^COLOR=' | cut -d= -f2 || true)
+if [[ -n "$actual_color" ]]; then
+  if [[ "$actual_color" != "$expected_color" ]]; then
+    echo "Active color $actual_color does not match expected $expected_color" >&2
+    exit 1
+  fi
+  echo "All services are ready with color $actual_color."
+else
+  echo "All services are ready."
+fi
 

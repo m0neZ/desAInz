@@ -1,0 +1,9 @@
+resources:
+  - ../../base
+  - api-gateway-blue-deployment.yaml
+  - api-gateway-green-deployment.yaml
+  - admin-dashboard-blue-deployment.yaml
+  - admin-dashboard-green-deployment.yaml
+  - admin-dashboard-service.yaml
+patchesStrategicMerge:
+  - api-gateway-service-selector-blue.yaml

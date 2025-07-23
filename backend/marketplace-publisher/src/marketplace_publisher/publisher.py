@@ -63,6 +63,18 @@ def validate_mockup(
     return None
 
 
+def publish_design(
+    marketplace: Marketplace, design_path: Path, metadata: Mapping[str, Any]
+) -> str | Literal["trademarked"]:
+    """Publish ``design_path`` to ``marketplace`` if allowed."""
+
+    title = str(metadata.get("title", ""))
+    if title and is_trademarked(title):
+        return "trademarked"
+    client = CLIENTS[marketplace]
+    return client.publish_design(design_path, dict(metadata))
+
+
 async def publish_with_retry(
     session: AsyncSession,
     task_id: int,
@@ -85,8 +97,11 @@ async def publish_with_retry(
             notify_failure(task_id, marketplace.value)
             return reason
 
-        client = CLIENTS[marketplace]
-        listing_id = client.publish_design(design_path, metadata)
+        listing_id = publish_design(marketplace, design_path, metadata)
+        if listing_id == "trademarked":
+            await update_task_status(session, task_id, PublishStatus.failed)
+            notify_failure(task_id, marketplace.value)
+            return "trademarked"
         await update_task_status(session, task_id, PublishStatus.success)
         return listing_id
     except (RequestException, SQLAlchemyError, RuntimeError) as exc:

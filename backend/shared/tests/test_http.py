@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import asyncio
 import pytest
 import requests
 
-from backend.shared.http import request_with_retry
+from backend.shared import http as http_module
+from backend.shared.http import get_async_http_client, request_with_retry
 
 
 def test_request_with_retry_success(requests_mock):
@@ -49,3 +51,32 @@ def test_request_with_retry_custom_session(requests_mock):
     )
     assert resp.text == "ok"
     assert requests_mock.call_count == 2
+
+
+@pytest.mark.asyncio()
+async def test_cached_client_same_loop() -> None:
+    """Calling helper twice in the same loop should return the same client."""
+
+    client1 = await get_async_http_client()
+    client2 = await get_async_http_client()
+    assert client1 is client2
+    await asyncio.to_thread(http_module._close_async_client)
+
+
+def test_clients_unique_per_loop() -> None:
+    """Each event loop should receive its own ``AsyncClient`` instance."""
+
+    loop1 = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop1)
+    client1 = loop1.run_until_complete(get_async_http_client())
+    loop2 = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop2)
+    client2 = loop2.run_until_complete(get_async_http_client())
+    http_module._close_async_client()
+    loop1.run_until_complete(loop1.shutdown_asyncgens())
+    loop2.run_until_complete(loop2.shutdown_asyncgens())
+    loop1.close()
+    loop2.close()
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
+    assert client1 is not client2

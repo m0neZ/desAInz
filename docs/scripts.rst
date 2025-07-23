@@ -32,6 +32,9 @@ Python utilities
    * - ``benchmark_mockup.py``
      - Measure latency for generating mock-ups.
      - ``python scripts/benchmark_mockup.py``
+   * - ``benchmark_metrics_store.py``
+     - Compare metric insertion with and without connection pooling.
+     - ``python scripts/benchmark_metrics_store.py``
    * - ``cli.py``
      - Entry point exposing ingestion and publishing helpers.
      - ``python scripts/cli.py --help``

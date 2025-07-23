@@ -93,6 +93,36 @@ class MetricsStore:
                     )
                     conn.commit()
 
+    def add_metrics(self, metrics: Iterable[ResourceMetric]) -> None:
+        """Insert multiple metrics in a single batch."""
+        metrics_list = list(metrics)
+        if not metrics_list:
+            return
+        values = [
+            (
+                m.timestamp.isoformat(),
+                m.cpu_percent,
+                m.memory_mb,
+                m.disk_usage_mb,
+            )
+            for m in metrics_list
+        ]
+        if self._use_sqlite:
+            with self._get_sqlite_conn() as conn:
+                conn.executemany(
+                    "INSERT INTO metrics VALUES (?, ?, ?, ?)",
+                    values,
+                )
+                conn.commit()
+        else:
+            with self._get_pg_conn() as conn:
+                with conn.cursor() as cur:
+                    cur.executemany(
+                        "INSERT INTO metrics VALUES (%s, %s, %s, %s)",
+                        values,
+                    )
+                    conn.commit()
+
     def get_metrics(self, batch_size: int = 500) -> Iterable[ResourceMetric]:
         """
         Yield all stored metrics in ``batch_size`` chunks.

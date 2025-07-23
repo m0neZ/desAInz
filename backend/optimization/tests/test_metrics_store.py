@@ -19,3 +19,12 @@ def test_sqlite_metrics_store(tmp_path: Path) -> None:
     assert metrics[0].cpu_percent == 50.0
     assert metrics[0].memory_mb == 128.0
     assert metrics[0].disk_usage_mb == 256.0
+
+
+def test_add_metrics_batch(tmp_path: Path) -> None:
+    """Verify multiple metrics can be inserted efficiently."""
+    store = MetricsStore(f"sqlite:///{tmp_path/'metrics.db'}")
+    metrics = [ResourceMetric(datetime.now(UTC), float(i), float(i)) for i in range(3)]
+    store.add_metrics(metrics)
+    retrieved = list(store.get_metrics())
+    assert len(retrieved) == 3

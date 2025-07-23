@@ -15,15 +15,16 @@ from backend.optimization.storage import MetricsStore
 def test_get_metrics_memory_usage(tmp_path: Path) -> None:
     """Ensure get_metrics does not load all rows into memory at once."""
     store = MetricsStore(f"sqlite:///{tmp_path/'metrics.db'}")
-    for i in range(5000):
-        store.add_metric(
-            ResourceMetric(
-                timestamp=datetime.now(UTC),
-                cpu_percent=float(i),
-                memory_mb=float(i),
-                disk_usage_mb=float(i),
-            )
+    metrics = [
+        ResourceMetric(
+            timestamp=datetime.now(UTC),
+            cpu_percent=float(i),
+            memory_mb=float(i),
+            disk_usage_mb=float(i),
         )
+        for i in range(5000)
+    ]
+    store.add_metrics(metrics)
 
     proc = psutil.Process()
     before = proc.memory_info().rss

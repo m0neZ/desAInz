@@ -9,6 +9,7 @@ import math
 import time
 
 from backend.shared.regex_utils import compile_cached
+from redis.client import Pipeline
 
 from backend.shared.cache import get_sync_client
 from backend.shared.cache import sync_get, sync_set
@@ -19,6 +20,7 @@ TRENDING_TS_KEY = "trending:timestamps"
 TRENDING_CACHE_PREFIX = "trending:list:"
 _DECAY_BASE = math.e
 _PIPELINE_BATCH = 1000
+_SCAN_COUNT = 10000
 _WORD_RE: Pattern[str] = compile_cached(r"\w+")
 
 
@@ -32,7 +34,7 @@ def extract_keywords(text: str | None) -> list[str]:
 def store_keywords(keywords: Iterable[str]) -> None:
     """Increment counts for ``keywords`` and refresh TTL."""
     client = get_sync_client()
-    pipe = client.pipeline()
+    pipe = cast(Pipeline, client.pipeline())
     now = int(time.time())
     for word in keywords:
         pipe.zincrby(TRENDING_KEY, 1, word)
@@ -80,35 +82,44 @@ def trim_keywords(max_size: int) -> None:
         pipe.zrem(TRENDING_KEY, *stale_words)
     pipe.zremrangebyscore(TRENDING_TS_KEY, 0, cutoff)
     pipe.execute()
-    pipe = client.pipeline()
-    op_count = 0
+    words: list[str] = []
+    scores: list[float] = []
 
-    for word, score in client.zscan_iter(TRENDING_KEY, count=1000):
-        w = word.decode("utf-8") if isinstance(word, bytes) else word
-        last_seen = client.zscore(TRENDING_TS_KEY, w)
-        if last_seen is None:
-            pipe.zrem(TRENDING_KEY, w)
-            pipe.zrem(TRENDING_TS_KEY, w)
-        else:
-            elapsed = now - int(last_seen)
-            decay = step_decay**elapsed
-            new_score = float(score) * decay
-            if new_score <= 0:
-                pipe.zrem(TRENDING_KEY, w)
-                pipe.zrem(TRENDING_TS_KEY, w)
+    def _process_chunk(chunk_words: list[str], chunk_scores: list[float]) -> None:
+        ts_pipe = cast(Pipeline, client.pipeline())
+        for w in chunk_words:
+            ts_pipe.zscore(TRENDING_TS_KEY, w)
+        timestamps = ts_pipe.execute()
+
+        update_pipe = cast(Pipeline, client.pipeline())
+        for w, score, last_seen in zip(chunk_words, chunk_scores, timestamps):
+            if last_seen is None:
+                update_pipe.zrem(TRENDING_KEY, w)
+                update_pipe.zrem(TRENDING_TS_KEY, w)
             else:
-                pipe.zadd(TRENDING_KEY, {w: new_score})
-        op_count += 1
-        if op_count >= _PIPELINE_BATCH:
-            pipe.execute()
-            pipe = client.pipeline()
-            op_count = 0
-    pipe.execute()
+                elapsed = now - int(last_seen)
+                new_score = score * (step_decay**elapsed)
+                if new_score <= 0:
+                    update_pipe.zrem(TRENDING_KEY, w)
+                    update_pipe.zrem(TRENDING_TS_KEY, w)
+                else:
+                    update_pipe.zadd(TRENDING_KEY, {w: new_score})
+        update_pipe.execute()
+
+    for word, score in client.zscan_iter(TRENDING_KEY, count=_SCAN_COUNT):
+        w = word.decode("utf-8") if isinstance(word, bytes) else word
+        words.append(w)
+        scores.append(float(score))
+        if len(words) >= _PIPELINE_BATCH:
+            _process_chunk(words, scores)
+            words, scores = [], []
+    if words:
+        _process_chunk(words, scores)
     size = client.zcard(TRENDING_KEY)
     if size > max_size:
         excess = client.zrange(TRENDING_KEY, 0, size - max_size - 1)
         if excess:
-            pipe = client.pipeline()
+            pipe = cast(Pipeline, client.pipeline())
             pipe.zrem(TRENDING_KEY, *excess)
             pipe.zrem(TRENDING_TS_KEY, *excess)
             pipe.execute()

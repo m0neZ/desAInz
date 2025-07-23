@@ -79,29 +79,39 @@ def trim_keywords(max_size: int) -> None:
         pipe.zrem(TRENDING_KEY, *stale_words)
     pipe.zremrangebyscore(TRENDING_TS_KEY, 0, cutoff)
     pipe.execute()
-    pipe = client.pipeline()
 
-    cursor = 0
-    while True:
-        cursor, words = client.zscan(TRENDING_KEY, cursor)
-        for word, score in words:
-            w = word.decode("utf-8") if isinstance(word, bytes) else word
-            last_seen = client.zscore(TRENDING_TS_KEY, w)
+    def _process(words: list[tuple[str, float]]) -> None:
+        ts_pipe = client.pipeline()
+        for w, _ in words:
+            ts_pipe.zscore(TRENDING_TS_KEY, w)
+        timestamps = ts_pipe.execute()
+
+        update_pipe = client.pipeline()
+        for (w, score), last_seen in zip(words, timestamps):
             if last_seen is None:
-                pipe.zrem(TRENDING_KEY, w)
-                pipe.zrem(TRENDING_TS_KEY, w)
+                update_pipe.zrem(TRENDING_KEY, w)
+                update_pipe.zrem(TRENDING_TS_KEY, w)
                 continue
             elapsed = now - int(last_seen)
             decay = step_decay**elapsed
             new_score = float(score) * decay
             if new_score <= 0:
-                pipe.zrem(TRENDING_KEY, w)
-                pipe.zrem(TRENDING_TS_KEY, w)
+                update_pipe.zrem(TRENDING_KEY, w)
+                update_pipe.zrem(TRENDING_TS_KEY, w)
             else:
-                pipe.zadd(TRENDING_KEY, {w: new_score})
-        if cursor == 0:
-            break
-    pipe.execute()
+                update_pipe.zadd(TRENDING_KEY, {w: new_score})
+        update_pipe.execute()
+
+    batch: list[tuple[str, float]] = []
+    for word, score in client.zscan_iter(TRENDING_KEY, count=1000):
+        w = word.decode("utf-8") if isinstance(word, bytes) else word
+        batch.append((w, float(score)))
+        if len(batch) >= 1000:
+            _process(batch)
+            batch.clear()
+    if batch:
+        _process(batch)
+
     size = client.zcard(TRENDING_KEY)
     if size > max_size:
         excess = client.zrange(TRENDING_KEY, 0, size - max_size - 1)

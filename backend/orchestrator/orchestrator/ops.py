@@ -248,7 +248,7 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
     headers = _auth_headers(context)
 
     client = await get_async_http_client()
-    for _ in range(30):
+    while True:
         try:
             resp = await client.get(url, headers=headers, timeout=5)
             resp.raise_for_status()
@@ -258,7 +258,6 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
         except httpx.HTTPError as exc:  # noqa: BLE001
             context.log.warning("approval check failed: %s", exc)
         await asyncio.sleep(10)
-    raise Failure("publishing not approved")
 
 
 @op(retry_policy=RetryPolicy(max_retries=3, delay=1))  # type: ignore[misc]

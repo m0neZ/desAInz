@@ -120,6 +120,13 @@ async function post(path: string, body?: unknown): Promise<void> {
   }
 }
 
+async function del(path: string): Promise<void> {
+  const res = await fetch(`${API_URL}${path}`, { method: 'DELETE' });
+  if (!res.ok) {
+    throw new Error(`request failed: ${res.status}`);
+  }
+}
+
 export const trpc = {
   ping: {
     mutate: () => call<{ message: string; user: string }>('ping'),
@@ -148,6 +155,7 @@ export const trpc = {
   },
   approvals: {
     approve: (runId: string) => post(`/approvals/${encodeURIComponent(runId)}`),
+    reject: (runId: string) => del(`/approvals/${encodeURIComponent(runId)}`),
     list: () => getJson<string[]>('/approvals'),
   },
   analytics: {

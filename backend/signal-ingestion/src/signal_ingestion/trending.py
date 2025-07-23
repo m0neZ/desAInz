@@ -18,6 +18,7 @@ TRENDING_KEY = "trending:keywords"
 TRENDING_TS_KEY = "trending:timestamps"
 TRENDING_CACHE_PREFIX = "trending:list:"
 _DECAY_BASE = math.e
+_PIPELINE_BATCH = 1000
 _WORD_RE: Pattern[str] = compile_cached(r"\w+")
 
 
@@ -80,17 +81,15 @@ def trim_keywords(max_size: int) -> None:
     pipe.zremrangebyscore(TRENDING_TS_KEY, 0, cutoff)
     pipe.execute()
     pipe = client.pipeline()
+    op_count = 0
 
-    cursor = 0
-    while True:
-        cursor, words = client.zscan(TRENDING_KEY, cursor)
-        for word, score in words:
-            w = word.decode("utf-8") if isinstance(word, bytes) else word
-            last_seen = client.zscore(TRENDING_TS_KEY, w)
-            if last_seen is None:
-                pipe.zrem(TRENDING_KEY, w)
-                pipe.zrem(TRENDING_TS_KEY, w)
-                continue
+    for word, score in client.zscan_iter(TRENDING_KEY, count=1000):
+        w = word.decode("utf-8") if isinstance(word, bytes) else word
+        last_seen = client.zscore(TRENDING_TS_KEY, w)
+        if last_seen is None:
+            pipe.zrem(TRENDING_KEY, w)
+            pipe.zrem(TRENDING_TS_KEY, w)
+        else:
             elapsed = now - int(last_seen)
             decay = step_decay**elapsed
             new_score = float(score) * decay
@@ -99,8 +98,11 @@ def trim_keywords(max_size: int) -> None:
                 pipe.zrem(TRENDING_TS_KEY, w)
             else:
                 pipe.zadd(TRENDING_KEY, {w: new_score})
-        if cursor == 0:
-            break
+        op_count += 1
+        if op_count >= _PIPELINE_BATCH:
+            pipe.execute()
+            pipe = client.pipeline()
+            op_count = 0
     pipe.execute()
     size = client.zcard(TRENDING_KEY)
     if size > max_size:

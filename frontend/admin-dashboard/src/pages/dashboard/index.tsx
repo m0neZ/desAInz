@@ -6,6 +6,8 @@ import type { GetStaticProps } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useSignals } from '../../lib/trpc/hooks';
 
+const LIMIT = 20;
+
 const StatusIndicator = dynamic(
   () => import('../../components/StatusIndicator')
 );
@@ -22,7 +24,7 @@ const AbTestSummary = dynamic(() => import('../../components/AbTestSummary'), {
 
 function DashboardPage() {
   const { t } = useTranslation();
-  const { data: signals, isLoading } = useSignals();
+  const { data: signals, isLoading } = useSignals(1, LIMIT);
 
   return (
     <div className="space-y-4">

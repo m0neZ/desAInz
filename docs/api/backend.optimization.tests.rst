@@ -1,6 +1,11 @@
 backend.optimization.tests package
 ==================================
 
+.. automodule:: backend.optimization.tests
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Submodules
 ----------
 
@@ -48,14 +53,6 @@ backend.optimization.tests.test\_scheduler module
 -------------------------------------------------
 
 .. automodule:: backend.optimization.tests.test_scheduler
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Module contents
----------------
-
-.. automodule:: backend.optimization.tests
    :members:
    :show-inheritance:
    :undoc-members:

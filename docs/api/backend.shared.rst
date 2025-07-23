@@ -1,6 +1,11 @@
 backend.shared package
 ======================
 
+.. automodule:: backend.shared
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Subpackages
 -----------
 
@@ -146,14 +151,6 @@ backend.shared.tracing module
 -----------------------------
 
 .. automodule:: backend.shared.tracing
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Module contents
----------------
-
-.. automodule:: backend.shared
    :members:
    :show-inheritance:
    :undoc-members:

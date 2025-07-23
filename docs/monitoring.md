@@ -86,6 +86,14 @@ Prometheus metrics are aggregated in memory. Path segments matching numeric or
 UUID-like patterns are replaced with `:id` before counters are updated. This
 keeps label cardinality low even for dynamic endpoints.
 
+## Connection Pool Metrics
+
+Each service exposes the size of its SQLAlchemy connection pool and the number
+of in-use connections via the `db_pool_size` and `db_pool_in_use` gauges. Query
+these metrics from Prometheus to visualize database load over time. When
+`db_pool_in_use` routinely nears `db_pool_size`, increase the `DB_POOL_SIZE`
+environment variable so additional connections can be allocated.
+
 ## PagerDuty Alerts
 
 Set `PAGERDUTY_ROUTING_KEY` and `ENABLE_PAGERDUTY=true` in the environment to enable alerting. The monitoring service triggers alerts when the average publish latency breaches the configured SLA and when listing synchronization detects issues. Rejections during publishing emit a `notify_listing_issue` event with a `nsfw` or `trademarked` state.

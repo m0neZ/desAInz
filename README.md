@@ -103,6 +103,10 @@ Base Kubernetes manifests are available under `infrastructure/k8s`.
 
 PgBouncer connection pooling is available via the `pgbouncer` service in
 `docker-compose.dev.yml`. Point `DATABASE_URL` at port `6432` to leverage pooling.
+The default SQLAlchemy pool size can be tuned using the `DB_POOL_SIZE`
+environment variable. Observe the `db_pool_size` and `db_pool_in_use` metrics in
+Prometheus to determine whether the pool is frequently exhausted and adjust the
+setting accordingly.
 Execute `scripts/analyze_query_plans.py` periodically to inspect query plans and
 identify missing indexes.
 

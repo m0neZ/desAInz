@@ -17,6 +17,10 @@ resources:
   - ai-mockup-generation-deployment.yaml
   - ai-mockup-generation-service.yaml
   - ai-mockup-generation-service-monitor.yaml
+  - orchestrator-deployment.yaml
+  - orchestrator-service.yaml
+  - orchestrator-service-monitor.yaml
+  - orchestrator-hpa.yaml
   - ai-mockup-generation-hpa.yaml
   - api-gateway-hpa.yaml
   - analytics-hpa.yaml

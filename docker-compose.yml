@@ -304,6 +304,16 @@ services:
       - "prometheus.scrape=true"
       - "prometheus.path=/metrics"
       - "prometheus.port=3000"
+
+  orchestrator-scheduler:
+    build:
+      context: .
+      dockerfile: backend/orchestrator/Dockerfile
+    command: dagster-daemon run
+    mem_limit: 512m
+    cpus: 0.25
+    depends_on:
+      - orchestrator
 volumes:
   postgres-data:
   redis-data:

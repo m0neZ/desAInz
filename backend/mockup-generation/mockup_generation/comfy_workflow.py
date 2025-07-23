@@ -7,7 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import requests
+import asyncio
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -27,22 +28,22 @@ class ComfyUIWorkflow:
         """Store the base URL of the ComfyUI API."""
         self.base_url = base_url.rstrip("/")
 
-    def execute(self, workflow: dict[str, Any], output_path: str) -> ComfyResult:
+    async def execute(self, workflow: dict[str, Any], output_path: str) -> ComfyResult:
         """Send ``workflow`` to ComfyUI and wait for ``output_path``."""
-        from time import perf_counter, sleep
+        from time import perf_counter
 
         start = perf_counter()
-        session = requests.Session()
         try:
-            resp = session.post(f"{self.base_url}/prompt", json=workflow, timeout=30)
-            resp.raise_for_status()
-            for _ in range(30):
-                if Path(output_path).exists():
-                    break
-                sleep(1)
-            else:
-                raise RuntimeError("ComfyUI did not produce output")
-        except requests.RequestException as exc:  # pragma: no cover - network error
+            async with httpx.AsyncClient(timeout=30) as session:
+                resp = await session.post(f"{self.base_url}/prompt", json=workflow)
+                resp.raise_for_status()
+                for _ in range(30):
+                    if Path(output_path).exists():
+                        break
+                    await asyncio.sleep(1)
+                else:
+                    raise RuntimeError("ComfyUI did not produce output")
+        except httpx.HTTPError as exc:  # pragma: no cover - network error
             raise RuntimeError("ComfyUI request failed") from exc
         duration = perf_counter() - start
         return ComfyResult(image_path=output_path, duration=duration)

@@ -42,6 +42,10 @@ SPOT_LABEL:
     ``"node-role.kubernetes.io/spot=yes"``.
 SPOT_COUNT:
     Number of spot nodes to maintain. Defaults to ``"1"``.
+SCORE_CONCURRENCY:
+    Maximum number of parallel scoring requests. Defaults to ``"5"``.
+GEN_CONCURRENCY:
+    Maximum number of parallel generation requests. Defaults to ``"5"``.
 """
 
 from __future__ import annotations
@@ -221,9 +225,17 @@ async def score_signals(  # type: ignore[no-untyped-def]
         "http://scoring-engine:5002",
     )
 
+    limit = int(os.environ.get("SCORE_CONCURRENCY", "5"))
+    semaphore = asyncio.Semaphore(limit)
+
     client = await get_async_http_client()
+
+    async def _score_limited() -> float:
+        async with semaphore:
+            return await _score(client)
+
     async with asyncio.TaskGroup() as tg:
-        tasks = [tg.create_task(_score(client)) for _ in signals]
+        tasks = [tg.create_task(_score_limited()) for _ in signals]
     return [task.result() for task in tasks]
 
 
@@ -269,8 +281,15 @@ async def generate_content(  # type: ignore[no-untyped-def]
             items = []
         return [str(item) for item in items]
 
+    limit = int(os.environ.get("GEN_CONCURRENCY", "5"))
+    semaphore = asyncio.Semaphore(limit)
+
+    async def _generate_limited(score: float) -> list[str]:
+        async with semaphore:
+            return await _generate(score)
+
     async with asyncio.TaskGroup() as tg:
-        tasks = [tg.create_task(_generate(s)) for s in scores]
+        tasks = [tg.create_task(_generate_limited(s)) for s in scores]
     results = [task.result() for task in tasks]
     return [item for sub in results for item in sub]
 

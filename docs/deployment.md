@@ -200,3 +200,10 @@ Run the script with the service name, target image and namespace:
 ```bash
 ./scripts/deploy.sh <service> ghcr.io/example/<service>:<tag> <namespace>
 ```
+
+## Pipeline Health Monitoring
+
+The CI pipeline checks that every service responds successfully to `/ready`
+after deploying the new images. If any health check fails, the workflow
+reverts to the previous image tag by running `make helm-deploy` with the prior
+commit SHA. Health checks are performed via `scripts/check_k8s_health.sh`.

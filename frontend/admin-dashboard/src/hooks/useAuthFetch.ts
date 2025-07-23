@@ -1,8 +1,10 @@
 // @flow
 /* global RequestInfo, RequestInit */
 
+import { useUserStore } from '../store/useUserStore';
+
 export async function refreshTokens(): Promise<boolean> {
-  const refresh = localStorage.getItem('refresh_token');
+  const refresh = useUserStore.getState().refreshToken;
   if (!refresh) return false;
   const res = await fetch('/auth/refresh', {
     method: 'POST',
@@ -14,8 +16,7 @@ export async function refreshTokens(): Promise<boolean> {
     access_token: string;
     refresh_token: string;
   };
-  localStorage.setItem('token', data.access_token);
-  localStorage.setItem('refresh_token', data.refresh_token);
+  useUserStore.getState().setTokens(data.access_token, data.refresh_token);
   return true;
 }
 
@@ -23,7 +24,7 @@ export async function fetchWithAuth(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<Response> {
-  const token = localStorage.getItem('token');
+  const token = useUserStore.getState().token;
   const headers = new Headers(init?.headers);
   if (token) headers.set('Authorization', 'Bearer ' + token);
   const makeRequest = () => fetch(input, { ...init, headers });
@@ -31,7 +32,7 @@ export async function fetchWithAuth(
   if (res.status === 401 && (await refreshTokens())) {
     headers.set(
       'Authorization',
-      'Bearer ' + (localStorage.getItem('token') ?? '')
+      'Bearer ' + (useUserStore.getState().token ?? '')
     );
     res = await makeRequest();
   }

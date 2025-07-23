@@ -1,23 +1,16 @@
 // @flow
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useTranslation } from 'react-i18next';
+import { usePreferenceStore } from '../../store/usePreferenceStore';
 
 function PreferencesPage() {
   const { t } = useTranslation();
-  const [notify, setNotify] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('notifyFail');
-    if (stored) {
-      setNotify(stored === 'true');
-    }
-  }, []);
+  const notify = usePreferenceStore((s) => s.notifyFail);
+  const setNotify = usePreferenceStore((s) => s.setNotifyFail);
 
   const toggle = () => {
-    const next = !notify;
-    setNotify(next);
-    localStorage.setItem('notifyFail', String(next));
+    setNotify(!notify);
   };
 
   return (

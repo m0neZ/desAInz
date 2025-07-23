@@ -558,6 +558,20 @@ async def monitoring_status() -> Dict[str, Any]:
     return cast(Dict[str, Any], resp.json())
 
 
+@monitoring_router.get("/metrics", summary="Monitoring metrics")
+async def monitoring_metrics() -> Response:
+    """Proxy Prometheus metrics from the monitoring service."""
+    url = f"{MONITORING_URL}/metrics"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return Response(
+        content=resp.content,
+        media_type=resp.headers.get("content-type", "text/plain"),
+    )
+
+
 @analytics_router.get("/ab_test_results/{ab_test_id}", summary="A/B test results")
 async def ab_test_results(ab_test_id: int) -> Dict[str, Any]:
     """Proxy aggregated A/B test results."""
@@ -597,6 +611,20 @@ async def recommendations() -> list[str]:
     if resp.status_code != 200:
         raise HTTPException(resp.status_code, resp.text)
     return cast(list[str], resp.json())
+
+
+@optimization_router.get("/metrics", summary="Optimization metrics")
+async def optimization_metrics() -> Response:
+    """Proxy Prometheus metrics from the optimization service."""
+    url = f"{OPTIMIZATION_URL}/metrics"
+    client = _get_client("optimization")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return Response(
+        content=resp.content,
+        media_type=resp.headers.get("content-type", "text/plain"),
+    )
 
 
 @router.get("/audit-logs", tags=["Audit"], summary="Retrieve audit logs")

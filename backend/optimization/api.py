@@ -119,7 +119,7 @@ def start_metrics_collection() -> None:
         scheduler.start()
     scheduler.add_job(
         record_resource_usage,
-        trigger=IntervalTrigger(seconds=30),
+        trigger=IntervalTrigger(minutes=1),
         id="collect_metrics",
         replace_existing=True,
     )
@@ -173,6 +173,12 @@ def add_metric(metric: MetricIn) -> dict[str, str]:
         )
     )
     return {"status": "ok"}
+
+
+@app.get("/metrics/recent", response_model=List[ResourceMetric])
+def get_recent_metrics(limit: int = 10) -> List[ResourceMetric]:
+    """Return the most recently captured metrics."""
+    return store.get_recent_metrics(limit)
 
 
 @app.get("/optimizations")

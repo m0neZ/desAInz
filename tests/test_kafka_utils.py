@@ -17,14 +17,15 @@ class DummyProducer:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialize the dummy producer."""
         self.sent: Dict[str, Any] = {}
+        self.flush_called = False
 
     def send(self, topic: str, value: Dict[str, Any]) -> None:
         """Record the produced message."""
         self.sent[topic] = value
 
     def flush(self) -> None:  # pragma: no cover
-        """Flush is a no-op for the dummy producer."""
-        pass
+        """Record that a flush was requested."""
+        self.flush_called = True
 
 
 def test_producer_validation(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -44,6 +45,9 @@ def test_producer_validation(monkeypatch: pytest.MonkeyPatch) -> None:
     producer = KafkaProducerWrapper("kafka:9092", registry)
     producer.produce("signals", {"id": "1"})
     assert producer._producer.sent["signals"] == {"id": "1"}
+    assert not producer._producer.flush_called
+    producer.flush()
+    assert producer._producer.flush_called
 
     with pytest.raises(ValidationError):
         producer.produce("signals", {"bad": "data"})

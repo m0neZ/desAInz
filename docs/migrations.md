@@ -58,6 +58,13 @@ The new revision should live in `backend/shared/db/migrations` and replace
 `scripts/validate_migrations.sh` to confirm that only a single head exists
 and that no divergent branches remain.
 
+### Current Merge Revisions
+
+The scoring engine service currently contains the following merge revisions:
+
+* `0003` merges `0002a` and `0002b`.
+* `0010` merges the `generated_mockups` branch with the main line.
+
 ## Verifying Migrations
 
 Run the migration tests to ensure each service's migrations apply cleanly on an

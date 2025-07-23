@@ -46,3 +46,11 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 def validate_token(payload: Dict[str, Any] = Depends(verify_token)) -> UserResponse:
     """Return the authenticated user if ``payload`` is valid."""
     return UserResponse(user=cast(str | None, payload.get("sub")))
+
+
+@router.get("/auth0/validate", summary="Validate Auth0 issued JWT")
+def validate_auth0_token(
+    payload: Dict[str, Any] = Depends(verify_token),
+) -> UserResponse:
+    """Return the Auth0 user identifier if ``payload`` is valid."""
+    return UserResponse(user=cast(str | None, payload.get("sub")))

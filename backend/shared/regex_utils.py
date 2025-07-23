@@ -1,6 +1,5 @@
-from __future__ import annotations
-
 """Helper utilities for working with cached regular expressions."""
+from __future__ import annotations
 
 from functools import lru_cache
 

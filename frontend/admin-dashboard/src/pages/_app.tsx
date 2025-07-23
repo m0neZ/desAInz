@@ -1,12 +1,20 @@
 // @flow
 import type { AppProps } from 'next/app';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import '../styles/globals.css';
 import AdminLayout from '../layouts/AdminLayout';
 import { I18nProvider } from '../i18n';
 import { TrpcProvider } from '../lib/trpc';
+import { useEffect } from 'react';
+import { useStore } from '../hooks/useStore';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const { user } = useUser();
+  const setAuth = useStore((s) => s.setAuthenticated);
+
+  useEffect(() => {
+    setAuth(Boolean(user));
+  }, [user, setAuth]);
   return (
     <UserProvider>
       <TrpcProvider>

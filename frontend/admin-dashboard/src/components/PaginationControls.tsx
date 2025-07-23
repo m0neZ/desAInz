@@ -19,9 +19,10 @@ export default function PaginationControls({
     <div className="flex items-center space-x-2">
       <button
         type="button"
-        className="px-2 py-1 border"
+        className="px-2 py-1 border focus:outline-none focus:ring"
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
+        aria-label="Previous page"
       >
         Prev
       </button>
@@ -31,9 +32,10 @@ export default function PaginationControls({
       </span>
       <button
         type="button"
-        className="px-2 py-1 border"
+        className="px-2 py-1 border focus:outline-none focus:ring"
         disabled={maxPage != null && page >= maxPage}
         onClick={() => onPageChange(page + 1)}
+        aria-label="Next page"
       >
         Next
       </button>

@@ -14,12 +14,29 @@ function ApprovalsPage() {
   const { data: runs, isLoading } = usePendingRuns();
   const queryClient = useQueryClient();
 
+  const removeRun = (id: string) => {
+    queryClient.setQueryData<string[] | undefined>(['pendingRuns'], (old) =>
+      old?.filter((r) => r !== id)
+    );
+  };
+
   const approve = async (runId: string) => {
+    removeRun(runId);
     try {
       await trpc.approvals.approve(runId);
-      await queryClient.invalidateQueries({ queryKey: ['pendingRuns'] });
     } catch {
+      await queryClient.invalidateQueries({ queryKey: ['pendingRuns'] });
       alert(t('approvalFailed'));
+    }
+  };
+
+  const reject = async (runId: string) => {
+    removeRun(runId);
+    try {
+      await trpc.approvals.reject(runId);
+    } catch {
+      await queryClient.invalidateQueries({ queryKey: ['pendingRuns'] });
+      alert(t('rejectionFailed'));
     }
   };
 
@@ -37,6 +54,13 @@ function ApprovalsPage() {
               <span>{id}</span>
               <Button onClick={() => approve(id)} ariaLabel={t('approve')}>
                 {t('approve')}
+              </Button>
+              <Button
+                onClick={() => reject(id)}
+                ariaLabel={t('reject')}
+                className="bg-red-600"
+              >
+                {t('reject')}
               </Button>
             </li>
           ))}

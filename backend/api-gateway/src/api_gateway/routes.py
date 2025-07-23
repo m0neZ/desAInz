@@ -482,6 +482,17 @@ async def approve_run(
     return StatusResponse(status="approved")
 
 
+@approvals_router.delete("/{run_id}", summary="Reject job run")
+async def reject_run(
+    run_id: str,
+    payload: Dict[str, Any] = Depends(require_role("admin")),
+) -> StatusResponse:
+    """Reject the Dagster run identified by ``run_id``."""
+    await get_async_client().srem(PENDING_RUNS_KEY, run_id)
+    log_admin_action(payload.get("sub", "unknown"), "reject_run", {"run_id": run_id})
+    return StatusResponse(status="rejected")
+
+
 @approvals_router.get("/{run_id}", summary="Check approval status")
 async def check_approval(run_id: str) -> ApprovalStatus:
     """Return ``True`` if ``run_id`` has been approved."""

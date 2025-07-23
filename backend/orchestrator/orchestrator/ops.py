@@ -318,6 +318,7 @@ async def await_approval(context) -> None:  # type: ignore[no-untyped-def]
 async def publish_content(  # type: ignore[no-untyped-def]
     context,
     items: list[str],
+
 ) -> None:
     """
     Publish generated content asynchronously.
@@ -325,7 +326,6 @@ async def publish_content(  # type: ignore[no-untyped-def]
     Requests are dispatched concurrently but limited by a semaphore so that the
     publisher service is not overwhelmed.
     """
-
     context.log.info("publishing %d items", len(items))
     base_url = os.environ.get(
         "PUBLISHER_URL",
@@ -364,13 +364,13 @@ def backup_data(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def cleanup_data(  # type: ignore[no-untyped-def]
+async def cleanup_data(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
     """Remove temporary or stale data."""
     context.log.info("running cleanup")
     try:
-        hints = asyncio.run(_fetch_hints(context))
+        hints = await _fetch_hints(context)
         if hints:
             context.log.info("optimization hints: %s", hints)
     except Exception as exc:  # noqa: BLE001
@@ -392,16 +392,14 @@ def analyze_query_plans_op(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def run_daily_summary(  # type: ignore[no-untyped-def]
+async def run_daily_summary(  # type: ignore[no-untyped-def]
     context,
 ) -> None:
     """Execute the daily summary script and log the result."""
     context.log.info("generating daily summary")
     from scripts.daily_summary import generate_daily_summary
 
-    import asyncio
-
-    summary = asyncio.run(generate_daily_summary())
+    summary = await generate_daily_summary()
     context.log.debug("summary: %s", summary)
 
 
@@ -449,25 +447,23 @@ def sync_listing_states_op(context) -> None:  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def purge_pii_rows_op(context) -> None:  # type: ignore[no-untyped-def]
+async def purge_pii_rows_op(context) -> None:  # type: ignore[no-untyped-def]
     """Run :func:`signal_ingestion.privacy.purge_pii_rows`."""
     context.log.info("purging stored PII")
-    import asyncio
     from signal_ingestion.privacy import purge_pii_rows
 
-    count = asyncio.run(purge_pii_rows())
+    count = await purge_pii_rows()
     context.log.info("purged %d rows", count)
 
 
 @op  # type: ignore[misc]
-def benchmark_score_op(context) -> None:  # type: ignore[no-untyped-def]
+async def benchmark_score_op(context) -> None:  # type: ignore[no-untyped-def]
     """Run benchmark_score script and persist results."""
     context.log.info("benchmarking scoring endpoint")
-    import asyncio
     from scripts import benchmark_score
     from backend.shared.db import session_scope, models
 
-    uncached, cached, runs = asyncio.run(benchmark_score.main())
+    uncached, cached, runs = await benchmark_score.main()
     with session_scope() as session:
         session.add(
             models.ScoreBenchmark(

@@ -1,4 +1,48 @@
-"""Dagster operations for the orchestration pipeline."""
+"""
+Dagster operations for the orchestration pipeline.
+
+Environment variables
+---------------------
+SERVICE_AUTH_TOKEN:
+    Bearer token for authenticating service-to-service calls. Optional.
+SIGNAL_INGESTION_URL:
+    Base URL for the signal ingestion service. Defaults to
+    ``"http://signal-ingestion:8004"``.
+SCORING_ENGINE_URL:
+    Base URL for the scoring engine. Defaults to
+    ``"http://scoring-engine:5002"``.
+MOCKUP_GENERATION_URL:
+    Base URL for the mockup generation service. Defaults to
+    ``"http://mockup-generation:8000"``.
+APPROVAL_SERVICE_URL:
+    Base URL for the approval service. Defaults to
+    ``"http://api-gateway:8000"``.
+PUBLISHER_URL:
+    Base URL for the marketplace publisher. Defaults to
+    ``"http://marketplace-publisher:8001"``.
+SLACK_WEBHOOK_URL:
+    Slack webhook for notifications. Optional.
+S3_IAM_USER:
+    AWS IAM user for S3 rotation. Defaults to ``"deploy"``.
+S3_SECRET_NAME:
+    Name of the Kubernetes secret containing S3 credentials. Defaults to
+    ``"s3-creds"``.
+SPOT_AMI_ID:
+    AMI ID for spot instances. Required.
+SPOT_INSTANCE_TYPE:
+    Instance type for spot nodes. Required.
+SPOT_KEY_NAME:
+    SSH key name for spot nodes. Required.
+SPOT_SECURITY_GROUP:
+    Security group for spot nodes. Required.
+SPOT_SUBNET_ID:
+    Subnet ID for spot nodes. Required.
+SPOT_LABEL:
+    Kubernetes node label used to identify spot nodes. Defaults to
+    ``"node-role.kubernetes.io/spot=yes"``.
+SPOT_COUNT:
+    Number of spot nodes to maintain. Defaults to ``"1"``.
+"""
 
 from __future__ import annotations
 

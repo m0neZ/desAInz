@@ -1,4 +1,12 @@
-"""FastAPI application exposing optimization endpoints."""
+"""
+FastAPI application exposing optimization endpoints.
+
+Environment variables
+---------------------
+SERVICE_NAME:
+    Name reported to tracing and logging backends. Defaults to
+    :data:`~backend.shared.ServiceName.OPTIMIZATION`.
+"""
 
 from __future__ import annotations
 

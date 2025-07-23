@@ -1,4 +1,22 @@
-"""Sphinx configuration for the desAInz project."""
+"""
+Sphinx configuration for the desAInz project.
+
+Environment variables
+---------------------
+SKIP_DOC_LINT:
+    Skip docstring linting when set to ``"1"``. Defaults to ``"0"``.
+SKIP_APIDOC:
+    Skip API documentation generation when set to ``"1"``. Defaults to ``"0"``.
+SKIP_OPENAPI:
+    Skip OpenAPI specification generation when set to ``"1"``. Defaults to
+    ``"0"``.
+KAFKA_SKIP:
+    Set to ``"1"`` while generating OpenAPI specs to disable Kafka connections.
+    Defaults to ``"0"``.
+SELENIUM_SKIP:
+    Set to ``"1"`` while generating OpenAPI specs to disable Selenium usage.
+    Defaults to ``"0"``.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,11 @@
-"""Notification helpers for publisher errors."""
+"""
+Notification helpers for publisher errors.
+
+Environment variables
+---------------------
+SLACK_WEBHOOK_URL:
+    Webhook URL used to dispatch failure notifications. Optional.
+"""
 
 from __future__ import annotations
 

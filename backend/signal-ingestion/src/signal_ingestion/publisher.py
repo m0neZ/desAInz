@@ -1,4 +1,11 @@
-"""Kafka publisher using typed schemas."""
+"""
+Kafka publisher using typed schemas.
+
+Environment variables
+---------------------
+KAFKA_SKIP:
+    When set to ``"1"`` Kafka connections are skipped. Defaults to ``"0"``.
+"""
 
 from __future__ import annotations
 

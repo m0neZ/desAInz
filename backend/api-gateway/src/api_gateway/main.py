@@ -1,4 +1,12 @@
-"""API Gateway FastAPI application."""
+"""
+API Gateway FastAPI application.
+
+Environment variables
+---------------------
+SERVICE_NAME:
+    Name reported to tracing and logging backends. Defaults to
+    :data:`~backend.shared.ServiceName.API_GATEWAY`.
+"""
 
 import logging
 import os

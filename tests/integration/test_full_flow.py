@@ -44,9 +44,6 @@ kafka_utils.KafkaProducer = MagicMock(
 )
 kafka_schema.SchemaRegistryClient.register = MagicMock()
 kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-warnings.filterwarnings("ignore", category=pytest.PytestRemovedIn9Warning)
-pytestmark = pytest.mark.filterwarnings("ignore::pytest.PytestRemovedIn9Warning")
 
 
 redis.Redis.from_url = lambda *a, **k: SimpleNamespace(
@@ -137,7 +134,7 @@ async def test_full_flow(
     monkeypatch.setattr(weight_repository, "update_weights", lambda **k: None)
     sig = scoring.Signal(
         source="global",
-        timestamp=datetime.utcnow().replace(tzinfo=UTC),
+        timestamp=datetime.now(UTC),
         engagement_rate=1.0,
         embedding=[0.1, 0.2],
         metadata={},
@@ -159,7 +156,7 @@ async def test_full_flow(
     )
     client = TestClient(opt_api.app)
     metric = {
-        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "cpu_percent": 10,
         "memory_mb": 100,
     }

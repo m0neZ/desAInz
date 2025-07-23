@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pytest
 from sqlalchemy.exc import IntegrityError
@@ -25,15 +25,17 @@ def test_signal_content_hash_unique() -> None:
     """Duplicated content_hash should raise an integrity error."""
     with SessionLocal() as session:
         sig1 = Signal(
+            idea_id=1,
             content_hash="dup",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             engagement_rate=0.5,
         )
         session.add(sig1)
         session.commit()
         sig2 = Signal(
+            idea_id=2,
             content_hash="dup",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             engagement_rate=0.7,
         )
         session.add(sig2)

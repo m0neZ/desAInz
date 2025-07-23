@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import boto3
 import pytest
@@ -22,7 +22,6 @@ def test_purge_old_s3_objects(monkeypatch: pytest.MonkeyPatch) -> None:
         aws_access_key_id="test",
         aws_secret_access_key="test",
     )
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
     bucket = "test-bucket"
     s3.create_bucket(Bucket=bucket)
     s3.put_object(Bucket=bucket, Key="old.txt", Body=b"x")
@@ -33,7 +32,7 @@ def test_purge_old_s3_objects(monkeypatch: pytest.MonkeyPatch) -> None:
         type(
             "T",
             (datetime,),
-            {"utcnow": classmethod(lambda cls: datetime.utcnow() + timedelta(days=91))},
+            {"utcnow": classmethod(lambda cls: datetime.now(UTC) + timedelta(days=91))},
         ),
     )
     monkeypatch.setattr(config.settings, "s3_bucket", bucket, raising=False)

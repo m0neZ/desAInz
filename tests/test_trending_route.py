@@ -24,7 +24,6 @@ def test_trending_proxy(monkeypatch: Any) -> None:
     monkeypatch.setenv("API_GATEWAY_REQUEST_CACHE_TTL", "1")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     monkeypatch.setenv("SDK_DISABLED", "1")
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
     import backend.shared.config as shared_config
 
     shared_config.settings.redis_url = RedisDsn("redis://localhost:6379/0")

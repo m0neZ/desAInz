@@ -6,12 +6,13 @@ import base64
 import subprocess
 
 import boto3
+import botocore.auth
+import types
+from datetime import UTC, datetime
 import pytest
 from moto import mock_aws
+import os
 
-pytestmark = pytest.mark.filterwarnings(
-    r"ignore:datetime\.datetime\.utcnow\(\) is deprecated"
-)
 
 from scripts.rotate_s3_keys import rotate
 
@@ -19,12 +20,17 @@ from scripts.rotate_s3_keys import rotate
 @mock_aws
 def test_rotate_s3_keys(monkeypatch: pytest.MonkeyPatch) -> None:
     """New keys are created and kubectl is called with encoded values."""
+    os.environ.setdefault("AWS_ACCESS_KEY_ID", "test")
+    os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "test")
+    botocore.auth.datetime = types.SimpleNamespace(
+        datetime=types.SimpleNamespace(utcnow=lambda: datetime.now(UTC))
+    )
     iam = boto3.client("iam", region_name="us-east-1")
     iam.create_user(UserName="test")
     iam.create_access_key(UserName="test")
     called: list[list[str]] = []
 
-    def fake_run(cmd: list[str], _check: bool = True) -> None:
+    def fake_run(cmd: list[str], check: bool = True) -> None:
         called.append(cmd)
 
     monkeypatch.setattr(subprocess, "run", fake_run)

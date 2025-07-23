@@ -47,7 +47,6 @@ def _gateway_client(monkeypatch: pytest.MonkeyPatch) -> TestClient:
     monkeypatch.setenv("MONITORING_URL", "http://mon:8000")
     monkeypatch.setenv("API_GATEWAY_REQUEST_CACHE_TTL", "1")
     monkeypatch.setenv("SDK_DISABLED", "1")
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
     sys.path.insert(
         0, str(Path(__file__).resolve().parents[1] / "backend" / "api-gateway" / "src")
     )

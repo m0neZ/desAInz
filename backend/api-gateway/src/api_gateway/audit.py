@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from backend.shared.db import session_scope
@@ -19,7 +19,7 @@ def log_admin_action(
                 username=username,
                 action=action,
                 details=details,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(UTC),
             )
         )
         session.flush()

@@ -19,7 +19,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend" / "scoring-engine"))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "backend" / "mockup-generation"))
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 from scoring_engine.app import app as scoring_app
 import scoring_engine.app as scoring_module
 from scoring_engine.weight_repository import get_weights, update_weights
@@ -60,7 +59,7 @@ def _fake_load(self: MockupGenerator) -> None:  # noqa: D401 - short helper
 
 def _worker(client, gen: MockupGenerator, tmp: Path, idx: int) -> None:
     payload = {
-        "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "engagement_rate": 1.0,
         "embedding": [1.0, 0.0],
         "metadata": {},

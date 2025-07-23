@@ -83,7 +83,6 @@ class BulkAdapter(BaseAdapter):  # type: ignore[misc]
 
 
 @pytest.mark.asyncio()
-@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 async def test_ingest_large_volume(monkeypatch: pytest.MonkeyPatch) -> None:
     """Ingest a large number of rows within a time threshold."""
     engine: AsyncEngine = create_async_engine("sqlite+aiosqlite:///:memory:")

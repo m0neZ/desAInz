@@ -8,9 +8,6 @@ from types import ModuleType
 import pytest
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-pytestmark = pytest.mark.filterwarnings(
-    r"ignore:datetime\.datetime\.utcnow\(\) is deprecated"
-)
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "backend" / "marketplace-publisher" / "src"))  # noqa: E402

@@ -33,7 +33,6 @@ class DummyRedis:
 sys.path.append(str(Path(__file__).resolve().parents[1] / "backend" / "scoring-engine"))
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")
 os.environ.setdefault("KAFKA_SKIP", "1")
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 with mock.patch("backend.shared.cache.get_async_client", return_value=DummyRedis()):
     scoring_module = importlib.import_module("scoring_engine.app")
 scoring_module.settings.redis_url = "redis://localhost:6379/0"

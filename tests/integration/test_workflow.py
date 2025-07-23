@@ -92,7 +92,7 @@ async def test_end_to_end(
     )
     sig = scoring.Signal(
         source="global",
-        timestamp=datetime.utcnow().replace(tzinfo=UTC),
+        timestamp=datetime.now(UTC),
         engagement_rate=1.0,
         embedding=[0.1, 0.2],
         metadata={},

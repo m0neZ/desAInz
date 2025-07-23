@@ -22,8 +22,6 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 # isort: on
 
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-os.environ.setdefault("PYTHONWARNINGS", "ignore::DeprecationWarning")
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "backend" / "marketplace-publisher" / "src"))  # noqa: E402

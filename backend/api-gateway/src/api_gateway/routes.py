@@ -29,6 +29,7 @@ from .auth import (
     verify_token,
     require_role,
     revoke_token,
+    router as auth_router,
 )
 from .models import (
     ApprovalStatus,
@@ -764,3 +765,4 @@ router.include_router(monitoring_router)
 router.include_router(analytics_router)
 router.include_router(approvals_router)
 router.include_router(privacy_router)
+router.include_router(auth_router)

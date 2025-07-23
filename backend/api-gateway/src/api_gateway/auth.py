@@ -1,8 +1,10 @@
 """JWT authentication utilities for the API gateway."""
 
-from typing import Any, Dict, Callable, cast, Iterable
+from typing import Any, Dict, Callable, Iterable, cast
 
-from fastapi import Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from .models import UserResponse
 
 from backend.shared.auth import jwt as shared_jwt
 
@@ -35,3 +37,12 @@ def require_role(required_role: str) -> Callable[[Dict[str, Any]], Dict[str, Any
         return payload
 
     return _checker
+
+
+router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+
+@router.get("/validate", summary="Validate Auth0 JWT")
+def validate_token(payload: Dict[str, Any] = Depends(verify_token)) -> UserResponse:
+    """Return the authenticated user if ``payload`` is valid."""
+    return UserResponse(user=cast(str | None, payload.get("sub")))

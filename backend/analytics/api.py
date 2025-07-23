@@ -313,3 +313,18 @@ async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)
     return json_cached({"status": "ready"})
+
+
+if __name__ == "__main__":  # pragma: no cover - manual launch
+    import asyncio
+    import uvicorn
+    import uvloop
+
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
+    uvicorn.run(
+        "backend.analytics.api:app",
+        host="0.0.0.0",
+        port=8000,
+        log_level="info",
+    )

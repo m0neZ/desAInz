@@ -19,7 +19,7 @@ spec:
           image: example/analytics:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8001
+            - containerPort: 8000
           env:
             - name: LOKI_URL
               value: http://loki:3100

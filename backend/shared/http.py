@@ -21,7 +21,8 @@ from tenacity import (
 
 DEFAULT_RETRIES = int(os.getenv("HTTP_RETRIES", "3"))
 DEFAULT_TIMEOUT = httpx.Timeout(10.0)
-_ASYNC_CLIENT: httpx.AsyncClient | None = None
+# Store ``AsyncClient`` instances keyed by running event loop.
+_ASYNC_CLIENTS: dict[asyncio.AbstractEventLoop, httpx.AsyncClient] = {}
 
 __all__ = ["request_with_retry", "DEFAULT_TIMEOUT", "get_async_http_client"]
 
@@ -71,22 +72,18 @@ def request_with_retry(
 async def get_async_http_client(
     timeout: httpx.Timeout | None = None,
 ) -> httpx.AsyncClient:
-    """
-    Return a cached :class:`~httpx.AsyncClient` instance.
-
-    Parameters
-    ----------
-    timeout:
-        Optional timeout to use when creating the client. When ``None`` the
-        default :data:`DEFAULT_TIMEOUT` is used.
-    """
-    global _ASYNC_CLIENT
-    if _ASYNC_CLIENT is None:
-        _ASYNC_CLIENT = httpx.AsyncClient(timeout=timeout or DEFAULT_TIMEOUT)
-    return _ASYNC_CLIENT
+    """Return an :class:`~httpx.AsyncClient` cached per running event loop."""
+    loop = asyncio.get_running_loop()
+    client = _ASYNC_CLIENTS.get(loop)
+    if client is None:
+        client = httpx.AsyncClient(timeout=timeout or DEFAULT_TIMEOUT)
+        _ASYNC_CLIENTS[loop] = client
+    return client
 
 
 @atexit.register
 def _close_async_client() -> None:
-    if _ASYNC_CLIENT is not None:
-        asyncio.run(_ASYNC_CLIENT.aclose())
+    """Close all cached ``AsyncClient`` instances."""
+    for client in list(_ASYNC_CLIENTS.values()):
+        asyncio.run(client.aclose())
+    _ASYNC_CLIENTS.clear()

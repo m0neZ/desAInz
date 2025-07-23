@@ -35,6 +35,7 @@ def batch_embed(self: Task, signals: list[Mapping[str, object]]) -> int:
 
     with tracer.start_as_current_span("batch_embed"):
         with session_scope() as session:
+            objects: list[Embedding] = []
             for msg in signals:
                 embedding = msg.get("embedding")
                 if embedding is None:
@@ -47,6 +48,7 @@ def batch_embed(self: Task, signals: list[Mapping[str, object]]) -> int:
                 else:
                     embedding_value = list(cast(list[float], embedding))
                 source = str(msg.get("source", "global"))
-                session.add(Embedding(source=source, embedding=embedding_value))
+                objects.append(Embedding(source=source, embedding=embedding_value))
+            session.bulk_save_objects(objects)
             session.flush()
         return len(signals)

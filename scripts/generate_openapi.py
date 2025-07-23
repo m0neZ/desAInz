@@ -186,7 +186,7 @@ def _patch_shared_dependencies() -> None:
         def _db_url(self: _config.Settings) -> str:
             return str(self.pgbouncer_url or self.database_url)
 
-        _config.Settings.effective_database_url = property(_db_url)
+        setattr(_config.Settings, "effective_database_url", property(_db_url))
         _config.settings = _config.Settings()
     except Exception:  # pragma: no cover - best effort
         pass

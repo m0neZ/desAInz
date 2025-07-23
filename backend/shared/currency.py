@@ -28,7 +28,11 @@ scheduler = BackgroundScheduler()
 
 def _fetch_rates(base: str = BASE_CURRENCY) -> Dict[str, float]:
     """Fetch latest exchange rates from external API."""
-    response = requests.get(EXCHANGE_API_URL, params={"base": base}, timeout=10)
+    response = requests.get(
+        str(EXCHANGE_API_URL),
+        params={"base": base},
+        timeout=10,
+    )
     response.raise_for_status()
     data = response.json()
     rates = cast(dict[str, float], data.get("rates", {}))

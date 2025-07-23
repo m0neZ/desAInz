@@ -27,6 +27,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
+from backend.shared.http import close_async_clients
 
 from backend.shared import add_error_handlers, configure_sentry
 
@@ -76,6 +77,7 @@ async def startup() -> None:
 async def shutdown() -> None:
     """Stop background tasks."""
     scheduler.shutdown()
+    await close_async_clients()
 
 
 @app.middleware("http")

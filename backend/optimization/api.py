@@ -29,6 +29,7 @@ from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
+from backend.shared.http import close_async_clients
 from backend.shared.responses import json_cached
 from backend.shared.logging import configure_logging
 from backend.shared import ServiceName, add_error_handlers, configure_sentry
@@ -146,10 +147,11 @@ def start_scheduler() -> None:
 
 
 @app.on_event("shutdown")
-def shutdown_scheduler() -> None:
+async def shutdown_scheduler() -> None:
     """Shutdown the aggregate scheduler."""
     if scheduler.running:
         scheduler.shutdown()
+    await close_async_clients()
 
 
 class MetricIn(BaseModel):

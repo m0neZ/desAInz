@@ -60,7 +60,7 @@ async def test_cached_client_same_loop() -> None:
     client1 = await get_async_http_client()
     client2 = await get_async_http_client()
     assert client1 is client2
-    await asyncio.to_thread(http_module._close_async_client)
+    await http_module.close_async_clients()
 
 
 def test_clients_unique_per_loop() -> None:
@@ -72,7 +72,7 @@ def test_clients_unique_per_loop() -> None:
     loop2 = asyncio.new_event_loop()
     asyncio.set_event_loop(loop2)
     client2 = loop2.run_until_complete(get_async_http_client())
-    http_module._close_async_client()
+    loop2.run_until_complete(http_module.close_async_clients())
     loop1.run_until_complete(loop1.shutdown_asyncgens())
     loop2.run_until_complete(loop2.shutdown_asyncgens())
     loop1.close()

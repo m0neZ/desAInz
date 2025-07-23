@@ -19,6 +19,7 @@ from backend.shared.security import require_status_api_key
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from backend.shared.cache import AsyncRedis, get_async_client
+from backend.shared.http import close_async_clients
 from sqlalchemy import select
 import numpy as np
 from prometheus_client import (
@@ -208,6 +209,7 @@ async def stop_consumer() -> None:
         _consumer_thread.join(timeout=5)
     if _consumer is not None:
         _consumer.close()
+    await close_async_clients()
 
 
 async def trending_factor(topics: list[str]) -> float:

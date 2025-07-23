@@ -6,7 +6,6 @@ import os
 from typing import Any
 
 import asyncio
-import atexit
 
 import requests
 
@@ -24,7 +23,12 @@ DEFAULT_TIMEOUT = httpx.Timeout(10.0)
 # Store ``AsyncClient`` instances keyed by running event loop.
 _ASYNC_CLIENTS: dict[asyncio.AbstractEventLoop, httpx.AsyncClient] = {}
 
-__all__ = ["request_with_retry", "DEFAULT_TIMEOUT", "get_async_http_client"]
+__all__ = [
+    "request_with_retry",
+    "DEFAULT_TIMEOUT",
+    "get_async_http_client",
+    "close_async_clients",
+]
 
 
 def request_with_retry(
@@ -81,9 +85,11 @@ async def get_async_http_client(
     return client
 
 
-@atexit.register
-def _close_async_client() -> None:
-    """Close all cached ``AsyncClient`` instances."""
+async def close_async_clients() -> None:
+    """Close all cached :class:`~httpx.AsyncClient` instances."""
     for client in list(_ASYNC_CLIENTS.values()):
-        asyncio.run(client.aclose())
+        try:
+            await client.aclose()
+        except Exception:  # pragma: no cover - best effort cleanup
+            pass
     _ASYNC_CLIENTS.clear()

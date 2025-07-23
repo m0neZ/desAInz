@@ -27,6 +27,7 @@ from backend.shared.db import run_migrations_if_needed, session_scope
 from backend.shared.metrics import register_metrics
 from backend.shared.profiling import add_profiling
 from backend.shared.responses import json_cached
+from backend.shared.http import close_async_clients
 from backend.shared.security import add_security_headers
 from backend.shared.tracing import configure_tracing
 
@@ -407,6 +408,12 @@ async def oauth_callback(marketplace: Marketplace, request: Request) -> dict[str
     client = publisher.CLIENTS[marketplace]
     await asyncio.to_thread(client.fetch_token, str(request.url))
     return {"status": "authorized"}
+
+
+@app.on_event("shutdown")
+async def shutdown_event() -> None:
+    """Release HTTP clients on application shutdown."""
+    await close_async_clients()
 
 
 if __name__ == "__main__":  # pragma: no cover

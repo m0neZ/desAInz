@@ -10,12 +10,13 @@ SERVICE_NAME:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 import asyncio
 import psutil
 import logging
 import os
 import uuid
+import warnings
 from functools import lru_cache
 from typing import Callable, Coroutine, List, cast
 
@@ -39,6 +40,7 @@ from .storage import MetricsStore
 
 
 configure_logging()
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 logger = logging.getLogger(__name__)
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", ServiceName.OPTIMIZATION.value)
@@ -204,9 +206,15 @@ def get_recent_metrics(limit: int = 10) -> List[ResourceMetric]:
 
 
 @app.get("/optimizations")
-def get_optimizations() -> List[str]:
+def get_optimizations(window_minutes: int | None = None) -> List[str]:
     """
     Return recommended cost optimizations.
+
+    Parameters
+    ----------
+    window_minutes : int | None, optional
+        Limit analysis to metrics collected within the last ``window_minutes``
+        minutes. If ``None``, all available metrics are used.
 
     Returns
     -------
@@ -214,14 +222,25 @@ def get_optimizations() -> List[str]:
         Ordered list of optimization suggestions.
     """
 
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+    since = (
+        datetime.now(UTC) - timedelta(minutes=window_minutes)
+        if window_minutes is not None
+        else None
+    )
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.recommend_optimizations()
 
 
 @app.get("/recommendations")
-def get_recommendations() -> List[str]:
+def get_recommendations(window_minutes: int | None = None) -> List[str]:
     """
     Return prioritized optimization actions.
+
+    Parameters
+    ----------
+    window_minutes : int | None, optional
+        Analyze metrics captured in the last ``window_minutes`` minutes. Use all
+        data if ``None``.
 
     Returns
     -------
@@ -229,14 +248,25 @@ def get_recommendations() -> List[str]:
         Recommendations ordered by impact.
     """
 
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+    since = (
+        datetime.now(UTC) - timedelta(minutes=window_minutes)
+        if window_minutes is not None
+        else None
+    )
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.top_recommendations()
 
 
 @app.get("/hints")
-def get_hints() -> List[str]:
+def get_hints(window_minutes: int | None = None) -> List[str]:
     """
     Return optimization hints based on recent metrics.
+
+    Parameters
+    ----------
+    window_minutes : int | None, optional
+        Consider only metrics from the last ``window_minutes`` minutes. When
+        ``None`` all stored metrics are analyzed.
 
     Returns
     -------
@@ -244,14 +274,25 @@ def get_hints() -> List[str]:
         Ranked hints derived from recent data.
     """
 
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+    since = (
+        datetime.now(UTC) - timedelta(minutes=window_minutes)
+        if window_minutes is not None
+        else None
+    )
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.top_recommendations()
 
 
 @app.get("/cost_alerts")
-def get_cost_alerts() -> List[str]:
+def get_cost_alerts(window_minutes: int | None = None) -> List[str]:
     """
     Return alerts when usage or cost thresholds are exceeded.
+
+    Parameters
+    ----------
+    window_minutes : int | None, optional
+        Evaluate metrics recorded within the last ``window_minutes`` minutes. If
+        ``None`` all metrics are used.
 
     Returns
     -------
@@ -259,7 +300,12 @@ def get_cost_alerts() -> List[str]:
         Messages describing current cost concerns.
     """
 
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+    since = (
+        datetime.now(UTC) - timedelta(minutes=window_minutes)
+        if window_minutes is not None
+        else None
+    )
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.cost_alerts()
 
 

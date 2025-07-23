@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, List, Optional, TYPE_CHECKING
+from typing import Iterable, List, Optional, TYPE_CHECKING, Iterator
 
 import numpy as np
 
@@ -27,27 +27,73 @@ class MetricsAnalyzer:
 
     @classmethod
     def from_store(
-        cls, store: "MetricsStore", limit: int | None = None
+        cls,
+        store: "MetricsStore",
+        *,
+        limit: int | None = None,
+        since: datetime | None = None,
+        iterator: Iterable[ResourceMetric] | None = None,
+        batch_size: int = 500,
     ) -> "MetricsAnalyzer":
-        """Create analyzer from a :class:`MetricsStore` instance."""
-        if limit is None:
-            metrics = list(store.get_metrics())
+        """
+        Create analyzer from metrics in ``store`` or ``iterator``.
+
+        Parameters
+        ----------
+        store:
+            Metrics storage backend.
+        limit:
+            If provided, only this many most recent metrics are used.
+        since:
+            Filter metrics on or after this timestamp.
+        iterator:
+            Custom iterator yielding :class:`ResourceMetric` objects. If
+            supplied, ``store`` is ignored.
+        batch_size:
+            Chunk size for streaming metrics from ``store``.
+
+        Returns
+        -------
+        MetricsAnalyzer
+            Analyzer populated with metrics matching the parameters.
+        """
+
+        if iterator is not None:
+            metrics_iter: Iterable[ResourceMetric] = iterator
         else:
-            metrics = store.get_recent_metrics(limit)
-        return cls(metrics)
+            if limit is not None:
+                metrics_iter = store.get_recent_metrics(limit)
+            else:
+                metrics_iter = store.get_metrics(batch_size=batch_size)
+
+        if since is not None:
+            metrics_iter = (m for m in metrics_iter if m.timestamp >= since)
+
+        return cls(metrics_iter)
 
     def __init__(self, metrics: Iterable[ResourceMetric]) -> None:
-        """Initialize the analyzer with historical metrics."""
-        data = sorted(metrics, key=lambda m: m.timestamp)
-        self._timestamps = np.array(
-            [m.timestamp.timestamp() for m in data], dtype=float
-        )
-        self._cpu = np.array([m.cpu_percent for m in data], dtype=float)
-        self._memory = np.array([m.memory_mb for m in data], dtype=float)
-        self._disk = np.array(
-            [m.disk_usage_mb if m.disk_usage_mb is not None else np.nan for m in data],
-            dtype=float,
-        )
+        """
+        Initialize the analyzer with historical metrics.
+
+        The ``metrics`` iterable should yield values ordered by timestamp. Data
+        is processed incrementally to minimize memory overhead.
+        """
+
+        timestamps: list[float] = []
+        cpu: list[float] = []
+        memory: list[float] = []
+        disk: list[float] = []
+
+        for m in metrics:
+            timestamps.append(m.timestamp.timestamp())
+            cpu.append(m.cpu_percent)
+            memory.append(m.memory_mb)
+            disk.append(m.disk_usage_mb if m.disk_usage_mb is not None else np.nan)
+
+        self._timestamps = np.array(timestamps, dtype=float)
+        self._cpu = np.array(cpu, dtype=float)
+        self._memory = np.array(memory, dtype=float)
+        self._disk = np.array(disk, dtype=float)
 
     def average_cpu(self, last_n: int | None = None) -> float:
         """Return the average CPU usage."""

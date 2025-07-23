@@ -5,6 +5,8 @@ from __future__ import annotations
 from datetime import UTC, datetime, timedelta
 
 from backend.optimization.metrics import MetricsAnalyzer, ResourceMetric
+from backend.optimization.storage import MetricsStore
+import pytest
 
 
 def test_average_cpu_memory() -> None:
@@ -110,3 +112,23 @@ def test_cost_alerts_trigger() -> None:
     alerts = analyzer.cost_alerts()
     assert any("CPU usage" in a for a in alerts)
     assert any("Disk usage" in a for a in alerts)
+
+
+def test_from_store_since(tmp_path):
+    """`MetricsAnalyzer.from_store` filters metrics by timestamp."""
+    store = MetricsStore(f"sqlite:///{tmp_path/'metrics.db'}")
+    now = datetime.now(UTC)
+    metrics = [
+        ResourceMetric(
+            timestamp=now - timedelta(minutes=i),
+            cpu_percent=float(i),
+            memory_mb=float(i),
+            disk_usage_mb=float(i),
+        )
+        for i in range(10)
+    ]
+    store.add_metrics(metrics)
+
+    since = now - timedelta(minutes=5)
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
+    assert analyzer.average_cpu() == pytest.approx(sum(range(6)) / 6)

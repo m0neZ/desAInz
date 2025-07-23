@@ -107,6 +107,20 @@ jobs:
           TAG: ${{ github.sha }}
           ENV: prod
         run: make helm-deploy REGISTRY=$REGISTRY TAG=$TAG ENV=$ENV
+      - name: Wait for health checks
+        env:
+          SERVICES: >-
+            orchestrator ai-mockup-generation data-storage signal-ingestion
+            scoring-engine marketplace-publisher feedback-loop
+          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          PREVIOUS_TAG: ${{ github.event.before }}
+          ENV: prod
+        run: |
+          if ! ./scripts/check_k8s_health.sh "$ENV" $SERVICES; then
+            echo "Health check failed, rolling back" >&2
+            make helm-deploy REGISTRY=$REGISTRY TAG=$PREVIOUS_TAG ENV=$ENV
+            exit 1
+          fi
 
   docs:
     runs-on: ubuntu-latest

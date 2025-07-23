@@ -195,6 +195,13 @@ def get_recommendations() -> List[str]:
     return analyzer.top_recommendations()
 
 
+@app.get("/hints")
+def get_hints() -> List[str]:
+    """Return optimization hints based on recent metrics."""
+    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+    return analyzer.top_recommendations()
+
+
 @app.get("/cost_alerts")
 def get_cost_alerts() -> List[str]:
     """Return alerts when usage or cost thresholds are exceeded."""

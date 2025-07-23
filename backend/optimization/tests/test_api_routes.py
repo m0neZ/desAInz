@@ -40,3 +40,7 @@ def test_recommendation_routes(tmp_path: Path) -> None:
     resp = client.get("/cost_alerts")
     assert resp.status_code == 200
     assert isinstance(resp.json(), list)
+
+    resp = client.get("/hints")
+    assert resp.status_code == 200
+    assert isinstance(resp.json(), list)

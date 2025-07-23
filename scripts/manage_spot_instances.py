@@ -9,6 +9,7 @@ import time
 from typing import Iterable
 
 import boto3
+from botocore.exceptions import WaiterError
 
 
 def request_instance(
@@ -44,14 +45,46 @@ def request_instance(
 
 
 def label_node(instance_id: str, label: str) -> None:
-    """Label the Kubernetes node once it becomes available."""
+    """
+    Label the Kubernetes node once it becomes available.
+
+    The function waits for the EC2 instance to enter the ``running`` state using
+    a waiter with a 5-second delay and a 5-minute timeout. If the waiter fails or
+    the instance metadata is incomplete, it falls back to polling while logging
+    the situation.
+    """
     ec2 = boto3.client("ec2")
-    while True:
+    waiter = ec2.get_waiter("instance_running")
+    try:
+        waiter.wait(
+            InstanceIds=[instance_id],
+            WaiterConfig={"Delay": 5, "MaxAttempts": 60},
+        )
         desc = ec2.describe_instances(InstanceIds=[instance_id])
         inst = desc["Reservations"][0]["Instances"][0]
-        if inst["State"]["Name"] == "running" and "PrivateDnsName" in inst:
-            break
-        time.sleep(5)
+        if "PrivateDnsName" not in inst:
+            logging.info(
+                "Private DNS not available for %s; polling until set.",
+                instance_id,
+            )
+            for _ in range(60):
+                time.sleep(5)
+                desc = ec2.describe_instances(InstanceIds=[instance_id])
+                inst = desc["Reservations"][0]["Instances"][0]
+                if "PrivateDnsName" in inst:
+                    break
+    except WaiterError as exc:  # pragma: no cover - network dependent
+        logging.warning(
+            "Waiter for instance %s failed: %s; falling back to manual poll.",
+            instance_id,
+            exc,
+        )
+        while True:
+            desc = ec2.describe_instances(InstanceIds=[instance_id])
+            inst = desc["Reservations"][0]["Instances"][0]
+            if inst["State"]["Name"] == "running" and "PrivateDnsName" in inst:
+                break
+            time.sleep(5)
     node_name = inst["PrivateDnsName"].split(".")[0]
     subprocess.run(
         ["kubectl", "label", "nodes", node_name, label, "--overwrite"],

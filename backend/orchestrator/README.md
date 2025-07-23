@@ -27,3 +27,8 @@ for configuration.
 ## Environment Variables
 
 Copy `.env.example` to `.env` and adjust the values.
+
+| Variable             | Description                                           |
+| -------------------- | ----------------------------------------------------- |
+| `SCORE_CONCURRENCY`  | Maximum parallel scoring requests. Defaults to `5`.   |
+| `GEN_CONCURRENCY`    | Maximum parallel content generation tasks. Defaults to `5`. |

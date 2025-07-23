@@ -55,3 +55,11 @@ for these calls is 10 seconds and is exposed as
 ``backend.shared.http.get_async_http_client()`` to obtain a shared
 ``httpx.AsyncClient`` instance cached for the running event loop and
 configured with this timeout.
+
+Concurrency Limits
+------------------
+
+The orchestrator limits the number of simultaneous scoring and generation
+requests. Set ``SCORE_CONCURRENCY`` and ``GEN_CONCURRENCY`` to control the
+maximum concurrent tasks for each step. The defaults of ``5`` work well for
+most deployments but may be lowered if backend services become saturated.

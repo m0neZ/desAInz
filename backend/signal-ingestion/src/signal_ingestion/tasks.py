@@ -102,6 +102,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         sanitized_json = json.dumps(clean_row)
         sanitized.append((key, sanitized_json, signal_data))
 
+    objects: list[DBSignal] = []
     for i in range(0, len(sanitized), EMBEDDING_CHUNK_SIZE):
         chunk = sanitized[i : i + EMBEDDING_CHUNK_SIZE]
         try:
@@ -109,8 +110,7 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
         except Exception as exc:  # pragma: no cover - passthrough
             raise EmbeddingGenerationError(str(exc)) from exc
 
-        objects: list[DBSignal] = []
-        for (key, sanitized_json, _signal_data), embedding in zip(chunk, embeddings):
+        for (_key, sanitized_json, _signal_data), embedding in zip(chunk, embeddings):
             objects.append(
                 DBSignal(
                     source=adapter.__class__.__name__,
@@ -119,13 +119,13 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
                 )
             )
 
-        session.add_all(objects)
-        await session.commit()
+    session.bulk_save_objects(objects)
+    await session.commit()
 
-        for key, sanitized_json, signal_data in chunk:
-            publish("signals", key)
-            publish("signals.ingested", sanitized_json)
-            store_keywords(extract_keywords(signal_data.title))
+    for key, sanitized_json, signal_data in sanitized:
+        publish("signals", key)
+        publish("signals.ingested", sanitized_json)
+        store_keywords(extract_keywords(signal_data.title))
 
 
 @app.task(name="signal_ingestion.ingest_adapter")  # type: ignore[misc]

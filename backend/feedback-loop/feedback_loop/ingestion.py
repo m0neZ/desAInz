@@ -28,7 +28,6 @@ def ingest_metrics(
     metrics: Iterable[Mapping[str, float | datetime]],
 ) -> list[dict[str, float | datetime]]:
     """Persist incoming metrics and return them with added timestamps."""
-
     metrics_list = [dict(m) for m in metrics]
     now = datetime.utcnow().replace(tzinfo=UTC)
     for entry in metrics_list:
@@ -78,7 +77,7 @@ def store_marketplace_metrics(metrics: Iterable[Mapping[str, float]]) -> None:
     if not rows:
         return
     with session_scope() as session:
-        session.add_all(rows)
+        session.bulk_save_objects(rows)
         logger.info("stored %s marketplace metrics", len(rows))
 
 

@@ -56,7 +56,7 @@ def test_generate_with_comfyui(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) 
     settings.use_comfyui = True
     called: list[dict[str, str]] = []
 
-    def fake_execute(
+    async def fake_execute(
         self: object, workflow: dict[str, str], output: str
     ) -> SimpleNamespace:
         Path(output).write_text("x")

@@ -114,7 +114,7 @@ class MockupGenerator:
 
             workflow = {"prompt": prompt, "output": str(temp_path)}
             runner = ComfyUIWorkflow(settings.comfyui_url)
-            res = runner.execute(workflow, str(temp_path))
+            res = await runner.execute(workflow, str(temp_path))
             Path(temp_path).replace(output_file)
             return GenerationResult(image_path=str(output_file), duration=res.duration)
 

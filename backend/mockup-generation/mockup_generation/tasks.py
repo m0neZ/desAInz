@@ -366,7 +366,7 @@ def generate_single_mockup(
             prompt = build_prompt(context)
             output_path = Path(output_dir) / f"mockup_{index}.png"
             try:
-                gen_result = generator.generate(
+                gen_result = await generator.generate(
                     prompt,
                     str(output_path),
                     num_inference_steps=num_inference_steps,

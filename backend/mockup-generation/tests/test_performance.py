@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import threading
 from pathlib import Path
@@ -17,7 +18,9 @@ def test_generation_speed(tmp_path: Path) -> None:
     """Ensure generation completes within a reasonable timeframe."""
     generator = MockupGenerator()
     start = time.perf_counter()
-    generator.generate("test", str(tmp_path / "img.png"), num_inference_steps=1)
+    asyncio.run(
+        generator.generate("test", str(tmp_path / "img.png"), num_inference_steps=1)
+    )
     duration = time.perf_counter() - start
     assert duration < 30
 
@@ -70,10 +73,8 @@ def test_concurrent_generation_gpu_utilization(tmp_path: Path) -> None:
     with ThreadPoolExecutor(max_workers=3) as executor:
         for prompt, path in zip(prompts, paths):
             executor.submit(
-                generator.generate,
-                prompt,
-                str(path),
-                num_inference_steps=1,
+                asyncio.run,
+                generator.generate(prompt, str(path), num_inference_steps=1),
             )
 
     done.set()

@@ -33,6 +33,7 @@ kafka_schema.SchemaRegistryClient.fetch = MagicMock(return_value={})  # type: ig
 
 import psutil  # noqa: E402
 import time  # noqa: E402
+import asyncio
 from datetime import UTC, datetime  # noqa: E402
 
 import pytest  # noqa: E402
@@ -158,7 +159,9 @@ async def test_pipeline_with_metrics(
 
     generator = MockupGenerator()
     start = time.perf_counter()
-    result = generator.generate("cat", str(tmp_path / "img.png"), num_inference_steps=1)
+    result = asyncio.run(
+        generator.generate("cat", str(tmp_path / "img.png"), num_inference_steps=1)
+    )
     gen_time = time.perf_counter() - start
     assert Path(result.image_path).exists()
     assert gen_time < thresholds["generate"]

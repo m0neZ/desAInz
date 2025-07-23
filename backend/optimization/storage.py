@@ -248,6 +248,15 @@ class MetricsStore:
             if hasattr(self, "_pool"):
                 self._pool.closeall()
 
-    def __del__(self) -> None:
-        """Automatically close connections when destroyed."""
+    def __enter__(self) -> "MetricsStore":
+        """Return self for context manager usage."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: object | None,
+    ) -> None:
+        """Close the store when exiting a context manager."""
         self.close()

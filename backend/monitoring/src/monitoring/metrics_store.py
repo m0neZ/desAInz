@@ -93,11 +93,24 @@ class TimescaleMetricsStore:
             )
             conn.commit()
 
-    def __del__(self) -> None:
-        """Close the connection pool when the store is garbage-collected."""
+    def close(self) -> None:
+        """Close the underlying connection pool if present."""
         pool = getattr(self, "_pool", None)
         if pool is not None:
             pool.closeall()
+
+    def __enter__(self) -> "TimescaleMetricsStore":
+        """Return the store instance for context manager usage."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: object | None,
+    ) -> None:
+        """Close the store when leaving a context manager."""
+        self.close()
 
     def _send_loki_log(
         self, message: str, labels: MutableMapping[str, str] | None = None

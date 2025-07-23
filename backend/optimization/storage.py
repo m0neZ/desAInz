@@ -9,6 +9,7 @@ from datetime import datetime
 from typing import Iterator, Iterable, List
 
 import psycopg2
+from psycopg2.pool import SimpleConnectionPool
 from urllib.parse import urlparse
 
 from .metrics import ResourceMetric
@@ -19,13 +20,16 @@ class MetricsStore:
 
     def __init__(self, db_url: str | None = None) -> None:
         """Initialize the store and ensure the table exists."""
-        self.db_url = db_url or os.environ.get(
-            "METRICS_DB_URL", f"sqlite:///{os.path.abspath('metrics.db')}"
+        self.db_url: str = (
+            db_url
+            or os.environ.get("METRICS_DB_URL")
+            or f"sqlite:///{os.path.abspath('metrics.db')}"
         )
         parsed = urlparse(self.db_url)
         self._use_sqlite = str(parsed.scheme).startswith("sqlite")
         if self._use_sqlite:
             self.db_path = parsed.path
+            self._sqlite_conn = sqlite3.connect(self.db_path, check_same_thread=False)
             with self._get_sqlite_conn() as conn:
                 conn.execute(
                     (
@@ -34,6 +38,7 @@ class MetricsStore:
                     )
                 )
         else:
+            self._pool = SimpleConnectionPool(1, 10, self.db_url)
             with self._get_pg_conn() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
@@ -48,21 +53,17 @@ class MetricsStore:
     @contextmanager
     def _get_sqlite_conn(self) -> Iterator[sqlite3.Connection]:
         """Yield a SQLite connection."""
-        conn = sqlite3.connect(self.db_path)
-        try:
-            yield conn
-        finally:
-            conn.commit()
-            conn.close()
+        yield self._sqlite_conn
 
     @contextmanager
     def _get_pg_conn(self) -> Iterator[psycopg2.extensions.connection]:
         """Yield a PostgreSQL connection."""
-        conn = psycopg2.connect(self.db_url)
+        assert self._pool
+        conn = self._pool.getconn()
         try:
             yield conn
         finally:
-            conn.close()
+            self._pool.putconn(conn)
 
     def add_metric(self, metric: ResourceMetric) -> None:
         """Add a metric entry to the database."""
@@ -77,6 +78,7 @@ class MetricsStore:
                         metric.disk_usage_mb,
                     ),
                 )
+                conn.commit()
         else:
             with self._get_pg_conn() as conn:
                 with conn.cursor() as cur:
@@ -235,3 +237,17 @@ class MetricsStore:
                 except psycopg2.Error:
                     cur.execute(fallback_stmt)
                 conn.commit()
+
+    def close(self) -> None:
+        """Close open database connections."""
+        if self._use_sqlite:
+            if hasattr(self, "_sqlite_conn"):
+                self._sqlite_conn.commit()
+                self._sqlite_conn.close()
+        else:
+            if hasattr(self, "_pool"):
+                self._pool.closeall()
+
+    def __del__(self) -> None:
+        """Automatically close connections when destroyed."""
+        self.close()

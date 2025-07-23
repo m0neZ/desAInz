@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "signal-ingestion.fullname" . }}
+  labels: {{- include "signal-ingestion.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{- include "signal-ingestion.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - path: /metrics
+      targetPort: {{ .Values.service.port }}
+      interval: 30s

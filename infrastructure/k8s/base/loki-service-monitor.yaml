@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: loki
+  labels:
+    app: loki
+spec:
+  selector:
+    matchLabels:
+      app: loki
+  endpoints:
+    - path: /metrics
+      targetPort: 3100
+      interval: 30s

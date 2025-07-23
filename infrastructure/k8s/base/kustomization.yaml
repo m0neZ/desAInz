@@ -1,22 +1,22 @@
 resources:
   - api-gateway-deployment.yaml
   - api-gateway-service.yaml
-  - api-gateway-servicemonitor.yaml
+  - api-gateway-service-monitor.yaml
   - marketplace-publisher-deployment.yaml
   - marketplace-publisher-service.yaml
-  - marketplace-publisher-servicemonitor.yaml
+  - marketplace-publisher-service-monitor.yaml
   - signal-ingestion-deployment.yaml
   - signal-ingestion-service.yaml
-  - signal-ingestion-servicemonitor.yaml
+  - signal-ingestion-service-monitor.yaml
   - scoring-engine-deployment.yaml
   - scoring-engine-service.yaml
-  - scoring-engine-servicemonitor.yaml
+  - scoring-engine-service-monitor.yaml
   - analytics-deployment.yaml
   - analytics-service.yaml
-  - analytics-servicemonitor.yaml
+  - analytics-service-monitor.yaml
   - ai-mockup-generation-deployment.yaml
   - ai-mockup-generation-service.yaml
-  - ai-mockup-generation-servicemonitor.yaml
+  - ai-mockup-generation-service-monitor.yaml
   - ai-mockup-generation-hpa.yaml
   - api-gateway-hpa.yaml
   - analytics-hpa.yaml
@@ -29,17 +29,18 @@ resources:
   - loki-hpa.yaml
   - feedback-loop-deployment.yaml
   - feedback-loop-service.yaml
-  - feedback-loop-servicemonitor.yaml
+  - feedback-loop-service-monitor.yaml
   - optimization-deployment.yaml
   - optimization-service.yaml
-  - optimization-servicemonitor.yaml
+  - optimization-service-monitor.yaml
   - monitoring-deployment.yaml
   - monitoring-service.yaml
-  - monitoring-servicemonitor.yaml
+  - monitoring-service-monitor.yaml
   - configmap.yaml
   - secret.yaml
   - loki-deployment.yaml
   - loki-service.yaml
+  - loki-service-monitor.yaml
   - cronjobs/orchestrator-backup.yaml
   - cronjobs/orchestrator-cleanup.yaml
   - cronjobs/orchestrator-idea.yaml

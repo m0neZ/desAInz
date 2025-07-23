@@ -117,3 +117,29 @@ to Codecov.
 To view results locally, open
 `frontend/admin-dashboard/coverage/lcov-report/index.html` in your browser and
 use any coverage tool that supports the XML format to inspect `coverage.xml`.
+
+## Profiling Code
+
+Use `scripts/capture_profile.py` to gather CPU statistics for any module. The
+command executes the given module under `cProfile` and writes the data to a file.
+
+```bash
+python scripts/capture_profile.py backend.app.main --output run.prof
+```
+
+To investigate Dagster jobs or operations, profile the orchestrator package:
+
+```bash
+python scripts/capture_profile.py orchestrator.ops --output orchestrator.prof
+```
+
+You can also profile the scoring API using the benchmark script:
+
+```bash
+python scripts/capture_profile.py scripts.benchmark_score --output scoring.prof
+```
+
+Visualize the resulting profile with tools like `snakeviz` or generate a
+flamegraph via `py-spy`. When your changes noticeably impact performance,
+attach the flamegraph images to the pull request so reviewers can compare
+results.

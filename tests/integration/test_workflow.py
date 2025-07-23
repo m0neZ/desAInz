@@ -6,6 +6,7 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
+from typing import Any
 from unittest.mock import MagicMock
 import pytest
 import vcr
@@ -105,3 +106,79 @@ async def test_end_to_end(
 
     publisher.publish("signals", "done")
     assert sent
+
+
+def _run_mock_server(generated_items: list[str] | None = None):
+    """Return context manager running a tiny HTTP server for job calls."""
+    import json
+    import threading
+    from contextlib import contextmanager
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    calls: list[str] = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self) -> None:  # noqa: D401 - test helper
+            calls.append(self.path)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            if self.path == "/ingest":
+                payload = {"signals": ["s1"]}
+            elif self.path == "/score":
+                payload = {"score": 1}
+            elif self.path == "/generate":
+                payload = {"items": generated_items or ["i1"]}
+            elif self.path == "/publish":
+                payload = {"task_id": 1}
+            else:
+                payload = {}
+            self.wfile.write(json.dumps(payload).encode())
+
+        def do_GET(self) -> None:  # noqa: D401 - test helper
+            calls.append(self.path)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(b'{"approved": true}')
+
+        def log_message(self, *args: object) -> None:  # noqa: D401 - silence logs
+            return
+
+    @contextmanager
+    def _server() -> Any:
+        server = HTTPServer(("localhost", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever)
+        thread.daemon = True
+        thread.start()
+        url = f"http://localhost:{server.server_port}"
+        try:
+            yield url, calls
+        finally:
+            server.shutdown()
+            thread.join()
+
+    return _server()
+
+
+def test_orchestrator_job(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Execute ``idea_job`` end-to-end through HTTP mock server."""
+    from dagster import DagsterInstance
+    from orchestrator.jobs import idea_job
+
+    with _run_mock_server() as (url, calls):
+        monkeypatch.setenv("SIGNAL_INGESTION_URL", url)
+        monkeypatch.setenv("SCORING_ENGINE_URL", url)
+        monkeypatch.setenv("MOCKUP_GENERATION_URL", url)
+        monkeypatch.setenv("PUBLISHER_URL", url)
+        monkeypatch.setenv("APPROVAL_SERVICE_URL", url)
+        instance = DagsterInstance.ephemeral()
+        result = idea_job.execute_in_process(instance=instance)
+        assert result.success
+        assert calls == [
+            "/ingest",
+            "/score",
+            "/generate",
+            f"/approvals/{result.dagster_run.run_id}",
+            "/publish",
+        ]

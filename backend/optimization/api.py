@@ -102,15 +102,16 @@ store = MetricsStore()
 scheduler = AsyncIOScheduler()
 
 
-def record_resource_usage(target_store: MetricsStore = store) -> None:
+def record_resource_usage(target_store: MetricsStore | None = None) -> None:
     """Capture current CPU, memory and disk usage and store the metric."""
+    store_obj = target_store or store
     metric = ResourceMetric(
-        timestamp=datetime.utcnow().replace(tzinfo=UTC),
+        timestamp=datetime.now(UTC),
         cpu_percent=psutil.cpu_percent(),
         memory_mb=psutil.virtual_memory().used / (1024 * 1024),
         disk_usage_mb=psutil.disk_usage("/").used / (1024 * 1024),
     )
-    target_store.add_metric(metric)
+    store_obj.add_metric(metric)
 
 
 @app.on_event("startup")

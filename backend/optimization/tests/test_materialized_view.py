@@ -3,9 +3,14 @@
 from __future__ import annotations
 
 import warnings
+from pathlib import Path
 import psycopg2
 import pytest
 from fastapi.testclient import TestClient
+import docker  # type: ignore
+
+if not Path("/var/run/docker.sock").exists():
+    pytest.skip("docker not available", allow_module_level=True)
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 

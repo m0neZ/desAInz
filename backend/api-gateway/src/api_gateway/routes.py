@@ -758,7 +758,7 @@ async def metrics_ws(websocket: WebSocket) -> None:
         client = _get_client("monitoring")
         while True:
             overview_req = client.get(f"{MONITORING_URL}/overview")
-            analytics_req = client.get(f"{MONITORING_URL}/analytics")
+            analytics_req = client.get(f"{ANALYTICS_URL}/analytics")
             async with asyncio.TaskGroup() as tg:
                 overview_task = tg.create_task(overview_req)
                 analytics_task = tg.create_task(analytics_req)
@@ -783,7 +783,7 @@ async def metrics_sse() -> EventSourceResponse:
         client = _get_client("monitoring")
         while True:
             overview_req = client.get(f"{MONITORING_URL}/overview")
-            analytics_req = client.get(f"{MONITORING_URL}/analytics")
+            analytics_req = client.get(f"{ANALYTICS_URL}/analytics")
             async with asyncio.TaskGroup() as tg:
                 overview_task = tg.create_task(overview_req)
                 analytics_task = tg.create_task(analytics_req)

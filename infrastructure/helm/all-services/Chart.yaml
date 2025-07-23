@@ -23,6 +23,9 @@ dependencies:
   - name: feedback-loop
     version: 0.1.0
     repository: "file://../feedback-loop"
+  - name: analytics
+    version: 0.1.0
+    repository: "file://../analytics"
   - name: orchestrator
     version: 0.1.0
     repository: "file://../orchestrator"

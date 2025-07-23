@@ -66,10 +66,12 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
      -f infrastructure/helm/ai-mockup-generation/values-dev.yaml
    helm install marketplace-publisher infrastructure/helm/marketplace-publisher \
      -f infrastructure/helm/marketplace-publisher/values-dev.yaml
-   helm install feedback-loop infrastructure/helm/feedback-loop \
-     -f infrastructure/helm/feedback-loop/values-dev.yaml
-   helm install orchestrator infrastructure/helm/orchestrator \
-     -f infrastructure/helm/orchestrator/values-dev.yaml
+  helm install feedback-loop infrastructure/helm/feedback-loop \
+    -f infrastructure/helm/feedback-loop/values-dev.yaml
+  helm install analytics infrastructure/helm/analytics \
+    -f infrastructure/helm/analytics/values-dev.yaml
+  helm install orchestrator infrastructure/helm/orchestrator \
+    -f infrastructure/helm/orchestrator/values-dev.yaml
    helm install backup-jobs infrastructure/helm/backup-jobs \
      -f infrastructure/helm/backup-jobs/values-dev.yaml
    helm install logrotate-jobs infrastructure/helm/logrotate-jobs \

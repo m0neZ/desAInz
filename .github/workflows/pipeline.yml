@@ -111,7 +111,7 @@ jobs:
         env:
           SERVICES: >-
             orchestrator ai-mockup-generation data-storage signal-ingestion
-            scoring-engine marketplace-publisher feedback-loop
+            scoring-engine marketplace-publisher feedback-loop analytics
           REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
           PREVIOUS_TAG: ${{ github.event.before }}
           ENV: prod

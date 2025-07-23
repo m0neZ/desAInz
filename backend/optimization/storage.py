@@ -6,7 +6,7 @@ import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime
-from typing import Iterator, List
+from typing import Iterator, Iterable, List
 
 import psycopg2
 from urllib.parse import urlparse
@@ -91,33 +91,62 @@ class MetricsStore:
                     )
                     conn.commit()
 
-    def get_metrics(self) -> List[ResourceMetric]:
-        """Retrieve all stored metrics."""
+    def get_metrics(self, batch_size: int = 500) -> Iterable[ResourceMetric]:
+        """
+        Yield all stored metrics in ``batch_size`` chunks.
+
+        Parameters
+        ----------
+        batch_size:
+            Maximum number of rows to fetch per database call.
+
+        Yields
+        ------
+        ResourceMetric
+            Metrics stored in the database ordered by timestamp.
+        """
         if self._use_sqlite:
             with self._get_sqlite_conn() as conn:
-                rows = conn.execute(
-                    "SELECT timestamp, cpu, memory, disk FROM metrics"
-                ).fetchall()
+                cursor = conn.execute(
+                    "SELECT timestamp, cpu, memory, disk FROM metrics ORDER BY timestamp"
+                )
+                while True:
+                    rows = cursor.fetchmany(batch_size)
+                    if not rows:
+                        break
+                    for ts, cpu, memory, disk in rows:
+                        if isinstance(ts, datetime):
+                            timestamp = ts
+                        else:
+                            timestamp = datetime.fromisoformat(str(ts))
+                        yield ResourceMetric(
+                            timestamp=timestamp,
+                            cpu_percent=cpu,
+                            memory_mb=memory,
+                            disk_usage_mb=disk,
+                        )
         else:
             with self._get_pg_conn() as conn:
-                with conn.cursor() as cur:
-                    cur.execute("SELECT timestamp, cpu, memory, disk FROM metrics")
-                    rows = cur.fetchall()
-        result: List[ResourceMetric] = []
-        for ts, cpu, memory, disk in rows:
-            if isinstance(ts, datetime):
-                timestamp = ts
-            else:
-                timestamp = datetime.fromisoformat(str(ts))
-            result.append(
-                ResourceMetric(
-                    timestamp=timestamp,
-                    cpu_percent=cpu,
-                    memory_mb=memory,
-                    disk_usage_mb=disk,
-                )
-            )
-        return result
+                with conn.cursor(name="metrics_cursor") as cur:
+                    cur.itersize = batch_size
+                    cur.execute(
+                        "SELECT timestamp, cpu, memory, disk FROM metrics ORDER BY timestamp"
+                    )
+                    while True:
+                        rows = cur.fetchmany(batch_size)
+                        if not rows:
+                            break
+                        for ts, cpu, memory, disk in rows:
+                            if isinstance(ts, datetime):
+                                timestamp = ts
+                            else:
+                                timestamp = datetime.fromisoformat(str(ts))
+                            yield ResourceMetric(
+                                timestamp=timestamp,
+                                cpu_percent=cpu,
+                                memory_mb=memory,
+                                disk_usage_mb=disk,
+                            )
 
     def get_recent_metrics(self, limit: int) -> List[ResourceMetric]:
         """Return the most recent ``limit`` metrics ordered oldest to newest."""

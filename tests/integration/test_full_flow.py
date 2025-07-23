@@ -167,4 +167,4 @@ async def test_full_flow(
     assert response.status_code == 200
     response = client.get("/optimizations")
     assert response.status_code == 200
-    assert len(opt_api.store.get_metrics()) == 1
+    assert len(list(opt_api.store.get_metrics())) == 1

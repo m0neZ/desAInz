@@ -281,26 +281,40 @@ async def publish_content(  # type: ignore[no-untyped-def]
     context,
     items: list[str],
 ) -> None:
-    """Publish generated content asynchronously."""
+    """
+    Publish generated content asynchronously.
+
+    Requests are dispatched concurrently but limited by a semaphore so that the
+    publisher service is not overwhelmed.
+    """
+
     context.log.info("publishing %d items", len(items))
     base_url = os.environ.get(
         "PUBLISHER_URL",
         "http://marketplace-publisher:8001",
     )
-    for item in items:
+    limit = int(os.environ.get("PUBLISH_CONCURRENCY", "5"))
+    semaphore = asyncio.Semaphore(limit)
+
+    async def _publish(item: str) -> None:
         payload = {"marketplace": "redbubble", "design_path": item}
-        try:
-            resp = await _post_with_retry(
-                context,
-                f"{base_url}/publish",
-                json=payload,
-                headers=_auth_headers(context),
-                timeout=30,
-            )
-            task_id = resp.json().get("task_id")
-            context.log.debug("created publish task %s", task_id)
-        except httpx.HTTPError as exc:  # noqa: BLE001
-            context.log.warning("failed to publish %s after retries: %s", item, exc)
+        async with semaphore:
+            try:
+                resp = await _post_with_retry(
+                    context,
+                    f"{base_url}/publish",
+                    json=payload,
+                    headers=_auth_headers(context),
+                    timeout=30,
+                )
+                task_id = resp.json().get("task_id")
+                context.log.debug("created publish task %s", task_id)
+            except httpx.HTTPError as exc:  # noqa: BLE001
+                context.log.warning("failed to publish %s after retries: %s", item, exc)
+
+    async with asyncio.TaskGroup() as tg:
+        for item in items:
+            tg.create_task(_publish(item))
 
 
 @op  # type: ignore[misc]

@@ -14,7 +14,13 @@ import types
 
 import pytest
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+import math
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT / "backend" / "signal-ingestion" / "src"))

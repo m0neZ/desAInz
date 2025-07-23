@@ -92,3 +92,9 @@ warnings.filterwarnings(
     category=UserWarning,
     message='directory "/run/secrets" does not exist',
 )
+warnings.filterwarnings(
+    "ignore",
+    category=DeprecationWarning,
+    message=r".*on_event.*",
+    module=r"fastapi.*",
+)

@@ -108,14 +108,21 @@ async def _ingest_from_adapter(session: AsyncSession, adapter: BaseAdapter) -> N
             embeddings = generate_embeddings([text for _key, text, _data in chunk])
         except Exception as exc:  # pragma: no cover - passthrough
             raise EmbeddingGenerationError(str(exc)) from exc
-        for (key, sanitized_json, signal_data), embedding in zip(chunk, embeddings):
-            signal = DBSignal(
-                source=adapter.__class__.__name__,
-                content=sanitized_json,
-                embedding=embedding,
+
+        objects: list[DBSignal] = []
+        for (key, sanitized_json, _signal_data), embedding in zip(chunk, embeddings):
+            objects.append(
+                DBSignal(
+                    source=adapter.__class__.__name__,
+                    content=sanitized_json,
+                    embedding=embedding,
+                )
             )
-            session.add(signal)
-            await session.commit()
+
+        session.add_all(objects)
+        await session.commit()
+
+        for key, sanitized_json, signal_data in chunk:
             publish("signals", key)
             publish("signals.ingested", sanitized_json)
             store_keywords(extract_keywords(signal_data.title))

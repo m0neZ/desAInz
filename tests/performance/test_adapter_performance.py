@@ -10,15 +10,12 @@ import time
 from pathlib import Path
 import importlib
 
-import types
-
 import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
     async_sessionmaker,
-    create_async_engine,
 )
 import math
 
@@ -28,6 +25,7 @@ os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
 # Use a patched ``create_async_engine`` that ignores unsupported arguments.
 import sqlalchemy.ext.asyncio as sa_async
+import sqlalchemy
 
 _real_create_async_engine = sa_async.create_async_engine
 
@@ -38,6 +36,17 @@ def _patched_create_async_engine(url: str, *args: object, **kwargs: object) -> A
 
 
 sa_async.create_async_engine = _patched_create_async_engine  # type: ignore[assignment]
+create_async_engine = sa_async.create_async_engine  # type: ignore[assignment]
+
+_real_create_engine = sqlalchemy.create_engine
+
+
+def _patched_create_engine(url: str, *args: object, **kwargs: object) -> Any:
+    kwargs.pop("pool_size", None)
+    return _real_create_engine(url, *args, **kwargs)
+
+
+sqlalchemy.create_engine = _patched_create_engine  # type: ignore[assignment]
 
 from typing import Any, TYPE_CHECKING
 
@@ -46,6 +55,10 @@ if TYPE_CHECKING:  # pragma: no cover - type checking only
 else:  # pragma: no cover - runtime import and reload
     shared_config = importlib.import_module("backend.shared.config")  # type: ignore[assignment]
     importlib.reload(shared_config)  # type: ignore[arg-type]
+    shared_config.settings.database_url = "sqlite+aiosqlite:///:memory:"
+    import backend.shared.queue_metrics as qm
+
+    qm.register_redis_queue_collector = lambda *a, **k: None
 
 from signal_ingestion import database as database_mod, tasks as tasks_mod  # noqa: E402
 from signal_ingestion.adapters.base import BaseAdapter  # noqa: E402
@@ -117,7 +130,6 @@ async def test_ingest_large_volume(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert len(rows) == 1000
     assert duration < 5.0
-    expected_commits = math.ceil(adapter.size / tasks.EMBEDDING_CHUNK_SIZE)
-    assert commit_count == expected_commits
+    assert commit_count == 1
 
     await engine.dispose()

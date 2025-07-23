@@ -10,6 +10,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.append(str(ROOT))
+sys.path.append(str(ROOT / "backend" / "orchestrator"))
+sys.path.append(str(ROOT / "backend" / "monitoring" / "src"))
 
 from dagster import DagsterInstance, build_run_status_sensor_context
 

@@ -384,6 +384,20 @@ services:
     - openai_api_key
     - stability_ai_api_key
     - huggingface_token
+  orchestrator-scheduler:
+    build:
+      context: .
+      dockerfile: backend/orchestrator/Dockerfile
+    command: dagster-daemon run
+    mem_limit: 512m
+    cpus: 0.25
+    depends_on:
+    - orchestrator
+    secrets:
+    - secret_key
+    - openai_api_key
+    - stability_ai_api_key
+    - huggingface_token
   backup:
     image: ghcr.io/example/backup:latest
     mem_limit: 512m

@@ -31,6 +31,7 @@ Welcome to desAInz's documentation!
    mocking
    maintenance
    operations
+   orchestrator
    listing_sync
    publish_tasks
    security

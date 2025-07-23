@@ -76,6 +76,7 @@ class TimescaleMetricsStore:
             maxconn = int(os.environ.get("METRICS_DB_POOL_SIZE", "5"))
             self._pool = SimpleConnectionPool(1, maxconn, dsn=self.db_url)
 
+        self._closed = False
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute(
@@ -95,9 +96,19 @@ class TimescaleMetricsStore:
 
     def __del__(self) -> None:
         """Close the connection pool when the store is garbage-collected."""
+        self.close()
+
+    def close(self) -> None:
+        """Close open connections and HTTP sessions."""
         pool = getattr(self, "_pool", None)
         if pool is not None:
             pool.closeall()
+            self._pool = None
+        try:
+            type(self)._session.close()
+        except Exception:
+            pass
+        self._closed = True
 
     def _send_loki_log(
         self, message: str, labels: MutableMapping[str, str] | None = None

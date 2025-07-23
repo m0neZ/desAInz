@@ -19,6 +19,7 @@ from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from backend.shared.currency import start_rate_updater
+from backend.shared.http import close_async_clients
 
 from backend.shared.db import run_migrations_if_needed
 
@@ -102,6 +103,12 @@ async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)
     return json_cached({"status": "ready"})
+
+
+@app.on_event("shutdown")
+async def shutdown_event() -> None:
+    """Release async resources."""
+    await close_async_clients()
 
 
 if __name__ == "__main__":  # pragma: no cover

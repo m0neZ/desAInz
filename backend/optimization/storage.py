@@ -26,6 +26,7 @@ class MetricsStore:
             or f"sqlite:///{os.path.abspath('metrics.db')}"
         )
         parsed = urlparse(self.db_url)
+        self._closed = False
         self._use_sqlite = str(parsed.scheme).startswith("sqlite")
         if self._use_sqlite:
             self.db_path = parsed.path
@@ -244,9 +245,12 @@ class MetricsStore:
             if hasattr(self, "_sqlite_conn"):
                 self._sqlite_conn.commit()
                 self._sqlite_conn.close()
+                self._sqlite_conn = None  # type: ignore[assignment]
         else:
             if hasattr(self, "_pool"):
                 self._pool.closeall()
+                self._pool = None  # type: ignore[assignment]
+        self._closed = True
 
     def __del__(self) -> None:
         """Automatically close connections when destroyed."""

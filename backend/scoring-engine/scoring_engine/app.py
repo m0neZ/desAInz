@@ -32,6 +32,7 @@ from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
+from backend.shared.http import close_async_clients
 
 from backend.shared.config import settings
 from backend.shared.tracing import configure_tracing
@@ -208,6 +209,8 @@ async def stop_consumer() -> None:
         _consumer_thread.join(timeout=5)
     if _consumer is not None:
         _consumer.close()
+    metrics_store.close()
+    await close_async_clients()
 
 
 async def trending_factor(topics: list[str]) -> float:

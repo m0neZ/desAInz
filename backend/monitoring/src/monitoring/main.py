@@ -50,6 +50,7 @@ from .metrics_store import (
 
 from backend.shared.cache import sync_get, sync_set
 import redis
+from backend.shared.http import close_async_clients
 
 LAST_ALERT_KEY = "sla:last_alert"
 QUEUE_ALERT_KEY = "queue:last_alert"
@@ -325,6 +326,13 @@ async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)
     return json_cached({"status": "ready"})
+
+
+@app.on_event("shutdown")
+async def shutdown_event() -> None:
+    """Release async resources on shutdown."""
+    await close_async_clients()
+    metrics_store.close()
 
 
 if __name__ == "__main__":  # pragma: no cover

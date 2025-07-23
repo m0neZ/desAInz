@@ -81,9 +81,17 @@ async def get_async_http_client(
     return client
 
 
+async def close_async_clients() -> None:
+    """Close all cached ``AsyncClient`` instances."""
+    for client in list(_ASYNC_CLIENTS.values()):
+        try:
+            await client.aclose()
+        except Exception:
+            pass
+    _ASYNC_CLIENTS.clear()
+
+
 @atexit.register
 def _close_async_client() -> None:
     """Close all cached ``AsyncClient`` instances."""
-    for client in list(_ASYNC_CLIENTS.values()):
-        asyncio.run(client.aclose())
-    _ASYNC_CLIENTS.clear()
+    asyncio.run(close_async_clients())

@@ -23,6 +23,7 @@ from fastapi.security import HTTPAuthorizationCredentials
 from prometheus_client import Counter, Histogram
 
 from .routes import router, close_http_clients
+from backend.shared.http import close_async_clients
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
@@ -194,3 +195,9 @@ async def ready(request: Request) -> Response:
 
 app.include_router(router)
 app.add_event_handler("shutdown", close_http_clients)
+
+
+@app.on_event("shutdown")
+async def shutdown_async_clients() -> None:
+    """Release shared async HTTP clients."""
+    await close_async_clients()

@@ -15,6 +15,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
+from backend.shared.http import close_async_clients
 from backend.shared.tracing import configure_tracing
 from pydantic import BaseModel
 
@@ -92,6 +93,7 @@ async def shutdown() -> None:
     """Stop the background scheduler."""
     if scheduler:
         scheduler.shutdown()
+    await close_async_clients()
 
 
 app.add_event_handler("startup", startup)

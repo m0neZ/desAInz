@@ -29,6 +29,7 @@ from backend.shared.profiling import add_profiling
 from backend.shared.responses import json_cached
 from backend.shared.security import add_security_headers
 from backend.shared.tracing import configure_tracing
+from backend.shared.http import close_async_clients
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from backend.shared.security import require_status_api_key
@@ -391,6 +392,12 @@ async def ready(request: Request) -> Response:
     """Return service readiness."""
     require_status_api_key(request)
     return json_cached({"status": "ready"})
+
+
+@app.on_event("shutdown")
+async def shutdown_event() -> None:
+    """Release shared async resources."""
+    await close_async_clients()
 
 
 @app.get("/oauth/{marketplace}")

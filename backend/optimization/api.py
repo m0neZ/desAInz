@@ -25,6 +25,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+from backend.shared.http import close_async_clients
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
 from backend.shared.metrics import register_metrics
@@ -146,10 +147,12 @@ def start_scheduler() -> None:
 
 
 @app.on_event("shutdown")
-def shutdown_scheduler() -> None:
-    """Shutdown the aggregate scheduler."""
+async def shutdown_scheduler() -> None:
+    """Shutdown scheduler and release resources."""
     if scheduler.running:
         scheduler.shutdown()
+    store.close()
+    await close_async_clients()
 
 
 class MetricIn(BaseModel):

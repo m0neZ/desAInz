@@ -92,6 +92,16 @@ async def test_ingest_large_volume(monkeypatch: pytest.MonkeyPatch) -> None:
         ),
     )
 
+    commit_count = 0
+    orig_commit = AsyncSession.commit
+
+    async def counting_commit(self: AsyncSession) -> None:
+        nonlocal commit_count
+        await orig_commit(self)
+        commit_count += 1
+
+    monkeypatch.setattr(AsyncSession, "commit", counting_commit)
+
     adapter = BulkAdapter(1000)
     start = time.perf_counter()
     async with database.SessionLocal() as session:
@@ -101,5 +111,7 @@ async def test_ingest_large_volume(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert len(rows) == 1000
     assert duration < 5.0
+    expected_commits = math.ceil(adapter.size / tasks.EMBEDDING_CHUNK_SIZE)
+    assert commit_count == expected_commits
 
     await engine.dispose()

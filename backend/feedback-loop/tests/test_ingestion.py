@@ -27,6 +27,23 @@ def _db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     import warnings
 
     warnings.filterwarnings("ignore", category=DeprecationWarning)
+    monkeypatch.setattr(
+        "prometheus_client.Gauge",
+        lambda *_, **__: types.SimpleNamespace(
+            set=lambda *_1, **_2: None,
+            _value=types.SimpleNamespace(get=lambda: 0),
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "marketplace_publisher.publisher",
+        types.SimpleNamespace(CLIENTS={}),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "marketplace_publisher.clients",
+        types.SimpleNamespace(BaseClient=object),
+    )
     monkeypatch.setitem(
         sys.modules,
         "scoring_engine",
@@ -149,3 +166,46 @@ def test_update_weights_from_db(_db, requests_mock):
     assert requests_mock.called
     assert round(weights["engagement"], 2) == 0.33
     assert round(weights["community_fit"], 2) == 0.6
+
+
+@pytest.mark.vcr(record_mode="new_episodes")
+def test_fetch_marketplace_metrics_vcr(tmp_path: Path) -> None:
+    """Recorded HTTP calls should return parsed metrics."""
+
+    import http.server
+    import socketserver
+    import threading
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self) -> None:  # noqa: D401
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(
+                b'{"views": 5, "favorites": 2, "orders": 1, "revenue": 3.5}'
+            )
+
+        def log_message(self, format: str, *args: object) -> None:  # noqa: D401
+            return
+
+    with socketserver.TCPServer(("127.0.0.1", 0), Handler) as srv:
+        thread = threading.Thread(target=srv.serve_forever)
+        thread.start()
+        try:
+            port = srv.server_address[1]
+            from feedback_loop.ingestion import fetch_marketplace_metrics
+
+            metrics = fetch_marketplace_metrics(f"http://127.0.0.1:{port}", [1])
+        finally:
+            srv.shutdown()
+            thread.join()
+
+    assert metrics == [
+        {
+            "listing_id": 1.0,
+            "views": 5.0,
+            "favorites": 2.0,
+            "orders": 1.0,
+            "revenue": 3.5,
+        }
+    ]

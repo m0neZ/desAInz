@@ -32,6 +32,7 @@ from prometheus_client import Histogram
 from backend.shared.metrics import register_metrics
 from backend.shared.security import add_security_headers
 from backend.shared.responses import json_cached
+from backend.shared.http import close_async_clients
 
 from backend.shared.tracing import configure_tracing
 from backend.shared.profiling import add_profiling
@@ -85,9 +86,10 @@ add_security_headers(app)
 
 
 @app.on_event("shutdown")
-def shutdown_store() -> None:
+async def shutdown_store() -> None:
     """Close metrics store connections on shutdown."""
     metrics_store.close()
+    await close_async_clients()
 
 
 SIGNAL_TO_PUBLISH_SECONDS = Histogram(

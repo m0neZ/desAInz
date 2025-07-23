@@ -45,9 +45,9 @@ jobs:
           npm run lint:css
           npm run lint:css --prefix frontend/admin-dashboard
       - name: Run Flow
-        run: |
-          npm run flow
-          npm run flow --prefix frontend/admin-dashboard
+        run: npm run flow
+      - name: Run Flow (admin-dashboard)
+        run: npm run flow --prefix frontend/admin-dashboard
       - name: Run ShellCheck
         run: |
           shellcheck $(find scripts -name '*.sh')

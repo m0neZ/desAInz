@@ -162,7 +162,7 @@ async def ingest_signals(  # type: ignore[no-untyped-def]
 
 
 @op  # type: ignore[misc]
-def score_signals(  # type: ignore[no-untyped-def]
+async def score_signals(  # type: ignore[no-untyped-def]
     context,
     signals: list[str],
 ) -> list[float]:
@@ -170,7 +170,7 @@ def score_signals(  # type: ignore[no-untyped-def]
 
     async def _score(client: httpx.AsyncClient) -> float:
         payload = {
-            "timestamp": datetime.utcnow().replace(tzinfo=UTC).isoformat(),
+            "timestamp": datetime.now(tz=UTC).isoformat(),
             "engagement_rate": 0.0,
             "embedding": [0.0],
         }
@@ -202,13 +202,10 @@ def score_signals(  # type: ignore[no-untyped-def]
         "http://scoring-engine:5002",
     )
 
-    async def _run() -> list[float]:
-        client = await get_async_http_client()
-        async with asyncio.TaskGroup() as tg:
-            tasks = [tg.create_task(_score(client)) for _ in signals]
-        return [t.result() for t in tasks]
-
-    return list(asyncio.run(_run()))
+    client = await get_async_http_client()
+    async with asyncio.TaskGroup() as tg:
+        tasks = [tg.create_task(_score(client)) for _ in signals]
+    return [task.result() for task in tasks]
 
 
 @op  # type: ignore[misc]

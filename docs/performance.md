@@ -83,6 +83,12 @@ directly from Redis and exposed via Prometheus. When the average queue length
 exceeds 30 pending tasks a PagerDuty alert is triggered and additional workers
 are spawned automatically.
 
+Queue lengths are exported at each service's `/metrics` endpoint by the
+``register_redis_queue_collector`` helper. A Prometheus adapter (or KEDA with the
+Prometheus scaler) exposes this metric as ``celery_queue_length`` so the HPA can
+scale based on backlog size. The Helm charts include optional values to set the
+desired average queue length.
+
 ## GPU Slot Metrics
 
 GPU-bound workloads now expose lock usage information through Prometheus.

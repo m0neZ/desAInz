@@ -30,5 +30,10 @@ redis-cli set gpu_slots 2
 An example HPA manifest lives in `infrastructure/k8s/examples/gpu-worker-hpa.yaml`
 and scales the `mockup-generation` deployment according to queue length.
 
+The Helm chart exposes an ``hpa.queueAverageValue`` parameter which controls the
+desired backlog size before scaling out. When used with the Prometheus adapter or
+KEDA, this value maps to the ``celery_queue_length`` metric exported by the
+workers.
+
 The metadata generation service uses OpenAI's GPT‑4 model by default. The
 model can be changed by setting the `OPENAI_MODEL` environment variable.

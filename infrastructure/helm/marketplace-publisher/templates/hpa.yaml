@@ -23,4 +23,13 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.hpa.targetMemoryUtilizationPercentage }}
+{{- if .Values.hpa.queueAverageValue }}
+    - type: External
+      external:
+        metric:
+          name: celery_queue_length
+        target:
+          type: AverageValue
+          averageValue: "{{ .Values.hpa.queueAverageValue }}"
+{{- end }}
 {{- end }}

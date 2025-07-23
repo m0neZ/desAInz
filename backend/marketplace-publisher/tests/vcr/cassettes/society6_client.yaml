@@ -1,0 +1,204 @@
+interactions:
+- request:
+    body: client_id=id&client_secret=secret&grant_type=client_credentials
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '63'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.32.4
+    method: POST
+    uri: http://127.0.0.1:58609/token
+  response:
+    body:
+      string: '{"access_token": "tok"}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:02 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!binary |
+      LS05ZmQ5NWZkYmY4ZTY5MWJlOTY0ZWM2NWFlYTE2MmI0Mg0KQ29udGVudC1EaXNwb3NpdGlvbjog
+      Zm9ybS1kYXRhOyBuYW1lPSJ0aXRsZSINCg0KdA0KLS05ZmQ5NWZkYmY4ZTY5MWJlOTY0ZWM2NWFl
+      YTE2MmI0Mg0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJmaWxlIjsgZmls
+      ZW5hbWU9ImRlc2lnbi5wbmciDQoNCh+LCAAeZIBoAv+rAACDFtyMAQAAAA0KLS05ZmQ5NWZkYmY4
+      ZTY5MWJlOTY0ZWM2NWFlYTE2MmI0Mi0tDQo=
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer tok
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '254'
+      Content-Type:
+      - multipart/form-data; boundary=9fd95fdbf8e691be964ec65aea162b42
+      User-Agent:
+      - python-requests/2.32.4
+      X-API-Key:
+      - key
+    method: POST
+    uri: http://127.0.0.1:58609/publish
+  response:
+    body:
+      string: '{"id": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:02 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer tok
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.4
+      X-API-Key:
+      - key
+    method: GET
+    uri: http://127.0.0.1:58609/metrics/1
+  response:
+    body:
+      string: '{"views": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:02 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: client_id=id&client_secret=secret&grant_type=client_credentials
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '63'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.32.4
+    method: POST
+    uri: http://127.0.0.1:43691/token
+  response:
+    body:
+      string: '{"access_token": "tok"}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:20 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!binary |
+      LS00NGNhNTg4ODYzYzMwOTc1YTY0MzFmNjI2MDdjOWRjYw0KQ29udGVudC1EaXNwb3NpdGlvbjog
+      Zm9ybS1kYXRhOyBuYW1lPSJ0aXRsZSINCg0KdA0KLS00NGNhNTg4ODYzYzMwOTc1YTY0MzFmNjI2
+      MDdjOWRjYw0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJmaWxlIjsgZmls
+      ZW5hbWU9ImRlc2lnbi5wbmciDQoNCh+LCAAwZIBoAv+rAACDFtyMAQAAAA0KLS00NGNhNTg4ODYz
+      YzMwOTc1YTY0MzFmNjI2MDdjOWRjYy0tDQo=
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer tok
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '254'
+      Content-Type:
+      - multipart/form-data; boundary=44ca588863c30975a6431f62607c9dcc
+      User-Agent:
+      - python-requests/2.32.4
+      X-API-Key:
+      - key
+    method: POST
+    uri: http://127.0.0.1:43691/publish
+  response:
+    body:
+      string: '{"id": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:20 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer tok
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.4
+      X-API-Key:
+      - key
+    method: GET
+    uri: http://127.0.0.1:43691/metrics/1
+  response:
+    body:
+      string: '{"views": 1}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Jul 2025 04:25:20 GMT
+      Server:
+      - BaseHTTP/0.6 Python/3.12.10
+    status:
+      code: 200
+      message: OK
+version: 1

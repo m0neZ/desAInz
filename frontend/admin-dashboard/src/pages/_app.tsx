@@ -6,11 +6,11 @@ import AdminLayout from '../layouts/AdminLayout';
 import { I18nProvider } from '../i18n';
 import { TrpcProvider } from '../lib/trpc';
 import { useEffect } from 'react';
-import { useStore } from '../hooks/useStore';
+import { useUserStore } from '../store/useUserStore';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { user } = useUser();
-  const setAuth = useStore((s) => s.setAuthenticated);
+  const setAuth = useUserStore((s) => s.setAuthenticated);
 
   useEffect(() => {
     setAuth(Boolean(user));

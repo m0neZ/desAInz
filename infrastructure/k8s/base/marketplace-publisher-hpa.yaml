@@ -22,3 +22,10 @@ spec:
         target:
           type: Utilization
           averageUtilization: 70
+    - type: External
+      external:
+        metric:
+          name: celery_queue_length
+        target:
+          type: AverageValue
+          averageValue: "30"

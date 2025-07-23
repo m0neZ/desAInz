@@ -6,7 +6,12 @@ from datetime import UTC, datetime
 
 import numpy as np
 
-from scoring_engine.scoring import Signal, calculate_score, compute_novelty
+from scoring_engine.scoring import (
+    Signal,
+    calculate_score,
+    compute_engagement,
+    compute_novelty,
+)
 from scoring_engine.weight_repository import update_weights
 from scoring_engine.centroid_job import compute_and_store_centroids
 from backend.shared.db import session_scope
@@ -69,3 +74,11 @@ def test_scoring_uses_db_centroid(tmp_path) -> None:
         np.array(dim_vec1), np.array([0.5] + [0.0] * 766 + [0.5])
     )
     assert score == expected
+
+
+def test_compute_engagement_manual() -> None:
+    """compute_engagement uses manual z-score."""
+
+    assert compute_engagement(2.0, 1.0) == 1.0
+    assert compute_engagement(1.0, 2.0) == -0.5
+    assert compute_engagement(0.0, 0.0) == 0.0

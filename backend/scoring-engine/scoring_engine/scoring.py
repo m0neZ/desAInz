@@ -14,7 +14,6 @@ except Exception:  # pragma: no cover - fallback on pure Python
     _compute_novelty_ext = None
 
 import numpy as np
-from sklearn.preprocessing import StandardScaler
 
 from .weight_repository import get_centroid, get_weights
 from .affinity import metadata_embedding, DIMENSION
@@ -39,10 +38,6 @@ class Signal:
         self.metadata = metadata
 
 
-_SCALER: StandardScaler = StandardScaler(copy=False)
-_SCALER_BUF: NDArray[np.floating] = np.empty((2, 1), dtype=float)
-
-
 def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> float:
     """Return freshness score weighted by ``trending_factor``."""
     hours = (datetime.utcnow().replace(tzinfo=UTC) - timestamp).total_seconds() / 3600
@@ -51,11 +46,10 @@ def compute_freshness(timestamp: datetime, trending_factor: float = 1.0) -> floa
 
 
 def compute_engagement(current: float, median: float) -> float:
-    """Z-score of engagement rate against median without new allocations."""
-    _SCALER_BUF[0, 0] = current
-    _SCALER_BUF[1, 0] = median
-    scaled = _SCALER.fit_transform(_SCALER_BUF)
-    return float(scaled[0, 0])
+    """Return z-score of engagement based on the provided median."""
+
+    denom = abs(median) or 1.0
+    return float((current - median) / denom)
 
 
 def compute_novelty(

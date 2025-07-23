@@ -184,6 +184,7 @@ services:
     - 8000:8000
     environment:
       LOKI_URL: http://loki:3100
+      ANALYTICS_URL: http://analytics:8000
     depends_on:
     - loki
     labels:
@@ -256,6 +257,25 @@ services:
     - openai_api_key
     - stability_ai_api_key
     - huggingface_token
+  analytics:
+    build: ./backend/analytics
+    mem_limit: 512m
+    cpus: 0.50
+    ports:
+    - 8006:8000
+    depends_on:
+    - postgres
+    labels:
+    - prometheus.scrape=true
+    - prometheus.path=/metrics
+    - prometheus.port=8000
+
+    secrets:
+    - secret_key
+    - openai_api_key
+    - stability_ai_api_key
+    - huggingface_token
+
   api-gateway:
     build: ./backend/api-gateway
     mem_limit: 512m
@@ -264,6 +284,7 @@ services:
     - 8001:8000
     environment:
       LOKI_URL: http://loki:3100
+      ANALYTICS_URL: http://analytics:8000
     depends_on:
     - kafka
     - redis

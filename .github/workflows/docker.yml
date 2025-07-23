@@ -25,7 +25,21 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Scan image with Trivy
+      - name: Build analytics image
+        uses: docker/build-push-action@v5
+        with:
+          context: backend/analytics
+          tags: analytics:latest
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Scan analytics image with Trivy
+        uses: aquasecurity/trivy-action@0.32.0
+        with:
+          image-ref: analytics:latest
+          severity: CRITICAL,HIGH
+          exit-code: 1
+      - name: Scan mockup-generation image with Trivy
         uses: aquasecurity/trivy-action@0.32.0
         with:
           image-ref: mockup-generation:latest

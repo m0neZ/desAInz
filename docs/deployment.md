@@ -31,6 +31,7 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
    ```
 
 5. Secrets can be stored in files under `secrets/` and referenced as Docker secrets. The services read them from `/run/secrets`.
+6. The new analytics container listens on port `8000`. When deploying the API Gateway set `ANALYTICS_URL` to the analytics service URL.
 
 ## Kubernetes
 
@@ -72,11 +73,13 @@ This guide explains how to run desAInz locally with Docker Compose, deploy it to
      -f infrastructure/helm/orchestrator/values-dev.yaml
    helm install backup-jobs infrastructure/helm/backup-jobs \
      -f infrastructure/helm/backup-jobs/values-dev.yaml
-   helm install logrotate-jobs infrastructure/helm/logrotate-jobs \
-     -f infrastructure/helm/logrotate-jobs/values-dev.yaml
-   helm install monitoring infrastructure/helm/monitoring \
-     -f infrastructure/helm/monitoring/values.yaml
-   ```
+  helm install logrotate-jobs infrastructure/helm/logrotate-jobs \
+    -f infrastructure/helm/logrotate-jobs/values-dev.yaml
+  helm install monitoring infrastructure/helm/monitoring \
+    -f infrastructure/helm/monitoring/values.yaml
+  helm install analytics infrastructure/helm/analytics \
+    -f infrastructure/helm/analytics/values-dev.yaml
+  ```
 
 Production deployments use the corresponding `values-production.yaml` files under
 each chart directory.

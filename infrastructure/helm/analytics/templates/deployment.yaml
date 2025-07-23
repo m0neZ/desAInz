@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "analytics.fullname" . }}
+  labels: {{- include "analytics.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{- include "analytics.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "analytics.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.service.port }}
+          env:
+{{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+{{- end }}
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /run/secrets
+              readOnly: true
+            - name: tmpfs-volume
+              mountPath: /tmpfs
+          resources:
+{{ toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: {{ .Values.secretName }}
+        - name: tmpfs-volume
+          emptyDir:
+            medium: Memory

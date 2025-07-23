@@ -257,6 +257,20 @@ services:
       - "prometheus.path=/metrics"
       - "prometheus.port=8000"
 
+  analytics:
+    build: ./backend/analytics
+    mem_limit: 512m
+    cpus: 0.50
+    command: python -m analytics.api
+    ports:
+      - "8006:8000"
+    depends_on:
+      - postgres
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=8000"
+
   feedback-loop:
     build: ./backend/feedback-loop
     mem_limit: 512m

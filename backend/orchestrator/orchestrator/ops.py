@@ -107,6 +107,25 @@ async def _post_with_retry(
     raise RuntimeError("unreachable")
 
 
+async def _fetch_optimizations(context: Any) -> list[str]:
+    """Return optimization results from the optimization service."""
+    base_url = os.environ.get("OPTIMIZATION_URL", "http://optimization:5007")
+    client = await get_async_http_client()
+    try:
+        resp = await client.get(
+            f"{base_url}/optimizations",
+            headers=_auth_headers(context),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        if isinstance(data, list):
+            return [str(item) for item in data]
+    except httpx.HTTPError as exc:  # noqa: BLE001
+        context.log.warning("failed to fetch optimizations: %s", exc)
+    return []
+
+
 @op  # type: ignore[misc]
 async def ingest_signals(  # type: ignore[no-untyped-def]
     context,
@@ -302,6 +321,12 @@ def cleanup_data(  # type: ignore[no-untyped-def]
 ) -> None:
     """Remove temporary or stale data."""
     context.log.info("running cleanup")
+    try:
+        optimizations = asyncio.run(_fetch_optimizations(context))
+        if optimizations:
+            context.log.info("optimization suggestions: %s", optimizations)
+    except Exception as exc:  # noqa: BLE001
+        context.log.warning("optimization query failed: %s", exc)
     maintenance.archive_old_mockups()
     maintenance.purge_stale_records()
     maintenance.purge_old_s3_objects()

@@ -20,6 +20,9 @@ scrape_configs:
   - job_name: 'feedback-loop'
     static_configs:
       - targets: ['feedback-loop:8000']
+  - job_name: 'optimization'
+    static_configs:
+      - targets: ['optimization:5007']
   - job_name: 'orchestrator'
     static_configs:
       - targets: ['orchestrator:3000']

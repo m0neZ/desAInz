@@ -38,3 +38,62 @@ def test_metrics_endpoint(base: str, module: str) -> None:
         assert b"# TYPE" in resp.content
         metrics = {m.name for m in text_string_to_metric_families(resp.text)}
         assert "http_requests_total" in metrics
+
+
+def _gateway_client(monkeypatch: pytest.MonkeyPatch) -> TestClient:
+    """Return an ``api-gateway`` test client with mocked dependencies."""
+    monkeypatch.setenv("OPTIMIZATION_URL", "http://opt:5007")
+    monkeypatch.setenv("MONITORING_URL", "http://mon:8000")
+    monkeypatch.setenv("API_GATEWAY_REQUEST_CACHE_TTL", "1")
+    monkeypatch.setenv("SDK_DISABLED", "1")
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    sys.path.insert(
+        0, str(Path(__file__).resolve().parents[1] / "backend" / "api-gateway" / "src")
+    )
+    import api_gateway.routes as routes
+    import api_gateway.main as main
+    import prometheus_client
+    from prometheus_client import CollectorRegistry
+    import httpx
+
+    class MockClient:
+        async def __aenter__(self) -> "MockClient":
+            return self
+
+        async def __aexit__(
+            self,
+            exc_type: object,
+            exc: object,
+            tb: object,
+        ) -> None:
+            return None
+
+        async def get(self, url: str) -> httpx.Response:
+            if url == "http://opt:5007/metrics":
+                return httpx.Response(200, content=b"opt")
+            if url == "http://mon:8000/metrics":
+                return httpx.Response(200, content=b"mon")
+            return httpx.Response(404)
+
+    monkeypatch.setattr(httpx, "AsyncClient", MockClient)
+    prometheus_client.REGISTRY = CollectorRegistry()
+    importlib.reload(routes)
+    return TestClient(main.app)
+
+
+def test_proxy_optimization_metrics(monkeypatch: pytest.MonkeyPatch) -> None:
+    """API gateway should proxy optimization metrics."""
+    client = _gateway_client(monkeypatch)
+    resp = client.get("/metrics")
+    assert resp.status_code == 200
+    resp = client.get("/optimization/metrics")
+    assert resp.status_code == 200
+    assert resp.text == "opt"
+
+
+def test_proxy_monitoring_metrics(monkeypatch: pytest.MonkeyPatch) -> None:
+    """API gateway should proxy monitoring metrics."""
+    client = _gateway_client(monkeypatch)
+    resp = client.get("/monitoring/metrics")
+    assert resp.status_code == 200
+    assert resp.text == "mon"

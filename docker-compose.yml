@@ -204,6 +204,8 @@ services:
       - "8001:8000"
     environment:
       LOKI_URL: http://loki:3100
+      OPTIMIZATION_URL: http://optimization:5007
+      MONITORING_URL: http://monitoring:8000
     depends_on:
       - kafka
       - redis
@@ -282,6 +284,22 @@ services:
       - "prometheus.scrape=true"
       - "prometheus.path=/metrics"
       - "prometheus.port=8000"
+
+  optimization:
+    build: ./backend/optimization
+    mem_limit: 512m
+    cpus: 0.50
+    command: python -m backend.optimization.api
+    ports:
+      - "5007:5007"
+    environment:
+      LOKI_URL: http://loki:3100
+    depends_on:
+      - postgres
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.path=/metrics"
+      - "prometheus.port=5007"
 
   admin-dashboard:
     build: ./frontend/admin-dashboard

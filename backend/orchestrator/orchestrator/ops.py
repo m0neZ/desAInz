@@ -126,6 +126,25 @@ async def _fetch_optimizations(context: Any) -> list[str]:
     return []
 
 
+async def _fetch_hints(context: Any) -> list[str]:
+    """Return optimization hints from the optimization service."""
+    base_url = os.environ.get("OPTIMIZATION_URL", "http://optimization:5007")
+    client = await get_async_http_client()
+    try:
+        resp = await client.get(
+            f"{base_url}/hints",
+            headers=_auth_headers(context),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        if isinstance(data, list):
+            return [str(item) for item in data]
+    except httpx.HTTPError as exc:  # noqa: BLE001
+        context.log.warning("failed to fetch optimization hints: %s", exc)
+    return []
+
+
 @op  # type: ignore[misc]
 async def ingest_signals(  # type: ignore[no-untyped-def]
     context,
@@ -332,9 +351,9 @@ def cleanup_data(  # type: ignore[no-untyped-def]
     """Remove temporary or stale data."""
     context.log.info("running cleanup")
     try:
-        optimizations = asyncio.run(_fetch_optimizations(context))
-        if optimizations:
-            context.log.info("optimization suggestions: %s", optimizations)
+        hints = asyncio.run(_fetch_hints(context))
+        if hints:
+            context.log.info("optimization hints: %s", hints)
     except Exception as exc:  # noqa: BLE001
         context.log.warning("optimization query failed: %s", exc)
     maintenance.archive_old_mockups()

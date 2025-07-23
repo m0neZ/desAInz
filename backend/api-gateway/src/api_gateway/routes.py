@@ -1,6 +1,6 @@
 """API routes including REST and tRPC-compatible endpoints."""
 
-from typing import Any, Dict, AsyncGenerator, cast
+from typing import Any, Dict, AsyncGenerator, Awaitable, Callable, cast
 from hashlib import md5
 from functools import lru_cache
 
@@ -67,7 +67,7 @@ from scripts import maintenance
 class CacheControlRoute(APIRoute):
     """APIRoute that attaches caching headers and uses Redis for GET responses."""
 
-    def get_route_handler(self):  # type: ignore[override]
+    def get_route_handler(self) -> Callable[[Request], Awaitable[Response]]:  # type: ignore[override]
         """Return handler that caches GET responses based on request URI."""
         original_handler = super().get_route_handler()
 
@@ -542,6 +542,17 @@ async def optimizations() -> list[str]:
     return cast(list[str], resp.json())
 
 
+@optimization_router.get("/hints", summary="Optimization hints")
+async def optimization_hints() -> list[str]:
+    """Return optimization hints from the optimization service."""
+    url = f"{OPTIMIZATION_URL}/hints"
+    client = _get_client("optimization")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[str], resp.json())
+
+
 @router.get("/trending", tags=["Trending"], summary="Popular keywords")
 async def trending(limit: int = 10, offset: int = 0) -> list[str]:
     """Return trending keywords from the ingestion service."""
@@ -570,6 +581,50 @@ async def monitoring_status() -> Dict[str, Any]:
     return cast(Dict[str, Any], resp.json())
 
 
+@monitoring_router.get("/sla", summary="SLA status")
+async def monitoring_sla() -> Dict[str, float]:
+    """Proxy SLA status from the monitoring service."""
+    url = f"{MONITORING_URL}/sla"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, float], resp.json())
+
+
+@monitoring_router.get("/latency", summary="Average publish latency")
+async def monitoring_latency() -> Dict[str, float]:
+    """Proxy average latency from the monitoring service."""
+    url = f"{MONITORING_URL}/latency"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, float], resp.json())
+
+
+@monitoring_router.get("/queue_length", summary="Queue backlog length")
+async def monitoring_queue_length() -> Dict[str, int]:
+    """Proxy queue length from the monitoring service."""
+    url = f"{MONITORING_URL}/queue_length"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, int], resp.json())
+
+
+@optimization_router.get("/cost_alerts", summary="Cost alerts")
+async def optimization_cost_alerts() -> list[str]:
+    """Return optimization cost alerts from the optimization service."""
+    url = f"{OPTIMIZATION_URL}/cost_alerts"
+    client = _get_client("optimization")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(list[str], resp.json())
+
+
 @monitoring_router.get("/metrics", summary="Monitoring metrics")
 async def monitoring_metrics() -> Response:
     """Proxy Prometheus metrics from the monitoring service."""
@@ -582,6 +637,39 @@ async def monitoring_metrics() -> Response:
         content=resp.content,
         media_type=resp.headers.get("content-type", "text/plain"),
     )
+
+
+@monitoring_router.get("/daily_summary", summary="Daily summary")
+async def monitoring_daily_summary() -> Dict[str, Any]:
+    """Proxy the generated daily summary from the monitoring service."""
+    url = f"{MONITORING_URL}/daily_summary"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@monitoring_router.get("/daily_summary/report", summary="Daily summary report")
+async def monitoring_daily_summary_report() -> Dict[str, Any]:
+    """Proxy the persisted daily summary report."""
+    url = f"{MONITORING_URL}/daily_summary/report"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, Any], resp.json())
+
+
+@monitoring_router.get("/logs", summary="Service logs")
+async def monitoring_logs() -> Dict[str, str]:
+    """Proxy application logs from the monitoring service."""
+    url = f"{MONITORING_URL}/logs"
+    client = _get_client("monitoring")
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        raise HTTPException(resp.status_code, resp.text)
+    return cast(Dict[str, str], resp.json())
 
 
 @analytics_router.get("/ab_test_results/{ab_test_id}", summary="A/B test results")

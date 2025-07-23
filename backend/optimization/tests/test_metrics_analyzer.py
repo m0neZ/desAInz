@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 from backend.optimization.metrics import MetricsAnalyzer, ResourceMetric
+from backend.optimization.storage import MetricsStore
 
 
 def test_average_cpu_memory() -> None:
@@ -110,3 +112,21 @@ def test_cost_alerts_trigger() -> None:
     alerts = analyzer.cost_alerts()
     assert any("CPU usage" in a for a in alerts)
     assert any("Disk usage" in a for a in alerts)
+
+
+def test_from_store_since(tmp_path: Path) -> None:
+    """``MetricsAnalyzer.from_store`` handles ``since`` window."""
+    store = MetricsStore(f"sqlite:///{tmp_path/'metrics.db'}")
+    now = datetime.now(UTC)
+    for i in range(5):
+        store.add_metric(
+            ResourceMetric(
+                timestamp=now - timedelta(hours=5 - i),
+                cpu_percent=10.0,
+                memory_mb=100.0,
+                disk_usage_mb=200.0,
+            )
+        )
+    window = now - timedelta(hours=2)
+    analyzer = MetricsAnalyzer.from_store(store, since=window)
+    assert analyzer.average_cpu() == 10.0

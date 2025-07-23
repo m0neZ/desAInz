@@ -190,6 +190,57 @@ class MetricsStore:
                     rows = cur.fetchall()
         return self._rows_to_metrics(rows)
 
+    def iter_metrics_since(
+        self, since: datetime, batch_size: int = 500
+    ) -> Iterable[ResourceMetric]:
+        """Yield metrics recorded at or after ``since`` in ``batch_size`` chunks."""
+        if self._use_sqlite:
+            with self._get_sqlite_conn() as conn:
+                cursor = conn.execute(
+                    "SELECT timestamp, cpu, memory, disk FROM metrics"
+                    " WHERE timestamp >= ? ORDER BY timestamp",
+                    (since.isoformat(),),
+                )
+                while True:
+                    rows = cursor.fetchmany(batch_size)
+                    if not rows:
+                        break
+                    for ts, cpu, memory, disk in rows:
+                        if isinstance(ts, datetime):
+                            timestamp = ts
+                        else:
+                            timestamp = datetime.fromisoformat(str(ts))
+                        yield ResourceMetric(
+                            timestamp=timestamp,
+                            cpu_percent=cpu,
+                            memory_mb=memory,
+                            disk_usage_mb=disk,
+                        )
+        else:
+            with self._get_pg_conn() as conn:
+                with conn.cursor(name="metrics_since_cursor") as cur:
+                    cur.itersize = batch_size
+                    cur.execute(
+                        "SELECT timestamp, cpu, memory, disk FROM metrics"
+                        " WHERE timestamp >= %s ORDER BY timestamp",
+                        (since.isoformat(),),
+                    )
+                    while True:
+                        rows = cur.fetchmany(batch_size)
+                        if not rows:
+                            break
+                        for ts, cpu, memory, disk in rows:
+                            if isinstance(ts, datetime):
+                                timestamp = ts
+                            else:
+                                timestamp = datetime.fromisoformat(str(ts))
+                            yield ResourceMetric(
+                                timestamp=timestamp,
+                                cpu_percent=cpu,
+                                memory_mb=memory,
+                                disk_usage_mb=disk,
+                            )
+
     def _rows_to_metrics(
         self, rows: list[tuple[str | datetime, float, float, float | None]]
     ) -> List[ResourceMetric]:

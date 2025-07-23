@@ -10,7 +10,7 @@ SERVICE_NAME:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 import asyncio
 import psutil
 import logging
@@ -190,30 +190,34 @@ def get_recent_metrics(limit: int = 10) -> List[ResourceMetric]:
 
 
 @app.get("/optimizations")
-def get_optimizations() -> List[str]:
-    """Return recommended cost optimizations."""
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+def get_optimizations(hours: int = 24) -> List[str]:
+    """Return recommended cost optimizations for the last ``hours`` hours."""
+    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=hours)
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.recommend_optimizations()
 
 
 @app.get("/recommendations")
-def get_recommendations() -> List[str]:
-    """Return top optimization actions."""
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+def get_recommendations(hours: int = 24) -> List[str]:
+    """Return top optimization actions for the last ``hours`` hours."""
+    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=hours)
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.top_recommendations()
 
 
 @app.get("/hints")
-def get_hints() -> List[str]:
-    """Return optimization hints based on recent metrics."""
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+def get_hints(hours: int = 24) -> List[str]:
+    """Return optimization hints based on metrics from the last ``hours`` hours."""
+    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=hours)
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.top_recommendations()
 
 
 @app.get("/cost_alerts")
-def get_cost_alerts() -> List[str]:
-    """Return alerts when usage or cost thresholds are exceeded."""
-    analyzer = MetricsAnalyzer(list(store.get_metrics()))
+def get_cost_alerts(hours: int = 24) -> List[str]:
+    """Return alerts when usage or cost thresholds are exceeded over ``hours`` hours."""
+    since = datetime.utcnow().replace(tzinfo=UTC) - timedelta(hours=hours)
+    analyzer = MetricsAnalyzer.from_store(store, since=since)
     return analyzer.cost_alerts()
 
 

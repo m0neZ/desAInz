@@ -29,18 +29,18 @@ def test_recommendation_routes(tmp_path: Path) -> None:
     resp = client.post("/metrics", json=metric)
     assert resp.status_code == 200
 
-    resp = client.get("/optimizations")
+    resp = client.get("/optimizations", params={"hours": 1})
     assert resp.status_code == 200
     assert resp.json() != []
 
-    resp = client.get("/recommendations")
+    resp = client.get("/recommendations", params={"hours": 1})
     assert resp.status_code == 200
     assert resp.json() != []
 
-    resp = client.get("/cost_alerts")
+    resp = client.get("/cost_alerts", params={"hours": 1})
     assert resp.status_code == 200
     assert isinstance(resp.json(), list)
 
-    resp = client.get("/hints")
+    resp = client.get("/hints", params={"hours": 1})
     assert resp.status_code == 200
     assert isinstance(resp.json(), list)

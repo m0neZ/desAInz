@@ -27,13 +27,38 @@ class MetricsAnalyzer:
 
     @classmethod
     def from_store(
-        cls, store: "MetricsStore", limit: int | None = None
+        cls,
+        store: "MetricsStore",
+        limit: int | None = None,
+        *,
+        since: datetime | None = None,
+        batch_size: int = 500,
+        metrics_iter: Iterable[ResourceMetric] | None = None,
     ) -> "MetricsAnalyzer":
-        """Create analyzer from a :class:`MetricsStore` instance."""
-        if limit is None:
-            metrics = list(store.get_metrics())
-        else:
+        """
+        Create analyzer from a :class:`MetricsStore` instance.
+
+        Parameters
+        ----------
+        store:
+            Metrics storage backend.
+        limit:
+            Maximum number of records to load from the store.
+        since:
+            Lower timestamp bound for metrics to retrieve.
+        batch_size:
+            Batch size used when streaming results from the database.
+        metrics_iter:
+            Optional iterable of metrics to use instead of querying ``store``.
+        """
+        if metrics_iter is not None:
+            metrics = metrics_iter
+        elif limit is not None:
             metrics = store.get_recent_metrics(limit)
+        elif since is not None:
+            metrics = store.iter_metrics_since(since, batch_size=batch_size)
+        else:
+            metrics = store.get_metrics(batch_size)
         return cls(metrics)
 
     def __init__(self, metrics: Iterable[ResourceMetric]) -> None:

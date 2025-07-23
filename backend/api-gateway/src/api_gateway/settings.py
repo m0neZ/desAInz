@@ -25,6 +25,11 @@ class Settings(BaseSettings):
     optimization_url: HttpUrl = HttpUrl("http://optimization:8000")
     monitoring_url: HttpUrl = HttpUrl("http://monitoring:8000")
     analytics_url: HttpUrl = HttpUrl("http://analytics:8000")
+    auth0_domain: str | None = shared_settings.auth0_domain
+    """Auth0 tenant domain for validating tokens."""
+
+    auth0_client_id: str | None = shared_settings.auth0_client_id
+    """Client identifier issued by Auth0."""
 
     @field_validator(
         "rate_limit_per_user",

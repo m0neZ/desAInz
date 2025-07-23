@@ -1,42 +1,22 @@
 // @flow
-import { signIn, signOut, useSession } from 'next-auth/react';
-
-function useSafeSession() {
-  try {
-    return useSession();
-  } catch {
-    return { data: null, status: 'unauthenticated' } as const;
-  }
-}
+import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function AuthButton() {
-  const { data: session, status } = useSafeSession();
-
-  if (status === 'loading') {
+  const { user, isLoading } = useUser();
+  if (isLoading) {
     return null;
   }
-
-  if (session) {
+  if (user) {
     return (
-      <button
-        type="button"
-        aria-label="Logout"
-        onClick={() => signOut()}
-        className="ml-auto"
-      >
+      <Link href="/api/auth/logout" aria-label="Logout" className="ml-auto">
         Logout
-      </button>
+      </Link>
     );
   }
-
   return (
-    <button
-      type="button"
-      aria-label="Login"
-      onClick={() => signIn()}
-      className="ml-auto"
-    >
+    <Link href="/api/auth/login" aria-label="Login" className="ml-auto">
       Login
-    </button>
+    </Link>
   );
 }

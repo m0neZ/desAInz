@@ -116,3 +116,17 @@ def test_refresh_token_invalid() -> None:
     """Invalid refresh token returns 401."""
     resp = client.post("/auth/refresh", json={"refresh_token": "bad"})
     assert resp.status_code == 401
+
+
+def test_validate_token_valid() -> None:
+    """``/auth/validate`` returns the token subject."""
+    token = get_token("admin")
+    resp = client.get("/auth/validate", headers={"Authorization": f"Bearer {token}"})
+    assert resp.status_code == 200
+    assert resp.json()["user"] == "admin"
+
+
+def test_validate_token_invalid() -> None:
+    """Invalid tokens return ``403``."""
+    resp = client.get("/auth/validate", headers={"Authorization": "Bearer bad"})
+    assert resp.status_code == 403
